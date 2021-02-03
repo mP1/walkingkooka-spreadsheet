@@ -111,7 +111,11 @@ public final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor
                 final SimpleDateFormat dateFormat = (SimpleDateFormat)localeToFormatPattern.apply(locale);
                 pattern = dateFormat.toPattern();
                 assertNotEquals("",
-                        SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(pattern),
+                        SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
+                                pattern,
+                                false, // ignoreSeconds
+                                false // ignoreAmpm
+                        ),
                         () -> "" + locale);
             } catch (final UnsupportedOperationException cause) {
                 throw new UnsupportedOperationException(pattern + " " + locale.toLanguageTag() + " " + cause.getMessage(), cause);
@@ -121,7 +125,7 @@ public final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor
 
     @Override
     public SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor createVisitor() {
-        return new SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor();
+        return new SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor(false, false);
     }
 
     @Override

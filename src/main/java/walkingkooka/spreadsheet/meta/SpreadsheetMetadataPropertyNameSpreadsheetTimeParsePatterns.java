@@ -17,15 +17,14 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 
 import java.text.DateFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns extends SpreadsheetMetadataPropertyName<SpreadsheetTimeParsePatterns> {
 
@@ -60,33 +59,21 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns extends 
         visitor.visitTimeParsePatterns(value);
     }
 
-    @Override
     Optional<SpreadsheetTimeParsePatterns> extractLocaleValue(final Locale locale) {
-        return dateFormatThenParsePattern(locale,
-                SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns::simpleDateFormatParse,
-                SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns::parseTimeParsePatterns);
-    }
+        final List<DateFormat> patterns = Lists.array();
 
-    private static String simpleDateFormatParse(final int style,
-                                                final Locale locale) {
-        return toPattern(DateFormat.getTimeInstance(style, locale));
-    }
+        for (final int timeStyle : DATE_FORMAT_STYLES) {
+            patterns.add(
+                    DateFormat.getTimeInstance(
+                            timeStyle,
+                            locale
+                    )
+            );
+        }
 
-    private static SpreadsheetTimeParsePatterns parseTimeParsePatterns(final String text) {
-        final SpreadsheetTimeParsePatterns pattern = SpreadsheetPattern.parseTimeParsePatterns(text);
-        return SpreadsheetPattern.timeParsePatterns(
-                pattern
-                        .value()
-                        .stream()
-                        .map(SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns::parseTimeParsePatterns0)
-                        .collect(Collectors.toList())
-        );
-    }
-
-    private static SpreadsheetFormatTimeParserToken parseTimeParsePatterns0(final SpreadsheetFormatTimeParserToken token) {
-        return SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatternsSpreadsheetFormatParserTokenVisitor.fix(
-                token,
-                SpreadsheetFormatParserToken::time
+        return this.extractLocaleSimpleDateFormat(
+                patterns,
+                SpreadsheetPattern::parseTimeParsePatterns
         );
     }
 

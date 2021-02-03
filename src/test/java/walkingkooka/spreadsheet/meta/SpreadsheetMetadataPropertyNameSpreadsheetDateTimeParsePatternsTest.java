@@ -29,7 +29,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatter
     public void testExtractLocaleValue() {
         this.extractLocaleValueAndCheck(
                 Locale.ENGLISH,
-                SpreadsheetDateParsePatterns.parseDateTimeParsePatterns("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yyyy, h:mm:ss AM/PM;dddd, mmmm d, yyyy, h:mm AM/PM;mmmm d, yyyy \\a\\t h:mm:ss AM/PM;mmmm d, yyyy \\a\\t h:mm:ss AM/PM;mmmm d, yyyy, h:mm:ss AM/PM;mmmm d, yyyy, h:mm AM/PM;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yyyy, h:mm AM/PM;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm AM/PM")
+                SpreadsheetDateParsePatterns.parseDateTimeParsePatterns("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm:ss;dddd, mmmm d, yyyy \\a\\t h:mm AM/PM;dddd, mmmm d, yyyy, h:mm:ss AM/PM;dddd, mmmm d, yyyy, h:mm:ss;dddd, mmmm d, yyyy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm;mmmm d, yyyy \\a\\t h:mm:ss AM/PM;mmmm d, yyyy \\a\\t h:mm:ss;mmmm d, yyyy \\a\\t h:mm AM/PM;mmmm d, yyyy, h:mm:ss AM/PM;mmmm d, yyyy, h:mm:ss;mmmm d, yyyy, h:mm AM/PM;mmmm d, yyyy, h:mm;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yyyy, h:mm:ss;mmm d, yyyy, h:mm AM/PM;mmm d, yyyy, h:mm;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss;m/d/yy, h:mm AM/PM;m/d/yy, h:mm")
         );
     }
 

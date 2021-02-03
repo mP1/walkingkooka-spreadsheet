@@ -18,7 +18,9 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 import walkingkooka.net.email.EmailAddress;
@@ -58,9 +60,10 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.BiFunction;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * The {@link Name} of metadata property.
@@ -384,35 +387,86 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * Factory that fetches a {@link DateFormat}, casts to a {@link SimpleDateFormat} and parses the pattern.
      */
-    final Optional<T> extractLocaleSimpleDateFormat(final Locale locale,
-                                                    final Function<Locale, DateFormat> localeToDateFormat,
+    final Optional<T> extractLocaleSimpleDateFormat(final DateFormat dateFormat,
                                                     final Function<String, T> patternParser) {
-        return Optional.of(patternParser.apply(toPattern(localeToDateFormat.apply(locale))));
+        return extractLocaleSimpleDateFormat(
+            Lists.of(dateFormat),
+            patternParser
+        );
     }
 
     /**
-     * Casts and grabs the {@link SimpleDateFormat#toPattern()} and then converts the pattern using {@link SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor}.
+     * Uses the provided {@link DateFormat} actually {@link SimpleDateFormat} visiting the pattern of each
+     * to create {@link SpreadsheetPattern} sub class instance. For sub classes of {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns}
+     * simplified forms of each pattern are also created, this means if a locale supports a pattern like <code>hh:mm:ss</code>
+     * the form <code>hh:mm</code> will also be added.
      */
-    final static String toPattern(final DateFormat dateFormat) {
-        final SimpleDateFormat simpleDateFormat = (SimpleDateFormat) dateFormat;
-        return SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(simpleDateFormat.toPattern());
+    final Optional<T> extractLocaleSimpleDateFormat(final Iterable<DateFormat> dateFormats,
+                                                    final Function<String, T> patternParser) {
+        final Set<String> patterns = Sets.ordered();
+
+        for(final DateFormat dateFormat : dateFormats) {
+            final SimpleDateFormat simpleDateFormat = (SimpleDateFormat) dateFormat;
+            final String simpleDateFormatPattern = simpleDateFormat.toPattern();
+
+            {
+                final String pattern = SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
+                        simpleDateFormatPattern,
+                        true,
+                        true
+                );
+                if (!patterns.contains(pattern)) {
+                    patterns.add(pattern);
+                }
+            }
+
+            // if a parse pattern want to create simplifications like hh:mm:ss -> hh:mm
+            if (this.isParsePatterns()) {
+                {
+                    final String pattern = SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
+                            simpleDateFormatPattern,
+                            true,
+                            false
+                    );
+                    if (!patterns.contains(pattern)) {
+                        patterns.add(pattern);
+                    }
+                }
+                {
+                    final String pattern = SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
+                            simpleDateFormatPattern,
+                            false,
+                            true
+                    );
+                    if(!patterns.contains(pattern)) {
+                        patterns.add(pattern);
+                    }
+                }
+            }
+        }
+
+        return Optional.of(
+                patternParser.apply(
+                        patterns.stream()
+                                .collect(
+                                        Collectors.joining(";")
+                                )
+                )
+        );
     }
 
-    /**
-     * This method is only called by {@link SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns} and
-     * {@link SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns}. It creates a pattern with FULL, LONG, MEDIUM and SHORT and
-     * then calls the factory.
-     */
-    final Optional<T> dateFormatThenParsePattern(final Locale locale,
-                                                 final BiFunction<Integer, Locale, String> pattern,
-                                                 final Function<String, T> parser) {
-        final String full = pattern.apply(DateFormat.FULL, locale).trim();
-        final String longPattern = pattern.apply(DateFormat.LONG, locale).trim();
-        final String medium = pattern.apply(DateFormat.MEDIUM, locale).trim();
-        final String shortPattern = pattern.apply(DateFormat.SHORT, locale).trim();
-
-        return Optional.of(parser.apply(full + ";" + longPattern + ";" + medium + ";" + shortPattern));
+    private boolean isParsePatterns() {
+        return this instanceof SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns ||
+                this instanceof SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns ||
+                this instanceof SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns;
     }
+
+    final static int[] DATE_FORMAT_STYLES = new int[]{
+            DateFormat.FULL,
+            DateFormat.LONG,
+            DateFormat.MEDIUM,
+            DateFormat.SHORT
+    };
 
     /**
      * This makes an assumption that a {@link DecimalFormat} pattern will only use characters that are also equal in

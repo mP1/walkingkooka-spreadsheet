@@ -28,15 +28,21 @@ import walkingkooka.text.CharSequences;
  */
 final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extends SimpleDateFormatPatternVisitor {
 
+    private static final char YEAR = 'y';
     private static final char DAY_IN_MONTH = 'd';
-    private static final char HOUR = 'H';
+    private static final char HOUR = 'h';
     private static final char MONTH_OR_MINUTE = 'm';
 
     /**
      * Accepts a {@link java.text.SimpleDateFormat} pattern and returns its equivalent spreadsheet format pattern.
      */
-    static String pattern(final String pattern) {
-        final SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor visitor = new SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor();
+    static String pattern(final String pattern,
+                          final boolean seconds,
+                          final boolean ampm) {
+        final SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor visitor = new SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor(
+                seconds,
+                ampm
+        );
         visitor.accept(pattern);
 
         // normalize spaces
@@ -50,12 +56,16 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
             }
             result = less;
         }
-        return result;
+
+        return result.trim();
     }
 
     // @VisibleForTesting.
-    SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor() {
+    SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor(final boolean seconds,
+                                                                  final boolean ampm) {
         super();
+        this.seconds = seconds;
+        this.ampm = ampm;
     }
 
     @Override
@@ -65,12 +75,12 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
 
     @Override
     protected void visitYear(final int width) {
-        this.add('y', width == 2 ? 2 : 4);
+        this.add(YEAR, width == 2 ? 2 : 4);
     }
 
     @Override
     protected void visitWeekYear(int width) {
-        this.add('Y', width);
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -113,7 +123,9 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
 
     @Override
     protected void visitAmPmMarker(final int width) {
-        this.add("AM/PM");
+        if (this.ampm) {
+            this.add("AM/PM");
+        }
     }
 
     @Override
@@ -143,13 +155,21 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
 
     @Override
     protected void visitSecondInMinute(final int width) {
-        this.add('s', width);
+        if (this.seconds) {
+            this.add('s', width);
+        } else {
+            this.removeTextLiteral();
+        }
     }
 
     @Override
     protected void visitMillisecond(final int width) {
-        this.add('.');
-        this.add('0', width);
+        if (this.seconds) {
+            this.add('.');
+            this.add('0', width);
+        } else {
+            this.removeTextLiteral();
+        }
     }
 
     @Override
@@ -172,8 +192,13 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
      */
     @Override
     protected void visitLiteral(final String text) {
-        for(final char c : text.toCharArray()) {
-            switch(c) {
+        int textLiteral = this.textLiteral;
+        if (-1 == textLiteral) {
+            textLiteral = this.pattern.length();
+        }
+
+        for (final char c : text.toCharArray()) {
+            switch (c) {
                 case ' ':
                 case ',':
                 case '.':
@@ -187,12 +212,25 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
                     this.add(c);
             }
         }
+
+        // save textLiteral because add will have reset $textLiteral
+        this.textLiteral = textLiteral;
     }
 
     @Override
     protected void visitIllegal(final String component) {
         throw new UnsupportedOperationException(component);
     }
+
+    /**
+     * When the seconds component will be included along with any preceding text literals
+     */
+    private final boolean seconds;
+
+    /**
+     * When the am/pm component will be included along with any preceding text literals
+     */
+    private final boolean ampm;
 
     private void add(final char c) {
         this.add(c, 1);
@@ -205,12 +243,26 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
 
     private void add(final CharSequence chars) {
         this.pattern.append(chars);
+        this.textLiteral = -1; // real textLiteral need to set this field after the call completes
     }
+
+    private void removeTextLiteral() {
+        final int textLiteral = this.textLiteral;
+        if (-1 != textLiteral) {
+            this.pattern.setLength(textLiteral);
+        }
+    }
+
+    /**
+     * This index is used to reset {@link #pattern} so text added before a seconds or ampm is removed when the seconds or
+     * ampm token is encountered and not included.
+     */
+    private int textLiteral = -1;
 
     private final StringBuilder pattern = new StringBuilder();
 
     @Override
     public String toString() {
-        return this.pattern.toString();
+        return this.pattern.toString() + (this.seconds ? " ignore seconds" : "") + (this.ampm ? " ignore seconds" : "");
     }
 }

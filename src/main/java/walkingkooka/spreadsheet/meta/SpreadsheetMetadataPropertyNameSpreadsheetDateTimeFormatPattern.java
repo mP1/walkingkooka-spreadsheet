@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
@@ -58,21 +57,14 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPattern exte
         visitor.visitDateTimeFormatPattern(value);
     }
 
-    @Override
     Optional<SpreadsheetDateTimeFormatPattern> extractLocaleValue(final Locale locale) {
-        return this.extractLocaleSimpleDateFormat(locale,
-                (l) -> DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, l),
-                SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPattern::parseDateTimeFormatPattern);
-    }
-
-    private static SpreadsheetDateTimeFormatPattern parseDateTimeFormatPattern(final String text) {
-        final SpreadsheetDateTimeFormatPattern pattern = SpreadsheetPattern.parseDateTimeFormatPattern(text);
-
-        return SpreadsheetPattern.dateTimeFormatPattern(
-                SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatternsSpreadsheetFormatParserTokenVisitor.fix(
-                        pattern.value(),
-                        SpreadsheetFormatParserToken::dateTime
-                )
+        return this.extractLocaleSimpleDateFormat(
+                DateFormat.getDateTimeInstance(
+                        DateFormat.FULL,
+                        DateFormat.FULL,
+                        locale
+                ),
+                SpreadsheetPattern::parseDateTimeFormatPattern
         );
     }
 
