@@ -37,11 +37,16 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
     }
 
     @Override
+    final boolean isExpressionCompatible() {
+        return true;
+    }
+
+    @Override
     final boolean parse(final TextCursor cursor,
-                     final SpreadsheetNumberParsePatternsRequest request) {
+                        final SpreadsheetNumberParsePatternsRequest request) {
         boolean completed;
 
-        if(cursor.isEmpty()) {
+        if (cursor.isEmpty()) {
             completed = request.nextComponent(cursor);
         } else {
             request.digitMode.tryParseSign(cursor, request);

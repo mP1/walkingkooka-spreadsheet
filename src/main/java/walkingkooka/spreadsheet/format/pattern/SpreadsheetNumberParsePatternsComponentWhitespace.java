@@ -34,8 +34,13 @@ final class SpreadsheetNumberParsePatternsComponentWhitespace extends Spreadshee
     }
 
     @Override
+    boolean isExpressionCompatible() {
+        return false;
+    }
+
+    @Override
     boolean parse(final TextCursor cursor,
-               final SpreadsheetNumberParsePatternsRequest request) {
+                  final SpreadsheetNumberParsePatternsRequest request) {
         // not consumed
         return request.nextComponent(cursor);
     }

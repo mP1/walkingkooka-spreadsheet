@@ -34,8 +34,13 @@ final class SpreadsheetNumberParsePatternsComponentTextLiteral extends Spreadshe
     }
 
     @Override
+    boolean isExpressionCompatible() {
+        return this.text.equals(";"); // Pattern separator is ok!
+    }
+
+    @Override
     boolean parse(final TextCursor cursor,
-               final SpreadsheetNumberParsePatternsRequest request) {
+                  final SpreadsheetNumberParsePatternsRequest request) {
         // not consumed
         return request.nextComponent(cursor);
     }

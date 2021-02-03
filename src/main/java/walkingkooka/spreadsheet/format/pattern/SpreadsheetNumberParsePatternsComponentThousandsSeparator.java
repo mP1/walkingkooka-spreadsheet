@@ -17,47 +17,35 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
- * A {@link SpreadsheetNumberParsePatternsComponent} that matches an exponent and switches parsing to exponent parsing mode.
+ * A {@link SpreadsheetNumberParsePatternsComponent} that does not actually expect or consume the grouping character.
  */
-final class SpreadsheetNumberParsePatternsComponentExponent extends SpreadsheetNumberParsePatternsComponent2 {
+final class SpreadsheetNumberParsePatternsComponentThousandsSeparator extends SpreadsheetNumberParsePatternsComponent2 {
 
     /**
      * Singleton
      */
-    final static SpreadsheetNumberParsePatternsComponentExponent INSTANCE = new SpreadsheetNumberParsePatternsComponentExponent();
+    final static SpreadsheetNumberParsePatternsComponentThousandsSeparator INSTANCE = new SpreadsheetNumberParsePatternsComponentThousandsSeparator();
 
-    /**
-     * Private ctor use singleton.
-     */
-    private SpreadsheetNumberParsePatternsComponentExponent() {
+    private SpreadsheetNumberParsePatternsComponentThousandsSeparator() {
         super();
     }
 
     @Override
     boolean isExpressionCompatible() {
-        return true;
+        return false;
     }
 
     @Override
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternsRequest request) {
-        return this.parseToken(
-                cursor,
-                request.context.exponentSymbol(),
-                CaseSensitivity.INSENSITIVE,
-                SpreadsheetParserToken::exponentSymbol,
-                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN,
-                request
-        );
+        return request.nextComponent(cursor);
     }
 
     @Override
     public String toString() {
-        return "E";
+        return ",";
     }
 }

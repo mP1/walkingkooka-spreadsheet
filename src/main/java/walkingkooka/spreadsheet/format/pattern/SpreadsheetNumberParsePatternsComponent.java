@@ -50,7 +50,7 @@ abstract class SpreadsheetNumberParsePatternsComponent {
      */
     static SpreadsheetNumberParsePatternsComponent digit(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
                                                          final int max) {
-        return SpreadsheetNumberParsePatternsComponentDigitDigit.with(mode,max);
+        return SpreadsheetNumberParsePatternsComponentDigitDigit.with(mode, max);
     }
 
     /**
@@ -93,6 +93,13 @@ abstract class SpreadsheetNumberParsePatternsComponent {
     }
 
     /**
+     * {@see SpreadsheetNumberParsePatternsComponentThousandsSeparator}
+     */
+    static SpreadsheetNumberParsePatternsComponent thousands() {
+        return SpreadsheetNumberParsePatternsComponentThousandsSeparator.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetNumberParsePatternsComponentWhitespace}
      */
     @SuppressWarnings("SameReturnValue")
@@ -113,12 +120,22 @@ abstract class SpreadsheetNumberParsePatternsComponent {
      */
     abstract SpreadsheetNumberParsePatternsComponent lastDigit(final SpreadsheetNumberParsePatternsComponentDigitMode mode);
 
+    // used within Streams as a method reference
+    final boolean isNotExpressionCompatible() {
+        return !this.isExpressionCompatible();
+    }
+
+    /**
+     * Some components (grouping separator) are not valid within an expression but are valid as a number literal.
+     */
+    abstract boolean isExpressionCompatible();
+
     /**
      * Each component in turn is asked to consume and possibly update the number value in the context.
      * A return value of false indicates matching was completed.
      */
     abstract boolean parse(final TextCursor cursor,
-                        final SpreadsheetNumberParsePatternsRequest request);
+                           final SpreadsheetNumberParsePatternsRequest request);
 
     /**
      * Advances the cursor attempting to match the given token in full.

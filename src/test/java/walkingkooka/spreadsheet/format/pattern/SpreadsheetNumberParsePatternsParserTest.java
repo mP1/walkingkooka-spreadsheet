@@ -39,6 +39,8 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsParser>
         implements ParserTesting2<SpreadsheetNumberParsePatternsParser, SpreadsheetParserContext> {
 
@@ -47,6 +49,27 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
     @Test
     public void testHashInvalidFails() {
         this.parseAndFail2("#", "A");
+    }
+
+    // expression parser fail...........................................................................................
+
+    @Test
+    public void testExpressionGroupingSeparatorFails() {
+        this.parseExpressionFails("#,###.##");
+    }
+
+    @Test
+    public void testExpressionTextLiteralFails() {
+        this.parseExpressionFails("#\"text\"#");
+    }
+
+    @Test
+    public void testExpressionPercentFails() {
+        this.parseExpressionFails("#.#%");
+    }
+
+    private void parseExpressionFails(final String pattern) {
+        assertThrows(IllegalStateException.class, () -> SpreadsheetNumberParsePatterns.parseNumberParsePatterns(pattern).expressionParser());
     }
 
     // integer values single digit pattern..............................................................................

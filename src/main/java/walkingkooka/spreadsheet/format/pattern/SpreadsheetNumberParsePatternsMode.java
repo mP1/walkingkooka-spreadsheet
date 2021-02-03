@@ -19,6 +19,10 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.math.DecimalNumberContext;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 /**
  * Internal enum that is used hen creating a {@link SpreadsheetNumberParsePatternsParser} to differentiate between
  * a number that parses a value and numbers within an expression.
@@ -29,13 +33,38 @@ enum SpreadsheetNumberParsePatternsMode {
         boolean isGroupSeparator(final char c, final DecimalNumberContext context) {
             return false;
         }
+
+        /**
+         * Loops over all component and fails if any report they are NOT compatible.
+         */
+        @Override
+        void checkCompatible(final SpreadsheetNumberParsePatterns patterns) {
+            patterns.patterns.forEach(this::checkCompatible0);
+        }
+
+        private void checkCompatible0(final List<SpreadsheetNumberParsePatternsComponent> patterns) {
+            patterns.stream()
+                    .filter(SpreadsheetNumberParsePatternsComponent::isNotExpressionCompatible)
+                    .findFirst()
+                    .ifPresent(p -> {
+                        throw new IllegalStateException("Invalid component " + p + " within " + patterns.stream().map(Objects::toString).collect(Collectors.joining()));
+                    });
+        }
     },
-    VALUE{
+
+    VALUE {
         @Override
         boolean isGroupSeparator(final char c, final DecimalNumberContext context) {
             return c == context.groupingSeparator();
         }
+
+        @Override
+        void checkCompatible(final SpreadsheetNumberParsePatterns patterns) {
+            // nop
+        }
     };
 
     abstract boolean isGroupSeparator(final char c, final DecimalNumberContext context);
+
+    abstract void checkCompatible(final SpreadsheetNumberParsePatterns patterns);
 }
