@@ -58,9 +58,10 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern extends 
 
     @Override
     Optional<SpreadsheetDateFormatPattern> extractLocaleValue(final Locale locale) {
-        return this.extractLocaleSimpleDateFormat(locale,
-                (l) -> DateFormat.getDateInstance(DateFormat.FULL, l),
-                SpreadsheetDateFormatPattern::parseDateFormatPattern);
+        return this.extractLocaleSimpleDateFormat(
+                DateFormat.getDateInstance(DateFormat.FULL, locale),
+                SpreadsheetDateFormatPattern::parseDateFormatPattern
+        );
     }
 
     @Override
