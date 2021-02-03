@@ -82,7 +82,7 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
     /**
      * Returns a {@link Parser} which will try all the patterns.
      */
-    public Parser<SpreadsheetParserContext> expresionParser() {
+    public Parser<SpreadsheetParserContext> expressionParser() {
         if (null == this.expressionParser) {
             this.expressionParser = this.createExpressionParser();
         }
