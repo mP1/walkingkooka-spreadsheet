@@ -36,8 +36,13 @@ final class SpreadsheetNumberParsePatternsComponentCurrency extends SpreadsheetN
     }
 
     @Override
+    boolean isExpressionCompatible() {
+        return true;
+    }
+
+    @Override
     boolean parse(final TextCursor cursor,
-               final SpreadsheetNumberParsePatternsRequest request) {
+                  final SpreadsheetNumberParsePatternsRequest request) {
         return this.parseToken(
                 cursor,
                 request.context.currencySymbol(),

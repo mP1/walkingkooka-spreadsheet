@@ -45,6 +45,8 @@ final class SpreadsheetNumberParsePatternsParser implements Parser<SpreadsheetPa
         super();
         this.pattern = pattern;
         this.mode = mode;
+
+        this.mode.checkCompatible(pattern);
     }
 
     @Override
