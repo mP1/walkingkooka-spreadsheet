@@ -425,6 +425,16 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
                 {
                     final String pattern = SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
                             simpleDateFormatPattern,
+                            false,
+                            false
+                    );
+                    if (!patterns.contains(pattern)) {
+                        patterns.add(pattern);
+                    }
+                }
+                {
+                    final String pattern = SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
+                            simpleDateFormatPattern,
                             true,
                             false
                     );
