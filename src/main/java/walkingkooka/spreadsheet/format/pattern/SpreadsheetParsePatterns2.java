@@ -113,6 +113,7 @@ abstract class SpreadsheetParsePatterns2<F extends SpreadsheetFormatParserToken,
                         .mapToObj(this::createParser0)
                         .collect(Collectors.toList())
         ).transform(this::parserTransform)
+                .setToString(this.toString())
                 .cast();
     }
 
