@@ -44,6 +44,8 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
@@ -342,6 +344,42 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
             DateFormat.MEDIUM,
             DateFormat.SHORT
     };
+
+    /**
+     * Creates a {@link SpreadsheetNumberFormatPattern} using the {@link Locale}
+     */
+    public static SpreadsheetNumberFormatPattern numberFormatPatternLocale(final Locale locale) {
+        checkLocale(locale);
+
+        return parseNumberFormatPattern(
+                decimalFormatPattern(DecimalFormat.getInstance(locale))
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetNumberParsePatterns} using the {@link Locale}
+     */
+    public static SpreadsheetNumberParsePatterns numberParsePatternsLocale(final Locale locale) {
+        checkLocale(locale);
+
+        final String number = decimalFormatPattern(DecimalFormat.getInstance(locale));
+        final String integer = decimalFormatPattern(DecimalFormat.getIntegerInstance(locale));
+
+        return parseNumberParsePatterns(
+                number.equals(integer) ?
+                        number :
+                        number + ";" + integer);
+    }
+
+
+    /**
+     * This makes an assumption that a {@link DecimalFormat} pattern will only use characters that are also equal in
+     * functionality and meaning within a spreadsheet number format.
+     */
+    static String decimalFormatPattern(final NumberFormat numberFormat) {
+        final DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+        return decimalFormat.toPattern();
+    }
 
     // parseDateParsePatterns...........................................................................................
 

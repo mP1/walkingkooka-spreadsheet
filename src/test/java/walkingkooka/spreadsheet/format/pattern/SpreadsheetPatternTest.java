@@ -28,8 +28,10 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
+import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
@@ -39,8 +41,11 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -214,6 +219,117 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                             @Override
                             public int twoDigitYear() {
                                 return 50;
+                            }
+                        }))
+                        .orElse(null),
+                () -> "parse " + CharSequences.quoteAndEscape(text) + " parser: " + parser
+        );
+    }
+
+    // number...........................................................................................................
+
+    @Test
+    public void testNumberFormatPatternLocaleNullLocaleFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.numberFormatPatternLocale(null));
+    }
+
+    @Test
+    public void testNumberParsePatternsLocaleNullLocaleFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.numberParsePatternsLocale(null));
+    }
+
+    @Test
+    public void testNumberFormatLocale() {
+        this.formatAndCheck(
+                SpreadsheetPattern.numberFormatPatternLocale(EN_AU).formatter(),
+                BigDecimal.valueOf(12.5),
+                new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return true;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return Converters.simple()
+                                .convert
+                                        (value,
+                                                target,
+                                                ConverterContexts.fake());
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return 'd';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL32;
+                    }
+
+                    @Override
+                    public char negativeSign() {
+                        return 'n';
+                    }
+
+                    @Override
+                    public char positiveSign() {
+                        return 'p';
+                    }
+
+                    @Override
+                    public ExpressionNumberKind expressionNumberKind() {
+                        return ExpressionNumberKind.BIG_DECIMAL;
+                    }
+                },
+                "12d5"
+        );
+    }
+
+    @Test
+    public void testNumberParsePatternsLocale() {
+        final Parser<SpreadsheetParserContext> parser = SpreadsheetPattern.numberParsePatternsLocale(EN_AU).parser();
+        final String text = "1d2";
+        final TextCursor cursor = TextCursors.charSequence(text);
+
+        assertEquals(
+                ExpressionNumberKind.BIG_DECIMAL.create(1.2),
+                parser.parse(cursor, new FakeSpreadsheetParserContext() {
+
+                    @Override
+                    public char decimalSeparator() {
+                        return 'd';
+                    }
+
+                    @Override
+                    public char negativeSign() {
+                        return 'n';
+                    }
+
+                    @Override
+                    public char positiveSign() {
+                        return 'p';
+                    }
+                })
+                        .map(t -> t.cast(SpreadsheetNumberParserToken.class).toNumber(new FakeExpressionEvaluationContext() {
+
+                            @Override
+                            public char negativeSign() {
+                                return 'n';
+                            }
+
+                            @Override
+                            public char positiveSign() {
+                                return 'p';
+                            }
+
+                            @Override
+                            public ExpressionNumberKind expressionNumberKind() {
+                                return ExpressionNumberKind.BIG_DECIMAL;
                             }
                         }))
                         .orElse(null),
