@@ -50,8 +50,6 @@ import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.TextStyle;
 
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
@@ -376,15 +374,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * Some properties support providing a value for the given Locale for the parent {@link SpreadsheetMetadata} to be updated.
      */
     abstract Optional<T> extractLocaleValue(final Locale locale);
-
-    /**
-     * This makes an assumption that a {@link DecimalFormat} pattern will only use characters that are also equal in
-     * functionality and meaning within a spreadsheet number format.
-     */
-    static String decimalFormatPattern(final NumberFormat numberFormat) {
-        final DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
-        return decimalFormat.toPattern();
-    }
 
     // SpreadsheetMetadataVisitor.......................................................................................
 
