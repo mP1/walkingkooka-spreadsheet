@@ -37,7 +37,6 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
@@ -52,39 +51,38 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern<?>>,
-        SpreadsheetFormatterTesting,
-        ParserTesting {
+        SpreadsheetFormatterTesting {
 
 
     // static factory method Locale.....................................................................................
 
     @Test
-    public static void testDateFormatPatternLocaleNullLocaleFails() {
+    public void testDateFormatPatternLocaleNullLocaleFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateFormatPatternLocale(null));
     }
 
     @Test
-    public static void testDateParsePatternsLocaleNullLocaleFails() {
+    public void testDateParsePatternsLocaleNullLocaleFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateParsePatternsLocale(null));
     }
 
     @Test
-    public static void testDateTimeFormatPatternLocaleNullLocaleFails() {
+    public void testDateTimeFormatPatternLocaleNullLocaleFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateTimeFormatPatternLocale(null));
     }
 
     @Test
-    public static void testDateTimeParsePatternsLocaleNullLocaleFails() {
+    public void testDateTimeParsePatternsLocaleNullLocaleFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateTimeParsePatternsLocale(null));
     }
 
     @Test
-    public static void testTimeFormatPatternLocaleNullLocaleFails() {
+    public void testTimeFormatPatternLocaleNullLocaleFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetPattern.timeFormatPatternLocale(null));
     }
 
     @Test
-    public static void testTimeParsePatternsLocaleNullLocaleFails() {
+    public void testTimeParsePatternsLocaleNullLocaleFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetPattern.timeParsePatternsLocale(null));
     }
 
