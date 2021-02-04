@@ -301,9 +301,16 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         };
     }
 
+    @Test
+    public final void testParserToString() {
+        final P pattern = this.createPattern();
+        this.toStringAndCheck(pattern.parser(), pattern.toString());
+    }
+
     static SpreadsheetAmPmParserToken am() {
         return SpreadsheetParserToken.amPm(0, "AM");
     }
+
     static SpreadsheetTextLiteralParserToken colon() {
         return textLiteral(":");
     }
