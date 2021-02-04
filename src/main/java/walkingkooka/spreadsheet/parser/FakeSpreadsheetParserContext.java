@@ -32,7 +32,7 @@ public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements
 
     @Override
     public char decimalSeparator() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -42,12 +42,12 @@ public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements
 
     @Override
     public char groupingSeparator() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public char percentageSymbol() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
