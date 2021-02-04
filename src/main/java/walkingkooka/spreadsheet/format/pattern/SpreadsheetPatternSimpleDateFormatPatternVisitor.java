@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.datetime.SimpleDateFormatPatternComponentKind;
 import walkingkooka.datetime.SimpleDateFormatPatternVisitor;
@@ -26,7 +26,7 @@ import walkingkooka.text.CharSequences;
  * matching such as 23 or 24 hour time becomes 24, timezone patterns are ignored, year and yearOfEra are equivalent to year
  * and a few others.
  */
-final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extends SimpleDateFormatPatternVisitor {
+final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateFormatPatternVisitor {
 
     private static final char YEAR = 'y';
     private static final char DAY_IN_MONTH = 'd';
@@ -40,7 +40,7 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
                           final boolean year,
                           final boolean seconds,
                           final boolean ampm) {
-        final SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor visitor = new SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor(
+        final SpreadsheetPatternSimpleDateFormatPatternVisitor visitor = new SpreadsheetPatternSimpleDateFormatPatternVisitor(
                 year,
                 seconds,
                 ampm
@@ -63,9 +63,9 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
     }
 
     // @VisibleForTesting.
-    SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor(final boolean year,
-                                                                  final boolean seconds,
-                                                                  final boolean ampm) {
+    SpreadsheetPatternSimpleDateFormatPatternVisitor(final boolean year,
+                                                     final boolean seconds,
+                                                     final boolean ampm) {
         super();
         this.year = year;
         this.seconds = seconds;
