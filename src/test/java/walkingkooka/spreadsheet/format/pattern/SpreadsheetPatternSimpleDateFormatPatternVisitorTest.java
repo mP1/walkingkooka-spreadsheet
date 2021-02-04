@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.datetime.SimpleDateFormatPatternVisitor;
@@ -29,7 +29,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitorTest implements SimpleDateFormatPatternVisitorTesting<SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor> {
+public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implements SimpleDateFormatPatternVisitorTesting<SpreadsheetPatternSimpleDateFormatPatternVisitor> {
 
     @Test
     public void testDateFormatFull() {
@@ -111,7 +111,7 @@ public final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor
                 final SimpleDateFormat dateFormat = (SimpleDateFormat)localeToFormatPattern.apply(locale);
                 pattern = dateFormat.toPattern();
                 assertNotEquals("",
-                        SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
+                        SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
                                 pattern,
                                 true,
                                 false, // include Seconds
@@ -125,8 +125,8 @@ public final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor
     }
 
     @Override
-    public SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor createVisitor() {
-        return new SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor(
+    public SpreadsheetPatternSimpleDateFormatPatternVisitor createVisitor() {
+        return new SpreadsheetPatternSimpleDateFormatPatternVisitor(
                 false,
                 false,
                 false
@@ -134,8 +134,8 @@ public final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor
     }
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor> type() {
-        return SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.class;
+    public Class<SpreadsheetPatternSimpleDateFormatPatternVisitor> type() {
+        return SpreadsheetPatternSimpleDateFormatPatternVisitor.class;
     }
 
     @Override
@@ -145,7 +145,7 @@ public final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetMetadata.class.getSimpleName();
+        return SpreadsheetPattern.class.getSimpleName();
     }
 
     @Override

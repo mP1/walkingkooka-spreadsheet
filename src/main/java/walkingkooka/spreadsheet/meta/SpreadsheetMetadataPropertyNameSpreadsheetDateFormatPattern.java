@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
-import java.text.DateFormat;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -58,9 +58,8 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern extends 
 
     @Override
     Optional<SpreadsheetDateFormatPattern> extractLocaleValue(final Locale locale) {
-        return this.extractLocaleSimpleDateFormat(
-                DateFormat.getDateInstance(DateFormat.FULL, locale),
-                SpreadsheetDateFormatPattern::parseDateFormatPattern
+        return Optional.of(
+                SpreadsheetPattern.dateFormatPatternLocale(locale)
         );
     }
 

@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
@@ -41,10 +43,15 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Holds a tokens that may be used to parse or format values along with helpers.
@@ -106,6 +113,235 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
     public static SpreadsheetTimeParsePatterns timeParsePatterns(final List<SpreadsheetFormatTimeParserToken> token) {
         return SpreadsheetTimeParsePatterns.withTokens(token);
     }
+
+    // Locale public factory............................................................................................
+
+    /**
+     * Creates a {@link SpreadsheetDateFormatPattern} using date patterns from the {@link DateFormat} and {@link Locale}.
+     */
+    public static SpreadsheetDateFormatPattern dateFormatPatternLocale(final Locale locale) {
+        return javaTextDateFormat(
+                DateFormat.getDateInstance(DateFormat.FULL, locale),
+                NOT_DATE,
+                NOT_TIME,
+                SpreadsheetPattern::parseDateFormatPattern
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetDateFormatPattern} using date patterns from the {@link DateFormat} and {@link Locale}.
+     */
+    public static SpreadsheetDateParsePatterns dateParsePatternsLocale(final Locale locale) {
+        return javaTextDateFormat(
+                Lists.of(
+                        DateFormat.getDateInstance(DateFormat.FULL, locale),
+                        DateFormat.getDateInstance(DateFormat.LONG, locale),
+                        DateFormat.getDateInstance(DateFormat.MEDIUM, locale),
+                        DateFormat.getDateInstance(DateFormat.SHORT, locale)
+                ),
+                DATE,
+                NOT_TIME,
+                SpreadsheetPattern::parseDateParsePatterns
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetDateFormatPattern} using date/time patterns from the {@link DateFormat} and {@link Locale}.
+     */
+    public static SpreadsheetDateTimeFormatPattern dateTimeFormatPatternLocale(final Locale locale) {
+        checkLocale(locale);
+
+        return javaTextDateFormat(
+                DateFormat.getDateTimeInstance(
+                        DateFormat.FULL,
+                        DateFormat.FULL,
+                        locale
+                ),
+                NOT_DATE,
+                NOT_TIME,
+                SpreadsheetPattern::parseDateTimeFormatPattern
+        );
+    }
+
+    public static SpreadsheetDateTimeParsePatterns dateTimeParsePatternsLocale(final Locale locale) {
+        checkLocale(locale);
+
+        final List<DateFormat> patterns = Lists.array();
+
+        for (final int dateStyle : DATE_FORMAT_STYLES) {
+            for (final int timeStyle : DATE_FORMAT_STYLES) {
+                patterns.add(
+                        DateFormat.getDateTimeInstance(
+                                dateStyle,
+                                timeStyle,
+                                locale
+                        )
+                );
+            }
+        }
+
+        return javaTextDateFormat(
+                patterns,
+                DATE,
+                TIME,
+                SpreadsheetPattern::parseDateTimeParsePatterns
+        );
+    }
+
+
+    /**
+     * Creates a {@link SpreadsheetTimeFormatPattern} using time patterns from the {@link DateFormat} and {@link Locale}.
+     */
+    public static SpreadsheetTimeFormatPattern timeFormatPatternLocale(final Locale locale) {
+        checkLocale(locale);
+
+        return javaTextDateFormat(
+                DateFormat.getTimeInstance(DateFormat.FULL, locale),
+                NOT_DATE,
+                NOT_TIME,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetTimeFormatPattern} using time patterns from the {@link DateFormat} and {@link Locale}.
+     */
+    public static SpreadsheetTimeParsePatterns timeParsePatternsLocale(final Locale locale) {
+        checkLocale(locale);
+
+        return javaTextDateFormat(
+                Lists.of(
+                        DateFormat.getTimeInstance(DateFormat.FULL, locale),
+                        DateFormat.getTimeInstance(DateFormat.LONG, locale),
+                        DateFormat.getTimeInstance(DateFormat.MEDIUM, locale),
+                        DateFormat.getTimeInstance(DateFormat.SHORT, locale)
+                ),
+                NOT_DATE,
+                TIME,
+                SpreadsheetPattern::parseTimeParsePatterns
+        );
+    }
+
+    private static void checkLocale(final Locale locale) {
+        Objects.requireNonNull(locale, "locale");
+    }
+
+    private final static boolean DATE = true;
+    private final static boolean NOT_DATE = !DATE;
+
+    private final static boolean TIME = true;
+    private final static boolean NOT_TIME = !TIME;
+
+    /**
+     * Factory that fetches a {@link DateFormat}, casts to a {@link SimpleDateFormat} and parses the pattern.
+     */
+    private static <P extends SpreadsheetPattern<V>, V> P javaTextDateFormat(final DateFormat dateFormat,
+                                                                             final boolean date,
+                                                                             final boolean time,
+                                                                             final Function<String, P> patternParser) {
+        return javaTextDateFormat(
+                Lists.of(dateFormat),
+                date,
+                time,
+                patternParser
+        );
+    }
+
+    /**
+     * Uses the provided {@link DateFormat} actually {@link SimpleDateFormat} visiting the pattern of each
+     * to create {@link SpreadsheetPattern} sub class instance. For sub classes of {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns}
+     * simplified forms of each pattern are also created, this means if a locale supports a pattern like <code>hh:mm:ss</code>
+     * the form <code>hh:mm</code> will also be added.
+     */
+    private static <P extends SpreadsheetPattern<V>, V> P javaTextDateFormat(final Iterable<DateFormat> dateFormats,
+                                                                             final boolean date,
+                                                                             final boolean time,
+                                                                             final Function<String, P> patternParser) {
+        final Set<String> patterns = Sets.ordered();
+
+        for (final DateFormat dateFormat : dateFormats) {
+            final SimpleDateFormat simpleDateFormat = (SimpleDateFormat) dateFormat;
+            final String simpleDateFormatPattern = simpleDateFormat.toPattern();
+
+            // include all year, seconds, ampm
+            {
+                final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                        simpleDateFormatPattern,
+                        true,
+                        true,
+                        true
+                );
+                if (!patterns.contains(pattern)) {
+                    patterns.add(pattern);
+                }
+            }
+            // if only date, try and make a pattern without year
+            if (date && !time) {
+                {
+                    final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                            simpleDateFormatPattern,
+                            false,
+                            false, // only dates, seconds and ampm shouldnt appear anyway
+                            false
+                    );
+                    if (!patterns.contains(pattern)) {
+                        patterns.add(pattern);
+                    }
+                }
+            }
+
+            // if a parse pattern want to create simplifications like hh:mm:ss -> hh:mm
+            if (time) {
+                {
+                    final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                            simpleDateFormatPattern,
+                            true,
+                            true,
+                            false
+                    );
+                    if (!patterns.contains(pattern)) {
+                        patterns.add(pattern);
+                    }
+                }
+                {
+                    final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                            simpleDateFormatPattern,
+                            true,
+                            false,
+                            true
+                    );
+                    if (!patterns.contains(pattern)) {
+                        patterns.add(pattern);
+                    }
+                }
+                {
+                    final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                            simpleDateFormatPattern,
+                            true,
+                            false,
+                            false
+                    );
+                    if (!patterns.contains(pattern)) {
+                        patterns.add(pattern);
+                    }
+                }
+            }
+        }
+
+        return patternParser.apply(
+                patterns.stream()
+                        .collect(
+                                Collectors.joining(";")
+                        )
+        );
+    }
+
+    private final static int[] DATE_FORMAT_STYLES = new int[]{
+            DateFormat.FULL,
+            DateFormat.LONG,
+            DateFormat.MEDIUM,
+            DateFormat.SHORT
+    };
 
     // parseDateParsePatterns...........................................................................................
 
