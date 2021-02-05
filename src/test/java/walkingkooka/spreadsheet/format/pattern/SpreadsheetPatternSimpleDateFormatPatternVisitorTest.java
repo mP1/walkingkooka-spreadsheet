@@ -113,7 +113,7 @@ public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implemen
                 assertNotEquals("",
                         SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
                                 pattern,
-                                true,
+                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
                                 false, // include Seconds
                                 false // include Ampm
                         ),
@@ -127,7 +127,7 @@ public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implemen
     @Override
     public SpreadsheetPatternSimpleDateFormatPatternVisitor createVisitor() {
         return new SpreadsheetPatternSimpleDateFormatPatternVisitor(
-                false,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
                 false,
                 false
         );

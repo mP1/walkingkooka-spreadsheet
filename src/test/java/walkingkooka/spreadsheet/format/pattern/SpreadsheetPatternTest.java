@@ -180,6 +180,14 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
+    public void testDateParsePatternsLocaleDayMonthNameTwoDigitYear() {
+        this.localeDatePatternParseAndCheck(
+                "31 December 00",
+                LocalDate.of(2000, 12, 31)
+        );
+    }
+
+    @Test
     public void testDateParsePatternsLocaleDayMonthNameFourDigitYear() {
         this.localeDatePatternParseAndCheck(
                 "31 December 2000",
