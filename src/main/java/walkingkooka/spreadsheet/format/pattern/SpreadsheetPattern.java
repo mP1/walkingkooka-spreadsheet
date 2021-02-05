@@ -266,148 +266,104 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
             final String simpleDateFormatPattern = simpleDateFormat.toPattern();
 
             // include all year, seconds, ampm
-            {
-                final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                        simpleDateFormatPattern,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                        true,
-                        true
-                );
-                if (!patterns.contains(pattern)) {
-                    patterns.add(pattern);
-                }
-            }
+            visitSimpleDateFormatPattern(
+                    simpleDateFormatPattern,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                    true,
+                    true,
+                    patterns
+            );
 
             if (date) {
-                {
-                    final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                visitSimpleDateFormatPattern(
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
+                        true,
+                        true,
+                        patterns
+                );
+
+
+                if (time) {
+                    visitSimpleDateFormatPattern(
                             simpleDateFormatPattern,
                             SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
                             true,
-                            true
+                            false,
+                            patterns
                     );
-                    if (!patterns.contains(pattern)) {
-                        patterns.add(pattern);
-                    }
+
+                    visitSimpleDateFormatPattern(
+                            simpleDateFormatPattern,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
+                            false,
+                            true,
+                            patterns
+                    );
                 }
+
+                visitSimpleDateFormatPattern(
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                        true,
+                        true,
+                        patterns
+                );
 
                 if (time) {
-                    {
-                        final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                                simpleDateFormatPattern,
-                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
-                                true,
-                                false
-                        );
-                        if (!patterns.contains(pattern)) {
-                            patterns.add(pattern);
-                        }
-                    }
-
-                    {
-                        final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                                simpleDateFormatPattern,
-                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
-                                false,
-                                true
-                        );
-                        if (!patterns.contains(pattern)) {
-                            patterns.add(pattern);
-                        }
-                    }
-                }
-
-
-                {
-                    final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                    visitSimpleDateFormatPattern(
                             simpleDateFormatPattern,
                             SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
                             true,
-                            true
+                            false,
+                            patterns
                     );
-                    if (!patterns.contains(pattern)) {
-                        patterns.add(pattern);
-                    }
-                }
 
-                if (time) {
-                    {
-                        final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                                simpleDateFormatPattern,
-                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
-                                true,
-                                false
-                        );
-                        if (!patterns.contains(pattern)) {
-                            patterns.add(pattern);
-                        }
-                    }
-
-                    {
-                        final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                                simpleDateFormatPattern,
-                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
-                                false,
-                                true
-                        );
-                        if (!patterns.contains(pattern)) {
-                            patterns.add(pattern);
-                        }
-                    }
+                    visitSimpleDateFormatPattern(
+                            simpleDateFormatPattern,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                            false,
+                            true,
+                            patterns
+                    );
                 }
             }
 
 
             // if only date, try and make a pattern without year
             if (date && !time) {
-                {
-                    final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                            simpleDateFormatPattern,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
-                            false, // only dates, seconds and ampm shouldnt appear anyway
-                            false
-                    );
-                    if (!patterns.contains(pattern)) {
-                        patterns.add(pattern);
-                    }
-                }
+                visitSimpleDateFormatPattern(
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
+                        false, // only dates, seconds and ampm shouldnt appear anyway
+                        false,
+                        patterns
+                );
             }
 
             // if a parse pattern want to create simplifications like hh:mm:ss -> hh:mm
             if (time) {
-                {
-                    final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                            simpleDateFormatPattern,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                            true,
-                            false
-                    );
-                    if (!patterns.contains(pattern)) {
-                        patterns.add(pattern);
-                    }
-                }
-                {
-                    final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                            simpleDateFormatPattern,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                            false,
-                            true
-                    );
-                    if (!patterns.contains(pattern)) {
-                        patterns.add(pattern);
-                    }
-                }
-                {
-                    final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                            simpleDateFormatPattern,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                            false,
-                            false
-                    );
-                    if (!patterns.contains(pattern)) {
-                        patterns.add(pattern);
-                    }
-                }
+                visitSimpleDateFormatPattern(
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                        true,
+                        false,
+                        patterns
+                );
+                visitSimpleDateFormatPattern(
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                        false,
+                        true,
+                        patterns
+                );
+                visitSimpleDateFormatPattern(
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                        false,
+                        false,
+                        patterns
+                );
             }
         }
 
@@ -425,6 +381,25 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
             DateFormat.MEDIUM,
             DateFormat.SHORT
     };
+
+    /**
+     * Accepts a {@link java.text.SimpleDateFormat} pattern and returns its equivalent spreadsheet format pattern.
+     */
+    private static void visitSimpleDateFormatPattern(final String simpleDateFormatPattern,
+                                                     final SpreadsheetPatternSimpleDateFormatPatternVisitorYear year,
+                                                     final boolean seconds,
+                                                     final boolean ampm,
+                                                     final Set<String> patterns) {
+        final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                simpleDateFormatPattern,
+                year,
+                seconds,
+                ampm
+        );
+        if (!patterns.contains(pattern)) {
+            patterns.add(pattern);
+        }
+    }
 
     /**
      * Creates a {@link SpreadsheetNumberFormatPattern} using the {@link Locale}
