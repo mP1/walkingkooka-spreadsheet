@@ -166,6 +166,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         public char positiveSign() {
             return '+';
         }
+
+        @Override
+        public MathContext mathContext() {
+            return MATH_CONTEXT;
+        }
     };
 
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;

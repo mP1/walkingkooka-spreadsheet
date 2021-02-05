@@ -55,6 +55,7 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -493,7 +494,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "converterContext=DateTimeContext123 \"C\" 'd' \"e\" 'g' 'n' 't' 'p' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123"
+                "converterContext=DateTimeContext123 \"C\" 'd' \"e\" 'g' 'n' 't' 'p' fr_CA precision=7 roundingMode=HALF_UP DOUBLE fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123"
         );
     }
 
@@ -617,7 +618,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 PERCENT,
                 PLUS,
                 Locale.CANADA_FRENCH,
-                MathContext.DECIMAL32
+                new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_UP)
         );
     }
 
