@@ -28,7 +28,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternsTe
     public void testExtractLocaleValueUS() {
         this.extractLocaleValueAndCheck(
                 Locale.ENGLISH,
-                SpreadsheetDateParsePatterns.parseDateParsePatterns("dddd, mmmm d, yyyy;dddd, mmmm d;mmmm d, yyyy;mmmm d;mmm d, yyyy;mmm d;m/d/yy;m/d")
+                SpreadsheetDateParsePatterns.parseDateParsePatterns("dddd, mmmm d, yyyy;dddd, mmmm d, yy;dddd, mmmm d;mmmm d, yyyy;mmmm d, yy;mmmm d;mmm d, yyyy;mmm d, yy;mmm d;m/d/yy;m/d")
         );
     }
 
@@ -36,7 +36,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternsTe
     public void testExtractLocaleValueAu() {
         this.extractLocaleValueAndCheck(
                 Locale.forLanguageTag("EN-AU"),
-                SpreadsheetDateParsePatterns.parseDateParsePatterns("dddd, d mmmm yyyy;dddd, d mmmm;d mmmm yyyy;d mmmm;d mmm yyyy;d mmm;d/m/yy;d/m")
+                SpreadsheetDateParsePatterns.parseDateParsePatterns("dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m")
         );
     }
 

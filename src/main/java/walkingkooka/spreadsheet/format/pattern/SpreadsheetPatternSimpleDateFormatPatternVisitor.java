@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.NeverError;
 import walkingkooka.datetime.SimpleDateFormatPatternComponentKind;
 import walkingkooka.datetime.SimpleDateFormatPatternVisitor;
 import walkingkooka.text.CharSequences;
@@ -37,7 +38,7 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
      * Accepts a {@link java.text.SimpleDateFormat} pattern and returns its equivalent spreadsheet format pattern.
      */
     static String pattern(final String pattern,
-                          final boolean year,
+                          final SpreadsheetPatternSimpleDateFormatPatternVisitorYear year,
                           final boolean seconds,
                           final boolean ampm) {
         final SpreadsheetPatternSimpleDateFormatPatternVisitor visitor = new SpreadsheetPatternSimpleDateFormatPatternVisitor(
@@ -63,7 +64,7 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
     }
 
     // @VisibleForTesting.
-    SpreadsheetPatternSimpleDateFormatPatternVisitor(final boolean year,
+    SpreadsheetPatternSimpleDateFormatPatternVisitor(final SpreadsheetPatternSimpleDateFormatPatternVisitorYear year,
                                                      final boolean seconds,
                                                      final boolean ampm) {
         super();
@@ -80,18 +81,29 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
     @Override
     protected void visitYear(final int width) {
         // year can only be skipped after month
-        if (this.year) {
-            this.add(YEAR, width == 2 ? 2 : 4);
-        } else {
-            if (this.date) {
-                // dd/mm/yyyy after day or month so remove the text literal before to become dd/mm
-                this.removeTextLiteral();
-            }
+
+        final SpreadsheetPatternSimpleDateFormatPatternVisitorYear year = this.year;
+        switch (year) {
+            case ALWAYS_TWO_DIGITS:
+                this.add(YEAR, 2);
+                break;
+            case INCLUDE:
+                this.add(YEAR, width == 2 ? 2 : 4);
+                break;
+            case EXCLUDE:
+                if (this.date) {
+                    // dd/mm/yyyy after day or month so remove the text literal before to become dd/mm
+                    this.removeTextLiteral();
+                }
+                break;
+            default:
+                NeverError.unhandledCase(year, SpreadsheetPatternSimpleDateFormatPatternVisitorYear.values());
         }
+
         this.date = true;
     }
 
-    private boolean year;
+    private SpreadsheetPatternSimpleDateFormatPatternVisitorYear year;
 
     @Override
     protected void visitWeekYear(int width) {
