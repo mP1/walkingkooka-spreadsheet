@@ -44,52 +44,52 @@ final class SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitor ex
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
         return this.failInvalid(token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
         return this.failInvalid(token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
         return this.failInvalid(token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
         return this.failInvalid(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatAmPmParserToken token) {
+    protected final void visit(final SpreadsheetFormatAmPmParserToken token) {
         this.failInvalid(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDayParserToken token) {
+    protected final void visit(final SpreadsheetFormatDayParserToken token) {
         this.failInvalid(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatHourParserToken token) {
+    protected final void visit(final SpreadsheetFormatHourParserToken token) {
         this.failInvalid(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
+    protected final void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
         this.failInvalid(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatSecondParserToken token) {
+    protected final void visit(final SpreadsheetFormatSecondParserToken token) {
         this.failInvalid(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatYearParserToken token) {
+    protected final void visit(final SpreadsheetFormatYearParserToken token) {
         this.failInvalid(token);
     }
 }
