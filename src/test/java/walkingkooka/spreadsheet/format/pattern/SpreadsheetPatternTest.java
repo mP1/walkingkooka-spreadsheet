@@ -33,7 +33,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -49,6 +48,7 @@ import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.function.BiFunction;
 
@@ -169,57 +169,171 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    // Locale parse Date................................................................................................
+
     @Test
-    public void testDateParsePatternsLocale() {
-        this.localePatternParseAndCheck(
-                SpreadsheetPattern.dateParsePatternsLocale(EN_AU),
+    public void testDateParsePatternsLocaleDayMonthNumberTwoDigitYear() {
+        this.localeDatePatternParseAndCheck(
                 "31/12/00",
-                (t, c) -> t.cast(SpreadsheetDateParserToken.class).toLocalDate(c),
                 LocalDate.of(2000, 12, 31)
         );
     }
 
     @Test
-    public void testDateTimeParsePatternsLocale() {
+    public void testDateParsePatternsLocaleDayMonthNameFourDigitYear() {
+        this.localeDatePatternParseAndCheck(
+                "31 December 2000",
+                LocalDate.of(2000, 12, 31)
+        );
+    }
+
+    private void localeDatePatternParseAndCheck(final String text,
+                                                final LocalDate expected) {
         this.localePatternParseAndCheck(
-                SpreadsheetPattern.dateTimeParsePatternsLocale(EN_AU),
+                SpreadsheetPattern.dateParsePatternsLocale(EN_AU),
+                text,
+                (t, c) -> t.cast(SpreadsheetDateParserToken.class).toLocalDate(c),
+                expected
+        );
+    }
+
+    // Locale parse DateTime............................................................................................
+
+    @Test
+    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinute() {
+        this.localeDateTimePatternParseAndCheck(
                 "31/12/00, 12:58",
-                (t, c) -> t.cast(SpreadsheetDateTimeParserToken.class).toLocalDateTime(c),
                 LocalDateTime.of(2000, 12, 31, 12, 58)
         );
     }
 
     @Test
-    public void testTimeParsePatternsLocale() {
+    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteAmpm() {
+        this.localeDateTimePatternParseAndCheck(
+                "31/12/00, 11:58 PM",
+                LocalDateTime.of(2000, 12, 31, 23, 58)
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteSecond() {
+        this.localeDateTimePatternParseAndCheck(
+                "31/12/00, 12:58:59",
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59)
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteSecondAmpm() {
+        this.localeDateTimePatternParseAndCheck(
+                "31/12/00, 11:58:59 PM",
+                LocalDateTime.of(2000, 12, 31, 23, 58, 59)
+        );
+    }
+
+    private void localeDateTimePatternParseAndCheck(final String text,
+                                                    final LocalDateTime expected) {
         this.localePatternParseAndCheck(
-                SpreadsheetPattern.timeParsePatternsLocale(EN_AU),
+                SpreadsheetPattern.dateTimeParsePatternsLocale(EN_AU),
+                text,
+                (t, c) -> t.cast(SpreadsheetDateTimeParserToken.class).toLocalDateTime(c),
+                expected
+        );
+    }
+
+    // Locale parse Time................................................................................................
+
+    @Test
+    public void testTimeParsePatternsLocaleHourMinute() {
+        this.localeTimePatternParseAndCheck(
                 "12:58",
-                (t, c) -> t.cast(SpreadsheetTimeParserToken.class).toLocalTime(),
                 LocalTime.of(12, 58)
         );
     }
 
-    private <T> void localePatternParseAndCheck(final SpreadsheetParsePatterns<?> parsePatterns,
+    @Test
+    public void testTimeParsePatternsLocaleHourMinuteSecond() {
+        this.localeTimePatternParseAndCheck(
+                "12:58:59",
+                LocalTime.of(12, 58, 59)
+        );
+    }
+
+// https://github.com/mP1/walkingkooka-spreadsheet/issues/1442
+// SpreadsheetPattern from Locale needs permutation with millis (added to seconds)
+//    @Test
+//    public void testTimeParsePatternsLocaleHourMinuteSecondMillis() {
+//        this.localeTimePatternParseAndCheck(
+//                "12:58:59.123",
+//                LocalTime.of(12, 58, 59, 1230000)
+//        );
+//    }
+
+    @Test
+    public void testTimeParsePatternsLocaleHourMinuteAmpm() {
+        this.localeTimePatternParseAndCheck(
+                "11:58 PM",
+                LocalTime.of(23, 58)
+        );
+    }
+
+    @Test
+    public void testTimeParsePatternsLocaleHourMinuteSecondAmpm() {
+        this.localeTimePatternParseAndCheck(
+                "11:58:59 PM",
+                LocalTime.of(23, 58, 59)
+        );
+    }
+
+    private void localeTimePatternParseAndCheck(final String text,
+                                                final LocalTime expected) {
+        this.localePatternParseAndCheck(
+                SpreadsheetPattern.timeParsePatternsLocale(EN_AU),
+                text,
+                (t, c) -> t.cast(SpreadsheetTimeParserToken.class).toLocalTime(),
+                expected
+        );
+    }
+
+    private <T> void localePatternParseAndCheck(final SpreadsheetParsePatterns<?> pattern,
                                                 final String text,
                                                 final BiFunction<ParserToken, ExpressionEvaluationContext, T> tokenToValue,
                                                 final T expected) {
-        final Parser<SpreadsheetParserContext> parser = parsePatterns.parser();
+        final Parser<SpreadsheetParserContext> parser = pattern.parser();
         final TextCursor cursor = TextCursors.charSequence(text);
 
+        final DateTimeContext dateTimeContext = DateTimeContexts.locale(EN_AU, 1800, 50);
 
         assertEquals(
                 expected,
-                parser.parse(cursor, SpreadsheetParserContexts.fake())
+                parser.parse(cursor, new FakeSpreadsheetParserContext() {
+                    @Override
+                    public List<String> ampms() {
+                        return dateTimeContext.ampms();
+                    }
+
+                    @Override
+                    public List<String> monthNames() {
+                        return dateTimeContext.monthNames();
+                    }
+
+                    @Override
+                    public List<String> monthNameAbbreviations() {
+                        return dateTimeContext.monthNameAbbreviations();
+                    }
+                })
                         .map(t -> tokenToValue.apply(t, new FakeExpressionEvaluationContext() {
+
                             @Override
                             public int defaultYear() {
-                                return 1800;
+                                return dateTimeContext.defaultYear();
                             }
 
                             @Override
                             public int twoDigitYear() {
-                                return 50;
+                                return dateTimeContext.twoDigitYear();
                             }
+
                         }))
                         .orElse(null),
                 () -> "parse " + CharSequences.quoteAndEscape(text) + " parser: " + parser
