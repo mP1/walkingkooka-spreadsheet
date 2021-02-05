@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.text.CharSequences;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 /**
  * Handles preparing the integer, fraction and possibly exponent digits that will eventually appear in the formatted text.
@@ -36,7 +35,10 @@ enum NumberSpreadsheetFormatterNormalOrScientific {
                                                   final NumberSpreadsheetFormatter formatter,
                                                   final SpreadsheetFormatterContext context) {
             final BigDecimal rounded = value.scaleByPowerOfTen(formatter.decimalPlacesShift)
-                    .setScale(formatter.fractionDigitSymbolCount, RoundingMode.HALF_UP);
+                    .setScale(
+                            formatter.fractionDigitSymbolCount,
+                            context.mathContext().getRoundingMode()
+                    );
 
             final int valueSign = rounded.signum();
             String integerDigits = "";
@@ -77,8 +79,10 @@ enum NumberSpreadsheetFormatterNormalOrScientific {
             final int fractionDigitSymbolCount = formatter.fractionDigitSymbolCount;
 
             final BigDecimal rounded = value.abs()
-                    .setScale((integerDigitSymbolCount + fractionDigitSymbolCount) - (value.precision() - value.scale()),
-                            RoundingMode.HALF_UP)
+                    .setScale(
+                            (integerDigitSymbolCount + fractionDigitSymbolCount) - (value.precision() - value.scale()),
+                            context.mathContext().getRoundingMode()
+                    )
                     .stripTrailingZeros();
 
             final String digits = rounded.unscaledValue()

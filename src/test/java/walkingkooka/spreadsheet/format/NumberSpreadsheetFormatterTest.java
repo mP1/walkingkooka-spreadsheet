@@ -34,6 +34,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -1341,6 +1342,28 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
                 "before 123!5000 after");
     }
 
+    //rounding..........................................................................................................
+
+    @Test
+    public void testFormatRoundingHalfUp() {
+        this.parseFormatAndCheck(
+                "#",
+                "1.5",
+                RoundingMode.HALF_UP,
+                "2"
+        );
+    }
+
+    @Test
+    public void testFormatRoundingDown() {
+        this.parseFormatAndCheck(
+                "#",
+                "1.5",
+                RoundingMode.DOWN,
+                "1"
+        );
+    }
+
     //toString .........................................................................................................
 
     @Test
@@ -1353,24 +1376,49 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     private void parseFormatAndCheck(final String pattern,
                                      final double value,
                                      final String text) {
-        this.parseFormatAndCheck(pattern, String.valueOf(value), text);
+        this.parseFormatAndCheck(
+                pattern,
+                String.valueOf(value),
+                text
+        );
     }
 
     private void parseFormatAndCheck(final String pattern,
                                      final String value,
                                      final String text) {
-        this.parseFormatAndCheck0(pattern, value, SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
+        this.parseFormatAndCheck(
+                pattern,
+                value,
+                RoundingMode.HALF_UP,
+                text
+        );
+    }
+
+    private void parseFormatAndCheck(final String pattern,
+                                     final String value,
+                                     final RoundingMode roundingMode,
+                                     final String text) {
+        this.parseFormatAndCheck0(
+                pattern,
+                value,
+                this.createContext(roundingMode),
+                SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text)
+        );
     }
 
     private void parseFormatAndCheck0(final String pattern,
                                       final String value,
+                                      final SpreadsheetFormatterContext context,
                                       final SpreadsheetText text) {
         final NumberSpreadsheetFormatter formatter = this.createFormatter(pattern);
 
-        this.formatAndCheck2(formatter,
+        this.formatAndCheck2(
+                formatter,
                 value,
                 ExpressionNumberKind.BIG_DECIMAL,
-                text);
+                context,
+                text
+        );
 
         BigInteger bigInteger;
         try {
@@ -1382,10 +1430,13 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
             this.formatAndCheck(formatter, bigInteger, text);
         }
 
-        this.formatAndCheck2(formatter,
+        this.formatAndCheck2(
+                formatter,
                 value,
                 ExpressionNumberKind.DOUBLE,
-                text);
+                context,
+                text
+        );
 
         Long longValue;
         try {
@@ -1401,14 +1452,21 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     private void formatAndCheck2(final NumberSpreadsheetFormatter formatter,
                                  final String value,
                                  final ExpressionNumberKind kind,
+                                 final SpreadsheetFormatterContext context,
                                  final SpreadsheetText text) {
-        this.formatAndCheck(formatter,
+        this.formatAndCheck(
+                formatter,
                 kind.create(new BigDecimal(value)),
-                text);
+                context,
+                text
+        );
 
-        this.formatAndCheck(formatter,
+        this.formatAndCheck(
+                formatter,
                 kind.create(Double.parseDouble(value)),
-                text);
+                context,
+                text
+        );
     }
 
     @Override
@@ -1433,6 +1491,10 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
 
     @Override
     public SpreadsheetFormatterContext createContext() {
+        return this.createContext(RoundingMode.HALF_UP);
+    }
+
+    public SpreadsheetFormatterContext createContext(final RoundingMode roundingMode) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
@@ -1475,7 +1537,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
 
             @Override
             public MathContext mathContext() {
-                return MathContext.UNLIMITED;
+                return new MathContext(32, roundingMode);
             }
 
             @Override
