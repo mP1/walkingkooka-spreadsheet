@@ -306,6 +306,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
 
                     @Override
+                    public char groupingSeparator() {
+                        return 'g';
+                    }
+
+                    @Override
                     public char negativeSign() {
                         return 'n';
                     }
