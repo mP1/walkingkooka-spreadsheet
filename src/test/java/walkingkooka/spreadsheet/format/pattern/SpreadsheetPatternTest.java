@@ -240,6 +240,22 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
+    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteSecondMillis5() {
+        this.localeDateTimePatternParseAndCheck(
+                "31/12/00, 12:58:59.5",
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59, 500000000)
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteSecondMillis123() {
+        this.localeDateTimePatternParseAndCheck(
+                "31/12/00, 12:58:59.123",
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123000000)
+        );
+    }
+
+    @Test
     public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteSecondAmpm() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/00, 11:58:59 PM",
@@ -268,6 +284,22 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.localeDateTimePatternParseAndCheck(
                 "31/12/2000, 12:58:59",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59)
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinuteSecondMilli1() {
+        this.localeDateTimePatternParseAndCheck(
+                "31/12/2000, 12:58:59.1",
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59, 100000000)
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinuteSecondMilli123() {
+        this.localeDateTimePatternParseAndCheck(
+                "31/12/2000, 12:58:59.123",
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123000000)
         );
     }
 
@@ -358,6 +390,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public List<String> ampms() {
                         return dateTimeContext.ampms();
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
                     }
 
                     @Override

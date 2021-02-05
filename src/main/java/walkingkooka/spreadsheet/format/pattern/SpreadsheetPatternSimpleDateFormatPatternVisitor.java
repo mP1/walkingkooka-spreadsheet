@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.NeverError;
+import walkingkooka.ToStringBuilder;
 import walkingkooka.datetime.SimpleDateFormatPatternComponentKind;
 import walkingkooka.datetime.SimpleDateFormatPatternVisitor;
 import walkingkooka.text.CharSequences;
@@ -39,7 +40,7 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
      */
     static String pattern(final String pattern,
                           final SpreadsheetPatternSimpleDateFormatPatternVisitorYear year,
-                          final boolean seconds,
+                          final SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds seconds,
                           final boolean ampm) {
         final SpreadsheetPatternSimpleDateFormatPatternVisitor visitor = new SpreadsheetPatternSimpleDateFormatPatternVisitor(
                 year,
@@ -65,7 +66,7 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
 
     // @VisibleForTesting.
     SpreadsheetPatternSimpleDateFormatPatternVisitor(final SpreadsheetPatternSimpleDateFormatPatternVisitorYear year,
-                                                     final boolean seconds,
+                                                     final SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds seconds,
                                                      final boolean ampm) {
         super();
         this.year = year;
@@ -199,10 +200,22 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
     protected void visitSecondInMinute(final int width) {
         this.date = false;
 
-        if (this.seconds) {
-            this.add('s', width);
-        } else {
-            this.removeTextLiteral();
+        final SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds seconds = this.seconds;
+        switch (seconds) {
+            case EXCLUDE:
+                this.removeTextLiteral();
+                break;
+            case INCLUDE:
+                this.add('s', width);
+                break;
+            case INCLUDE_WITH_MILLIS:
+                this.add('s', width);
+                this.add(".0");
+                this.millis = this.pattern.length();
+                break;
+            default:
+                NeverError.unhandledCase(seconds, SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.values());
+                break;
         }
     }
 
@@ -210,11 +223,20 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
     protected void visitMillisecond(final int width) {
         this.date = false;
 
-        if (this.seconds) {
-            this.add('.');
-            this.add('0', width);
-        } else {
-            this.removeTextLiteral();
+        final SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds seconds = this.seconds;
+        switch (seconds) {
+            case EXCLUDE:
+                this.removeTextLiteral();
+                break;
+            case INCLUDE:
+            case INCLUDE_WITH_MILLIS:
+                this.removeMillis();
+                this.add('.');
+                this.add('0', width);
+                break;
+            default:
+                NeverError.unhandledCase(seconds, SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.values());
+                break;
         }
     }
 
@@ -277,7 +299,7 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
     /**
      * When the seconds component will be included along with any preceding text literals
      */
-    private final boolean seconds;
+    private final SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds seconds;
 
     /**
      * When the am/pm component will be included along with any preceding text literals
@@ -298,10 +320,22 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
         this.textLiteral = -1; // real textLiteral need to set this field after the call completes
     }
 
+    private void removeMillis() {
+        this.remove(this.millis);
+    }
+
+    /**
+     * This index is used to reset {@link #pattern} so millis that are included with seconds can be removed if replaced.
+     */
+    private int millis = -1;
+
     private void removeTextLiteral() {
-        final int textLiteral = this.textLiteral;
-        if (-1 != textLiteral) {
-            this.pattern.setLength(textLiteral);
+        this.remove(this.textLiteral);
+    }
+
+    private void remove(final int index) {
+        if (-1 != index) {
+            this.pattern.setLength(index);
         }
     }
 
@@ -315,6 +349,10 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
 
     @Override
     public String toString() {
-        return this.pattern.toString() + (this.seconds ? " ignore seconds" : "") + (this.ampm ? " ignore seconds" : "");
+        return ToStringBuilder.empty()
+                .label("year").value(this.year)
+                .label("seconds").value(this.seconds)
+                .label("ampm").value(this.ampm)
+                .build();
     }
 }
