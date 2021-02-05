@@ -180,6 +180,14 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
+    public void testDateParsePatternsLocaleDayMonthNumberFourDigitYear() {
+        this.localeDatePatternParseAndCheck(
+                "31/12/2000",
+                LocalDate.of(2000, 12, 31)
+        );
+    }
+
+    @Test
     public void testDateParsePatternsLocaleDayMonthNameTwoDigitYear() {
         this.localeDatePatternParseAndCheck(
                 "31 December 00",
@@ -235,6 +243,38 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteSecondAmpm() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/00, 11:58:59 PM",
+                LocalDateTime.of(2000, 12, 31, 23, 58, 59)
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinute() {
+        this.localeDateTimePatternParseAndCheck(
+                "31/12/2000, 12:58",
+                LocalDateTime.of(2000, 12, 31, 12, 58)
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinuteAmpm() {
+        this.localeDateTimePatternParseAndCheck(
+                "31/12/2000, 11:58 PM",
+                LocalDateTime.of(2000, 12, 31, 23, 58)
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinuteSecond() {
+        this.localeDateTimePatternParseAndCheck(
+                "31/12/2000, 12:58:59",
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59)
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinuteSecondAmpm() {
+        this.localeDateTimePatternParseAndCheck(
+                "31/12/2000, 11:58:59 PM",
                 LocalDateTime.of(2000, 12, 31, 23, 58, 59)
         );
     }

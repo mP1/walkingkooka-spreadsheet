@@ -84,8 +84,11 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
 
         final SpreadsheetPatternSimpleDateFormatPatternVisitorYear year = this.year;
         switch (year) {
-            case ALWAYS_TWO_DIGITS:
+            case ALWAYS_2_DIGITS:
                 this.add(YEAR, 2);
+                break;
+            case ALWAYS_4_DIGITS:
+                this.add(YEAR, 4);
                 break;
             case INCLUDE:
                 this.add(YEAR, width == 2 ? 2 : 4);

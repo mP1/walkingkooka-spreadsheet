@@ -25,7 +25,12 @@ enum SpreadsheetPatternSimpleDateFormatPatternVisitorYear {
     /**
      * Year components will appear as a two digit year. <code>dd/mm/yyyy</code> into <code>dd/mm/yy</code>
      */
-    ALWAYS_TWO_DIGITS,
+    ALWAYS_2_DIGITS,
+
+    /**
+     * Year components will appear as a two digit year. <code>dd/mm/yy</code> into <code>dd/mm/yyyy</code>
+     */
+    ALWAYS_4_DIGITS,
 
     /**
      * Always include the year component as it appears.

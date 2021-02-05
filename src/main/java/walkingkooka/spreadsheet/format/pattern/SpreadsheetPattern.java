@@ -282,7 +282,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                 {
                     final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
                             simpleDateFormatPattern,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_TWO_DIGITS,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
                             true,
                             true
                     );
@@ -295,19 +295,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                     {
                         final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
                                 simpleDateFormatPattern,
-                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_TWO_DIGITS,
-                                true,
-                                true
-                        );
-                        if (!patterns.contains(pattern)) {
-                            patterns.add(pattern);
-                        }
-                    }
-
-                    {
-                        final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                                simpleDateFormatPattern,
-                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_TWO_DIGITS,
+                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
                                 true,
                                 false
                         );
@@ -319,7 +307,46 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                     {
                         final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
                                 simpleDateFormatPattern,
-                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_TWO_DIGITS,
+                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
+                                false,
+                                true
+                        );
+                        if (!patterns.contains(pattern)) {
+                            patterns.add(pattern);
+                        }
+                    }
+                }
+
+
+                {
+                    final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                            simpleDateFormatPattern,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                            true,
+                            true
+                    );
+                    if (!patterns.contains(pattern)) {
+                        patterns.add(pattern);
+                    }
+                }
+
+                if (time) {
+                    {
+                        final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                                simpleDateFormatPattern,
+                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                                true,
+                                false
+                        );
+                        if (!patterns.contains(pattern)) {
+                            patterns.add(pattern);
+                        }
+                    }
+
+                    {
+                        final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                                simpleDateFormatPattern,
+                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
                                 false,
                                 true
                         );
