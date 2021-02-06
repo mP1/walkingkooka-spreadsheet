@@ -24,6 +24,8 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.Parser;
 
+import java.time.LocalTime;
+
 /**
  * A {@link Parser} that matches the milliseconds and returns a {@link walkingkooka.spreadsheet.parser.SpreadsheetMillisecondParserToken}
  */
@@ -46,14 +48,14 @@ final class SpreadsheetParsePatterns2ParserMilliseconds extends SpreadsheetParse
                                                      final SpreadsheetParserContext context,
                                                      final TextCursorSavePoint start) {
         SpreadsheetMillisecondParserToken token = null;
-        float digitValue = FIRST_DIGIT;
-        float value = 0;
+        double digitValue = FIRST_DIGIT;
+        double value = 0;
 
 
-        for (;;) {
+        for (; ; ) {
             final char c = cursor.at();
             final int digit = Character.digit(c, 10);
-            if(-1 == digit) {
+            if (-1 == digit) {
                 token = digitValue != FIRST_DIGIT ?
                         token(value, start) :
                         null;
@@ -73,11 +75,12 @@ final class SpreadsheetParsePatterns2ParserMilliseconds extends SpreadsheetParse
         return token;
     }
 
-    private final static float FIRST_DIGIT = 100 * 1000;
+    private final static double FIRST_DIGIT = LocalTime.of(0, 0, 1).toNanoOfDay() / 10;
 
-    private static SpreadsheetMillisecondParserToken token(final float value, final TextCursorSavePoint start) {
+    private static SpreadsheetMillisecondParserToken token(final double value,
+                                                           final TextCursorSavePoint start) {
         return SpreadsheetParserToken.millisecond(
-                Math.round(value),
+                (int) Math.round(value), // shouldnt overload
                 start.textBetween().toString()
         );
     }

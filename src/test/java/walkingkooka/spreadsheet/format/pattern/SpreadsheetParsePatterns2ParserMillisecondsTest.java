@@ -49,80 +49,81 @@ public final class SpreadsheetParsePatterns2ParserMillisecondsTest extends Sprea
     }
 
     @Test
-    public void testParse1() {
+    public void testParse100000000() {
         this.parseAndCheck2(
                 "1",
-                100 * 1000
+                100_000_000
         );
     }
 
     @Test
-    public void testParse12() {
+    public void testParse120000000() {
         this.parseAndCheck2(
                 "12",
-                120 * 1000
+                120_000_000
         );
     }
 
     @Test
-    public void testParse123() {
+    public void testParse123000000() {
         this.parseAndCheck2(
                 "123",
-                123 * 1000
+                123_000_000
         );
     }
 
     @Test
-    public void testParse1234() {
+    public void testParse123400000() {
         this.parseAndCheck2(
                 "1234",
-                1234 * 100
+                123_400_000
         );
     }
 
     @Test
-    public void testParse12345() {
+    public void testParse123450000() {
         this.parseAndCheck2(
                 "12345",
-                12345 * 10
+                123_450_000
         );
     }
+
     @Test
-    public void testParse123456() {
+    public void testParse123456000() {
         this.parseAndCheck2(
                 "123456",
-                123456 * 1
+                123_456_000
         );
     }
 
     @Test
-    public void testParse1234567() {
+    public void testParse1234567055RoundLastDigit() {
         this.parseAndCheck2(
-                "1234567",
-                123457
+                "1234567055",
+                123_456_706
         );
     }
 
     @Test
-    public void testParse0000000() {
+    public void testParse000000000() {
         this.parseAndCheck2(
-                "0000000",
+                "000000000",
                 0
         );
     }
 
     @Test
-    public void testParse0000001() {
+    public void testParse0000000001() {
         this.parseAndCheck2(
-                "0000001",
+                "0000000001",
                 0
         );
     }
 
     @Test
-    public void testParse0000005() {
+    public void testParse0000000005() {
         this.parseAndCheck2(
-                "0000005",
+                "0000000005",
                 1 // round up
         );
     }
