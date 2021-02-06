@@ -213,7 +213,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli(100000, "1")
+                milli(100_000_000, "1")
         );
     }
 
@@ -242,7 +242,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond(120 * 1000, "12")
+                SpreadsheetParserToken.millisecond(120_000_000, "12")
         );
     }
 
@@ -257,7 +257,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond(123 * 1000, "123")
+                SpreadsheetParserToken.millisecond(123_000_000, "123")
         );
     }
 
@@ -272,7 +272,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond(120 * 1000, "12")
+                SpreadsheetParserToken.millisecond(120_000_000, "12")
         );
     }
 
@@ -287,7 +287,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond(100 * 1000, "1")
+                SpreadsheetParserToken.millisecond(100_000_000, "1")
         );
     }
 
@@ -370,7 +370,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli(100 * 1000, "1"),
+                milli(100_000_000, "1"),
                 textLiteralWhitespace(),
                 pm()
         );

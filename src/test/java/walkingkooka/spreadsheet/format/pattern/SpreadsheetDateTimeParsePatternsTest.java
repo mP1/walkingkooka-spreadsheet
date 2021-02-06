@@ -147,7 +147,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli(100 * 1000, "1")
+                milli(100_000_000, "1")
         );
     }
 
@@ -162,7 +162,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli(120 * 1000, "12")
+                milli(120_000_000, "12")
         );
     }
 
@@ -177,7 +177,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli(123 * 1000, "123")
+                milli(123_000_000, "123")
         );
     }
 
@@ -192,7 +192,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli(120 * 1000, "12")
+                milli(120_000_000, "12")
         );
     }
 
@@ -207,7 +207,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli(100 * 1000, "1")
+                milli(100_000_000, "1")
         );
     }
 
@@ -251,7 +251,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli(100 * 1000, "1"),
+                milli(100_000_000, "1"),
                 textLiteralWhitespace(),
                 pm()
         );
