@@ -269,7 +269,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
             visitSimpleDateFormatPattern(
                     simpleDateFormatPattern,
                     SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                    true,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
                     true,
                     patterns
             );
@@ -278,7 +278,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                 visitSimpleDateFormatPattern(
                         simpleDateFormatPattern,
                         SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
-                        true,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
                         true,
                         patterns
                 );
@@ -288,7 +288,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                     visitSimpleDateFormatPattern(
                             simpleDateFormatPattern,
                             SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
-                            true,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
                             false,
                             patterns
                     );
@@ -296,7 +296,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                     visitSimpleDateFormatPattern(
                             simpleDateFormatPattern,
                             SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
-                            false,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
                             true,
                             patterns
                     );
@@ -305,7 +305,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                 visitSimpleDateFormatPattern(
                         simpleDateFormatPattern,
                         SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
-                        true,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
                         true,
                         patterns
                 );
@@ -314,7 +314,15 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                     visitSimpleDateFormatPattern(
                             simpleDateFormatPattern,
                             SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE_WITH_MILLIS,
                             true,
+                            patterns
+                    );
+
+                    visitSimpleDateFormatPattern(
+                            simpleDateFormatPattern,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE_WITH_MILLIS,
                             false,
                             patterns
                     );
@@ -322,7 +330,15 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                     visitSimpleDateFormatPattern(
                             simpleDateFormatPattern,
                             SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
                             false,
+                            patterns
+                    );
+
+                    visitSimpleDateFormatPattern(
+                            simpleDateFormatPattern,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
                             true,
                             patterns
                     );
@@ -335,7 +351,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                 visitSimpleDateFormatPattern(
                         simpleDateFormatPattern,
                         SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
-                        false, // only dates, seconds and ampm shouldnt appear anyway
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE, // only dates, seconds and ampm shouldnt appear anyway
                         false,
                         patterns
                 );
@@ -346,21 +362,28 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                 visitSimpleDateFormatPattern(
                         simpleDateFormatPattern,
                         SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                        true,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
                         false,
                         patterns
                 );
                 visitSimpleDateFormatPattern(
                         simpleDateFormatPattern,
                         SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE_WITH_MILLIS,
                         false,
+                        patterns
+                );
+                visitSimpleDateFormatPattern(
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
                         true,
                         patterns
                 );
                 visitSimpleDateFormatPattern(
                         simpleDateFormatPattern,
                         SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                        false,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
                         false,
                         patterns
                 );
@@ -387,7 +410,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
      */
     private static void visitSimpleDateFormatPattern(final String simpleDateFormatPattern,
                                                      final SpreadsheetPatternSimpleDateFormatPatternVisitorYear year,
-                                                     final boolean seconds,
+                                                     final SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds seconds,
                                                      final boolean ampm,
                                                      final Set<String> patterns) {
         final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(

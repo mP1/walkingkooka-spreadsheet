@@ -114,7 +114,7 @@ public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implemen
                         SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
                                 pattern,
                                 SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                                false, // include Seconds
+                                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
                                 false // include Ampm
                         ),
                         () -> "" + locale);
@@ -128,7 +128,7 @@ public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implemen
     public SpreadsheetPatternSimpleDateFormatPatternVisitor createVisitor() {
         return new SpreadsheetPatternSimpleDateFormatPatternVisitor(
                 SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
-                false,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
                 false
         );
     }
