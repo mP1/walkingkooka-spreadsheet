@@ -21,6 +21,9 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Optional;
 
+/**
+ * A property that requires a character that is not a control character, whitespace, letter or digit.
+ */
 abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetadataPropertyName<Character> {
 
     /**
@@ -32,13 +35,16 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
 
     @Override
     final Character checkValue0(final Object value) {
-        return this.checkValueType(value,
-                v -> v instanceof Character);
+        final Character c = this.checkValueType(value, v -> v instanceof Character);
+        if (c < 0x20 || Character.isWhitespace(c) || Character.isLetter(c) || Character.isDigit(c)) {
+            throw this.spreadsheetMetadataPropertyValueException(value);
+        }
+        return c;
     }
 
     @Override
     final String expected() {
-        return Character.class.getSimpleName();
+        return Character.class.getSimpleName() + " symbol, not control character, whitespace, letter or digit";
     }
 
     @Override
