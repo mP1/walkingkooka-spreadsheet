@@ -345,7 +345,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetMillisecondParserToken millis123() {
-        return SpreadsheetParserToken.millisecond(123000, "123");
+        return SpreadsheetParserToken.millisecond(123_000_000, "123");
     }
 
     private SpreadsheetMinuteParserToken minute58() {
