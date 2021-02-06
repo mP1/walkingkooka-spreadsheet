@@ -17,10 +17,87 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.predicate.character.CharPredicate;
+import walkingkooka.text.CharSequences;
+
 public abstract class SpreadsheetMetadataPropertyNameCharacterTestCase<N extends SpreadsheetMetadataPropertyNameCharacter> extends SpreadsheetMetadataPropertyNameTestCase<N, Character> {
 
     SpreadsheetMetadataPropertyNameCharacterTestCase() {
         super();
+    }
+
+    @Test
+    public final void testAllControlCharactersFails() {
+        for (int i = Character.MIN_VALUE; i < 0x20; i++) {
+            this.checkValueFails2((char) i);
+        }
+    }
+
+    @Test
+    public final void testAllWhitespaceFails() {
+        this.checkValueFails2(Character::isWhitespace);
+    }
+
+    @Test
+    public final void testAllLettersFails() {
+        this.checkValueFails2(Character::isLetter);
+    }
+
+    @Test
+    public final void testAllDigitsFails() {
+        this.checkValueFails2(Character::isDigit);
+    }
+
+    private void checkValueFails2(final CharPredicate predicate) {
+        for (int i = Character.MIN_VALUE; i < Character.MAX_VALUE; i++) {
+            final char c = (char) i;
+            if (predicate.test(c)) {
+                this.checkValueFails2(c);
+            }
+        }
+    }
+
+    private void checkValueFails2(final char c) {
+        this.checkValueFails(
+                c,
+                "Expected Character symbol, not control character, whitespace, letter or digit, but got " + CharSequences.quoteIfChars(c) + " for " + CharSequences.quoteAndEscape(this.createName().toString())
+        );
+    }
+
+    @Test
+    public final void testSemiColon() {
+        this.checkValue(';');
+    }
+
+    @Test
+    public final void testDollarSign() {
+        this.checkValue('$');
+    }
+
+    @Test
+    public final void testDecimalPoint() {
+        this.checkValue('.');
+    }
+
+    @Test
+    public final void testAllSymbols() {
+        for (int i = Character.MIN_VALUE; i < Character.MAX_VALUE; i++) {
+            final char c = (char) i;
+            if (c < 0x20) {
+                continue;
+            }
+            if (Character.isWhitespace(c)) {
+                continue;
+            }
+            if (Character.isLetter(c)) {
+                continue;
+            }
+            if (Character.isDigit(c)) {
+                continue;
+            }
+            this.checkValue(c);
+        }
     }
 
     @Override
@@ -30,6 +107,6 @@ public abstract class SpreadsheetMetadataPropertyNameCharacterTestCase<N extends
 
     @Override
     final String propertyValueType() {
-        return Character.class.getSimpleName();
+        return Character.class.getSimpleName() + " symbol, not control character, whitespace, letter or digit";
     }
 }
