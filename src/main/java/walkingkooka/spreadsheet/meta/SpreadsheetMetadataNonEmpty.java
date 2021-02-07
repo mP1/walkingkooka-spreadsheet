@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
+import walkingkooka.NeverError;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
@@ -102,39 +103,67 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
     // set..............................................................................................................
 
+    /**
+     * Loops over all entries, trying to find a match. While finding a match a new {@link List} is created with
+     * sorted entries and this is used to create a new {@link SpreadsheetMetadataNonEmpty} if no match was found.
+     */
     @Override
-    <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName, final V value) {
+    <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                 final V value) {
         SpreadsheetMetadataNonEmptyMap map = this.value;
+
         final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> values = Lists.array();
 
-        int mode = 0; // new property added.
+        int mode = MODE_SET_APPENDED; // new property added.
 
-        for (Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : map.entries) {
+        for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : map.entries) {
             final SpreadsheetMetadataPropertyName<?> property = propertyAndValue.getKey();
 
-            if (propertyName.equals(property)) {
+            final int compare = property.compareTo(propertyName);
+            if (0 == compare) {
                 if (propertyAndValue.getValue().equals(value)) {
-                    mode = 1; // no change
+                    mode = MODE_SET_UNMODIFIED; // no change
                     break;
                 } else {
                     values.add(Maps.entry(property, value));
-                    mode = 2; // replaced
+                    mode = MODE_SET_REPLACED; // replaced
                 }
             } else {
+                if (MODE_SET_APPENDED == mode && compare > 0) {
+                    values.add(Maps.entry(propertyName, value));
+                    mode = MODE_SET_INSERTED;
+                }
+
                 values.add(propertyAndValue);
             }
         }
 
-        // replace didnt happen
-        if (0 == mode) {
-            values.add(Maps.entry(propertyName, value));
-            SpreadsheetMetadataNonEmptyMapEntrySet.sort(values);
+        final SpreadsheetMetadata result;
+
+        switch (mode) {
+            case MODE_SET_APPENDED:
+                values.add(Maps.entry(propertyName, value));
+                result = this.setValues(values);
+                break;
+            case MODE_SET_UNMODIFIED:
+                result = this;
+                break;
+            case MODE_SET_REPLACED:
+            case MODE_SET_INSERTED:
+                result = this.setValues(values);
+                break;
+            default:
+                NeverError.unhandledCase(mode, MODE_SET_APPENDED, MODE_SET_UNMODIFIED, MODE_SET_REPLACED, MODE_SET_INSERTED);
+                result = null;
         }
 
-        return 1 == mode ?
-                this :
-                this.setValues(values);
+        return result;
     }
+
+    private final static int MODE_SET_APPENDED = 0;
+    private final static int MODE_SET_UNMODIFIED = 1;
+    private final static int MODE_SET_REPLACED = 2;
+    private final static int MODE_SET_INSERTED = 3;
 
     // remove...........................................................................................................
 
@@ -143,7 +172,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
         final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> values = Lists.array();
         boolean removed = false;
 
-        for (Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.value.entries) {
+        for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.value.entries) {
             final SpreadsheetMetadataPropertyName<?> property = propertyAndValue.getKey();
             if (propertyName.equals(property)) {
                 removed = true;
@@ -167,7 +196,12 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     }
 
     private SpreadsheetMetadata setValues(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> values) {
-        return new SpreadsheetMetadataNonEmpty(SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataNonEmptyMapEntrySet.withList(values)), this.defaults);
+        return new SpreadsheetMetadataNonEmpty(
+                SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(
+                        SpreadsheetMetadataNonEmptyMapEntrySet.withList(values)
+                ),
+                this.defaults
+        );
     }
 
     // getters..........................................................................................................

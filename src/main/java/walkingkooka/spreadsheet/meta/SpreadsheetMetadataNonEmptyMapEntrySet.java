@@ -53,7 +53,7 @@ final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<Spr
     static SpreadsheetMetadataNonEmptyMapEntrySet with(final Map<SpreadsheetMetadataPropertyName<?>, Object> entries) {
         final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> list = Lists.array();
 
-        for (Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : entries.entrySet()) {
+        for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : entries.entrySet()) {
             final SpreadsheetMetadataPropertyName<?> property = propertyAndValue.getKey();
             if (null == property) {
                 throw new NullPointerException("Map contains null key got " + entries);
@@ -65,17 +65,10 @@ final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<Spr
             list.add(Maps.entry(property, value));
         }
 
-        sort(list);
+        list.sort(SpreadsheetMetadataNonEmptyMapEntrySet::comparator);
         return list.isEmpty() ?
                 EMPTY :
                 withList(list);
-    }
-
-    /**
-     * Sorts the {@link List} so all textStyle using the {@link SpreadsheetMetadataPropertyName} {@link Comparator}.
-     */
-    static void sort(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> list) {
-        list.sort(SpreadsheetMetadataNonEmptyMapEntrySet::comparator);
     }
 
     /**
@@ -86,6 +79,9 @@ final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<Spr
         return first.getKey().compareTo(second.getKey());
     }
 
+    /**
+     * Creates a new {@link SpreadsheetMetadataNonEmptyMapEntrySet} to hold the entries, assuming the {@link List} of entries has already been sorted.
+     */
     static SpreadsheetMetadataNonEmptyMapEntrySet withList(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> entries) {
         return new SpreadsheetMetadataNonEmptyMapEntrySet(entries);
     }
