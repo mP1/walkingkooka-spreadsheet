@@ -21,6 +21,7 @@ import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A read only {@link Set} sorted view of textStyle that have had their values checked.
@@ -102,6 +104,26 @@ final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<Spr
     }
 
     final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> entries;
+
+    // toString.........................................................................................................
+
+    @Override
+    public String toString() {
+        return toString0("[", "]");
+    }
+
+    /**
+     * This method supports the different surrounding characters of a {@link Map}.
+     */
+    String toString0(final String prefix, final String suffix) {
+        return this.entries.stream()
+                .map(SpreadsheetMetadataNonEmptyMapEntrySet::toStringEntry)
+                .collect(Collectors.joining(", ", prefix, suffix));
+    }
+
+    private static String toStringEntry(final Entry<SpreadsheetMetadataPropertyName<?>, Object> entry) {
+        return entry.getKey() + "=" + CharSequences.quoteIfChars(entry.getValue());
+    }
 
     // SpreadsheetMetadataVisitor.......................................................................................
 

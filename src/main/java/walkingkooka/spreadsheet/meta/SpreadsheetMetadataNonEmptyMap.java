@@ -78,6 +78,11 @@ final class SpreadsheetMetadataNonEmptyMap extends AbstractMap<SpreadsheetMetada
 
     final SpreadsheetMetadataNonEmptyMapEntrySet entries;
 
+    @Override
+    public String toString() {
+        return this.entries.toString0("{", "}");
+    }
+
     // SpreadsheetMetadataVisitor.......................................................................................
 
     void accept(final SpreadsheetMetadataVisitor visitor) {

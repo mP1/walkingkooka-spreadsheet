@@ -96,6 +96,24 @@ public final class SpreadsheetMetadataNonEmptyMapTest implements MapTesting2<Spr
         this.toStringAndCheck(this.createMap(), map.toString());
     }
 
+    @Test
+    public void testToStringCharacterValue() {
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
+        map.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.');
+        map.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
+
+        this.toStringAndCheck(SpreadsheetMetadataNonEmptyMap.with(map), "{decimal-separator='.', modified-by=modified@example.com}");
+    }
+
+    @Test
+    public void testToStringStringValue() {
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
+        map.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD");
+        map.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
+
+        this.toStringAndCheck(SpreadsheetMetadataNonEmptyMap.with(map), "{currency-symbol=\"AUD\", modified-by=modified@example.com}");
+    }
+
     @Override
     public SpreadsheetMetadataNonEmptyMap createMap() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.ordered();

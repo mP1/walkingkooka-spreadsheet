@@ -1321,6 +1321,24 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.toStringAndCheck(SpreadsheetMetadataNonEmpty.with(map), map.toString());
     }
 
+    @Test
+    public void testToStringCharacterValue() {
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
+        map.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.');
+        map.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
+
+        this.toStringAndCheck(SpreadsheetMetadataNonEmpty.with(map), "{decimal-separator='.', modified-by=modified@example.com}");
+    }
+
+    @Test
+    public void testToStringStringValue() {
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
+        map.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD");
+        map.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
+
+        this.toStringAndCheck(SpreadsheetMetadataNonEmpty.with(map), "{currency-symbol=\"AUD\", modified-by=modified@example.com}");
+    }
+
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Test
