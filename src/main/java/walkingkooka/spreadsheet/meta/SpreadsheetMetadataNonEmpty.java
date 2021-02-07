@@ -110,13 +110,11 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     @Override
     <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName,
                                  final V value) {
-        SpreadsheetMetadataNonEmptyMap map = this.value;
-
         final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> values = Lists.array();
 
         int mode = MODE_SET_APPENDED; // new property added.
 
-        for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : map.entries) {
+        for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.value.entries) {
             final SpreadsheetMetadataPropertyName<?> property = propertyAndValue.getKey();
 
             final int compare = property.compareTo(propertyName);
