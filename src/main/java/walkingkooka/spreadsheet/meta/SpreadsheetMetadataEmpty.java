@@ -81,7 +81,15 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
 
     @Override
     <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName, final V value) {
-        return SpreadsheetMetadataNonEmpty.with(SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataNonEmptyMapEntrySet.withList(Lists.of(Maps.entry(propertyName, value)))));
+        return SpreadsheetMetadataNonEmpty.with(
+                SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(
+                        SpreadsheetMetadataNonEmptyMapEntrySet.withList(
+                                Lists.of(
+                                        Maps.entry(propertyName, value)
+                                )
+                        )
+                )
+        );
     }
 
     @Override
