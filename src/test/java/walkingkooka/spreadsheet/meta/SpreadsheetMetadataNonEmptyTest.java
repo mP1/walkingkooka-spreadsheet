@@ -1046,7 +1046,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)
                 .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENT)
-                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, PERCENT)
+                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
                 .set(SpreadsheetMetadataPropertyName.WIDTH, 10);
