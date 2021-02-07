@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.iterator.IteratorTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.SetTesting2;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.net.email.EmailAddress;
 
 import java.time.LocalDateTime;
@@ -68,7 +69,27 @@ public final class SpreadsheetMetadataNonEmptyMapEntrySetTest implements SetTest
         map.put(this.property1(), this.value1());
         map.put(this.property2(), this.value2());
 
+        System.out.println("@@@" + Sets.of(property1(), value1()));
+
         this.toStringAndCheck(this.createSet(), map.entrySet().toString());
+    }
+
+    @Test
+    public void testToStringCharacterValue() {
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
+        map.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.');
+        map.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
+
+        this.toStringAndCheck(SpreadsheetMetadataNonEmptyMapEntrySet.with(map), "[decimal-separator='.', modified-by=modified@example.com]");
+    }
+
+    @Test
+    public void testToStringStringValue() {
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
+        map.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD");
+        map.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
+
+        this.toStringAndCheck(SpreadsheetMetadataNonEmptyMapEntrySet.with(map), "[currency-symbol=\"AUD\", modified-by=modified@example.com]");
     }
 
     @Override
