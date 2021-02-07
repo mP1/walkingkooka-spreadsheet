@@ -311,6 +311,47 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
         this.jsonPropertyName = JsonPropertyName.with(name);
     }
 
+    /**
+     * Setting a {@link Character} property that is a duplicate value of another {@link Character} should result
+     * in the duplicate value being replaced with the value of the property being set.<br>
+     * <pre>
+     * BEFORE
+     * decimal=dot
+     * group=comma
+     * SET
+     * decimal=comma
+     * AFTER
+     * decimal=comma
+     * group=dot
+     * </pre>
+     * Because group held the new value, it actually gains the old value of decimal, aka values were swapped.
+     * Note that grouping and value separator may have the same value and not be considered duplicates.
+     */
+    final boolean swapIfDuplicateValue() {
+        return this.isCharacter();
+    }
+
+    /**
+     * A test to prevent {@link #GROUPING_SEPARATOR} and {@link #VALUE_SEPARATOR} are both Characters, they cannot be duplicates
+     * of each other.
+     */
+    boolean isDuplicateIfValuesEqual(final SpreadsheetMetadataPropertyName<?> possible) {
+        return this.isCharacter() && possible.isCharacter() &&
+                (
+                        (this.isGroupingSeparatorOrValueSeparator() && possible.isGroupingSeparatorOrValueSeparator()) ?
+                                false :
+                                true
+                );
+    }
+
+    private boolean isCharacter() {
+        return this instanceof SpreadsheetMetadataPropertyNameCharacter;
+    }
+
+    private boolean isGroupingSeparatorOrValueSeparator() {
+        return this instanceof SpreadsheetMetadataPropertyNameGroupingSymbol || this instanceof SpreadsheetMetadataPropertyNameValueSeparator;
+    }
+
     @Override
     public final String value() {
         return this.name;

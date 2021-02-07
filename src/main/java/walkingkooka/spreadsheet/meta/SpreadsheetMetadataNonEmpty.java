@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -110,21 +111,30 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     @Override
     <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName,
                                  final V value) {
+        final boolean swapIfDuplicateValue = propertyName.swapIfDuplicateValue();
+        int swapIndex = -1;
+        SpreadsheetMetadataPropertyName<?> swapPropertyName = null;
+        Object swapValue = null;
+
         final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> values = Lists.array();
 
         int mode = MODE_SET_APPENDED; // new property added.
 
+        int i = 0;
         for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.value.entries) {
             final SpreadsheetMetadataPropertyName<?> property = propertyAndValue.getKey();
+            final Object propertyValue = propertyAndValue.getValue();
 
             final int compare = property.compareTo(propertyName);
             if (0 == compare) {
-                if (propertyAndValue.getValue().equals(value)) {
+                if (propertyValue.equals(value)) {
                     mode = MODE_SET_UNMODIFIED; // no change
                     break;
                 } else {
                     values.add(Maps.entry(property, value));
                     mode = MODE_SET_REPLACED; // replaced
+
+                    swapValue = propertyValue; // needed if another property has $value it needs to be given $swapValue
                 }
             } else {
                 if (MODE_SET_APPENDED == mode && compare > 0) {
@@ -132,8 +142,22 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
                     mode = MODE_SET_INSERTED;
                 }
 
+                if (propertyName.isDuplicateIfValuesEqual(property) && propertyValue.equals(value)) {
+                    swapIndex = i;
+                    swapPropertyName = property;
+                }
                 values.add(propertyAndValue);
             }
+
+            i++;
+        }
+
+        if (-1 != swapIndex) {
+            // because the new property has no previous value the now duplicate cannot be swapped.
+            if (null == swapValue) {
+                throw new IllegalArgumentException("Duplicate value " + propertyName + "=" + CharSequences.quoteIfChars(value) + " and " + swapPropertyName);
+            }
+            values.set(swapIndex, Maps.entry(swapPropertyName, swapValue));
         }
 
         final SpreadsheetMetadata result;
