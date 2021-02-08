@@ -156,7 +156,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
         if (-1 != swapIndex) {
             // because the new property has no previous value the now duplicate cannot be swapped.
             if (null == swapValue) {
-                throw new IllegalArgumentException("Duplicate value " + propertyName + "=" + CharSequences.quoteIfChars(value) + " and " + swapPropertyName);
+                throw new IllegalArgumentException("Cannot set " + propertyName + "=" + CharSequences.quoteIfChars(value) + " duplicate of " + swapPropertyName);
             }
             values.set(swapIndex, Maps.entry(swapPropertyName, swapValue));
         }
