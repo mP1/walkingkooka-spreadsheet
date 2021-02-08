@@ -142,7 +142,8 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
                     mode = MODE_SET_INSERTED;
                 }
 
-                if (propertyName.isDuplicateIfValuesEqual(property) && propertyValue.equals(value)) {
+                if (swapIfDuplicateValue &&
+                        propertyName.isDuplicateIfValuesEqual(property) && propertyValue.equals(value)) {
                     swapIndex = i;
                     swapPropertyName = property;
                 }
