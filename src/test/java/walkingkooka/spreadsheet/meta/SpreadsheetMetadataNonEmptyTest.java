@@ -339,7 +339,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 () -> this.createSpreadsheetMetadata(decimalSeparator, dot).set(grouping, dot)
         );
 
-        assertEquals("Duplicate value grouping-separator='.' and decimal-separator", thrown.getMessage(), "thrown message");
+        assertEquals("Cannot set grouping-separator='.' duplicate of decimal-separator", thrown.getMessage(), "thrown message");
     }
 
     @Test
