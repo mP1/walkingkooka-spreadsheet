@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetCellStore} implementations.
@@ -29,6 +30,14 @@ public final class SpreadsheetCellStores implements PublicStaticHelper {
      */
     public static SpreadsheetCellStore fake() {
         return new FakeSpreadsheetCellStore();
+    }
+
+    /**
+     * {@see SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore}
+     */
+    public static SpreadsheetCellStore spreadsheetFormulaSpreadsheetMetadataAware(final SpreadsheetCellStore store,
+                                                                                  final SpreadsheetMetadata metadata) {
+        return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(store, metadata);
     }
 
     /**
