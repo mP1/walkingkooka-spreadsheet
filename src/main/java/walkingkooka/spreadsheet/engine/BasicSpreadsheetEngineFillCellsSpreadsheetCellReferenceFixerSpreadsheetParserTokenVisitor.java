@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.Cast;
 import walkingkooka.NeverError;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
@@ -63,7 +62,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
             throw new IllegalStateException("Expected only 1 child but got " + count + "=" + tokens);
         }
 
-        return Cast.to(tokens.get(0));
+        return tokens.get(0).cast(SpreadsheetParserToken.class);
     }
 
     /**
