@@ -43,7 +43,6 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceSt
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
@@ -374,9 +373,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 }
             }
 
-        } catch (final ParserException failed) {
-            // parsing failed set the error message
-            result = this.setError(formula, failed.getMessage());
+        } catch (final Exception failed) {
+            // parsing or token to expression failed set the error message
+            result = this.setError(result, failed.getMessage());
         }
 
         return result;
@@ -385,6 +384,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * This {@link SpreadsheetParserToken} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
      */
+    // VisibleForTesting
     final static Optional<SpreadsheetParserToken> EMPTY_TOKEN = Optional.of(
             SpreadsheetParserToken.text(
                     Lists.<ParserToken>of( // J2clTranspiler: Error:BasicSpreadsheetEngine.java:386: The method of(T...) of type Lists is not applicable as the formal varargs element type T is not accessible here
@@ -397,6 +397,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * This {@link Expression} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
      */
+    // VisibleForTesting
     final static Optional<Expression> EMPTY_EXPRESSION = Optional.of(Expression.valueOrFail(""));
 
     // EVAL .........................................................................................................
@@ -415,8 +416,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         final SpreadsheetEngineContext context) {
         SpreadsheetFormula result;
         try {
-            result = formula.setValue(Optional.of(context.evaluate(formula.expression()
-                    .orElseThrow(() -> new BasicSpreadsheetEngineException("Cell missing value and error and expression")))));
+            final Optional<Expression> expression = formula.expression();
+            if (expression.isPresent()) {
+                result = formula.setValue(
+                        Optional.ofNullable(
+                                context.evaluate(expression.get())
+                        )
+                );
+            } else {
+                result = formula;
+            }
+
         } catch (final ExpressionEvaluationException cause) {
             result = this.setError(formula, cause.getMessage());
         }
@@ -534,7 +544,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetCell formatAndApplyStyleValueAbsent(final SpreadsheetCell cell) {
         final Optional<SpreadsheetError> error = cell.formula().error();
 
-        return cell.setFormatted(Optional.of(cell.style().replace(TextNode.text(error.get().value()))));
+        return error.isPresent() ?
+                cell.setFormatted(
+                        Optional.of(
+                                cell.style()
+                                        .replace(
+                                                TextNode.text(error.get().value())
+                                        )
+                        )
+                ) :
+                cell;
     }
 
     // max..............................................................................................................
