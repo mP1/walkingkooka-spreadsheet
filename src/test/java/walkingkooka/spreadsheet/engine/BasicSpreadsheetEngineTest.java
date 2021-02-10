@@ -748,6 +748,52 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testSaveCellInvalidDate() {
+        this.saveCellWithErrorAndCheck(
+                "1999/99/31",
+                "Invalid value for MonthOfYear (valid values 1 - 12): 99"
+        );
+    }
+
+    @Test
+    public void testSaveCellInvalidDateTime() {
+        this.saveCellWithErrorAndCheck(
+                "1999/99/31 12:58",
+                "Invalid value for MonthOfYear (valid values 1 - 12): 99"
+        );
+    }
+
+    @Test
+    public void testSaveCellInvalidTime() {
+        this.saveCellWithErrorAndCheck(
+                "12:99",
+                "Invalid value for MinuteOfHour (valid values 0 - 59): 99"
+        );
+    }
+
+    private void saveCellWithErrorAndCheck(final String formula, final String errorMessage) {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                cellReferenceStore,
+                labelStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", formula);
+        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, errorMessage);
+        this.saveCellAndCheck(engine,
+                a1,
+                context,
+                a1Formatted);
+
+        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(cellReferenceStore, 0);
+    }
+
+    @Test
     public void testSaveCellWithoutReferences() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
@@ -5433,22 +5479,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetParserToken token =
                 text.isEmpty() ?
-                null :
-                SpreadsheetParsers.valueOrExpression(BasicSpreadsheetEngineTest.this.metadata().parser())
-                        .parse(TextCursors.charSequence(text),
-                                SpreadsheetParserContexts.basic(
-                                        this.dateTimeContext(),
-                                        this.decimalNumberContext(),
-                                        expressionNumberKind,
-                                        VALUE_SEPARATOR
-                                )
-                        ).orElseThrow(() -> new AssertionError("Failed to parseFormula " + CharSequences.quote(text)))
-                        .cast(SpreadsheetParserToken.class);
-        return null == token ?
-                formula.setToken(BasicSpreadsheetEngine.EMPTY_TOKEN)
-                    .setExpression(BasicSpreadsheetEngine.EMPTY_EXPRESSION):
-                formula.setToken(Optional.of(token))
-                .setExpression(
+                        null :
+                        SpreadsheetParsers.valueOrExpression(BasicSpreadsheetEngineTest.this.metadata().parser())
+                                .parse(TextCursors.charSequence(text),
+                                        SpreadsheetParserContexts.basic(
+                                                this.dateTimeContext(),
+                                                this.decimalNumberContext(),
+                                                expressionNumberKind,
+                                                VALUE_SEPARATOR
+                                        )
+                                ).orElseThrow(() -> new AssertionError("Failed to parseFormula " + CharSequences.quote(text)))
+                                .cast(SpreadsheetParserToken.class);
+        SpreadsheetFormula parsedFormula = formula;
+        if (null == token) {
+            parsedFormula = formula.setToken(BasicSpreadsheetEngine.EMPTY_TOKEN)
+                    .setExpression(BasicSpreadsheetEngine.EMPTY_EXPRESSION);
+        } else {
+            parsedFormula = parsedFormula.setToken(Optional.of(token));
+
+            try {
+                parsedFormula = parsedFormula.setExpression(
                         token.toExpression(
                                 new FakeExpressionEvaluationContext() {
 
@@ -5469,6 +5519,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 }
                         )
                 );
+            } catch (final Exception fail) {
+                parsedFormula = parsedFormula.setError(
+                        Optional.of(SpreadsheetError.with(fail.getMessage()))
+                );
+            }
+        }
+
+        return parsedFormula;
     }
 
     private void loadCellStoreAndCheck(final SpreadsheetCellStore store,
