@@ -124,7 +124,7 @@ public final class SpreadsheetFormula implements HasText,
      * The plain text form of the formula. This may or may not be valid and thus may or may not be a {@link #expression}
      * which may be executed.
      */
-    private String text;
+    private final String text;
 
     private static void checkText(final String text) {
         Objects.requireNonNull(text, "text");
@@ -162,7 +162,7 @@ public final class SpreadsheetFormula implements HasText,
      * The token parsed from the text form of this formula. When loading a stored/persisted formula this should be
      * used to reconstruct the text form.
      */
-    private Optional<SpreadsheetParserToken> token;
+    private final Optional<SpreadsheetParserToken> token;
 
     private static void checkToken(final Optional<SpreadsheetParserToken> token) {
         Objects.requireNonNull(token, "token");
@@ -191,7 +191,7 @@ public final class SpreadsheetFormula implements HasText,
     /**
      * The expression parsed from the text form of this formula. This can then be executed to produce a {@link #value}
      */
-    private Optional<Expression> expression;
+    private final Optional<Expression> expression;
 
     private static void checkExpression(final Optional<Expression> expression) {
         Objects.requireNonNull(expression, "expression");
@@ -220,7 +220,7 @@ public final class SpreadsheetFormula implements HasText,
     /**
      * The value parsed from the text form of this formula.
      */
-    private Optional<Object> value;
+    private final Optional<Object> value;
 
     private static void checkValue(final Optional<Object> value) {
         Objects.requireNonNull(value, "value");
@@ -249,7 +249,7 @@ public final class SpreadsheetFormula implements HasText,
     /**
      * The error parsed from the text form of this formula.
      */
-    private Optional<SpreadsheetError> error;
+    private final Optional<SpreadsheetError> error;
 
     private static void checkError(final Optional<SpreadsheetError> error) {
         Objects.requireNonNull(error, "error");
