@@ -519,6 +519,63 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     }
 
     @Test
+    public void testSaveFormulaWithTokenTextUpdateRequiredPercet() {
+        final String text = "=150" + PERCENT;
+        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+                .setToken(
+                        Optional.of(
+                                this.expressionNumberWithPercentParserToken(PERCENT)
+                        )
+                );
+
+        final SpreadsheetCell requires = this.cell(formula);
+
+        final SpreadsheetCellStore store = SpreadsheetCellStores.treeMap();
+        store.save(requires);
+
+        final char percent2 = ';';
+        final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                store,
+                this.metadata()
+                        .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, percent2)
+        );
+
+        final String text2 = text.replace(PERCENT, percent2);
+        assertEquals(
+                requires.setFormula(
+                        formula.setText(text2)
+                                .setToken(
+                                        Optional.of(
+                                                this.expressionNumberWithPercentParserToken(percent2)
+                                        )
+                                ).setExpression(
+                                Optional.of(
+                                        number(1.5)
+                                )
+                        )
+                ),
+                loader.loadOrFail(requires.reference()),
+                () -> "didnt rewrite formula"
+        );
+    }
+
+    private SpreadsheetParserToken expressionNumberWithPercentParserToken(final char percentSymbol) {
+        return SpreadsheetParserToken.expression(
+                Lists.of(
+                        SpreadsheetParserToken.equalsSymbol("=", "="),
+                        SpreadsheetParserToken.number(
+                                Lists.of(
+                                        SpreadsheetParserToken.digits("150", "150"),
+                                        SpreadsheetParserToken.percentSymbol("" + percentSymbol, "" + percentSymbol)
+                                ),
+                                "150" + percentSymbol
+                        )
+                ),
+                "=150" + percentSymbol
+        );
+    }
+
+    @Test
     public void testSaveFormulaWithTokenAndExpressionTextUpdateRequired() {
         final String text = "3" + DECIMAL_SEPARATOR + "5";
         final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
