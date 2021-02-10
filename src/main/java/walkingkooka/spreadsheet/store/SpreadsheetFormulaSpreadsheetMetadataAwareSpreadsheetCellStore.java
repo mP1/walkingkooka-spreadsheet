@@ -94,25 +94,24 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
             // any value or error will be lost if token/expression is updated
             SpreadsheetParserToken token = formula.token()
                     .orElse(null);
-            if (null == token) {
-                token = this.parseFormulaTextExpression(text);
-                formula = formula
-                        .setToken(Optional.of(token));
-            }
-            if (null != token) {
-                formula = formula.setText(token.text());
-
-                try {
+            try {
+                if (null == token) {
+                    token = this.parseFormulaTextExpression(text);
+                    formula = formula
+                            .setToken(Optional.of(token));
+                }
+                if (null != token) {
+                    formula = formula.setText(token.text());
                     formula = formula.setExpression(
                             token.toExpression(this.expressionEvaluationContext())
                     ); // also clears value/error
-                } catch (final Exception failed) {
-                    formula = formula.setError(
-                            Optional.of(
-                                    SpreadsheetError.with(failed.getMessage())
-                            )
-                    );
                 }
+            } catch (final Exception failed) {
+                formula = formula.setError(
+                        Optional.of(
+                                SpreadsheetError.with(failed.getMessage())
+                        )
+                );
             }
             result = cell.setFormula(formula);
         }

@@ -131,6 +131,32 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
     @Test
     public void testSaveFormulaWithInvalidDate() {
+        final String text = "99:12:00";
+
+        final SpreadsheetFormula formula = SpreadsheetFormula.with(text);
+
+        final SpreadsheetCell requires = SpreadsheetCell.with(
+                SpreadsheetCellReference.parseCellReference("B2"),
+                formula
+        );
+
+        final SpreadsheetCell with = requires.setFormula(
+                formula.setError(
+                        Optional.of(
+                                SpreadsheetError.with("Unrecognized character '9' at (1,1) \"99:12:00\" expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE")
+                        )
+                )
+        );
+
+        this.saveAndCheck(
+                requires,
+                with,
+                with
+        );
+    }
+
+    @Test
+    public void testSaveFormulaWithInvalidDate2() {
         final String text = "99/12/00";
 
         final SpreadsheetFormula formula = SpreadsheetFormula.with(text);
