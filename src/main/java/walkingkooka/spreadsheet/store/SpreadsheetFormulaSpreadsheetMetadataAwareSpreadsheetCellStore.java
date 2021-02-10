@@ -68,6 +68,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         return this.store.load(cellReference).map(this::fixFormulaText);
     }
 
+    // save begin.........................................................................................................s
+
     @Override
     public SpreadsheetCell save(final SpreadsheetCell cell) {
         Objects.requireNonNull(cell, "cell");
@@ -78,6 +80,51 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                 )
         );
     }
+
+    /**
+     * If the {@link SpreadsheetFormula#token()} or {@link SpreadsheetFormula#expression()} are missing, parsing the text
+     * and rebuilding the expression is performed. This has the side effect that the value/error will also be cleared.
+     */
+    private SpreadsheetCell ensureFormulaHasToken(final SpreadsheetCell cell) {
+        SpreadsheetFormula formula = cell.formula();
+        final String text = formula.text();
+
+        if (!text.isEmpty()) {
+            // any value or error will be lost if token/expression is updated
+            SpreadsheetParserToken token = formula.token()
+                    .orElse(null);
+            if (null == token) {
+                token = this.parseFormulaTextExpression(text);
+                formula = formula
+                        .setToken(Optional.of(token));
+            }
+            if (null != token) {
+                formula = formula
+                        .setText(token.text())
+                        .setExpression(
+                                token.toExpression(this.expressionEvaluationContext())
+                        ); // also clears value/error
+            }
+        }
+
+        return cell.setFormula(formula);
+    }
+
+
+    /**
+     * Parses the formula text into an {@link SpreadsheetParserToken}.
+     */
+    private SpreadsheetParserToken parseFormulaTextExpression(final String text) {
+        final SpreadsheetMetadata metadata = this.metadata;
+
+        return SpreadsheetParsers.expression()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(TextCursors.charSequence(text), metadata.parserContext())
+                .orElse(null)
+                .cast(SpreadsheetParserToken.class);
+    }
+
+    // save end.........................................................................................................
 
     @Override
     public Runnable addSaveWatcher(final Consumer<SpreadsheetCell> remover) {
@@ -147,49 +194,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     // helpers that do the formula tokenization/text thing..............................................................
-
-    /**
-     * If the {@link SpreadsheetFormula#token()} or {@link SpreadsheetFormula#expression()} are missing, parsing the text
-     * and rebuilding the expression is performed. This has the side effect that the value/error will also be cleared.
-     */
-    private SpreadsheetCell ensureFormulaHasToken(final SpreadsheetCell cell) {
-        SpreadsheetFormula formula = cell.formula();
-        final String text = formula.text();
-
-        if (!text.isEmpty()) {
-            // any value or error will be lost if token/expression is updated
-            SpreadsheetParserToken token = formula.token()
-                    .orElse(null);
-            if (null == token) {
-                token = this.parseFormulaTextExpression(text);
-                formula = formula
-                        .setToken(Optional.of(token));
-            }
-            if (null != token) {
-                formula = formula
-                        .setText(token.text())
-                        .setExpression(
-                                token.toExpression(SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext.with(this.metadata))
-                        ); // also clears value/error
-            }
-        }
-
-        return cell.setFormula(formula);
-    }
-
-
-    /**
-     * Parses the formula text into an {@link SpreadsheetParserToken}.
-     */
-    private SpreadsheetParserToken parseFormulaTextExpression(final String text) {
-        final SpreadsheetMetadata metadata = this.metadata;
-
-        return SpreadsheetParsers.expression()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), metadata.parserContext())
-                .orElse(null)
-                .cast(SpreadsheetParserToken.class);
-    }
 
     private List<SpreadsheetCell> fixFormulaTextList(final List<SpreadsheetCell> cells) {
         return cells.stream()
