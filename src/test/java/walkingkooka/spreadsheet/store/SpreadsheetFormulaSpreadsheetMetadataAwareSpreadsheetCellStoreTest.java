@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -119,6 +120,43 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         )
                 )
                         .setExpression(expression)
+        );
+
+        this.saveAndCheck(
+                requires,
+                with,
+                with
+        );
+    }
+
+    @Test
+    public void testSaveFormulaWithInvalidDate() {
+        final String text = "99/12/00";
+
+        final SpreadsheetFormula formula = SpreadsheetFormula.with(text);
+
+        final SpreadsheetCell requires = SpreadsheetCell.with(
+                SpreadsheetCellReference.parseCellReference("B2"),
+                formula
+        );
+
+        final SpreadsheetCell with = requires.setFormula(
+                formula.setToken(
+                        Optional.of(
+                                SpreadsheetParserToken.date(
+                                        Lists.of(
+                                                SpreadsheetParserToken.dayNumber(99, "99"),
+                                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                                SpreadsheetParserToken.monthNumber(12, "12"),
+                                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                                SpreadsheetParserToken.year(0, "00")
+                                        ),
+                                        text
+                                )
+                        )
+                ).setError(
+                        Optional.of(SpreadsheetError.with("Invalid value for DayOfMonth (valid values 1 - 28/31): 99"))
+                )
         );
 
         this.saveAndCheck(
@@ -484,10 +522,67 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 requires.setFormula(
                         formula.setText(text.replace(DECIMAL_SEPARATOR, decimalSeparator2))
                                 .setToken(
+                                        Optional.of(
+                                                this.numberParserToken(decimalSeparator2)
+                                        )
+                                ).setExpression(
                                 Optional.of(
-                                        this.numberParserToken(decimalSeparator2)
+                                        number(3.5)
                                 )
-                        ).setExpression(
+                        )
+                ),
+                loader.loadOrFail(requires.reference()),
+                () -> "didnt rewrite formula"
+        );
+    }
+
+    @Test
+    public void testSaveFormulaWithTokenAndExpressionTextUpdateRequired2() {
+        final String text = "=3" + DECIMAL_SEPARATOR + "5";
+        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+                .setToken(
+                        Optional.of(
+                                SpreadsheetParserToken.expression(
+                                        Lists.of(
+                                                SpreadsheetParserToken.equalsSymbol("=", "="),
+                                                this.numberParserToken(DECIMAL_SEPARATOR)
+                                        ),
+                                        text
+                                )
+                        )
+                ).setExpression(
+                        Optional.of(
+                                number(3.5)
+                        )
+                );
+
+        final SpreadsheetCell requires = this.cell(formula);
+
+        final SpreadsheetCellStore store = SpreadsheetCellStores.treeMap();
+        store.save(requires);
+
+        final char decimalSeparator2 = ';';
+        final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                store,
+                this.metadata()
+                        .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, decimalSeparator2)
+        );
+
+        final String text2 = text.replace(DECIMAL_SEPARATOR, decimalSeparator2);
+        assertEquals(
+                requires.setFormula(
+                        formula.setText(text2)
+                                .setToken(
+                                        Optional.of(
+                                                SpreadsheetParserToken.expression(
+                                                        Lists.of(
+                                                                SpreadsheetParserToken.equalsSymbol("=", "="),
+                                                                this.numberParserToken(decimalSeparator2)
+                                                        ),
+                                                        text2
+                                                )
+                                        )
+                                ).setExpression(
                                 Optional.of(
                                         number(3.5)
                                 )
@@ -606,7 +701,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, GROUPING_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPattern.parseNumberParsePatterns("#.#"))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPattern.parseNumberParsePatterns("#;#.#"))
                 .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENT)
                 .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, MathContext.DECIMAL32.getPrecision())

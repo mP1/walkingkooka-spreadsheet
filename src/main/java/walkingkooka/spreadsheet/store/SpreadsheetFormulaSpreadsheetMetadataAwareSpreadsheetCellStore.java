@@ -22,10 +22,10 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -89,6 +89,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         SpreadsheetFormula formula = cell.formula();
         final String text = formula.text();
 
+        SpreadsheetCell result = cell;
         if (!text.isEmpty()) {
             // any value or error will be lost if token/expression is updated
             SpreadsheetParserToken token = formula.token()
@@ -99,17 +100,25 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                         .setToken(Optional.of(token));
             }
             if (null != token) {
-                formula = formula
-                        .setText(token.text())
-                        .setExpression(
-                                token.toExpression(this.expressionEvaluationContext())
-                        ); // also clears value/error
+                formula = formula.setText(token.text());
+
+                try {
+                    formula = formula.setExpression(
+                            token.toExpression(this.expressionEvaluationContext())
+                    ); // also clears value/error
+                } catch (final Exception failed) {
+                    formula = formula.setError(
+                            Optional.of(
+                                    SpreadsheetError.with(failed.getMessage())
+                            )
+                    );
+                }
             }
+            result = cell.setFormula(formula);
         }
 
-        return cell.setFormula(formula);
+        return result;
     }
-
 
     /**
      * Parses the formula text into an {@link SpreadsheetParserToken}.
@@ -117,7 +126,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     private SpreadsheetParserToken parseFormulaTextExpression(final String text) {
         final SpreadsheetMetadata metadata = this.metadata;
 
-        return SpreadsheetParsers.expression()
+        return this.metadata.parser()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), metadata.parserContext())
                 .orElse(null)
