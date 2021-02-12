@@ -25,6 +25,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -42,7 +43,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
         HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
         JsonNodeMarshallingTesting<SpreadsheetFormula>,
-        ToStringTesting<SpreadsheetFormula> {
+        ToStringTesting<SpreadsheetFormula>,
+        TreePrintableTesting {
 
     private final static String TEXT = "a+2";
     private final static String EXPRESSION = "1+2";
@@ -367,6 +369,82 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.checkExpressionAbsent(formula);
         this.checkValueAbsent(formula);
         this.checkErrorAbsent(formula);
+    }
+
+    // TreePrintable.....................................................................................................
+
+    @Test
+    public void testTreePrintText() {
+        this.treePrintAndCheck(
+                SpreadsheetFormula.with("1+2"),
+                "Formula\n" +
+                        "  text: \"1+2\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintTextToken() {
+        this.treePrintAndCheck(
+                SpreadsheetFormula.with("1+2")
+                        .setToken(this.token()),
+                "Formula\n" +
+                        "  text: \"1+2\"\n" +
+                        "  token:\n" +
+                        "    SpreadsheetText\n" +
+                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintTextTokenExpression() {
+        this.treePrintAndCheck(
+                SpreadsheetFormula.with("1+2")
+                        .setToken(this.token())
+                        .setExpression(this.expression()),
+                "Formula\n" +
+                        "  text: \"1+2\"\n" +
+                        "  token:\n" +
+                        "    SpreadsheetText\n" +
+                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
+                        "  expression:\n" +
+                        "    StringExpression \"1+2\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintTextTokenExpressionValue() {
+        this.treePrintAndCheck(
+                SpreadsheetFormula.with("1+2")
+                        .setToken(this.token())
+                        .setExpression(this.expression())
+                        .setValue(this.value()),
+                "Formula\n" +
+                        "  text: \"1+2\"\n" +
+                        "  token:\n" +
+                        "    SpreadsheetText\n" +
+                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
+                        "  expression:\n" +
+                        "    StringExpression \"1+2\"\n" +
+                        "  value: 3.0 (java.lang.Double)\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintTextTokenExpressionError() {
+        this.treePrintAndCheck(
+                SpreadsheetFormula.with("1+2")
+                        .setToken(this.token())
+                        .setExpression(this.expression())
+                        .setError(this.error()),
+                "Formula\n" +
+                        "  text: \"1+2\"\n" +
+                        "  token:\n" +
+                        "    SpreadsheetText\n" +
+                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
+                        "  expression:\n" +
+                        "    StringExpression \"1+2\"\n" +
+                        "  error: \"Message #1\"\n"
+        );
     }
 
     // equals.......................................................................................................
