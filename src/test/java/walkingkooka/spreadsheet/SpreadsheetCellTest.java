@@ -639,6 +639,109 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
     }
 
+    @Test
+    public void testTreePrintableFormulaTokenExpressionValueStyle() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetFormula.with(FORMULA_TEXT)
+                                .setToken(token())
+                                .setExpression(expression())
+                                .setValue(Optional.of(3))
+                ).setStyle(this.boldAndItalics()),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text: \"=1+2\"\n" +
+                        "    token:\n" +
+                        "      SpreadsheetExpression\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetAddition\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "    expression:\n" +
+                        "      AddExpression\n" +
+                        "        ExpressionNumberExpression 1\n" +
+                        "        ExpressionNumberExpression 2\n" +
+                        "    value: 3 (java.lang.Integer)\n" +
+                        "  TextStyle\n" +
+                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableFormulaTokenExpressionValueStyleFormat() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetFormula.with(FORMULA_TEXT)
+                                .setToken(token())
+                                .setExpression(expression())
+                                .setValue(Optional.of(3))
+                ).setStyle(this.boldAndItalics())
+                        .setFormat(format()),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text: \"=1+2\"\n" +
+                        "    token:\n" +
+                        "      SpreadsheetExpression\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetAddition\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "    expression:\n" +
+                        "      AddExpression\n" +
+                        "        ExpressionNumberExpression 1\n" +
+                        "        ExpressionNumberExpression 2\n" +
+                        "    value: 3 (java.lang.Integer)\n" +
+                        "  TextStyle\n" +
+                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
+                        "  format: \"pattern\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableFormulaTokenExpressionValueStyleFormatFormatted() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetFormula.with(FORMULA_TEXT)
+                                .setToken(token())
+                                .setExpression(expression())
+                                .setValue(Optional.of(3))
+                ).setStyle(this.boldAndItalics())
+                        .setFormat(format())
+                        .setFormatted(formatted()),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text: \"=1+2\"\n" +
+                        "    token:\n" +
+                        "      SpreadsheetExpression\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetAddition\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "    expression:\n" +
+                        "      AddExpression\n" +
+                        "        ExpressionNumberExpression 1\n" +
+                        "        ExpressionNumberExpression 2\n" +
+                        "    value: 3 (java.lang.Integer)\n" +
+                        "  TextStyle\n" +
+                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
+                        "  format: \"pattern\"\n" +
+                        "  formatted:\n" +
+                        "    Text \"formatted-text\"\n"
+        );
+    }
+
     private final static String FORMULA_TEXT = "=1+2";
 
     private Optional<SpreadsheetParserToken> token() {
