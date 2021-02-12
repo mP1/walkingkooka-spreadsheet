@@ -35,6 +35,120 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         assertNotEquals(this.window(), this.differentWindow(), "window v differentWindow must NOT be equal");
     }
 
+    // TreePrintable.....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.cells(),
+                        SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
+                        this.window()
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  window:\n" +
+                        "    A1:E5\n" +
+                        "    F6:Z99\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeRowHeights() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.cells(),
+                        SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                        this.maxRowHeights(),
+                        this.window()
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  rowHeights:\n" +
+                        "    1: 75.0\n" +
+                        "  window:\n" +
+                        "    A1:E5\n" +
+                        "    F6:Z99\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeColumnWidths() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.cells(),
+                        this.maxColumnWidths(),
+                        SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
+                        this.window()
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  columnWidths:\n" +
+                        "    A: 50.0\n" +
+                        "  window:\n" +
+                        "    A1:E5\n" +
+                        "    F6:Z99\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeColumnWidthsAndRowHeights() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.cells(),
+                        this.maxColumnWidths(),
+                        this.maxRowHeights(),
+                        this.window()
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  columnWidths:\n" +
+                        "    A: 50.0\n" +
+                        "  rowHeights:\n" +
+                        "    1: 75.0\n" +
+                        "  window:\n" +
+                        "    A1:E5\n" +
+                        "    F6:Z99\n"
+        );
+    }
+
     // JsonNodeMarshallingTesting...........................................................................................
 
     private final static JsonString WINDOW_PIXEL_RECTANGLE_JSON_STRING = JsonNode.string("B9:300:50");

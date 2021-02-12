@@ -45,6 +45,106 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
         this.checkCells(delta);
     }
 
+    // TreePrintable.....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.cells(),
+                        SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_MAX_ROW_HEIGHTS
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeRowHeights() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.cells(),
+                        SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                        this.maxRowHeights()
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  rowHeights:\n" +
+                        "    1: 75.0\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeColumnWidths() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.cells(),
+                        this.maxColumnWidths(),
+                        SpreadsheetDelta.NO_MAX_ROW_HEIGHTS
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  columnWidths:\n" +
+                        "    A: 50.0\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeColumnWidthsAndRowHeights() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.cells(),
+                        this.maxColumnWidths(),
+                        this.maxRowHeights()
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  columnWidths:\n" +
+                        "    A: 50.0\n" +
+                        "  rowHeights:\n" +
+                        "    1: 75.0\n"
+        );
+    }
+
+    // equals...........................................................................................................
+
     @Test
     public void testEqualsSpreadsheetDeltaWindowed() {
         this.checkNotEquals(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
