@@ -241,7 +241,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
 
             final Optional<SpreadsheetCellFormat> format = this.format();
             if (format.isPresent()) {
-                printer.println("format:" + CharSequences.quoteAndEscape(format.get().pattern()));
+                printer.println("format: " + CharSequences.quoteAndEscape(format.get().pattern()));
             }
 
             final Optional<TextNode> formatted = this.formatted();
