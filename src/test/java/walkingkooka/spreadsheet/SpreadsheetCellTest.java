@@ -19,14 +19,19 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -39,6 +44,7 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,7 +56,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         ComparableTesting2<SpreadsheetCell>,
         JsonNodeMarshallingTesting<SpreadsheetCell>,
         HateosResourceTesting<SpreadsheetCell>,
-        ToStringTesting<SpreadsheetCell> {
+        ToStringTesting<SpreadsheetCell>,
+        TreePrintableTesting {
 
 
     private final static int COLUMN = 1;
@@ -504,6 +511,172 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     private SpreadsheetCell createCell(final String reference) {
         return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference(reference), formula("1+2"));
+    }
+
+    // treePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintableFormula() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetFormula.with("1+2")
+                ),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text: \"1+2\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableFormulaToken() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetFormula.with(FORMULA_TEXT)
+                                .setToken(token())
+
+                ),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text: \"=1+2\"\n" +
+                        "    token:\n" +
+                        "      SpreadsheetExpression\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetAddition\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableFormulaTokenExpression() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetFormula.with(FORMULA_TEXT)
+                                .setToken(token())
+                                .setExpression(expression())
+
+                ),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text: \"=1+2\"\n" +
+                        "    token:\n" +
+                        "      SpreadsheetExpression\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetAddition\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "    expression:\n" +
+                        "      AddExpression\n" +
+                        "        ExpressionNumberExpression 1\n" +
+                        "        ExpressionNumberExpression 2\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableFormulaTokenExpressionValue() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetFormula.with(FORMULA_TEXT)
+                                .setToken(token())
+                                .setExpression(expression())
+                                .setValue(Optional.of(3))
+
+                ),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text: \"=1+2\"\n" +
+                        "    token:\n" +
+                        "      SpreadsheetExpression\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetAddition\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "    expression:\n" +
+                        "      AddExpression\n" +
+                        "        ExpressionNumberExpression 1\n" +
+                        "        ExpressionNumberExpression 2\n" +
+                        "    value: 3 (java.lang.Integer)\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableFormulaTokenExpressionError() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetFormula.with(FORMULA_TEXT)
+                                .setToken(token())
+                                .setExpression(expression())
+                                .setError(Optional.of(SpreadsheetError.with("error message 1")))
+
+                ),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text: \"=1+2\"\n" +
+                        "    token:\n" +
+                        "      SpreadsheetExpression\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetAddition\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "    expression:\n" +
+                        "      AddExpression\n" +
+                        "        ExpressionNumberExpression 1\n" +
+                        "        ExpressionNumberExpression 2\n" +
+                        "    error: \"error message 1\"\n"
+        );
+    }
+
+    private final static String FORMULA_TEXT = "=1+2";
+
+    private Optional<SpreadsheetParserToken> token() {
+        return Optional.of(
+                SpreadsheetParserToken.expression(
+                        Lists.of(
+                                SpreadsheetParserToken.equalsSymbol("=", "="),
+                                SpreadsheetParserToken.addition(
+                                        Lists.of(
+                                                SpreadsheetParserToken.number(
+                                                        List.of(
+                                                                SpreadsheetParserToken.digits("1", "1")
+                                                        ),
+                                                        "1"
+                                                ),
+                                                SpreadsheetParserToken.number(
+                                                        List.of(
+                                                                SpreadsheetParserToken.digits("2", "2")
+                                                        ),
+                                                        "2"
+                                                )
+                                        ),
+                                        FORMULA_TEXT.substring(1)
+                                )
+                        ),
+                        FORMULA_TEXT
+                )
+        );
+    }
+
+    private Optional<Expression> expression() {
+        final ExpressionNumberKind kind = ExpressionNumberKind.DOUBLE;
+        return Optional.of(
+                Expression.add(
+                        Expression.expressionNumber(kind.create(1)),
+                        Expression.expressionNumber(kind.create(2))
+                )
+        );
     }
 
     // toString.........................................................................................................

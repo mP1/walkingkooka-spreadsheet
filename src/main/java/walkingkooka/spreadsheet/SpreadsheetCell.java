@@ -23,6 +23,9 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -41,6 +44,7 @@ import java.util.Optional;
  */
 public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         HateosResource<SpreadsheetCellReference>,
+        TreePrintable,
         UsesToStringBuilder {
 
     /**
@@ -223,6 +227,34 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     @Override
     public int compareTo(final SpreadsheetCell other) {
         return this.reference().compareTo(other.reference());
+    }
+
+    // TreePrintable.....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println("Cell " + this.reference());
+        printer.indent();
+        {
+            this.formula.printTree(printer);
+            this.style.printTree(printer);
+
+            final Optional<SpreadsheetCellFormat> format = this.format();
+            if (format.isPresent()) {
+                printer.println("format:" + CharSequences.quoteAndEscape(format.get().pattern()));
+            }
+
+            final Optional<TextNode> formatted = this.formatted();
+            if (formatted.isPresent()) {
+                printer.println("formatted:");
+                printer.indent();
+                {
+                    formatted.get().printTree(printer);
+                }
+                printer.outdent();
+            }
+        }
+        printer.outdent();
     }
 
     // JsonNodeContext...................................................................................................
