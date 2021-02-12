@@ -23,7 +23,10 @@ import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -41,6 +44,7 @@ import java.util.Optional;
  * A spreadsheet formula, including its compiled {@link Expression} and possibly its {@link Object value} or {@link SpreadsheetError}.
  */
 public final class SpreadsheetFormula implements HasText,
+        TreePrintable,
         UsesToStringBuilder {
 
     /**
@@ -281,6 +285,55 @@ public final class SpreadsheetFormula implements HasText,
                 value,
                 error
         );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println("Formula");
+        printer.indent();
+
+        printer.println("text: " + CharSequences.quoteAndEscape(this.text()));
+
+        this.printTree0(
+                "token",
+                this.token(),
+                printer
+        );
+
+        this.printTree0(
+                "expression",
+                this.expression(),
+                printer
+        );
+
+
+        final Optional<Object> possibleValue = this.value();
+        if (possibleValue.isPresent()) {
+            final Object value = possibleValue.get();
+            printer.println("value: " + CharSequences.quoteIfChars(value) + " (" + value.getClass().getName() + ")");
+        }
+
+        final Optional<SpreadsheetError> error = this.error();
+        if (error.isPresent()) {
+            printer.println("error: " + CharSequences.quoteAndEscape(error.get().value()));
+        }
+
+        printer.outdent();
+    }
+
+    private void printTree0(final String label,
+                            final Optional<? extends TreePrintable> printable,
+                            final IndentingPrinter printer) {
+        if (printable.isPresent()) {
+            printer.println(label + ":");
+            printer.indent();
+            {
+                printable.get().printTree(printer);
+            }
+            printer.outdent();
+        }
     }
 
     // JsonNodeContext..................................................................................................
