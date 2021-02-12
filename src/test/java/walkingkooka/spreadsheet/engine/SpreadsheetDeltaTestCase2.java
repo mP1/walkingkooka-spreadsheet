@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -50,7 +51,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> extends SpreadsheetDeltaTestCase<D>
         implements HashCodeEqualsDefinedTesting2<D>,
         JsonNodeMarshallingTesting<D>,
-        ToStringTesting<D> {
+        ToStringTesting<D>,
+        TreePrintableTesting {
 
     SpreadsheetDeltaTestCase2() {
         super();

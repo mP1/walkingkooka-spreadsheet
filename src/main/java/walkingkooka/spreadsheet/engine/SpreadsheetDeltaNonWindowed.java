@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.List;
 import java.util.Map;
@@ -78,6 +79,15 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells) {
         return Sets.immutable(cells); // already empty
     }
+
+    // TreePrintable.....................................................................................................
+
+    @Override
+    void printWindow(final IndentingPrinter printer) {
+        // nop
+    }
+
+    // Object...........................................................................................................
 
     @Override
     int hashWindow() {

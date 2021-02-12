@@ -31,6 +31,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -49,7 +51,7 @@ import java.util.stream.Collectors;
 /**
  * Captures changes following an operation. A window when non empty is applied to any given cells as a filter.
  */
-public abstract class SpreadsheetDelta {
+public abstract class SpreadsheetDelta implements TreePrintable {
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
     public final static List<SpreadsheetRectangle<?>> NO_WINDOW = Lists.empty();
@@ -217,6 +219,57 @@ public abstract class SpreadsheetDelta {
                 })
                 .collect(Collectors.toCollection(Sets::sorted));
     }
+
+    // TreePrintable.....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println("SpreadsheetDelta");
+        printer.indent();
+        {
+
+            printer.println("cells:");
+            printer.indent();
+            {
+                for (final SpreadsheetCell cell : this.cells()) {
+                    cell.printTree(printer);
+                }
+            }
+            printer.outdent();
+
+            this.printTreeMap(
+                    "columnWidths",
+                    this.maxColumnWidths(),
+                    printer
+            );
+
+            this.printTreeMap(
+                    "rowHeights",
+                    this.maxRowHeights(),
+                    printer
+            );
+
+            this.printWindow(printer);
+        }
+        printer.outdent();
+    }
+
+    private void printTreeMap(final String label,
+                              final Map<? extends SpreadsheetColumnOrRowReference<?>, Double> references,
+                              final IndentingPrinter printer) {
+        if (!references.isEmpty()) {
+            printer.println(label + ":");
+            printer.indent();
+            {
+                for (final Map.Entry<? extends SpreadsheetColumnOrRowReference<?>, Double> referenceAndWidth : references.entrySet()) {
+                    printer.println(referenceAndWidth.getKey() + ": " + referenceAndWidth.getValue());
+                }
+            }
+            printer.outdent();
+        }
+    }
+
+    abstract void printWindow(final IndentingPrinter printer);
 
     // JsonNodeContext..................................................................................................
 

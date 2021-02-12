@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.List;
 import java.util.Map;
@@ -78,6 +79,21 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     @Override
     Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells) {
         return maybeFilterCells(cells, this.window);
+    }
+
+    // TreePrintable.....................................................................................................
+
+    @Override
+    void printWindow(final IndentingPrinter printer) {
+        printer.println("window:");
+        printer.indent();
+        {
+            for (final SpreadsheetRectangle<?> rectangle : this.window()) {
+                printer.println(rectangle.toString());
+            }
+        }
+
+        printer.outdent();
     }
 
     @Override
