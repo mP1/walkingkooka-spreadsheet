@@ -91,6 +91,11 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
+    public boolean isPure(final FunctionExpressionName name) {
+        return this.context.isPure(name);
+    }
+
+    @Override
     public Optional<Expression> reference(final ExpressionReference reference) {
         return this.cellReference().equals(reference) ?
                 this.value :
