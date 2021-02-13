@@ -53,6 +53,11 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
     }
 
     @Override
+    public boolean isPure(final FunctionExpressionName name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<Expression> reference(final ExpressionReference expressionReference) {
         throw new UnsupportedOperationException();
     }

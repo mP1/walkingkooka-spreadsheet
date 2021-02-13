@@ -51,6 +51,11 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     @Override
+    public boolean isPure(final FunctionExpressionName name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<Expression> reference(ExpressionReference expressionReference) {
         throw new UnsupportedOperationException();
     }

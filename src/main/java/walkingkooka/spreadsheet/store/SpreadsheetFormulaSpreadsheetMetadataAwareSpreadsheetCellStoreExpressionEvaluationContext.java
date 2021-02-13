@@ -54,6 +54,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     @Override
+    public boolean isPure(final FunctionExpressionName name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<Expression> reference(final ExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
