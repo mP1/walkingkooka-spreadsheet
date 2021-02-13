@@ -103,6 +103,12 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
             }
 
             @Override
+            public boolean isPure(final FunctionExpressionName name) {
+                Objects.requireNonNull(name, "name");
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
             public MathContext mathContext() {
                 return MathContext.DECIMAL32;
             }
