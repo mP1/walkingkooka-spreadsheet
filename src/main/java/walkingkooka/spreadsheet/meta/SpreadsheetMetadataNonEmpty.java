@@ -187,7 +187,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
         final SpreadsheetMetadata defaults = this.defaults;
         return copy.isEmpty() && null == defaults ?
                 EMPTY :
-                new SpreadsheetMetadataNonEmpty(copy, defaults);
+                new SpreadsheetMetadataNonEmpty(Maps.immutable(copy), defaults);
     }
 
     // getters..........................................................................................................
