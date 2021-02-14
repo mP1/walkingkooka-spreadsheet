@@ -74,19 +74,10 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testWithSpreadsheetMetadataMapNullValueFails() {
+    public void testWithMapNullValueFails() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123), SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, null);
         final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> SpreadsheetMetadata.with(map));
         assertEquals("Missing value, but got null for \"spreadsheet-name\"", thrown.getMessage(), "message");
-    }
-
-    @Test
-    public void testWithSpreadsheetMetadataMap() {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.of(this.property1(), this.value1());
-        final SpreadsheetMetadataNonEmptyMap metadataMap = SpreadsheetMetadataNonEmptyMap.with(map);
-
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(metadataMap);
-        assertSame(metadataMap, metadata.value(), "value");
     }
 
     @Test
@@ -107,19 +98,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     @Test
     public void testMaxNumberColorConstant() {
         assertEquals(SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER, SpreadsheetMetadata.MAX_NUMBER_COLOR);
-    }
-
-    @Test
-    public void testEmpty() {
-        assertSame(SpreadsheetMetadataNonEmptyMap.EMPTY, SpreadsheetMetadataNonEmptyMap.with(Maps.empty()));
-    }
-
-    @Test
-    public void testValue() {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.of(this.property1(), this.value1());
-
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(map);
-        assertEquals(SpreadsheetMetadataNonEmptyMap.class, metadata.value().getClass(), () -> "" + metadata);
     }
 
     @Test

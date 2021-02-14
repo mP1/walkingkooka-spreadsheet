@@ -29,7 +29,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
         store.save(this.metadata(1, "user1@example.com"));
         store.save(this.metadata(2, "user2@example.com"));
 
-        this.toStringAndCheck(store, "[{create-date-time=1999-12-31T12:58:59, creator=user1@example.com, locale=en_AU, modified-by=modified@example.com, modified-date-time=2000-01-02T12:58:59, spreadsheet-id=1}, {create-date-time=1999-12-31T12:58:59, creator=user2@example.com, locale=en_AU, modified-by=modified@example.com, modified-date-time=2000-01-02T12:58:59, spreadsheet-id=2}]");
+        this.toStringAndCheck(store, "[{spreadsheet-id=1, creator=user1@example.com, create-date-time=1999-12-31T12:58:59, locale=en_AU, modified-by=modified@example.com, modified-date-time=2000-01-02T12:58:59}, {spreadsheet-id=2, creator=user2@example.com, create-date-time=1999-12-31T12:58:59, locale=en_AU, modified-by=modified@example.com, modified-date-time=2000-01-02T12:58:59}]");
     }
 
     @Override

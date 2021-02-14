@@ -110,14 +110,11 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     /**
      * Factory that creates a {@link SpreadsheetMetadata} from a {@link Map}.
      */
-    public static SpreadsheetMetadata with(final Map<SpreadsheetMetadataPropertyName<?>, Object> value) {
-        return withSpreadsheetMetadataMap(SpreadsheetMetadataNonEmptyMap.with(value));
-    }
-
-    private static SpreadsheetMetadata withSpreadsheetMetadataMap(final SpreadsheetMetadataNonEmptyMap map) {
-        return map.isEmpty() ?
+    public static SpreadsheetMetadata with(final Map<SpreadsheetMetadataPropertyName<?>, Object> properties) {
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.immutable(properties);
+        return copy.isEmpty() ?
                 EMPTY :
-                SpreadsheetMetadataNonEmpty.with(map);
+                SpreadsheetMetadataNonEmpty.withImmutableMap(copy);
     }
 
     /**
