@@ -613,44 +613,27 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     // setDefaults......................................................................................................
 
     /**
-     * Sets a provider which will provide defaults when the value is not actually present in this instance.
+     * Sets a {@link SpreadsheetMetadata} which will provide defaults when the value is not actually present in this instance.
      */
     public final SpreadsheetMetadata setDefaults(final SpreadsheetMetadata defaults) {
         Objects.requireNonNull(defaults, "defaults");
 
-        if (EMPTY != defaults) {
-            defaults.checkDefaultsValues();
-            this.checkDefaults(this, defaults);
-        }
-
-        // if new defaults is EMPTY set its defaults instead, even if that is null
         return this.defaults().equals(defaults) ?
                 this :
-                this.replaceDefaults(EMPTY == defaults ? null : defaults.isEmpty() ? defaults.defaults : defaults);
+                this.replaceDefaults(defaults.checkDefault());
     }
 
     /**
-     * Checks that all property values are valid or general and not specific to a single spreadsheet.
-     */
-    abstract void checkDefaultsValues();
-
-    /**
-     * Only {@link SpreadsheetMetadataNonEmpty} will perform checks
-     */
-    private void checkDefaults(final SpreadsheetMetadata defaults,
-                               final SpreadsheetMetadata replacement) {
-        if (null != defaults) {
-            if (defaults == replacement) {
-                throw new IllegalArgumentException("New defaults includes cycle: " + this);
-            }
-            this.checkDefaults(defaults.defaults, defaults);
-        }
-    }
-
-    /**
-     * Factory that creates a new {@link SpreadsheetMetadata} sub class with the given defaults.
+     * Factory that creates a new {@link SpreadsheetMetadata} with the given defaults. Defaults will be null
+     * if it was empty.
      */
     abstract SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults);
+
+    /**
+     * Checks that all property values are valid or general and not specific to a single spreadsheet, and then
+     * return the defaults {@link SpreadsheetMetadata} or null if its empty.
+     */
+    abstract SpreadsheetMetadata checkDefault();
 
     /**
      * Returns another {@link SpreadsheetMetadata} which will provide defaults.

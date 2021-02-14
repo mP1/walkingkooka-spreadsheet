@@ -75,10 +75,21 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
     // setDefaults......................................................................................................
 
+    @Override
+    SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults) {
+        return new SpreadsheetMetadataNonEmpty(this.value, defaults);
+    }
+
     /**
      * Checks that all property values are valid or general and not specific to a single spreadsheet.
      */
-    void checkDefaultsValues() {
+    @Override
+    SpreadsheetMetadata checkDefault() {
+        final SpreadsheetMetadata defaults = this.defaults();
+        if (!defaults.isEmpty()) {
+            throw new IllegalArgumentException("Default cannot have defaults: " + defaults);
+        }
+
         final String invalid = this.value.keySet()
                 .stream()
                 .filter(SpreadsheetMetadataPropertyName::isInvalidGenericProperty)
@@ -88,11 +99,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
         if (false == invalid.isEmpty()) {
             throw new IllegalArgumentException("Defaults includes invalid default values: " + invalid);
         }
-    }
-
-    @Override
-    SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults) {
-        return new SpreadsheetMetadataNonEmpty(this.value, defaults);
+        return this;
     }
 
     // get..............................................................................................................
@@ -159,6 +166,8 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
                 throw new IllegalArgumentException("Cannot set " + propertyName + "=" + CharSequences.quoteIfChars(value) + " duplicate of " + swapPropertyName);
             }
             values.set(swapIndex, Maps.entry(swapPropertyName, swapValue));
+        } else {
+            // might be a duplicate of a default character property.
         }
 
         final SpreadsheetMetadata result;

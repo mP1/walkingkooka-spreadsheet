@@ -100,13 +100,13 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     // setDefaults......................................................................................................
 
     @Override
-    void checkDefaultsValues() {
-        // nop
+    SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata metadata) {
+        return new SpreadsheetMetadataEmpty(metadata); // will be null if original was empty
     }
 
     @Override
-    SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults) {
-        return new SpreadsheetMetadataEmpty(defaults);
+    SpreadsheetMetadata checkDefault() {
+        return null; // null means empty when defaults
     }
 
     // getters..........................................................................................................

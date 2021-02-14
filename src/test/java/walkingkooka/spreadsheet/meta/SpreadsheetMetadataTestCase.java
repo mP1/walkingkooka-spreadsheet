@@ -97,31 +97,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 value);
     }
 
-    @Test
-    public final void testGetUnknownDefaultsToDefaultCascading() {
-        final String value1 = "!!!";
-        final Character value2 = '@';
-
-        final SpreadsheetMetadata metadata = this.createObject();
-
-        final SpreadsheetMetadataPropertyName<String> unknown1 = SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL;
-        this.getAndCheck(metadata, unknown1, null);
-
-        final SpreadsheetMetadataPropertyName<Character> unknown2 = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
-        this.getAndCheck(metadata, unknown2, null);
-
-        final SpreadsheetMetadata withDefaults = this.createObject()
-                .setDefaults(SpreadsheetMetadata.EMPTY.set(unknown1, value1)
-                        .setDefaults(SpreadsheetMetadata.EMPTY.set(unknown2, value2)));
-
-        this.getAndCheck(withDefaults,
-                unknown1,
-                value1);
-        this.getAndCheck(withDefaults,
-                unknown2,
-                value2);
-    }
-
     final <TT> void getAndCheck(final SpreadsheetMetadata metadata,
                                 final SpreadsheetMetadataPropertyName<TT> propertyName,
                                 final TT value) {
@@ -359,15 +334,17 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     }
 
     @Test
-    public final void testSetDefaultsEmptyWithDefaultsItself() {
+    public final void testSetDefaultWithDefaultFails() {
         final SpreadsheetMetadata metadata = this.createObject();
-        final SpreadsheetMetadata notEmptyDefaults = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
 
-        final SpreadsheetMetadata emptyWithDefaults = SpreadsheetMetadata.EMPTY.setDefaults(notEmptyDefaults);
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
+                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
+                .setDefaults(SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$UAD")
+                );
 
-        final SpreadsheetMetadata withDefaults = metadata.setDefaults(emptyWithDefaults);
-        this.checkDefaults(withDefaults, notEmptyDefaults);
+        assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(defaults));
     }
 
     final void checkDefaults(final SpreadsheetMetadata metadata,
