@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
-import walkingkooka.NeverError;
+import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
@@ -33,6 +33,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -52,13 +53,14 @@ import java.util.stream.Collectors;
 final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
     /**
-     * Factory that creates a {@link SpreadsheetMetadataNonEmpty} from a {@link SpreadsheetMetadataNonEmptyMap}.
+     * Factory that creates a {@link SpreadsheetMetadataNonEmpty} from a {@link Map<SpreadsheetMetadataPropertyName<?>, Object>}.
      */
-    static SpreadsheetMetadataNonEmpty with(final SpreadsheetMetadataNonEmptyMap value) {
-        return new SpreadsheetMetadataNonEmpty(value, null);
+    static SpreadsheetMetadataNonEmpty withImmutableMap(final Map<SpreadsheetMetadataPropertyName<?>, Object> properties) {
+        properties.forEach((p, v) -> p.checkValue(v));
+        return new SpreadsheetMetadataNonEmpty(properties, null);
     }
 
-    private SpreadsheetMetadataNonEmpty(final SpreadsheetMetadataNonEmptyMap value,
+    private SpreadsheetMetadataNonEmpty(final Map<SpreadsheetMetadataPropertyName<?>, Object> value,
                                         final SpreadsheetMetadata defaults) {
         super(defaults);
         this.value = value;
@@ -71,7 +73,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
         return this.value;
     }
 
-    final SpreadsheetMetadataNonEmptyMap value;
+    final Map<SpreadsheetMetadataPropertyName<?>, Object> value;
 
     // setDefaults......................................................................................................
 
@@ -112,128 +114,80 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     // set..............................................................................................................
 
     /**
-     * Loops over all entries, trying to find a match. While finding a match a new {@link List} is created with
-     * sorted entries and this is used to create a new {@link SpreadsheetMetadataNonEmpty} if no match was found.
+     * Creates a new {@link Map} and if the property is a character property and the value is a duplicate the duplicated
+     * property is given the old value.
      */
     @Override
     <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName,
                                  final V value) {
-        final boolean swapIfDuplicateValue = propertyName.swapIfDuplicateValue();
-        int swapIndex = -1;
-        SpreadsheetMetadataPropertyName<?> swapPropertyName = null;
-        Object swapValue = null;
+        SpreadsheetMetadata result = this;
 
-        final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> values = Lists.array();
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = this.value();
+        final Object previous = properties.get(propertyName);
+        if (!value.equals(previous)) {
+            // property is different or new
+            final boolean swapIfDuplicateValue = propertyName.swapIfDuplicateValue();
 
-        int mode = MODE_SET_APPENDED; // new property added.
+            final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
+            copy.putAll(properties);
+            copy.put(propertyName, value);
 
-        int i = 0;
-        for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.value.entries) {
-            final SpreadsheetMetadataPropertyName<?> property = propertyAndValue.getKey();
-            final Object propertyValue = propertyAndValue.getValue();
+            if (swapIfDuplicateValue) {
+                boolean swapped = false;
+                SpreadsheetMetadataPropertyName<?> duplicate = null;
 
-            final int compare = property.compareTo(propertyName);
-            if (0 == compare) {
-                if (propertyValue.equals(value)) {
-                    mode = MODE_SET_UNMODIFIED; // no change
+                for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : properties.entrySet()) {
+                    final SpreadsheetMetadataPropertyName<?> propertyName2 = propertyAndValue.getKey();
+                    if (propertyName.equals(propertyName2)) {
+                        continue;
+                    }
+                    final Object value2 = propertyAndValue.getValue();
+                    swapped = value.equals(value2) && propertyName.isDuplicateIfValuesEqual(propertyName2);
+                    if (!swapped) {
+                        continue;
+                    }
+                    if (null == previous) {
+                        SpreadsheetMetadataNonEmpty.reportDuplicateProperty(propertyName, value, propertyName2);
+                    }
+                    copy.put(propertyName2, previous); // the other property now has the previous value of $propertyName
+                    duplicate = propertyName2;
                     break;
-                } else {
-                    values.add(Maps.entry(property, value));
-                    mode = MODE_SET_REPLACED; // replaced
-
-                    swapValue = propertyValue; // needed if another property has $value it needs to be given $swapValue
-                }
-            } else {
-                if (MODE_SET_APPENDED == mode && compare > 0) {
-                    values.add(Maps.entry(propertyName, value));
-                    mode = MODE_SET_INSERTED;
                 }
 
-                if (swapIfDuplicateValue &&
-                        propertyName.isDuplicateIfValuesEqual(property) && propertyValue.equals(value)) {
-                    swapIndex = i;
-                    swapPropertyName = property;
+                if (null != duplicate && !swapped) {
+                    SpreadsheetMetadataNonEmpty.reportDuplicateProperty(propertyName, value, duplicate);
                 }
-                values.add(propertyAndValue);
             }
 
-            i++;
-        }
-
-        if (-1 != swapIndex) {
-            // because the new property has no previous value the now duplicate cannot be swapped.
-            if (null == swapValue) {
-                throw new IllegalArgumentException("Cannot set " + propertyName + "=" + CharSequences.quoteIfChars(value) + " duplicate of " + swapPropertyName);
-            }
-            values.set(swapIndex, Maps.entry(swapPropertyName, swapValue));
-        } else {
-            // might be a duplicate of a default character property.
-        }
-
-        final SpreadsheetMetadata result;
-
-        switch (mode) {
-            case MODE_SET_APPENDED:
-                values.add(Maps.entry(propertyName, value));
-                result = this.setValues(values);
-                break;
-            case MODE_SET_UNMODIFIED:
-                result = this;
-                break;
-            case MODE_SET_REPLACED:
-            case MODE_SET_INSERTED:
-                result = this.setValues(values);
-                break;
-            default:
-                NeverError.unhandledCase(mode, MODE_SET_APPENDED, MODE_SET_UNMODIFIED, MODE_SET_REPLACED, MODE_SET_INSERTED);
-                result = null;
+            result = new SpreadsheetMetadataNonEmpty(Maps.immutable(copy), this.defaults);
         }
 
         return result;
     }
 
-    private final static int MODE_SET_APPENDED = 0;
-    private final static int MODE_SET_UNMODIFIED = 1;
-    private final static int MODE_SET_REPLACED = 2;
-    private final static int MODE_SET_INSERTED = 3;
+    private static void reportDuplicateProperty(final SpreadsheetMetadataPropertyName<?> property,
+                                                final Object value,
+                                                final SpreadsheetMetadataPropertyName<?> original) {
+        throw new IllegalArgumentException("Cannot set " + property + "=" + CharSequences.quoteIfChars(value) + " duplicate of " + original);
+    }
 
     // remove...........................................................................................................
 
     @Override
     SpreadsheetMetadata remove0(final SpreadsheetMetadataPropertyName<?> propertyName) {
-        final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> values = Lists.array();
-        boolean removed = false;
-
-        for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.value.entries) {
-            final SpreadsheetMetadataPropertyName<?> property = propertyAndValue.getKey();
-            if (propertyName.equals(property)) {
-                removed = true;
-            } else {
-                values.add(propertyAndValue);
-            }
-        }
-
-        return removed ?
-                this.remove1(values) :
-                this;
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
+        copy.putAll(this.value());
+        final Object removed = copy.remove(propertyName);
+        return null == removed ?
+                this :
+                this.removeNonEmpty(copy);
     }
 
-    /**
-     * Accepts a list after removing a property, special casing if the list is empty.
-     */
-    private SpreadsheetMetadata remove1(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> list) {
-        return list.isEmpty() ?
-                SpreadsheetMetadata.EMPTY.setDefaults(this.defaults()) :
-                this.setValues(list); // no need to sort after a delete
-    }
-
-    private SpreadsheetMetadata setValues(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> values) {
-        return new SpreadsheetMetadataNonEmpty(
-                SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(
-                        SpreadsheetMetadataNonEmptyMapEntrySet.withList(values)
-                ),
-                this.defaults
-        );
+    private SpreadsheetMetadata removeNonEmpty(final Map<SpreadsheetMetadataPropertyName<?>, Object> copy) {
+        final SpreadsheetMetadata defaults = this.defaults;
+        return copy.isEmpty() && null == defaults ?
+                EMPTY :
+                new SpreadsheetMetadataNonEmpty(copy, defaults);
     }
 
     // getters..........................................................................................................
@@ -417,7 +371,9 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
     @Override
     void accept(final SpreadsheetMetadataVisitor visitor) {
-        this.value.accept(visitor);
+        this.value()
+                .entrySet()
+                .forEach(visitor::acceptPropertyAndValue);
     }
 
     // Object...........................................................................................................
@@ -438,15 +394,28 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     }
 
     @Override
-    public final String toString() {
-        return this.value.toString();
+    public String toString() {
+        return ToStringBuilder.empty()
+                .append('{')
+                .value(this.value())
+                .append('}')
+                .build();
     }
 
     // JsonNodeContext..................................................................................................
 
     @Override
     JsonObject marshallProperties(final JsonNodeMarshallContext context) {
-        return this.value.marshall(context)
-                .objectOrFail();
+        final List<JsonNode> json = Lists.array();
+
+        for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.value().entrySet()) {
+            final SpreadsheetMetadataPropertyName<?> propertyName = propertyAndValue.getKey();
+            final JsonNode value = context.marshall(propertyAndValue.getValue());
+
+            json.add(value.setName(propertyName.jsonPropertyName));
+        }
+
+        return JsonNode.object()
+                .setChildren(json);
     }
 }

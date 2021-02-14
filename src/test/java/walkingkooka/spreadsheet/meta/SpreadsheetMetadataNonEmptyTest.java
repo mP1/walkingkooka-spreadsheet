@@ -105,18 +105,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     private final static int DEFAULT_YEAR = 1900;
 
     @Test
-    public void testWithSpreadsheetMetadataMap() {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
-        map.put(this.property1(), this.value1());
-        map.put(this.property2(), this.value2());
-        final SpreadsheetMetadataNonEmptyMap metadataMap = SpreadsheetMetadataNonEmptyMap.with(map);
-
-        final SpreadsheetMetadataNonEmpty metadata = this.createSpreadsheetMetadata(metadataMap);
-        assertSame(metadataMap, metadata.value(), "value");
-        this.checkDefaults(metadata, null);
-    }
-
-    @Test
     public void testWithMapCopied() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
         map.put(this.property1(), this.value1());
@@ -132,25 +120,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testEmpty() {
-        assertSame(SpreadsheetMetadataNonEmptyMap.EMPTY, SpreadsheetMetadataNonEmptyMap.with(Maps.empty()));
-    }
-
-    @Test
     public void testId() {
         final SpreadsheetId id = SpreadsheetId.with(123);
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id));
         assertEquals(Optional.of(id), metadata.id(), "id");
-    }
-
-    @Test
-    public void testValue() {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
-        map.put(this.property1(), this.value1());
-        map.put(this.property2(), this.value2());
-
-        final SpreadsheetMetadataNonEmpty metadata = this.createSpreadsheetMetadata(map);
-        assertEquals(SpreadsheetMetadataNonEmptyMap.class, metadata.value().getClass(), () -> "" + metadata.value);
     }
 
     // get..............................................................................................................
@@ -438,7 +411,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         grouping, comma,
                         positive,
                         plus
-                ).set(decimalSeparator, comma).set(grouping, plus)
+                ).set(decimalSeparator, comma)
+                        .set(grouping, plus)
         );
     }
 
