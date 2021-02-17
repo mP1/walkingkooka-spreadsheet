@@ -401,6 +401,84 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
+    @Test
+    public void testSetPropertyDefaultsCausesSwap() {
+        final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
+        final Character dot = '.';
+
+        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
+        final Character comma = ',';
+
+        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(grouping, comma);
+
+        this.setAndCheck(
+                this.createSpreadsheetMetadata(decimalSeparator, dot).setDefaults(defaults),
+                decimalSeparator,
+                comma,
+                this.createSpreadsheetMetadata(decimalSeparator, comma, grouping, dot).setDefaults(defaults)
+        );
+    }
+
+    @Test
+    public void testSetPropertyDefaultsCausesSwap2() {
+        final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
+        final Character dot = '.';
+
+        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
+        final Character comma = ',';
+
+        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(grouping, comma);
+
+        this.setAndCheck(
+                this.createSpreadsheetMetadata(decimalSeparator, dot).setDefaults(defaults),
+                grouping,
+                dot,
+                this.createSpreadsheetMetadata(decimalSeparator, comma, grouping, dot).setDefaults(defaults)
+        );
+    }
+
+    @Test
+    public void testSetPropertyDefaultsCausesSwap3() {
+        final SpreadsheetMetadataPropertyName<EmailAddress> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final EmailAddress email = EmailAddress.parse("creator@example.com");
+
+        final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
+        final Character dot = '.';
+
+        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
+        final Character comma = ',';
+
+        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(decimalSeparator, dot, grouping, comma);
+
+        this.setAndCheck(
+                this.createSpreadsheetMetadata(creator, email).setDefaults(defaults),
+                decimalSeparator,
+                comma,
+                this.createSpreadsheetMetadata(creator, email, decimalSeparator, comma, grouping, dot).setDefaults(defaults)
+        );
+    }
+
+    @Test
+    public void testSetPropertyDefaultsCausesSwap4() {
+        final SpreadsheetMetadataPropertyName<EmailAddress> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final EmailAddress email = EmailAddress.parse("creator@example.com");
+
+        final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
+        final Character dot = '.';
+
+        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
+        final Character comma = ',';
+
+        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(decimalSeparator, dot, grouping, comma);
+
+        this.setAndCheck(
+                this.createSpreadsheetMetadata(creator, email).setDefaults(defaults),
+                grouping,
+                dot,
+                this.createSpreadsheetMetadata(creator, email, decimalSeparator, comma, grouping, dot).setDefaults(defaults)
+        );
+    }
+
     private <T> void setAndCheck(final SpreadsheetMetadata metadata,
                                  final SpreadsheetMetadataPropertyName<T> propertyName,
                                  final T value) {
