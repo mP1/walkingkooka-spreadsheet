@@ -108,16 +108,6 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     public final static SpreadsheetMetadata EMPTY = SpreadsheetMetadataEmpty.instance();
 
     /**
-     * Factory that creates a {@link SpreadsheetMetadata} from a {@link Map}.
-     */
-    public static SpreadsheetMetadata with(final Map<SpreadsheetMetadataPropertyName<?>, Object> properties) {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.immutable(properties);
-        return copy.isEmpty() ?
-                EMPTY :
-                SpreadsheetMetadataNonEmpty.withImmutableMap(copy);
-    }
-
-    /**
      * Private ctor to limit sub classes.
      */
     SpreadsheetMetadata(final SpreadsheetMetadata defaults) {
@@ -715,7 +705,11 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
             properties.put(name, name.unmarshall(child, context));
         }
 
-        return with(properties).setDefaults(defaults);
+        return (
+                properties.isEmpty() ?
+                        EMPTY :
+                        SpreadsheetMetadataNonEmpty.with(properties)
+        ).setDefaults(defaults);
     }
 
     static {

@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
@@ -39,9 +38,12 @@ public final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitorTest 
     public void testToString() {
         final SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor();
 
-        visitor.accept(SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"),
-                SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("apple")), Color.fromRgb(0x112233),
-                SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("banana")), Color.fromRgb(0xffeedd))));
+        visitor.accept(
+                SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
+                        .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("apple")), Color.fromRgb(0x112233))
+                        .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("banana")), Color.fromRgb(0xffeedd))
+        );
         this.toStringAndCheck(visitor, "{apple=#112233, banana=#ffeedd}");
     }
 

@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
@@ -51,7 +50,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATOR;
         final EmailAddress value = EmailAddress.parse("user@example.com");
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.with(Maps.of(property, value)));
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY.set(property, value));
         assertEquals(value, components.getOrNull(property));
         this.checkMissing(components);
     }
@@ -105,7 +104,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATOR;
         final EmailAddress value = EmailAddress.parse("user@example.com");
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.with(Maps.of(property, value)));
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY.set(property, value));
         components.getOrNull(property);
         components.reportIfMissing();
     }

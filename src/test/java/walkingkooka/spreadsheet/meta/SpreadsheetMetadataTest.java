@@ -26,7 +26,6 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -50,7 +49,6 @@ import walkingkooka.tree.text.WordWrap;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -62,38 +60,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
         JsonNodeMarshallingTesting<SpreadsheetMetadata>,
         ToStringTesting<SpreadsheetMetadata> {
-
-    @Test
-    public void testWithNullFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetMetadata.with(null));
-    }
-
-    @Test
-    public void testWithInvalidPropertyFails() {
-        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null)));
-    }
-
-    @Test
-    public void testWithMapNullValueFails() {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123), SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, null);
-        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> SpreadsheetMetadata.with(map));
-        assertEquals("Missing value, but got null for \"spreadsheet-name\"", thrown.getMessage(), "message");
-    }
-
-    @Test
-    public void testWithMapCopied() {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
-        map.put(this.property1(), this.value1());
-        map.put(this.property2(), this.value2());
-
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
-        copy.putAll(map);
-
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(map);
-
-        map.clear();
-        assertEquals(copy, metadata.value(), "value");
-    }
 
     @Test
     public void testMaxNumberColorConstant() {
@@ -251,12 +217,12 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testToString() {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.of(this.property1(),
-                this.value1(),
-                this.property2(),
-                this.value2());
-
-        this.toStringAndCheck(SpreadsheetMetadata.with(map), map.toString());
+        this.toStringAndCheck(
+                SpreadsheetMetadata.EMPTY
+                        .set(this.property1(), this.value1())
+                        .set(this.property2(), this.value2()),
+                "{create-date-time=2000-01-02T12:58:59, creator=user@example.com}"
+        );
     }
 
     @Test
@@ -271,13 +237,13 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     private SpreadsheetMetadata metadata() {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.ordered();
-        map.put(this.property1(), this.value1());
-        return SpreadsheetMetadata.with(map);
+        return SpreadsheetMetadataNonEmpty.with(
+                Maps.of(this.property1(), this.value1())
+        );
     }
 
     @SuppressWarnings("SameReturnValue")
-    private SpreadsheetMetadataPropertyName<?> property1() {
+    private SpreadsheetMetadataPropertyName<LocalDateTime> property1() {
         return SpreadsheetMetadataPropertyName.CREATE_DATE_TIME;
     }
 
@@ -286,7 +252,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @SuppressWarnings("SameReturnValue")
-    private SpreadsheetMetadataPropertyName<?> property2() {
+    private SpreadsheetMetadataPropertyName<EmailAddress> property2() {
         return SpreadsheetMetadataPropertyName.CREATOR;
     }
 

@@ -105,21 +105,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     private final static int DEFAULT_YEAR = 1900;
 
     @Test
-    public void testWithMapCopied() {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
-        map.put(this.property1(), this.value1());
-        map.put(this.property2(), this.value2());
-
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
-        copy.putAll(map);
-
-        final SpreadsheetMetadataNonEmpty metadata = this.createSpreadsheetMetadata(map);
-
-        map.clear();
-        assertEquals(copy, metadata.value(), "value");
-    }
-
-    @Test
     public void testId() {
         final SpreadsheetId id = SpreadsheetId.with(123);
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id));
@@ -147,7 +132,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
         final EmailAddress value = EmailAddress.parse("creator111@example.com");
 
-        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.with(Maps.of(propertyName, value));
+        final SpreadsheetMetadata notEmpty = SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, value));
         this.getAndCheck(notEmpty,
                 propertyName,
                 value);
@@ -869,13 +854,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         Arrays.stream(Locale.getAvailableLocales())
                 .forEach(l -> {
                     final int twoDigitYear = 49;
-                    final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(
-                            Maps.of(
-                                    SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR,
-                                    SpreadsheetMetadataPropertyName.LOCALE, l,
-                                    SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear
-                            )
-                    );
+                    final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                            .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+                            .set(SpreadsheetMetadataPropertyName.LOCALE, l)
+                            .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
 
                     final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
                     final DateTimeContext context = metadata.dateTimeContext();
@@ -892,13 +874,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDateTimeContextCached() {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(
-                Maps.of(
-                        SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR,
-                        SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH,
-                        SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20
-                )
-        );
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20);
         assertSame(metadata.dateTimeContext(), metadata.dateTimeContext());
     }
     
@@ -1629,7 +1608,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 missing,
                 () -> "Several properties are missing values in " + properties);
 
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetMetadata.with(properties));
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetMetadataNonEmpty.with(properties));
     }
 
     // helpers...........................................................................................................
@@ -1672,7 +1651,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     private SpreadsheetMetadataNonEmpty createSpreadsheetMetadata(final Map<SpreadsheetMetadataPropertyName<?>, Object> map) {
-        return Cast.to(SpreadsheetMetadata.with(map));
+        return SpreadsheetMetadataNonEmpty.with(map);
     }
 
     @SuppressWarnings("SameReturnValue")

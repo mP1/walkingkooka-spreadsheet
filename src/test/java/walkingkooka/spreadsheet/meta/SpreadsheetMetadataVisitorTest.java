@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.net.email.EmailAddress;
@@ -482,7 +481,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     private static <T> SpreadsheetMetadata metadata(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {
-        return SpreadsheetMetadata.with(Maps.of(propertyName, value));
+        return SpreadsheetMetadata.EMPTY.set(propertyName, value);
     }
 
     @Override
