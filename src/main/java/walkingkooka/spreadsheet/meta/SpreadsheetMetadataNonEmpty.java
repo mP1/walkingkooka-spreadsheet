@@ -55,7 +55,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     /**
      * Factory that creates a {@link SpreadsheetMetadataNonEmpty} from a {@link Map<SpreadsheetMetadataPropertyName<?>, Object>}.
      */
-    static SpreadsheetMetadataNonEmpty withImmutableMap(final Map<SpreadsheetMetadataPropertyName<?>, Object> properties) {
+    static SpreadsheetMetadataNonEmpty with(final Map<SpreadsheetMetadataPropertyName<?>, Object> properties) {
         properties.forEach((p, v) -> p.checkValue(v));
         return new SpreadsheetMetadataNonEmpty(properties, null);
     }

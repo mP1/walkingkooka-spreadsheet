@@ -40,11 +40,6 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     }
 
     @Test
-    public void testEmpty() {
-        assertSame(SpreadsheetMetadata.EMPTY, SpreadsheetMetadata.with(Maps.empty()));
-    }
-
-    @Test
     public void testValue() {
         assertSame(SpreadsheetMetadata.EMPTY.value(), SpreadsheetMetadata.EMPTY.value());
     }
@@ -56,10 +51,12 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
         final EmailAddress familyName = EmailAddress.parse("user@example.com");
 
-        this.setAndCheck(SpreadsheetMetadata.EMPTY,
+        this.setAndCheck(
+                SpreadsheetMetadata.EMPTY,
                 propertyName,
                 familyName,
-                SpreadsheetMetadata.with(Maps.of(propertyName, familyName)));
+                SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, familyName))
+        );
     }
 
     // HateosResourceTesting............................................................................................

@@ -80,7 +80,7 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
 
     @Override
     <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName, final V value) {
-        return with(Maps.of(propertyName, value));
+        return SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, value));
     }
 
     @Override
