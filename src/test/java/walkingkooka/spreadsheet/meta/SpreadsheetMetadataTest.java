@@ -242,7 +242,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     private SpreadsheetMetadata metadata() {
         return SpreadsheetMetadataNonEmpty.with(
                 Maps.of(this.property1(), this.value1()),
-                SpreadsheetMetadata.EMPTY
+                null
         );
     }
 

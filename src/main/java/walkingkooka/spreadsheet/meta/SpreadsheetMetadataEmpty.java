@@ -71,16 +71,11 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
         return Maps.empty();
     }
 
-    // get/set/remove...................................................................................................
+    // get/remove.......................................................................................................
 
     @Override
     <V> Optional<V> getIgnoringDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return Optional.empty();
-    }
-
-    @Override
-    <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName, final V value) {
-        return SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, value), this.defaults);
     }
 
     @Override

@@ -58,6 +58,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -205,13 +206,88 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
      * Sets a possibly new property returning a {@link SpreadsheetMetadata} with the new definition which may or may not
      * require creating a new {@link SpreadsheetMetadata}.
      */
-    public final <V> SpreadsheetMetadata set(final SpreadsheetMetadataPropertyName<V> propertyName, final V value) {
+    public final <V> SpreadsheetMetadata set(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                             final V value) {
         checkPropertyName(propertyName);
-
         return this.set0(propertyName, propertyName.checkValue(value));
     }
 
-    abstract <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName, final V value);
+    private <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                         final V value) {
+        SpreadsheetMetadata result = this;
+
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = this.value();
+        final V previousValue = (V) this.get(propertyName).orElse(null);
+
+        if (!value.equals(previousValue)) {
+            // property is different or new
+            final boolean swapIfDuplicateValue = propertyName.swapIfDuplicateValue();
+
+            final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
+            copy.putAll(properties);
+            copy.put(propertyName, value);
+
+            if (swapIfDuplicateValue) {
+                final SpreadsheetMetadataPropertyName<?> duplicate = findDuplicates(
+                        propertyName,
+                        value,
+                        properties
+                );
+                if (null != duplicate) {
+                    if (null == previousValue) {
+                        reportDuplicateProperty(propertyName, value, duplicate);
+                    }
+                    copy.put(duplicate, previousValue); // the other property now has the previous value of $propertyName
+                } else {
+                    // need to check defaults...
+                    final Map<SpreadsheetMetadataPropertyName<?>, Object> defaults = this.defaults().value();
+                    final SpreadsheetMetadataPropertyName<?> duplicate2 = findDuplicates(
+                            propertyName,
+                            value,
+                            defaults
+                    );
+                    if (null != duplicate2) {
+                        copy.put(duplicate2, null != previousValue ? previousValue : defaults.get(propertyName));
+                        copy.put(propertyName, value);
+                    }
+                }
+            }
+
+            result = SpreadsheetMetadataNonEmpty.with(Maps.immutable(copy), this.defaults);
+        }
+
+        return result;
+    }
+
+    /**
+     * Finds a different but duplicate property.
+     */
+    private static <V> SpreadsheetMetadataPropertyName<?> findDuplicates(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                                                         final V value,
+                                                                         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties) {
+        SpreadsheetMetadataPropertyName<?> duplicate = null;
+
+        for (final Map.Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : properties.entrySet()) {
+            final SpreadsheetMetadataPropertyName<?> otherPropertyName = propertyAndValue.getKey();
+            if (propertyName.equals(otherPropertyName)) {
+                continue;
+            }
+            final boolean duplicated = value.equals(propertyAndValue.getValue()) && propertyName.isDuplicateIfValuesEqual(otherPropertyName);
+            if (!duplicated) {
+                continue;
+            }
+            duplicate = otherPropertyName;
+            break;
+        }
+
+        return duplicate;
+    }
+
+    private static void reportDuplicateProperty(final SpreadsheetMetadataPropertyName<?> property,
+                                                final Object value,
+                                                final SpreadsheetMetadataPropertyName<?> original) {
+        throw new IllegalArgumentException("Cannot set " + property + "=" + CharSequences.quoteIfChars(value) + " duplicate of " + original);
+    }
 
     // remove...........................................................................................................
 
@@ -694,22 +770,24 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
 
     static SpreadsheetMetadata unmarshall(final JsonNode node,
                                           final JsonNodeUnmarshallContext context) {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
-        SpreadsheetMetadata defaults = null;
+        SpreadsheetMetadata metadata = EMPTY;
 
-        for (final JsonNode child : node.objectOrFail().children()) {
+        final Optional<JsonNode> defaults = node.objectOrFail().get(DEFAULTS);
+        if(defaults.isPresent()) {
+            metadata = metadata.setDefaults(context.unmarshall(defaults.get(), SpreadsheetMetadata.class));
+        }
+
+        for (final JsonNode child : node.children()) {
             if (child.name().equals(DEFAULTS)) {
-                defaults = context.unmarshall(child, SpreadsheetMetadata.class);
                 continue;
             }
 
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(child);
-            properties.put(name, name.unmarshall(child, context));
+            metadata = metadata.set(name, Cast.to(name.unmarshall(child, context)));
         }
 
-        return properties.isEmpty() ?
-                null == defaults ? EMPTY : EMPTY.setDefaults(defaults) :
-                SpreadsheetMetadataNonEmpty.with(properties, null == defaults ? null : defaults);
+
+        return metadata;
     }
 
     static {

@@ -56,7 +56,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      */
     static SpreadsheetMetadataNonEmpty with(final Map<SpreadsheetMetadataPropertyName<?>, Object> properties,
                                             final SpreadsheetMetadata defaults) {
-        properties.forEach((p, v) -> p.checkValue(v));
         return new SpreadsheetMetadataNonEmpty(properties, defaults);
     }
 
@@ -77,9 +76,21 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
     // setDefaults......................................................................................................
 
+    /**
+     * The new {@link SpreadsheetMetadata} must be rebuilt because a new default could result in some properties being swapped.
+     */
     @Override
     SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults) {
-        return new SpreadsheetMetadataNonEmpty(this.value, defaults);
+        SpreadsheetMetadata metadata = EMPTY.setDefaults(defaults);
+
+        for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> nameAndValue : this.value.entrySet()) {
+            metadata = metadata.set(
+                    nameAndValue.getKey(),
+                    Cast.to(nameAndValue.getValue())
+            );
+        }
+
+        return metadata;
     }
 
     /**
@@ -109,90 +120,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     @Override
     <V> Optional<V> getIgnoringDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return Optional.ofNullable(Cast.to(this.value.get(propertyName)));
-    }
-
-    // set..............................................................................................................
-
-    /**
-     * Creates a new {@link Map} and if the property is a character property and the value is a duplicate the duplicated
-     * property is given the old value.
-     */
-    @Override
-    <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName,
-                                 final V value) {
-        SpreadsheetMetadata result = this;
-
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = this.value();
-        final V previousValue = (V) this.get(propertyName).orElse(null);
-
-        if (!value.equals(previousValue)) {
-            // property is different or new
-            final boolean swapIfDuplicateValue = propertyName.swapIfDuplicateValue();
-
-            final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
-            copy.putAll(properties);
-            copy.put(propertyName, value);
-
-            if (swapIfDuplicateValue) {
-                final SpreadsheetMetadataPropertyName<?> duplicate = findDuplicates(
-                        propertyName,
-                        value,
-                        properties
-                );
-                if (null != duplicate) {
-                    if (null == previousValue) {
-                        SpreadsheetMetadataNonEmpty.reportDuplicateProperty(propertyName, value, duplicate);
-                    }
-                    copy.put(duplicate, previousValue); // the other property now has the previous value of $propertyName
-                } else {
-                    // need to check defaults...
-                    final Map<SpreadsheetMetadataPropertyName<?>, Object> defaults = this.defaults().value();
-                    final SpreadsheetMetadataPropertyName<?> duplicate2 = findDuplicates(
-                            propertyName,
-                            value,
-                            defaults
-                    );
-                    if (null != duplicate2) {
-                        copy.put(duplicate2, null != previousValue ? previousValue : defaults.get(propertyName));
-                        copy.put(propertyName, value);
-                    }
-                }
-            }
-
-            result = new SpreadsheetMetadataNonEmpty(Maps.immutable(copy), this.defaults);
-        }
-
-        return result;
-    }
-
-    /**
-     * Finds a different but duplicate property.
-     */
-    private static <V> SpreadsheetMetadataPropertyName<?> findDuplicates(final SpreadsheetMetadataPropertyName<V> propertyName,
-                                                                         final V value,
-                                                                         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties) {
-        SpreadsheetMetadataPropertyName<?> duplicate = null;
-
-        for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : properties.entrySet()) {
-            final SpreadsheetMetadataPropertyName<?> otherPropertyName = propertyAndValue.getKey();
-            if (propertyName.equals(otherPropertyName)) {
-                continue;
-            }
-            final boolean duplicated = value.equals(propertyAndValue.getValue()) && propertyName.isDuplicateIfValuesEqual(otherPropertyName);
-            if (!duplicated) {
-                continue;
-            }
-            duplicate = otherPropertyName;
-            break;
-        }
-
-        return duplicate;
-    }
-
-    private static void reportDuplicateProperty(final SpreadsheetMetadataPropertyName<?> property,
-                                                final Object value,
-                                                final SpreadsheetMetadataPropertyName<?> original) {
-        throw new IllegalArgumentException("Cannot set " + property + "=" + CharSequences.quoteIfChars(value) + " duplicate of " + original);
     }
 
     // remove...........................................................................................................
