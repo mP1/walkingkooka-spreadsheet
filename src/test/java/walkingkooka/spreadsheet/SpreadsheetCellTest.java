@@ -33,7 +33,6 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -312,34 +311,33 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testJsonNodeUnmarshallBooleanFails() {
-        this.unmarshallFails(JsonNode.booleanNode(true), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.booleanNode(true));
     }
 
     @Test
     public void testJsonNodeUnmarshallNumberFails() {
-        this.unmarshallFails(JsonNode.number(12), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.number(12));
     }
 
     @Test
     public void testJsonNodeUnmarshallArrayFails() {
-        this.unmarshallFails(JsonNode.array(), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.array());
     }
 
     @Test
     public void testJsonNodeUnmarshallStringFails() {
-        this.unmarshallFails(JsonNode.string("fails"), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.string("fails"));
     }
 
     @Test
     public void testJsonNodeUnmarshallObjectEmptyFails() {
-        this.unmarshallFails(JsonNode.object(), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.object());
     }
 
     @Test
     public void testJsonNodeUnmarshallObjectReferenceMissingFails() {
         this.unmarshallFails(JsonNode.object()
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, this.marshallContext().marshall(formula())),
-                JsonNodeException.class);
+                .set(SpreadsheetCell.FORMULA_PROPERTY, this.marshallContext().marshall(formula())));
     }
 
     @Test
@@ -347,16 +345,14 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallFails(JsonNode.object()
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(this.boldAndItalics())),
-                JsonNodeException.class);
+                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(this.boldAndItalics())));
     }
 
     @Test
     public void testJsonNodeUnmarshallObjectFormulaMissingFails() {
         this.unmarshallFails(JsonNode.object()
-                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()),
-                JsonNodeException.class);
+                .set(JsonPropertyName.with(reference().toString()), JsonNode.object()));
     }
 
     @Test

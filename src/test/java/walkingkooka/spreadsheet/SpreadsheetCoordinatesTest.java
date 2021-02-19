@@ -23,7 +23,6 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -80,22 +79,22 @@ public final class SpreadsheetCoordinatesTest implements ClassTesting2<Spreadshe
 
     @Test
     public void testJsonNodeUnmarshallBooleanFails() {
-        this.unmarshallFails(JsonNode.booleanNode(true), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.booleanNode(true));
     }
 
     @Test
     public void testJsonNodeUnmarshallNumberFails() {
-        this.unmarshallFails(JsonNode.number(12), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.number(12));
     }
 
     @Test
     public void testJsonNodeUnmarshallArrayFails() {
-        this.unmarshallFails(JsonNode.array(), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.array());
     }
 
     @Test
     public void testJsonNodeUnmarshallObjectFails() {
-        this.unmarshallFails(JsonNode.object(), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.object());
     }
 
     @Test

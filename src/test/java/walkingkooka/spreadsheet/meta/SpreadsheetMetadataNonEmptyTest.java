@@ -1602,8 +1602,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.unmarshallFails(
                 JsonNode.parse("{" +
                         "  \"decimal-separator\": \"d\"\n" +
-                        "}"),
-                Exception.class
+                        "}")
         );
     }
 

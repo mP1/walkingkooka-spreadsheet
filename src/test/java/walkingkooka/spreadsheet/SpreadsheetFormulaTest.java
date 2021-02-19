@@ -28,7 +28,6 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -540,27 +539,27 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testJsonNodeUnmarshallBooleanFails() {
-        this.unmarshallFails(JsonNode.booleanNode(true), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.booleanNode(true));
     }
 
     @Test
     public void testJsonNodeUnmarshallNumberFails() {
-        this.unmarshallFails(JsonNode.number(12), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.number(12));
     }
 
     @Test
     public void testJsonNodeUnmarshallArrayFails() {
-        this.unmarshallFails(JsonNode.array(), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.array());
     }
 
     @Test
     public void testJsonNodeUnmarshallStringFails() {
-        this.unmarshallFails(JsonNode.string("fails"), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.string("fails"));
     }
 
     @Test
     public void testJsonNodeUnmarshallObjectEmptyFails() {
-        this.unmarshallFails(JsonNode.object(), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.object());
     }
 
     @Test
@@ -630,10 +629,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testJsonNodeUnmarshallTextAndErrorAndValueFails() {
         this.unmarshallFails(JsonNode.object()
-                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
-                        .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.string("1"))
-                        .set(SpreadsheetFormula.ERROR_PROPERTY, this.marshallContext().marshall(SpreadsheetError.with(ERROR))),
-                JsonNodeException.class);
+                .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
+                .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.string("1"))
+                .set(SpreadsheetFormula.ERROR_PROPERTY, this.marshallContext().marshall(SpreadsheetError.with(ERROR))));
     }
 
     // marshall.......................................................................................................

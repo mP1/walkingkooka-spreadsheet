@@ -108,7 +108,7 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
 
     @Test
     public void testJsonNodeUnmarshallInvalidEmailFails() {
-        this.unmarshallFails(JsonNode.string("!"), IllegalArgumentException.class);
+        this.unmarshallFails(JsonNode.string("!"));
     }
 
     @Test

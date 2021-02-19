@@ -24,7 +24,6 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -138,77 +137,72 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
 
     @Test
     public void testJsonNodeUnmarshallBooleanFails() {
-        this.unmarshallFails(JsonNode.booleanNode(true), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.booleanNode(true));
     }
 
     @Test
     public void testJsonNodeUnmarshallNumberFails() {
-        this.unmarshallFails(JsonNode.number(12), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.number(12));
     }
 
     @Test
     public void testJsonNodeUnmarshallArrayFails() {
-        this.unmarshallFails(JsonNode.array(), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.array());
     }
 
     @Test
     public void testJsonNodeUnmarshallStringFails() {
-        this.unmarshallFails(JsonNode.string("fails"), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.string("fails"));
     }
 
     @Test
     public void testJsonNodeUnmarshallObjectEmptyFails() {
-        this.unmarshallFails(JsonNode.object(), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.object());
     }
 
     @Test
     public void testJsonNodeUnmarshallMissingReferenceFails() {
         this.unmarshallFails(JsonNode.object()
-                        .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
-                        .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
-                        .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1))
-                        .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)),
-                JsonNodeException.class);
+                .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
+                .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
+                .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1))
+                .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)));
     }
 
     @Test
     public void testJsonNodeUnmarshallMissingXFails() {
         this.unmarshallFails(JsonNode.object()
-                        .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
-                        .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
-                        .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1))
-                        .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)),
-                JsonNodeException.class);
+                .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
+                .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
+                .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1))
+                .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)));
     }
 
     @Test
     public void testJsonNodeUnmarshallMissingYFails() {
         this.unmarshallFails(JsonNode.object()
-                        .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
-                        .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
-                        .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1))
-                        .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)),
-                JsonNodeException.class);
+                .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
+                .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
+                .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1))
+                .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)));
     }
 
     @Test
     public void testJsonNodeUnmarshallMissingWidthFails() {
         this.unmarshallFails(JsonNode.object()
-                        .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
-                        .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
-                        .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
-                        .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)),
-                JsonNodeException.class);
+                .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
+                .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
+                .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
+                .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)));
     }
 
     @Test
     public void testJsonNodeUnmarshallMissingHeightFails() {
         this.unmarshallFails(JsonNode.object()
-                        .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
-                        .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
-                        .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
-                        .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1)),
-                JsonNodeException.class);
+                .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
+                .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
+                .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
+                .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1)));
     }
 
     @Test

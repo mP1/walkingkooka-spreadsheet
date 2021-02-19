@@ -100,7 +100,7 @@ public final class SpreadsheetColumnTest implements ClassTesting2<SpreadsheetCol
 
     @Test
     public void testJsonNodeUnmarshallStringFails() {
-        this.unmarshallFails(JsonNode.string("fails"), IllegalArgumentException.class);
+        this.unmarshallFails(JsonNode.string("fails"));
     }
 
     @Test
