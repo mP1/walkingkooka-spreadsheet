@@ -55,7 +55,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 SpreadsheetMetadata.EMPTY,
                 propertyName,
                 familyName,
-                SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, familyName))
+                SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, familyName), null)
         );
     }
 
