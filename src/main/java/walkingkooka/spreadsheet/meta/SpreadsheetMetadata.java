@@ -664,7 +664,9 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     abstract boolean equalsValues(final SpreadsheetMetadata other);
 
     @Override
-    public abstract String toString();
+    public final String toString() {
+        return this.marshall(JsonNodeMarshallContexts.basic()).toString();
+    }
 
     // JsonNodeContext..................................................................................................
 

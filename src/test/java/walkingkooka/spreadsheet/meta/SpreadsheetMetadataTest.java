@@ -221,7 +221,10 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.EMPTY
                         .set(this.property1(), this.value1())
                         .set(this.property2(), this.value2()),
-                "{create-date-time=2000-01-02T12:58:59, creator=user@example.com}"
+                "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
+                        "  \"creator\": \"user@example.com\"\n" +
+                        "}"
         );
     }
 

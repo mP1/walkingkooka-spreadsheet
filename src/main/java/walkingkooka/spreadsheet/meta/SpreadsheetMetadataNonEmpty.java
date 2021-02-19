@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
-import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
@@ -415,15 +414,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     @Override
     boolean equalsValues(final SpreadsheetMetadata other) {
         return this.value.equals(other.value());
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.empty()
-                .append('{')
-                .value(this.value())
-                .append('}')
-                .build();
     }
 
     // JsonNodeContext..................................................................................................
