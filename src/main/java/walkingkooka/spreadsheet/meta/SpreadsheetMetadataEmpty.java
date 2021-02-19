@@ -191,11 +191,6 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
         return true; // no values to test
     }
 
-    @Override
-    public String toString() {
-        return "";
-    }
-
     // JsonNodeContext..................................................................................................
 
     @Override

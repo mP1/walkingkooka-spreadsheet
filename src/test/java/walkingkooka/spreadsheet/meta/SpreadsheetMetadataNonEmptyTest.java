@@ -1514,7 +1514,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         map.put(this.property1(), this.value1());
         map.put(this.property2(), this.value2());
 
-        this.toStringAndCheck(SpreadsheetMetadataNonEmpty.with(map), map.toString());
+        this.toStringAndCheck(
+                SpreadsheetMetadataNonEmpty.with(map),
+                "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
+                        "  \"creator\": \"user@example.com\"\n" +
+                        "}"
+        );
     }
 
     @Test
@@ -1523,7 +1529,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         map.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.');
         map.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
 
-        this.toStringAndCheck(SpreadsheetMetadataNonEmpty.with(map), "{decimal-separator='.', modified-by=modified@example.com}");
+        this.toStringAndCheck(
+                SpreadsheetMetadataNonEmpty.with(map),
+                "{\n" +
+                        "  \"decimal-separator\": \".\",\n" +
+                        "  \"modified-by\": \"modified@example.com\"\n" +
+                        "}"
+        );
     }
 
     @Test
@@ -1532,7 +1544,31 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         map.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD");
         map.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
 
-        this.toStringAndCheck(SpreadsheetMetadataNonEmpty.with(map), "{currency-symbol=\"AUD\", modified-by=modified@example.com}");
+        this.toStringAndCheck(
+                SpreadsheetMetadataNonEmpty.with(map),
+                "{\n" +
+                        "  \"currency-symbol\": \"AUD\",\n" +
+                        "  \"modified-by\": \"modified@example.com\"\n" +
+                        "}"
+        );
+    }
+
+    @Test
+    public void testToStringWithDefaults() {
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
+        map.put(this.property1(), this.value1());
+        map.put(this.property2(), this.value2());
+
+        this.toStringAndCheck(
+                SpreadsheetMetadataNonEmpty.with(map).setDefaults(SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH))),
+                "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
+                        "  \"creator\": \"user@example.com\",\n" +
+                        "  \"_defaults\": {\n" +
+                        "    \"locale\": \"en\"\n" +
+                        "  }\n" +
+                        "}"
+        );
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
