@@ -695,7 +695,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     static SpreadsheetMetadata unmarshall(final JsonNode node,
                                           final JsonNodeUnmarshallContext context) {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
-        SpreadsheetMetadata defaults = EMPTY;
+        SpreadsheetMetadata defaults = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             if (child.name().equals(DEFAULTS)) {
@@ -707,11 +707,9 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
             properties.put(name, name.unmarshall(child, context));
         }
 
-        return (
-                properties.isEmpty() ?
-                        EMPTY :
-                        SpreadsheetMetadataNonEmpty.with(properties)
-        ).setDefaults(defaults);
+        return properties.isEmpty() ?
+                null == defaults ? EMPTY : EMPTY.setDefaults(defaults) :
+                SpreadsheetMetadataNonEmpty.with(properties, null == defaults ? null : defaults);
     }
 
     static {

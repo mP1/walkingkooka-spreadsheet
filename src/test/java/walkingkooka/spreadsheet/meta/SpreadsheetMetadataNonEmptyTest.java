@@ -132,7 +132,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
         final EmailAddress value = EmailAddress.parse("creator111@example.com");
 
-        final SpreadsheetMetadata notEmpty = SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, value));
+        final SpreadsheetMetadata notEmpty = SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, value), SpreadsheetMetadata.EMPTY);
         this.getAndCheck(notEmpty,
                 propertyName,
                 value);
@@ -145,7 +145,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
         final EmailAddress email = EmailAddress.parse("creator123@example.com");
 
-        final SpreadsheetMetadata metadata = SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, email));
+        final SpreadsheetMetadata metadata = SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, email), SpreadsheetMetadata.EMPTY);
         assertEquals(email,
                 metadata.getOrFail(propertyName),
                 () -> "getOrFail " + propertyName + " in " + metadata);
@@ -690,7 +690,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testHateosLinkId() {
-        this.hateosLinkIdAndCheck(SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(0x12347f))),
+        this.hateosLinkIdAndCheck(
+                SpreadsheetMetadataNonEmpty.with(
+                        Maps.of(
+                                SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(0x12347f)
+                        ),
+                        SpreadsheetMetadata.EMPTY),
                 "12347f");
     }
 
@@ -1308,7 +1313,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testHasMathContextRequiredPropertiesAbsentFails2() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, 1))
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, 1), SpreadsheetMetadata.EMPTY)
                 .mathContext());
         this.checkMessage(thrown, "Required properties \"rounding-mode\" missing.");
     }
@@ -1318,8 +1323,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final int precision = 11;
 
         Arrays.stream(RoundingMode.values()).forEach(r -> {
-            final MathContext mathContext = SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, precision,
-                    SpreadsheetMetadataPropertyName.ROUNDING_MODE, r))
+            final MathContext mathContext = SpreadsheetMetadataNonEmpty.with(
+                    Maps.of(
+                            SpreadsheetMetadataPropertyName.PRECISION, precision,
+                            SpreadsheetMetadataPropertyName.ROUNDING_MODE, r
+                    ),
+                    SpreadsheetMetadata.EMPTY
+            )
                     .mathContext();
             assertEquals(precision, mathContext.getPrecision(), "precision");
             assertEquals(r, mathContext.getRoundingMode(), "roundingMode");
@@ -1328,8 +1338,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testMathContextCached() {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, 16,
-                SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR));
+        final SpreadsheetMetadata metadata = SpreadsheetMetadataNonEmpty.with(
+                Maps.of(
+                        SpreadsheetMetadataPropertyName.PRECISION, 16,
+                        SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR
+                ),
+                SpreadsheetMetadata.EMPTY
+        );
         assertSame(metadata.mathContext(), metadata.mathContext());
     }
 
@@ -1515,7 +1530,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         map.put(this.property2(), this.value2());
 
         this.toStringAndCheck(
-                SpreadsheetMetadataNonEmpty.with(map),
+                SpreadsheetMetadataNonEmpty.with(map, null),
                 "{\n" +
                         "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
                         "  \"creator\": \"user@example.com\"\n" +
@@ -1530,7 +1545,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         map.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
 
         this.toStringAndCheck(
-                SpreadsheetMetadataNonEmpty.with(map),
+                SpreadsheetMetadataNonEmpty.with(map, null),
                 "{\n" +
                         "  \"decimal-separator\": \".\",\n" +
                         "  \"modified-by\": \"modified@example.com\"\n" +
@@ -1545,7 +1560,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         map.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
 
         this.toStringAndCheck(
-                SpreadsheetMetadataNonEmpty.with(map),
+                SpreadsheetMetadataNonEmpty.with(map, null),
                 "{\n" +
                         "  \"currency-symbol\": \"AUD\",\n" +
                         "  \"modified-by\": \"modified@example.com\"\n" +
@@ -1560,7 +1575,16 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         map.put(this.property2(), this.value2());
 
         this.toStringAndCheck(
-                SpreadsheetMetadataNonEmpty.with(map).setDefaults(SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH))),
+                SpreadsheetMetadataNonEmpty.with(
+                        map,
+                        null
+                ).setDefaults(
+                        SpreadsheetMetadataNonEmpty.with(
+                                Maps.of(
+                                        SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH),
+                                null
+                        )
+                ),
                 "{\n" +
                         "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
                         "  \"creator\": \"user@example.com\",\n" +
@@ -1722,7 +1746,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 missing,
                 () -> "Several properties are missing values in " + properties);
 
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetMetadataNonEmpty.with(properties));
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetMetadataNonEmpty.with(properties, SpreadsheetMetadata.EMPTY));
     }
 
     // helpers...........................................................................................................
@@ -1765,7 +1789,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     private SpreadsheetMetadataNonEmpty createSpreadsheetMetadata(final Map<SpreadsheetMetadataPropertyName<?>, Object> map) {
-        return SpreadsheetMetadataNonEmpty.with(map);
+        return SpreadsheetMetadataNonEmpty.with(map, null);
     }
 
     @SuppressWarnings("SameReturnValue")
