@@ -102,7 +102,7 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
 
     @Test
     public void testJsonNodeUnmarshallStringFails() {
-        this.unmarshallFails(JsonNode.string("fails"), IllegalArgumentException.class);
+        this.unmarshallFails(JsonNode.string("fails"));
     }
 
     @Test

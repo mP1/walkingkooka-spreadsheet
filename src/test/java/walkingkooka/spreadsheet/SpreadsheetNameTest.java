@@ -69,7 +69,7 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
 
     @Test
     public void testJsonNodeUnmarshallInvalidStringFails() {
-        this.unmarshallFails(JsonNode.string("\r123xyz"), IllegalArgumentException.class);
+        this.unmarshallFails(JsonNode.string("\r123xyz"));
     }
 
     @Test

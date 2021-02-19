@@ -82,7 +82,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
 
     @Test
     public void testJsonNodeUnmarshallInvalidStringFails() {
-        this.unmarshallFails(JsonNode.string("123xyz"), IllegalArgumentException.class);
+        this.unmarshallFails(JsonNode.string("123xyz"));
     }
 
     @Test

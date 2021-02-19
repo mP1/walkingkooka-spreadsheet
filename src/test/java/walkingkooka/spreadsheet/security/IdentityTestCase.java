@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 public abstract class IdentityTestCase<V extends Identity<I>, I extends IdentityId> implements IdentityTesting<V, I>,
@@ -33,21 +32,21 @@ public abstract class IdentityTestCase<V extends Identity<I>, I extends Identity
 
     @Test
     public void testJsonNodeUnmarshallBooleanFails() {
-        this.unmarshallFails(JsonNode.booleanNode(true), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.booleanNode(true));
     }
 
     @Test
     public void testJsonNodeUnmarshallNumberFails() {
-        this.unmarshallFails(JsonNode.number(12), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.number(12));
     }
 
     @Test
     public void testJsonNodeUnmarshallArrayFails() {
-        this.unmarshallFails(JsonNode.array(), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.array());
     }
 
     @Test
     public void testJsonNodeUnmarshallObjectFails() {
-        this.unmarshallFails(JsonNode.object(), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.object());
     }
 }

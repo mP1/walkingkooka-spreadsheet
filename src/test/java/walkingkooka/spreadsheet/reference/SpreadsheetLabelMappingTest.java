@@ -25,7 +25,6 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -112,7 +111,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Test
     public void testJsonNodeUnmarshallEmptyObjectFails() {
-        this.unmarshallFails(JsonNode.object(), JsonNodeException.class);
+        this.unmarshallFails(JsonNode.object());
     }
 
     // HateosResource....................................................................................................

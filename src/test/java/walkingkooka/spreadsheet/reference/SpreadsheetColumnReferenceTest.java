@@ -150,7 +150,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testJsonNodeUnmarshallStringInvalidFails() {
-        this.unmarshallFails(JsonNode.string("!9"), IllegalArgumentException.class);
+        this.unmarshallFails(JsonNode.string("!9"));
     }
 
     @Test
