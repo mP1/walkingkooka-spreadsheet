@@ -69,7 +69,6 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -750,11 +749,15 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
      * Marshalls the individual properties and values and defaults but not the cached constructed values.
      */
     final JsonNode marshall(final JsonNodeMarshallContext context) {
-        final JsonObject object = this.marshallProperties(context);
+        final List<JsonNode> children = Lists.array();
+
         final SpreadsheetMetadata defaults = this.defaults;
-        return null != defaults ?
-                object.set(DEFAULTS, defaults.marshall(context)) :
-                object;
+        if (null != defaults) {
+            children.add(defaults.marshall(context).setName(DEFAULTS));
+        }
+
+        this.marshallProperties(children, context);
+        return JsonNode.object().setChildren(children);
     }
 
     /**
@@ -766,7 +769,8 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     /**
      * Sub classes must marshall their properties but not the defaults.
      */
-    abstract JsonObject marshallProperties(final JsonNodeMarshallContext context);
+    abstract void marshallProperties(final List<JsonNode> children,
+                                     final JsonNodeMarshallContext context);
 
     static SpreadsheetMetadata unmarshall(final JsonNode node,
                                           final JsonNodeUnmarshallContext context) {

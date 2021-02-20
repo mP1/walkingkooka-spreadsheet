@@ -30,11 +30,11 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -189,7 +189,7 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     // JsonNodeContext..................................................................................................
 
     @Override
-    JsonObject marshallProperties(final JsonNodeMarshallContext context) {
-        return JsonNode.object();
+    void marshallProperties(final List<JsonNode> children,
+                            final JsonNodeMarshallContext context) {
     }
 }

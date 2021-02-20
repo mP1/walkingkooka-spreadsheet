@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
@@ -28,12 +27,10 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -347,17 +344,13 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     // JsonNodeContext..................................................................................................
 
     @Override
-    JsonObject marshallProperties(final JsonNodeMarshallContext context) {
-        final List<JsonNode> json = Lists.array();
-
+    void marshallProperties(final List<JsonNode> children,
+                            final JsonNodeMarshallContext context) {
         for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.value().entrySet()) {
             final SpreadsheetMetadataPropertyName<?> propertyName = propertyAndValue.getKey();
             final JsonNode value = context.marshall(propertyAndValue.getValue());
 
-            json.add(value.setName(propertyName.jsonPropertyName));
+            children.add(value.setName(propertyName.jsonPropertyName));
         }
-
-        return JsonNode.object()
-                .setChildren(json);
     }
 }
