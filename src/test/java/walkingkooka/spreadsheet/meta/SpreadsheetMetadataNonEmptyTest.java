@@ -1586,11 +1586,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         )
                 ),
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"creator\": \"user@example.com\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"locale\": \"en\"\n" +
-                        "  }\n" +
+                        "  },\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
+                        "  \"creator\": \"user@example.com\"\n" +
                         "}"
         );
     }
