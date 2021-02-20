@@ -1600,9 +1600,30 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testFromJsonInvalidCharacterValueFails() {
         this.unmarshallFails(
-                JsonNode.parse("{" +
+                "{" +
                         "  \"decimal-separator\": \"d\"\n" +
-                        "}")
+                        "}",
+                SpreadsheetMetadata.class
+        );
+    }
+
+    @Test
+    public void testFromJsonWithDefaultSwap() {
+        this.unmarshallAndCheck(
+                "{\n" +
+                        "    \"decimal-separator\": \",\",\n" +
+                        "    \"_defaults\": {\n" +
+                        "        \"decimal-separator\": \".\",\n" +
+                        "        \"grouping-separator\": \",\"\n" +
+                        "    }\n" +
+                        "}",
+                SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, ',')
+                        .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, '.')
+                        .setDefaults(SpreadsheetMetadata.EMPTY
+                                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
+                                .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, ',')
+                        )
         );
     }
 
