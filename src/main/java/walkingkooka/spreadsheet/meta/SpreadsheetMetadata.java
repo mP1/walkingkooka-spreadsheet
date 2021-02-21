@@ -216,7 +216,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         SpreadsheetMetadata result = this;
 
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = this.value();
-        final V previousValue = (V) this.get(propertyName).orElse(null);
+        final V previousValue = (V) this.value().get(propertyName);
 
         if (!value.equals(previousValue)) {
             // property is different or new
