@@ -168,6 +168,39 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
+    public void testSetPropertyValueSameDefaultValue() {
+        final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
+        final Character dot = '.';
+        final Character comma = ',';
+
+        this.setAndCheck(
+                SpreadsheetMetadataNonEmpty.with(
+                        Maps.of(
+                                decimalSeparator, dot
+                        ),
+                        SpreadsheetMetadataNonEmpty.with(
+                                Maps.of(
+                                        decimalSeparator, comma
+                                ),
+                                null)
+                ),
+                decimalSeparator,
+                comma,
+                SpreadsheetMetadataNonEmpty.with(
+                        Maps.of(
+                                decimalSeparator, comma
+                        ),
+                        SpreadsheetMetadataNonEmpty.with(
+                                Maps.of(
+                                        decimalSeparator, comma
+                                ),
+                                null
+                        )
+                )
+        );
+    }
+
+    @Test
     public void testSetReplacePropertyAndValue() {
         final SpreadsheetMetadataPropertyName<LocalDateTime> property1 = this.property1();
         final LocalDateTime value1 = this.value1();
