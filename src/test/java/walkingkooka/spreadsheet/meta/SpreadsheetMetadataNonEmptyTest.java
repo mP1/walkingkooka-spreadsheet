@@ -460,13 +460,20 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
         final Character comma = ',';
 
-        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(grouping, comma);
+        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(
+                decimalSeparator, dot,
+                grouping, comma
+        );
 
         this.setAndCheck(
                 this.createSpreadsheetMetadata(decimalSeparator, dot).setDefaults(defaults),
-                grouping,
-                dot,
-                this.createSpreadsheetMetadata(decimalSeparator, comma, grouping, dot).setDefaults(defaults)
+                decimalSeparator,
+                comma,
+                SpreadsheetMetadataNonEmpty.with(
+                        Maps.of(
+                                decimalSeparator, comma, grouping, dot
+                        ),
+                        defaults)
         );
     }
 
