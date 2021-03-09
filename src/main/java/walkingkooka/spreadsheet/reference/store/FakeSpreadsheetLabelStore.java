@@ -24,6 +24,7 @@ import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetLabelStore extends FakeStore<SpreadsheetLabelName, SpreadsheetLabelMapping> implements SpreadsheetLabelStore, Fake {
@@ -35,6 +36,11 @@ public class FakeSpreadsheetLabelStore extends FakeStore<SpreadsheetLabelName, S
 
     @Override
     public Set<SpreadsheetLabelName> labels(final SpreadsheetCellReference cell) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetLabelMapping> loadWithLabelName(final SpreadsheetLabelName name) {
         throw new UnsupportedOperationException();
     }
 }
