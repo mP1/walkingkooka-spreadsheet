@@ -142,13 +142,6 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         return Sets.readOnly(TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor.gather(cell, this.mappings));
     }
 
-    @Override
-    public Optional<SpreadsheetLabelMapping> loadWithLabelName(final SpreadsheetLabelName name) {
-        Objects.requireNonNull(name, "name");
-
-        return Optional.ofNullable(this.mappings.get(name));
-    }
-
     /**
      * All mappings present in this spreadsheet
      */

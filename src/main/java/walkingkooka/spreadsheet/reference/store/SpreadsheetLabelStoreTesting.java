@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.store.StoreTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -116,31 +115,6 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         assertEquals(labels,
                 store.labels(reference),
                 () -> "labels for " + reference);
-    }
-
-    @Test
-    default void testLoadWithLabelNameNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().loadWithLabelName(null));
-    }
-
-    default void loadWithLabelNameAndCheck(final SpreadsheetLabelStore store,
-                                           final SpreadsheetLabelName name) {
-        this.loadWithLabelNameAndCheck(store, name, Optional.empty());
-    }
-
-
-    default void loadWithLabelNameAndCheck(final SpreadsheetLabelStore store,
-                                           final SpreadsheetLabelName name,
-                                           final SpreadsheetLabelMapping mapping) {
-        this.loadWithLabelNameAndCheck(store, name, Optional.of(mapping));
-    }
-
-    default void loadWithLabelNameAndCheck(final SpreadsheetLabelStore store,
-                                           final SpreadsheetLabelName name,
-                                           final Optional<SpreadsheetLabelMapping> mapping) {
-        assertEquals(mapping,
-                store.loadWithLabelName(name),
-                () -> "labelName " + name);
     }
 
     @Override

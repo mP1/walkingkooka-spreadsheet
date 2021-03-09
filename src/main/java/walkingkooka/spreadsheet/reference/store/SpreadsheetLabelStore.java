@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.store.Store;
 import walkingkooka.tree.expression.ExpressionReference;
 
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -42,9 +41,4 @@ public interface SpreadsheetLabelStore extends Store<SpreadsheetLabelName, Sprea
      * label to label references until they resolve to cells.
      */
     Set<SpreadsheetLabelName> labels(final SpreadsheetCellReference cell);
-
-    /**
-     * Attempts to load the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetLabelName}
-     */
-    Optional<SpreadsheetLabelMapping> loadWithLabelName(final SpreadsheetLabelName name);
 }
