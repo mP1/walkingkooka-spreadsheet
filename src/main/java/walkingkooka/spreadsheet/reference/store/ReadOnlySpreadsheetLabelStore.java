@@ -96,11 +96,6 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
         return this.store.labels(cell);
     }
 
-    @Override
-    public Optional<SpreadsheetLabelMapping> loadWithLabelName(final SpreadsheetLabelName name) {
-        return this.store.loadWithLabelName(name);
-    }
-
     private final SpreadsheetLabelStore store;
 
     @Override

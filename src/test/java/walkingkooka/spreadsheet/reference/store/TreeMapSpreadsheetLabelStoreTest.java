@@ -96,30 +96,6 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     @Test
-    public void testLoadLabelNameUnknown() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
-        store.save(SpreadsheetLabelMapping.with(this.label1(), this.range1()));
-        store.save(SpreadsheetLabelMapping.with(this.label2(), this.a2()));
-
-        this.loadWithLabelNameAndCheck(this.createStore(), this.label1());
-    }
-
-    @Test
-    public void testLoadLabelName() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
-
-        final SpreadsheetLabelMapping mapping1 = SpreadsheetLabelMapping.with(this.label1(), this.a1());
-        store.save(mapping1);
-
-        final SpreadsheetLabelMapping mapping2 = SpreadsheetLabelMapping.with(this.label2(), this.a2());
-        store.save(mapping2);
-
-        this.loadWithLabelNameAndCheck(store, mapping1.label(), mapping1);
-        this.loadWithLabelNameAndCheck(store, mapping2.label(), mapping2);
-        this.loadWithLabelNameAndCheck(store, SpreadsheetLabelName.labelName("unknown"));
-    }
-
-    @Test
     public void testToString() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
         store.save(SpreadsheetLabelMapping.with(this.label1(), this.range1()));
