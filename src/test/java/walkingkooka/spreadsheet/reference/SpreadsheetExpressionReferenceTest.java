@@ -151,6 +151,17 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
         this.parseStringAndCheck(label, SpreadsheetExpressionReference.labelName(label));
     }
 
+    @Test
+    public void testParseRange() {
+        final String range = "A2:B2";
+        this.parseStringAndCheck(range, SpreadsheetExpressionReference.parseRange(range));
+    }
+
+    @Test
+    public void testParseViewportFails() {
+        this.parseStringFails(SpreadsheetExpressionReference.parseViewport("B9:40:50.75").toString(), IllegalArgumentException.class);
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
