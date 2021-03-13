@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.tree.expression.Expression;
@@ -39,6 +41,88 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
         ParserTesting,
         HasLocaleTesting {
+
+    // resolveCellReference...............................................................................................
+
+    @Test
+    default void testResolveCellReferenceNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createContext().resolveCellReference(null));
+    }
+
+    @Test
+    default void testResolveCellReferenceEmptyFails() {
+        this.resolveCellReferenceAndFail("");
+    }
+
+    @Test
+    default void testResolveCellReferenceInvalidFails() {
+        this.resolveCellReferenceAndFail("!invalid");
+    }
+
+    @Test
+    default void testResolveCellReferenceViewportFails() {
+        this.resolveCellReferenceAndFail(SpreadsheetExpressionReference.parseViewport("B9:40.5:50.75").toString());
+    }
+
+    @Test
+    default void testResolveCellReferenceRange() {
+        this.resolveCellReferenceAndCheck("B2:B3", SpreadsheetCellReference.parseCellReference("B2"));
+    }
+
+    default void resolveCellReferenceAndFail(final String text) {
+        this.resolveCellReferenceAndFail(
+                this.createContext(),
+                text
+        );
+    }
+
+    default void resolveCellReferenceAndFail(final SpreadsheetEngineContext context,
+                                             final String text) {
+        assertThrows(RuntimeException.class, () -> context.resolveCellReference(text),
+                () -> "resolveCellReference " + CharSequences.quoteIfChars(text)
+        );
+    }
+
+    default void resolveCellReferenceAndFail(final String text,
+                                             final String message) {
+        this.resolveCellReferenceAndFail(
+                this.createContext(),
+                text,
+                message
+        );
+    }
+
+    default void resolveCellReferenceAndFail(final SpreadsheetEngineContext context,
+                                             final String text,
+                                             final String message) {
+        final RuntimeException thrown = assertThrows(RuntimeException.class, () -> context.resolveCellReference(text),
+                () -> "resolveCellReference " + CharSequences.quoteIfChars(text)
+        );
+        assertEquals(
+                message,
+                thrown.getMessage(),
+                () -> "resolveCellReference " + CharSequences.quoteIfChars(text)
+        );
+    }
+
+    default void resolveCellReferenceAndCheck(final String text,
+                                              final SpreadsheetCellReference reference) {
+        this.resolveCellReferenceAndCheck(
+                this.createContext(),
+                text,
+                reference
+        );
+    }
+
+    default void resolveCellReferenceAndCheck(final SpreadsheetEngineContext context,
+                                              final String text,
+                                              final SpreadsheetCellReference reference) {
+        assertEquals(
+                reference,
+                context.resolveCellReference(text),
+                () -> "resolveCellReference " + CharSequences.quoteIfChars(text)
+        );
+    }
 
     // parseFormula......................................................................................................
 

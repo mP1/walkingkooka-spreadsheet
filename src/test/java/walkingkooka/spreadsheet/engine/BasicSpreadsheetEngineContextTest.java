@@ -38,6 +38,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.text.cursor.parser.Parser;
@@ -250,6 +252,57 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final SpreadsheetFormatter defaultSpreadsheetFormatter = this.defaultSpreadsheetFormatter();
         assertSame(defaultSpreadsheetFormatter, this.createContext(defaultSpreadsheetFormatter).defaultSpreadsheetFormatter());
     }
+
+    // resolveCellReference..............................................................................................
+
+    @Test
+    public void testResolveCellReferenceCellReference() {
+        this.resolveCellReferenceAndCheck(
+                "A1",
+                SpreadsheetCellReference.parseCellReference("A1")
+        );
+    }
+
+    @Test
+    public void testResolveCellReferenceLabelUnknownFails() {
+        this.resolveCellReferenceAndFail(
+                "UnknownLabel"
+        );
+    }
+
+    @Test
+    public void testResolveCellReferenceLabel() {
+        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCellReference("A1");
+        final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("Label456");
+
+        final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
+        store.save(label.mapping(cell));
+
+        this.resolveCellReferenceAndCheck(
+                this.createContext(store),
+                label.toString(),
+                cell
+        );
+    }
+
+    @Test
+    public void testResolveCellReferenceLabelToLabelToCell() {
+        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCellReference("A1");
+        final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label111");
+        final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label222");
+
+        final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
+        store.save(label1.mapping(label2));
+        store.save(label2.mapping(cell));
+
+        this.resolveCellReferenceAndCheck(
+                this.createContext(store),
+                label1.toString(),
+                cell
+        );
+    }
+
+    // parseFormula.....................................................................................................
 
     @Test
     public void testParseFormulaApostropheString() {
@@ -503,13 +556,22 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return this.createContext(this.defaultSpreadsheetFormatter());
     }
 
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore) {
+        return this.createContext(labelStore, this.defaultSpreadsheetFormatter());
+    }
+
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetFormatter defaultSpreadsheetFormatter) {
+        return this.createContext(this.labelStore(), defaultSpreadsheetFormatter);
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore,
+                                                        final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         return BasicSpreadsheetEngineContext.with(
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.labelStore(),
+                labelStore,
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),

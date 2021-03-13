@@ -17,10 +17,12 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.Either;
 import walkingkooka.convert.FakeConverterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -29,6 +31,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class FakeSpreadsheetEngineContext extends FakeConverterContext implements SpreadsheetEngineContext, Fake {
+
+    @Override
+    public SpreadsheetCellReference resolveCellReference(final String text) {
+        Objects.requireNonNull(text, "text");
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public SpreadsheetParserToken parseFormula(final String formula) {
