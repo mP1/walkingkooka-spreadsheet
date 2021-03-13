@@ -136,14 +136,17 @@ abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> im
     // parse............................................................................................................
 
     /**
-     * Parsers the given text into a {@link SpreadsheetExpressionReference}
+     * Parsers the given text into a {@link SpreadsheetCellReference}, {@link SpreadsheetLabelName} or {@link SpreadsheetRange}.
+     * Attempts to parse {@link SpreadsheetViewport} in text will fail.
      */
     public static SpreadsheetExpressionReference parse(final String text) {
         Objects.requireNonNull(text, "text");
 
-        return isTextCellReference(text) ?
-                parseCellReference(text) :
-                labelName(text);
+        return text.contains(":") ?
+                parseRange(text) :
+                isTextCellReference(text) ?
+                        parseCellReference(text) :
+                        labelName(text);
     }
 
     /**
