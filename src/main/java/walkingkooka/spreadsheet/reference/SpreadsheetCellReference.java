@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.Comparators;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -29,13 +30,14 @@ import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A {@link SpreadsheetExpressionReference reference} that includes a defined name or column and row. Note the
  * {@link #compareTo(SpreadsheetCellReference)} ignores the {@link SpreadsheetReferenceKind} of the column and row.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetCellReference extends SpreadsheetExpressionReference<SpreadsheetCellReference> {
+public final class SpreadsheetCellReference extends SpreadsheetExpressionReference<SpreadsheetCellReference> implements HateosResource<String> {
 
     /**
      * Parsers a range of cell referencs.
@@ -213,8 +215,16 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         return SpreadsheetCellBox.with(this, x, y, width, height);
     }
 
+    // HateosResource...................................................................................................
+
+    @Override
     public String hateosLinkId() {
         return this.column.hateosLinkId() + this.row.hateosLinkId();
+    }
+
+    @Override
+    public Optional<String> id() {
+        return Optional.of(this.hateosLinkId());
     }
 
     // SpreadsheetExpressionReferenceVisitor............................................................................
