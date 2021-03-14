@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.ComparableTesting2;
+import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.test.ParseStringTesting;
@@ -34,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetCellReference>
         implements ComparableTesting2<SpreadsheetCellReference>,
+        HateosResourceTesting<SpreadsheetCellReference>,
         ParseStringTesting<SpreadsheetCellReference> {
 
     private final static int COLUMN = 123;
@@ -588,6 +590,13 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // HatoesResourceTesting............................................................................................
+
+    @Override
+    public SpreadsheetCellReference createHateosResource() {
+        return this.createReference();
     }
 
     // ParseStringTesting.........................................................................................
