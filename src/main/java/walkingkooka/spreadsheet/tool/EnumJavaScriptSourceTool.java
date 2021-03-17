@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.tool;
 
+import walkingkooka.Cast;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -35,6 +37,8 @@ public final class EnumJavaScriptSourceTool {
 
     public static void main(final String[] args) throws Exception {
         final Path reactSrc = Paths.get("../walkingkooka-spreadsheet-react/src/");
+
+        generateSpreadsheetEngineEvaluation(Paths.get(reactSrc.toString(), "spreadsheet", "engine"));
         generateTextStylePropertyNames(Paths.get(reactSrc.toString(), "text"));
     }
 
@@ -47,13 +51,20 @@ public final class EnumJavaScriptSourceTool {
         }
     }
 
-    private static void generateEnums(final Class<Enum<?>> enumType,
+    private static void generateSpreadsheetEngineEvaluation(final Path dest) throws Exception {
+        generateEnums(
+                SpreadsheetEngineEvaluation.class,
+                dest
+        );
+    }
+
+    private static void generateEnums(final Class<? extends Enum<?>> enumType,
                                       final Path dest) throws Exception {
         try (final Writer writer = new FileWriter(sourceFilePath(dest, enumType).toFile())) {
             final IndentingPrinter printer = Printers.writer(writer, LineEnding.SYSTEM)
                     .indenting(Indentation.with("  "));
             generateSource(
-                    enumType,
+                    Cast.to(enumType),
                     printer
             );
             printer.flush();
