@@ -28,6 +28,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.io.FileWriter;
 import java.io.Writer;
+import java.math.RoundingMode;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -40,6 +41,7 @@ public final class EnumJavaScriptSourceTool {
         final Path reactSrc = Paths.get("../walkingkooka-spreadsheet-react/src/");
 
         generateExpressionNumberKind(Paths.get(reactSrc.toString(), "math"));
+        generateRoundingMode(Paths.get(reactSrc.toString(), "math"));
         generateSpreadsheetEngineEvaluation(Paths.get(reactSrc.toString(), "spreadsheet", "engine"));
         generateTextStylePropertyNames(Paths.get(reactSrc.toString(), "text"));
     }
@@ -47,6 +49,13 @@ public final class EnumJavaScriptSourceTool {
     private static void generateExpressionNumberKind(final Path dest) throws Exception {
         generateEnums(
                 ExpressionNumberKind.class,
+                dest
+        );
+    }
+
+    private static void generateRoundingMode(final Path dest) throws Exception {
+        generateEnums(
+                RoundingMode.class,
                 dest
         );
     }
