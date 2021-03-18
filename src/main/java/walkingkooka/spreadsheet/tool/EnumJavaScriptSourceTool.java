@@ -23,6 +23,7 @@ import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printers;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.io.FileWriter;
@@ -38,8 +39,23 @@ public final class EnumJavaScriptSourceTool {
     public static void main(final String[] args) throws Exception {
         final Path reactSrc = Paths.get("../walkingkooka-spreadsheet-react/src/");
 
+        generateExpressionNumberKind(Paths.get(reactSrc.toString(), "math"));
         generateSpreadsheetEngineEvaluation(Paths.get(reactSrc.toString(), "spreadsheet", "engine"));
         generateTextStylePropertyNames(Paths.get(reactSrc.toString(), "text"));
+    }
+
+    private static void generateExpressionNumberKind(final Path dest) throws Exception {
+        generateEnums(
+                ExpressionNumberKind.class,
+                dest
+        );
+    }
+
+    private static void generateSpreadsheetEngineEvaluation(final Path dest) throws Exception {
+        generateEnums(
+                SpreadsheetEngineEvaluation.class,
+                dest
+        );
     }
 
     private static void generateTextStylePropertyNames(final Path dest) throws Exception {
@@ -49,13 +65,6 @@ public final class EnumJavaScriptSourceTool {
                 generateEnums(maybeEnumType.get(), dest);
             }
         }
-    }
-
-    private static void generateSpreadsheetEngineEvaluation(final Path dest) throws Exception {
-        generateEnums(
-                SpreadsheetEngineEvaluation.class,
-                dest
-        );
     }
 
     private static void generateEnums(final Class<? extends Enum<?>> enumType,
