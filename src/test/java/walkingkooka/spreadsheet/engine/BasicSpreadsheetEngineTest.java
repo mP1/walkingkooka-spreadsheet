@@ -84,7 +84,7 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.Length;
-import walkingkooka.tree.text.TextDecoration;
+import walkingkooka.tree.text.TextDecorationLine;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -679,12 +679,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.saveRule(true,
                 2,
-                TextStyle.with(Maps.of(TextStylePropertyName.TEXT_DECORATION, TextDecoration.UNDERLINE)),
+                TextStyle.with(Maps.of(TextStylePropertyName.TEXT_DECORATION_LINE, TextDecorationLine.UNDERLINE)),
                 a,
                 rules);
         this.saveRule(false,
                 3,
-                TextStyle.with(Maps.of(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC, TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD, TextStylePropertyName.TEXT_DECORATION, TextDecoration.UNDERLINE)),
+                TextStyle.with(Maps.of(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC, TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD, TextStylePropertyName.TEXT_DECORATION_LINE, TextDecorationLine.UNDERLINE)),
                 a,
                 rules);
 
