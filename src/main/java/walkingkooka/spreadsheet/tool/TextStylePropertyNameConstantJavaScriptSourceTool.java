@@ -30,15 +30,9 @@ public final class TextStylePropertyNameConstantJavaScriptSourceTool {
     public static void main(final String[] args) {
         try (final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.with("  "))) {
             for (final TextStylePropertyName name : TextStylePropertyName.values()) {
-                final String kebabName = name.value();
-                printer.println("static " + (toUpperCaseUnderscore(kebabName)) + " = \"" + kebabName + "\";");
+                printer.println("static " + name.constantName() + " = \"" + name.value() + "\";");
             }
             printer.flush();
         }
-    }
-
-    private static String toUpperCaseUnderscore(final String kebabName) {
-        return kebabName.toUpperCase()
-                .replace('-', '_');
     }
 }
