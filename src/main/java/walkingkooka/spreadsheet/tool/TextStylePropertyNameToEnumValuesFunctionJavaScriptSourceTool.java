@@ -49,7 +49,7 @@ public final class TextStylePropertyNameToEnumValuesFunctionJavaScriptSourceTool
                         if (possibleEnumType.isPresent()) {
                             final String kebabName = name.value();
 
-                            printer.println("case TextStyle." + toUpperCaseUnderscore(kebabName) + ":");
+                            printer.println("case TextStyle." + name.constantName() + ":");
                             printer.indent();
                             {
                                 printer.println("values = " + possibleEnumType.get().getSimpleName() + ".values();");
@@ -74,10 +74,5 @@ public final class TextStylePropertyNameToEnumValuesFunctionJavaScriptSourceTool
             printer.println("}");
             printer.flush();
         }
-    }
-
-    private static String toUpperCaseUnderscore(final String kebabName) {
-        return kebabName.toUpperCase()
-                .replace('-', '_');
     }
 }
