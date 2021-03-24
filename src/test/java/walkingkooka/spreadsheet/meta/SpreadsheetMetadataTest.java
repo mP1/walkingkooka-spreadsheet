@@ -39,11 +39,16 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.BorderStyle;
 import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
+import walkingkooka.tree.text.FontStyle;
+import walkingkooka.tree.text.FontVariant;
+import walkingkooka.tree.text.Hyphens;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextJustify;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.tree.text.VerticalAlign;
+import walkingkooka.tree.text.WordBreak;
 import walkingkooka.tree.text.WordWrap;
 
 import java.math.BigDecimal;
@@ -125,6 +130,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .set(TextStylePropertyName.BORDER_BOTTOM_COLOR, borderColor)
                 .set(TextStylePropertyName.BORDER_BOTTOM_STYLE, borderStyle)
 
+                .set(TextStylePropertyName.MARGIN_LEFT, none)
+                .set(TextStylePropertyName.MARGIN_TOP, none)
+                .set(TextStylePropertyName.MARGIN_BOTTOM, none)
+                .set(TextStylePropertyName.MARGIN_RIGHT, none)
+
                 .set(TextStylePropertyName.PADDING_LEFT, none)
                 .set(TextStylePropertyName.PADDING_TOP, none)
                 .set(TextStylePropertyName.PADDING_BOTTOM, none)
@@ -135,8 +145,13 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
                 .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("MS Sans Serif"))
                 .set(TextStylePropertyName.FONT_SIZE, FontSize.with(11))
+                .set(TextStylePropertyName.FONT_STYLE, FontStyle.NORMAL)
+                .set(TextStylePropertyName.FONT_VARIANT, FontVariant.NORMAL)
+                .set(TextStylePropertyName.HYPHENS, Hyphens.NONE)
                 .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.LEFT)
                 .set(TextStylePropertyName.TEXT_JUSTIFY, TextJustify.NONE)
+                .set(TextStylePropertyName.VERTICAL_ALIGN, VerticalAlign.TOP)
+                .set(TextStylePropertyName.WORD_BREAK, WordBreak.NORMAL)
                 .set(TextStylePropertyName.WORD_WRAP, WordWrap.NORMAL)
 
                 .set(TextStylePropertyName.HEIGHT, Length.pixel(30.0))
