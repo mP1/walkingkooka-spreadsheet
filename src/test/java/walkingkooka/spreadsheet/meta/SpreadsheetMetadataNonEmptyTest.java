@@ -1280,6 +1280,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private SpreadsheetMetadata createSpreadsheetMetadataWithFormatterContext() {
         return this.createSpreadsheetMetadataWithConverter()
+                .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
@@ -1289,8 +1290,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENT)
                 .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
-                .set(SpreadsheetMetadataPropertyName.WIDTH, 10);
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN);
     }
 
     // HasJsonNodeUnmarshallContext.......................................................................................
@@ -1748,6 +1748,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testJsonNodeMarshallRoundtrip() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
+        properties.put(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 0);
         properties.put(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59));
         properties.put(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
@@ -1789,7 +1790,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetCellReference.parseCellReference("B99"));
         properties.put(SpreadsheetMetadataPropertyName.VIEWPORT_COORDINATES, SpreadsheetCoordinates.with(1, 2));
-        properties.put(SpreadsheetMetadataPropertyName.WIDTH, 0);
+        ;
 
         for (int i = 0; i < SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER + 2; i++) {
             properties.put(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));

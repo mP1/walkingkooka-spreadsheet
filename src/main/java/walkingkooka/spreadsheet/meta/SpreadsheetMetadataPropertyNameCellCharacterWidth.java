@@ -17,20 +17,20 @@
 
 package walkingkooka.spreadsheet.meta;
 
-final class SpreadsheetMetadataPropertyNameWidth extends SpreadsheetMetadataPropertyNameInteger {
+final class SpreadsheetMetadataPropertyNameCellCharacterWidth extends SpreadsheetMetadataPropertyNameInteger {
 
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameWidth instance() {
-        return new SpreadsheetMetadataPropertyNameWidth();
+    final static SpreadsheetMetadataPropertyNameCellCharacterWidth instance() {
+        return new SpreadsheetMetadataPropertyNameCellCharacterWidth();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameWidth() {
-        super("width");
+    private SpreadsheetMetadataPropertyNameCellCharacterWidth() {
+        super("cell-character-width");
     }
 
     @Override
@@ -45,6 +45,6 @@ final class SpreadsheetMetadataPropertyNameWidth extends SpreadsheetMetadataProp
     @Override
     void accept(final Integer value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitWidth(value);
+        visitor.visitCellCharacterWidth(value);
     }
 }

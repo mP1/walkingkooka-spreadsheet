@@ -79,6 +79,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Integer> CELL_CHARACTER_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameCellCharacterWidth.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>creator {@link EmailAddress}</code>
      */
     public final static SpreadsheetMetadataPropertyName<EmailAddress> CREATOR = registerConstant(SpreadsheetMetadataPropertyNameCreator.instance());
@@ -252,11 +257,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>viewport-coordinates {@link SpreadsheetCoordinates}</code>
      */
     public final static SpreadsheetMetadataPropertyName<SpreadsheetCoordinates> VIEWPORT_COORDINATES = registerConstant(SpreadsheetMetadataPropertyNameViewportCoordinates.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<Integer> WIDTH = registerConstant(SpreadsheetMetadataPropertyNameWidth.instance());
 
     /**
      * Factory that assumes a valid {@link SpreadsheetMetadataPropertyName} or fails.
