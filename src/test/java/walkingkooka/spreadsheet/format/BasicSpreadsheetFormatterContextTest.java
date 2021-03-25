@@ -48,7 +48,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithNullNumberToColorFails() {
         this.withFails(null,
                 this.nameToColor(),
-                WIDTH,
+                CELL_CHARACTER_WIDTH,
                 this.defaultSpreadsheetFormatter(),
                 this.converterContext());
     }
@@ -57,13 +57,13 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithNullNameToColorFails() {
         this.withFails(this.numberToColor(),
                 null,
-                WIDTH,
+                CELL_CHARACTER_WIDTH,
                 this.defaultSpreadsheetFormatter(),
                 this.converterContext());
     }
 
     @Test
-    public void testWithInvalidWidthFails() {
+    public void testWithInvalidCellCharacterWidthFails() {
         assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                 this.nameToColor(),
                 -1,
@@ -72,7 +72,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     @Test
-    public void testWithInvalidWidthFails2() {
+    public void testWithInvalidCellCharacterWidthFails2() {
         assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                 this.nameToColor(),
                 0,
@@ -84,7 +84,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithNullDefaultSpreadsheetFormatterFails() {
         this.withFails(this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
+                CELL_CHARACTER_WIDTH,
                 null,
                 this.converterContext());
     }
@@ -93,7 +93,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWIthNullConverterContextFails() {
         this.withFails(this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
+                CELL_CHARACTER_WIDTH,
                 this.defaultSpreadsheetFormatter(),
                 null);
     }
@@ -155,7 +155,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
         return BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
+                CELL_CHARACTER_WIDTH,
                 this.defaultSpreadsheetFormatter(),
                 this.converterContext());
     }
@@ -196,7 +196,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return Color.fromRgb(0x123456);
     }
 
-    private final static int WIDTH = 1;
+    private final static int CELL_CHARACTER_WIDTH = 1;
 
     private SpreadsheetFormatter defaultSpreadsheetFormatter() {
         return new SpreadsheetFormatter() {

@@ -25,6 +25,11 @@ import java.util.Optional;
 public class FakeSpreadsheetFormatterContext extends FakeExpressionFunctionContext implements SpreadsheetFormatterContext {
 
     @Override
+    public int cellCharacterWidth() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<Color> colorNumber(final int number) {
         throw new UnsupportedOperationException();
     }
@@ -36,11 +41,6 @@ public class FakeSpreadsheetFormatterContext extends FakeExpressionFunctionConte
 
     @Override
     public Optional<SpreadsheetText> defaultFormatText(final Object value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int width() {
         throw new UnsupportedOperationException();
     }
 }

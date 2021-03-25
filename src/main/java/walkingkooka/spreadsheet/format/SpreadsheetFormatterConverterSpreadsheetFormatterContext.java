@@ -58,6 +58,11 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
+    public int cellCharacterWidth() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<Color> colorNumber(final int number) {
         throw new UnsupportedOperationException();
     }
@@ -179,11 +184,6 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     @Override
     public String weekDayNameAbbreviation(final int day) {
         return context.weekDayNameAbbreviation(day);
-    }
-
-    @Override
-    public int width() {
-        throw new UnsupportedOperationException();
     }
 
     @Override
