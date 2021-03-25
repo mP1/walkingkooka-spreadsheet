@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -33,6 +34,18 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
 
     SpreadsheetMetadataPropertyNameTestCase() {
         super();
+    }
+
+    @Test
+    public final void testTextStylePropertyNameClashFree() {
+        final String property = this.createName().value();
+
+        assertEquals(
+                false,
+                TextStylePropertyName.values()
+                        .stream()
+                        .anyMatch(p -> p.value().equals(property))
+        );
     }
 
     @Test
