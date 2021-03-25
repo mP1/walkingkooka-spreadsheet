@@ -54,7 +54,7 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
                 new TestSpreadsheetFormatterContext() {
 
                     @Override
-                    public int width() {
+                    public int cellCharacterWidth() {
                         return TEXT.length() + 3;
                     }
                 },

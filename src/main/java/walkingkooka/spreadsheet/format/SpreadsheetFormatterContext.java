@@ -30,6 +30,12 @@ public interface SpreadsheetFormatterContext extends CanConvert,
         ExpressionNumberConverterContext {
 
     /**
+     * The width of the "cell" in characters.
+     * This value affects STAR operator.
+     */
+    int cellCharacterWidth();
+
+    /**
      * Returns the {@link Color} with the given number.
      */
     Optional<Color> colorNumber(final int number);
@@ -38,12 +44,6 @@ public interface SpreadsheetFormatterContext extends CanConvert,
      * Returns the {@link Color} with the given name.
      */
     Optional<Color> colorName(final SpreadsheetColorName name);
-
-    /**
-     * The width of the "cell" in characters.
-     * This value affects STAR operator.
-     */
-    int width();
 
     /**
      * Provides a default format text.

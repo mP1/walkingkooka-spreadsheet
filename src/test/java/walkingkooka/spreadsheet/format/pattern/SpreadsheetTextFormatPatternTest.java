@@ -323,7 +323,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
             }
 
             @Override
-            public int width() {
+            public int cellCharacterWidth() {
                 return 2;
             }
         };

@@ -62,7 +62,7 @@ final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends 
 
     @Override
     protected void visit(final SpreadsheetFormatStarParserToken token) {
-        final int fill = this.context.width() - this.text.length();
+        final int fill = this.context.cellCharacterWidth() - this.text.length();
         final char c = token.value();
 
         for (int i = 0; i < fill; i++) {
