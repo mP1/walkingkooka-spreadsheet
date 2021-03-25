@@ -98,6 +98,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
 
     // properties..........................................................................................................
 
+    protected void visitCellCharacterWidth(final Integer value) {
+        // nop
+    }
+
     protected void visitCreateDateTime(final LocalDateTime dateTime) {
         // nop
     }
@@ -243,10 +247,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitViewportCoordinates(final SpreadsheetCoordinates coords) {
-        // nop
-    }
-
-    protected void visitWidth(final Integer value) {
         // nop
     }
 }

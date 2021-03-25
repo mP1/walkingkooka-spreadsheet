@@ -69,6 +69,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitCellCharacterWidth(final Integer value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitCreateDateTime(final LocalDateTime dateTime) {
         throw new UnsupportedOperationException();
     }
@@ -250,11 +255,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitViewportCoordinates(final SpreadsheetCoordinates coords) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitWidth(final Integer value) {
         throw new UnsupportedOperationException();
     }
 }

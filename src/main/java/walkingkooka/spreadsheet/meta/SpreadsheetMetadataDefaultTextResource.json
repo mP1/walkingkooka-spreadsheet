@@ -1,4 +1,5 @@
 {
+  "cell-character-width": 1,
   "date-time-offset": -25569,
   "default-year": 1900,
   "expression-number-kind": "BIG_DECIMAL",
@@ -42,6 +43,5 @@
   },
   "two-digit-year": 20,
   "viewport-cell": "A1",
-  "viewport-coordinates": "0,0",
-  "width": 1
+  "viewport-coordinates": "0,0"
 }

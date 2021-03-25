@@ -121,6 +121,7 @@ public class JunitTest {
     private static SpreadsheetMetadata metadata() {
         if (null == metadata) {
             SpreadsheetMetadata m = SpreadsheetMetadata.EMPTY
+                    .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
                     .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59))
                     .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
                     .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD")
@@ -149,8 +150,7 @@ public class JunitTest {
                     .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("hh:mm"))
                     .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("hh:mmhh:mm:ss.000"))
                     .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31)
-                    .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',')
-                    .set(SpreadsheetMetadataPropertyName.WIDTH, 10);
+                    .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',');
 
             for (int i = 0; i < SpreadsheetMetadata.MAX_NUMBER_COLOR + 2; i++) {
                 m = m.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));

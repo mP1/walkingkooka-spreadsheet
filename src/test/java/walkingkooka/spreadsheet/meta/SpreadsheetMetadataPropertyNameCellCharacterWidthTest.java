@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameWidthTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameWidth> {
+public final class SpreadsheetMetadataPropertyNameCellCharacterWidthTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameCellCharacterWidth> {
 
     @Test
     public void testNegativeValueFails() {
@@ -33,18 +33,18 @@ public final class SpreadsheetMetadataPropertyNameWidthTest extends SpreadsheetM
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameWidth.instance(), "width");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCellCharacterWidth.instance(), "width");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameWidth createName() {
-        return SpreadsheetMetadataPropertyNameWidth.instance();
+    SpreadsheetMetadataPropertyNameCellCharacterWidth createName() {
+        return SpreadsheetMetadataPropertyNameCellCharacterWidth.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameWidth> type() {
-        return SpreadsheetMetadataPropertyNameWidth.class;
+    public Class<SpreadsheetMetadataPropertyNameCellCharacterWidth> type() {
+        return SpreadsheetMetadataPropertyNameCellCharacterWidth.class;
     }
 }

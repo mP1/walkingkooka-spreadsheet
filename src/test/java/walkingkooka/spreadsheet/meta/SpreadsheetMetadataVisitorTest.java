@@ -115,6 +115,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitCellCharacterWidth() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitCellCharacterWidth(final Integer i) {
+                this.visited = i;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 0);
+    }
+
+    @Test
     public void testVisitCreator() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -468,16 +478,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = coords;
             }
         }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_COORDINATES, SpreadsheetCoordinates.with(1, 2));
-    }
-
-    @Test
-    public void testVisitWidth() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitWidth(final Integer i) {
-                this.visited = i;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.WIDTH, 0);
     }
 
     private static <T> SpreadsheetMetadata metadata(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {
