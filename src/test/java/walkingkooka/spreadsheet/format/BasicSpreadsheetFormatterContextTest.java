@@ -146,7 +146,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createContext(),
-                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converterContext=locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE");
+                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 converterContext=locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE");
     }
 
     @Override

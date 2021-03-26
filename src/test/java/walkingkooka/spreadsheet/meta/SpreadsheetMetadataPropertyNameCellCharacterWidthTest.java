@@ -23,7 +23,7 @@ public final class SpreadsheetMetadataPropertyNameCellCharacterWidthTest extends
 
     @Test
     public void testNegativeValueFails() {
-        this.checkValueFails(-1, "Expected int > 0, but got -1 for \"width\"");
+        this.checkValueFails(-1, "Expected int > 0, but got -1 for \"cell-character-width\"");
     }
 
     @Test
@@ -33,7 +33,7 @@ public final class SpreadsheetMetadataPropertyNameCellCharacterWidthTest extends
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCellCharacterWidth.instance(), "width");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCellCharacterWidth.instance(), "cell-character-width");
     }
 
     @Override

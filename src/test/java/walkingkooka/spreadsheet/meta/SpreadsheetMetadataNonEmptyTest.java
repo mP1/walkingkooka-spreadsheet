@@ -1674,6 +1674,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testFromJson() {
         final JsonNode json = JsonNode.parse("{\n" +
+                "  \"cell-character-width\": 0,\n" +
                 "  \"color-0\": \"#000000\",\n" +
                 "  \"color-1\": \"#000001\",\n" +
                 "  \"color-10\": \"#00000a\",\n" +
@@ -1737,8 +1738,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"text-format-pattern\": \"@@\",\n" +
                 "  \"time-format-pattern\": \"hh:mm\",\n" +
                 "  \"time-parse-patterns\": \"hh:mm;hh:mm:ss.000\",\n" +
-                "  \"two-digit-year\": 31,\n" +
-                "  \"width\": 0\n" +
+                "  \"two-digit-year\": 31\n" +
                 "}");
         final SpreadsheetMetadata metadata = this.unmarshall(json);
         assertNotEquals(metadata, SpreadsheetMetadata.EMPTY);
