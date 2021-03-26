@@ -17,13 +17,10 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.collect.set.Sets;
 import walkingkooka.tree.text.TextStyle;
-import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * A property that holds a {@link TextStyle} holding defaults such as the default column width.
@@ -51,29 +48,8 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
 
     @Override
     TextStyle checkValue0(final Object value) {
-        final TextStyle style = this.checkValueType(value, v -> v instanceof TextStyle);
-
-        final Set<TextStylePropertyName<?>> missing = Sets.ordered();
-        for (final TextStylePropertyName<?> required : REQUIRED) {
-            if (false == style.get(required).isPresent()) {
-                missing.add(required);
-            }
-        }
-
-        if (false == missing.isEmpty()) {
-            throw new SpreadsheetMetadataPropertyValueException("Missing required properties " + missing,
-                    this,
-                    value);
-        }
-        return style;
+        return this.checkValueType(value, v -> v instanceof TextStyle);
     }
-
-    private final static TextStylePropertyName[] REQUIRED = new TextStylePropertyName[] {
-            TextStylePropertyName.FONT_FAMILY,
-            TextStylePropertyName.FONT_SIZE,
-            TextStylePropertyName.HEIGHT,
-            TextStylePropertyName.WIDTH
-    };
 
     @Override
     String expected() {
