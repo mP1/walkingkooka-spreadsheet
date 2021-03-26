@@ -27,23 +27,8 @@ import walkingkooka.tree.text.TextStylePropertyName;
 public final class SpreadsheetMetadataPropertyNameStyleTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameStyle, TextStyle> {
 
     @Test
-    public void testValueMissingFontFamilyFails() {
-        this.checkValueFails(this.propertyValue().remove(TextStylePropertyName.FONT_FAMILY), null);
-    }
-
-    @Test
-    public void testValueMissingFontSizeFails() {
-        this.checkValueFails(this.propertyValue().remove(TextStylePropertyName.FONT_SIZE), null);
-    }
-
-    @Test
-    public void testValueMissingHeightFails() {
-        this.checkValueFails(this.propertyValue().remove(TextStylePropertyName.HEIGHT), null);
-    }
-
-    @Test
-    public void testValueMissingWidthFails() {
-        this.checkValueFails(this.propertyValue().remove(TextStylePropertyName.WIDTH), null);
+    public void testCheckEmptyTextStyle() {
+        this.checkValue(TextStyle.EMPTY);
     }
 
     @Test
