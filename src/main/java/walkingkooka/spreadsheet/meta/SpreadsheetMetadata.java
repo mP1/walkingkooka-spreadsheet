@@ -76,6 +76,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -197,6 +198,33 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     public final <V> V getOrFail(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return this.get(propertyName)
                 .orElseThrow(() -> new SpreadsheetMetadataPropertyValueException("Required property missing", propertyName, null));
+    }
+
+    /**
+     * Gets the effective style property, first checking the current {@link SpreadsheetMetadataPropertyName#STYLE}
+     * and if absent from there the defaults are then checked.
+     */
+    public final <V> Optional<V> getEffectiveStyleProperty(final TextStylePropertyName<V> property) {
+        Objects.requireNonNull(property, "property");
+
+        Optional<V> value = Optional.empty();
+
+        do {
+            Optional<TextStyle> style = this.get(SpreadsheetMetadataPropertyName.STYLE);
+            if (style.isPresent()) {
+                value = style.get().get(property);
+                if (value.isPresent()) {
+                    break;
+                }
+            }
+            style = this.defaults()
+                    .get(SpreadsheetMetadataPropertyName.STYLE);
+            if (style.isPresent()) {
+                value = style.get().get(property);
+            }
+        } while (false);
+
+        return value;
     }
 
     // set..............................................................................................................

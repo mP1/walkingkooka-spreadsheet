@@ -35,6 +35,9 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.tree.text.WordWrap;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -170,6 +173,45 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 removed,
                 () -> metadata + " remove " + propertyName);
         return removed;
+    }
+
+    // getEffectiveStyle.................................................................................................
+
+    @Test
+    public final void testGetEffectiveStyleNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createObject().getEffectiveStyleProperty(null));
+    }
+
+    @Test
+    public final void testGetEffectiveStyleAbsent() {
+        this.getEffectiveStyleAndCheck(this.createObject(), TextStylePropertyName.WORD_WRAP, null);
+    }
+
+    @Test
+    public final void testGetEffectiveStylePresentInDefault() {
+        final TextStylePropertyName<WordWrap> textStylePropertyName = TextStylePropertyName.WORD_WRAP;
+        final WordWrap wordWrap = WordWrap.BREAK_WORD;
+
+        this.getEffectiveStyleAndCheck(this.createObject()
+                        .setDefaults(
+                                SpreadsheetMetadata.EMPTY.set(
+                                        SpreadsheetMetadataPropertyName.STYLE,
+                                        TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
+                                )
+                        ),
+                textStylePropertyName,
+                wordWrap
+        );
+    }
+
+    final <TT> void getEffectiveStyleAndCheck(final SpreadsheetMetadata metadata,
+                                              final TextStylePropertyName<TT> property,
+                                              final TT expected) {
+        assertEquals(
+                Optional.ofNullable(expected),
+                metadata.getEffectiveStyleProperty(property),
+                () -> metadata + " getEffectiveStyleProperty " + property
+        );
     }
 
     // NameToColor......................................................................................................
