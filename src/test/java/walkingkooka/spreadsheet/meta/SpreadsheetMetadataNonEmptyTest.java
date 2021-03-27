@@ -72,6 +72,7 @@ import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.tree.text.WordWrap;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -622,6 +623,49 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 property1,
                 value1,
                 this.createSpreadsheetMetadata(property1, value1, property2, value2));
+    }
+
+    // getEffectiveStyle.................................................................................................
+
+    @Test
+    public void testGetEffectiveStyleEmptyDefaults() {
+        final TextStylePropertyName<WordWrap> textStylePropertyName = TextStylePropertyName.WORD_WRAP;
+        final WordWrap wordWrap = WordWrap.BREAK_WORD;
+
+        this.getEffectiveStyleAndCheck(this.createObject()
+                        .set(
+                                SpreadsheetMetadataPropertyName.STYLE,
+                                TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
+                        )
+                        .setDefaults(
+                                SpreadsheetMetadata.EMPTY.set(
+                                        SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
+                                )
+                        ),
+                textStylePropertyName,
+                wordWrap
+        );
+    }
+
+    @Test
+    public void testGetEffectiveStyleIgnoresDefaults() {
+        final TextStylePropertyName<WordWrap> textStylePropertyName = TextStylePropertyName.WORD_WRAP;
+        final WordWrap wordWrap = WordWrap.BREAK_WORD;
+
+        this.getEffectiveStyleAndCheck(this.createObject()
+                        .set(
+                                SpreadsheetMetadataPropertyName.STYLE,
+                                TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
+                        )
+                        .setDefaults(
+                                SpreadsheetMetadata.EMPTY.set(
+                                        SpreadsheetMetadataPropertyName.STYLE,
+                                        TextStyle.EMPTY.set(textStylePropertyName, WordWrap.NORMAL)
+                                )
+                        ),
+                textStylePropertyName,
+                wordWrap
+        );
     }
 
     // NameToColor......................................................................................................
