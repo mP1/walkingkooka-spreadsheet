@@ -670,6 +670,51 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
+    // getEffectiveStylePropertyOrFail..................................................................................
+
+    @Test
+    public void testGetEffectiveStylePropertyOrFailEmptyDefaults() {
+        final TextStylePropertyName<WordWrap> textStylePropertyName = TextStylePropertyName.WORD_WRAP;
+        final WordWrap wordWrap = WordWrap.BREAK_WORD;
+
+        this.getEffectiveStylePropertyOrFailAndCheck(
+                this.createObject()
+                        .set(
+                                SpreadsheetMetadataPropertyName.STYLE,
+                                TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
+                        )
+                        .setDefaults(
+                                SpreadsheetMetadata.EMPTY.set(
+                                        SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
+                                )
+                        ),
+                textStylePropertyName,
+                wordWrap
+        );
+    }
+
+    @Test
+    public void testGetEffectiveStylePropertyOrFailIgnoresDefaults() {
+        final TextStylePropertyName<WordWrap> textStylePropertyName = TextStylePropertyName.WORD_WRAP;
+        final WordWrap wordWrap = WordWrap.BREAK_WORD;
+
+        this.getEffectiveStylePropertyOrFailAndCheck(
+                this.createObject()
+                        .set(
+                                SpreadsheetMetadataPropertyName.STYLE,
+                                TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
+                        )
+                        .setDefaults(
+                                SpreadsheetMetadata.EMPTY.set(
+                                        SpreadsheetMetadataPropertyName.STYLE,
+                                        TextStyle.EMPTY.set(textStylePropertyName, WordWrap.NORMAL)
+                                )
+                        ),
+                textStylePropertyName,
+                wordWrap
+        );
+    }
+
     // NameToColor......................................................................................................
 
     @Test
