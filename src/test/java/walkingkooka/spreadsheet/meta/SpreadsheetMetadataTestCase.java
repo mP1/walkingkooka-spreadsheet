@@ -37,6 +37,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.tree.text.TextStylePropertyValueException;
 import walkingkooka.tree.text.WordWrap;
 
 import java.time.LocalDateTime;
@@ -211,6 +212,48 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 Optional.ofNullable(expected),
                 metadata.getEffectiveStyleProperty(property),
                 () -> metadata + " getEffectiveStyleProperty " + property
+        );
+    }
+
+    // getEffectiveStyleOrFail.................................................................................................
+
+    @Test
+    public final void testGetEffectiveStylePropertyOrFailNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createObject().getEffectiveStylePropertyOrFail(null));
+    }
+
+    @Test
+    public final void testGetEffectiveStyleOrFailAbsent() {
+        assertThrows(
+                TextStylePropertyValueException.class,
+                () -> this.createObject().getEffectiveStylePropertyOrFail(TextStylePropertyName.WORD_WRAP)
+        );
+    }
+
+    @Test
+    public final void testGetEffectiveStylePropertyOrFailPresentInDefault() {
+        final TextStylePropertyName<WordWrap> textStylePropertyName = TextStylePropertyName.WORD_WRAP;
+        final WordWrap wordWrap = WordWrap.BREAK_WORD;
+
+        this.getEffectiveStylePropertyOrFailAndCheck(this.createObject()
+                        .setDefaults(
+                                SpreadsheetMetadata.EMPTY.set(
+                                        SpreadsheetMetadataPropertyName.STYLE,
+                                        TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
+                                )
+                        ),
+                textStylePropertyName,
+                wordWrap
+        );
+    }
+
+    final <TT> void getEffectiveStylePropertyOrFailAndCheck(final SpreadsheetMetadata metadata,
+                                                            final TextStylePropertyName<TT> property,
+                                                            final TT expected) {
+        assertEquals(
+                expected,
+                metadata.getEffectiveStylePropertyOrFail(property),
+                () -> metadata + " getEffectiveStyleOrFailProperty " + property
         );
     }
 
