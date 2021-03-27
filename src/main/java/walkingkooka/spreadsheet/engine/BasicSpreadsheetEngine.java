@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -47,7 +48,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.text.Length;
-import walkingkooka.tree.text.PixelLength;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -580,9 +580,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Gets the double value for the given {@link TextStylePropertyName} which is either WIDTH or HEIGHT>
      */
     private double textStyleProperty(final TextStylePropertyName<Length<?>> propertyName) {
-        final PixelLength pixels = (PixelLength) this.metadata.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
-                .getOrFail(propertyName);
-        return pixels.value();
+        final Length<?> pixels = Cast.to(
+                this.metadata.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
+                        .getOrFail(propertyName)
+        );
+        return pixels.pixelValue();
     }
 
     private final SpreadsheetMetadata metadata;
