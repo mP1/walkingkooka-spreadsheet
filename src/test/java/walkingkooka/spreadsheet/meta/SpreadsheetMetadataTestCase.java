@@ -175,16 +175,16 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         return removed;
     }
 
-    // getEffectiveStyle.................................................................................................
+    // getEffectiveStyleProperty.......................................................................................
 
     @Test
-    public final void testGetEffectiveStyleNullFails() {
+    public final void testGetEffectiveStylePropertyNullFails() {
         assertThrows(NullPointerException.class, () -> this.createObject().getEffectiveStyleProperty(null));
     }
 
     @Test
-    public final void testGetEffectiveStyleAbsent() {
-        this.getEffectiveStyleAndCheck(this.createObject(), TextStylePropertyName.WORD_WRAP, null);
+    public final void testGetEffectiveStylePropertyAbsent() {
+        this.getEffectiveStylePropertyAndCheck(this.createObject(), TextStylePropertyName.WORD_WRAP, null);
     }
 
     @Test
@@ -192,7 +192,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final TextStylePropertyName<WordWrap> textStylePropertyName = TextStylePropertyName.WORD_WRAP;
         final WordWrap wordWrap = WordWrap.BREAK_WORD;
 
-        this.getEffectiveStyleAndCheck(this.createObject()
+        this.getEffectiveStylePropertyAndCheck(this.createObject()
                         .setDefaults(
                                 SpreadsheetMetadata.EMPTY.set(
                                         SpreadsheetMetadataPropertyName.STYLE,
@@ -204,9 +204,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
     }
 
-    final <TT> void getEffectiveStyleAndCheck(final SpreadsheetMetadata metadata,
-                                              final TextStylePropertyName<TT> property,
-                                              final TT expected) {
+    final <TT> void getEffectiveStylePropertyAndCheck(final SpreadsheetMetadata metadata,
+                                                      final TextStylePropertyName<TT> property,
+                                                      final TT expected) {
         assertEquals(
                 Optional.ofNullable(expected),
                 metadata.getEffectiveStyleProperty(property),

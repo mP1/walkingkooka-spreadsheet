@@ -625,14 +625,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(property1, value1, property2, value2));
     }
 
-    // getEffectiveStyle.................................................................................................
+    // getEffectiveStyleProperty........................................................................................
 
     @Test
-    public void testGetEffectiveStyleEmptyDefaults() {
+    public void testGetEffectiveStylePropertyEmptyDefaults() {
         final TextStylePropertyName<WordWrap> textStylePropertyName = TextStylePropertyName.WORD_WRAP;
         final WordWrap wordWrap = WordWrap.BREAK_WORD;
 
-        this.getEffectiveStyleAndCheck(this.createObject()
+        this.getEffectiveStylePropertyAndCheck(
+                this.createObject()
                         .set(
                                 SpreadsheetMetadataPropertyName.STYLE,
                                 TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
@@ -648,11 +649,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testGetEffectiveStyleIgnoresDefaults() {
+    public void testGetEffectiveStylePropertyIgnoresDefaults() {
         final TextStylePropertyName<WordWrap> textStylePropertyName = TextStylePropertyName.WORD_WRAP;
         final WordWrap wordWrap = WordWrap.BREAK_WORD;
 
-        this.getEffectiveStyleAndCheck(this.createObject()
+        this.getEffectiveStylePropertyAndCheck(
+                this.createObject()
                         .set(
                                 SpreadsheetMetadataPropertyName.STYLE,
                                 TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
