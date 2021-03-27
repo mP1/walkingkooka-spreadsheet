@@ -562,7 +562,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public double columnWidth(final SpreadsheetColumnReference column) {
         double columnWidth = this.cellStore.maxColumnWidth(column);
         if (0 == columnWidth) {
-            columnWidth = textStyleProperty(TextStylePropertyName.WIDTH);
+            columnWidth = columnWidthOrRowHeight(TextStylePropertyName.WIDTH);
         }
         return columnWidth;
     }
@@ -571,7 +571,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public double rowHeight(final SpreadsheetRowReference row) {
         double rowHeight = this.cellStore.maxRowHeight(row);
         if (0 == rowHeight) {
-            rowHeight = textStyleProperty(TextStylePropertyName.HEIGHT);
+            rowHeight = columnWidthOrRowHeight(TextStylePropertyName.HEIGHT);
         }
         return rowHeight;
     }
@@ -579,12 +579,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Gets the double value for the given {@link TextStylePropertyName} which is either WIDTH or HEIGHT>
      */
-    private double textStyleProperty(final TextStylePropertyName<Length<?>> propertyName) {
-        final Length<?> pixels = Cast.to(
-                this.metadata.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
-                        .getOrFail(propertyName)
-        );
-        return pixels.pixelValue();
+    private double columnWidthOrRowHeight(final TextStylePropertyName<Length<?>> propertyName) {
+        return this.metadata.getEffectiveStylePropertyOrFail(propertyName).pixelValue();
     }
 
     private final SpreadsheetMetadata metadata;
