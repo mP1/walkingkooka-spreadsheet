@@ -46,7 +46,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyValueException;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -88,6 +87,7 @@ import walkingkooka.tree.text.TextDecorationLine;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.tree.text.TextStylePropertyValueException;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -5035,7 +5035,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         return 0;
                     }
                 });
-        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> engine.columnWidth(column));
+        assertThrows(TextStylePropertyValueException.class, () -> engine.columnWidth(column));
     }
 
     @Test
@@ -5090,7 +5090,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         return 0;
                     }
                 });
-        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> engine.rowHeight(row));
+        assertThrows(TextStylePropertyValueException.class, () -> engine.rowHeight(row));
     }
 
     //  cellBox.........................................................................................................
