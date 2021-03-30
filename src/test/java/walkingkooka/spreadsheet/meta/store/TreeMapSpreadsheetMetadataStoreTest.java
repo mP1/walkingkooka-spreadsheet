@@ -30,19 +30,19 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
         store.save(this.metadata(2, "user2@example.com"));
 
         this.toStringAndCheck(store, "[{\n" +
+                "  \"spreadsheet-id\": \"1\",\n" +
                 "  \"create-date-time\": \"1999-12-31T12:58:59\",\n" +
                 "  \"creator\": \"user1@example.com\",\n" +
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"modified-by\": \"modified@example.com\",\n" +
-                "  \"modified-date-time\": \"2000-01-02T12:58:59\",\n" +
-                "  \"spreadsheet-id\": \"1\"\n" +
+                "  \"modified-date-time\": \"2000-01-02T12:58:59\"\n" +
                 "}, {\n" +
+                "  \"spreadsheet-id\": \"2\",\n" +
                 "  \"create-date-time\": \"1999-12-31T12:58:59\",\n" +
                 "  \"creator\": \"user2@example.com\",\n" +
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"modified-by\": \"modified@example.com\",\n" +
-                "  \"modified-date-time\": \"2000-01-02T12:58:59\",\n" +
-                "  \"spreadsheet-id\": \"2\"\n" +
+                "  \"modified-date-time\": \"2000-01-02T12:58:59\"\n" +
                 "}]");
     }
 

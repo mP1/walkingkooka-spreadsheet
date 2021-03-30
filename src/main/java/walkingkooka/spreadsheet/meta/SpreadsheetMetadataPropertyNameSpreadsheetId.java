@@ -65,4 +65,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
     Class<SpreadsheetId> type() {
         return SpreadsheetId.class;
     }
+
+    @Override
+    String compareToName() {
+        return ""; // ensure id always appears first.
+    }
 }

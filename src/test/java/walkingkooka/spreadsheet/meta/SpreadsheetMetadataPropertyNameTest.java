@@ -118,15 +118,60 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testSort() {
+    public void testSortSpreadsheetIdFirst() {
         final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATOR;
         final SpreadsheetMetadataPropertyName<?> modifiedBy = SpreadsheetMetadataPropertyName.MODIFIED_BY;
         final SpreadsheetMetadataPropertyName<?> modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME;
         final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
 
         //noinspection unchecked
-        this.compareToArraySortAndCheck(spreadsheetId, modifiedDateTime, creator, modifiedBy,
-                creator, modifiedBy, modifiedDateTime, spreadsheetId);
+        this.compareToArraySortAndCheck(
+                spreadsheetId, modifiedDateTime, creator, modifiedBy,
+                spreadsheetId, creator, modifiedBy, modifiedDateTime
+        );
+    }
+
+    @Test
+    public void testSortSpreadsheetIdFirst2() {
+        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<?> modifiedBy = SpreadsheetMetadataPropertyName.MODIFIED_BY;
+        final SpreadsheetMetadataPropertyName<?> modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME;
+        final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
+
+        //noinspection unchecked
+        this.compareToArraySortAndCheck(
+                modifiedDateTime, spreadsheetId, modifiedBy, creator,
+                spreadsheetId, creator, modifiedBy, modifiedDateTime
+        );
+    }
+
+    @Test
+    public void testSortNumberedColours() {
+        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<?> color10 = SpreadsheetMetadataPropertyName.numberedColor(10);
+        final SpreadsheetMetadataPropertyName<?> color2 = SpreadsheetMetadataPropertyName.numberedColor(2);
+        final SpreadsheetMetadataPropertyName<?> color3 = SpreadsheetMetadataPropertyName.numberedColor(3);
+
+        //noinspection unchecked
+        this.compareToArraySortAndCheck(
+                color3, color2, creator, color10,
+                color2, color3, color10, creator
+        );
+    }
+
+    @Test
+    public void testSortSpreadsheetIdNumberedColours() {
+        final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
+        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<?> color10 = SpreadsheetMetadataPropertyName.numberedColor(10);
+        final SpreadsheetMetadataPropertyName<?> color2 = SpreadsheetMetadataPropertyName.numberedColor(2);
+        final SpreadsheetMetadataPropertyName<?> color3 = SpreadsheetMetadataPropertyName.numberedColor(3);
+
+        //noinspection unchecked
+        this.compareToArraySortAndCheck(
+                color3, color2, creator, spreadsheetId, color10,
+                spreadsheetId, color2, color3, color10, creator
+        );
     }
 
     // JsonNodeMarshallingTesting.......................................................................................

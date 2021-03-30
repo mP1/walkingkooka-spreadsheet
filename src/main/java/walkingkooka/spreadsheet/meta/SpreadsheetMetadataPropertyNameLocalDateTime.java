@@ -50,4 +50,9 @@ abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetM
     Class<LocalDateTime> type() {
         return LocalDateTime.class;
     }
+
+    @Override
+    final String compareToName() {
+        return this.value();
+    }
 }

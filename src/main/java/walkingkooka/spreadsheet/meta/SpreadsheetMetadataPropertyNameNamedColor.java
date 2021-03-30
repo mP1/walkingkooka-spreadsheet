@@ -48,4 +48,9 @@ final class SpreadsheetMetadataPropertyNameNamedColor extends SpreadsheetMetadat
     }
 
     final SpreadsheetColorName name;
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }

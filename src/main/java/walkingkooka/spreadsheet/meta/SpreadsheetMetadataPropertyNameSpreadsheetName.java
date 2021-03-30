@@ -65,4 +65,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetName extends SpreadsheetMe
     Class<SpreadsheetName> type() {
         return SpreadsheetName.class;
     }
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }

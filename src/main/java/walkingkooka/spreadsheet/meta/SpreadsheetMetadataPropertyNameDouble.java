@@ -43,4 +43,9 @@ abstract class SpreadsheetMetadataPropertyNameDouble extends SpreadsheetMetadata
     final Class<Double> type() {
         return Double.class;
     }
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }

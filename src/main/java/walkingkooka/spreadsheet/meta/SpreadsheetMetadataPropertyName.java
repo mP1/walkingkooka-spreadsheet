@@ -461,8 +461,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
 
     @Override
     public int compareTo(final SpreadsheetMetadataPropertyName<?> other) {
-        return this.caseSensitivity().comparator().compare(this.name, other.name);
+        return this.caseSensitivity().comparator().compare(this.compareToName(), other.compareToName());
     }
+
+    abstract String compareToName();
 
     // Json...........................................................................................................
 

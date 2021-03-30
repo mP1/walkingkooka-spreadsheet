@@ -64,4 +64,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern extends 
     Class<SpreadsheetTextFormatPattern> type() {
         return SpreadsheetTextFormatPattern.class;
     }
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }

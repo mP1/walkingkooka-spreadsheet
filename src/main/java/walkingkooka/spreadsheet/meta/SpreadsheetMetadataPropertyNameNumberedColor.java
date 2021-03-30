@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
+import walkingkooka.text.CharSequences;
 
 import java.util.stream.IntStream;
 
@@ -67,6 +68,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     private SpreadsheetMetadataPropertyNameNumberedColor(final int number) {
         super(COLOR_PREFIX + number);
         this.number = number;
+        this.compareToName = COLOR_PREFIX + CharSequences.padLeft(String.valueOf(number), 5, '0');
     }
 
     final int number;
@@ -76,4 +78,11 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitNumberedColor(this.number, value);
     }
+
+    @Override
+    String compareToName() {
+        return this.compareToName;
+    }
+
+    private final String compareToName;
 }

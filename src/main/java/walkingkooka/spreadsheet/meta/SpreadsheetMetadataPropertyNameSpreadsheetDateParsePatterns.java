@@ -67,4 +67,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns extends 
     Class<SpreadsheetDateParsePatterns> type() {
         return SpreadsheetDateParsePatterns.class;
     }
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }

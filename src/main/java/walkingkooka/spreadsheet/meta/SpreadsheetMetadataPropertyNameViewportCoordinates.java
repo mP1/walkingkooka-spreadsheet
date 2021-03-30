@@ -67,4 +67,9 @@ final class SpreadsheetMetadataPropertyNameViewportCoordinates extends Spreadshe
     Class<SpreadsheetCoordinates> type() {
         return SpreadsheetCoordinates.class;
     }
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }
