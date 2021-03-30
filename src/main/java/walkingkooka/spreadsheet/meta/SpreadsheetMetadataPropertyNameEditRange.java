@@ -69,4 +69,9 @@ final class SpreadsheetMetadataPropertyNameEditRange extends SpreadsheetMetadata
     Class<SpreadsheetRange> type() {
         return SpreadsheetRange.class;
     }
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }

@@ -62,4 +62,9 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
     Class<Locale> type() {
         return Locale.class;
     }
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }

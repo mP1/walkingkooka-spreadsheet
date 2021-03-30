@@ -51,4 +51,9 @@ abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMe
     Class<EmailAddress> type() {
         return EmailAddress.class;
     }
+
+    @Override
+    final String compareToName() {
+        return this.value();
+    }
 }

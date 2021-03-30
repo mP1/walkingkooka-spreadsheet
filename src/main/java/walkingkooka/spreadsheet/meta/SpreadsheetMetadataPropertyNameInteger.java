@@ -47,4 +47,9 @@ abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadat
     final Class<Integer> type() {
         return Integer.class;
     }
+
+    @Override
+    final String compareToName() {
+        return this.value();
+    }
 }

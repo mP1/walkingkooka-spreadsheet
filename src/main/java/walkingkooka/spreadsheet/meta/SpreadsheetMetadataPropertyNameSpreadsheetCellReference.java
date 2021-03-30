@@ -55,4 +55,9 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetCellReference extends S
     final Class<SpreadsheetCellReference> type() {
         return SpreadsheetCellReference.class;
     }
+
+    @Override
+    final String compareToName() {
+        return this.value();
+    }
 }

@@ -63,4 +63,9 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
     Class<RoundingMode> type() {
         return RoundingMode.class;
     }
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }

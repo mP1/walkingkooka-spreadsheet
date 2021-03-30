@@ -56,4 +56,9 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
     }
 
     abstract String extractLocaleValueString(final DecimalFormatSymbols symbols);
+
+    @Override
+    final String compareToName() {
+        return this.value();
+    }
 }

@@ -62,4 +62,9 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
     Class<Long> type() {
         return Long.class;
     }
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }

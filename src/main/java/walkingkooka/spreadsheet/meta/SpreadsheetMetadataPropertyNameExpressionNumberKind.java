@@ -64,4 +64,9 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
     Class<ExpressionNumberKind> type() {
         return ExpressionNumberKind.class;
     }
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }

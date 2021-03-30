@@ -66,4 +66,9 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitStyle(value);
     }
+
+    @Override
+    String compareToName() {
+        return this.value();
+    }
 }

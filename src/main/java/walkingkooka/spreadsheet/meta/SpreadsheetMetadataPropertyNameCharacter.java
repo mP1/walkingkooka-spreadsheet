@@ -61,4 +61,9 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
     Class<Character> type() {
         return Character.class;
     }
+
+    @Override
+    final String compareToName() {
+        return this.value();
+    }
 }
