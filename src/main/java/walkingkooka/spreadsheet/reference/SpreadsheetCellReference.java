@@ -114,6 +114,13 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         return this.setRow(this.row().add(row));
     }
 
+    /**
+     * Adds with saturation a delta to the row, performing a would be update if the row value is not zero.
+     */
+    public SpreadsheetCellReference addRowSaturated(final int row) {
+        return this.setRow(this.row().addSaturated(row));
+    }
+
     public SpreadsheetColumnReference column() {
         return this.column;
     }
