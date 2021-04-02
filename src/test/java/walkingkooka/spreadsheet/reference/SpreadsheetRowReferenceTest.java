@@ -122,6 +122,16 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 SpreadsheetColumnOrRowReference.parseRowRange("$2:$5"));
     }
 
+    // add..............................................................................................................
+
+    @Test
+    public void testAdd() {
+        assertEquals(
+                SpreadsheetRowReference.parseRow("9"),
+                SpreadsheetRowReference.parseRow("7").add(2)
+        );
+    }
+
     // max.............................................................................................................
 
     private final static boolean LEFT = true;
