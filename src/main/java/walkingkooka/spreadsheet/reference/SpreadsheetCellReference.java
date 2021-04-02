@@ -160,6 +160,13 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         return this.setColumn(this.column().add(column));
     }
 
+    /**
+     * Adds with saturation a delta to the column, performing a would be update if the column value is not zero
+     */
+    public SpreadsheetCellReference addColumnSaturated(final int column) {
+        return this.setColumn(this.column().addSaturated(column));
+    }
+
     private SpreadsheetCellReference replace(final SpreadsheetColumnReference column, final SpreadsheetRowReference row) {
         return new SpreadsheetCellReference(column, row);
     }

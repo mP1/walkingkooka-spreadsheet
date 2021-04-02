@@ -191,6 +191,38 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         this.checkRow(different, this.row());
     }
 
+    // addColumnSaturated................................................................................................
+
+    @Test
+    public void testAddColumnSaturationUnderflows() {
+        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCellReference("B2");
+        assertEquals(
+                SpreadsheetCellReference.parseCellReference("A2"),
+                cell.addColumnSaturated(-3)
+        );
+    }
+
+    @Test
+    public void testAddColumnSaturationOverflows() {
+        final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("2");
+        final SpreadsheetCellReference cell = SpreadsheetReferenceKind.RELATIVE.column(SpreadsheetColumnReference.MAX - 2)
+                .setRow(row);
+        assertEquals(
+                SpreadsheetReferenceKind.RELATIVE.column(SpreadsheetColumnReference.MAX - 1)
+                        .setRow(row),
+                cell.addColumnSaturated(+3)
+        );
+    }
+
+    @Test
+    public void testAddColumnSaturation() {
+        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCellReference("B2");
+        assertEquals(
+                SpreadsheetCellReference.parseCellReference("D2"),
+                cell.addColumnSaturated(+2)
+        );
+    }
+
     // addRow .............................................................................................
 
     @Test
