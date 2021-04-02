@@ -77,6 +77,16 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return Cast.to(this.add0(value));
     }
 
+    @Override
+    public SpreadsheetRowReference addSaturated(final int value) {
+        return Cast.to(this.addSaturated0(value));
+    }
+
+    @Override
+    int max() {
+        return MAX - 1;
+    }
+
     /**
      * Would be setter that returns a {@link SpreadsheetRowReference} with the given value creating a new
      * instance if it is different.

@@ -199,6 +199,47 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.checkType(different);
     }
 
+    // addSaturated.....................................................................................................
+
+    @Test
+    public final void testAddSaturatedUnderflow1() {
+        final R reference = this.createReference(0);
+        assertEquals(reference, reference.addSaturated(-1));
+    }
+
+    @Test
+    public final void testAddSaturatedUnderflow2() {
+        final R reference = this.createReference(1);
+        assertEquals(this.createReference(0), reference.addSaturated(-1));
+    }
+
+    @Test
+    public final void testAddSaturatedUnderflow3() {
+        final R reference = this.createReference(2);
+        assertEquals(this.createReference(0), reference.addSaturated(-3));
+    }
+
+    @Test
+    public final void testAddSaturatedOverflow1() {
+        final int max = this.maxValue() - 1;
+        final R reference = this.createReference(max);
+        assertEquals(reference, reference.addSaturated(+1));
+    }
+
+    @Test
+    public final void testAddSaturatedOverflow2() {
+        final int max = this.maxValue() - 1;
+        final R reference = this.createReference(max);
+        assertEquals(reference, reference.addSaturated(+1));
+    }
+
+    @Test
+    public final void testAddSaturatedOverflow3() {
+        final int max = this.maxValue() - 1;
+        final R reference = this.createReference(max - 1);
+        assertEquals(this.createReference(max), reference.addSaturated(+2));
+    }
+
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
