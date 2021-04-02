@@ -149,6 +149,25 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
                 this.setValue(this.value + value);
     }
 
+    /**
+     * A saturated adds of delta to the value and returns an instance with the result.
+     */
+    abstract SpreadsheetColumnOrRowReference addSaturated(final int value);
+
+    final SpreadsheetColumnOrRowReference addSaturated0(final int value) {
+        return this.setValue(
+                Math.min(
+                        Math.max(this.value + value, 0),
+                        this.max()
+                )
+        );
+    }
+
+    /**
+     * Returns the maximum valid value, this is used during {@link #addSaturated(int)}
+     */
+    abstract int max();
+
     abstract SpreadsheetColumnOrRowReference setValue(final int value);
 
     @Override

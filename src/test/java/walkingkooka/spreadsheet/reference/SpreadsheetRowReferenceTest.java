@@ -132,6 +132,16 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // addSaturated......................................................................................................
+
+    @Test
+    public void testAddSaturated() {
+        assertEquals(
+                SpreadsheetRowReference.parseRow("9"),
+                SpreadsheetRowReference.parseRow("7").addSaturated(2)
+        );
+    }
+
     // max.............................................................................................................
 
     private final static boolean LEFT = true;

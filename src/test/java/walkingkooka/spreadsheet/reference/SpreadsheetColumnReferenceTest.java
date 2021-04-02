@@ -156,6 +156,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
+    // addSaturated......................................................................................................
+
+    @Test
+    public void testAddSaturated() {
+        assertEquals(
+                SpreadsheetColumnReference.parseColumn("M"),
+                SpreadsheetColumnReference.parseColumn("K").addSaturated(2)
+        );
+    }
+
     // JsonNodeTesting..................................................................................................
 
     @Test
