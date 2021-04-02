@@ -31,7 +31,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     final static int MAX = 16384;
     final static int RADIX = 26;
 
-    final static String MAX_ROW_NAME = toString0(MAX, SpreadsheetReferenceKind.RELATIVE);
+    final static String MAX_TOSTRING = toString0(MAX, SpreadsheetReferenceKind.RELATIVE);
 
     /**
      * Factory that creates a new column.

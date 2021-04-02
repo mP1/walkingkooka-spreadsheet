@@ -62,7 +62,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
     @Test//(expected = IllegalArgumentException.class)
     public void testCellReferenceFails3() {
-        SpreadsheetLabelName.with(SpreadsheetColumnReference.MAX_ROW_NAME + "1");
+        SpreadsheetLabelName.with(SpreadsheetColumnReference.MAX_TOSTRING + "1");
     }
 
     @Test
