@@ -146,6 +146,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.parseStringAndCheck("B", SpreadsheetReferenceKind.RELATIVE.column(1));
     }
 
+    // add..............................................................................................................
+
+    @Test
+    public void testAdd() {
+        assertEquals(
+                SpreadsheetColumnReference.parseColumn("M"),
+                SpreadsheetColumnReference.parseColumn("K").add(2)
+        );
+    }
+
     // JsonNodeTesting..................................................................................................
 
     @Test

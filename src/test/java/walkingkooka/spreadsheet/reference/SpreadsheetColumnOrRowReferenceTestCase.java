@@ -162,6 +162,18 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.checkType(different);
     }
 
+    // add..............................................................................................................
+
+    @Test
+    public final void testAddUnderflowFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createReference(0).add(-1));
+    }
+
+    @Test
+    public final void testAddOverflowFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createReference(this.maxValue()).add(1));
+    }
+
     @Test
     public final void testAddZero() {
         final R reference = this.createReference();
