@@ -37,7 +37,8 @@ import java.util.Optional;
  * {@link #compareTo(SpreadsheetCellReference)} ignores the {@link SpreadsheetReferenceKind} of the column and row.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetCellReference extends SpreadsheetExpressionReference<SpreadsheetCellReference> implements HateosResource<String> {
+public final class SpreadsheetCellReference extends SpreadsheetExpressionReferenceComparable<SpreadsheetCellReference>
+        implements HateosResource<String> {
 
     /**
      * Parsers a range of cell referencs.
@@ -275,36 +276,14 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         return "" + this.column + this.row;
     }
 
-    // Comparable ..................................................................................................
+    // Comparable ......................................................................................................
 
     @Override
     public int compareTo(final SpreadsheetCellReference other) {
-        // reverse sign because #compareTo1 does compareTo0 in reverse because of double dispatch.
-        return -this.compareTo1(other);
-    }
-
-    // SpreadsheetExpressionReferenceComparator........................................................................
-
-    /**
-     * Note the {@link SpreadsheetReferenceKind} of the {@link SpreadsheetColumnReference} and {@link SpreadsheetRowReference}
-     * is ignored.
-     */
-    @Override
-    final int compareTo0(final SpreadsheetExpressionReference other) {
-        return other.compareTo1(this);
-    }
-
-    @Override
-    final int compareTo1(final SpreadsheetCellReference other) {
-        final int result = other.column.value - this.column.value;
+        final int result = this.column.value - other.column.value;
         return Comparators.EQUAL != result ?
                 result :
-                other.row.value - this.row.value;
-    }
-
-    @Override
-    final int compareTo1(final SpreadsheetLabelName other) {
-        return LABEL_COMPARED_WITH_CELL_RESULT;
+                this.row.value - other.row.value;
     }
 
     // equalsIgnoreReferenceKind........................................................................................

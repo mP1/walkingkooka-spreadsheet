@@ -21,7 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceComparable;
 import walkingkooka.store.Store;
 import walkingkooka.store.Watchers;
 
@@ -36,9 +36,9 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetExpressionReferenceStore} that uses a {@link Map} to store an entity to {@link SpreadsheetCellReference}
  */
-final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference<T>> implements SpreadsheetExpressionReferenceStore<T> {
+final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReferenceComparable<T>> implements SpreadsheetExpressionReferenceStore<T> {
 
-    static <T extends SpreadsheetExpressionReference<T>> TreeMapSpreadsheetExpressionReferenceStore<T> create() {
+    static <T extends SpreadsheetExpressionReferenceComparable<T>> TreeMapSpreadsheetExpressionReferenceStore<T> create() {
         return new TreeMapSpreadsheetExpressionReferenceStore<>();
     }
 
@@ -256,7 +256,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         Objects.requireNonNull(referrer, "referrer");
     }
 
-    private static void checkReferrerAndReference(final TargetAndSpreadsheetCellReference targetAndReference) {
+    private static void checkReferrerAndReference(final TargetAndSpreadsheetCellReference<?> targetAndReference) {
         Objects.requireNonNull(targetAndReference, "targetAndReference");
     }
 
@@ -270,7 +270,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
      * The inverse of {@link #targetToReferences}
      */
     // VisibleForTesting
-    final Map<SpreadsheetCellReference, Set<T>> referenceToTargets = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
+    final Map<SpreadsheetCellReference, Set<T>> referenceToTargets = Maps.sorted();
 
     @Override
     public String toString() {

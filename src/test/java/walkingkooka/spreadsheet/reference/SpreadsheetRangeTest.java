@@ -950,18 +950,6 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         this.marshallRoundTripTwiceAndCheck(SpreadsheetRange.parseRange0("A1:A2"));
     }
 
-    //compareTo0...........................................................................................................
-
-    @Test
-    public void testCompareCellFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.range().compareTo0(this.begin()));
-    }
-
-    @Test
-    public void testCompareRangeFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.range().compareTo0(this.range()));
-    }
-
     //helper.................................................................................................
 
     private SpreadsheetRange range() {

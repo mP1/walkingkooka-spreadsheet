@@ -17,22 +17,17 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.text.CharSequences;
-
 /**
- * A rectangular region that selects one or more cells
+ * Base class shared by {@link SpreadsheetCellReference} and {@link SpreadsheetLabelName}.
+ * This type is necessary to avoid J2clTranspiler failures because of what appears to be a failure of the JDT not being
+ * able to handle type parameters with multiple bounds.
  */
-public abstract class SpreadsheetRectangle extends SpreadsheetExpressionReference {
+abstract public class SpreadsheetExpressionReferenceComparable<C extends SpreadsheetExpressionReferenceComparable<C>> extends SpreadsheetExpressionReference implements Comparable<C> {
 
-    public static SpreadsheetRectangle parseRectangle(final String text) {
-        CharSequences.failIfNullOrEmpty(text, "text");
-
-        return text.split(SpreadsheetViewport.SEPARATOR.string()).length > 2 ?
-                SpreadsheetExpressionReference.parseViewport(text) :
-                SpreadsheetExpressionReference.parseRange(text);
-    }
-
-    SpreadsheetRectangle() {
+    /**
+     * Package private to limit sub classing.
+     */
+    SpreadsheetExpressionReferenceComparable() {
         super();
     }
 }

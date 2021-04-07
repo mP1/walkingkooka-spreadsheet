@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceComparable;
 
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetExpressionReferenceStore} implementations.
@@ -28,21 +28,21 @@ public final class SpreadsheetExpressionReferenceStores implements PublicStaticH
     /**
      * {@see FakeSpreadsheetExpressionReferenceStore}
      */
-    public static <T extends SpreadsheetExpressionReference<T>> SpreadsheetExpressionReferenceStore<T> fake() {
+    public static <T extends SpreadsheetExpressionReferenceComparable<T>> SpreadsheetExpressionReferenceStore<T> fake() {
         return new FakeSpreadsheetExpressionReferenceStore<>();
     }
 
     /**
      * {@see ReadOnlySpreadsheetExpressionReferenceStore}
      */
-    public static <T extends SpreadsheetExpressionReference<T>> SpreadsheetExpressionReferenceStore<T> readOnly(final SpreadsheetExpressionReferenceStore<T> store) {
+    public static <T extends SpreadsheetExpressionReferenceComparable<T>> SpreadsheetExpressionReferenceStore<T> readOnly(final SpreadsheetExpressionReferenceStore<T> store) {
         return ReadOnlySpreadsheetExpressionReferenceStore.with(store);
     }
 
     /**
      * {@see TreeMapSpreadsheetExpressionReferenceStore}
      */
-    public static <T extends SpreadsheetExpressionReference<T>> SpreadsheetExpressionReferenceStore<T> treeMap() {
+    public static <T extends SpreadsheetExpressionReferenceComparable<T>> SpreadsheetExpressionReferenceStore<T> treeMap() {
         return TreeMapSpreadsheetExpressionReferenceStore.create();
     }
 

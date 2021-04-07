@@ -18,8 +18,6 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.compare.ComparableTesting2;
-import walkingkooka.compare.Comparators;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -32,8 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetViewport>
-        implements ParseStringTesting<SpreadsheetViewport>,
-        ComparableTesting2<SpreadsheetViewport> {
+        implements ParseStringTesting<SpreadsheetViewport> {
 
     private final static double WIDTH = 50;
     private final static double HEIGHT = 75;
@@ -320,58 +317,6 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
         this.marshallRoundTripTwiceAndCheck(SpreadsheetViewport.with(this.reference(), 50.5, 75.75));
     }
 
-    //compareTo0...........................................................................................................
-
-    @Test
-    public void testCompareCellFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.viewport().compareTo0(SpreadsheetCellReference.parseCellReference("A1")));
-    }
-
-    @Test
-    public void testCompareRectangleFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.viewport().compareTo0(this.viewport()));
-    }
-
-    @Test
-    public void testCompareReferenceColumnLeft() {
-        this.compareToAndCheckMore(SpreadsheetViewport.with(this.reference().addColumn(-1), WIDTH, HEIGHT));
-    }
-
-    @Test
-    public void testCompareReferenceColumnRight() {
-        this.compareToAndCheckLess(SpreadsheetViewport.with(this.reference().addColumn(+1), WIDTH, HEIGHT));
-    }
-
-    @Test
-    public void testCompareReferenceRowDown() {
-        this.compareToAndCheckMore(SpreadsheetViewport.with(this.reference().addRow(-1), WIDTH, HEIGHT));
-    }
-
-    @Test
-    public void testCompareReferenceRowUp() {
-        this.compareToAndCheckLess(SpreadsheetViewport.with(this.reference().addRow(+1), WIDTH, HEIGHT));
-    }
-
-    @Test
-    public void testCompareReferenceWidth() {
-        this.compareToAndCheckEquals(SpreadsheetViewport.with(this.reference(), WIDTH + 1, HEIGHT));
-    }
-
-    @Test
-    public void testCompareReferenceHeight() {
-        this.compareToAndCheckEquals(SpreadsheetViewport.with(this.reference(), WIDTH, HEIGHT + 1));
-    }
-
-    @Override
-    public void compareToAndCheckEquals(final SpreadsheetViewport viewport) {
-        this.compareToAndCheck(viewport, Comparators.EQUAL);
-    }
-
-    @Override
-    public void compareToAndCheck(final SpreadsheetViewport comparable, final int expected) {
-        this.compareToAndCheck(this.createComparable(), comparable, expected);
-    }
-
     //equals............................................................................................................
 
     @Test
@@ -440,13 +385,6 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
-    }
-
-    // ComparableTesting................................................................................................
-
-    @Override
-    public SpreadsheetViewport createComparable() {
-        return SpreadsheetViewport.with(this.reference(), WIDTH, HEIGHT);
     }
 
     // JsonNodeMarshallingTesting...........................................................................................

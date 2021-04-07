@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceComparable;
 
 import java.util.List;
 import java.util.Objects;
@@ -29,9 +29,10 @@ import java.util.function.Consumer;
 /**
  * A read only wrapper around a {@link SpreadsheetExpressionReferenceStore}
  */
-final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference<T>> implements SpreadsheetExpressionReferenceStore<T> {
+final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReferenceComparable<T>>
+        implements SpreadsheetExpressionReferenceStore<T> {
 
-    static <T extends SpreadsheetExpressionReference<T>> ReadOnlySpreadsheetExpressionReferenceStore<T> with(final SpreadsheetExpressionReferenceStore<T> store) {
+    static <T extends SpreadsheetExpressionReferenceComparable<T>> ReadOnlySpreadsheetExpressionReferenceStore<T> with(final SpreadsheetExpressionReferenceStore<T> store) {
         Objects.requireNonNull(store, "store");
         return new ReadOnlySpreadsheetExpressionReferenceStore<>(store);
     }
@@ -136,7 +137,7 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
         Objects.requireNonNull(id, "id");
     }
 
-    private static void checkTargetedReference(final TargetAndSpreadsheetCellReference targetedReference) {
+    private static void checkTargetedReference(final TargetAndSpreadsheetCellReference<?> targetedReference) {
         Objects.requireNonNull(targetedReference, "targetedReference");
     }
 }

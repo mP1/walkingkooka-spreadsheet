@@ -35,7 +35,7 @@ import java.util.stream.Stream;
  * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetRange extends SpreadsheetRectangle<SpreadsheetRange> implements Predicate<SpreadsheetCellReference> {
+public final class SpreadsheetRange extends SpreadsheetRectangle implements Predicate<SpreadsheetCellReference> {
 
     /**
      * Factory that parses some text holding a range.
@@ -336,27 +336,5 @@ public final class SpreadsheetRange extends SpreadsheetRectangle<SpreadsheetRang
         return this.equals(relative) ?
                 this :
                 relative;
-    }
-
-    // SpreadsheetExpressionReferenceComparator........................................................................
-
-    @Override
-    public int compareTo(final SpreadsheetRange other) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    final int compareTo0(final SpreadsheetExpressionReference other) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    final int compareTo1(final SpreadsheetCellReference other) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    final int compareTo1(final SpreadsheetLabelName other) {
-        throw new UnsupportedOperationException();
     }
 }

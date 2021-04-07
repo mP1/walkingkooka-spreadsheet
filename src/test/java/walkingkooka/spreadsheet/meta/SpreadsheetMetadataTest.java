@@ -92,8 +92,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetRange.parseRange("$B$2:$C$3"));
     }
 
-    private <T extends SpreadsheetExpressionReference<T>> void setAndCheck(final SpreadsheetMetadataPropertyName<T> property,
-                                                                           final T value) {
+    private <T extends SpreadsheetExpressionReference> void setAndCheck(final SpreadsheetMetadataPropertyName<T> property,
+                                                                        final T value) {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(property, value);
         assertEquals(value.toRelative(), metadata.getOrFail(property));

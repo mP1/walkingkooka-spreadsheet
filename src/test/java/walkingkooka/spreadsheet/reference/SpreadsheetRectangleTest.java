@@ -23,7 +23,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 
-public final class SpreadsheetRectangleTest implements ClassTesting2<SpreadsheetRectangle<?>>, ParseStringTesting<SpreadsheetRectangle<?>> {
+public final class SpreadsheetRectangleTest implements ClassTesting2<SpreadsheetRectangle>, ParseStringTesting<SpreadsheetRectangle> {
 
     @Test
     public void testParseRange() {
@@ -53,7 +53,7 @@ public final class SpreadsheetRectangleTest implements ClassTesting2<Spreadsheet
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetRectangle<?>> type() {
+    public Class<SpreadsheetRectangle> type() {
         return Cast.to(SpreadsheetRectangle.class);
     }
 
@@ -65,7 +65,7 @@ public final class SpreadsheetRectangleTest implements ClassTesting2<Spreadsheet
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetRectangle<?> parseString(final String text) {
+    public SpreadsheetRectangle parseString(final String text) {
         return SpreadsheetRectangle.parseRectangle(text);
     }
 

@@ -39,7 +39,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     static SpreadsheetDeltaWindowed withWindowed(final Set<SpreadsheetCell> cells,
                                                  final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
                                                  final Map<SpreadsheetRowReference, Double> maxRowHeights,
-                                                 final List<SpreadsheetRectangle<?>> window) {
+                                                 final List<SpreadsheetRectangle> window) {
         return new SpreadsheetDeltaWindowed(cells,
                 maxColumnWidths,
                 maxRowHeights,
@@ -49,7 +49,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     private SpreadsheetDeltaWindowed(final Set<SpreadsheetCell> cells,
                                      final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
                                      final Map<SpreadsheetRowReference, Double> maxRowHeights,
-                                     final List<SpreadsheetRectangle<?>> window) {
+                                     final List<SpreadsheetRectangle> window) {
         super(cells, maxColumnWidths, maxRowHeights);
         this.window = window;
     }
@@ -70,11 +70,11 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    public List<SpreadsheetRectangle<?>> window() {
+    public List<SpreadsheetRectangle> window() {
         return this.window;
     }
 
-    private final List<SpreadsheetRectangle<?>> window;
+    private final List<SpreadsheetRectangle> window;
 
     @Override
     Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells) {
@@ -88,7 +88,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         printer.println("window:");
         printer.indent();
         {
-            for (final SpreadsheetRectangle<?> rectangle : this.window()) {
+            for (final SpreadsheetRectangle rectangle : this.window()) {
                 printer.println(rectangle.toString());
             }
         }

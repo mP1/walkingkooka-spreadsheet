@@ -17,9 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.Range;
-import walkingkooka.compare.Comparators;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
@@ -28,7 +26,6 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -36,13 +33,7 @@ import java.util.function.Function;
 /**
  * Base class for all Spreadsheet {@link ExpressionReference}
  */
-abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> implements ExpressionReference, Comparable<T> {
-
-    /**
-     * A comparator that orders {@link SpreadsheetLabelName} before {@link SpreadsheetCellReference}.
-     * Note when comparing {@link SpreadsheetCellReference} the {@link SpreadsheetReferenceKind} component is ignored.
-     */
-    public final static Comparator<SpreadsheetExpressionReference<?>> COMPARATOR = Cast.to(SpreadsheetExpressionReferenceComparator.INSTANCE);
+abstract public class SpreadsheetExpressionReference implements ExpressionReference {
 
     // modes used by isTextCellReference
     private final static int MODE_COLUMN_FIRST = 0;
@@ -253,24 +244,6 @@ abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> im
 
     abstract boolean equals0(final Object other);
 
-    // Comparable.......................................................................................................
-
-    /**
-     * Invoked by {@link SpreadsheetExpressionReferenceComparator} using double dispatch
-     * to compareTo0 two {@link SpreadsheetExpressionReference}. Each sub class will use double dispatch which will invoke
-     * either of the #compareTo1 methods. saving the need for instanceof checks.
-     */
-    abstract int compareTo0(final SpreadsheetExpressionReference other);
-
-    abstract int compareTo1(final SpreadsheetCellReference other);
-
-    abstract int compareTo1(final SpreadsheetLabelName other);
-
-    /**
-     * Labels come before references, used as the result when a label compares with a reference.
-     */
-    final static int LABEL_COMPARED_WITH_CELL_RESULT = Comparators.LESS;
-
     // JsonNodeContext..................................................................................................
 
     /**
@@ -359,7 +332,7 @@ abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> im
         );
     }
 
-    private static <T extends SpreadsheetExpressionReference<T>> void register(
+    private static <T extends SpreadsheetExpressionReference> void register(
             final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
             final BiFunction<T, JsonNodeMarshallContext, JsonNode> to,
             final Class<T> type) {
