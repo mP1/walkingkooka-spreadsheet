@@ -248,7 +248,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Override
-    final List<SpreadsheetRectangle<?>> window() {
+    final List<SpreadsheetRectangle> window() {
         return Lists.empty();
     }
 

@@ -34,7 +34,8 @@ import walkingkooka.text.CharSequences;
  * </pre>
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-final public class SpreadsheetLabelName extends SpreadsheetExpressionReference<SpreadsheetLabelName> implements Name {
+final public class SpreadsheetLabelName extends SpreadsheetExpressionReferenceComparable<SpreadsheetLabelName>
+        implements Name {
 
     private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 
@@ -124,7 +125,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference<S
     }
 
     private boolean equals1(final SpreadsheetLabelName other) {
-        return this.compareTo0(other) == 0;
+        return this.compareTo(other) == 0;
     }
 
     @Override
@@ -147,23 +148,6 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference<S
     @Override
     public SpreadsheetLabelName toRelative() {
         return this;
-    }
-
-    // SpreadsheetExpressionReferenceComparator........................................................................
-
-    @Override
-    final int compareTo0(final SpreadsheetExpressionReference other) {
-        return other.compareTo1(this);
-    }
-
-    @Override
-    final int compareTo1(final SpreadsheetCellReference other) {
-        return -LABEL_COMPARED_WITH_CELL_RESULT;
-    }
-
-    @Override
-    final int compareTo1(final SpreadsheetLabelName other) {
-        return other.compareTo(this);
     }
 
     // HasCaseSensitivity................................................................................................

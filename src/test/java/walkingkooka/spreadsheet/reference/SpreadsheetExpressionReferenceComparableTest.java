@@ -17,22 +17,22 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.text.CharSequences;
+import walkingkooka.Cast;
+import walkingkooka.reflect.ClassTesting;
+import walkingkooka.reflect.JavaVisibility;
 
-/**
- * A rectangular region that selects one or more cells
- */
-public abstract class SpreadsheetRectangle extends SpreadsheetExpressionReference {
 
-    public static SpreadsheetRectangle parseRectangle(final String text) {
-        CharSequences.failIfNullOrEmpty(text, "text");
+public final class SpreadsheetExpressionReferenceComparableTest implements ClassTesting<SpreadsheetExpressionReferenceComparable<?>> {
 
-        return text.split(SpreadsheetViewport.SEPARATOR.string()).length > 2 ?
-                SpreadsheetExpressionReference.parseViewport(text) :
-                SpreadsheetExpressionReference.parseRange(text);
+    // ClassTesting.....................................................................................................
+
+    @Override
+    public Class<SpreadsheetExpressionReferenceComparable<?>> type() {
+        return Cast.to(SpreadsheetExpressionReferenceComparable.class);
     }
 
-    SpreadsheetRectangle() {
-        super();
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }

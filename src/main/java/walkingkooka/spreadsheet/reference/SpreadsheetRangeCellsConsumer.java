@@ -70,7 +70,7 @@ final class SpreadsheetRangeCellsConsumer implements Consumer<SpreadsheetCellRef
 
     final Consumer<? super SpreadsheetCell> present;
     final Consumer<? super SpreadsheetCellReference> absent;
-    final Map<SpreadsheetCellReference, SpreadsheetCell> referenceToCells = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
+    final Map<SpreadsheetCellReference, SpreadsheetCell> referenceToCells = Maps.sorted();
 
     @Override
     public String toString() {

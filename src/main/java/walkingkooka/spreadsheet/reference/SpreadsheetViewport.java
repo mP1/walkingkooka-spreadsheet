@@ -26,7 +26,7 @@ import java.util.Objects;
  * Represents a rectangle selection of cells, starting from an cell reference covering the given pixel dimensions.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetViewport extends SpreadsheetRectangle<SpreadsheetViewport> {
+public final class SpreadsheetViewport extends SpreadsheetRectangle {
 
     final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
@@ -179,21 +179,6 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle<SpreadsheetV
     }
 
     @Override
-    int compareTo0(final SpreadsheetExpressionReference other) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    int compareTo1(final SpreadsheetCellReference other) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    int compareTo1(final SpreadsheetLabelName other) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public String toString() {
         return this.reference.toString() +
                 SEPARATOR +
@@ -207,15 +192,5 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle<SpreadsheetV
         return toString.endsWith(".0") ?
                 toString.substring(0, toString.length() - 2) :
                 toString;
-    }
-
-    // Comparable.......................................................................................................
-
-    /**
-     * Compares the {@link #reference()} ignoring the {@link #width()} and {@link #height()}
-     */
-    @Override
-    public int compareTo(final SpreadsheetViewport other) {
-        return this.reference.compareTo(other.reference);
     }
 }

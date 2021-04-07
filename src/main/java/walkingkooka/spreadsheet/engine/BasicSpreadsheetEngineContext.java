@@ -149,7 +149,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     public SpreadsheetCellReference resolveCellReference(final String text) {
         Objects.requireNonNull(text, "text");
 
-        final SpreadsheetExpressionReference<?> reference;
+        final SpreadsheetExpressionReference reference;
         try {
             reference = SpreadsheetExpressionReference.parse(text);
         } catch (final RuntimeException cause) {

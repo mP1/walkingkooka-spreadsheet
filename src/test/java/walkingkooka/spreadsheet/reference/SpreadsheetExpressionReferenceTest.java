@@ -31,8 +31,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<SpreadsheetExpressionReference<?>>,
-        ParseStringTesting<SpreadsheetExpressionReference<?>> {
+public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<SpreadsheetExpressionReference>,
+        ParseStringTesting<SpreadsheetExpressionReference> {
 
     @Test
     public void testIsTextCellReferenceNullFails() {
@@ -165,8 +165,8 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetExpressionReference<?>> type() {
-        return Cast.to(SpreadsheetExpressionReference.class);
+    public Class<SpreadsheetExpressionReference> type() {
+        return SpreadsheetExpressionReference.class;
     }
 
     @Override
@@ -177,7 +177,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetExpressionReference<?> parseString(final String text) {
+    public SpreadsheetExpressionReference parseString(final String text) {
         return SpreadsheetExpressionReference.parse(text);
     }
 
