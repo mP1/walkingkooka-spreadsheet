@@ -129,6 +129,65 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
+    public Set<SpreadsheetLabelName> findSimilar(final String text,
+                                                 final int count) {
+        Objects.requireNonNull(text, "text");
+        Store.checkCount(count);
+
+        final Set<SpreadsheetLabelName> results;
+        if (text.isEmpty() || 0 == count) {
+            results = Sets.empty();
+        } else {
+            results = findSimilarNonEmpty(text, count);
+        }
+
+        return results;
+    }
+
+    private Set<SpreadsheetLabelName> findSimilarNonEmpty(final String text,
+                                                          final int count) {
+        Set<SpreadsheetLabelName> results;
+
+        do {
+            SpreadsheetLabelName labelName;
+            boolean exact = false;
+            try {
+                labelName = SpreadsheetLabelName.labelName(text);
+                exact = this.mappings.containsKey(labelName);
+                if (exact && 1 == count) {
+                    results = Sets.of(labelName);
+                    break;
+                }
+            } catch (final Exception notExact) {
+                labelName = null;
+            }
+
+            results = Sets.ordered();
+            if (exact) {
+                results.add(labelName);
+            }
+
+            this.mappings.keySet()
+                    .stream()
+                    .filter(l -> contains(text, l))
+                    .limit(count - (exact ? 1 : 0))
+                    .forEach(results::add);
+        } while (false);
+
+        return results;
+    }
+
+    /**
+     * Predicate that returns true if the {@link SpreadsheetLabelName} contains the given text value.
+     * This assumes that a test has already been performed for exact matches.
+     */
+    private boolean contains(final String text,
+                             final SpreadsheetLabelName possible) {
+        final String value = possible.value();
+        return value.length() != text.length() && SpreadsheetLabelName.CASE_SENSITIVITY.contains(value, text);
+    }
+
+    @Override
     public Set<? super ExpressionReference> loadCellReferencesOrRanges(final SpreadsheetLabelName label) {
         Objects.requireNonNull(label, "label");
 
