@@ -87,6 +87,12 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
+    public Set<SpreadsheetLabelName> findSimilar(final String text,
+                                                 final int count) {
+        return this.store.findSimilar(text, count);
+    }
+
+    @Override
     public Set<? super ExpressionReference> loadCellReferencesOrRanges(final SpreadsheetLabelName label) {
         return this.store.loadCellReferencesOrRanges(label);
     }

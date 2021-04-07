@@ -29,6 +29,96 @@ import java.util.TreeMap;
 
 public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<TreeMapSpreadsheetLabelStore> {
 
+    // findSimilar......................................................................................................
+
+    @Test
+    public void testFindSimilarNone() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        store.save(SpreadsheetLabelMapping.with(this.label1(), this.a1()));
+
+        this.findSimilarAndCheck(store, this.label2().value(), 2);
+    }
+
+    @Test
+    public void testFindSimilarOnly() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label = this.label1();
+        store.save(SpreadsheetLabelMapping.with(label, this.a1()));
+
+        this.findSimilarAndCheck(store, label.value(), 1, label);
+    }
+
+    @Test
+    public void testFindSimilarOnly2() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label = this.label1();
+        store.save(SpreadsheetLabelMapping.with(label, this.a1()));
+
+        this.findSimilarAndCheck(store, label.value(), 2, label);
+    }
+
+    @Test
+    public void testFindSimilarOnly3() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label = this.label1();
+        store.save(SpreadsheetLabelMapping.with(label, this.a1()));
+        store.save(SpreadsheetLabelMapping.with(SpreadsheetLabelName.labelName("xyz"), this.a1()));
+
+        this.findSimilarAndCheck(store, label.value(), 2, label);
+    }
+
+    @Test
+    public void testFindSimilarPartial() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("Label123");
+        store.save(SpreadsheetLabelMapping.with(label, this.a1()));
+
+        this.findSimilarAndCheck(store, "123", 2, label);
+    }
+
+    @Test
+    public void testFindSimilarSeveral() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetCellReference cell = this.a1();
+
+        final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label123");
+        store.save(SpreadsheetLabelMapping.with(label1, cell));
+
+        final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label1234");
+        store.save(SpreadsheetLabelMapping.with(label2, cell));
+
+        final SpreadsheetLabelName label3 = SpreadsheetLabelName.labelName("Label999");
+        store.save(SpreadsheetLabelMapping.with(label3, cell));
+
+        this.findSimilarAndCheck(store, "Label123", 2, label1, label2);
+    }
+
+    @Test
+    public void testFindSimilarSeveral2() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetCellReference cell = this.a1();
+
+        final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label123");
+        store.save(SpreadsheetLabelMapping.with(label1, cell));
+
+        final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label1234");
+        store.save(SpreadsheetLabelMapping.with(label2, cell));
+
+        final SpreadsheetLabelName label3 = SpreadsheetLabelName.labelName("Label999");
+        store.save(SpreadsheetLabelMapping.with(label3, cell));
+
+        this.findSimilarAndCheck(store, "2", 2, label1, label2);
+    }
+
+    // loadCellReferencesOrRanges.......................................................................................
+
     @Test
     public void testLoadCellReferencesOrRangesNotFound() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();

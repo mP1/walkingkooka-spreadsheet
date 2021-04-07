@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.store.StoreTesting;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Set;
@@ -34,6 +35,50 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> extends StoreTesting<S, SpreadsheetLabelName, SpreadsheetLabelMapping>,
         TypeNameTesting<S> {
+
+    @Test
+    default void testFindSimilarNullTextFails() {
+        assertThrows(NullPointerException.class, () -> this.createStore().findSimilar(null, 1));
+    }
+
+    @Test
+    default void testFindSimilarInvalidCountFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createStore().findSimilar("text", -1));
+    }
+
+    @Test
+    default void testFindSimilarEmptyText() {
+        this.findSimilarAndCheck("", 1);
+    }
+
+    @Test
+    default void testFindSimilarZeroCount() {
+        this.findSimilarAndCheck("text", 0);
+    }
+
+    default void findSimilarAndCheck(final String text,
+                                     final int count,
+                                     final SpreadsheetLabelName... labels) {
+        this.findSimilarAndCheck(this.createStore(), text, count, labels);
+    }
+
+    default void findSimilarAndCheck(final SpreadsheetLabelStore store,
+                                     final String text,
+                                     final int count,
+                                     final SpreadsheetLabelName... labels) {
+        this.findSimilarAndCheck(store, text, count, Sets.of(labels));
+    }
+
+    default void findSimilarAndCheck(final SpreadsheetLabelStore store,
+                                     final String text,
+                                     final int count,
+                                     final Set<SpreadsheetLabelName> labels) {
+        assertEquals(
+                labels,
+                store.findSimilar(text, count),
+                () -> "findSimilar " + CharSequences.quoteAndEscape(text) + " count=" + count
+        );
+    }
 
     @Test
     default void testLoadCellReferencesOrRangesNullLabelFails() {

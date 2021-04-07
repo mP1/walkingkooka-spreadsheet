@@ -31,6 +31,11 @@ import java.util.Set;
 public interface SpreadsheetLabelStore extends Store<SpreadsheetLabelName, SpreadsheetLabelMapping> {
 
     /**
+     * Finds all {@link SpreadsheetLabelName} for the given text.
+     */
+    Set<SpreadsheetLabelName> findSimilar(final String text, final int max);
+
+    /**
      * Returns all {@link SpreadsheetCellReference} for the given {@link SpreadsheetLabelName}, including resolving
      * label to label references until they resolve to cells.
      */
