@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceComparable;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 
 public abstract class SpreadsheetExpressionReferenceStoreTestCase<S extends SpreadsheetExpressionReferenceStore<T>,
-        T extends SpreadsheetExpressionReferenceComparable<T>>
+        T extends SpreadsheetCellReferenceOrLabelName<T>>
         implements SpreadsheetExpressionReferenceStoreTesting<S, T> {
 
     SpreadsheetExpressionReferenceStoreTestCase() {

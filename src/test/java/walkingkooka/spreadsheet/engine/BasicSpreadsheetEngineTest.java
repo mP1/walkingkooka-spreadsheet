@@ -50,9 +50,9 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceComparable;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
@@ -5544,9 +5544,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 () -> "all mappings in " + store);
     }
 
-    private <E extends SpreadsheetExpressionReferenceComparable<E>> void loadReferencesAndCheck(final SpreadsheetExpressionReferenceStore<E> store,
-                                                                                                final E cell,
-                                                                                                final SpreadsheetCellReference... out) {
+    private <E extends SpreadsheetCellReferenceOrLabelName<E>> void loadReferencesAndCheck(final SpreadsheetExpressionReferenceStore<E> store,
+                                                                                           final E cell,
+                                                                                           final SpreadsheetCellReference... out) {
         assertEquals(Optional.ofNullable(out.length == 0 ? null : Sets.of(out)),
                 store.load(cell),
                 "references to " + cell);
