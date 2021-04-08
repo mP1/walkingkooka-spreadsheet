@@ -21,7 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceComparable;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.store.Store;
 import walkingkooka.store.Watchers;
 
@@ -36,9 +36,9 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetExpressionReferenceStore} that uses a {@link Map} to store an entity to {@link SpreadsheetCellReference}
  */
-final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReferenceComparable<T>> implements SpreadsheetExpressionReferenceStore<T> {
+final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetCellReferenceOrLabelName<T>> implements SpreadsheetExpressionReferenceStore<T> {
 
-    static <T extends SpreadsheetExpressionReferenceComparable<T>> TreeMapSpreadsheetExpressionReferenceStore<T> create() {
+    static <T extends SpreadsheetCellReferenceOrLabelName<T>> TreeMapSpreadsheetExpressionReferenceStore<T> create() {
         return new TreeMapSpreadsheetExpressionReferenceStore<>();
     }
 

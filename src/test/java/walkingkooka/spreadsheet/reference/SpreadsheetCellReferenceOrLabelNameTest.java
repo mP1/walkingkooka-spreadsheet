@@ -22,13 +22,13 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
 
-public final class SpreadsheetExpressionReferenceComparableTest implements ClassTesting<SpreadsheetExpressionReferenceComparable<?>> {
+public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesting<SpreadsheetCellReferenceOrLabelName<?>> {
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetExpressionReferenceComparable<?>> type() {
-        return Cast.to(SpreadsheetExpressionReferenceComparable.class);
+    public Class<SpreadsheetCellReferenceOrLabelName<?>> type() {
+        return Cast.to(SpreadsheetCellReferenceOrLabelName.class);
     }
 
     @Override

@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceComparable;
 import walkingkooka.store.Store;
 
 import java.util.Objects;
@@ -32,7 +32,7 @@ import java.util.function.Consumer;
  * property if one is present. Any return types of {@link SpreadsheetExpressionReference} will have their
  * {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind} set to {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind#RELATIVE}.
  */
-public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReferenceComparable<T>> extends Store<T, Set<SpreadsheetCellReference>> {
+public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetCellReferenceOrLabelName<T>> extends Store<T, Set<SpreadsheetCellReference>> {
 
     @Override
     default Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> value) {

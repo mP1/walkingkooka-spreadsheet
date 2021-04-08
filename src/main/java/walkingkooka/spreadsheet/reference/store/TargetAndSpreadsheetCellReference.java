@@ -19,18 +19,18 @@ package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceComparable;
 
 import java.util.Objects;
 
 /**
  * Holds a {@link SpreadsheetExpressionReference source} to a {@link SpreadsheetCellReference}.
  */
-public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpressionReferenceComparable<T>> {
+public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetCellReferenceOrLabelName<T>> {
 
-    public static <T extends SpreadsheetExpressionReferenceComparable<T>> TargetAndSpreadsheetCellReference<T> with(final T target,
-                                                                                                                    final SpreadsheetCellReference reference) {
+    public static <T extends SpreadsheetCellReferenceOrLabelName<T>> TargetAndSpreadsheetCellReference<T> with(final T target,
+                                                                                                               final SpreadsheetCellReference reference) {
         Objects.requireNonNull(target, "target");
         Objects.requireNonNull(reference, "reference");
         if (target.equals(reference)) {

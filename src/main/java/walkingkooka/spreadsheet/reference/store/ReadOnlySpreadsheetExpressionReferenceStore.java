@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceComparable;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 
 import java.util.List;
 import java.util.Objects;
@@ -29,10 +29,10 @@ import java.util.function.Consumer;
 /**
  * A read only wrapper around a {@link SpreadsheetExpressionReferenceStore}
  */
-final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReferenceComparable<T>>
+final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetCellReferenceOrLabelName<T>>
         implements SpreadsheetExpressionReferenceStore<T> {
 
-    static <T extends SpreadsheetExpressionReferenceComparable<T>> ReadOnlySpreadsheetExpressionReferenceStore<T> with(final SpreadsheetExpressionReferenceStore<T> store) {
+    static <T extends SpreadsheetCellReferenceOrLabelName<T>> ReadOnlySpreadsheetExpressionReferenceStore<T> with(final SpreadsheetExpressionReferenceStore<T> store) {
         Objects.requireNonNull(store, "store");
         return new ReadOnlySpreadsheetExpressionReferenceStore<>(store);
     }
