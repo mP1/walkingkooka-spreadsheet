@@ -763,16 +763,16 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "rowHeight " + row + " of " + engine);
     }
 
-    default void computeRange(final SpreadsheetViewport viewport,
-                              final SpreadsheetRange expected) {
-        this.computeRange(this.createSpreadsheetEngine(),
+    default void computeRangeAndCheck(final SpreadsheetViewport viewport,
+                                      final SpreadsheetRange expected) {
+        this.computeRangeAndCheck(this.createSpreadsheetEngine(),
                 viewport,
                 expected);
     }
 
-    default void computeRange(final SpreadsheetEngine engine,
-                              final SpreadsheetViewport viewport,
-                              final SpreadsheetRange expected) {
+    default void computeRangeAndCheck(final SpreadsheetEngine engine,
+                                      final SpreadsheetViewport viewport,
+                                      final SpreadsheetRange expected) {
         assertEquals(expected,
                 engine.computeRange(viewport),
                 () -> "computeRange " + viewport + " of " + engine);
