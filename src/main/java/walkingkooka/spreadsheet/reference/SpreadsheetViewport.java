@@ -52,7 +52,7 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
                 throw new IllegalArgumentException("Incorrect number of tokens in " + CharSequences.quoteAndEscape(text));
         }
 
-        final SpreadsheetCellReference reference;
+        final SpreadsheetCellReferenceOrLabelName<?> reference;
         try {
             reference = SpreadsheetCellReference.parseCellReference(tokens[0]);
         } catch (final NumberFormatException cause) {
@@ -78,10 +78,13 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
     /**
      * Factory that creates a new {@link SpreadsheetViewport}.
      */
-    static SpreadsheetViewport with(final SpreadsheetCellReference reference,
+    static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName<?> reference,
                                     final double width,
                                     final double height) {
         Objects.requireNonNull(reference, "reference");
+        if (reference.isViewport()) {
+            throw new IllegalArgumentException("Invalid reference got " + reference);
+        }
 
         if (width <= 0) {
             throw new IllegalArgumentException("Invalid width " + width + " <= 0");
@@ -92,7 +95,7 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
         return new SpreadsheetViewport(reference, width, height);
     }
 
-    private SpreadsheetViewport(final SpreadsheetCellReference reference,
+    private SpreadsheetViewport(final SpreadsheetCellReferenceOrLabelName<?> reference,
                                 final double width,
                                 final double height) {
         super();
@@ -113,11 +116,11 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
 
     // properties.......................................................................................................
 
-    public SpreadsheetCellReference reference() {
+    public SpreadsheetExpressionReference reference() {
         return this.reference;
     }
 
-    private final SpreadsheetCellReference reference;
+    private final SpreadsheetCellReferenceOrLabelName<?> reference;
 
     public double width() {
         return this.width;

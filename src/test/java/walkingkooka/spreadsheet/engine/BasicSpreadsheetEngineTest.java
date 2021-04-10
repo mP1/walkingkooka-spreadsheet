@@ -181,6 +181,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static int TWO_DIGIT_YEAR = 20;
     private final static char VALUE_SEPARATOR = ';';
 
+    private final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.labelName("Label123");
+    private final static SpreadsheetCellReference LABEL_CELL = SpreadsheetCellReference.parseCellReference("Z99");
+
     @Test
     public void testWithNullIdFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(null,
@@ -5221,7 +5224,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Override
     public SpreadsheetEngineContext createContext() {
-        return SpreadsheetEngineContexts.fake();
+        return new FakeSpreadsheetEngineContext() {
+            @Override
+            public SpreadsheetCellReference resolveCellReference(final String text) {
+                final SpreadsheetExpressionReference reference = SpreadsheetExpressionReference.parse(text);
+                if (reference.isCellReference()) {
+                    return (SpreadsheetCellReference) reference;
+                }
+                assertEquals(LABEL, reference.toString());
+                return LABEL_CELL;
+            }
+        };
     }
 
     private SpreadsheetEngineContext createContext(final BasicSpreadsheetEngine engine) {

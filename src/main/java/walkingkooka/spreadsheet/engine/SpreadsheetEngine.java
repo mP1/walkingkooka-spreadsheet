@@ -134,7 +134,8 @@ public interface SpreadsheetEngine {
     /**
      * Computes the {@link SpreadsheetRange} from the given {@link SpreadsheetViewport} using the column width and row heights.
      */
-    SpreadsheetRange computeRange(final SpreadsheetViewport viewport);
+    SpreadsheetRange computeRange(final SpreadsheetViewport viewport,
+                                  final SpreadsheetEngineContext context);
 
     /**
      * Locates the {@link SpreadsheetCellBox} at the given coordinates.

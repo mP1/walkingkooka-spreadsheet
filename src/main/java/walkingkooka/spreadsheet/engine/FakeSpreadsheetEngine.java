@@ -123,7 +123,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetRange computeRange(final SpreadsheetViewport viewport) {
+    public SpreadsheetRange computeRange(final SpreadsheetViewport viewport,
+                                         final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
