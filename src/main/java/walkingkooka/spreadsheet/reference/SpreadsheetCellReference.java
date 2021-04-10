@@ -179,15 +179,6 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return new SpreadsheetCellReference(column, row);
     }
 
-    // SpreadsheetViewport........................................................................................
-
-    /**
-     * Creates a {@link SpreadsheetViewport} using this as the top/left.
-     */
-    public SpreadsheetViewport viewport(final double width,
-                                        final double height) {
-        return SpreadsheetViewport.with(this, width, height);
-    }
 
     // range/spreadsheetRange...........................................................................................
 
