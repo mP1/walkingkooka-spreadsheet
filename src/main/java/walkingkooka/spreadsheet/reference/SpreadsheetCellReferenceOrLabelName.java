@@ -22,13 +22,25 @@ package walkingkooka.spreadsheet.reference;
  * This type is necessary to avoid J2clTranspiler failures because of what appears to be a failure of the JDT not being
  * able to handle type parameters with multiple bounds.
  */
-abstract public class SpreadsheetCellReferenceOrLabelName<C extends SpreadsheetCellReferenceOrLabelName<C>> extends SpreadsheetExpressionReference implements Comparable<C> {
+abstract public class SpreadsheetCellReferenceOrLabelName<C extends SpreadsheetCellReferenceOrLabelName<C>> extends SpreadsheetExpressionReference
+        implements Comparable<C> {
 
     /**
      * Package private to limit sub classing.
      */
     SpreadsheetCellReferenceOrLabelName() {
         super();
+    }
+
+
+    // SpreadsheetViewport........................................................................................
+
+    /**
+     * Creates a {@link SpreadsheetViewport} using this as the top/left.
+     */
+    public final SpreadsheetViewport viewport(final double width,
+                                              final double height) {
+        return SpreadsheetViewport.with(this, width, height);
     }
 
     abstract public SpreadsheetCellReferenceOrLabelName<C> toRelative();

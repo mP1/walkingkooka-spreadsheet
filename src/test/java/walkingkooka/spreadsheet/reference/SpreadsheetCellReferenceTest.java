@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
-import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
@@ -33,9 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetCellReference>
-        implements ComparableTesting2<SpreadsheetCellReference>,
-        HateosResourceTesting<SpreadsheetCellReference>,
+public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReferenceOrLabelNameTestCase<SpreadsheetCellReference>
+        implements HateosResourceTesting<SpreadsheetCellReference>,
         ParseStringTesting<SpreadsheetCellReference> {
 
     private final static int COLUMN = 123;
@@ -442,21 +440,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         assertEquals(SpreadsheetRange.with(expected),
                 cell.spreadsheetRange(other),
                 () -> cell + " spreadsheetRange " + other);
-    }
-
-    // SpreadsheetViewport.........................................................................................
-
-    @Test
-    public void testViewport() {
-        final double width = 100.5;
-        final double height = 20.5;
-        final SpreadsheetCellReference reference = this.createReference();
-
-        final SpreadsheetViewport viewport = reference.viewport(width, height);
-
-        assertEquals(reference.toRelative(), viewport.reference(), "reference");
-        assertEquals(width, viewport.width(), "width");
-        assertEquals(height, viewport.height(), "height");
     }
 
     // ParseStringTesting...............................................................................................

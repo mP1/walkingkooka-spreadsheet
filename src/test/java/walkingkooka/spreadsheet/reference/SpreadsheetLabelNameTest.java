@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetLabelName>
+final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLabelNameTestCase<SpreadsheetLabelName>
         implements NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName> {
 
     @Test
