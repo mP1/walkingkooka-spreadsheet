@@ -45,9 +45,17 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label = this.label1();
-        store.save(SpreadsheetLabelMapping.with(label, this.a1()));
+        final SpreadsheetCellReference cell = this.a1();
+        final SpreadsheetLabelMapping mapping = label.mapping(cell);
 
-        this.findSimilarAndCheck(store, label.value(), 1, label);
+        store.save(mapping);
+
+        this.findSimilarAndCheck(
+                store,
+                label.value(),
+                1,
+                mapping
+        );
     }
 
     @Test
@@ -55,9 +63,17 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label = this.label1();
-        store.save(SpreadsheetLabelMapping.with(label, this.a1()));
+        final SpreadsheetCellReference cell = this.a1();
+        final SpreadsheetLabelMapping mapping = label.mapping(cell);
 
-        this.findSimilarAndCheck(store, label.value(), 2, label);
+        store.save(mapping);
+
+        this.findSimilarAndCheck(
+                store,
+                label.value(),
+                2,
+                mapping
+        );
     }
 
     @Test
@@ -65,10 +81,18 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label = this.label1();
-        store.save(SpreadsheetLabelMapping.with(label, this.a1()));
+        final SpreadsheetCellReference cell = this.a1();
+        final SpreadsheetLabelMapping mapping = label.mapping(cell);
+
+        store.save(mapping);
         store.save(SpreadsheetLabelMapping.with(SpreadsheetLabelName.labelName("xyz"), this.a1()));
 
-        this.findSimilarAndCheck(store, label.value(), 2, label);
+        this.findSimilarAndCheck(
+                store,
+                label.value(),
+                2,
+                mapping
+        );
     }
 
     @Test
@@ -76,9 +100,12 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("Label123");
-        store.save(SpreadsheetLabelMapping.with(label, this.a1()));
+        final SpreadsheetCellReference cell = this.a1();
+        final SpreadsheetLabelMapping mapping = label.mapping(cell);
 
-        this.findSimilarAndCheck(store, "123", 2, label);
+        store.save(mapping);
+
+        this.findSimilarAndCheck(store, "123", 2, mapping);
     }
 
     @Test
@@ -88,15 +115,22 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetCellReference cell = this.a1();
 
         final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label123");
-        store.save(SpreadsheetLabelMapping.with(label1, cell));
+        final SpreadsheetLabelMapping mapping1 = label1.mapping(cell);
+        store.save(mapping1);
 
         final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label1234");
-        store.save(SpreadsheetLabelMapping.with(label2, cell));
+        final SpreadsheetLabelMapping mapping2 = label2.mapping(cell);
+        store.save(mapping2);
 
         final SpreadsheetLabelName label3 = SpreadsheetLabelName.labelName("Label999");
         store.save(SpreadsheetLabelMapping.with(label3, cell));
 
-        this.findSimilarAndCheck(store, "Label123", 2, label1, label2);
+        this.findSimilarAndCheck(
+                store,
+                "Label123",
+                2,
+                mapping1, mapping2
+        );
     }
 
     @Test
@@ -106,15 +140,22 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetCellReference cell = this.a1();
 
         final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label123");
-        store.save(SpreadsheetLabelMapping.with(label1, cell));
+        final SpreadsheetLabelMapping mapping1 = label1.mapping(cell);
+        store.save(mapping1);
 
         final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label1234");
-        store.save(SpreadsheetLabelMapping.with(label2, cell));
+        final SpreadsheetLabelMapping mapping2 = label2.mapping(cell);
+        store.save(mapping2);
 
         final SpreadsheetLabelName label3 = SpreadsheetLabelName.labelName("Label999");
         store.save(SpreadsheetLabelMapping.with(label3, cell));
 
-        this.findSimilarAndCheck(store, "2", 2, label1, label2);
+        this.findSimilarAndCheck(
+                store,
+                "2",
+                2,
+                mapping1, mapping2
+        );
     }
 
     // loadCellReferencesOrRanges.......................................................................................

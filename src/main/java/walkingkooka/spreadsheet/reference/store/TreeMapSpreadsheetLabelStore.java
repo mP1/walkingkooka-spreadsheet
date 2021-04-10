@@ -129,12 +129,12 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<SpreadsheetLabelName> findSimilar(final String text,
-                                                 final int count) {
+    public Set<SpreadsheetLabelMapping> findSimilar(final String text,
+                                                    final int count) {
         Objects.requireNonNull(text, "text");
         Store.checkCount(count);
 
-        final Set<SpreadsheetLabelName> results;
+        final Set<SpreadsheetLabelMapping> results;
         if (text.isEmpty() || 0 == count) {
             results = Sets.empty();
         } else {
@@ -144,18 +144,18 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         return results;
     }
 
-    private Set<SpreadsheetLabelName> findSimilarNonEmpty(final String text,
-                                                          final int count) {
-        Set<SpreadsheetLabelName> results;
+    private Set<SpreadsheetLabelMapping> findSimilarNonEmpty(final String text,
+                                                             final int count) {
+        Set<SpreadsheetLabelMapping> results;
 
         do {
             SpreadsheetLabelName labelName;
-            boolean exact = false;
+            SpreadsheetLabelMapping mapping = null;
             try {
                 labelName = SpreadsheetLabelName.labelName(text);
-                exact = this.mappings.containsKey(labelName);
-                if (exact && 1 == count) {
-                    results = Sets.of(labelName);
+                mapping = this.mappings.get(labelName);
+                if (null != mapping && 1 == count) {
+                    results = Sets.of(mapping);
                     break;
                 }
             } catch (final Exception notExact) {
@@ -163,14 +163,14 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
             }
 
             results = Sets.ordered();
-            if (exact) {
-                results.add(labelName);
+            if (null != mapping) {
+                results.add(mapping);
             }
 
-            this.mappings.keySet()
+            this.mappings.values()
                     .stream()
                     .filter(l -> contains(text, l))
-                    .limit(count - (exact ? 1 : 0))
+                    .limit(count - (null != mapping ? 1 : 0))
                     .forEach(results::add);
         } while (false);
 
@@ -178,12 +178,13 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     /**
-     * Predicate that returns true if the {@link SpreadsheetLabelName} contains the given text value.
+     * Predicate that returns true if the {@link SpreadsheetLabelMapping} contains the given text value.
      * This assumes that a test has already been performed for exact matches.
      */
     private boolean contains(final String text,
-                             final SpreadsheetLabelName possible) {
-        final String value = possible.value();
+                             final SpreadsheetLabelMapping possible) {
+        final String value = possible.label()
+                .value();
         return value.length() != text.length() && SpreadsheetLabelName.CASE_SENSITIVITY.contains(value, text);
     }
 

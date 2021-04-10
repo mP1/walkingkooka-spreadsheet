@@ -33,7 +33,7 @@ public interface SpreadsheetLabelStore extends Store<SpreadsheetLabelName, Sprea
     /**
      * Finds all {@link SpreadsheetLabelName} for the given text.
      */
-    Set<SpreadsheetLabelName> findSimilar(final String text, final int max);
+    Set<SpreadsheetLabelMapping> findSimilar(final String text, final int max);
 
     /**
      * Returns all {@link SpreadsheetCellReference} for the given {@link SpreadsheetLabelName}, including resolving
