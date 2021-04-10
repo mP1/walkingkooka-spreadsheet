@@ -58,6 +58,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
@@ -5094,6 +5095,36 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         assertThrows(TextStylePropertyValueException.class, () -> engine.rowHeight(row));
     }
 
+    //  computeRange....................................................................................................
+
+    @Test
+    public void testComputeRangeA1() {
+        this.computeRangeAndCheck(
+                SpreadsheetViewport.parseViewport("A1:" + WIDTH * 3 + ":" + HEIGHT * 2),
+                SpreadsheetRange.parseRange("A1:D3")
+        );
+    }
+
+    @Test
+    public void testComputeRangeB2() {
+        this.computeRangeAndCheck(
+                SpreadsheetViewport.parseViewport("B2:" + WIDTH * 3 + ":" + HEIGHT * 2),
+                SpreadsheetRange.parseRange("B2:E4")
+        );
+    }
+
+    @Test
+    public void testComputeRange3() {
+        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCellReference("C3");
+        final int column = 7;
+        final int row = 4;
+
+        this.computeRangeAndCheck(
+                SpreadsheetViewport.parseViewport(cell + ":" + WIDTH * column + ":" + HEIGHT * row),
+                SpreadsheetRange.parseRange(cell + ":" + cell.addColumn(column).addRow(row))
+        );
+    }
+
     //  cellBox.........................................................................................................
 
     @Test
@@ -5581,8 +5612,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetParsePatterns.parseNumberFormatPattern(NUMBER_PATTERN + suffix))
                 .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetParsePatterns.parseNumberParsePatterns(NUMBER_PATTERN))
                 .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetParsePatterns.parseTimeFormatPattern(TIME_PATTERN + suffix))
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseTimeParsePatterns(TIME_PATTERN));
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseTimeParsePatterns(TIME_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
+                        .set(TextStylePropertyName.WIDTH, Length.parsePixels(WIDTH + "px"))
+                        .set(TextStylePropertyName.HEIGHT, Length.parsePixels(HEIGHT + "px"))
+                );
     }
+
+    private final static int WIDTH = 50;
+    private final static int HEIGHT = 30;
 
     private SpreadsheetCellStore cellStore() {
         return SpreadsheetCellStores.treeMap();
