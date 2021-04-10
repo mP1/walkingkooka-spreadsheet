@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
-import walkingkooka.Either;
 import walkingkooka.convert.CanConvert;
 import walkingkooka.datetime.YearContext;
 import walkingkooka.locale.HasLocale;
@@ -26,6 +25,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 
@@ -41,9 +41,9 @@ public interface SpreadsheetEngineContext extends Context,
         YearContext {
 
     /**
-     * Accepts some text and attempts to resolve the possible cell reference or label to a {@link SpreadsheetCellReference}.
+     * Resolves a {@link SpreadsheetExpressionReference} to a {@link SpreadsheetCellReference}.
      */
-    SpreadsheetCellReference resolveCellReference(final String text);
+    SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference);
 
     /**
      * Parses the formula into an {@link Expression}.

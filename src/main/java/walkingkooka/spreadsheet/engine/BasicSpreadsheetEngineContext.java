@@ -38,7 +38,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -147,15 +146,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // resolveCellReference.............................................................................................
 
     @Override
-    public SpreadsheetCellReference resolveCellReference(final String text) {
-        Objects.requireNonNull(text, "text");
+    public SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
 
-        final SpreadsheetExpressionReference reference;
-        try {
-            reference = SpreadsheetExpressionReference.parse(text);
-        } catch (final RuntimeException cause) {
-            throw new IllegalArgumentException("Invalid cell, label or range got " + CharSequences.quoteAndEscape(text));
-        }
         return BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor.lookup(reference, this.labelStore);
     }
 

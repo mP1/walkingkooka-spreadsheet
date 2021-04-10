@@ -50,77 +50,70 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     @Test
-    default void testResolveCellReferenceEmptyFails() {
-        this.resolveCellReferenceAndFail("");
-    }
-
-    @Test
-    default void testResolveCellReferenceInvalidFails() {
-        this.resolveCellReferenceAndFail("!invalid");
-    }
-
-    @Test
     default void testResolveCellReferenceViewportFails() {
-        this.resolveCellReferenceAndFail(SpreadsheetExpressionReference.parseViewport("B9:40.5:50.75").toString());
+        this.resolveCellReferenceAndFail(SpreadsheetExpressionReference.parseViewport("B9:40.5:50.75"));
     }
 
     @Test
     default void testResolveCellReferenceRange() {
-        this.resolveCellReferenceAndCheck("B2:B3", SpreadsheetCellReference.parseCellReference("B2"));
+        this.resolveCellReferenceAndCheck(
+                SpreadsheetExpressionReference.parse("B2:B3"),
+                SpreadsheetCellReference.parseCellReference("B2")
+        );
     }
 
-    default void resolveCellReferenceAndFail(final String text) {
+    default void resolveCellReferenceAndFail(final SpreadsheetExpressionReference reference) {
         this.resolveCellReferenceAndFail(
                 this.createContext(),
-                text
+                reference
         );
     }
 
     default void resolveCellReferenceAndFail(final SpreadsheetEngineContext context,
-                                             final String text) {
-        assertThrows(RuntimeException.class, () -> context.resolveCellReference(text),
-                () -> "resolveCellReference " + CharSequences.quoteIfChars(text)
+                                             final SpreadsheetExpressionReference reference) {
+        assertThrows(RuntimeException.class, () -> context.resolveCellReference(reference),
+                () -> "resolveCellReference " + reference
         );
     }
 
-    default void resolveCellReferenceAndFail(final String text,
+    default void resolveCellReferenceAndFail(final SpreadsheetExpressionReference reference,
                                              final String message) {
         this.resolveCellReferenceAndFail(
                 this.createContext(),
-                text,
+                reference,
                 message
         );
     }
 
     default void resolveCellReferenceAndFail(final SpreadsheetEngineContext context,
-                                             final String text,
+                                             final SpreadsheetExpressionReference reference,
                                              final String message) {
-        final RuntimeException thrown = assertThrows(RuntimeException.class, () -> context.resolveCellReference(text),
-                () -> "resolveCellReference " + CharSequences.quoteIfChars(text)
+        final RuntimeException thrown = assertThrows(RuntimeException.class, () -> context.resolveCellReference(reference),
+                () -> "resolveCellReference " + reference
         );
         assertEquals(
                 message,
                 thrown.getMessage(),
-                () -> "resolveCellReference " + CharSequences.quoteIfChars(text)
+                () -> "resolveCellReference " + reference
         );
     }
 
-    default void resolveCellReferenceAndCheck(final String text,
-                                              final SpreadsheetCellReference reference) {
+    default void resolveCellReferenceAndCheck(final SpreadsheetExpressionReference reference,
+                                              final SpreadsheetCellReference expected) {
         this.resolveCellReferenceAndCheck(
                 this.createContext(),
-                text,
-                reference
+                reference,
+                expected
         );
     }
 
     default void resolveCellReferenceAndCheck(final SpreadsheetEngineContext context,
-                                              final String text,
-                                              final SpreadsheetCellReference reference) {
+                                              final SpreadsheetExpressionReference reference,
+                                              final SpreadsheetCellReference expected) {
         assertEquals(
-                reference,
-                context.resolveCellReference(text),
-                () -> "resolveCellReference " + CharSequences.quoteIfChars(text)
+                expected,
+                context.resolveCellReference(reference),
+                () -> "resolveCellReference " + reference
         );
     }
 

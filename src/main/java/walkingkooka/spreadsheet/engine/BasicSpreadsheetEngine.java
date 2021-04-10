@@ -592,7 +592,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(viewport, "viewport");
         Objects.requireNonNull(context, "context");
 
-        final SpreadsheetCellReference reference = context.resolveCellReference(viewport.reference().toString());
+        final SpreadsheetCellReference reference = context.resolveCellReference(viewport.reference());
 
         final double width = viewport.width();
         double x = 0;

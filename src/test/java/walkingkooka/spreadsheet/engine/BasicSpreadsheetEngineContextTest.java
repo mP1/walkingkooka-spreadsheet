@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
@@ -257,16 +258,17 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testResolveCellReferenceCellReference() {
+        final SpreadsheetCellReference cell = SpreadsheetExpressionReference.parseCellReference("A1");
         this.resolveCellReferenceAndCheck(
-                "A1",
-                SpreadsheetCellReference.parseCellReference("A1")
+                cell,
+                cell
         );
     }
 
     @Test
     public void testResolveCellReferenceLabelUnknownFails() {
         this.resolveCellReferenceAndFail(
-                "UnknownLabel"
+                SpreadsheetLabelName.labelName("UnknownLabel")
         );
     }
 
@@ -280,7 +282,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         this.resolveCellReferenceAndCheck(
                 this.createContext(store),
-                label.toString(),
+                label,
                 cell
         );
     }
@@ -297,7 +299,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         this.resolveCellReferenceAndCheck(
                 this.createContext(store),
-                label1.toString(),
+                label1,
                 cell
         );
     }
