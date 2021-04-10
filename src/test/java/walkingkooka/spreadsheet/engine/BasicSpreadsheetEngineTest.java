@@ -5226,8 +5226,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public SpreadsheetEngineContext createContext() {
         return new FakeSpreadsheetEngineContext() {
             @Override
-            public SpreadsheetCellReference resolveCellReference(final String text) {
-                final SpreadsheetExpressionReference reference = SpreadsheetExpressionReference.parse(text);
+            public SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference) {
                 if (reference.isCellReference()) {
                     return (SpreadsheetCellReference) reference;
                 }
