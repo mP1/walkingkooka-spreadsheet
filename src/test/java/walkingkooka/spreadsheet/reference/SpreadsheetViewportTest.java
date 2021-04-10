@@ -132,19 +132,13 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
             }
 
             @Override
-            protected void visit(final SpreadsheetCellReference cell) {
-                assertSame(viewport.reference(), cell);
-                b.append("5");
-            }
-
-            @Override
             protected void visit(final SpreadsheetViewport r) {
                 assertSame(viewport, r);
-                b.append("6");
+                b.append("5");
             }
         }.accept(viewport);
 
-        assertEquals("135642", b.toString());
+        assertEquals("13542", b.toString());
     }
 
     @Test
@@ -182,19 +176,13 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
             }
 
             @Override
-            protected void visit(final SpreadsheetLabelName l) {
-                assertSame(viewport.reference(), l);
-                b.append("5");
-            }
-
-            @Override
             protected void visit(final SpreadsheetViewport r) {
                 assertSame(viewport, r);
-                b.append("6");
+                b.append("5");
             }
         }.accept(viewport);
 
-        assertEquals("135642", b.toString());
+        assertEquals("13542", b.toString());
     }
 
     // equals...........................................................................................................
@@ -295,6 +283,11 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
 
     private void parseStringFails2(final String text, final String expectedMessage) {
         this.parseStringFails(text, new IllegalArgumentException(expectedMessage));
+    }
+
+    @Test
+    public void testParseRangeFails() {
+        this.parseStringFails2("A1:B2:100:200", "Incorrect number of tokens in \"A1:B2:100:200\"");
     }
 
     @Test
