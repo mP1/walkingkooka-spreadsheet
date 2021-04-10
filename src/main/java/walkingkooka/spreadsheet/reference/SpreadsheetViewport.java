@@ -52,11 +52,15 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
                 throw new IllegalArgumentException("Incorrect number of tokens in " + CharSequences.quoteAndEscape(text));
         }
 
-        final SpreadsheetCellReferenceOrLabelName<?> reference;
+        final SpreadsheetExpressionReference reference;
         try {
-            reference = SpreadsheetCellReference.parseCellReference(tokens[0]);
+            reference = SpreadsheetCellReference.parse(tokens[0]);
         } catch (final NumberFormatException cause) {
             throw new IllegalArgumentException("Invalid width in " + CharSequences.quoteAndEscape(text));
+        }
+
+        if (!(reference.isCellReference() || reference.isLabelName())) {
+            throw new IllegalArgumentException("Reference must be cell or label got " + reference);
         }
 
         final double width;
@@ -72,7 +76,7 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
             throw new IllegalArgumentException("Invalid height in " + CharSequences.quoteAndEscape(text));
         }
 
-        return with(reference, width, height);
+        return with((SpreadsheetCellReferenceOrLabelName<?>) reference, width, height);
     }
 
     /**
@@ -176,7 +180,7 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
     }
 
     private boolean equals1(final SpreadsheetViewport other) {
-        return this.reference.equals0(other.reference) &&
+        return this.reference.equals(other.reference) &&
                 this.width == other.width &&
                 this.height == other.height;
     }
