@@ -56,8 +56,23 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
     }
 
     @Test
-    public void testWith() {
-        this.check(SpreadsheetViewport.with(this.reference(), WIDTH, HEIGHT));
+    public void testWithCellReference() {
+        this.check(
+                SpreadsheetViewport.with(this.reference(), WIDTH, HEIGHT),
+                this.reference(),
+                WIDTH,
+                HEIGHT
+        );
+    }
+
+    @Test
+    public void testWithLabel() {
+        this.check(
+                SpreadsheetViewport.with(this.label(), WIDTH, HEIGHT),
+                this.label(),
+                WIDTH,
+                HEIGHT
+        );
     }
 
     @Test
@@ -85,51 +100,121 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
     // SpreadsheetExpressionReferenceVisitor.............................................................................
 
     @Test
-    public void testAccept() {
+    public void testAcceptWithCellReference() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetViewport reference = this.createReference();
+        final SpreadsheetViewport viewport = this.createReference();
 
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
             protected Visiting startVisit(final ExpressionReference r) {
-                assertSame(reference, r);
+                assertSame(viewport, r);
                 b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final ExpressionReference r) {
-                assertSame(reference, r);
+                assertSame(viewport, r);
                 b.append("2");
             }
 
             @Override
             protected Visiting startVisit(final SpreadsheetExpressionReference r) {
-                assertSame(reference, r);
+                assertSame(viewport, r);
                 b.append("3");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final SpreadsheetExpressionReference r) {
-                assertSame(reference, r);
+                assertSame(viewport, r);
                 b.append("4");
             }
 
             @Override
-            protected void visit(final SpreadsheetViewport r) {
-                assertSame(reference, r);
+            protected void visit(final SpreadsheetCellReference cell) {
+                assertSame(viewport.reference(), cell);
                 b.append("5");
             }
-        }.accept(reference);
-        assertEquals("13542", b.toString());
+
+            @Override
+            protected void visit(final SpreadsheetViewport r) {
+                assertSame(viewport, r);
+                b.append("6");
+            }
+        }.accept(viewport);
+
+        assertEquals("135642", b.toString());
+    }
+
+    @Test
+    public void testAcceptWithLabel() {
+        final StringBuilder b = new StringBuilder();
+
+        final SpreadsheetLabelName label = this.label();
+        final SpreadsheetViewport viewport = SpreadsheetViewport.with(label, WIDTH, HEIGHT);
+
+        new FakeSpreadsheetExpressionReferenceVisitor() {
+            @Override
+            protected Visiting startVisit(final ExpressionReference r) {
+                assertSame(viewport, r);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final ExpressionReference r) {
+                assertSame(viewport, r);
+                b.append("2");
+            }
+
+            @Override
+            protected Visiting startVisit(final SpreadsheetExpressionReference r) {
+                assertSame(viewport, r);
+                b.append("3");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final SpreadsheetExpressionReference r) {
+                assertSame(viewport, r);
+                b.append("4");
+            }
+
+            @Override
+            protected void visit(final SpreadsheetLabelName l) {
+                assertSame(viewport.reference(), l);
+                b.append("5");
+            }
+
+            @Override
+            protected void visit(final SpreadsheetViewport r) {
+                assertSame(viewport, r);
+                b.append("6");
+            }
+        }.accept(viewport);
+
+        assertEquals("135642", b.toString());
     }
 
     // equals...........................................................................................................
 
     @Test
-    public void testEqualsDifferentReference() {
+    public void testEqualsWithLabel() {
+        this.checkEquals(
+                SpreadsheetViewport.with(this.label(), WIDTH, HEIGHT),
+                SpreadsheetViewport.with(this.label(), WIDTH, HEIGHT)
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentCellReference() {
         this.checkNotEquals(SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("a1"), 1000 + WIDTH, HEIGHT));
+    }
+
+    @Test
+    public void testEqualsDifferentLabel() {
+        this.checkNotEquals(SpreadsheetViewport.with(label(), 1000 + WIDTH, HEIGHT));
     }
 
     @Test
@@ -145,18 +230,23 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
     // toString.........................................................................................................
 
     @Test
-    public void testToString() {
+    public void testToStringCell() {
         this.toStringAndCheck(SpreadsheetViewport.with(this.reference(), 40, 50), "B9:40:50");
     }
 
     @Test
-    public void testToString2() {
+    public void testToStringCell2() {
         this.toStringAndCheck(SpreadsheetViewport.with(this.reference(), 40.5, 50.75), "B9:40.5:50.75");
     }
 
     @Test
-    public void testToString3() {
+    public void testToStringCell3() {
         this.toStringAndCheck(SpreadsheetViewport.with(this.reference(), 40, 50.75), "B9:40:50.75");
+    }
+
+    @Test
+    public void testToStringLabel() {
+        this.toStringAndCheck(SpreadsheetViewport.with(this.label(), 40, 50.75), "Label123:40:50.75");
     }
 
     // helpers .........................................................................................................
@@ -208,18 +298,23 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
     }
 
     @Test
-    public void testParse() {
+    public void testParseCellReference() {
         this.parseStringAndCheck("B9:400:500", SpreadsheetViewport.with(this.reference(), 400, 500));
     }
 
     @Test
-    public void testParse2() {
+    public void testParseCellReferenceAbsoluteColumnAbsoluteRow() {
         this.parseStringAndCheck("$B$9:400:500", SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("$B$9"), 400, 500));
     }
 
     @Test
-    public void testParse3() {
+    public void testParseCellReference2() {
         this.parseStringAndCheck("B9:400.5:500.5", SpreadsheetViewport.with(this.reference(), 400.5, 500.5));
+    }
+
+    @Test
+    public void testParseLabel() {
+        this.parseStringAndCheck("Label123:400.5:500.5", SpreadsheetViewport.with(this.label(), 400.5, 500.5));
     }
 
     // test.............................................................................................................
@@ -274,10 +369,16 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
                               final double x,
                               final double y,
                               final boolean expected) {
-        final SpreadsheetViewport viewport = SpreadsheetViewport.with(reference(), width, height);
+        final SpreadsheetViewport viewportWithCellReference = SpreadsheetViewport.with(reference(), width, height);
         assertEquals(expected,
-                viewport.test(x, y),
-                () -> "test " + x + ", " + y + " in " + viewport);
+                viewportWithCellReference.test(x, y),
+                () -> "test " + x + ", " + y + " in " + viewportWithCellReference);
+
+        final SpreadsheetViewport viewportWithLabel = SpreadsheetViewport.with(label(), width, height);
+        assertEquals(expected,
+                viewportWithLabel.test(x, y),
+                () -> "test " + x + ", " + y + " in " + viewportWithLabel);
+
     }
 
     // JsonNodeMarshallingTesting...............................................................................................
@@ -317,21 +418,9 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
         this.marshallRoundTripTwiceAndCheck(SpreadsheetViewport.with(this.reference(), 50.5, 75.75));
     }
 
-    //equals............................................................................................................
-
     @Test
-    public void testDifferentReference() {
-        this.checkNotEquals(SpreadsheetViewport.with(this.reference().add(1, 1), WIDTH, HEIGHT));
-    }
-
-    @Test
-    public void testDifferentWidth() {
-        this.checkNotEquals(SpreadsheetViewport.with(this.reference(), WIDTH + 1, HEIGHT));
-    }
-
-    @Test
-    public void testDifferentHeight() {
-        this.checkNotEquals(SpreadsheetViewport.with(this.reference(), WIDTH, HEIGHT + 1));
+    public void testJsonNodeMarshallRoundtripLabel() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetViewport.with(this.label(), 50.5, 75.75));
     }
 
     //helper............................................................................................................
@@ -344,6 +433,10 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
         return SpreadsheetCellReference.parseCellReference("B9");
     }
 
+    private SpreadsheetLabelName label() {
+        return SpreadsheetLabelName.with("Label123");
+    }
+
     private void check(final SpreadsheetViewport viewport) {
         this.check(viewport,
                 this.reference(),
@@ -352,7 +445,7 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
     }
 
     private void check(final SpreadsheetViewport viewport,
-                       final SpreadsheetCellReference reference,
+                       final SpreadsheetCellReferenceOrLabelName<?> reference,
                        final double width,
                        final double height) {
         this.checkReference(viewport, reference);
@@ -361,7 +454,7 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
     }
 
     private void checkReference(final SpreadsheetViewport viewport,
-                                final SpreadsheetCellReference reference) {
+                                final SpreadsheetCellReferenceOrLabelName<?> reference) {
         assertEquals(reference, viewport.reference(), () -> "viewport width=" + viewport);
     }
 

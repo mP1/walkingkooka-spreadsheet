@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -586,10 +587,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private final SpreadsheetMetadata metadata;
 
     @Override
-    public SpreadsheetRange computeRange(final SpreadsheetViewport viewport) {
-        Objects.requireNonNull(viewport, "rectangle");
+    public SpreadsheetRange computeRange(final SpreadsheetViewport viewport,
+                                         final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(viewport, "viewport");
+        Objects.requireNonNull(context, "context");
 
-        final SpreadsheetCellReference reference = viewport.reference();
+        final SpreadsheetCellReference reference = context.resolveCellReference(viewport.reference().toString());
 
         final double width = viewport.width();
         double x = 0;

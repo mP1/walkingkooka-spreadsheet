@@ -30,4 +30,6 @@ abstract public class SpreadsheetCellReferenceOrLabelName<C extends SpreadsheetC
     SpreadsheetCellReferenceOrLabelName() {
         super();
     }
+
+    abstract public SpreadsheetCellReferenceOrLabelName<C> toRelative();
 }
