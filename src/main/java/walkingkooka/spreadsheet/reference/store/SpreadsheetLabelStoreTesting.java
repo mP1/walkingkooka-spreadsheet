@@ -58,23 +58,23 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
 
     default void findSimilarAndCheck(final String text,
                                      final int count,
-                                     final SpreadsheetLabelName... labels) {
-        this.findSimilarAndCheck(this.createStore(), text, count, labels);
+                                     final SpreadsheetLabelMapping... mappings) {
+        this.findSimilarAndCheck(this.createStore(), text, count, mappings);
     }
 
     default void findSimilarAndCheck(final SpreadsheetLabelStore store,
                                      final String text,
                                      final int count,
-                                     final SpreadsheetLabelName... labels) {
-        this.findSimilarAndCheck(store, text, count, Sets.of(labels));
+                                     final SpreadsheetLabelMapping... mappings) {
+        this.findSimilarAndCheck(store, text, count, Sets.of(mappings));
     }
 
     default void findSimilarAndCheck(final SpreadsheetLabelStore store,
                                      final String text,
                                      final int count,
-                                     final Set<SpreadsheetLabelName> labels) {
+                                     final Set<SpreadsheetLabelMapping> mappings) {
         assertEquals(
-                labels,
+                mappings,
                 store.findSimilar(text, count),
                 () -> "findSimilar " + CharSequences.quoteAndEscape(text) + " count=" + count
         );

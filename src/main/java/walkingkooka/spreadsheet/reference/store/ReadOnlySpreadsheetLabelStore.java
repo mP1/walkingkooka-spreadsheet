@@ -87,8 +87,8 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<SpreadsheetLabelName> findSimilar(final String text,
-                                                 final int count) {
+    public Set<SpreadsheetLabelMapping> findSimilar(final String text,
+                                                    final int count) {
         return this.store.findSimilar(text, count);
     }
 
