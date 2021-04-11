@@ -362,7 +362,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     }
 
     final SpreadsheetCellStore cellStore() {
-        return this.engine.cellStore;
+        return this.context.storeRepository()
+                .cells();
     }
 
     final int value;
@@ -387,7 +388,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     }
 
     final SpreadsheetLabelStore labelStore() {
-        return this.engine.labelStore;
+        return this.context.storeRepository()
+                .labels();
     }
 
     private final BasicSpreadsheetEngine engine;

@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceSt
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -37,22 +38,8 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngine}
      */
-    public static SpreadsheetEngine basic(final SpreadsheetMetadata metadata,
-                                          final SpreadsheetCellStore cellStore,
-                                          final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore,
-                                          final SpreadsheetLabelStore labelStore,
-                                          final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore,
-                                          final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore,
-                                          final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore) {
-        return BasicSpreadsheetEngine.with(
-                metadata,
-                cellStore,
-                cellReferencesStore,
-                labelStore,
-                labelReferencesStore,
-                rangeToCellStore,
-                rangeToConditionalFormattingRuleStore
-        );
+    public static SpreadsheetEngine basic(final SpreadsheetMetadata metadata) {
+        return BasicSpreadsheetEngine.with(metadata);
     }
 
     /**

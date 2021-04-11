@@ -29,31 +29,37 @@ import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReferenc
 final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
 
     static BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor with(final SpreadsheetCellReference target,
-                                                                                                                     final BasicSpreadsheetEngine engine) {
-        return new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(target, engine);
+                                                                                                                     final SpreadsheetEngineContext context) {
+        return new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(target, context);
     }
 
     // VisibleForTesting
     BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(final SpreadsheetCellReference target,
-                                                                                                         final BasicSpreadsheetEngine engine) {
+                                                                                                         final SpreadsheetEngineContext context) {
         super();
         this.target = target;
-        this.engine = engine;
+        this.context = context;
     }
 
     @Override
     final protected void visit(final SpreadsheetCellReference reference) {
-        this.engine.cellReferencesStore.addReference(TargetAndSpreadsheetCellReference.with(this.target, reference));
+        this.context.storeRepository()
+                .cellReferences()
+                .addReference(TargetAndSpreadsheetCellReference.with(this.target, reference));
     }
 
     @Override
     final protected void visit(final SpreadsheetLabelName label) {
-        this.engine.labelReferencesStore.addReference(TargetAndSpreadsheetCellReference.with(label, this.target));
+        this.context.storeRepository()
+                .labelReferences()
+                .addReference(TargetAndSpreadsheetCellReference.with(label, this.target));
     }
 
     @Override
     final protected void visit(final SpreadsheetRange range) {
-        this.engine.rangeToCellStore.addValue(range, this.target);
+        this.context.storeRepository()
+                .rangeToCells()
+                .addValue(range, this.target);
     }
 
     /**
@@ -62,9 +68,9 @@ final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSprea
     private final SpreadsheetCellReference target;
 
     /**
-     * The engine holds stores which will have references to this cell updated.
+     * Used to get stores.
      */
-    private final BasicSpreadsheetEngine engine;
+    private final SpreadsheetEngineContext context;
 
     @Override
     public final String toString() {

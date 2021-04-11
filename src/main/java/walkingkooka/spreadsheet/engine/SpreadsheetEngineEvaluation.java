@@ -37,7 +37,9 @@ public enum SpreadsheetEngineEvaluation {
         SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                 final BasicSpreadsheetEngine engine,
                                                 final SpreadsheetEngineContext context) {
-            return engine.cellStore.save(cell.setFormula(cell.formula().clear()));
+            return context.storeRepository()
+                    .cells()
+                    .save(cell.setFormula(cell.formula().clear()));
         }
     },
 

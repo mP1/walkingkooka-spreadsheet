@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceSt
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 
 public final class BasicSpreadsheetEngineFillCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineFillCells>
         implements ToStringTesting<BasicSpreadsheetEngineFillCells> {
@@ -31,13 +32,7 @@ public final class BasicSpreadsheetEngineFillCellsTest extends BasicSpreadsheetE
     @Test
     public void testToString() {
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(
-                SpreadsheetMetadata.EMPTY,
-                SpreadsheetCellStores.fake(),
-                SpreadsheetExpressionReferenceStores.fake(),
-                SpreadsheetLabelStores.fake(),
-                SpreadsheetExpressionReferenceStores.fake(),
-                SpreadsheetRangeStores.fake(),
-                SpreadsheetRangeStores.fake()
+                SpreadsheetMetadata.EMPTY
         );
         this.toStringAndCheck(new BasicSpreadsheetEngineFillCells(engine, null), engine.toString());
     }

@@ -37,10 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
@@ -64,49 +61,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Factory that creates a new {@link BasicSpreadsheetEngine}
      */
-    static BasicSpreadsheetEngine with(final SpreadsheetMetadata metadata,
-                                       final SpreadsheetCellStore cellStore,
-                                       final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore,
-                                       final SpreadsheetLabelStore labelStore,
-                                       final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore,
-                                       final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore,
-                                       final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore) {
+    static BasicSpreadsheetEngine with(final SpreadsheetMetadata metadata) {
         Objects.requireNonNull(metadata, "metadata");
-        Objects.requireNonNull(cellStore, "cellStore");
-        Objects.requireNonNull(cellReferencesStore, "cellReferencesStore");
-        Objects.requireNonNull(labelStore, "labelStore");
-        Objects.requireNonNull(labelReferencesStore, "labelReferencesStore");
-        Objects.requireNonNull(rangeToCellStore, "rangeToCellStore");
-        Objects.requireNonNull(rangeToConditionalFormattingRuleStore, "rangeToConditionalFormattingRuleStore");
 
         return new BasicSpreadsheetEngine(
-                metadata,
-                cellStore,
-                cellReferencesStore,
-                labelStore,
-                labelReferencesStore,
-                rangeToCellStore,
-                rangeToConditionalFormattingRuleStore
+                metadata
         );
     }
 
     /**
      * Private ctor.
      */
-    private BasicSpreadsheetEngine(final SpreadsheetMetadata metadata,
-                                   final SpreadsheetCellStore cellStore,
-                                   final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore,
-                                   final SpreadsheetLabelStore labelStore,
-                                   final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore,
-                                   final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore,
-                                   final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore) {
+    private BasicSpreadsheetEngine(final SpreadsheetMetadata metadata) {
         this.metadata = metadata;
-        this.cellStore = cellStore;
-        this.cellReferencesStore = cellReferencesStore;
-        this.labelStore = labelStore;
-        this.labelReferencesStore = labelReferencesStore;
-        this.rangeToCellStore = rangeToCellStore;
-        this.rangeToConditionalFormattingRuleStore = rangeToConditionalFormattingRuleStore;
     }
 
     // LOAD CELL........................................................................................................
@@ -123,7 +90,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
-            final Optional<SpreadsheetCell> loaded = this.cellStore.load(reference);
+            final Optional<SpreadsheetCell> loaded = context.storeRepository()
+                    .cells()
+                    .load(reference);
             loaded.map(c -> {
                 final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(c, evaluation, context);
                 updated.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
@@ -166,7 +135,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
-            this.cellStore.delete(reference);
+            context.storeRepository()
+                    .cells()
+                    .delete(reference);
             updated.refreshUpdated();
             return SpreadsheetDelta.with(updated.cells());
         }
@@ -270,7 +241,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
-            this.labelStore.save(mapping);
+            context.storeRepository()
+                    .labels()
+                    .save(mapping);
             updated.refreshUpdated();
             return SpreadsheetDelta.with(updated.cells());
         }
@@ -283,16 +256,23 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
-            this.labelStore.delete(label);
+            context.storeRepository()
+                    .labels()
+                    .delete(label);
             updated.refreshUpdated();
             return SpreadsheetDelta.with(updated.cells());
         }
     }
 
     @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name,
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName label,
                                                        final SpreadsheetEngineContext context) {
-        return this.labelStore.load(name);
+        checkLabel(label);
+        checkContext(context);
+
+        return context.storeRepository()
+                .labels()
+                .load(label);
     }
 
     // cell eval........................................................................................................
@@ -304,7 +284,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                    final SpreadsheetEngineEvaluation evaluation,
                                                    final SpreadsheetEngineContext context) {
         final SpreadsheetCell result = evaluation.formulaEvaluateAndStyle(cell, this, context);
-        this.cellStore.save(result); // update cells enabling caching of parsing and value and errors.
+        context.storeRepository()
+                .cells()
+                .save(result); // update cells enabling caching of parsing and value and errors.
         return result;
     }
 
@@ -501,7 +483,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetCell result = cell;
 
         final Set<SpreadsheetConditionalFormattingRule> rules = Sets.sorted(SpreadsheetConditionalFormattingRule.PRIORITY_COMPARATOR);
-        rules.addAll(this.rangeToConditionalFormattingRuleStore.loadCellReferenceValues(cell.reference()));
+        rules.addAll(context.storeRepository()
+                .rangeToConditionalFormattingRules()
+                .loadCellReferenceValues(cell.reference()));
         for (SpreadsheetConditionalFormattingRule rule : rules) {
             final Object test = context.evaluate(rule.formula().expression().get());
             final Boolean booleanResult = context.convertOrFail(test, Boolean.class);
@@ -517,11 +501,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
         return result;
     }
-
-    /**
-     * Provides the conditional format rules for each cell.
-     */
-    private final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore;
 
     // FORMAT ERROR ....................................................................................................
 
@@ -549,7 +528,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public double columnWidth(final SpreadsheetColumnReference column,
                               final SpreadsheetEngineContext context) {
-        double columnWidth = this.cellStore.maxColumnWidth(column);
+        double columnWidth = context.storeRepository()
+                .cells()
+                .maxColumnWidth(column);
         if (0 == columnWidth) {
             columnWidth = columnWidthOrRowHeight(TextStylePropertyName.WIDTH);
         }
@@ -559,7 +540,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public double rowHeight(final SpreadsheetRowReference row,
                             final SpreadsheetEngineContext context) {
-        double rowHeight = this.cellStore.maxRowHeight(row);
+        double rowHeight = context.storeRepository()
+                .cells()
+                .maxRowHeight(row);
         if (0 == rowHeight) {
             rowHeight = columnWidthOrRowHeight(TextStylePropertyName.HEIGHT);
         }
@@ -609,10 +592,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return reference.spreadsheetRange(column.setRow(row));
     }
 
-    @Override
     public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords,
                                       final SpreadsheetEngineContext context) {
-        return this.cellStore.cellBox(coords);
+            return context.storeRepository()
+                    .cells()
+                    .cellBox(coords);
     }
 
     // checkers.........................................................................................................
@@ -643,20 +627,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public String toString() {
-        return this.cellStore.toString();
+        return this.metadata.toString();
     }
-
-    final SpreadsheetCellStore cellStore;
-    final SpreadsheetLabelStore labelStore;
-
-    /**
-     * Tracks all references to a single cell.
-     */
-    final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore;
-    final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore;
-
-    /**
-     * Used to track ranges to cells references.
-     */
-    final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore;
 }
