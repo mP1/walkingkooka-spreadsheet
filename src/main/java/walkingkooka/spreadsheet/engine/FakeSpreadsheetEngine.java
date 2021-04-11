@@ -115,7 +115,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public double rowHeight(final SpreadsheetRowReference row) {
+    public double rowHeight(final SpreadsheetRowReference row,
+                            final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 

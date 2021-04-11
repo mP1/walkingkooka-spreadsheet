@@ -557,7 +557,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public double rowHeight(final SpreadsheetRowReference row) {
+    public double rowHeight(final SpreadsheetRowReference row,
+                            final SpreadsheetEngineContext context) {
         double rowHeight = this.cellStore.maxRowHeight(row);
         if (0 == rowHeight) {
             rowHeight = columnWidthOrRowHeight(TextStylePropertyName.HEIGHT);
@@ -600,7 +601,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .setReferenceKind(SpreadsheetReferenceKind.RELATIVE);
 
         while (y < height) {
-            y = y + this.rowHeight(row);
+            y = y + this.rowHeight(row, context);
             row = row.add(1);
         }
 
