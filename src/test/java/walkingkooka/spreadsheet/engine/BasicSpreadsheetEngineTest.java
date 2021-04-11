@@ -185,20 +185,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static SpreadsheetCellReference LABEL_CELL = SpreadsheetCellReference.parseCellReference("Z99");
 
     @Test
-    public void testWithNullIdFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(null,
-                this.metadata(),
-                this.cellStore(),
-                this.cellReferencesStore(),
-                this.labelStore(),
-                this.labelReferencesStore(),
-                this.rangeToCellStore(),
-                this.rangeToConditionalFormattingRuleStore()));
-    }
-
-    @Test
     public void testWithNullMetadataFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
                 null,
                 this.cellStore(),
                 this.cellReferencesStore(),
@@ -210,7 +198,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testWithNullCellStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
                 this.metadata(),
                 null,
                 this.cellReferencesStore(),
@@ -222,7 +210,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testWithNullCellReferencesStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
                 this.metadata(),
                 this.cellStore(),
                 null,
@@ -234,7 +222,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
                 this.metadata(),
                 this.cellStore(),
                 this.cellReferencesStore(),
@@ -246,7 +234,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testWithNullLabelReferencesStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
                 this.metadata(),
                 this.cellStore(),
                 this.cellReferencesStore(),
@@ -258,7 +246,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testWithNullRangeToCellStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
                 this.metadata(),
                 this.cellStore(),
                 this.cellReferencesStore(),
@@ -270,7 +258,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testWithNullRangeToConditionalFormattingRuleStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
                 this.metadata(),
                 this.cellStore(),
                 this.cellReferencesStore(),
@@ -278,13 +266,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.labelReferencesStore(),
                 this.rangeToCellStore(),
                 null));
-    }
-
-    // spreadsheetId....................................................................................................
-
-    @Test
-    public void testSpreadsheetId() {
-        this.spreadsheetIdAndCheck(this.createSpreadsheetEngine(), this.id());
     }
 
     // loadCell.........................................................................................................
@@ -5152,7 +5133,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private BasicSpreadsheetEngine createEngine(final SpreadsheetMetadata metadata,
                                                 final SpreadsheetCellStore store) {
-        return BasicSpreadsheetEngine.with(this.id(),
+        return BasicSpreadsheetEngine.with(
                 metadata,
                 store,
                 SpreadsheetExpressionReferenceStores.fake(),
@@ -5189,7 +5170,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
                                                            final SpreadsheetLabelStore labelStore,
                                                            final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToRules) {
-        return BasicSpreadsheetEngine.with(this.id(),
+        return BasicSpreadsheetEngine.with(
                 this.metadata(),
                 cellStore,
                 this.cellReferencesStore(),
@@ -5212,14 +5193,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                            final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore,
                                                            final SpreadsheetLabelStore labelStore,
                                                            final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore) {
-        return BasicSpreadsheetEngine.with(this.id(),
+        return BasicSpreadsheetEngine.with(
                 this.metadata(),
                 cellStore,
                 cellReferencesStore,
                 labelStore,
                 labelReferencesStore,
                 SpreadsheetRangeStores.readOnly(this.rangeToCellStore()),
-                this.rangeToConditionalFormattingRuleStore());
+                this.rangeToConditionalFormattingRuleStore()
+        );
     }
 
     @Override

@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -38,22 +37,22 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngine}
      */
-    public static SpreadsheetEngine basic(final SpreadsheetId id,
-                                          final SpreadsheetMetadata metadata,
+    public static SpreadsheetEngine basic(final SpreadsheetMetadata metadata,
                                           final SpreadsheetCellStore cellStore,
                                           final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore,
                                           final SpreadsheetLabelStore labelStore,
                                           final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore,
                                           final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore,
                                           final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore) {
-        return BasicSpreadsheetEngine.with(id,
+        return BasicSpreadsheetEngine.with(
                 metadata,
                 cellStore,
                 cellReferencesStore,
                 labelStore,
                 labelReferencesStore,
                 rangeToCellStore,
-                rangeToConditionalFormattingRuleStore);
+                rangeToConditionalFormattingRuleStore
+        );
     }
 
     /**

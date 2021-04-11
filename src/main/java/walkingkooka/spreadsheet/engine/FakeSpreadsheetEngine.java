@@ -21,7 +21,6 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -35,10 +34,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
-    @Override
-    public SpreadsheetId id() {
-        throw new UnsupportedOperationException();
-    }
 
     @Override
     public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
