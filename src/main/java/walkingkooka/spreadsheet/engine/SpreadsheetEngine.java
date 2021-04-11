@@ -125,7 +125,8 @@ public interface SpreadsheetEngine {
     /**
      * Returns the row height for the given {@link SpreadsheetRowReference}
      */
-    double rowHeight(final SpreadsheetRowReference row);
+    double rowHeight(final SpreadsheetRowReference row,
+                     final SpreadsheetEngineContext context);
 
     /**
      * Computes the {@link SpreadsheetRange} from the given {@link SpreadsheetViewport} using the column width and row heights.

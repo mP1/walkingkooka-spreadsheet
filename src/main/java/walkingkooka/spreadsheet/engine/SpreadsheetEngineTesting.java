@@ -388,8 +388,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testRowHeightNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().rowHeight(null));
+    default void testRowHeightNullRowReferenceFails() {
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().rowHeight(null, this.createContext()));
+    }
+
+    @Test
+    default void testRowHeightNullContextFails() {
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().rowHeight(SpreadsheetRowReference.parseRow("1"), null));
     }
 
     E createSpreadsheetEngine();
@@ -753,15 +758,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void rowHeightAndCheck(final SpreadsheetRowReference row,
+                                   final SpreadsheetEngineContext context,
                                    final double expected) {
-        this.rowHeightAndCheck(this.createSpreadsheetEngine(), row, expected);
+        this.rowHeightAndCheck(this.createSpreadsheetEngine(), row, context, expected);
     }
 
     default void rowHeightAndCheck(final SpreadsheetEngine engine,
                                    final SpreadsheetRowReference row,
+                                   final SpreadsheetEngineContext context,
                                    final double expected) {
         assertEquals(expected,
-                engine.rowHeight(row),
+                engine.rowHeight(row, context),
                 () -> "rowHeight " + row + " of " + engine);
     }
 

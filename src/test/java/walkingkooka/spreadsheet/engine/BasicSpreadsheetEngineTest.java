@@ -5042,7 +5042,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 });
 
-        this.rowHeightAndCheck(engine, row, expected);
+        this.rowHeightAndCheck(engine, row, this.createContext(), expected);
     }
 
     @Test
@@ -5064,7 +5064,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 });
 
-        this.rowHeightAndCheck(engine, row, expected);
+        this.rowHeightAndCheck(engine, row, this.createContext(), expected);
     }
 
     @Test
@@ -5080,7 +5080,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         return 0;
                     }
                 });
-        assertThrows(TextStylePropertyValueException.class, () -> engine.rowHeight(row));
+        assertThrows(TextStylePropertyValueException.class, () -> engine.rowHeight(row, this.createContext()));
     }
 
     //  computeRange....................................................................................................
