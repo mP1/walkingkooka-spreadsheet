@@ -137,5 +137,6 @@ public interface SpreadsheetEngine {
     /**
      * Locates the {@link SpreadsheetCellBox} at the given coordinates.
      */
-    SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords);
+    SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords,
+                               final SpreadsheetEngineContext context);
 }

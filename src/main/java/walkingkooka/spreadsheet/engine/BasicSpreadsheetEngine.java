@@ -610,7 +610,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords) {
+    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords,
+                                      final SpreadsheetEngineContext context) {
         return this.cellStore.cellBox(coords);
     }
 
