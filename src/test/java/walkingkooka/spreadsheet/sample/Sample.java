@@ -43,16 +43,19 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
+import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
@@ -78,11 +81,8 @@ public final class Sample {
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     public static void main(final String[] args) {
-        final SpreadsheetCellStore cellStore = cellStore();
-        final SpreadsheetLabelStore labelStore = SpreadsheetLabelStores.treeMap();
-
-        final SpreadsheetEngine engine = engine(cellStore, labelStore);
-        final SpreadsheetEngineContext engineContext = engineContext(engine, labelStore);
+        final SpreadsheetEngine engine = engine();
+        final SpreadsheetEngineContext engineContext = engineContext(engine);
 
         engine.saveCell(SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("A1"), SpreadsheetFormula.with("12+B2")), engineContext);
 
@@ -103,10 +103,6 @@ public final class Sample {
                                     final Object actual,
                                     final String message) {
         assertEquals(expected, actual, message);
-    }
-
-    private static SpreadsheetCellStore cellStore() {
-        return SpreadsheetCellStores.treeMap();
     }
 
     private static SpreadsheetMetadata metadata() {
@@ -154,21 +150,11 @@ public final class Sample {
 
     private static SpreadsheetMetadata metadata;
 
-    private static SpreadsheetEngine engine(final SpreadsheetCellStore cellStore,
-                                            final SpreadsheetLabelStore labelStore) {
-        return SpreadsheetEngines.basic(
-                metadata(),
-                cellStore,
-                SpreadsheetExpressionReferenceStores.treeMap(),
-                labelStore,
-                SpreadsheetExpressionReferenceStores.treeMap(),
-                SpreadsheetRangeStores.treeMap(),
-                SpreadsheetRangeStores.treeMap()
-        );
+    private static SpreadsheetEngine engine() {
+        return SpreadsheetEngines.basic(metadata());
     }
 
-    private static SpreadsheetEngineContext engineContext(final SpreadsheetEngine engine,
-                                                          final SpreadsheetLabelStore labelStore) {
+    private static SpreadsheetEngineContext engineContext(final SpreadsheetEngine engine) {
         final SpreadsheetMetadata metadata = metadata();
         return new FakeSpreadsheetEngineContext() {
 
@@ -198,7 +184,11 @@ public final class Sample {
             }
 
             private Function<ExpressionReference, Optional<Expression>> references() {
-                return SpreadsheetEngines.expressionEvaluationContextExpressionReferenceExpressionFunction(engine, labelStore, this);
+                return SpreadsheetEngines.expressionEvaluationContextExpressionReferenceExpressionFunction(
+                        engine,
+                        this.storeRepository().labels(),
+                        this
+                );
             }
 
             @Override
@@ -235,6 +225,23 @@ public final class Sample {
             public ExpressionNumberKind expressionNumberKind() {
                 return EXPRESSION_NUMBER_KIND;
             }
+
+            @Override
+            public SpreadsheetStoreRepository storeRepository() {
+                return this.storeRepository;
+            }
+
+            private SpreadsheetStoreRepository storeRepository = SpreadsheetStoreRepositories.basic(
+                    SpreadsheetCellStores.treeMap(),
+                    SpreadsheetExpressionReferenceStores.treeMap(),
+                    SpreadsheetGroupStores.fake(),
+                    SpreadsheetLabelStores.treeMap(),
+                    SpreadsheetExpressionReferenceStores.treeMap(),
+                    SpreadsheetMetadataStores.fake(),
+                    SpreadsheetRangeStores.treeMap(),
+                    SpreadsheetRangeStores.treeMap(),
+                    SpreadsheetUserStores.fake()
+            );
         };
     }
 

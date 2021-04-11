@@ -22,30 +22,62 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCells>
         implements ToStringTesting<BasicSpreadsheetEngineUpdatedCells> {
 
     @Test
     public void testToString() {
-        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(
-                SpreadsheetMetadata.EMPTY,
-                SpreadsheetCellStores.treeMap(),
-                SpreadsheetExpressionReferenceStores.treeMap(),
-                SpreadsheetLabelStores.treeMap(),
-                SpreadsheetExpressionReferenceStores.treeMap(),
-                SpreadsheetRangeStores.treeMap(),
-                SpreadsheetRangeStores.treeMap()
-        );
+        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(SpreadsheetMetadata.EMPTY);
 
-        final BasicSpreadsheetEngineUpdatedCells cells = BasicSpreadsheetEngineUpdatedCells.with(engine,
-                SpreadsheetEngineContexts.fake(),
-                BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE);
+        final BasicSpreadsheetEngineUpdatedCells cells = BasicSpreadsheetEngineUpdatedCells.with(
+                engine,
+                new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public SpreadsheetStoreRepository storeRepository() {
+                        return new FakeSpreadsheetStoreRepository() {
+                            @Override
+                            public SpreadsheetCellStore cells() {
+                                return SpreadsheetCellStores.treeMap();
+                            }
+
+                            @Override
+                            public SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences() {
+                                return SpreadsheetExpressionReferenceStores.treeMap();
+                            }
+
+                            @Override
+                            public SpreadsheetLabelStore labels() {
+                                return SpreadsheetLabelStores.treeMap();
+                            }
+
+                            @Override
+                            public SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences() {
+                                return SpreadsheetExpressionReferenceStores.treeMap();
+                            }
+
+                            @Override
+                            public SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells() {
+                                return SpreadsheetRangeStores.treeMap();
+                            }
+                        };
+                    }
+                },
+                BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE
+        );
 
         cells.onCellSavedImmediate(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetFormula.with("1+2")));
         cells.onCellSavedImmediate(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("B2"), SpreadsheetFormula.with("3+4")));

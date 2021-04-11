@@ -31,23 +31,26 @@ final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor exte
 
     static void processReferences(final Expression node,
                                   final SpreadsheetCellReference target,
-                                  final BasicSpreadsheetEngine engine) {
-        new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor(target, engine).accept(node);
+                                  final SpreadsheetEngineContext context) {
+        new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor(target, context)
+                .accept(node);
     }
 
     // VisibleForTesting
     BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor(final SpreadsheetCellReference target,
-                                                                    final BasicSpreadsheetEngine engine) {
+                                                                    final SpreadsheetEngineContext context) {
         super();
         this.target = target;
-        this.engine = engine;
+        this.context = context;
     }
 
     @Override
     protected void visit(final ReferenceExpression node) {
         if (null == this.visitor) {
-            this.visitor = BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor.with(this.target,
-                    this.engine);
+            this.visitor = BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor.with(
+                    this.target,
+                    this.context
+            );
         }
         this.visitor.accept(node.value());
     }
@@ -57,10 +60,7 @@ final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor exte
      */
     private final SpreadsheetCellReference target;
 
-    /**
-     * The engine holds stores which will have references to this cell updated.
-     */
-    private final BasicSpreadsheetEngine engine;
+    private final SpreadsheetEngineContext context;
 
     /**
      * Cache of the {@link BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor} that will process each and every encountered {@link ReferenceExpression}.

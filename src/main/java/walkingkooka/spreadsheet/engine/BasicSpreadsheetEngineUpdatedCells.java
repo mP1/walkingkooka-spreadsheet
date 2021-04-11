@@ -25,7 +25,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReference;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.store.Watchers;
 
 import java.util.Map;
@@ -51,15 +54,23 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
 
         this.mode = mode;
 
-        this.onSaveCell = engine.cellStore.addSaveWatcher(this::onCellSaved);
-        this.onDeleteCell = engine.cellStore.addDeleteWatcher(this::onCellDeleted);
-        this.onDeleteCellReferences = engine.cellReferencesStore.addRemoveReferenceWatcher(this::onCellReferenceDeleted);
-
-        this.onSaveLabel = engine.labelStore.addSaveWatcher(this::onLabelSaved);
-        this.onDeleteLabel = engine.labelStore.addDeleteWatcher(this::onLabelDeleted);
-
         this.engine = engine;
         this.context = context;
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+
+        final SpreadsheetCellStore cellStore = repository.cells();
+        this.onSaveCell = cellStore.addSaveWatcher(this::onCellSaved);
+        this.onDeleteCell = cellStore.addDeleteWatcher(this::onCellDeleted);
+
+        this.onDeleteCellReferences = repository.cellReferences()
+                .addRemoveReferenceWatcher(this::onCellReferenceDeleted);
+
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        this.onSaveLabel = labelStore.addSaveWatcher(this::onLabelSaved);
+        this.onDeleteLabel = labelStore.addDeleteWatcher(this::onLabelDeleted);
+
+        this.repository = repository;
     }
 
     // dispatch using mode to the final target.
@@ -106,7 +117,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
         formula.expression()
                 .ifPresent(e -> BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor.processReferences(e,
                         cell,
-                        this.engine));
+                        this.context));
     }
 
     /**
@@ -118,13 +129,16 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
     }
 
     private void removePreviousExpressionReferences(final SpreadsheetCellReference cell) {
-        final BasicSpreadsheetEngine engine = this.engine;
+        final SpreadsheetStoreRepository repository = this.repository;
 
-        engine.cellReferencesStore.delete(cell);
-        engine.labelReferencesStore.loadReferred(cell)
-                .forEach(l -> engine.labelReferencesStore.removeReference(TargetAndSpreadsheetCellReference.with(l, cell)));
-        engine.rangeToCellStore.rangesWithValue(cell)
-                .forEach(r -> engine.rangeToCellStore.removeValue(r, cell));
+        repository.cellReferences()
+                .delete(cell);
+        repository.labelReferences()
+                .loadReferred(cell)
+                .forEach(l -> repository.labelReferences().removeReference(TargetAndSpreadsheetCellReference.with(l, cell)));
+        repository.rangeToCells()
+                .rangesWithValue(cell)
+                .forEach(r -> repository.rangeToCells().removeValue(r, cell));
     }
 
     void onCellReferenceDeletedImmediate(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference) {
@@ -210,26 +224,30 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
     }
 
     private void batchLabel(final SpreadsheetLabelName label) {
-        this.engine.labelReferencesStore.load(label)
+        this.repository.labelReferences()
+                .load(label)
                 .ifPresent(r -> r.forEach(this::batchCell));
     }
 
     private void batchRange(final SpreadsheetRange range) {
-        this.engine.rangeToCellStore.load(range)
+        this.repository.rangeToCells()
+                .load(range)
                 .ifPresent(c -> c.forEach(this::batchCell));
     }
 
     private void batchReferrers(final SpreadsheetCellReference reference) {
-        final BasicSpreadsheetEngine engine = this.engine;
+        final SpreadsheetStoreRepository repository = this.repository;
 
-        engine.cellReferencesStore
+        repository.cellReferences()
                 .loadReferred(reference)
                 .forEach(this::batchCell);
 
-        engine.labelStore.labels(reference)
+        repository.labels()
+                .labels(reference)
                 .forEach(this::batchLabel);
 
-        engine.rangeToCellStore.loadCellReferenceRanges(reference)
+        repository.rangeToCells()
+                .loadCellReferenceRanges(reference)
                 .forEach(this::batchRange);
     }
 
@@ -248,12 +266,9 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
      */
     private final Map<SpreadsheetCellReference, SpreadsheetCell> updated = Maps.sorted();
 
-    /**
-     * Mostly used to load cells and access stores.
-     */
     private final BasicSpreadsheetEngine engine;
-
     private final SpreadsheetEngineContext context;
+    private final SpreadsheetStoreRepository repository;
 
     /**
      * Removes previously added watchers.

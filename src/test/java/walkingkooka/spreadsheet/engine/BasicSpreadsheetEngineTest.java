@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -65,9 +66,14 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
+import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -186,86 +192,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testWithNullMetadataFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
-                null,
-                this.cellStore(),
-                this.cellReferencesStore(),
-                this.labelStore(),
-                this.labelReferencesStore(),
-                this.rangeToCellStore(),
-                this.rangeToConditionalFormattingRuleStore()));
-    }
-
-    @Test
-    public void testWithNullCellStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
-                this.metadata(),
-                null,
-                this.cellReferencesStore(),
-                this.labelStore(),
-                this.labelReferencesStore(),
-                this.rangeToCellStore(),
-                this.rangeToConditionalFormattingRuleStore()));
-    }
-
-    @Test
-    public void testWithNullCellReferencesStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
-                this.metadata(),
-                this.cellStore(),
-                null,
-                this.labelStore(),
-                this.labelReferencesStore(),
-                this.rangeToCellStore(),
-                this.rangeToConditionalFormattingRuleStore()));
-    }
-
-    @Test
-    public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
-                this.metadata(),
-                this.cellStore(),
-                this.cellReferencesStore(),
-                null,
-                this.labelReferencesStore(),
-                this.rangeToCellStore(),
-                this.rangeToConditionalFormattingRuleStore()));
-    }
-
-    @Test
-    public void testWithNullLabelReferencesStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
-                this.metadata(),
-                this.cellStore(),
-                this.cellReferencesStore(),
-                this.labelStore(),
-                null,
-                this.rangeToCellStore(),
-                this.rangeToConditionalFormattingRuleStore()));
-    }
-
-    @Test
-    public void testWithNullRangeToCellStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
-                this.metadata(),
-                this.cellStore(),
-                this.cellReferencesStore(),
-                this.labelStore(),
-                this.labelReferencesStore(),
-                null,
-                this.rangeToConditionalFormattingRuleStore()));
-    }
-
-    @Test
-    public void testWithNullRangeToConditionalFormattingRuleStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(
-                this.metadata(),
-                this.cellStore(),
-                this.cellReferencesStore(),
-                this.labelStore(),
-                this.labelReferencesStore(),
-                this.rangeToCellStore(),
-                null));
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(null));
     }
 
     // loadCell.........................................................................................................
@@ -277,12 +204,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellSkipEvaluate() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(this.cell(cellReference, "=1+2"));
+        context.storeRepository()
+                .cells()
+                .save(this.cell(cellReference, "=1+2"));
 
         this.loadCellAndCheckWithoutValueOrError(engine,
                 cellReference,
@@ -312,13 +240,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private void cellStoreSaveAndLoadCellAndCheck(final Optional<SpreadsheetCellFormat> format,
                                                   final String patternSuffix) {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(this.cell(cellReference, "=1+2")
-                .setFormat(format));
+        context.storeRepository()
+                .cells()
+                .save(this.cell(cellReference, "=1+2")
+                        .setFormat(format));
 
         this.loadCellAndCheckFormatted2(engine,
                 cellReference,
@@ -330,12 +259,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellComputeIfNecessaryCachesCell() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(this.cell(cellReference, "=1+2"));
+        context.storeRepository()
+                .cells()
+                .save(this.cell(cellReference, "=1+2"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine,
                 cellReference,
@@ -351,12 +281,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellComputeIfNecessaryKeepsExpression() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
-        cellStore.save(this.cell(a, "1/2"));
+        context.storeRepository()
+                .cells()
+                .save(this.cell(a, "1/2"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine, a, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, context);
         this.checkValueOrError(first, LocalDate.of(DEFAULT_YEAR, 2, 1));
@@ -367,19 +298,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                this.createContext(defaultYear, engine));
+                this.createContext(defaultYear, engine, context.storeRepository()));
 
         assertSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
     }
 
     @Test
     public void testLoadCellComputeIfNecessaryCachesCellWithInvalidFormulaAndErrorCached() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(this.cell(cellReference, "=1+2+"));
+        context.storeRepository()
+                .cells()
+                .save(this.cell(cellReference, "=1+2+"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine,
                 cellReference,
@@ -393,12 +325,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellForceRecomputeIgnoresExpression() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
-        cellStore.save(this.cell(a, "1/2"));
+        context.storeRepository()
+                .cells()
+                .save(this.cell(a, "1/2"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine, a, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, context);
         this.checkValueOrError(first, LocalDate.of(DEFAULT_YEAR, 2, 1));
@@ -409,7 +342,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 a,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                this.createContext(defaultYear, engine));
+                this.createContext(defaultYear, engine, context.storeRepository()));
 
         assertNotSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
         this.checkValueOrError(
@@ -420,9 +353,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellForceRecomputeIgnoresCache() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
         cellStore.save(this.cell(a, "=1"));
@@ -443,8 +378,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellForceRecomputeIgnoresPreviousError() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("A1");
@@ -457,7 +391,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 () -> "cell should have error because B2 reference is unknown=" + withError);
 
         final SpreadsheetCellReference b = this.cellReference("B2");
-        cellStore.save(this.cell(b, "=99"));
+        context.storeRepository()
+                .cells()
+                .save(this.cell(b, "=99"));
 
         this.loadCellAndCheckValue(engine,
                 a,
@@ -468,12 +404,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellComputeThenSkipEvaluate() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(this.cell(cellReference, "=1+2"));
+        context.storeRepository()
+                .cells()
+                .save(this.cell(cellReference, "=1+2"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine,
                 cellReference,
@@ -489,14 +426,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellManyWithoutCrossReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(3, 1);
 
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
         cellStore.save(this.cell(a, "=1+2"));
         cellStore.save(this.cell(b, "=3+4"));
         cellStore.save(this.cell(c, "=5+6"));
@@ -523,8 +461,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellWithCrossReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
@@ -551,12 +488,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellValueCellReferenceInvalidFails() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
-        cellStore.save(this.cell(a, "=X99"));
+        context.storeRepository()
+                .cells()
+                .save(this.cell(a, "=X99"));
 
         this.loadCellAndCheckError(engine,
                 a,
@@ -567,13 +505,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellValueLabelInvalidFails() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
-        cellStore.save(this.cell(a, "=INVALIDLABEL"));
+        context.storeRepository()
+                .cells()
+                .save(this.cell(a, "=INVALIDLABEL"));
 
         this.loadCellAndCheckError(engine,
                 a,
@@ -584,13 +522,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellValueIsCellReference() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // B1
 
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
         cellStore.save(this.cell(a, "=B1"));
         cellStore.save(this.cell(b, "=3+4"));
 
@@ -613,18 +552,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellValueIsLabel() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // B1
 
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+
+        final SpreadsheetCellStore cellStore = repository.cells();
         cellStore.save(this.cell(a, "=" + LABEL.value()));
         cellStore.save(this.cell(b, "=3+4"));
 
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, b));
+        repository.labels()
+                .save(SpreadsheetLabelMapping.with(LABEL, b));
 
         // formula
         this.loadCellAndCheckFormatted2(engine,
@@ -645,14 +586,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellWithConditionalFormattingRule() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rules = this.rangeToConditionalFormattingRuleStore();
+        final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore, rules);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
-
+        final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rules = repository.rangeToConditionalFormattingRules();
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
 
         // rule 3 is ignored because it returns false, rule 2 short circuits the conditional testing ...
@@ -674,7 +613,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 rules);
 
-        cellStore.save(this.cell(a, "=3+4"));
+        repository.cells()
+                .save(this.cell(a, "=3+4"));
 
         final SpreadsheetCell cell = this.loadCellAndCheckFormatted2(engine,
                 a,
@@ -712,14 +652,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellEmptyFormula() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "");
         final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, "");
@@ -727,6 +661,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 context,
                 a1Formatted);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(cellStore, a1Formatted);
         this.loadLabelStoreAndCheck(labelStore);
@@ -758,14 +697,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private void saveCellWithErrorAndCheck(final String formula, final String errorMessage) {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", formula);
         final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, errorMessage);
@@ -774,6 +707,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 a1Formatted);
 
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+
         this.loadCellStoreAndCheck(cellStore, a1Formatted);
         this.loadLabelStoreAndCheck(labelStore);
         this.countAndCheck(cellReferenceStore, 0);
@@ -781,14 +719,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellWithoutReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "=1+2");
         final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, number(3));
@@ -797,6 +729,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 a1Formatted);
 
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+
         this.loadCellStoreAndCheck(cellStore, a1Formatted);
         this.loadLabelStoreAndCheck(labelStore);
         this.countAndCheck(cellReferenceStore, 0);
@@ -804,14 +741,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellWithUnknownReference() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
 
         final SpreadsheetCell a1 = this.cell("a1", "=$B$2+99");
         final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Unknown cell reference $B$2");
@@ -835,8 +771,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellIgnoresPreviousErrorComputesValue() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
@@ -853,15 +788,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellMultipleIndependentUnreferenced() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=1+2");
         final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, number(3));
@@ -903,16 +836,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellWithLabelReference() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferenceStore = this.labelReferencesStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore,
-                labelReferenceStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName unknown = SpreadsheetExpressionReference.labelName("LABELXYZ");
 
@@ -923,23 +848,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 a1Formatted);
 
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
+
         this.loadCellStoreAndCheck(cellStore, a1Formatted);
         this.loadLabelStoreAndCheck(labelStore);
         this.countAndCheck(cellReferenceStore, 0);
 
-        this.loadReferencesAndCheck(labelReferenceStore, unknown, a1.reference());
+        this.loadReferencesAndCheck(labelReferencesStore, unknown, a1.reference());
     }
 
     @Test
     public void testSaveCellTwiceLaterReferencesPrevious() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=1+2");
         engine.saveCell(a1, context);
@@ -952,6 +877,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithValue(b2, number(5 + 3)));
 
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
+                .cellReferences();
+
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference(), b2.reference());
 
@@ -961,14 +889,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellTwiceLaterReferencesPrevious2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=1+C3");
         engine.saveCell(a1, context);
@@ -988,14 +910,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellTwiceLaterReferencesPreviousAgain() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=1+2");
         engine.saveCell(a1, context);
@@ -1015,14 +931,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellReferencesUpdated() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference b2Reference = SpreadsheetCellReference.parseCellReference("$B2$2");
         final SpreadsheetCell a1 = this.cell("$A$1", "=" + b2Reference + "+5");
@@ -1035,6 +945,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue(a1, number(1 + 2 + 5)),
                 this.formattedCellWithValue(b2, number(1 + 2)));
 
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
+                .cellReferences();
+
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2Reference.toRelative());
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
 
@@ -1044,18 +957,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellLabelReference() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
-        labelStore.save(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("LABELA1"), this.cellReference("A1")));
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore,
-                labelReferencesStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        context.storeRepository()
+                .labels()
+                .save(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("LABELA1"), this.cellReference("A1")));
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=10");
         engine.saveCell(a1, context);
@@ -1069,24 +976,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellLabelReference2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
+
+
         final SpreadsheetCell b2 = this.cell("$B$2", "=5");
 
+        final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
         labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore,
-                labelReferencesStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=10+" + labelB2);
         engine.saveCell(a1, context);
+
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
@@ -1105,14 +1011,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellReplacesCellReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell d4 = this.cell("$D$4", "=20");
         engine.saveCell(d4, context);
@@ -1128,6 +1028,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithValue(a1, number(40 + 30)));
 
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context
+                .storeRepository()
+                .cellReferences();
+
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), e5.reference());
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
 
@@ -1137,22 +1041,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellReplacesLabelReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
         final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
         labelStore.save(SpreadsheetLabelMapping.with(labelB2, this.cellReference("B2")));
 
         final SpreadsheetLabelName labelD4 = SpreadsheetExpressionReference.labelName("LABELD4");
         labelStore.save(SpreadsheetLabelMapping.with(labelD4, this.cellReference("D4")));
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore,
-                labelReferencesStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
         final SpreadsheetCell d4 = this.cell("$D$4", "=20");
         engine.saveCell(d4, context);
@@ -1177,10 +1079,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellReplacesCellAndLabelReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
         final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
         final SpreadsheetCellReference b2Reference = this.cellReference("B2");
@@ -1188,12 +1094,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetLabelName labelD4 = SpreadsheetExpressionReference.labelName("LABELD4");
         labelStore.save(SpreadsheetLabelMapping.with(labelD4, this.cellReference("D4")));
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore,
-                labelReferencesStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
         final SpreadsheetCell d4 = this.cell("$D$4", "=20");
         engine.saveCell(d4, context);
@@ -1267,9 +1167,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private void saveCellAndLoadAndFormattedCheck(final String formula,
                                                   final Object value) {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", formula);
@@ -1282,27 +1180,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 a1Formatted);
 
-        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+        this.loadCellStoreAndCheck(context.storeRepository().cells(), a1Formatted);
     }
 
     // deleteCell....................................................................................................
 
     @Test
     public void testDeleteCellWithReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCellReference("$A$1");
         final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCellReference("$B$2");
 
         engine.saveCell(this.cell(a1, "=99+" + b2), context);
         this.deleteCellAndCheck(engine, a1, context);
+
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
+                .cellReferences();
 
         this.loadReferencesAndCheck(cellReferenceStore, a1);
         this.loadReferrersAndCheck(cellReferenceStore, a1);
@@ -1313,15 +1208,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteCellWithCellReferrers() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
-
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
         final SpreadsheetCellReference b2Reference = SpreadsheetCellReference.parseCellReference("$B$2");
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=1+" + b2Reference);
@@ -1335,6 +1223,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithError(a1, "Unknown cell reference " + b2Reference));
 
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
+                .cellReferences();
+
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2Reference.toRelative());
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
 
@@ -1344,20 +1235,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteCellWithLabelReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
         final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
         final SpreadsheetCell b2 = this.cell("$B$2", "=20");
         labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore,
-                labelReferencesStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=1+" + labelB2);
         engine.saveCell(a1, context);
@@ -1379,20 +1267,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteCellWithLabelReferrers() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
         final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
         final SpreadsheetCell b2 = this.cell("$B$2", "=20");
         labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
-                cellReferenceStore,
-                labelStore,
-                labelReferencesStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=1+" + labelB2);
         engine.saveCell(a1, context);
@@ -1417,10 +1302,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnZeroNothingDeleted() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference reference = this.cellReference(99, 0); // A3
 
@@ -1431,15 +1314,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 0,
                 context);
 
-        this.countAndCheck(cellStore, 1);
+        this.countAndCheck(context.storeRepository().cells(), 1);
     }
 
     @Test
     public void testDeleteColumnNoCellsRefreshed() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("A1"); // A1
         final SpreadsheetCellReference b = this.cellReference("B2"); // B2
@@ -1454,15 +1335,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1,
                 context);
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(context.storeRepository().cells(), 2);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshed() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("A1"); // A1
         final SpreadsheetCellReference b = this.cellReference("B2"); // B2
@@ -1478,7 +1357,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithValue("b3", "=5+6", number(5 + 6)));
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(context.storeRepository().cells(), 2);
     }
 
     @Test
@@ -1603,10 +1482,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private void deleteColumnColumnsAfterCellsRefreshedAndCheck(final String formula,
                                                                 final Object value) {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("A1"); // A1
         final SpreadsheetCellReference b = this.cellReference("B2"); // B2
@@ -1622,15 +1499,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithValue("b3", formula, value));
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(context.storeRepository().cells(), 2);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshed2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("A1");
         final SpreadsheetCellReference b = this.cellReference("B2"); //replaced by $c
@@ -1650,15 +1525,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("B3", "=5+6", number(5 + 6)),
                 this.formattedCellWithValue("Y99", "=7+8", number(7 + 8)));
 
-        this.countAndCheck(cellStore, 3);
+        this.countAndCheck(context.storeRepository().cells(), 3);
     }
 
     @Test
     public void testDeleteColumnWithLabelsToCellReferenceIgnored() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = SpreadsheetExpressionReference.parseCellReference("A1"); // A1
         final SpreadsheetCellReference b = SpreadsheetExpressionReference.parseCellReference("E2"); // E2
@@ -1682,10 +1559,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnWithLabelsToCellReferencedFixed() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // A2 replaced by c
@@ -1718,10 +1597,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnWithLabelToDeletedCell() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // A2
@@ -1742,10 +1623,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnWithCellReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // A2
@@ -1768,15 +1647,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
                 this.formattedCellWithValue(e.addColumn(-count), "=5+" + b, number(5 + 2))); // $c delete
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(context.storeRepository().cells(), 4);
     }
 
     @Test
     public void testDeleteColumnWithCellReferences2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // A2
@@ -1799,15 +1676,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
                 this.formattedCellWithValue(e.addColumn(-count), "=5+" + b, number(5 + 2))); // $c deleted, old-d & old-e refreshed
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(context.storeRepository().cells(), 4);
     }
 
     @Test
     public void testDeleteColumnWithCellReferencesToDeletedCell() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // A2
@@ -1822,15 +1697,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: " + b)); // $b delete
 
-        this.countAndCheck(cellStore, 1);
+        this.countAndCheck(context.storeRepository().cells(), 1);
     }
 
     @Test
     public void testDeleteColumnSeveral() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(10, 0); // DELETED
@@ -1855,17 +1728,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue(e.addColumn(-count), "=5", number(5)),
                 this.formattedCellWithValue(f.addColumn(-count), "=6", number(6))); // $b & $c
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(context.storeRepository().cells(), 4);
     }
 
     // deleteRow....................................................................................................
 
     @Test
     public void testDeleteRowsNone() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference reference = this.cellReference(0, 1); // A2
 
@@ -1876,15 +1747,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 0,
                 context);
 
-        this.countAndCheck(cellStore, 1);
+        this.countAndCheck(context.storeRepository().cells(), 1);
     }
 
     @Test
     public void testDeleteRowsOne() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("A1");
         final SpreadsheetCellReference b = this.cellReference("A2");
@@ -1900,7 +1769,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithValue(c.addRow(-1), "=5+6", number(5 + 6)));
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(context.storeRepository().cells(), 2);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addRow(-1),
@@ -1912,10 +1781,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsOne2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("A1"); //
         final SpreadsheetCellReference b = this.cellReference("A2"); // replaced by c
@@ -1935,7 +1802,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue(c.addRow(-count), "=5+6", number(5 + 6)),
                 this.formattedCellWithValue(d.addRow(-count), "=7+8", number(7 + 8))); // $b delete
 
-        this.countAndCheck(cellStore, 3);
+        this.countAndCheck(context.storeRepository().cells(), 3);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -1947,10 +1814,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsMany() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); //
         final SpreadsheetCellReference b = this.cellReference(0, 1); // replaced by c
@@ -1969,7 +1834,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithValue(d.addRow(-count), "=7+8", number(7 + 8)));
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(context.storeRepository().cells(), 2);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -1990,10 +1855,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsWithLabelsToCellUnmodified() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference("$A$1");
         final SpreadsheetCellReference b = this.cellReference("$A$2");
@@ -2040,10 +1907,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsWithLabelsToCellFixed() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference("$A$1");
         final SpreadsheetCellReference b = this.cellReference("$A$6");
@@ -2082,10 +1951,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsWithLabelToCellReferenceDeleted() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1");
         final SpreadsheetCellReference b = this.cellReference("$A$6");
@@ -2099,7 +1966,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $A$6"));
 
-        this.countAndCheck(cellStore, 1);
+        this.countAndCheck(context.storeRepository().cells(), 1);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -2111,10 +1978,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsWithCellReferencesFixed() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$A$2"); // B1
@@ -2137,7 +2002,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$I$13", "=4", number(4)),
                 this.formattedCellWithValue("$J$14", "=5+$A$2", number(5 + 2))); // $c delete
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(context.storeRepository().cells(), 4);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -2170,10 +2035,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsWithCellReferencesFixed2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1");
         final SpreadsheetCellReference b = this.cellReference("$A$2");
@@ -2196,7 +2059,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$I$12", "=4", number(4)),
                 this.formattedCellWithValue("$J$13", "=5+$A$2", number(5 + 2))); // $c delete
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                4
+        );
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -2231,10 +2098,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsWithLabelsToRangeUnmodified() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(0, 5);
@@ -2276,10 +2145,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsWithLabelsToRangeDeleted() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(0, 5);
@@ -2309,10 +2180,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsWithLabelsToRangeDeleted2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(0, 5);
@@ -2352,10 +2225,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsWithLabelsToRangeDeleted3() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(0, 5);
@@ -2387,10 +2262,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsWithLabelsToRangeFixed() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(0, 5);
@@ -2436,9 +2313,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @SuppressWarnings("unused")
     @Test
     public void testDeleteRowsWithLabelsToRangeFixed2() {
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelStore labelStore = context.storeRepository()
+                .labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(0, 5);
@@ -2461,9 +2340,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteRowsWithLabelsToRangeFixed3() {
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelStore labelStore = context.storeRepository()
+                .labels();
 
         final SpreadsheetCellReference b = this.cellReference(0, 5);
         final SpreadsheetCellReference c = this.cellReference(0, 10);
@@ -2487,9 +2368,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @SuppressWarnings("unused")
     @Test
     public void testDeleteRowsWithLabelsToRangeFixed4() {
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelStore labelStore = context.storeRepository()
+                .labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 5);  // delete
         final SpreadsheetCellReference b = this.cellReference(0, 10); // range delete
@@ -2515,10 +2398,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsNone() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference reference = this.cellReference(1, 0); // A2
 
@@ -2526,7 +2407,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.deleteColumns(reference.column(), 0, context);
 
-        this.countAndCheck(cellStore, 1);
+        this.countAndCheck(context.storeRepository().cells(), 1);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 reference,
@@ -2538,10 +2419,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsOne() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A1");
         final SpreadsheetCellReference b = this.cellReference(1, 0); // B1
@@ -2557,7 +2436,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithValue("$B$1", "=5+6", number(5 + 6)));
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(context.storeRepository().cells(), 2);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -2576,10 +2455,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsOne2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); //
         final SpreadsheetCellReference b = this.cellReference("$B$1"); // replaced by c
@@ -2599,7 +2476,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$B$1", "=5+6", number(5 + 6)),
                 this.formattedCellWithValue("$I$2", "=7+8", number(7 + 8))); // $b delete
 
-        this.countAndCheck(cellStore, 3);
+        this.countAndCheck(context.storeRepository().cells(), 3);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -2625,10 +2502,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsMany() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); //
         final SpreadsheetCellReference b = this.cellReference("$B$1"); // DELETED
@@ -2647,7 +2522,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithValue("$H$2", "=7+8", number(7 + 8))); // $b, $c deleted
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(context.storeRepository().cells(), 2);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -2668,10 +2543,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsWithLabelsToCellUnmodified() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference("$A$1");
         final SpreadsheetCellReference b = this.cellReference("$B$1");
@@ -2718,10 +2595,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsWithLabelsToCellFixed() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference("$A$1");
         final SpreadsheetCellReference b = this.cellReference("$E$1");
@@ -2759,10 +2638,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsWithLabelToCellReferenceDeleted() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1");
         final SpreadsheetCellReference b = this.cellReference("$E$1");
@@ -2776,7 +2653,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $E$1")); // $v delete
 
-        this.countAndCheck(cellStore, 1);
+        this.countAndCheck(context.storeRepository().cells(), 1);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -2788,10 +2665,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsWithCellReferencesFixed() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1");
         final SpreadsheetCellReference b = this.cellReference("$B$1");
@@ -2814,7 +2689,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$M$9", "=4", number(4)),
                 this.formattedCellWithValue("$N$10", "=5+" + b, number(5 + 2))); // $c delete
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(context.storeRepository().cells(), 4);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -2847,10 +2722,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsWithCellReferencesFixed2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$B$1"); // B1
@@ -2873,7 +2746,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$L$9", "=4", number(4)),
                 this.formattedCellWithValue("$M$10", "=5+$B$1", number(5 + 2))); // $c delete
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(context.storeRepository().cells(), 4);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -2908,10 +2781,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsWithLabelsToRangeUnmodified() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(5, 0);
@@ -2953,10 +2828,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsWithLabelsToRangeDeleted() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(5, 0);
@@ -2986,10 +2863,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsWithLabelsToRangeDeleted2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(5, 0);
@@ -3022,10 +2901,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsWithLabelsToRangeDeleted3() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(5, 0);
@@ -3057,10 +2938,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsWithLabelsToRangeFixed() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(5, 0);
@@ -3106,9 +2989,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @SuppressWarnings("unused")
     @Test
     public void testDeleteColumnsWithLabelsToRangeFixed2() {
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(5, 0);
@@ -3131,9 +3017,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnsWithLabelsToRangeFixed3() {
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelStore labelStore = context.storeRepository()
+                .labels();
 
         final SpreadsheetCellReference b = this.cellReference(5, 0);
         final SpreadsheetCellReference c = this.cellReference(10, 0);
@@ -3157,9 +3045,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @SuppressWarnings("unused")
     @Test
     public void testDeleteColumnsWithLabelsToRangeFixed4() {
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelStore labelStore = context.storeRepository()
+                .labels();
 
         final SpreadsheetCellReference a = this.cellReference(5, 0);  // delete
         final SpreadsheetCellReference b = this.cellReference(10, 0); // range delete
@@ -3185,10 +3075,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertColumnsZero() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference reference = this.cellReference("$CV$1");
 
@@ -3200,7 +3088,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 0,
                 context);
 
-        this.countAndCheck(cellStore, 1);
+        this.countAndCheck(context.storeRepository().cells(), 1);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 reference,
@@ -3212,10 +3100,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertColumns() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$B$1"); // MOVED
@@ -3233,7 +3119,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$C$1", "=3+4", number(3 + 4)),
                 this.formattedCellWithValue("$D$1", "=5+6", number(5 + 6)));
 
-        this.countAndCheck(cellStore, 3);
+        this.countAndCheck(context.storeRepository().cells(), 3);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -3245,10 +3131,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertColumns2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$B$1"); // MOVED
@@ -3266,7 +3150,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$C$1", "=3+4", number(3 + 4)),
                 this.formattedCellWithValue("$D$1", "=5+6", number(5 + 6))); // $b insert
 
-        this.countAndCheck(cellStore, 3);
+        this.countAndCheck(context.storeRepository().cells(), 3);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -3292,10 +3176,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertColumnsWithLabelToCellIgnored() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference("$C$2"); //
         final SpreadsheetCellReference b = this.cellReference("$E$4"); // moved
@@ -3333,10 +3219,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertColumnsWithLabelToCell() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$B$1"); // moved
@@ -3394,10 +3282,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertColumnsWithLabelToRangeUnchanged() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$F$6"); // moved
@@ -3438,10 +3328,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertColumnsWithLabelToRangeUpdated() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(5, 0);
@@ -3482,10 +3374,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertColumnsWithCellReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$B$1"); // B1
@@ -3506,7 +3396,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$L$1", "=3+0", number(3 + 0)),
                 this.formattedCellWithValue("$O$9", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(context.storeRepository().cells(), 4);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -3539,10 +3429,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertColumnsWithCellReferences2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$B$1"); //
@@ -3563,7 +3451,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$M$1", "=3+0", number(3 + 0)),
                 this.formattedCellWithValue("$P$9", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(context.storeRepository().cells(), 4);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -3596,10 +3484,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertColumnsSeveral() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); //
         final SpreadsheetCellReference b = this.cellReference("$K$1"); // MOVED
@@ -3623,7 +3509,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$R$3", "=4+0", number(4 + 0)),
                 this.formattedCellWithValue("$Z$4", "=5+0", number(5 + 0))); // $b & $c
 
-        this.countAndCheck(cellStore, 5);
+        this.countAndCheck(context.storeRepository().cells(), 5);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -3665,10 +3551,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertRowsZero() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference reference = this.cellReference("$A$100"); // A3
 
@@ -3679,7 +3563,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 0,
                 context);
 
-        this.countAndCheck(cellStore, 1);
+        this.countAndCheck(context.storeRepository().cells(), 1);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 reference,
@@ -3691,10 +3575,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertRows() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$A$2"); // MOVED
@@ -3712,7 +3594,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$A$3", "=3+4", number(3 + 4)),
                 this.formattedCellWithValue("$A$4", "=5+6", number(5 + 6)));
 
-        this.countAndCheck(cellStore, 3);
+        this.countAndCheck(context.storeRepository().cells(), 3);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -3738,10 +3620,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertRows2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$A$2"); // MOVED
@@ -3759,7 +3639,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$A$3", "=3+4", number(3 + 4)),
                 this.formattedCellWithValue("$A$4", "=5+6", number(5 + 6))); // $b insert
 
-        this.countAndCheck(cellStore, 3);
+        this.countAndCheck(context.storeRepository().cells(), 3);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -3785,10 +3665,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertRowsWithLabelToCellIgnored() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference("$B$3"); //
         final SpreadsheetCellReference b = this.cellReference("$D$5"); // moved
@@ -3826,10 +3708,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertRowsWithLabelToCell() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$A$2"); // moved
@@ -3887,10 +3771,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertRowsWithLabelToRangeUnchanged() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); //
         final SpreadsheetCellReference b = this.cellReference("$F$6"); // moved
@@ -3931,10 +3817,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertRowsWithLabelToRangeUpdated() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         final SpreadsheetCellReference a = this.cellReference(0, 0);
         final SpreadsheetCellReference b = this.cellReference(0, 5);
@@ -3975,10 +3863,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertRowsWithCellReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$A$2"); // A2
@@ -3999,7 +3885,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$A$12", "=3+0", number(3 + 0)),
                 this.formattedCellWithValue("$I$15", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(context.storeRepository().cells(), 4);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -4032,10 +3918,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertRowsWithCellReferences2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$A$2"); // A2
@@ -4056,7 +3940,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$A$13", "=3+0", number(3 + 0)),
                 this.formattedCellWithValue("$I$16", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(context.storeRepository().cells(), 4);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -4089,10 +3973,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testInsertRowsSeveral() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$A$11"); // MOVED
@@ -4116,7 +3998,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$C$18", "=4+0", number(4 + 0)),
                 this.formattedCellWithValue("$D$26", "=5+0", number(5 + 0))); // $b & $c
 
-        this.countAndCheck(cellStore, 5);
+        this.countAndCheck(context.storeRepository().cells(), 5);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -4160,9 +4042,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsDeleteOneCell() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(5, 5);
         final SpreadsheetCell cellA = this.cell(a, "=1+0");
@@ -4182,9 +4066,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsDeleteOneCell2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(5, 5);
         final SpreadsheetCell cellA = this.cell(a, "=1+0");
@@ -4213,9 +4099,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsDeletesManyCells() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(5, 5);
         final SpreadsheetCell cellA = this.cell(a, "=1+0");
@@ -4238,9 +4126,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsDeletesManyCells2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(5, 5);
         final SpreadsheetCell cellA = this.cell(a, "=1+0");
@@ -4275,8 +4165,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsSaveWithMissingCells() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
@@ -4295,7 +4184,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue(a, "=1+0", number(1)),
                 this.formattedCellWithValue(b, "=2+0", number(2)));
 
-        this.countAndCheck(cellStore, 2); // a + b saved
+        this.countAndCheck(context.storeRepository().cells(), 2); // a + b saved
 
         this.loadCellAndCheck(engine,
                 a,
@@ -4312,9 +4201,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsSaveWithMissingCells2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
         final SpreadsheetCellReference b = this.cellReference(2, 2);
@@ -4361,9 +4252,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsRangeOneEmptyCells2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
         final SpreadsheetCellReference b = this.cellReference(2, 1);
@@ -4400,9 +4293,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsRangeTwoEmptyCells() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
         final SpreadsheetCellReference b = this.cellReference(2, 1);
@@ -4554,11 +4449,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private void fillCellsAndCheck(final String formulaText, final Object expected) {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(10, 20);
         final SpreadsheetCellReference b = this.cellReference(11, 21);
@@ -4586,9 +4481,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsRepeatCellInto2x2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(10, 20);
         final SpreadsheetCellReference b = this.cellReference(11, 21);
@@ -4617,9 +4514,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCells2x2CellInto1x1() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(10, 20);
         final SpreadsheetCellReference b = this.cellReference(11, 21);
@@ -4648,9 +4547,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCells2x2Into2x2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(10, 20);
         final SpreadsheetCellReference b = this.cellReference(11, 21);
@@ -4680,9 +4581,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCells2x2Into7x2Gives6x2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(10, 20);
         final SpreadsheetCellReference b = this.cellReference(11, 21);
@@ -4715,9 +4618,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCells2x2Into2x7Gives2x6() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(10, 20);
         final SpreadsheetCellReference b = this.cellReference(11, 21);
@@ -4750,9 +4655,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsAbsoluteReference() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference a = this.cellReference(10, 20);
         final SpreadsheetCellReference b = this.cellReference(11, 21);
@@ -4778,9 +4685,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsExpressionRelativeReferenceFixed() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCell cellB = this.cell("B2", "=2");
         final SpreadsheetCell cellC = this.cell("C3", "=3+B2");
@@ -4801,9 +4710,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsExternalReferencesRefreshed() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetCellReference b = this.cellReference("b1");
         final SpreadsheetCell cellB = this.cell(b, "=2+0"); // copied to C1
@@ -4828,10 +4739,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadLabelUnknownFails() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetExpressionReference.parseCellReference("B2"));
@@ -4851,10 +4763,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveLabelAndLoadFromLabelStore() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetExpressionReference.parseCellReference("B2"));
@@ -4863,17 +4773,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 mapping,
                 context);
 
-        this.loadLabelAndCheck(labelStore,
+        this.loadLabelAndCheck(context.storeRepository().labels(),
                 label,
                 mapping);
     }
 
     @Test
     public void testSaveLabelAndLoadLabel() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetExpressionReference.parseCellReference("B2"));
@@ -4890,10 +4798,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveLabelWithoutReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
 
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetExpressionReference.parseCellReference("B2"));
@@ -4909,10 +4818,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveLabelRefreshesReferences() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetExpressionReference.parseCellReference("B2"));
@@ -4930,10 +4837,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testRemoveLabelAndLoadFromLabelStore() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetExpressionReference.parseCellReference("B2"));
@@ -4946,15 +4851,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 label,
                 context);
 
-        this.loadLabelFailCheck(labelStore, label);
+        this.loadLabelFailCheck(context.storeRepository().labels(), label);
     }
 
     @Test
     public void testRemoveLabelRefreshesCell() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
-        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetExpressionReference.parseCellReference("B2"));
@@ -4969,7 +4872,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithError("A1", "=" + label + "+1", "Unknown label: " + label));
 
-        this.loadLabelFailCheck(labelStore, label);
+        this.loadLabelFailCheck(context.storeRepository().labels(), label);
     }
 
     // columnWidth, rowHeight...........................................................................................
@@ -4978,17 +4881,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testColumnWidth() {
         final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
         final double expected = 150.5;
-        final BasicSpreadsheetEngine engine = this.createEngine(
-                this.metadata(),
-                new FakeSpreadsheetCellStore() {
-                    @Override
-                    public double maxColumnWidth(final SpreadsheetColumnReference c) {
-                        assertEquals(column, c);
-                        return expected;
-                    }
-                });
 
-        this.columnWidthAndCheck(engine, column, this.createContext(), expected);
+        this.columnWidthAndCheck2(
+                column,
+                this.metadata(),
+                expected,
+                expected);
     }
 
     @Test
@@ -4996,53 +4894,62 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
         final double expected = 150.5;
 
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS;
+        SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS;
         final TextStyle style = metadata.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
                 .set(TextStylePropertyName.WIDTH, Length.pixel(expected));
+        metadata = metadata.set(SpreadsheetMetadataPropertyName.STYLE, style);
 
-        final BasicSpreadsheetEngine engine = this.createEngine(
-                metadata.set(SpreadsheetMetadataPropertyName.STYLE, style),
-                new FakeSpreadsheetCellStore() {
+        this.columnWidthAndCheck2(
+                column,
+                metadata,
+                0,
+                expected);
+    }
+
+    private void columnWidthAndCheck2(final SpreadsheetColumnReference column,
+                                      final SpreadsheetMetadata metadata,
+                                      final double maxColumnWidth,
+                                      final double expected) {
+        this.columnWidthAndCheck(
+                BasicSpreadsheetEngine.with(metadata),
+                column,
+                this.createContext(new FakeSpreadsheetCellStore() {
                     @Override
                     public double maxColumnWidth(final SpreadsheetColumnReference c) {
                         assertEquals(column, c);
-                        return 0;
+                        return maxColumnWidth;
                     }
-                });
-
-        this.columnWidthAndCheck(engine, column, this.createContext(), expected);
+                }),
+                expected
+        );
     }
 
     @Test
     public void testColumnWidthDefaultMissing() {
         final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
-        final BasicSpreadsheetEngine engine = this.createEngine(
-                SpreadsheetMetadata.EMPTY,
-                new FakeSpreadsheetCellStore() {
-                    @Override
-                    public double maxColumnWidth(final SpreadsheetColumnReference c) {
-                        assertEquals(column, c);
-                        return 0;
-                    }
-                });
-        assertThrows(TextStylePropertyValueException.class, () -> engine.columnWidth(column, SpreadsheetEngineContexts.fake()));
+        assertThrows(
+                TextStylePropertyValueException.class,
+                () -> BasicSpreadsheetEngine.with(SpreadsheetMetadata.EMPTY)
+                        .columnWidth(
+                                column,
+                                this.createContext(new FakeSpreadsheetCellStore() {
+                                    @Override
+                                    public double maxColumnWidth(final SpreadsheetColumnReference c) {
+                                        assertEquals(column, c);
+                                        return 0;
+                                    }
+                                })));
     }
+
+    // rowHeight........................................................................................................
 
     @Test
     public void testRowHeight() {
-        final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("987");
-        final double expected = 150.5;
-        final BasicSpreadsheetEngine engine = this.createEngine(
+        this.rowHeightAndCheck2(
+                SpreadsheetRowReference.parseRow("987"),
                 SpreadsheetMetadata.EMPTY,
-                new FakeSpreadsheetCellStore() {
-                    @Override
-                    public double maxRowHeight(final SpreadsheetRowReference c) {
-                        assertEquals(row, c);
-                        return expected;
-                    }
-                });
-
-        this.rowHeightAndCheck(engine, row, this.createContext(), expected);
+                150.5
+        );
     }
 
     @Test
@@ -5054,33 +4961,45 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final TextStyle style = metadata.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
                 .set(TextStylePropertyName.HEIGHT, Length.pixel(expected));
 
-        final BasicSpreadsheetEngine engine = this.createEngine(
+        this.rowHeightAndCheck2(
+                row,
                 metadata.set(SpreadsheetMetadataPropertyName.STYLE, style),
-                new FakeSpreadsheetCellStore() {
+                expected
+        );
+    }
+
+    private void rowHeightAndCheck2(final SpreadsheetRowReference row,
+                                    final SpreadsheetMetadata metadata,
+                                    final double expected) {
+        this.rowHeightAndCheck(
+                BasicSpreadsheetEngine.with(metadata),
+                row,
+                this.createContext(new FakeSpreadsheetCellStore() {
                     @Override
                     public double maxRowHeight(final SpreadsheetRowReference c) {
                         assertEquals(row, c);
-                        return 0;
+                        return expected;
                     }
-                });
-
-        this.rowHeightAndCheck(engine, row, this.createContext(), expected);
+                }),
+                expected
+        );
     }
 
     @Test
     public void testRowHeightDefaultMissing() {
         final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("999");
-        final BasicSpreadsheetEngine engine = this.createEngine(
-                SpreadsheetMetadata.EMPTY,
-                new FakeSpreadsheetCellStore() {
+        assertThrows(TextStylePropertyValueException.class,
+                () -> BasicSpreadsheetEngine.with(SpreadsheetMetadata.EMPTY)
+                        .rowHeight(
+                                row,
+                                this.createContext(new FakeSpreadsheetCellStore() {
 
-                    @Override
-                    public double maxRowHeight(final SpreadsheetRowReference r) {
-                        assertEquals(row, r);
-                        return 0;
-                    }
-                });
-        assertThrows(TextStylePropertyValueException.class, () -> engine.rowHeight(row, this.createContext()));
+                                    @Override
+                                    public double maxRowHeight(final SpreadsheetRowReference r) {
+                                        assertEquals(row, r);
+                                        return 0;
+                                    }
+                                })));
     }
 
     //  computeRange....................................................................................................
@@ -5121,96 +5040,79 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cellBox(12, 34, 56, 78);
         final SpreadsheetCoordinates coords = SpreadsheetCoordinates.with(1, 2);
 
-        final BasicSpreadsheetEngine engine = this.createEngine(
-                SpreadsheetMetadata.EMPTY,
-                new FakeSpreadsheetCellStore() {
+        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(SpreadsheetMetadata.EMPTY);
+        assertEquals(
+                box,
+                engine.cellBox(
+                        coords,
+                        this.createContext(
+                                new FakeSpreadsheetCellStore() {
 
-                    @Override
-                    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates c) {
-                        assertEquals(coords, c);
-                        return box;
-                    }
-                });
-        assertEquals(box,
-                engine.cellBox(coords, createContext()));
-    }
-
-    private BasicSpreadsheetEngine createEngine(final SpreadsheetMetadata metadata,
-                                                final SpreadsheetCellStore store) {
-        return BasicSpreadsheetEngine.with(
-                metadata,
-                store,
-                SpreadsheetExpressionReferenceStores.fake(),
-                SpreadsheetLabelStores.fake(),
-                SpreadsheetExpressionReferenceStores.fake(),
-                SpreadsheetRangeStores.fake(),
-                SpreadsheetRangeStores.fake());
+                                    @Override
+                                    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates c) {
+                                        assertEquals(coords, c);
+                                        return box;
+                                    }
+                                }))
+        );
     }
 
     //  helpers.......................................................................................................
 
     @Override
     public BasicSpreadsheetEngine createSpreadsheetEngine() {
-        return this.createSpreadsheetEngine(this.cellStore());
-    }
-
-    private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore) {
-        return this.createSpreadsheetEngine(cellStore,
-                this.labelStore());
-    }
-
-    private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetLabelStore labelStore) {
-        return this.createSpreadsheetEngine(this.cellStore(),
-                labelStore);
-    }
-
-    private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
-                                                           final SpreadsheetLabelStore labelStore) {
-        return this.createSpreadsheetEngine(cellStore,
-                labelStore,
-                this.rangeToConditionalFormattingRuleStore());
-    }
-
-    private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
-                                                           final SpreadsheetLabelStore labelStore,
-                                                           final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToRules) {
-        return BasicSpreadsheetEngine.with(
-                this.metadata(),
-                cellStore,
-                this.cellReferencesStore(),
-                labelStore,
-                this.labelReferencesStore(),
-                SpreadsheetRangeStores.readOnly(this.rangeToCellStore()),
-                rangeToRules);
-    }
-
-    private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
-                                                           final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore,
-                                                           final SpreadsheetLabelStore labelStore) {
-        return this.createSpreadsheetEngine(cellStore,
-                cellReferencesStore,
-                labelStore,
-                this.labelReferencesStore());
-    }
-
-    private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
-                                                           final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore,
-                                                           final SpreadsheetLabelStore labelStore,
-                                                           final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore) {
-        return BasicSpreadsheetEngine.with(
-                this.metadata(),
-                cellStore,
-                cellReferencesStore,
-                labelStore,
-                labelReferencesStore,
-                SpreadsheetRangeStores.readOnly(this.rangeToCellStore()),
-                this.rangeToConditionalFormattingRuleStore()
-        );
+        return BasicSpreadsheetEngine.with(this.metadata());
     }
 
     @Override
     public SpreadsheetEngineContext createContext() {
+        return this.createContext(SpreadsheetEngines.fake());
+    }
+
+    private SpreadsheetEngineContext createContext(final SpreadsheetCellStore cellStore) {
+        return this.createContext(
+                DEFAULT_YEAR,
+                SpreadsheetEngines.fake(),
+                new FakeSpreadsheetStoreRepository() {
+                    @Override
+                    public SpreadsheetCellStore cells() {
+                        return cellStore;
+                    }
+                }
+        );
+    }
+
+    private SpreadsheetEngineContext createContext(final SpreadsheetEngine engine) {
+        return this.createContext(
+                DEFAULT_YEAR,
+                engine
+        );
+    }
+
+    private SpreadsheetEngineContext createContext(final int defaultYear,
+                                                   final SpreadsheetEngine engine) {
+        return this.createContext(
+                defaultYear,
+                engine,
+                SpreadsheetStoreRepositories.basic(
+                        SpreadsheetCellStores.treeMap(),
+                        SpreadsheetExpressionReferenceStores.treeMap(),
+                        SpreadsheetGroupStores.fake(),
+                        SpreadsheetLabelStores.treeMap(),
+                        SpreadsheetExpressionReferenceStores.treeMap(),
+                        SpreadsheetMetadataStores.fake(),
+                        SpreadsheetRangeStores.treeMap(),
+                        SpreadsheetRangeStores.treeMap(),
+                        SpreadsheetUserStores.fake()
+                )
+        );
+    }
+
+    private SpreadsheetEngineContext createContext(final int defaultYear,
+                                                   final SpreadsheetEngine engine,
+                                                   final SpreadsheetStoreRepository storeRepository) {
         return new FakeSpreadsheetEngineContext() {
+
             @Override
             public SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference) {
                 if (reference.isCellReference()) {
@@ -5219,35 +5121,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 assertEquals(LABEL, reference.toString());
                 return LABEL_CELL;
             }
-        };
-    }
-
-    private SpreadsheetEngineContext createContext(final BasicSpreadsheetEngine engine) {
-        return this.createContext(SpreadsheetLabelStores.fake(), engine);
-    }
-
-    private SpreadsheetEngineContext createContext(final int defaultYear,
-                                                   final BasicSpreadsheetEngine engine) {
-        return this.createContext(
-                defaultYear,
-                SpreadsheetLabelStores.fake(),
-                engine
-        );
-    }
-
-    private SpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore,
-                                                   final BasicSpreadsheetEngine engine) {
-        return this.createContext(
-                DEFAULT_YEAR,
-                labelStore,
-                engine
-        );
-    }
-
-    private SpreadsheetEngineContext createContext(final int defaultYear,
-                                                   final SpreadsheetLabelStore labelStore,
-                                                   final BasicSpreadsheetEngine engine) {
-        return new FakeSpreadsheetEngineContext() {
 
             @Override
             public int defaultYear() {
@@ -5330,7 +5203,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                 return node.toValue(ExpressionEvaluationContexts.basic(this.expressionNumberKind(),
                         functions,
-                        SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, labelStore, this),
+                        SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
+                                engine,
+                                storeRepository.labels(),
+                                this
+                        ),
                         converterContext()));
             }
 
@@ -5381,6 +5258,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                     final SpreadsheetFormatter formatter) {
                 assertFalse(value instanceof Optional, () -> "Value must not be optional" + value);
                 return formatter.format(Cast.to(value), SPREADSHEET_TEXT_FORMAT_CONTEXT);
+            }
+
+            @Override
+            public SpreadsheetStoreRepository storeRepository() {
+                return storeRepository;
             }
         };
     }
@@ -5619,30 +5501,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static int WIDTH = 50;
     private final static int HEIGHT = 30;
-
-    private SpreadsheetCellStore cellStore() {
-        return SpreadsheetCellStores.treeMap();
-    }
-
-    private SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore() {
-        return SpreadsheetExpressionReferenceStores.treeMap();
-    }
-
-    private SpreadsheetLabelStore labelStore() {
-        return SpreadsheetLabelStores.treeMap();
-    }
-
-    private SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore() {
-        return SpreadsheetExpressionReferenceStores.treeMap();
-    }
-
-    private SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore() {
-        return SpreadsheetRangeStores.treeMap();
-    }
-
-    private SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore() {
-        return SpreadsheetRangeStores.treeMap();
-    }
 
     private SpreadsheetColumnReference column(final int column) {
         return SpreadsheetReferenceKind.ABSOLUTE.column(column);
