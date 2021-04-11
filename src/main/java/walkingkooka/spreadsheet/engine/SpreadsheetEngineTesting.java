@@ -34,7 +34,6 @@ import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -389,12 +388,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     E createSpreadsheetEngine();
 
     SpreadsheetEngineContext createContext();
-
-    default void spreadsheetIdAndCheck(final SpreadsheetEngine engine, final SpreadsheetId id) {
-        assertEquals(id,
-                engine.id(),
-                engine::toString);
-    }
 
     default SpreadsheetCell loadCellOrFail(final SpreadsheetEngine engine,
                                            final SpreadsheetCellReference reference,

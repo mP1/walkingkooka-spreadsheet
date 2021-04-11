@@ -157,14 +157,14 @@ public final class Sample {
     private static SpreadsheetEngine engine(final SpreadsheetCellStore cellStore,
                                             final SpreadsheetLabelStore labelStore) {
         return SpreadsheetEngines.basic(
-                SpreadsheetId.with(123),
                 metadata(),
                 cellStore,
                 SpreadsheetExpressionReferenceStores.treeMap(),
                 labelStore,
                 SpreadsheetExpressionReferenceStores.treeMap(),
                 SpreadsheetRangeStores.treeMap(),
-                SpreadsheetRangeStores.treeMap());
+                SpreadsheetRangeStores.treeMap()
+        );
     }
 
     private static SpreadsheetEngineContext engineContext(final SpreadsheetEngine engine,
