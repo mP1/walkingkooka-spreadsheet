@@ -357,21 +357,23 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testLoadLabelNullMappingFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().loadLabel(null));
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().loadLabel(null, SpreadsheetEngineContexts.fake()));
     }
 
     default void loadLabelAndCheck(final SpreadsheetEngine engine,
                                    final SpreadsheetLabelName label,
+                                   final SpreadsheetEngineContext context,
                                    final SpreadsheetLabelMapping mapping) {
         assertEquals(Optional.of(mapping),
-                engine.loadLabel(label),
+                engine.loadLabel(label, context),
                 () -> "loadLabel " + label);
     }
 
     default void loadLabelAndFailCheck(final SpreadsheetEngine engine,
-                                       final SpreadsheetLabelName label) {
+                                       final SpreadsheetLabelName label,
+                                       final SpreadsheetEngineContext context) {
         assertEquals(Optional.empty(),
-                engine.loadLabel(label),
+                engine.loadLabel(label, context),
                 () -> "loadLabel " + label);
     }
 

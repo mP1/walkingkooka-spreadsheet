@@ -113,7 +113,8 @@ public interface SpreadsheetEngine {
     /**
      * Loads the given label if it exists.
      */
-    Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name);
+    Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name,
+                                                final SpreadsheetEngineContext context);
 
     /**
      * Returns the column width for the given {@link SpreadsheetColumnReference}

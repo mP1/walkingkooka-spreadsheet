@@ -103,7 +103,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name) {
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name,
+                                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 

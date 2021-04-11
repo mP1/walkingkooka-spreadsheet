@@ -4840,8 +4840,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 mapping,
                 context);
 
-        this.loadLabelAndFailCheck(engine,
-                SpreadsheetExpressionReference.labelName("UnknownLabel"));
+        this.loadLabelAndFailCheck(
+                engine,
+                SpreadsheetExpressionReference.labelName("UnknownLabel"),
+                this.createContext()
+        );
     }
 
     //  saveLabel.......................................................................................................
@@ -4881,6 +4884,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadLabelAndCheck(engine,
                 label,
+                context,
                 mapping);
     }
 
