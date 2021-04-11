@@ -119,7 +119,8 @@ public interface SpreadsheetEngine {
     /**
      * Returns the column width for the given {@link SpreadsheetColumnReference}
      */
-    double columnWidth(final SpreadsheetColumnReference column);
+    double columnWidth(final SpreadsheetColumnReference column,
+                       final SpreadsheetEngineContext context);
 
     /**
      * Returns the row height for the given {@link SpreadsheetRowReference}

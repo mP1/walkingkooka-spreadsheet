@@ -4988,7 +4988,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 });
 
-        this.columnWidthAndCheck(engine, column, expected);
+        this.columnWidthAndCheck(engine, column, this.createContext(), expected);
     }
 
     @Test
@@ -5010,7 +5010,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 });
 
-        this.columnWidthAndCheck(engine, column, expected);
+        this.columnWidthAndCheck(engine, column, this.createContext(), expected);
     }
 
     @Test
@@ -5025,7 +5025,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         return 0;
                     }
                 });
-        assertThrows(TextStylePropertyValueException.class, () -> engine.columnWidth(column));
+        assertThrows(TextStylePropertyValueException.class, () -> engine.columnWidth(column, SpreadsheetEngineContexts.fake()));
     }
 
     @Test

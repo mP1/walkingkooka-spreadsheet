@@ -378,8 +378,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testColumnWidthNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().columnWidth(null));
+    default void testColumnWidthNullColumnReferenceFails() {
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().columnWidth(null, this.createContext()));
+    }
+
+    @Test
+    default void testColumnWidthNullContextFails() {
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().columnWidth(SpreadsheetColumnReference.parseColumn("A"), null));
     }
 
     @Test
@@ -733,15 +738,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void columnWidthAndCheck(final SpreadsheetColumnReference column,
+                                     final SpreadsheetEngineContext context,
                                      final double expected) {
-        this.columnWidthAndCheck(this.createSpreadsheetEngine(), column, expected);
+        this.columnWidthAndCheck(this.createSpreadsheetEngine(), column, context, expected);
     }
 
     default void columnWidthAndCheck(final SpreadsheetEngine engine,
                                      final SpreadsheetColumnReference column,
+                                     final SpreadsheetEngineContext context,
                                      final double expected) {
         assertEquals(expected,
-                engine.columnWidth(column),
+                engine.columnWidth(column, context),
                 () -> "columnWidth " + column + " of " + engine);
     }
 
