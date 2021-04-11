@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -75,7 +76,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                               final int width,
                                               final Function<BigDecimal, Fraction> fractioner,
-                                              final SpreadsheetFormatter defaultSpreadsheetFormatter) {
+                                              final SpreadsheetFormatter defaultSpreadsheetFormatter,
+                                              final SpreadsheetStoreRepository storeRepository) {
         Objects.requireNonNull(valueParser, "valueParser");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
@@ -88,6 +90,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         }
         Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
+        Objects.requireNonNull(storeRepository, "storeRepository");
 
         return new BasicSpreadsheetEngineContext(
                 valueParser,
@@ -100,7 +103,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 nameToColor,
                 width,
                 fractioner,
-                defaultSpreadsheetFormatter
+                defaultSpreadsheetFormatter,
+                storeRepository
         );
     }
 
@@ -117,7 +121,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                           final int width,
                                           final Function<BigDecimal, Fraction> fractioner,
-                                          final SpreadsheetFormatter defaultSpreadsheetFormatter) {
+                                          final SpreadsheetFormatter defaultSpreadsheetFormatter,
+                                          final SpreadsheetStoreRepository storeRepository) {
         super();
         this.labelStore = labelStore;
 
@@ -141,6 +146,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 converterContext);
         this.fractioner = fractioner;
         this.defaultSpreadsheetFormatter = defaultSpreadsheetFormatter;
+
+        this.storeRepository = storeRepository;
     }
 
     // resolveCellReference.............................................................................................
@@ -268,6 +275,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     public int twoDigitYear() {
         return this.converterContext.twoDigitYear();
     }
+
+    // Store............................................................................................................
+
+    @Override
+    public SpreadsheetStoreRepository storeRepository() {
+        return this.storeRepository;
+    }
+
+    private final SpreadsheetStoreRepository storeRepository;
 
     // Object...........................................................................................................
 

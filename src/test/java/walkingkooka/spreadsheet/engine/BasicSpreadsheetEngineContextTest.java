@@ -43,6 +43,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.Expression;
@@ -86,7 +88,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter())
+                this.defaultSpreadsheetFormatter(),
+                this.storeRepository()
+                )
         );
     }
 
@@ -103,7 +107,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter())
+                this.defaultSpreadsheetFormatter(),
+                this.storeRepository()
+                )
         );
     }
 
@@ -120,7 +126,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter())
+                this.defaultSpreadsheetFormatter(),
+                this.storeRepository()
+                )
         );
     }
 
@@ -137,7 +145,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter())
+                this.defaultSpreadsheetFormatter(),
+                this.storeRepository()
+                )
         );
     }
 
@@ -154,7 +164,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter())
+                this.defaultSpreadsheetFormatter(),
+                this.storeRepository()
+                )
         );
     }
 
@@ -171,7 +183,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter())
+                this.defaultSpreadsheetFormatter(),
+                this.storeRepository()
+                )
         );
     }
 
@@ -188,7 +202,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 null,
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter())
+                this.defaultSpreadsheetFormatter(),
+                this.storeRepository()
+                )
         );
     }
 
@@ -205,7 +221,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 0,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter())
+                this.defaultSpreadsheetFormatter(),
+                this.storeRepository()
+                )
         );
     }
 
@@ -222,7 +240,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 null,
-                this.defaultSpreadsheetFormatter())
+                this.defaultSpreadsheetFormatter(),
+                this.storeRepository()
+                )
         );
     }
 
@@ -239,7 +259,28 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                null)
+                null,
+                this.storeRepository()
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullStoreRepositoryFails() {
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.valueParser(),
+                VALUE_SEPARATOR,
+                this.functions(),
+                this.engine(),
+                this.labelStore(),
+                this.converterContext(),
+                this.numberToColor(),
+                this.nameToColor(),
+                WIDTH,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter(),
+                null
+                )
         );
     }
 
@@ -579,7 +620,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                defaultSpreadsheetFormatter
+                defaultSpreadsheetFormatter,
+                this.storeRepository()
         );
     }
 
@@ -730,6 +772,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             return "Fractioner123";
         }
     };
+
+    final SpreadsheetStoreRepository storeRepository() {
+        return SpreadsheetStoreRepositories.fake();
+    }
 
     @Override
     public Class<BasicSpreadsheetEngineContext> type() {

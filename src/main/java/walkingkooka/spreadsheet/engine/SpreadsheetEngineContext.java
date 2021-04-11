@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 
@@ -41,6 +42,8 @@ public interface SpreadsheetEngineContext extends Context,
         YearContext {
 
     /**
+     * ]]
+     * <p>
      * Resolves a {@link SpreadsheetExpressionReference} to a {@link SpreadsheetCellReference}.
      */
     SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference);
@@ -70,4 +73,9 @@ public interface SpreadsheetEngineContext extends Context,
      */
     Optional<SpreadsheetText> format(final Object value,
                                      final SpreadsheetFormatter formatter);
+
+    /**
+     * Getter that returns the {@link SpreadsheetStoreRepository} for this spreadsheet.
+     */
+    SpreadsheetStoreRepository storeRepository();
 }
