@@ -5132,7 +5132,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 });
         assertEquals(box,
-                engine.cellBox(coords));
+                engine.cellBox(coords, createContext()));
     }
 
     private BasicSpreadsheetEngine createEngine(final SpreadsheetMetadata metadata,

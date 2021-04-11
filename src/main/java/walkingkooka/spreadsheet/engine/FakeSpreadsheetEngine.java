@@ -127,7 +127,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords) {
+    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords,
+                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 }
