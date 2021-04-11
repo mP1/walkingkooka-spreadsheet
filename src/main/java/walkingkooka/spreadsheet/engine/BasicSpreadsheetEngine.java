@@ -547,7 +547,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // max..............................................................................................................
 
     @Override
-    public double columnWidth(final SpreadsheetColumnReference column) {
+    public double columnWidth(final SpreadsheetColumnReference column,
+                              final SpreadsheetEngineContext context) {
         double columnWidth = this.cellStore.maxColumnWidth(column);
         if (0 == columnWidth) {
             columnWidth = columnWidthOrRowHeight(TextStylePropertyName.WIDTH);
@@ -588,7 +589,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .setReferenceKind(SpreadsheetReferenceKind.RELATIVE);
 
         while (x < width) {
-            x = x + this.columnWidth(column);
+            x = x + this.columnWidth(column, context);
             column = column.add(1);
         }
 
