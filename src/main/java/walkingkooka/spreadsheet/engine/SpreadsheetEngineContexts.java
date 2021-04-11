@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -49,7 +50,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int width,
                                                  final Function<BigDecimal, Fraction> fractioner,
-                                                 final SpreadsheetFormatter defaultSpreadsheetFormatter) {
+                                                 final SpreadsheetFormatter defaultSpreadsheetFormatter,
+                                                 final SpreadsheetStoreRepository storeRepository) {
         return BasicSpreadsheetEngineContext.with(
                 valueParser,
                 valueSeparator,
@@ -61,7 +63,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                 nameToColor,
                 width,
                 fractioner,
-                defaultSpreadsheetFormatter
+                defaultSpreadsheetFormatter,
+                storeRepository
         );
     }
 

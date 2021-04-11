@@ -17,13 +17,13 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.Either;
 import walkingkooka.convert.FakeConverterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -70,6 +70,11 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     @Override
     public Optional<SpreadsheetText> format(final Object value,
                                             final SpreadsheetFormatter formatter) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetStoreRepository storeRepository() {
         throw new UnsupportedOperationException();
     }
 }
