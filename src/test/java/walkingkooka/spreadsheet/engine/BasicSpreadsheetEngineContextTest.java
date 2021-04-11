@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.parser.Parser;
@@ -82,7 +83,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.labelStore(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -101,7 +101,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 VALUE_SEPARATOR,
                 null,
                 this.engine(),
-                this.labelStore(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -119,26 +118,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
-                null,
-                this.labelStore(),
-                this.converterContext(),
-                this.numberToColor(),
-                this.nameToColor(),
-                WIDTH,
-                FRACTIONER,
-                this.defaultSpreadsheetFormatter(),
-                this.storeRepository()
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.valueParser(),
-                VALUE_SEPARATOR,
-                this.functions(),
-                this.engine(),
                 null,
                 this.converterContext(),
                 this.numberToColor(),
@@ -158,7 +137,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.labelStore(),
                 null,
                 this.numberToColor(),
                 this.nameToColor(),
@@ -177,7 +155,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.labelStore(),
                 this.converterContext(),
                 null,
                 this.nameToColor(),
@@ -196,7 +173,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.labelStore(),
                 this.converterContext(),
                 this.numberToColor(),
                 null,
@@ -215,7 +191,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.labelStore(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -234,7 +209,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.labelStore(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -253,7 +227,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.labelStore(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -272,7 +245,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.labelStore(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -604,7 +576,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetFormatter defaultSpreadsheetFormatter) {
-        return this.createContext(this.labelStore(), defaultSpreadsheetFormatter);
+        return this.createContext(SpreadsheetLabelStores.fake(), defaultSpreadsheetFormatter);
     }
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore,
@@ -614,14 +586,18 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                labelStore,
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
                 defaultSpreadsheetFormatter,
-                this.storeRepository()
+                new FakeSpreadsheetStoreRepository() {
+                    @Override
+                    public SpreadsheetLabelStore labels() {
+                        return labelStore;
+                    }
+                }
         );
     }
 
@@ -670,10 +646,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private SpreadsheetEngine engine() {
         return SpreadsheetEngines.fake();
-    }
-
-    private SpreadsheetLabelStore labelStore() {
-        return SpreadsheetLabelStores.fake();
     }
 
     private Converter<ExpressionNumberConverterContext> converter() {

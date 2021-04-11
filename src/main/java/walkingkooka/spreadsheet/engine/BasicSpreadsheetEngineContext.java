@@ -37,7 +37,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
@@ -70,7 +69,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final char valueSeparator,
                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                               final SpreadsheetEngine engine,
-                                              final SpreadsheetLabelStore labelStore,
                                               final ExpressionNumberConverterContext converterContext,
                                               final Function<Integer, Optional<Color>> numberToColor,
                                               final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
@@ -81,7 +79,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(valueParser, "valueParser");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
-        Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(converterContext, "converterContext");
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
@@ -97,7 +94,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 valueSeparator,
                 functions,
                 engine,
-                labelStore,
                 converterContext,
                 numberToColor,
                 nameToColor,
@@ -115,7 +111,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final char valueSeparator,
                                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                           final SpreadsheetEngine engine,
-                                          final SpreadsheetLabelStore labelStore,
                                           final ExpressionNumberConverterContext converterContext,
                                           final Function<Integer, Optional<Color>> numberToColor,
                                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
@@ -124,7 +119,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                           final SpreadsheetStoreRepository storeRepository) {
         super();
-        this.labelStore = labelStore;
 
         this.valueParser = valueParser;
         this.parserContext = SpreadsheetParserContexts.basic(
@@ -135,7 +129,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         );
 
         this.functions = functions;
-        this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, labelStore, this);
+        this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
+                engine,
+                storeRepository.labels(),
+                this
+        );
 
         this.converterContext = converterContext;
 
@@ -156,10 +154,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     public SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
-        return BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor.lookup(reference, this.labelStore);
+        return BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor.lookup(reference, this.storeRepository().labels());
     }
-
-    private final SpreadsheetLabelStore labelStore;
 
     // parsing formula and executing.....................................................................................
 
