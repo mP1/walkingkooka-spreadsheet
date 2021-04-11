@@ -290,7 +290,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name) {
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name,
+                                                       final SpreadsheetEngineContext context) {
         return this.labelStore.load(name);
     }
 
