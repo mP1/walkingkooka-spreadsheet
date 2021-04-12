@@ -72,7 +72,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final char valueSeparator,
                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                               final SpreadsheetEngine engine,
-                                              final ExpressionNumberConverterContext converterContext,
                                               final Function<Integer, Optional<Color>> numberToColor,
                                               final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                               final Function<BigDecimal, Fraction> fractioner,
@@ -82,7 +81,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(valueParser, "valueParser");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
-        Objects.requireNonNull(converterContext, "converterContext");
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
         Objects.requireNonNull(fractioner, "fractioner");
@@ -95,7 +93,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 valueSeparator,
                 functions,
                 engine,
-                converterContext,
                 numberToColor,
                 nameToColor,
                 fractioner,
@@ -112,7 +109,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final char valueSeparator,
                                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                           final SpreadsheetEngine engine,
-                                          final ExpressionNumberConverterContext converterContext,
                                           final Function<Integer, Optional<Color>> numberToColor,
                                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                           final Function<BigDecimal, Fraction> fractioner,
@@ -122,10 +118,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         this.metadata = metadata;
         this.valueParser = valueParser;
+
+        final ExpressionNumberConverterContext converterContext = metadata.converterContext();
+
         this.parserContext = SpreadsheetParserContexts.basic(
                 converterContext,
                 converterContext,
-                converterContext.expressionNumberKind(),
+                metadata.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND),
                 valueSeparator
         );
 
@@ -135,8 +134,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 storeRepository.labels(),
                 this
         );
-
-        this.converterContext = converterContext;
 
         this.spreadsheetFormatContext = SpreadsheetFormatterContexts.basic(numberToColor,
                 nameToColor,
@@ -189,7 +186,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         return node.toValue(ExpressionEvaluationContexts.basic(this.expressionNumberKind(),
                 this.functions,
                 this.function,
-                this.converterContext));
+                this.metadata.converterContext()));
     }
 
     /**
@@ -204,27 +201,27 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type) {
-        return this.converterContext.canConvert(value, type);
+        return this.metadata.converterContext()
+                .canConvert(value, type);
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
-        return this.converterContext.convert(value, type);
+        return this.metadata.converterContext()
+                .convert(value, type);
     }
-
-    private final ExpressionNumberConverterContext converterContext;
 
     // ExpressionNumberContext..........................................................................................
 
     @Override
     public ExpressionNumberKind expressionNumberKind() {
-        return this.converterContext.expressionNumberKind();
+        return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
     }
 
     @Override
     public MathContext mathContext() {
-        return this.converterContext.mathContext();
+        return this.metadata.mathContext();
     }
 
     // parsing and formatting text......................................................................................
@@ -262,24 +259,25 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public Locale locale() {
-        return this.converterContext.locale();
+        return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
     }
 
     // YearContext......................................................................................................
 
     @Override
     public int defaultYear() {
-        return this.converterContext.defaultYear();
+        return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
     }
 
     @Override
     public int twoToFourDigitYear(final int year) {
-        return this.converterContext.twoToFourDigitYear(year);
+        return this.metadata.converterContext()
+                .twoToFourDigitYear(year);
     }
 
     @Override
     public int twoDigitYear() {
-        return this.converterContext.twoDigitYear();
+        return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
     }
 
     // Store............................................................................................................
@@ -296,7 +294,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .label("converterContext").value(this.converterContext)
+                .label("metadata").value(this.metadata)
                 .label("fractioner").value(this.fractioner)
                 .label("defaultSpreadsheetFormatter").value(this.defaultSpreadsheetFormatter)
                 .build();

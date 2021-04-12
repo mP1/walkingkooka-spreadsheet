@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
@@ -45,7 +44,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final char valueSeparator,
                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                                  final SpreadsheetEngine engine,
-                                                 final ExpressionNumberConverterContext converterContext,
                                                  final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final Function<BigDecimal, Fraction> fractioner,
@@ -57,7 +55,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                 valueSeparator,
                 functions,
                 engine,
-                converterContext,
                 numberToColor,
                 nameToColor,
                 fractioner,
