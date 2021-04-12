@@ -185,7 +185,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testWithInvalidWidthFails() {
+    public void testWithInvalidCellCharacterWidthFails() {
         assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.valueParser(),
                 VALUE_SEPARATOR,
