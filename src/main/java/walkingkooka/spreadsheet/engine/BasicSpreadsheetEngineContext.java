@@ -20,9 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
-import walkingkooka.color.Color;
 import walkingkooka.math.Fraction;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
@@ -41,7 +39,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
@@ -68,33 +65,22 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
     static BasicSpreadsheetEngineContext with(final SpreadsheetMetadata metadata,
-                                              final Parser<SpreadsheetParserContext> valueParser,
-                                              final char valueSeparator,
                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                               final SpreadsheetEngine engine,
-                                              final Function<Integer, Optional<Color>> numberToColor,
-                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                               final SpreadsheetStoreRepository storeRepository) {
         Objects.requireNonNull(metadata, "metadata");
-        Objects.requireNonNull(valueParser, "valueParser");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
-        Objects.requireNonNull(numberToColor, "numberToColor");
-        Objects.requireNonNull(nameToColor, "nameToColor");
         Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
         Objects.requireNonNull(storeRepository, "storeRepository");
 
         return new BasicSpreadsheetEngineContext(
                 metadata,
-                valueParser,
-                valueSeparator,
                 functions,
                 engine,
-                numberToColor,
-                nameToColor,
                 fractioner,
                 defaultSpreadsheetFormatter,
                 storeRepository
@@ -105,19 +91,14 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Private ctor use factory.
      */
     private BasicSpreadsheetEngineContext(final SpreadsheetMetadata metadata,
-                                          final Parser<SpreadsheetParserContext> valueParser,
-                                          final char valueSeparator,
                                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                           final SpreadsheetEngine engine,
-                                          final Function<Integer, Optional<Color>> numberToColor,
-                                          final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                           final SpreadsheetStoreRepository storeRepository) {
         super();
 
         this.metadata = metadata;
-        this.valueParser = valueParser;
 
         final ExpressionNumberConverterContext converterContext = metadata.converterContext();
 
@@ -125,7 +106,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 converterContext,
                 converterContext,
                 metadata.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND),
-                valueSeparator
+                metadata.getOrFail(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR)
         );
 
         this.functions = functions;
@@ -135,8 +116,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 this
         );
 
-        this.spreadsheetFormatContext = SpreadsheetFormatterContexts.basic(numberToColor,
-                nameToColor,
+        this.spreadsheetFormatContext = SpreadsheetFormatterContexts.basic(
+                metadata.numberToColor(),
+                metadata.nameToColor(),
                 metadata.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
                 defaultSpreadsheetFormatter,
                 converterContext);
@@ -168,7 +150,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public SpreadsheetParserToken parseFormula(final String formula) {
-        return SpreadsheetParsers.valueOrExpression(this.valueParser)
+        return SpreadsheetParsers.valueOrExpression(this.metadata.parser())
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(formula), this.parserContext)
                 .get()
@@ -178,7 +160,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * This parser is used to parse strings, date, date/time, time and numbers outside an expression but within a formula.
      */
-    private final Parser<SpreadsheetParserContext> valueParser;
     private final SpreadsheetParserContext parserContext;
 
     @Override

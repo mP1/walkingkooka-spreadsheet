@@ -35,10 +35,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -48,8 +46,6 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberExpression;
@@ -82,29 +78,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullMetadataFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 null,
-                this.valueParser(),
-                VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.numberToColor(),
-                this.nameToColor(),
-                FRACTIONER,
-                this.defaultSpreadsheetFormatter(),
-                this.storeRepository()
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullParserFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.metadata(),
-                null,
-                VALUE_SEPARATOR,
-                this.functions(),
-                this.engine(),
-                this.numberToColor(),
-                this.nameToColor(),
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -116,12 +91,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullFunctionsFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.metadata(),
-                this.valueParser(),
-                VALUE_SEPARATOR,
                 null,
                 this.engine(),
-                this.numberToColor(),
-                this.nameToColor(),
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -133,45 +104,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullEngineFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.metadata(),
-                this.valueParser(),
-                VALUE_SEPARATOR,
                 this.functions(),
-                null,
-                this.numberToColor(),
-                this.nameToColor(),
-                FRACTIONER,
-                this.defaultSpreadsheetFormatter(),
-                this.storeRepository()
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullNumberToColorFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.metadata(),
-                this.valueParser(),
-                VALUE_SEPARATOR,
-                this.functions(),
-                this.engine(),
-                null,
-                this.nameToColor(),
-                FRACTIONER,
-                this.defaultSpreadsheetFormatter(),
-                this.storeRepository()
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullNameToColorFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.metadata(),
-                this.valueParser(),
-                VALUE_SEPARATOR,
-                this.functions(),
-                this.engine(),
-                this.numberToColor(),
                 null,
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
@@ -184,12 +117,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullFractionFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.metadata(),
-                this.valueParser(),
-                VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.numberToColor(),
-                this.nameToColor(),
                 null,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -201,12 +130,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullDefaultSpreadsheetFormatterFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.metadata(),
-                this.valueParser(),
-                VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.numberToColor(),
-                this.nameToColor(),
                 FRACTIONER,
                 null,
                 this.storeRepository()
@@ -218,12 +143,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullStoreRepositoryFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.metadata(),
-                this.valueParser(),
-                VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.numberToColor(),
-                this.nameToColor(),
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 null
@@ -544,7 +465,24 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"date-parse-patterns\": \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
                         "  \"date-time-format-pattern\": \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                         "  \"date-time-offset\": \"-25569\",\n" +
-                        "  \"date-time-parse-patterns\": \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;ddd fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123"
+                        "  \"date-time-parse-patterns\": \"dd/mm/yyyy hh:mm\",\n" +
+                        "  \"decimal-separator\": \".\",\n" +
+                        "  \"default-year\": 1900,\n" +
+                        "  \"exponent-symbol\": \"e\",\n" +
+                        "  \"expression-number-kind\": \"DOUBLE\",\n" +
+                        "  \"grouping-separator\": \",\",\n" +
+                        "  \"locale\": \"en-AU\",\n" +
+                        "  \"negative-sign\": \"!\",\n" +
+                        "  \"number-format-pattern\": \"#,##0.###\",\n" +
+                        "  \"number-parse-patterns\": \"#,##0.###;#,##0\",\n" +
+                        "  \"percentage-symbol\": \"%\",\n" +
+                        "  \"positive-sign\": \"@\",\n" +
+                        "  \"precision\": 10,\n" +
+                        "  \"rounding-mode\": \"HALF_UP\",\n" +
+                        "  \"style\": {\n" +
+                        "    \"background-color\": \"#ffffff\",\n" +
+                        "    \"border-bottom-color\": \"#000000\",\n" +
+                        "    \"border-bottom fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123"
         );
     }
 
@@ -565,12 +503,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                         final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         return BasicSpreadsheetEngineContext.with(
                 this.metadata(),
-                this.valueParser(),
-                VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
-                this.numberToColor(),
-                this.nameToColor(),
                 FRACTIONER,
                 defaultSpreadsheetFormatter,
                 new FakeSpreadsheetStoreRepository() {
@@ -584,9 +518,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private SpreadsheetMetadata metadata() {
         return SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-                .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .loadFromLocale()
+                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetFormatPattern.parseDateTimeParsePatterns("dd/mm/yyyy hh:mm"))
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetFormatPattern.parseTextFormatPattern("@"))
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL)
@@ -594,18 +528,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, GROUPING)
                 .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, MINUS)
                 .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, PLUS)
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND);
-    }
-
-    private Parser<SpreadsheetParserContext> valueParser() {
-        return Parsers.alternatives(
-                Lists.of(
-                        SpreadsheetParsePatterns.parseDateTimeParsePatterns("d/mm/yyyy hh:mm").parser(),
-                        SpreadsheetParsePatterns.parseDateParsePatterns("d/mm/yyyy").parser(),
-                        SpreadsheetParsePatterns.parseTimeParsePatterns("hh:mm").parser(),
-                        SpreadsheetParsePatterns.parseNumberParsePatterns("#.#;#").parser()
-                )
-        );
+                .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+                .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
     }
 
     private ExpressionNumber number(final Number value) {
