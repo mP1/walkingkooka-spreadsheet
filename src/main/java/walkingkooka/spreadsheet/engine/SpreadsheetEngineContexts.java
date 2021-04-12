@@ -48,7 +48,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final ExpressionNumberConverterContext converterContext,
                                                  final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
-                                                 final int cellCharacterWidth,
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                                  final SpreadsheetStoreRepository storeRepository) {
@@ -61,7 +60,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                 converterContext,
                 numberToColor,
                 nameToColor,
-                cellCharacterWidth,
                 fractioner,
                 defaultSpreadsheetFormatter,
                 storeRepository

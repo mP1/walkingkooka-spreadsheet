@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -76,6 +77,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static char VALUE_SEPARATOR = ',';
+    private final static int WIDTH = 1;
 
     @Test
     public void testWithNullMetadataFails() {
@@ -88,7 +90,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -107,7 +108,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -126,7 +126,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -145,7 +144,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -164,7 +162,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 null,
                 this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -183,7 +180,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.converterContext(),
                 null,
                 this.nameToColor(),
-                WIDTH,
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -202,7 +198,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.converterContext(),
                 this.numberToColor(),
                 null,
-                WIDTH,
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -211,9 +206,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testWithInvalidCellCharacterWidthFails() {
+    public void testWithMissingCellCharacterWidthFails() {
         assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.metadata(),
+                SpreadsheetMetadata.EMPTY,
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
@@ -221,7 +216,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
-                0,
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -240,7 +234,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
                 null,
                 this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
@@ -259,7 +252,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
                 FRACTIONER,
                 null,
                 this.storeRepository()
@@ -278,7 +270,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
                 FRACTIONER,
                 this.defaultSpreadsheetFormatter(),
                 null
@@ -620,7 +611,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
-                WIDTH,
                 FRACTIONER,
                 defaultSpreadsheetFormatter,
                 new FakeSpreadsheetStoreRepository() {
@@ -633,7 +623,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     private SpreadsheetMetadata metadata() {
-        return SpreadsheetMetadata.EMPTY;
+        return SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH);
     }
 
     private Parser<SpreadsheetParserContext> valueParser() {
@@ -767,7 +758,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return Optional.of(Color.fromRgb(0x123456));
     }
 
-    private final static int WIDTH = 1;
     private final Function<BigDecimal, Fraction> FRACTIONER = new Function<>() {
         @Override
         public Fraction apply(final BigDecimal bigDecimal) {

@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -74,7 +75,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final ExpressionNumberConverterContext converterContext,
                                               final Function<Integer, Optional<Color>> numberToColor,
                                               final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
-                                              final int cellCharacterWidth,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                               final SpreadsheetStoreRepository storeRepository) {
@@ -85,9 +85,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(converterContext, "converterContext");
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
-        if (cellCharacterWidth <= 0) {
-            throw new IllegalArgumentException("Invalid cellCharacterWidth " + cellCharacterWidth + " <= 0");
-        }
         Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
         Objects.requireNonNull(storeRepository, "storeRepository");
@@ -101,7 +98,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 converterContext,
                 numberToColor,
                 nameToColor,
-                cellCharacterWidth,
                 fractioner,
                 defaultSpreadsheetFormatter,
                 storeRepository
@@ -119,7 +115,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final ExpressionNumberConverterContext converterContext,
                                           final Function<Integer, Optional<Color>> numberToColor,
                                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
-                                          final int cellCharacterWidth,
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                           final SpreadsheetStoreRepository storeRepository) {
@@ -145,7 +140,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         this.spreadsheetFormatContext = SpreadsheetFormatterContexts.basic(numberToColor,
                 nameToColor,
-                cellCharacterWidth,
+                metadata.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
                 defaultSpreadsheetFormatter,
                 converterContext);
         this.fractioner = fractioner;
