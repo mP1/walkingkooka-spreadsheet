@@ -17,21 +17,16 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.color.Color;
 import walkingkooka.math.Fraction;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 import java.util.function.Function;
 
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
@@ -40,23 +35,15 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      * {@see BasicSpreadsheetEngineContext}
      */
     public static SpreadsheetEngineContext basic(final SpreadsheetMetadata metadata,
-                                                 final Parser<SpreadsheetParserContext> valueParser,
-                                                 final char valueSeparator,
                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                                  final SpreadsheetEngine engine,
-                                                 final Function<Integer, Optional<Color>> numberToColor,
-                                                 final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                                  final SpreadsheetStoreRepository storeRepository) {
         return BasicSpreadsheetEngineContext.with(
                 metadata,
-                valueParser,
-                valueSeparator,
                 functions,
                 engine,
-                numberToColor,
-                nameToColor,
                 fractioner,
                 defaultSpreadsheetFormatter,
                 storeRepository
