@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.convert.FakeConverterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -32,6 +33,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class FakeSpreadsheetEngineContext extends FakeConverterContext implements SpreadsheetEngineContext, Fake {
+
+    @Override
+    public SpreadsheetMetadata metadata() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference) {

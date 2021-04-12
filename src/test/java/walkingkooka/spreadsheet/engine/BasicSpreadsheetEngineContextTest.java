@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -77,8 +78,28 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static char VALUE_SEPARATOR = ',';
 
     @Test
+    public void testWithNullMetadataFails() {
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                null,
+                this.valueParser(),
+                VALUE_SEPARATOR,
+                this.functions(),
+                this.engine(),
+                this.converterContext(),
+                this.numberToColor(),
+                this.nameToColor(),
+                WIDTH,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter(),
+                this.storeRepository()
+                )
+        );
+    }
+
+    @Test
     public void testWithNullParserFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.metadata(),
                 null,
                 VALUE_SEPARATOR,
                 this.functions(),
@@ -97,6 +118,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullFunctionsFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.metadata(),
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 null,
@@ -115,6 +137,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullEngineFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.metadata(),
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
@@ -133,6 +156,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullConverterContextFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.metadata(),
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
@@ -151,6 +175,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullNumberToColorFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.metadata(),
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
@@ -169,6 +194,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullNameToColorFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.metadata(),
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
@@ -187,6 +213,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithInvalidCellCharacterWidthFails() {
         assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.metadata(),
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
@@ -205,6 +232,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullFractionFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.metadata(),
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
@@ -223,6 +251,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullDefaultSpreadsheetFormatterFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.metadata(),
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
@@ -241,6 +270,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullStoreRepositoryFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.metadata(),
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
@@ -582,6 +612,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore,
                                                         final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         return BasicSpreadsheetEngineContext.with(
+                this.metadata(),
                 this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
@@ -599,6 +630,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     }
                 }
         );
+    }
+
+    private SpreadsheetMetadata metadata() {
+        return SpreadsheetMetadata.EMPTY;
     }
 
     private Parser<SpreadsheetParserContext> valueParser() {
