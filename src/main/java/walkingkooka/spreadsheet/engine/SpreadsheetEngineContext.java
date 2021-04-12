@@ -23,6 +23,7 @@ import walkingkooka.datetime.YearContext;
 import walkingkooka.locale.HasLocale;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -40,6 +41,11 @@ public interface SpreadsheetEngineContext extends Context,
         ExpressionNumberContext,
         HasLocale,
         YearContext {
+
+    /**
+     * Returns the current {@link SpreadsheetMetadata}
+     */
+    SpreadsheetMetadata metadata();
 
     /**
      * ]]

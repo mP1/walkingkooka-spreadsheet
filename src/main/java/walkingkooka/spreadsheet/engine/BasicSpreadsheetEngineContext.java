@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -65,7 +66,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static BasicSpreadsheetEngineContext with(final Parser<SpreadsheetParserContext> valueParser,
+    static BasicSpreadsheetEngineContext with(final SpreadsheetMetadata metadata,
+                                              final Parser<SpreadsheetParserContext> valueParser,
                                               final char valueSeparator,
                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                               final SpreadsheetEngine engine,
@@ -76,6 +78,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                               final SpreadsheetStoreRepository storeRepository) {
+        Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(valueParser, "valueParser");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
@@ -90,6 +93,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(storeRepository, "storeRepository");
 
         return new BasicSpreadsheetEngineContext(
+                metadata,
                 valueParser,
                 valueSeparator,
                 functions,
@@ -107,7 +111,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Private ctor use factory.
      */
-    private BasicSpreadsheetEngineContext(final Parser<SpreadsheetParserContext> valueParser,
+    private BasicSpreadsheetEngineContext(final SpreadsheetMetadata metadata,
+                                          final Parser<SpreadsheetParserContext> valueParser,
                                           final char valueSeparator,
                                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                           final SpreadsheetEngine engine,
@@ -120,6 +125,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final SpreadsheetStoreRepository storeRepository) {
         super();
 
+        this.metadata = metadata;
         this.valueParser = valueParser;
         this.parserContext = SpreadsheetParserContexts.basic(
                 converterContext,
@@ -147,6 +153,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         this.storeRepository = storeRepository;
     }
+
+    // metadata........................................................................................................
+
+    @Override
+    public SpreadsheetMetadata metadata() {
+        return this.metadata;
+    }
+
+    private final SpreadsheetMetadata metadata;
 
     // resolveCellReference.............................................................................................
 
