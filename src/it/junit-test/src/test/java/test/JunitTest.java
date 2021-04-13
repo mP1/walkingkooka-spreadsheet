@@ -232,11 +232,6 @@ public class JunitTest {
             }
 
             @Override
-            public ExpressionNumberKind expressionNumberKind() {
-                return EXPRESSION_NUMBER_KIND;
-            }
-
-            @Override
             public SpreadsheetStoreRepository storeRepository() {
                 return this.storeRepository;
             }

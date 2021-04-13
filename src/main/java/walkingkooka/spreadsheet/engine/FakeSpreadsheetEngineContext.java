@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -54,11 +53,6 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     @Override
     public Object evaluate(final Expression node) {
         Objects.requireNonNull(node, "node");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ExpressionNumberKind expressionNumberKind() {
         throw new UnsupportedOperationException();
     }
 

@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionNumberContext;
 
 import java.util.Optional;
 
@@ -35,7 +34,6 @@ import java.util.Optional;
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
 public interface SpreadsheetEngineContext extends Context,
-        ExpressionNumberContext,
         YearContext {
 
     /**

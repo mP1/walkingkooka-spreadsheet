@@ -110,12 +110,12 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
 
     @Override
     public MathContext mathContext() {
-        return this.context.mathContext();
+        return this.context.metadata().mathContext();
     }
 
     @Override
     public ExpressionNumberKind expressionNumberKind() {
-        return this.context.expressionNumberKind();
+        return this.context.metadata().expressionNumberKind();
     }
 
     private final SpreadsheetEngineContext context;
