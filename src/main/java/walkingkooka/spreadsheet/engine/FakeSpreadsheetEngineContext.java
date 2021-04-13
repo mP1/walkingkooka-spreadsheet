@@ -69,11 +69,6 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public SpreadsheetFormatter defaultSpreadsheetFormatter() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Optional<SpreadsheetText> format(final Object value,
                                             final SpreadsheetFormatter formatter) {
         throw new UnsupportedOperationException();

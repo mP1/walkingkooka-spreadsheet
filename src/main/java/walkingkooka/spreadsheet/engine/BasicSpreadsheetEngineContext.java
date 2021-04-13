@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
@@ -68,13 +69,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                               final SpreadsheetEngine engine,
                                               final Function<BigDecimal, Fraction> fractioner,
-                                              final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                               final SpreadsheetStoreRepository storeRepository) {
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(fractioner, "fractioner");
-        Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
         Objects.requireNonNull(storeRepository, "storeRepository");
 
         return new BasicSpreadsheetEngineContext(
@@ -82,7 +81,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 functions,
                 engine,
                 fractioner,
-                defaultSpreadsheetFormatter,
                 storeRepository
         );
     }
@@ -94,7 +92,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                           final SpreadsheetEngine engine,
                                           final Function<BigDecimal, Fraction> fractioner,
-                                          final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                           final SpreadsheetStoreRepository storeRepository) {
         super();
 
@@ -120,10 +117,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 metadata.numberToColor(),
                 metadata.nameToColor(),
                 metadata.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
-                defaultSpreadsheetFormatter,
+                metadata.formatter(),
                 converterContext);
         this.fractioner = fractioner;
-        this.defaultSpreadsheetFormatter = defaultSpreadsheetFormatter;
 
         this.storeRepository = storeRepository;
     }
@@ -229,13 +225,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     private final SpreadsheetFormatterContext spreadsheetFormatContext;
 
-    @Override
-    public SpreadsheetFormatter defaultSpreadsheetFormatter() {
-        return this.defaultSpreadsheetFormatter;
-    }
-
-    private final SpreadsheetFormatter defaultSpreadsheetFormatter;
-
     // HasLocale........................................................................................................
 
     @Override
@@ -275,9 +264,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .label("metadata").value(this.metadata)
+                .valueLength(Integer.MAX_VALUE)
+                .label("metadata")
+                .value(this.metadata)
+                .append(LineEnding.SYSTEM)
                 .label("fractioner").value(this.fractioner)
-                .label("defaultSpreadsheetFormatter").value(this.defaultSpreadsheetFormatter)
                 .build();
     }
 }
