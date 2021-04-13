@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
-import walkingkooka.datetime.YearContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -33,8 +32,7 @@ import java.util.Optional;
 /**
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
-public interface SpreadsheetEngineContext extends Context,
-        YearContext {
+public interface SpreadsheetEngineContext extends Context {
 
     /**
      * Returns the current {@link SpreadsheetMetadata}
