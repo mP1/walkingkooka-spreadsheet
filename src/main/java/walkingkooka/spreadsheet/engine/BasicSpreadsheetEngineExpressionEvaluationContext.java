@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Either;
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -103,7 +104,8 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
 
     @Override
     public Locale locale() {
-        return this.context.locale();
+        return this.context.metadata()
+                .getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
     }
 
     @Override

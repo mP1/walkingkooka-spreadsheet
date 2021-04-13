@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
 import walkingkooka.datetime.YearContext;
-import walkingkooka.locale.HasLocale;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -37,7 +36,6 @@ import java.util.Optional;
  */
 public interface SpreadsheetEngineContext extends Context,
         ExpressionNumberContext,
-        HasLocale,
         YearContext {
 
     /**
