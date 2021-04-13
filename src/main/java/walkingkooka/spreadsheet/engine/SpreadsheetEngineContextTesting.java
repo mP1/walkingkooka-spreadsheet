@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.ContextTesting;
-import walkingkooka.Either;
 import walkingkooka.locale.HasLocaleTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -214,26 +213,6 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         assertEquals(expected,
                 context.format(value, formatter),
                 () -> "format " + CharSequences.quoteIfChars(value) + " " + formatter);
-    }
-
-    // convert..........................................................................................................
-
-    default <T> void convertAndCheck(final Object value,
-                                     final Class<T> target,
-                                     final T expected) {
-        this.convertAndCheck(this.createContext(),
-                value,
-                target,
-                expected);
-    }
-
-    default <T> void convertAndCheck(final C context,
-                                     final Object value,
-                                     final Class<T> target,
-                                     final T expected) {
-        assertEquals(Either.left(expected),
-                context.convert(value, target),
-                () -> "convert " + CharSequences.quoteIfChars(value) + " target: " + target.getName());
     }
 
     // HasLocale........................................................................................................

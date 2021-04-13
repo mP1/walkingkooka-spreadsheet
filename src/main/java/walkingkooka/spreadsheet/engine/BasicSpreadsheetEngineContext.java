@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Cast;
-import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -172,22 +171,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions;
 
     private final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction function;
-
-    // Converter........................................................................................................
-
-    @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type) {
-        return this.metadata.converterContext()
-                .canConvert(value, type);
-    }
-
-    @Override
-    public <T> Either<T, String> convert(final Object value,
-                                         final Class<T> type) {
-        return this.metadata.converterContext()
-                .convert(value, type);
-    }
 
     // ExpressionNumberContext..........................................................................................
 

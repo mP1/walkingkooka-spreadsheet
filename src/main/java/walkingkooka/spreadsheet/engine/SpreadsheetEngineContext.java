@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
-import walkingkooka.convert.CanConvert;
 import walkingkooka.datetime.YearContext;
 import walkingkooka.locale.HasLocale;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -37,7 +36,6 @@ import java.util.Optional;
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
 public interface SpreadsheetEngineContext extends Context,
-        CanConvert,
         ExpressionNumberContext,
         HasLocale,
         YearContext {
