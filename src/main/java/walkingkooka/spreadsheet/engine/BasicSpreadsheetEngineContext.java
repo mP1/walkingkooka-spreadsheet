@@ -50,7 +50,6 @@ import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -207,13 +206,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     }
 
     private final SpreadsheetFormatterContext spreadsheetFormatContext;
-
-    // HasLocale........................................................................................................
-
-    @Override
-    public Locale locale() {
-        return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
-    }
 
     // YearContext......................................................................................................
 

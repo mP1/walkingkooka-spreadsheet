@@ -411,13 +411,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    // hasLocale........................................................................................................
-
-    @Test
-    public void testLocale() {
-        assertEquals(LOCALE, this.createContext().locale());
-    }
-
     // toString.........................................................................................................
 
     @Test

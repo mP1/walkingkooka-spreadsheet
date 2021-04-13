@@ -215,13 +215,6 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 () -> "format " + CharSequences.quoteIfChars(value) + " " + formatter);
     }
 
-    // HasLocale........................................................................................................
-
-    @Test
-    default <T> void testLocaleNotNull() {
-        assertNotEquals(null, this.createContext().locale());
-    }
-
     // TypeNameTesting .........................................................................................
 
     @Override
