@@ -34,7 +34,6 @@ import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatException;
@@ -5458,10 +5457,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private ExpressionNumber number(final Number number) {
         return this.expressionNumberKind().create(number);
-    }
-
-    private SpreadsheetId id() {
-        return SpreadsheetId.with(123);
     }
 
     private SpreadsheetMetadata metadata() {
