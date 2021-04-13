@@ -129,11 +129,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    @Test
-    public void testConvert() {
-        this.convertAndCheck(BigDecimal.valueOf(123), Integer.class, 123);
-    }
-
     // resolveCellReference..............................................................................................
 
     @Test

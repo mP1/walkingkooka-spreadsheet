@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Either;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -74,13 +75,20 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type) {
-        return this.context.canConvert(value, type);
+        return this.converterContext()
+                .canConvert(value, type);
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> target) {
-        return this.context.convert(value, target);
+        return this.converterContext()
+                .convert(value, target);
+    }
+
+    private ConverterContext converterContext() {
+        return this.context.metadata()
+                .converterContext();
     }
 
     @Override
