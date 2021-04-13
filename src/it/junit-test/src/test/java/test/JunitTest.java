@@ -168,6 +168,11 @@ public class JunitTest {
         return new FakeSpreadsheetEngineContext() {
 
             @Override
+            public SpreadsheetMetadata metadata() {
+                return metadata;
+            }
+
+            @Override
             public SpreadsheetParserToken parseFormula(final String formula) {
                 return Cast.to(SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
@@ -219,15 +224,11 @@ public class JunitTest {
             }
 
             @Override
-            public SpreadsheetFormatter defaultSpreadsheetFormatter() {
-                return defaultSpreadsheetFormatter0();
-            }
-
-            @Override
             public Optional<SpreadsheetText> format(final Object value,
                                                     final SpreadsheetFormatter formatter) {
                 checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
-                return formatter.format(value, formatterContext());
+
+                return formatter.format(value, metadata.formatterContext(metadata.formatter()));
             }
 
             @Override
@@ -258,26 +259,8 @@ public class JunitTest {
      * A {@lnk SpreadsheetFormatterContext} that is fully functional except for translating colour numbers and colour names to a {@link Color}.
      */
     private static SpreadsheetFormatterContext formatterContext() {
-        return metadata().formatterContext(defaultSpreadsheetFormatter0());
-    }
-
-    /**
-     * A {@link SpreadsheetFormatter} that accepts all values and creates a {@link SpreadsheetText} with {@link Object#toString()} and no colour.
-     */
-    private static SpreadsheetFormatter defaultSpreadsheetFormatter0() {
-        return new SpreadsheetFormatter() {
-            @Override
-            public boolean canFormat(final Object value,
-                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-                return true;
-            }
-
-            @Override
-            public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, String.valueOf(value)));
-            }
-        };
+        final SpreadsheetMetadata metadata = metadata();
+        return metadata.formatterContext(metadata.formatter());
     }
 }
 

@@ -70,11 +70,6 @@ public interface SpreadsheetEngineContext extends Context,
     SpreadsheetFormatter parsePattern(final String pattern);
 
     /**
-     * The default {@link SpreadsheetFormatter} when no pattern is available for a cell.
-     */
-    SpreadsheetFormatter defaultSpreadsheetFormatter();
-
-    /**
      * Formats the given value using the provided formatter.
      */
     Optional<SpreadsheetText> format(final Object value,

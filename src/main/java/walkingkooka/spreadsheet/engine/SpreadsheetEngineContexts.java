@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.math.Fraction;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -38,14 +37,12 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                                  final SpreadsheetEngine engine,
                                                  final Function<BigDecimal, Fraction> fractioner,
-                                                 final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                                  final SpreadsheetStoreRepository storeRepository) {
         return BasicSpreadsheetEngineContext.with(
                 metadata,
                 functions,
                 engine,
                 fractioner,
-                defaultSpreadsheetFormatter,
                 storeRepository
         );
     }

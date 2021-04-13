@@ -28,10 +28,8 @@ import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
-import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
@@ -64,7 +62,6 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext> {
@@ -81,7 +78,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 this.engine(),
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
                 )
         );
@@ -94,7 +90,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 null,
                 this.engine(),
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
                 )
         );
@@ -107,7 +102,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 null,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter(),
                 this.storeRepository()
                 )
         );
@@ -119,20 +113,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.metadata(),
                 this.functions(),
                 this.engine(),
-                null,
-                this.defaultSpreadsheetFormatter(),
-                this.storeRepository()
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullDefaultSpreadsheetFormatterFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.metadata(),
-                this.functions(),
-                this.engine(),
-                FRACTIONER,
                 null,
                 this.storeRepository()
                 )
@@ -146,7 +126,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 this.engine(),
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter(),
                 null
                 )
         );
@@ -155,12 +134,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testConvert() {
         this.convertAndCheck(BigDecimal.valueOf(123), Integer.class, 123);
-    }
-
-    @Test
-    public void testDefaultSpreadsheetFormatter() {
-        final SpreadsheetFormatter defaultSpreadsheetFormatter = this.defaultSpreadsheetFormatter();
-        assertSame(defaultSpreadsheetFormatter, this.createContext(defaultSpreadsheetFormatter).defaultSpreadsheetFormatter());
     }
 
     // resolveCellReference..............................................................................................
@@ -482,31 +455,24 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"style\": {\n" +
                         "    \"background-color\": \"#ffffff\",\n" +
                         "    \"border-bottom-color\": \"#000000\",\n" +
-                        "    \"border-bottom fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123"
+                        "    \"border-bottom-style\": \"SOLID\",\n" +
+                        "    \"border-bottom-width\": \"1px\",\n" +
+                        "    \"border-left-color\": \"#000000\",\n" +
+                        "    \"border-"
         );
     }
 
     @Override
     public BasicSpreadsheetEngineContext createContext() {
-        return this.createContext(this.defaultSpreadsheetFormatter());
+        return this.createContext(SpreadsheetLabelStores.treeMap());
     }
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore) {
-        return this.createContext(labelStore, this.defaultSpreadsheetFormatter());
-    }
-
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetFormatter defaultSpreadsheetFormatter) {
-        return this.createContext(SpreadsheetLabelStores.fake(), defaultSpreadsheetFormatter);
-    }
-
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore,
-                                                        final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         return BasicSpreadsheetEngineContext.with(
                 this.metadata(),
                 this.functions(),
                 this.engine(),
                 FRACTIONER,
-                defaultSpreadsheetFormatter,
                 new FakeSpreadsheetStoreRepository() {
                     @Override
                     public SpreadsheetLabelStore labels() {
@@ -601,15 +567,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE,
                 new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_UP)
         );
-    }
-
-    private SpreadsheetFormatter defaultSpreadsheetFormatter() {
-        return new FakeSpreadsheetFormatter() {
-            @Override
-            public String toString() {
-                return "SpreadsheetFormatter123";
-            }
-        };
     }
 
     private Function<Integer, Optional<Color>> numberToColor() {
