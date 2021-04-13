@@ -43,13 +43,11 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -158,10 +156,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public Object evaluate(final Expression node) {
-        return node.toValue(ExpressionEvaluationContexts.basic(this.expressionNumberKind(),
+        final SpreadsheetMetadata metadata = this.metadata;
+
+        return node.toValue(ExpressionEvaluationContexts.basic(metadata.expressionNumberKind(),
                 this.functions,
                 this.function,
-                this.metadata.converterContext()));
+                metadata.converterContext()));
     }
 
     /**
@@ -170,18 +170,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions;
 
     private final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction function;
-
-    // ExpressionNumberContext..........................................................................................
-
-    @Override
-    public ExpressionNumberKind expressionNumberKind() {
-        return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
-    }
-
-    @Override
-    public MathContext mathContext() {
-        return this.metadata.mathContext();
-    }
 
     // parsing and formatting text......................................................................................
 

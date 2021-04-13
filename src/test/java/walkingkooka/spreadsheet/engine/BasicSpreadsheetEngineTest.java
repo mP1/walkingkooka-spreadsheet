@@ -96,6 +96,7 @@ import walkingkooka.tree.text.TextStylePropertyValueException;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -5128,11 +5129,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public ExpressionNumberKind expressionNumberKind() {
-                return BasicSpreadsheetEngineTest.this.expressionNumberKind();
-            }
-
-            @Override
             public SpreadsheetParserToken parseFormula(final String formula) {
                 return SpreadsheetParsers.valueOrExpression(BasicSpreadsheetEngineTest.this.metadata().parser())
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
@@ -5141,7 +5137,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetParserContexts.basic(
                                         DateTimeContexts.fake(),
                                         converterContext(),
-                                        this.expressionNumberKind(),
+                                        this.metadata().expressionNumberKind(),
                                         VALUE_SEPARATOR
                                 )
                         )
@@ -5201,14 +5197,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 };
 
-                return node.toValue(ExpressionEvaluationContexts.basic(this.expressionNumberKind(),
-                        functions,
-                        SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
-                                engine,
-                                storeRepository.labels(),
-                                this
-                        ),
-                        converterContext()));
+                return node.toValue(
+                        ExpressionEvaluationContexts.basic(
+                                this.metadata().expressionNumberKind(),
+                                functions,
+                                SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
+                                        engine,
+                                        storeRepository.labels(),
+                                        this
+                                ),
+                                converterContext())
+                );
             }
 
             @Override
@@ -5465,6 +5464,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                 .loadFromLocale()
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
                 .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetParsePatterns.parseDateFormatPattern(DATE_PATTERN + suffix))
                 .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateParsePatterns(DATE_PATTERN + ";dd/mm"))
                 .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetParsePatterns.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix))
