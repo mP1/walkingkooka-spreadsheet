@@ -195,24 +195,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     private final SpreadsheetFormatterContext spreadsheetFormatContext;
 
-    // YearContext......................................................................................................
-
-    @Override
-    public int defaultYear() {
-        return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
-    }
-
-    @Override
-    public int twoToFourDigitYear(final int year) {
-        return this.metadata.converterContext()
-                .twoToFourDigitYear(year);
-    }
-
-    @Override
-    public int twoDigitYear() {
-        return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
-    }
-
     // Store............................................................................................................
 
     @Override

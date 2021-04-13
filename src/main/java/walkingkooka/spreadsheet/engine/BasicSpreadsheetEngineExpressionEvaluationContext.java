@@ -94,12 +94,16 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
 
     @Override
     public int defaultYear() {
-        return this.context.defaultYear();
+        return this.context
+                .metadata()
+                .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
     }
 
     @Override
     public int twoDigitYear() {
-        return this.context.twoDigitYear();
+        return this.context
+                .metadata()
+                .getOrFail(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
     }
 
     @Override
