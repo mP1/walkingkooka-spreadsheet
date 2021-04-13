@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
@@ -29,7 +28,6 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
@@ -567,29 +565,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE,
                 new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_UP)
         );
-    }
-
-    private Function<Integer, Optional<Color>> numberToColor() {
-        return this::numberToColor0;
-    }
-
-    private Optional<Color> numberToColor0(final Integer colorNumber) {
-        assertEquals(12, colorNumber, "colorNumber");
-        return this.color();
-    }
-
-
-    private Function<SpreadsheetColorName, Optional<Color>> nameToColor() {
-        return this::nameToColor0;
-    }
-
-    private Optional<Color> nameToColor0(final SpreadsheetColorName colorName) {
-        assertEquals(SpreadsheetColorName.with("bingo"), colorName, "colorName");
-        return this.color();
-    }
-
-    private Optional<Color> color() {
-        return Optional.of(Color.fromRgb(0x123456));
     }
 
     private final Function<BigDecimal, Fraction> FRACTIONER = new Function<>() {
