@@ -217,7 +217,7 @@ public final class Sample {
                                                     final SpreadsheetFormatter formatter) {
                 checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
 
-                return formatter.format(value, metadata.formatterContext(metadata.formatter()));
+                return formatter.format(value, metadata.formatterContext());
             }
 
             @Override

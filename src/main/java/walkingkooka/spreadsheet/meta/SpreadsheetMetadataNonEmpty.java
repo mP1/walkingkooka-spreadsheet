@@ -271,21 +271,15 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     private SpreadsheetFormatter formatter;
 
     @Override
-    public synchronized SpreadsheetFormatterContext formatterContext(final SpreadsheetFormatter defaultFormatter) {
-        if (false == defaultFormatter.equals(this.defaultFormatter)) {
-            this.formatterContext = this.formatterContext0(defaultFormatter);
-            this.defaultFormatter = defaultFormatter;
+    public synchronized SpreadsheetFormatterContext formatterContext() {
+        if (null == this.formatterContext) {
+            this.formatterContext = this.formatterContext0();
         }
         return this.formatterContext;
     }
 
     /**
-     * The default formatter used to create the {@link SpreadsheetFormatterContext}.
-     */
-    private SpreadsheetFormatter defaultFormatter;
-
-    /**
-     * Cached {@link SpreadsheetFormatter} which also uses the {@link #defaultFormatter} as the default formatter.
+     * Cached {@link SpreadsheetFormatter}
      */
     private SpreadsheetFormatterContext formatterContext;
 

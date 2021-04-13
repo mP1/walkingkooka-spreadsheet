@@ -148,8 +148,8 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     }
 
     @Override
-    public SpreadsheetFormatterContext formatterContext(final SpreadsheetFormatter defaultFormatter) {
-        return this.formatterContext0(defaultFormatter);
+    public SpreadsheetFormatterContext formatterContext() {
+        return this.formatterContext0();
     }
 
     @Override

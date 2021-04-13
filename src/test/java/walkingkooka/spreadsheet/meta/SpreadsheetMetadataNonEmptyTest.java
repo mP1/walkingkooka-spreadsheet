@@ -40,9 +40,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -1337,36 +1335,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // formatterContext.................................................................................................
 
     @Test
-    public void testFormatterContextNullDefaultFails() {
-        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithFormatter();
-        assertThrows(NullPointerException.class, () -> metadata.formatterContext(null));
-    }
-
-    @Test
-    public void testFormatterContextDifferent() {
+    public void testFormatterContextCached() {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithFormatterContext();
-        assertNotSame(metadata.formatterContext(SpreadsheetFormatters.fake()), metadata.formatterContext(SpreadsheetFormatters.fake()));
-    }
 
-    @Test
-    public void testFormatterContextCached2() {
-        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithFormatterContext();
-        final SpreadsheetFormatter formatter = SpreadsheetFormatters.fake();
-
-        assertSame(metadata.formatterContext(formatter), metadata.formatterContext(formatter));
-        assertSame(metadata.formatterContext(formatter), metadata.formatterContext(formatter));
-    }
-
-    @Test
-    public void testFormatterContextCached3() {
-        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithFormatterContext();
-        final SpreadsheetFormatter formatter = SpreadsheetFormatters.fake();
-
-        assertSame(metadata.formatterContext(formatter), metadata.formatterContext(formatter));
-
-        final SpreadsheetFormatter formatter2 = SpreadsheetFormatters.fake();
-        assertNotSame(metadata.formatterContext(formatter), metadata.formatterContext(formatter2));
-        assertSame(metadata.formatterContext(formatter2), metadata.formatterContext(formatter2));
+        assertSame(metadata.formatterContext(), metadata.formatterContext());
+        assertSame(metadata.formatterContext(), metadata.formatterContext());
     }
 
     private SpreadsheetMetadata createSpreadsheetMetadataWithFormatterContext() {

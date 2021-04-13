@@ -25,5 +25,5 @@ public interface HasSpreadsheetFormatterContext {
     /**
      * Getter that returns a {@link SpreadsheetFormatterContext}
      */
-    SpreadsheetFormatterContext formatterContext(final SpreadsheetFormatter defaultFormatter);
+    SpreadsheetFormatterContext formatterContext();
 }
