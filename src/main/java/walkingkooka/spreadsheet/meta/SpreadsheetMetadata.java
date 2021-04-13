@@ -35,7 +35,6 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HateosResource;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -606,18 +605,18 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     // HasSpreadsheetFormatterContext...................................................................................
 
     /**
-     * Creates a {@link SpreadsheetFormatterContext} using the given formatter as the default.
+     * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public abstract SpreadsheetFormatterContext formatterContext(final SpreadsheetFormatter defaultFormatter);
+    public abstract SpreadsheetFormatterContext formatterContext();
 
     /**
-     * Factory that combines properties and the given default {@link SpreadsheetFormatter} returning a {@link SpreadsheetFormatterContext}.
+     * Factory that combines properties returning a {@link SpreadsheetFormatterContext}.
      */
-    final SpreadsheetFormatterContext formatterContext0(final SpreadsheetFormatter defaultFormatter) {
+    final SpreadsheetFormatterContext formatterContext0() {
         return SpreadsheetFormatterContexts.basic(this.numberToColor(),
                 this.nameToColor(),
                 this.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
-                defaultFormatter,
+                this.formatter(),
                 this.converterContext());
     }
 

@@ -228,7 +228,7 @@ public class JunitTest {
                                                     final SpreadsheetFormatter formatter) {
                 checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
 
-                return formatter.format(value, metadata.formatterContext(metadata.formatter()));
+                return formatter.format(value, metadata.formatterContext());
             }
 
             @Override
@@ -254,8 +254,7 @@ public class JunitTest {
      * A {@lnk SpreadsheetFormatterContext} that is fully functional except for translating colour numbers and colour names to a {@link Color}.
      */
     private static SpreadsheetFormatterContext formatterContext() {
-        final SpreadsheetMetadata metadata = metadata();
-        return metadata.formatterContext(metadata.formatter());
+        return metadata().formatterContext();
     }
 }
 
