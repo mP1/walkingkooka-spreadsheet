@@ -429,7 +429,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"default-year\": 1900,\n" +
                         "  \"exponent-symbol\": \"e\",\n" +
                         "  \"expression-number-kind\": \"DOUBLE\",\n" +
-                        "  \"grouping-separator\": \",\",\n" +
+                        "  \"grouping-separator\": \"+\",\n" +
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
                         "  \"number-format-pattern\": \"#,##0.###\",\n" +

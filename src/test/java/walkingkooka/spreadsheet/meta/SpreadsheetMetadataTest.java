@@ -56,6 +56,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -69,6 +70,17 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     @Test
     public void testMaxNumberColorConstant() {
         assertEquals(SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER, SpreadsheetMetadata.MAX_NUMBER_COLOR);
+    }
+
+    @Test
+    public void testSwappablePropertiesConstants() {
+        assertArrayEquals(
+                SpreadsheetMetadataPropertyName.CONSTANTS.values()
+                        .stream()
+                        .filter(c -> c instanceof SpreadsheetMetadataPropertyNameCharacter)
+                        .toArray(),
+                SpreadsheetMetadata.SWAPPABLE_PROPERTIES
+        );
     }
 
     @Test
