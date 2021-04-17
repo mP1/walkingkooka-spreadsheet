@@ -249,12 +249,22 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         return this.set0(propertyName, propertyName.checkValue(value));
     }
 
+    // @VisibleForTesting
+    final static SpreadsheetMetadataPropertyName<Character>[] SWAPPABLE_PROPERTIES = new SpreadsheetMetadataPropertyName[]{
+            SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
+            SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR,
+            SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
+            SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
+            SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
+            SpreadsheetMetadataPropertyName.VALUE_SEPARATOR
+    };
+
     private <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName,
                                          final V value) {
         SpreadsheetMetadata result = this;
 
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = this.value();
-        final V previousValue = (V) this.value().get(propertyName);
+        final Object previousValue = this.get(propertyName).orElse(null);
 
         if (!value.equals(previousValue)) {
             // property is different or new
@@ -264,60 +274,38 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
             copy.putAll(properties);
             copy.put(propertyName, value);
 
+            final boolean groupOrValue = propertyName.isGroupingSeparatorOrValueSeparator();
+
             if (swapIfDuplicateValue) {
-                final SpreadsheetMetadataPropertyName<?> duplicate = findDuplicates(
-                        propertyName,
-                        value,
-                        properties
-                );
-                if (null != duplicate) {
-                    if (null == previousValue) {
-                        reportDuplicateProperty(propertyName, value, duplicate);
+                for (final SpreadsheetMetadataPropertyName<Character> duplicate : SWAPPABLE_PROPERTIES) {
+                    if (propertyName.equals(duplicate)) {
+                        continue;
                     }
-                    copy.put(duplicate, previousValue); // the other property now has the previous value of $propertyName
-                } else {
-                    // need to check defaults...
-                    final Map<SpreadsheetMetadataPropertyName<?>, Object> defaults = this.defaults().value();
-                    final SpreadsheetMetadataPropertyName<?> duplicate2 = findDuplicates(
-                            propertyName,
-                            value,
-                            defaults
-                    );
-                    if (null != duplicate2) {
-                        copy.put(duplicate2, null != previousValue ? previousValue : defaults.get(propertyName));
-                        copy.put(propertyName, value);
+                    final boolean duplicateIsGroupingOrValue = duplicate.isGroupingSeparatorOrValueSeparator();
+                    if (groupOrValue && duplicateIsGroupingOrValue) {
+                        continue;
+                    }
+
+                    final Character duplicateValue = this.get(duplicate).orElse(null);
+                    if (null != duplicateValue) {
+                        if (value.equals(duplicateValue) || duplicateIsGroupingOrValue) {
+                            if (null == previousValue) {
+                                if (!duplicateIsGroupingOrValue) {
+                                    reportDuplicateProperty(propertyName, value, duplicate);
+                                }
+                            } else {
+                                copy.put(duplicate, previousValue);
+                            }
+                        }
                     }
                 }
             }
 
+            // update and possibly swap of character properties
             result = SpreadsheetMetadataNonEmpty.with(Maps.immutable(copy), this.defaults);
         }
 
         return result;
-    }
-
-    /**
-     * Finds a different but duplicate property.
-     */
-    private static <V> SpreadsheetMetadataPropertyName<?> findDuplicates(final SpreadsheetMetadataPropertyName<V> propertyName,
-                                                                         final V value,
-                                                                         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties) {
-        SpreadsheetMetadataPropertyName<?> duplicate = null;
-
-        for (final Map.Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : properties.entrySet()) {
-            final SpreadsheetMetadataPropertyName<?> otherPropertyName = propertyAndValue.getKey();
-            if (propertyName.equals(otherPropertyName)) {
-                continue;
-            }
-            final boolean duplicated = value.equals(propertyAndValue.getValue()) && propertyName.isDuplicateIfValuesEqual(otherPropertyName);
-            if (!duplicated) {
-                continue;
-            }
-            duplicate = otherPropertyName;
-            break;
-        }
-
-        return duplicate;
     }
 
     private static void reportDuplicateProperty(final SpreadsheetMetadataPropertyName<?> property,

@@ -328,27 +328,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * Note that grouping and value separator may have the same value and not be considered duplicates.
      */
     final boolean swapIfDuplicateValue() {
-        return this.isCharacter();
-    }
-
-    /**
-     * A test to prevent {@link #GROUPING_SEPARATOR} and {@link #VALUE_SEPARATOR} are both Characters, they cannot be duplicates
-     * of each other.
-     */
-    boolean isDuplicateIfValuesEqual(final SpreadsheetMetadataPropertyName<?> possible) {
-        return this.isCharacter() && possible.isCharacter() &&
-                (
-                        (this.isGroupingSeparatorOrValueSeparator() && possible.isGroupingSeparatorOrValueSeparator()) ?
-                                false :
-                                true
-                );
-    }
-
-    private boolean isCharacter() {
         return this instanceof SpreadsheetMetadataPropertyNameCharacter;
     }
 
-    private boolean isGroupingSeparatorOrValueSeparator() {
+    final boolean isGroupingSeparatorOrValueSeparator() {
         return this instanceof SpreadsheetMetadataPropertyNameGroupingSymbol || this instanceof SpreadsheetMetadataPropertyNameValueSeparator;
     }
 

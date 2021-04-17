@@ -333,6 +333,21 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
+    public void testSetNewPropertyWithDuplicateFails2() {
+        final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
+        final Character dot = '.';
+
+        final SpreadsheetMetadataPropertyName<Character> valueSeparator = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetMetadata(decimalSeparator, dot).set(valueSeparator, dot)
+        );
+
+        assertEquals("Cannot set value-separator='.' duplicate of decimal-separator", thrown.getMessage(), "thrown message");
+    }
+
+    @Test
     public void testSetPropertyCharacterGroupingSeparatorAndValueSeparator() {
         final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
         final Character dot = '.';
@@ -366,6 +381,49 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSetPropertyCausesSwap2() {
+        final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
+        final Character dot = '.';
+
+        final SpreadsheetMetadataPropertyName<Character> valueSeparator = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
+        final Character comma = ',';
+
+        this.setAndCheck(
+                this.createSpreadsheetMetadata(decimalSeparator, dot, valueSeparator, comma),
+                decimalSeparator,
+                comma,
+                this.createSpreadsheetMetadata(decimalSeparator, comma, valueSeparator, dot)
+        );
+    }
+
+    @Test
+    public void testSetPropertyCausesSwap3() {
+        final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
+        final Character dot = '.';
+
+        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
+        final Character comma = ',';
+
+        final SpreadsheetMetadataPropertyName<Character> positive = SpreadsheetMetadataPropertyName.POSITIVE_SIGN;
+        final Character plus = '+';
+
+        this.setAndCheck(
+                this.createSpreadsheetMetadata(
+                        decimalSeparator, dot,
+                        grouping, comma,
+                        positive, plus
+                ),
+                grouping,
+                dot,
+                this.createSpreadsheetMetadata(
+                        decimalSeparator, comma,
+                        grouping, dot,
+                        positive, plus
+                )
+        );
+    }
+
+    @Test
+    public void testSetPropertyCausesSwapGroupingSeparatorValueSeparator() {
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
