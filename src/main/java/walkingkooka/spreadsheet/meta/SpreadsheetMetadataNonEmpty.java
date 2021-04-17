@@ -119,6 +119,31 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
         return Optional.ofNullable(Cast.to(this.value.get(propertyName)));
     }
 
+    // set..............................................................................................................
+
+    /**
+     * Could be setting a property that has the same effective value but it could be in the defaults.
+     * If the value is only in the defaults create a new instance with the value.
+     */
+    @Override
+    <V> SpreadsheetMetadata setSameValue(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                         final V value) {
+        SpreadsheetMetadata result = this;
+
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = this.value;
+
+        // save value anyway if previousValue was from defaults.
+        if (!properties.containsKey(propertyName)) {
+            final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
+            copy.putAll(properties);
+            copy.put(propertyName, value);
+
+            result = SpreadsheetMetadataNonEmpty.with(Maps.immutable(copy), this.defaults);
+        }
+
+        return result;
+    }
+
     // remove...........................................................................................................
 
     @Override

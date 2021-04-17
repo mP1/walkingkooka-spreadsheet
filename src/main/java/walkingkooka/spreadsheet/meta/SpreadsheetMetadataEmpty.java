@@ -79,6 +79,12 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     }
 
     @Override
+    final <V> SpreadsheetMetadata setSameValue(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                               final V value) {
+        return SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, value), this.defaults);
+    }
+
+    @Override
     SpreadsheetMetadata remove0(final SpreadsheetMetadataPropertyName<?> propertyName) {
         return this;
     }
