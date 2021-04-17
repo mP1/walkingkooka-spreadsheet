@@ -5120,12 +5120,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             public SpreadsheetMetadata metadata() {
-                return BasicSpreadsheetEngineTest.this.metadata();
+                return BasicSpreadsheetEngineTest.this.metadata()
+                        .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, defaultYear);
             }
 
             @Override
             public int defaultYear() {
-                return defaultYear;
+                return this.metadata()
+                        .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
             }
 
             @Override
