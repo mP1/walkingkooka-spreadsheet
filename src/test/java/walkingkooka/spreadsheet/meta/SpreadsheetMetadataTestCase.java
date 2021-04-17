@@ -149,7 +149,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final SpreadsheetMetadata set = metadata.set(propertyName, value);
         assertEquals(expected,
                 set,
-                () -> metadata + " set " + propertyName + " and " + CharSequences.quoteIfChars(value));
+                () -> "set " + propertyName + " = " + CharSequences.quoteIfChars(value) + "\n" + metadata);
         return set;
     }
 
