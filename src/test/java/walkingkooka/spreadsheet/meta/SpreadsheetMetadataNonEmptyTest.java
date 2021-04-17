@@ -174,6 +174,37 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         this.setAndCheck(
                 SpreadsheetMetadataNonEmpty.with(
+                        Maps.empty(),
+                        SpreadsheetMetadataNonEmpty.with(
+                                Maps.of(
+                                        decimalSeparator, comma
+                                ),
+                                null)
+                ),
+                decimalSeparator,
+                comma,
+                SpreadsheetMetadataNonEmpty.with(
+                        Maps.of(
+                                decimalSeparator, comma
+                        ),
+                        SpreadsheetMetadataNonEmpty.with(
+                                Maps.of(
+                                        decimalSeparator, comma
+                                ),
+                                null
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSetPropertyValueSameDefaultValue2() {
+        final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
+        final Character dot = '.';
+        final Character comma = ',';
+
+        this.setAndCheck(
+                SpreadsheetMetadataNonEmpty.with(
                         Maps.of(
                                 decimalSeparator, dot
                         ),

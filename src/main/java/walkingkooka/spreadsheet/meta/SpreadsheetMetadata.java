@@ -246,7 +246,75 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     public final <V> SpreadsheetMetadata set(final SpreadsheetMetadataPropertyName<V> propertyName,
                                              final V value) {
         checkPropertyName(propertyName);
-        return this.set0(propertyName, propertyName.checkValue(value));
+        return this.set0(
+                propertyName,
+                propertyName.checkValue(value) // necessary because absolute references values are made relative
+        );
+    }
+
+    private <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                         final V value) {
+        SpreadsheetMetadata result;
+
+        if (value.equals(this.getIgnoringDefaults(propertyName).orElse(null))) {
+            result = this.setSameValue(propertyName, value);
+        } else {
+            result = this.setDifferentValue(propertyName, value);
+        }
+
+        return result;
+    }
+
+    /**
+     * Handle the special case where a property is being set with the same effective value,
+     * which could be the current or default value. Sub classes need to test.
+     */
+    abstract <V> SpreadsheetMetadata setSameValue(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                                  final V value);
+
+    /**
+     * Handles the case where a value is different and if a character swaps might need to happen to avoid duplicates/clashes.
+     */
+    private <V> SpreadsheetMetadata setDifferentValue(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                                      final V value) {
+        final Object previousValue = this.get(propertyName).orElse(null);
+
+        // property is different or new
+        final boolean swapIfDuplicateValue = propertyName.swapIfDuplicateValue();
+
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
+        copy.putAll(this.value());
+        copy.put(propertyName, value);
+
+        final boolean groupOrValue = propertyName.isGroupingSeparatorOrValueSeparator();
+
+        if (swapIfDuplicateValue) {
+            for (final SpreadsheetMetadataPropertyName<Character> duplicate : SWAPPABLE_PROPERTIES) {
+                if (propertyName.equals(duplicate)) {
+                    continue;
+                }
+                final boolean duplicateIsGroupingOrValue = duplicate.isGroupingSeparatorOrValueSeparator();
+                if (groupOrValue && duplicateIsGroupingOrValue) {
+                    continue;
+                }
+
+                final Character duplicateValue = this.get(duplicate).orElse(null);
+                if (null != duplicateValue) {
+                    if (value.equals(duplicateValue) || duplicateIsGroupingOrValue) {
+                        if (null == previousValue) {
+                            if (!duplicateIsGroupingOrValue) {
+                                reportDuplicateProperty(propertyName, value, duplicate);
+                            }
+                        } else {
+                            copy.put(duplicate, previousValue);
+                        }
+                    }
+                }
+            }
+        }
+
+        // update and possibly swap of character properties
+        return SpreadsheetMetadataNonEmpty.with(Maps.immutable(copy), this.defaults);
     }
 
     // @VisibleForTesting
@@ -258,55 +326,6 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
             SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
             SpreadsheetMetadataPropertyName.VALUE_SEPARATOR
     };
-
-    private <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName,
-                                         final V value) {
-        SpreadsheetMetadata result = this;
-
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = this.value();
-        final Object previousValue = this.get(propertyName).orElse(null);
-
-        if (!value.equals(previousValue)) {
-            // property is different or new
-            final boolean swapIfDuplicateValue = propertyName.swapIfDuplicateValue();
-
-            final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
-            copy.putAll(properties);
-            copy.put(propertyName, value);
-
-            final boolean groupOrValue = propertyName.isGroupingSeparatorOrValueSeparator();
-
-            if (swapIfDuplicateValue) {
-                for (final SpreadsheetMetadataPropertyName<Character> duplicate : SWAPPABLE_PROPERTIES) {
-                    if (propertyName.equals(duplicate)) {
-                        continue;
-                    }
-                    final boolean duplicateIsGroupingOrValue = duplicate.isGroupingSeparatorOrValueSeparator();
-                    if (groupOrValue && duplicateIsGroupingOrValue) {
-                        continue;
-                    }
-
-                    final Character duplicateValue = this.get(duplicate).orElse(null);
-                    if (null != duplicateValue) {
-                        if (value.equals(duplicateValue) || duplicateIsGroupingOrValue) {
-                            if (null == previousValue) {
-                                if (!duplicateIsGroupingOrValue) {
-                                    reportDuplicateProperty(propertyName, value, duplicate);
-                                }
-                            } else {
-                                copy.put(duplicate, previousValue);
-                            }
-                        }
-                    }
-                }
-            }
-
-            // update and possibly swap of character properties
-            result = SpreadsheetMetadataNonEmpty.with(Maps.immutable(copy), this.defaults);
-        }
-
-        return result;
-    }
 
     private static void reportDuplicateProperty(final SpreadsheetMetadataPropertyName<?> property,
                                                 final Object value,
