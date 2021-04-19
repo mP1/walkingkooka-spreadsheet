@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
@@ -35,37 +34,37 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
         ParseStringTesting<SpreadsheetExpressionReference> {
 
     @Test
-    public void testIsTextCellReferenceNullFails() {
+    public void testIsTextCellReferenceReferenceNullFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetExpressionReference.isTextCellReference(null));
     }
 
     @Test
-    public void testIsTextCellEmptyFalse() {
+    public void testIsTextCellReferenceEmptyFalse() {
         this.isTextCellReferenceAndCheck("", false);
     }
 
     @Test
-    public void testIsTextCellWithCellReferenceUppercase() {
+    public void testIsTextCellReferenceWithCellReferenceUppercase() {
         this.isTextCellReferenceAndCheck("A1", true);
     }
 
     @Test
-    public void testIsTextCellWithCellReferenceUppercaseAbsolute() {
+    public void testIsTextCellReferenceWithCellReferenceUppercaseAbsolute() {
         this.isTextCellReferenceAndCheck("$A1", true);
     }
 
     @Test
-    public void testIsTextCellWithCellReferenceLowercase() {
+    public void testIsTextCellReferenceWithCellReferenceLowercase() {
         this.isTextCellReferenceAndCheck("a1", true);
     }
 
     @Test
-    public void testIsTextCellWithCellReferenceLowercaseAbsolute() {
+    public void testIsTextCellReferenceWithCellReferenceLowercaseAbsolute() {
         this.isTextCellReferenceAndCheck("$a1", true);
     }
 
     @Test
-    public void testIsTextCellWithLabel() {
+    public void testIsTextCellReferenceWithLabel() {
         this.isTextCellReferenceAndCheck("LABEL123", false);
     }
 
