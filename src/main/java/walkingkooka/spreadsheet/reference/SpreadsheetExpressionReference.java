@@ -59,7 +59,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
 
             if (MODE_COLUMN_FIRST == mode) {
                 mode = MODE_COLUMN;
-                if ('$' == c) {
+                if (SpreadsheetReferenceKind.ABSOLUTE_PREFIX == c) {
                     continue;
                 }
                 // fall-thru might be column letter
@@ -81,7 +81,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
 
             if (MODE_ROW_FIRST == mode) {
                 mode = MODE_ROW;
-                if ('$' == c) {
+                if (SpreadsheetReferenceKind.ABSOLUTE_PREFIX == c) {
                     continue;
                 }
                 // fall-thru might be row letter
