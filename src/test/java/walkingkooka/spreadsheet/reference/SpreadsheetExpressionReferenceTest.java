@@ -94,6 +94,11 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     }
 
     @Test
+    public void testIsCellReferenceTextWithCellReferenceLowercaseExtra() {
+        this.isCellReferenceTextAndCheck("a1!", false);
+    }
+
+    @Test
     public void testIsCellReferenceTextWithCellReferenceLowercaseAbsolute() {
         this.isCellReferenceTextAndCheck("$a1", true);
     }
@@ -101,6 +106,11 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     @Test
     public void testIsCellReferenceTextAbsoluteColumnAbsoluteRow() {
         this.isCellReferenceTextAndCheck("$a$1", true);
+    }
+
+    @Test
+    public void testIsCellReferenceTextAbsoluteColumnAbsoluteRowExtra() {
+        this.isCellReferenceTextAndCheck("$a$1!", false);
     }
 
     @Test
