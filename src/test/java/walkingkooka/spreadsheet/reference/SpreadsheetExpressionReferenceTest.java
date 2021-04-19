@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
@@ -35,84 +34,84 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
         ParseStringTesting<SpreadsheetExpressionReference> {
 
     @Test
-    public void testIsTextCellReferenceReferenceNullFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetExpressionReference.isTextCellReference(null));
+    public void testIsCellReferenceTextNullFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetExpressionReference.isCellReferenceText(null));
     }
 
     @Test
-    public void testIsTextCellReferenceEmptyFalse() {
-        this.isTextCellReferenceAndCheck("", false);
+    public void testIsCellReferenceTextEmptyFalse() {
+        this.isCellReferenceTextAndCheck("", false);
     }
 
     @Test
-    public void testIsTextCellReferenceInvalidCharacterFalse() {
-        this.isTextCellReferenceAndCheck("!", false);
+    public void testIsCellReferenceTextInvalidCharacterFalse() {
+        this.isCellReferenceTextAndCheck("!", false);
     }
 
     @Test
-    public void testIsTextCellReferenceAbsolutePrefixOnlyFalse() {
-        this.isTextCellReferenceAndCheck("$", false);
+    public void testIsCellReferenceTextAbsolutePrefixOnlyFalse() {
+        this.isCellReferenceTextAndCheck("$", false);
     }
 
     @Test
-    public void testIsTextCellReferenceAbsoluteColumnOnlyFalse() {
-        this.isTextCellReferenceAndCheck("$A", false);
+    public void testIsCellReferenceTextAbsoluteColumnOnlyFalse() {
+        this.isCellReferenceTextAndCheck("$A", false);
     }
 
     @Test
-    public void testIsTextCellReferenceColumnOnlyFalse() {
-        this.isTextCellReferenceAndCheck("A", false);
+    public void testIsCellReferenceTextColumnOnlyFalse() {
+        this.isCellReferenceTextAndCheck("A", false);
     }
 
     @Test
-    public void testIsTextCellReferenceAbsoluteRowOnlyFalse() {
-        this.isTextCellReferenceAndCheck("$9", false);
+    public void testIsCellReferenceTextAbsoluteRowOnlyFalse() {
+        this.isCellReferenceTextAndCheck("$9", false);
     }
 
     @Test
-    public void testIsTextCellReferenceRowOnlyFalse() {
-        this.isTextCellReferenceAndCheck("9", false);
+    public void testIsCellReferenceTextRowOnlyFalse() {
+        this.isCellReferenceTextAndCheck("9", false);
     }
 
     @Test
-    public void testIsTextCellReferenceRowOnlyFalse2() {
-        this.isTextCellReferenceAndCheck("98", false);
+    public void testIsCellReferenceTextRowOnlyFalse2() {
+        this.isCellReferenceTextAndCheck("98", false);
     }
 
     @Test
-    public void testIsTextCellReferenceWithCellReferenceUppercase() {
-        this.isTextCellReferenceAndCheck("A1", true);
+    public void testIsCellReferenceTextWithCellReferenceUppercase() {
+        this.isCellReferenceTextAndCheck("A1", true);
     }
 
     @Test
-    public void testIsTextCellReferenceWithCellReferenceUppercaseAbsolute() {
-        this.isTextCellReferenceAndCheck("$A1", true);
+    public void testIsCellReferenceTextWithCellReferenceUppercaseAbsolute() {
+        this.isCellReferenceTextAndCheck("$A1", true);
     }
 
     @Test
-    public void testIsTextCellReferenceWithCellReferenceLowercase() {
-        this.isTextCellReferenceAndCheck("a1", true);
+    public void testIsCellReferenceTextWithCellReferenceLowercase() {
+        this.isCellReferenceTextAndCheck("a1", true);
     }
 
     @Test
-    public void testIsTextCellReferenceWithCellReferenceLowercaseAbsolute() {
-        this.isTextCellReferenceAndCheck("$a1", true);
+    public void testIsCellReferenceTextWithCellReferenceLowercaseAbsolute() {
+        this.isCellReferenceTextAndCheck("$a1", true);
     }
 
     @Test
-    public void testIsTextCellReferenceAbsoluteColumnAbsoluteRow() {
-        this.isTextCellReferenceAndCheck("$a$1", true);
+    public void testIsCellReferenceTextAbsoluteColumnAbsoluteRow() {
+        this.isCellReferenceTextAndCheck("$a$1", true);
     }
 
     @Test
-    public void testIsTextCellReferenceWithLabel() {
-        this.isTextCellReferenceAndCheck("LABEL123", false);
+    public void testIsCellReferenceTextWithLabel() {
+        this.isCellReferenceTextAndCheck("LABEL123", false);
     }
 
-    private void isTextCellReferenceAndCheck(final String text, final boolean expected) {
+    private void isCellReferenceTextAndCheck(final String text, final boolean expected) {
         assertEquals(expected,
-                SpreadsheetExpressionReference.isTextCellReference(text),
-                () -> "isTextCellReference " + CharSequences.quoteAndEscape(text));
+                SpreadsheetExpressionReference.isCellReferenceText(text),
+                () -> "isCellReferenceText " + CharSequences.quoteAndEscape(text));
         if (expected) {
             SpreadsheetExpressionReference.parse(text);
         }

@@ -45,7 +45,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * Tests if the {@link String name} is a valid cell reference.
      */
-    public static boolean isTextCellReference(final String text) {
+    public static boolean isCellReferenceText(final String text) {
         Objects.requireNonNull(text, "text");
 
         int mode = MODE_COLUMN_FIRST; // -1 too long or contains invalid char
@@ -141,7 +141,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
 
         return text.contains(":") ?
                 parseRange(text) :
-                isTextCellReference(text) ?
+                isCellReferenceText(text) ?
                         parseCellReference(text) :
                         labelName(text);
     }

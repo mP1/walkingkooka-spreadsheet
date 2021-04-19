@@ -60,7 +60,7 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
             throw new InvalidTextLengthException("Label", name, 0, MAX_LENGTH);
         }
 
-        if (isTextCellReference(name)) {
+        if (isCellReferenceText(name)) {
             throw new IllegalArgumentException("Label is a valid cell reference=" + CharSequences.quote(name));
         }
 
