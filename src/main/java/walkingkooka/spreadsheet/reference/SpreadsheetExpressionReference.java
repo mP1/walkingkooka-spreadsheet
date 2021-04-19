@@ -49,6 +49,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
         Objects.requireNonNull(text, "text");
 
         int mode = MODE_COLUMN_FIRST; // -1 too long or contains invalid char
+        int columnLength = 0;
         int column = 0;
         int row = 0;
 
@@ -74,7 +75,12 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
                         mode = MODE_FAIL;
                         break; // column is too big cant be a cell reference.
                     }
+                    columnLength++;
                     continue;
+                }
+                if (0 == columnLength) {
+                    mode = MODE_FAIL;
+                    break;
                 }
                 mode = MODE_ROW_FIRST;
             }
