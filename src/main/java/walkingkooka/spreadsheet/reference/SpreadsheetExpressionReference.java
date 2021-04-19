@@ -45,17 +45,17 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * Tests if the {@link String name} is a valid cell reference.
      */
-    public static boolean isTextCellReference(final String name) {
-        Objects.requireNonNull(name, "name");
+    public static boolean isTextCellReference(final String text) {
+        Objects.requireNonNull(text, "text");
 
         int mode = MODE_COLUMN_FIRST; // -1 too long or contains invalid char
         int column = 0;
         int row = 0;
 
         // AB11 max row, max column
-        final int length = name.length();
+        final int length = text.length();
         for (int i = 0; i < length; i++) {
-            final char c = name.charAt(i);
+            final char c = text.charAt(i);
 
             if (MODE_COLUMN_FIRST == mode) {
                 mode = MODE_COLUMN;
