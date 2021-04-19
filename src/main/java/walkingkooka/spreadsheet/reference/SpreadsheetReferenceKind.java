@@ -45,7 +45,7 @@ public enum SpreadsheetReferenceKind {
 
         @Override
         String prefix() {
-            return "$";
+            return "" + ABSOLUTE_PREFIX;
         }
     },
     RELATIVE {
@@ -85,4 +85,6 @@ public enum SpreadsheetReferenceKind {
 
     // only called by {@link SpreadsheetRowReference#toString()} or {@link SpreadsheetColumnReference#toString()}
     abstract String prefix();
+
+    final static char ABSOLUTE_PREFIX = '$';
 }
