@@ -35,7 +35,7 @@ import java.util.Objects;
 
 /**
  * A {@link SpreadsheetStoreRepository} that rewraps the {@link SpreadsheetCellStore} each time a {@link SpreadsheetMetadata}
- * is saved.
+ * with the same id is saved.
  */
 final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository implements SpreadsheetStoreRepository {
 
@@ -56,21 +56,19 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
     }
 
     /**
-     * Whenever the {@link SpreadsheetMetadata} is saved call {@link SpreadsheetCellStores#spreadsheetFormulaSpreadsheetMetadataAware}
+     * Whenever the {@link SpreadsheetMetadata} with the same id is saved call {@link SpreadsheetCellStores#spreadsheetFormulaSpreadsheetMetadataAware}
      * again.
      */
     private void onSaveMetadata(final SpreadsheetMetadata metadata) {
         final SpreadsheetId id = metadata.id()
                 .orElseThrow(() -> new IllegalArgumentException("Metadata missing id"));
         final SpreadsheetId expected = this.id;
-        if (!expected.equals(id)) {
-            throw new IllegalArgumentException("Saved metadata has different id got " + id + " expected: " + expected);
+        if (expected.equals(id)) {
+            this.cells = SpreadsheetCellStores.spreadsheetFormulaSpreadsheetMetadataAware(
+                    this.repository.cells(),
+                    metadata
+            );
         }
-
-        this.cells = SpreadsheetCellStores.spreadsheetFormulaSpreadsheetMetadataAware(
-                this.repository.cells(),
-                metadata
-        );
     }
 
     @Override
