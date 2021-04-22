@@ -89,6 +89,20 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
     }
 
     @Test
+    public void testCellStoreSaveDifferentMetadataCellStore() {
+        final SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository repository = this.createStoreRepository();
+
+        final SpreadsheetCellStore cellStore = repository.cells();
+        assertSame(cellStore, repository.cells());
+
+        final SpreadsheetMetadata metadata = this.metadata();
+        repository.metadatas()
+                .save(metadata.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(99999)));
+
+        assertSame(cellStore, repository.cells(), "SpreadsheetCellStore should have been cached, and not recreated");
+    }
+
+    @Test
     public void testSaveMetadataCellStoreSaveMetadataCellStore() {
         final SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository repository = this.createStoreRepository();
 
