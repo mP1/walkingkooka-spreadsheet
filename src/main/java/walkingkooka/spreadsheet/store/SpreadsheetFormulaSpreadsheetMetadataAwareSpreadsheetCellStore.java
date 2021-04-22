@@ -53,9 +53,26 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         Objects.requireNonNull(store, "store");
         Objects.requireNonNull(metadata, "metadata");
 
-        return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(store, metadata);
+        return store instanceof SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore ?
+                setMetadata(
+                        (SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore) store,
+                        metadata
+                ) :
+                new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(store, metadata);
     }
-    
+
+    /**
+     * If the {@link SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore} has a different {@link SpreadsheetMetadata}
+     * create with the wrapped store and new metadata.
+     */
+    private static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore setMetadata(
+            final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore store,
+            final SpreadsheetMetadata metadata) {
+        return metadata.equals(store.metadata) ?
+                store :
+                new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(store.store, metadata);
+    }
+
     private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(final SpreadsheetCellStore store,
                                                                            final SpreadsheetMetadata metadata) {
         this.store = store;
@@ -245,9 +262,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext.with(this.metadata);
     }
 
-    private final SpreadsheetCellStore store;
+    // @VisibleForTesting
+    final SpreadsheetCellStore store;
 
-    private final SpreadsheetMetadata metadata;
+    // @VisibleForTesting
+    final SpreadsheetMetadata metadata;
 
     @Override
     public String toString() {

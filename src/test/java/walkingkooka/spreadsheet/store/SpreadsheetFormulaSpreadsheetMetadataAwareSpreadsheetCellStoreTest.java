@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -37,6 +38,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore> {
@@ -62,6 +64,70 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     @Test
     public void testWithNullMetadataFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(this.cellStore(), null));
+    }
+
+    @Test
+    public void testWith() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetMetadata metadata = this.metadata();
+
+        this.check(
+                SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                        cellStore,
+                        metadata
+                ),
+                cellStore,
+                metadata
+        );
+    }
+
+    @Test
+    public void testWithSpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreAndSameMetadata() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetMetadata metadata = this.metadata();
+
+        final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore wrapped = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                cellStore,
+                metadata
+        );
+
+        assertSame(
+                wrapped,
+                SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                        wrapped,
+                        metadata
+                ));
+    }
+
+    @Test
+    public void testWithSpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreDifferentMetadata() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetMetadata metadata = this.metadata();
+
+        final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore wrapped = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                cellStore,
+                metadata
+        );
+
+        final SpreadsheetMetadata differentMetadata = metadata.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(99999L)
+        );
+
+        this.check(
+                SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                        wrapped,
+                        differentMetadata
+                ),
+                cellStore,
+                differentMetadata
+        );
+    }
+
+    private void check(final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore store,
+                       final SpreadsheetCellStore cellStore,
+                       final SpreadsheetMetadata metadata) {
+        assertSame(cellStore, store.store, "cellStore");
+        assertSame(metadata, store.metadata, "metadata");
     }
 
     // save.............................................................................................................
