@@ -183,17 +183,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ),
                 decimalSeparator,
                 comma,
-                SpreadsheetMetadataNonEmpty.with(
-                        Maps.of(
-                                decimalSeparator, comma
-                        ),
-                        SpreadsheetMetadataNonEmpty.with(
-                                Maps.of(
-                                        decimalSeparator, comma
-                                ),
-                                null
-                        )
-                )
+                "{\n" +
+                        "  \"_defaults\": {\n" +
+                        "    \"decimal-separator\": \",\"\n" +
+                        "  },\n" +
+                        "  \"decimal-separator\": \",\"\n" +
+                        "}"
         );
     }
 
@@ -216,86 +211,120 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ),
                 decimalSeparator,
                 comma,
-                SpreadsheetMetadataNonEmpty.with(
-                        Maps.of(
-                                decimalSeparator, comma
-                        ),
-                        SpreadsheetMetadataNonEmpty.with(
-                                Maps.of(
-                                        decimalSeparator, comma
-                                ),
-                                null
-                        )
-                )
+                "{\n" +
+                        "  \"_defaults\": {\n" +
+                        "    \"decimal-separator\": \",\"\n" +
+                        "  },\n" +
+                        "  \"decimal-separator\": \",\"\n" +
+                        "}"
         );
     }
 
     @Test
     public void testSetReplacePropertyAndValue() {
-        final SpreadsheetMetadataPropertyName<LocalDateTime> property1 = this.property1();
+        final SpreadsheetMetadataPropertyName<LocalDateTime> created = this.property1();
         final LocalDateTime value1 = this.value1();
 
-        final SpreadsheetMetadataPropertyName<EmailAddress> property2 = this.property2();
+        final SpreadsheetMetadataPropertyName<EmailAddress> creator = this.property2();
         final EmailAddress value2 = this.value2();
 
         final LocalDateTime different = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
         assertNotSame(different, value1);
 
-        this.setAndCheck(this.createSpreadsheetMetadata(property1, value1, property2, value2),
-                property1,
+        this.setAndCheck(this.createSpreadsheetMetadata(created, value1, creator, value2),
+                created,
                 different,
-                this.createSpreadsheetMetadata(property1, different, property2, value2));
+                "{\n" +
+                        "  \"create-date-time\": \"1999-12-31T12:58:59\",\n" +
+                        "  \"creator\": \"user@example.com\"\n" +
+                        "}"
+        );
     }
 
     @Test
     public void testSetReplacePropertyAndValue2() {
-        final SpreadsheetMetadataPropertyName<LocalDateTime> property1 = this.property1();
+        final SpreadsheetMetadataPropertyName<LocalDateTime> created = this.property1();
         final LocalDateTime value1 = this.value1();
 
-        final SpreadsheetMetadataPropertyName<EmailAddress> property2 = this.property2();
+        final SpreadsheetMetadataPropertyName<EmailAddress> creator = this.property2();
         final EmailAddress value2 = this.value2();
 
         final EmailAddress different = EmailAddress.parse("different@example.com");
         assertNotSame(different, value2);
 
-        this.setAndCheck(this.createSpreadsheetMetadata(property1, value1, property2, value2),
-                property2,
+        this.setAndCheck(this.createSpreadsheetMetadata(created, value1, creator, value2),
+                creator,
                 different,
-                this.createSpreadsheetMetadata(property1, value1, property2, different));
+                "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
+                        "  \"creator\": \"different@example.com\"\n" +
+                        "}"
+        );
     }
 
     @Test
     public void testSetNewPropertyAndValue() {
-        final SpreadsheetMetadataPropertyName<LocalDateTime> property1 = this.property1();
+        final SpreadsheetMetadataPropertyName<LocalDateTime> created = this.property1();
         final LocalDateTime value1 = this.value1();
 
-        final SpreadsheetMetadataPropertyName<EmailAddress> property2 = this.property2();
+        final SpreadsheetMetadataPropertyName<EmailAddress> creator = this.property2();
         final EmailAddress value2 = this.value2();
 
-        final SpreadsheetMetadataPropertyName<EmailAddress> property3 = this.property3();
+        final SpreadsheetMetadataPropertyName<EmailAddress> modified = this.property3();
         final EmailAddress value3 = this.value3();
 
-        this.setAndCheck(this.createSpreadsheetMetadata(property1, value1, property2, value2),
-                property3,
+        this.setAndCheck(this.createSpreadsheetMetadata(created, value1, creator, value2),
+                modified,
                 value3,
-                this.createSpreadsheetMetadata(property1, value1, property2, value2, property3, value3));
+                "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
+                        "  \"creator\": \"user@example.com\",\n" +
+                        "  \"modified-by\": \"different@example.com\"\n" +
+                        "}");
     }
 
     @Test
     public void testSetNewPropertyAndValue2() {
-        final SpreadsheetMetadataPropertyName<LocalDateTime> property1 = this.property1();
+        final SpreadsheetMetadataPropertyName<LocalDateTime> created = this.property1();
         final LocalDateTime value1 = this.value1();
 
-        final SpreadsheetMetadataPropertyName<EmailAddress> property2 = this.property2();
+        final SpreadsheetMetadataPropertyName<EmailAddress> creator = this.property2();
         final EmailAddress value2 = this.value2();
 
-        final SpreadsheetMetadataPropertyName<EmailAddress> property3 = this.property3();
+        final SpreadsheetMetadataPropertyName<EmailAddress> modifier = this.property3();
         final EmailAddress value3 = this.value3();
 
-        this.setAndCheck(this.createSpreadsheetMetadata(property2, value2, property3, value3),
-                property1,
+        this.setAndCheck(this.createSpreadsheetMetadata(creator, value2, modifier, value3),
+                created,
                 value1,
-                this.createSpreadsheetMetadata(property1, value1, property2, value2, property3, value3));
+                "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
+                        "  \"creator\": \"user@example.com\",\n" +
+                        "  \"modified-by\": \"different@example.com\"\n" +
+                        "}");
+    }
+
+    @Test
+    public void testSetNewPropertyAndValue3() {
+        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> percent = SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL;
+        final SpreadsheetMetadataPropertyName<Character> value = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
+
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(grouping, ',').set(percent, '%').set(value, ',');
+
+        this.setAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
+                percent,
+                '%',
+                "{\n" +
+                        "  \"_defaults\": {\n" +
+                        "    \"grouping-separator\": \",\",\n" +
+                        "    \"percentage-symbol\": \"%\",\n" +
+                        "    \"value-separator\": \",\"\n" +
+                        "  },\n" +
+                        "  \"grouping-separator\": \"%\",\n" +
+                        "  \"percentage-symbol\": \"%\",\n" +
+                        "  \"value-separator\": \"%\"\n" +
+                        "}");
     }
 
     @Test
@@ -310,7 +339,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(decimalSeparator, dot),
                 grouping,
                 comma,
-                this.createSpreadsheetMetadata(decimalSeparator, dot, grouping, comma)
+                "{\n" +
+                        "  \"decimal-separator\": \".\",\n" +
+                        "  \"grouping-separator\": \",\"\n" +
+                        "}"
         );
     }
 
@@ -329,7 +361,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(decimalSeparator, dot, grouping, comma),
                 positive,
                 plus,
-                this.createSpreadsheetMetadata(decimalSeparator, dot, grouping, comma, positive, plus)
+                "{\n" +
+                        "  \"decimal-separator\": \".\",\n" +
+                        "  \"grouping-separator\": \",\",\n" +
+                        "  \"positive-sign\": \"+\"\n" +
+                        "}"
         );
     }
 
@@ -344,7 +380,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(grouping, dot),
                 value,
                 dot,
-                this.createSpreadsheetMetadata(grouping, dot, value, dot)
+                "{\n" +
+                        "  \"grouping-separator\": \".\",\n" +
+                        "  \"value-separator\": \".\"\n" +
+                        "}"
         );
     }
 
@@ -390,7 +429,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(grouping, dot, value, comma),
                 value,
                 dot,
-                this.createSpreadsheetMetadata(grouping, dot, value, dot)
+                "{\n" +
+                        "  \"grouping-separator\": \".\",\n" +
+                        "  \"value-separator\": \".\"\n" +
+                        "}"
         );
     }
 
@@ -406,7 +448,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(decimalSeparator, dot, grouping, comma),
                 grouping,
                 dot,
-                this.createSpreadsheetMetadata(decimalSeparator, comma, grouping, dot)
+                "{\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"grouping-separator\": \".\"\n" +
+                        "}"
         );
     }
 
@@ -422,7 +467,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(decimalSeparator, dot, valueSeparator, comma),
                 decimalSeparator,
                 comma,
-                this.createSpreadsheetMetadata(decimalSeparator, comma, valueSeparator, dot)
+                "{\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"value-separator\": \".\"\n" +
+                        "}"
         );
     }
 
@@ -445,11 +493,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ),
                 grouping,
                 dot,
-                this.createSpreadsheetMetadata(
-                        decimalSeparator, comma,
-                        grouping, dot,
-                        positive, plus
-                )
+                "{\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"grouping-separator\": \".\",\n" +
+                        "  \"positive-sign\": \"+\"\n" +
+                        "}"
         );
     }
 
@@ -472,11 +520,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ),
                 grouping,
                 dot,
-                this.createSpreadsheetMetadata(
-                        decimalSeparator, comma,
-                        grouping, dot,
-                        positive, plus
-                )
+                "{\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"grouping-separator\": \".\",\n" +
+                        "  \"positive-sign\": \"+\"\n" +
+                        "}"
         );
     }
 
@@ -536,7 +584,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(decimalSeparator, dot).setDefaults(defaults),
                 decimalSeparator,
                 comma,
-                this.createSpreadsheetMetadata(decimalSeparator, comma, grouping, dot).setDefaults(defaults)
+                "{\n" +
+                        "  \"_defaults\": {\n" +
+                        "    \"grouping-separator\": \",\"\n" +
+                        "  },\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"grouping-separator\": \".\"\n" +
+                        "}"
         );
     }
 
@@ -557,11 +611,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(decimalSeparator, dot).setDefaults(defaults),
                 decimalSeparator,
                 comma,
-                SpreadsheetMetadataNonEmpty.with(
-                        Maps.of(
-                                decimalSeparator, comma, grouping, dot
-                        ),
-                        defaults)
+                "{\n" +
+                        "  \"_defaults\": {\n" +
+                        "    \"decimal-separator\": \".\",\n" +
+                        "    \"grouping-separator\": \",\"\n" +
+                        "  },\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"grouping-separator\": \".\"\n" +
+                        "}"
         );
     }
 
@@ -582,7 +639,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(creator, email).setDefaults(defaults),
                 decimalSeparator,
                 comma,
-                this.createSpreadsheetMetadata(creator, email, decimalSeparator, comma, grouping, dot).setDefaults(defaults)
+                "{\n" +
+                        "  \"_defaults\": {\n" +
+                        "    \"decimal-separator\": \".\",\n" +
+                        "    \"grouping-separator\": \",\"\n" +
+                        "  },\n" +
+                        "  \"creator\": \"creator@example.com\",\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"grouping-separator\": \".\"\n" +
+                        "}"
         );
     }
 
@@ -603,7 +668,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(creator, email).setDefaults(defaults),
                 grouping,
                 dot,
-                this.createSpreadsheetMetadata(creator, email, decimalSeparator, comma, grouping, dot).setDefaults(defaults)
+                "{\n" +
+                        "  \"_defaults\": {\n" +
+                        "    \"decimal-separator\": \".\",\n" +
+                        "    \"grouping-separator\": \",\"\n" +
+                        "  },\n" +
+                        "  \"creator\": \"creator@example.com\",\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"grouping-separator\": \".\"\n" +
+                        "}"
         );
     }
 
@@ -661,7 +734,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata1 = this.setAndCheck(SpreadsheetMetadata.EMPTY,
                 property1,
                 value1,
-                this.createSpreadsheetMetadata(property1, value1));
+                "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\"\n" +
+                        "}"
+        );
 
         //set
         final SpreadsheetMetadataPropertyName<EmailAddress> property2 = this.property2();
@@ -669,7 +745,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata2 = this.setAndCheck(metadata1,
                 property2,
                 value2,
-                this.createSpreadsheetMetadata(property1, value1, property2, value2));
+                "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
+                        "  \"creator\": \"user@example.com\"\n" +
+                        "}"
+        );
 
         // remove1
         final SpreadsheetMetadata metadata3 = this.removeAndCheck(metadata2,
@@ -689,7 +769,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata1 = this.setAndCheck(SpreadsheetMetadata.EMPTY,
                 property1,
                 value1,
-                this.createSpreadsheetMetadata(property1, value1));
+                "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\"\n" +
+                        "}"
+        );
 
         //set
         final SpreadsheetMetadataPropertyName<EmailAddress> property2 = this.property2();
@@ -697,7 +780,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata2 = this.setAndCheck(metadata1,
                 property2,
                 value2,
-                this.createSpreadsheetMetadata(property1, value1, property2, value2));
+                "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
+                        "  \"creator\": \"user@example.com\"\n" +
+                        "}"
+        );
 
         // remove1
         final SpreadsheetMetadata metadata3 = this.removeAndCheck(metadata2,
@@ -709,7 +796,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.setAndCheck(metadata3,
                 property1,
                 value1,
-                this.createSpreadsheetMetadata(property1, value1, property2, value2));
+                "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
+                        "  \"creator\": \"user@example.com\"\n" +
+                        "}"
+        );
     }
 
     // getEffectiveStyleProperty........................................................................................

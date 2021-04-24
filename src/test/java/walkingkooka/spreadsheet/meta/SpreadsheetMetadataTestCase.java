@@ -145,11 +145,13 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final <TT> SpreadsheetMetadata setAndCheck(final SpreadsheetMetadata metadata,
                                                final SpreadsheetMetadataPropertyName<TT> propertyName,
                                                final TT value,
-                                               final SpreadsheetMetadata expected) {
+                                               final String expected) {
         final SpreadsheetMetadata set = metadata.set(propertyName, value);
-        assertEquals(expected,
-                set,
-                () -> "set " + propertyName + " = " + CharSequences.quoteIfChars(value) + "\n" + metadata);
+        assertEquals(
+                expected,
+                set.toString(),
+                () -> "set " + propertyName + " = " + CharSequences.quoteIfChars(value) + "\n" + metadata
+        );
         return set;
     }
 
