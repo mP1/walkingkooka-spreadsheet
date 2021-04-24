@@ -300,7 +300,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
 
                 final Character duplicateValue = this.get(duplicate).orElse(null);
                 if (null != duplicateValue) {
-                    if (value.equals(duplicateValue) || duplicateIsGroupingOrValue) {
+                    if (value.equals(duplicateValue)) {
                         if (null == previousValue) {
                             if (!duplicateIsGroupingOrValue) {
                                 reportDuplicateProperty(propertyName, value, duplicate);

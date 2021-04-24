@@ -305,29 +305,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testSetNewPropertyAndValue3() {
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
-        final SpreadsheetMetadataPropertyName<Character> percent = SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL;
-        final SpreadsheetMetadataPropertyName<Character> value = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
-
-        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(grouping, ',').set(percent, '%').set(value, ',');
-
-        this.setAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
-                percent,
-                '%',
-                "{\n" +
-                        "  \"_defaults\": {\n" +
-                        "    \"grouping-separator\": \",\",\n" +
-                        "    \"percentage-symbol\": \"%\",\n" +
-                        "    \"value-separator\": \",\"\n" +
-                        "  },\n" +
-                        "  \"grouping-separator\": \"%\",\n" +
-                        "  \"percentage-symbol\": \"%\",\n" +
-                        "  \"value-separator\": \"%\"\n" +
-                        "}");
-    }
-
-    @Test
     public void testSetNewPropertyAndWithoutSwapValue() {
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
@@ -678,6 +655,69 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         "  \"grouping-separator\": \".\"\n" +
                         "}"
         );
+    }
+
+    @Test
+    public void testSetDefaultAgain() {
+        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> percent = SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL;
+        final SpreadsheetMetadataPropertyName<Character> value = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
+
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(grouping, ',').set(percent, '%').set(value, ',');
+
+        this.setAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
+                percent,
+                '%',
+                "{\n" +
+                        "  \"_defaults\": {\n" +
+                        "    \"grouping-separator\": \",\",\n" +
+                        "    \"percentage-symbol\": \"%\",\n" +
+                        "    \"value-separator\": \",\"\n" +
+                        "  },\n" +
+                        "  \"percentage-symbol\": \"%\"\n" +
+                        "}");
+    }
+
+    @Test
+    public void testSetDefaultGroupingSeparatorAgain() {
+        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> percent = SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL;
+        final SpreadsheetMetadataPropertyName<Character> value = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
+
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(grouping, ',').set(percent, '%').set(value, ',');
+
+        this.setAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
+                grouping,
+                ',',
+                "{\n" +
+                        "  \"_defaults\": {\n" +
+                        "    \"grouping-separator\": \",\",\n" +
+                        "    \"percentage-symbol\": \"%\",\n" +
+                        "    \"value-separator\": \",\"\n" +
+                        "  },\n" +
+                        "  \"grouping-separator\": \",\"\n" +
+                        "}");
+    }
+
+    @Test
+    public void testSetDefaultValueSeparatorAgain() {
+        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> percent = SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL;
+        final SpreadsheetMetadataPropertyName<Character> value = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
+
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(grouping, ',').set(percent, '%').set(value, ',');
+
+        this.setAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
+                value,
+                ',',
+                "{\n" +
+                        "  \"_defaults\": {\n" +
+                        "    \"grouping-separator\": \",\",\n" +
+                        "    \"percentage-symbol\": \"%\",\n" +
+                        "    \"value-separator\": \",\"\n" +
+                        "  },\n" +
+                        "  \"value-separator\": \",\"\n" +
+                        "}");
     }
 
     private <T> void setAndCheck(final SpreadsheetMetadata metadata,
