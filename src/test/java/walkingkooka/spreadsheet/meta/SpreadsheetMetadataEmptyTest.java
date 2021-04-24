@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -49,13 +48,15 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testSet() {
         final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
-        final EmailAddress familyName = EmailAddress.parse("user@example.com");
+        final EmailAddress email = EmailAddress.parse("user@example.com");
 
         this.setAndCheck(
                 SpreadsheetMetadata.EMPTY,
                 propertyName,
-                familyName,
-                SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, familyName), null)
+                email,
+                "{\n" +
+                        "  \"creator\": \"user@example.com\"\n" +
+                        "}"
         );
     }
 
