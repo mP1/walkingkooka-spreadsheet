@@ -116,7 +116,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         for (JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
             switch (name.value()) {
-                case LABEL_NAME_PROPERTY_STRING:
+                case LABEL_PROPERTY_STRING:
                     labelName = context.unmarshall(child, SpreadsheetLabelName.class);
                     break;
                 case REFERENCE_PROPERTY_STRING:
@@ -128,7 +128,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         }
 
         if (null == labelName) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(LABEL_NAME_PROPERTY, node);
+            JsonNodeUnmarshallContext.requiredPropertyMissing(LABEL_PROPERTY, node);
         }
         if (null == reference) {
             JsonNodeUnmarshallContext.requiredPropertyMissing(REFERENCE_PROPERTY, node);
@@ -139,14 +139,14 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(LABEL_NAME_PROPERTY, context.marshall(this.label))
+                .set(LABEL_PROPERTY, context.marshall(this.label))
                 .set(REFERENCE_PROPERTY, context.marshall(this.reference));
     }
 
-    private final static String LABEL_NAME_PROPERTY_STRING = "label-name";
+    private final static String LABEL_PROPERTY_STRING = "label";
     private final static String REFERENCE_PROPERTY_STRING = "reference";
 
-    private final static JsonPropertyName LABEL_NAME_PROPERTY = JsonPropertyName.with(LABEL_NAME_PROPERTY_STRING);
+    private final static JsonPropertyName LABEL_PROPERTY = JsonPropertyName.with(LABEL_PROPERTY_STRING);
     private final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
 
     static {
