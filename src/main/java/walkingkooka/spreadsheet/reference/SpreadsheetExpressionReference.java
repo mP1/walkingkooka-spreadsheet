@@ -336,6 +336,8 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
                 SpreadsheetViewport::marshall,
                 SpreadsheetViewport.class
         );
+
+        SpreadsheetLabelMapping.init();
     }
 
     private static <T extends SpreadsheetExpressionReference> void register(
