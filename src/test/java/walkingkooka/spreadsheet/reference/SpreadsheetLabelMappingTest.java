@@ -114,6 +114,17 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         this.unmarshallFails(JsonNode.object());
     }
 
+    @Test
+    public void testToJson() {
+        this.marshallAndCheck(
+                this.createObject(),
+                "{\n" +
+                        "  \"label\": \"label\",\n" +
+                        "  \"reference\": \"$B3\"\n" +
+                        "}"
+        );
+    }
+
     // HateosResource....................................................................................................
 
     @Test
