@@ -281,6 +281,17 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
+     * Accepts a json string and returns a {@link SpreadsheetExpressionReference} or fails.
+     */
+    static SpreadsheetExpressionReference unmarshallExpressionReference(final JsonNode node,
+                                                                        final JsonNodeUnmarshallContext context) {
+        return unmarshall0(
+                node,
+                SpreadsheetExpressionReference::parse
+        );
+    }
+
+    /**
      * Accepts a json string and returns a {@link SpreadsheetLabelName} or fails.
      */
     static SpreadsheetLabelName unmarshallLabelName(final JsonNode node,
@@ -326,6 +337,13 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
                 SpreadsheetCellReference::unmarshallCellReference,
                 SpreadsheetCellReference::marshall,
                 SpreadsheetCellReference.class
+        );
+
+        //noinspection StaticInitializerReferencesSubClass
+        register(
+                SpreadsheetExpressionReference::unmarshallExpressionReference,
+                SpreadsheetExpressionReference::marshall,
+                SpreadsheetExpressionReference.class
         );
 
         register(
