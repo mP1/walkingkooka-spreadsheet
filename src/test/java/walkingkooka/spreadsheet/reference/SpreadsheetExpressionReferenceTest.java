@@ -207,8 +207,9 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     }
 
     @Test
-    public void testParseViewportFails() {
-        this.parseStringFails(SpreadsheetExpressionReference.parseViewport("B9:40:50.75").toString(), IllegalArgumentException.class);
+    public void testParseViewport() {
+        final SpreadsheetViewport viewport = SpreadsheetExpressionReference.parseViewport("B9:40:50.75");
+        this.parseStringAndCheck(viewport.toString(), viewport);
     }
 
     // ClassTesting.....................................................................................................
