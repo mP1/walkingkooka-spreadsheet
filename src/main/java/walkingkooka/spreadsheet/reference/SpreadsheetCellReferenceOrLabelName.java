@@ -23,7 +23,8 @@ package walkingkooka.spreadsheet.reference;
  * able to handle type parameters with multiple bounds.
  */
 abstract public class SpreadsheetCellReferenceOrLabelName<C extends SpreadsheetCellReferenceOrLabelName<C>> extends SpreadsheetExpressionReference
-        implements Comparable<C> {
+        implements SpreadsheetLabelMappingExpressionReference,
+        Comparable<C> {
 
     /**
      * Package private to limit sub classing.

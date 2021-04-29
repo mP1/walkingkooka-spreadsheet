@@ -40,7 +40,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         ToStringTesting<SpreadsheetLabelMapping> {
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetExpressionReference.labelName("label");
-    private final static ExpressionReference REFERENCE = cell(1);
+    private final static SpreadsheetLabelMappingExpressionReference REFERENCE = cell(1);
 
     @Test
     public void testWithNullLabelFails() {
@@ -99,7 +99,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Test
     public void testSetReferenceDifferent() {
         final SpreadsheetLabelMapping mapping = this.createObject();
-        final ExpressionReference differentReference = cell(999);
+        final SpreadsheetLabelMappingExpressionReference differentReference = cell(999);
         final SpreadsheetLabelMapping different = mapping.setReference(differentReference);
 
         assertNotSame(mapping, different);
@@ -122,6 +122,27 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
                         "  \"label\": \"label\",\n" +
                         "  \"reference\": \"$B3\"\n" +
                         "}"
+        );
+    }
+
+    @Test
+    public void testJsonRoundtripCellReference() {
+        this.marshallRoundTrip2(SpreadsheetExpressionReference.parseCellReference("A1"));
+    }
+
+    @Test
+    public void testJsonRoundtripLabelName() {
+        this.marshallRoundTrip2(SpreadsheetLabelName.labelName("LABEL123"));
+    }
+
+    @Test
+    public void testJsonRoundtripRange() {
+        this.marshallRoundTrip2(SpreadsheetExpressionReference.parseRange("A1:B2"));
+    }
+
+    private void marshallRoundTrip2(final SpreadsheetLabelMappingExpressionReference reference) {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetLabelName.with("Label123").mapping(reference)
         );
     }
 
@@ -164,11 +185,12 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         assertEquals(label, mapping.label(), "label");
     }
 
-    private void checkReference(final SpreadsheetLabelMapping mapping, final ExpressionReference reference) {
+    private void checkReference(final SpreadsheetLabelMapping mapping,
+                                final SpreadsheetLabelMappingExpressionReference reference) {
         assertEquals(reference, mapping.reference(), "reference");
     }
 
-    private static ExpressionReference cell(final int column) {
+    private static SpreadsheetCellReference cell(final int column) {
         return SpreadsheetReferenceKind.ABSOLUTE.column(column)
                 .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
     }

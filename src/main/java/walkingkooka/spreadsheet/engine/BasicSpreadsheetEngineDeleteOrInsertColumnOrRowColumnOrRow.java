@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMappingExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -376,7 +377,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
         this.saveLabelIfUpdated(this.fixCellReference(reference), mapping);
     }
 
-    final void saveLabelIfUpdated(final ExpressionReference reference, final SpreadsheetLabelMapping mapping) {
+    final void saveLabelIfUpdated(final SpreadsheetLabelMappingExpressionReference reference, final SpreadsheetLabelMapping mapping) {
         final SpreadsheetLabelMapping updated = mapping.setReference(reference);
         if (mapping != updated) {
             this.labelStore().save(updated);
