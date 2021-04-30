@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -39,7 +40,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
      */
     public static SpreadsheetLabelMapping with(final SpreadsheetLabelName label, final SpreadsheetLabelMappingExpressionReference reference) {
         checkLabel(label);
-        checkReference(reference);
+        checkReference(reference, label);
         return new SpreadsheetLabelMapping(label, reference);
     }
 
@@ -57,9 +58,18 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
     public SpreadsheetLabelMapping setLabel(final SpreadsheetLabelName label) {
         checkLabel(label);
+
+        final SpreadsheetLabelMappingExpressionReference reference = this.reference;
+        if (label.equals(reference)) {
+            throw new IllegalArgumentException(
+                    "New label " + CharSequences.quote(label.toString()) + " must be different from reference " + CharSequences.quote(reference.toString())
+            );
+        }
+
+
         return this.label.equals(label) ?
                 this :
-                this.replace(label, this.reference);
+                this.replace(label, reference);
     }
 
     private static void checkLabel(final SpreadsheetLabelName label) {
@@ -73,7 +83,8 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     }
 
     public SpreadsheetLabelMapping setReference(final SpreadsheetLabelMappingExpressionReference reference) {
-        checkReference(reference);
+        checkReference(reference, this.label);
+
         return this.reference.equals(reference) ?
                 this :
                 this.replace(this.label, reference);
@@ -81,8 +92,15 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
     private final SpreadsheetLabelMappingExpressionReference reference;
 
-    private static void checkReference(final SpreadsheetLabelMappingExpressionReference reference) {
+    private static void checkReference(final SpreadsheetLabelMappingExpressionReference reference,
+                                       final SpreadsheetLabelName label) {
         Objects.requireNonNull(reference, "reference");
+        if (reference.equals(label)) {
+            throw new IllegalArgumentException(
+                    "Reference " + CharSequences.quote(reference.toString()) +
+                            " must be different to label " + CharSequences.quote(label.toString())
+            );
+        }
     }
 
     private SpreadsheetLabelMapping replace(final SpreadsheetLabelName label,

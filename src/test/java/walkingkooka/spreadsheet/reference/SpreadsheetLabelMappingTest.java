@@ -23,7 +23,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -53,6 +52,11 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     }
 
     @Test
+    public void testWithReferenceSameAsLabelFails() {
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetLabelMapping.with(LABEL, LABEL));
+    }
+
+    @Test
     public void testWith() {
         final SpreadsheetLabelMapping mapping = this.createObject();
         this.checkLabel(mapping, LABEL);
@@ -64,6 +68,15 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Test
     public void testSetLabelNullFails() {
         assertThrows(NullPointerException.class, () -> this.createObject().setLabel(null));
+    }
+
+    @Test
+    public void testSetLabelSameAsReferenceFails() {
+        final SpreadsheetLabelName different = SpreadsheetLabelName.with("different");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(LABEL, different);
+
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> mapping.setLabel(different));
+        assertEquals("New label \"different\" must be different from reference \"different\"", thrown.getMessage());
     }
 
     @Test
@@ -88,6 +101,15 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Test
     public void testSetReferenceNullFails() {
         assertThrows(NullPointerException.class, () -> this.createObject().setReference(null));
+    }
+
+    @Test
+    public void testSetReferenceSameLabelFails() {
+        final SpreadsheetLabelMapping mapping = this.createObject();
+        assertSame(LABEL, mapping.label());
+
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> mapping.setReference(LABEL));
+        assertEquals("Reference \"label\" must be different to label \"label\"", thrown.getMessage());
     }
 
     @Test
@@ -132,7 +154,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Test
     public void testJsonRoundtripLabelName() {
-        this.marshallRoundTrip2(SpreadsheetLabelName.labelName("LABEL123"));
+        this.marshallRoundTrip2(SpreadsheetLabelName.labelName("LABEL456"));
     }
 
     @Test
