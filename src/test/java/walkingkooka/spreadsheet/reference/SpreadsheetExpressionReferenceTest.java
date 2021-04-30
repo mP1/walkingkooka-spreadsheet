@@ -22,15 +22,15 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<SpreadsheetExpressionReference>,
+        JsonNodeMarshallingTesting<SpreadsheetExpressionReference>,
         ParseStringTesting<SpreadsheetExpressionReference> {
 
     @Test
@@ -152,8 +152,24 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
                 SpreadsheetExpressionReference.unmarshall(JsonNode.string(label), this.unmarshallContext()));
     }
 
-    private JsonNodeUnmarshallContext unmarshallContext() {
-        return JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake());
+    @Test
+    public void testJsonRoundtripCellReference() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.parseCellReference("A1"));
+    }
+
+    @Test
+    public void testJsonRoundtripLabel() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.labelName("Label123"));
+    }
+
+    @Test
+    public void testJsonRoundtripRange() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.parseRange("B2:C3"));
+    }
+
+    @Test
+    public void testJsonRoundtripViewport() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.parseViewport("B2:100:200"));
     }
 
     // parse............................................................................................................
@@ -222,6 +238,19 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // JsonNodeTesting...................................................................................................
+
+    @Override
+    public SpreadsheetExpressionReference unmarshall(final JsonNode node,
+                                                     final JsonNodeUnmarshallContext context) {
+        return SpreadsheetExpressionReference.unmarshallExpressionReference(node, context);
+    }
+
+    @Override
+    public SpreadsheetExpressionReference createJsonNodeMappingValue() {
+        return SpreadsheetExpressionReference.parse("A1");
     }
 
     // ParseStringTesting...............................................................................................
