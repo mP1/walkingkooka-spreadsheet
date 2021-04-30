@@ -133,17 +133,28 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     // parse............................................................................................................
 
     /**
-     * Parsers the given text into a {@link SpreadsheetCellReference}, {@link SpreadsheetLabelName} or {@link SpreadsheetRange}.
-     * Attempts to parse {@link SpreadsheetViewport} in text will fail.
+     * Parsers the given text into of the sub classes of {@link SpreadsheetExpressionReference}.
      */
     public static SpreadsheetExpressionReference parse(final String text) {
         Objects.requireNonNull(text, "text");
 
-        return text.contains(":") ?
-                parseRange(text) :
-                isCellReferenceText(text) ?
+        final SpreadsheetExpressionReference reference;
+
+        switch (text.split(":").length) {
+            case 1:
+                reference = isCellReferenceText(text) ?
                         parseCellReference(text) :
                         labelName(text);
+                break;
+            case 2:
+                reference = parseRange(text);
+                break;
+            default:
+                reference = parseViewport(text);
+                break;
+        }
+
+        return reference;
     }
 
     /**
