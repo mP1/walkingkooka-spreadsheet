@@ -106,9 +106,22 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
     }
 
     @Test
-    public void testMapping() {
+    public void testMappingCellReference() {
+        this.mappingAndCheck(SpreadsheetExpressionReference.parseCellReference("A1"));
+    }
+
+    @Test
+    public void testMappingLabel() {
+        this.mappingAndCheck(SpreadsheetExpressionReference.labelName("LABEL456"));
+    }
+
+    @Test
+    public void testMappingRange() {
+        this.mappingAndCheck(SpreadsheetExpressionReference.parseRange("A1:b2"));
+    }
+
+    private void mappingAndCheck(final SpreadsheetLabelMappingExpressionReference reference) {
         final SpreadsheetLabelName label = SpreadsheetLabelName.with("LABEL123");
-        final SpreadsheetExpressionReference reference = SpreadsheetExpressionReference.parse("A1");
 
         final SpreadsheetLabelMapping mapping = label.mapping(reference);
         assertSame(label, mapping.label(), "label");

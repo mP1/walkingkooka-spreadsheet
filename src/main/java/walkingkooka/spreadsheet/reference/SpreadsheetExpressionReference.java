@@ -172,6 +172,28 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
+     * {@see #parse}
+     */
+    public static SpreadsheetLabelMappingExpressionReference parseSpreadsheetLabelMappingExpressionReference(final String text) {
+        Objects.requireNonNull(text, "text");
+
+        final SpreadsheetLabelMappingExpressionReference reference;
+
+        switch (text.split(":").length) {
+            case 1:
+                reference = isCellReferenceText(text) ?
+                        parseCellReference(text) :
+                        labelName(text);
+                break;
+            default:
+                reference = parseRange(text);
+                break;
+        }
+
+        return reference;
+    }
+
+    /**
      * Parsers the text expecting a valid {@link SpreadsheetRange} or fails.
      */
     public static SpreadsheetRange parseRange(final String text) {
@@ -308,6 +330,17 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
+     * Accepts a json string and returns a {@link SpreadsheetLabelMappingExpressionReference} or fails.
+     */
+    static SpreadsheetLabelMappingExpressionReference unmarshallSpreadsheetLabelMappingExpressionReference(final JsonNode node,
+                                                                                                           final JsonNodeUnmarshallContext context) {
+        return unmarshall0(
+                node,
+                SpreadsheetExpressionReference::parseSpreadsheetLabelMappingExpressionReference
+        );
+    }
+
+    /**
      * Accepts a json string and returns a {@link SpreadsheetViewport} or fails.
      */
     static SpreadsheetViewport unmarshallViewport(final JsonNode node,
@@ -318,8 +351,8 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * Generic helper that tries to convert the node into a string and call a parse method.
      */
-    private static <R extends SpreadsheetExpressionReference> R unmarshall0(final JsonNode node,
-                                                                            final Function<String, R> parse) {
+    private static <R extends ExpressionReference> R unmarshall0(final JsonNode node,
+                                                                 final Function<String, R> parse) {
         Objects.requireNonNull(node, "node");
 
         return parse.apply(node.stringOrFail());
@@ -328,7 +361,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * The json form of this object is also {@link #toString()}
      */
-    final JsonNode marshall(final JsonNodeMarshallContext context) {
+    public final JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonObject.string(this.toString());
     }
 
@@ -354,6 +387,13 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
 
         //noinspection StaticInitializerReferencesSubClass
         register(
+                SpreadsheetExpressionReference::unmarshallSpreadsheetLabelMappingExpressionReference,
+                SpreadsheetLabelMappingExpressionReference::marshall,
+                SpreadsheetLabelMappingExpressionReference.class
+        );
+
+        //noinspection StaticInitializerReferencesSubClass
+        register(
                 SpreadsheetRange::unmarshallRange,
                 SpreadsheetRange::marshall,
                 SpreadsheetRange.class
@@ -369,10 +409,9 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
         SpreadsheetLabelMapping.init();
     }
 
-    private static <T extends SpreadsheetExpressionReference> void register(
-            final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
-            final BiFunction<T, JsonNodeMarshallContext, JsonNode> to,
-            final Class<T> type) {
+    private static <T extends ExpressionReference> void register(final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
+                                                                 final BiFunction<T, JsonNodeMarshallContext, JsonNode> to,
+                                                                 final Class<T> type) {
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(type),
                 from,
