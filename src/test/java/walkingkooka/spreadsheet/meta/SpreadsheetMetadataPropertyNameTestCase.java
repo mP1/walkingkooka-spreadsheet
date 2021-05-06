@@ -21,8 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.TextStylePropertyName;
 
+import java.math.MathContext;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -45,6 +51,21 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                 TextStylePropertyName.values()
                         .stream()
                         .anyMatch(p -> p.value().equals(property))
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetMetadataJsonRoundtrip() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(this.createName(), this.propertyValue());
+
+        final JsonNode node = JsonNodeMarshallContexts.basic()
+                .marshall(metadata);
+        assertEquals(
+                metadata,
+                JsonNodeUnmarshallContexts.basic(
+                        ExpressionNumberContexts.basic(ExpressionNumberKind.DOUBLE, MathContext.DECIMAL32)
+                ).unmarshall(node, SpreadsheetMetadata.class)
         );
     }
 
