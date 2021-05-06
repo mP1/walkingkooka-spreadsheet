@@ -20,10 +20,13 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
+import java.util.Locale;
+import java.util.Optional;
+
 /**
  * Holds the home cell at the viewport-coordinates.
  */
-final class SpreadsheetMetadataPropertyNameViewportCell extends SpreadsheetMetadataPropertyNameSpreadsheetCellReference {
+final class SpreadsheetMetadataPropertyNameViewportCell extends SpreadsheetMetadataPropertyName<SpreadsheetCellReference> {
 
     /**
      * Singleton
@@ -37,6 +40,36 @@ final class SpreadsheetMetadataPropertyNameViewportCell extends SpreadsheetMetad
      */
     private SpreadsheetMetadataPropertyNameViewportCell() {
         super("viewport-cell");
+    }
+
+    /**
+     * After checking the type force the {@link SpreadsheetCellReference#toRelative()}
+     */
+    @Override
+    final SpreadsheetCellReference checkValue0(final Object value) {
+        return this.checkValueType(value,
+                v -> v instanceof SpreadsheetCellReference)
+                .toRelative();
+    }
+
+    @Override
+    final String expected() {
+        return SpreadsheetCellReference.class.getSimpleName();
+    }
+
+    @Override
+    final Optional<SpreadsheetCellReference> extractLocaleValue(final Locale locale) {
+        return Optional.empty();
+    }
+
+    @Override
+    final Class<SpreadsheetCellReference> type() {
+        return SpreadsheetCellReference.class;
+    }
+
+    @Override
+    final String compareToName() {
+        return this.value();
     }
 
     @Override
