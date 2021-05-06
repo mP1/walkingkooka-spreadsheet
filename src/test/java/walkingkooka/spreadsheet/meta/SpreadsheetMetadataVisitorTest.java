@@ -36,7 +36,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 
@@ -112,6 +113,27 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 assertSame(value, v, "value");
             }
         }.accept(metadata);
+    }
+
+
+    @Test
+    public void testVisitCellSpreadsheetCellReference() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitCell(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
+                this.visited = cellOrLabel;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.CELL, SpreadsheetCellReference.parseCellReference("A2:B3"));
+    }
+
+    @Test
+    public void testVisitCellSpreadsheetLabelName() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitCell(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
+                this.visited = cellOrLabel;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.CELL, SpreadsheetExpressionReference.labelName("Label123"));
     }
 
     @Test
@@ -222,26 +244,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = i;
             }
         }.accept(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
-    }
-
-    @Test
-    public void testVisitEditCell() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitEditCell(final SpreadsheetCellReference cell) {
-                this.visited = cell;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.EDIT_CELL, SpreadsheetCellReference.parseCellReference("A2:B3"));
-    }
-
-    @Test
-    public void testVisitEditRange() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitEditRange(final SpreadsheetRange range) {
-                this.visited = range;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.EDIT_RANGE, SpreadsheetRange.parseRange("B2:C3"));
     }
 
     @Test

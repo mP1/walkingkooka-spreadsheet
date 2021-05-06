@@ -50,7 +50,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
@@ -2032,6 +2031,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testJsonNodeMarshallRoundtrip() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
+        properties.put(SpreadsheetMetadataPropertyName.CELL, SpreadsheetCellReference.parse("C987"));
         properties.put(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 0);
         properties.put(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59));
         properties.put(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
@@ -2050,8 +2050,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         .set(TextStylePropertyName.HEIGHT, Length.pixel(60.0))
                         .set(TextStylePropertyName.WIDTH, Length.pixel(15.0))
         );
-        properties.put(SpreadsheetMetadataPropertyName.EDIT_CELL, SpreadsheetCellReference.parse("C987"));
-        properties.put(SpreadsheetMetadataPropertyName.EDIT_RANGE, SpreadsheetRange.parseRange("B99-C100"));
         properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL);
         properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, GROUPING_SEPARATOR);

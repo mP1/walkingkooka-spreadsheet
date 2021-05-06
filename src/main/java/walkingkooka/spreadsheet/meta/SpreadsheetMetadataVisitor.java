@@ -34,7 +34,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
@@ -98,6 +98,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
 
     // properties..........................................................................................................
 
+    protected void visitCell(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
+        // nop
+    }
+
     protected void visitCellCharacterWidth(final Integer value) {
         // nop
     }
@@ -139,14 +143,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitDefaultYear(final int defaultYear) {
-        // nop
-    }
-
-    protected void visitEditCell(final SpreadsheetCellReference cell) {
-        // nop
-    }
-
-    protected void visitEditRange(final SpreadsheetRange range) {
         // nop
     }
 

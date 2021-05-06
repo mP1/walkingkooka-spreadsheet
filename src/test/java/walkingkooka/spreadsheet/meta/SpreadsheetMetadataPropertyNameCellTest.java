@@ -19,13 +19,17 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 
 import java.util.Locale;
 
-public abstract class SpreadsheetMetadataPropertyNameSpreadsheetCellReferenceTestCase<N extends SpreadsheetMetadataPropertyNameSpreadsheetCellReference> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetCellReference> {
 
-    SpreadsheetMetadataPropertyNameSpreadsheetCellReferenceTestCase() {
-        super();
+public final class SpreadsheetMetadataPropertyNameCellTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameCell, SpreadsheetCellReferenceOrLabelName> {
+
+    @Test
+    public void testCheckLabel() {
+        this.checkValue(SpreadsheetLabelName.labelName("Label123"));
     }
 
     @Test
@@ -38,6 +42,16 @@ public abstract class SpreadsheetMetadataPropertyNameSpreadsheetCellReferenceTes
         this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
     }
 
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCell.instance(), "edit-cell");
+    }
+
+    @Override
+    SpreadsheetMetadataPropertyNameCell createName() {
+        return SpreadsheetMetadataPropertyNameCell.instance();
+    }
+
     @Override
     final SpreadsheetCellReference propertyValue() {
         return SpreadsheetCellReference.parseCellReference("B99");
@@ -46,5 +60,12 @@ public abstract class SpreadsheetMetadataPropertyNameSpreadsheetCellReferenceTes
     @Override
     final String propertyValueType() {
         return SpreadsheetCellReference.class.getSimpleName();
+    }
+
+    // ClassTesting.....................................................................................................
+
+    @Override
+    public Class<SpreadsheetMetadataPropertyNameCell> type() {
+        return SpreadsheetMetadataPropertyNameCell.class;
     }
 }

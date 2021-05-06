@@ -17,27 +17,39 @@
 
 package walkingkooka.spreadsheet.meta;
 
+
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 
 import java.util.Locale;
 import java.util.Optional;
 
-abstract class SpreadsheetMetadataPropertyNameSpreadsheetCellReference extends SpreadsheetMetadataPropertyName<SpreadsheetCellReference> {
+/**
+ * Holds the cell or label name for that cell currently being edited.
+ */
+final class SpreadsheetMetadataPropertyNameCell extends SpreadsheetMetadataPropertyName<SpreadsheetCellReferenceOrLabelName> {
 
     /**
-     * Package private to limit sub classing.
+     * Singleton
      */
-    SpreadsheetMetadataPropertyNameSpreadsheetCellReference(final String name) {
-        super(name);
+    final static SpreadsheetMetadataPropertyNameCell instance() {
+        return new SpreadsheetMetadataPropertyNameCell();
+    }
+
+    /**
+     * Private constructor use singleton.
+     */
+    private SpreadsheetMetadataPropertyNameCell() {
+        super("edit-cell");
     }
 
     /**
      * After checking the type force the {@link SpreadsheetCellReference#toRelative()}
      */
     @Override
-    final SpreadsheetCellReference checkValue0(final Object value) {
+    final SpreadsheetCellReferenceOrLabelName checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetCellReference)
+                v -> v instanceof SpreadsheetCellReferenceOrLabelName)
                 .toRelative();
     }
 
@@ -47,17 +59,23 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetCellReference extends S
     }
 
     @Override
-    final Optional<SpreadsheetCellReference> extractLocaleValue(final Locale locale) {
+    final Optional<SpreadsheetCellReferenceOrLabelName> extractLocaleValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    final Class<SpreadsheetCellReference> type() {
-        return SpreadsheetCellReference.class;
+    final Class<SpreadsheetCellReferenceOrLabelName> type() {
+        return SpreadsheetCellReferenceOrLabelName.class;
     }
 
     @Override
     final String compareToName() {
         return this.value();
+    }
+
+    @Override
+    void accept(final SpreadsheetCellReferenceOrLabelName value,
+                final SpreadsheetMetadataVisitor visitor) {
+        visitor.visitCell(value);
     }
 }

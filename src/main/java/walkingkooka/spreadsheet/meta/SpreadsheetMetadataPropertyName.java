@@ -38,7 +38,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -77,6 +77,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
         SpreadsheetMetadataPropertyName.CONSTANTS.put(constant.name, constant);
         return constant;
     }
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>edit-cell</code> {@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference}.
+     */
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetCellReferenceOrLabelName> CELL = registerConstant(SpreadsheetMetadataPropertyNameCell.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
@@ -132,16 +137,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * A {@link SpreadsheetMetadataPropertyName} holding the {@link Integer} <code>default-year</code>
      */
     public final static SpreadsheetMetadataPropertyName<Integer> DEFAULT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameDefaultYear.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>edit-cell</code> {@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference}.
-     */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetCellReference> EDIT_CELL = registerConstant(SpreadsheetMetadataPropertyNameEditCell.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>edit-range</code> {@link SpreadsheetRange}.
-     */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetRange> EDIT_RANGE = registerConstant(SpreadsheetMetadataPropertyNameEditRange.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
