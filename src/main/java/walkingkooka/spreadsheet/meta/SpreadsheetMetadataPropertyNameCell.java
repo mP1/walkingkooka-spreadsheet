@@ -40,7 +40,7 @@ final class SpreadsheetMetadataPropertyNameCell extends SpreadsheetMetadataPrope
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameCell() {
-        super("edit-cell");
+        super("cell");
     }
 
     /**

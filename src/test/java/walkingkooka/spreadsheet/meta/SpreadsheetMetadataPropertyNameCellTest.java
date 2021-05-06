@@ -44,7 +44,7 @@ public final class SpreadsheetMetadataPropertyNameCellTest extends SpreadsheetMe
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCell.instance(), "edit-cell");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCell.instance(), "cell");
     }
 
     @Override
