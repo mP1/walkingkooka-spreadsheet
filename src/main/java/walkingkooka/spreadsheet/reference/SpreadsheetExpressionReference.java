@@ -172,6 +172,17 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
+     * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}
+     */
+    public static SpreadsheetCellReferenceOrLabelName parseCellReferenceOrLabelName(final String text) {
+        Objects.requireNonNull(text, "text");
+
+        return isCellReferenceText(text) ?
+                parseCellReference(text) :
+                labelName(text);
+    }
+
+    /**
      * {@see #parse}
      */
     public static SpreadsheetLabelMappingExpressionReference parseSpreadsheetLabelMappingExpressionReference(final String text) {

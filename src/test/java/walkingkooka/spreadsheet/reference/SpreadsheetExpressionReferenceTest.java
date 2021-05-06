@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
@@ -226,6 +227,67 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     public void testParseViewport() {
         final SpreadsheetViewport viewport = SpreadsheetExpressionReference.parseViewport("B9:40:50.75");
         this.parseStringAndCheck(viewport.toString(), viewport);
+    }
+
+    // parseCellReferenceOrLabelName....................................................................................
+
+    @Test
+    public void testParseCellReferenceOrLabelNameNullFails() {
+        parseCellReferenceOrLabelNameFails(
+                null,
+                NullPointerException.class
+        );
+    }
+
+    @Test
+    public void testParseCellReferenceOrLabelNameEmptyFails() {
+        parseCellReferenceOrLabelNameFails(
+                "",
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
+    public void testParseCellReferenceOrLabelNameRangeFails() {
+        parseCellReferenceOrLabelNameFails(
+                SpreadsheetExpressionReference.parseRange("A1:B2").toString(),
+                InvalidCharacterException.class
+        );
+    }
+
+    @Test
+    public void testParseCellReferenceOrLabelNameViewportFails() {
+        parseCellReferenceOrLabelNameFails(
+                SpreadsheetExpressionReference.parseViewport("A1:400:500").toString(),
+                InvalidCharacterException.class
+        );
+    }
+
+    private void parseCellReferenceOrLabelNameFails(final String text,
+                                                    final Class<? extends RuntimeException> thrown) {
+        assertThrows(thrown, () -> SpreadsheetCellReferenceOrLabelName.parseCellReferenceOrLabelName(text));
+    }
+
+    @Test
+    public void testParseCellReferenceOrLabelNameCell() {
+        final String text = "A1";
+        this.parseCellReferenceOrLabelNameAndCheck(text, SpreadsheetCellReference.parseCellReference(text));
+    }
+
+    @Test
+    public void testParseCellReferenceOrLabelNameLabel() {
+        final String text = "Label123";
+        this.parseCellReferenceOrLabelNameAndCheck(text, SpreadsheetCellReference.labelName(text));
+    }
+
+    private void parseCellReferenceOrLabelNameAndCheck(final String text,
+                                                       final SpreadsheetCellReferenceOrLabelName expected) {
+        final SpreadsheetCellReferenceOrLabelName parsed = SpreadsheetCellReferenceOrLabelName.parseCellReferenceOrLabelName(text);
+        assertEquals(
+                expected,
+                parsed,
+                () -> "Parsing of " + CharSequences.quoteAndEscape(text) + " failed"
+        );
     }
 
     // ClassTesting.....................................................................................................
