@@ -18,9 +18,22 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+
+import java.util.Locale;
 
 
-public final class SpreadsheetMetadataPropertyNameViewportCellTest extends SpreadsheetMetadataPropertyNameSpreadsheetCellReferenceTestCase<SpreadsheetMetadataPropertyNameViewportCell> {
+public final class SpreadsheetMetadataPropertyNameViewportCellTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameViewportCell, SpreadsheetCellReference> {
+
+    @Test
+    public final void testInvalidSpreadsheetCellReferenceFails() {
+        this.checkValueFails("invalid", "Expected SpreadsheetCellReference, but got \"invalid\" for \"" + this.createName().value() + "\"");
+    }
+
+    @Test
+    public final void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+    }
 
     @Test
     public void testToString() {
@@ -30,6 +43,16 @@ public final class SpreadsheetMetadataPropertyNameViewportCellTest extends Sprea
     @Override
     SpreadsheetMetadataPropertyNameViewportCell createName() {
         return SpreadsheetMetadataPropertyNameViewportCell.instance();
+    }
+
+    @Override
+    final SpreadsheetCellReference propertyValue() {
+        return SpreadsheetCellReference.parseCellReference("B99");
+    }
+
+    @Override
+    final String propertyValueType() {
+        return SpreadsheetCellReference.class.getSimpleName();
     }
 
     // ClassTesting.....................................................................................................
