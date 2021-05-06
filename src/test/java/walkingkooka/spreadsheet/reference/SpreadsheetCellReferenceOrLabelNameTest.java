@@ -17,12 +17,56 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 
-public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesting<SpreadsheetCellReferenceOrLabelName<?>> {
+public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesting<SpreadsheetCellReferenceOrLabelName<?>>,
+        JsonNodeMarshallingTesting<SpreadsheetCellReferenceOrLabelName<?>> {
+
+    @Test
+    public void testUnmarshallCellReference() {
+        this.unmarshallAndCheck2(SpreadsheetExpressionReference.parseCellReference("B2"));
+    }
+
+    @Test
+    public void testUnmarshallLabel() {
+        this.unmarshallAndCheck2(SpreadsheetExpressionReference.labelName("LABEL123456"));
+    }
+
+    private void unmarshallAndCheck2(final SpreadsheetCellReferenceOrLabelName<?> reference) {
+        this.unmarshallAndCheck(
+                JsonNode.string(reference.toString()),
+                reference
+        );
+    }
+
+    @Test
+    public void testUnmarshallRangeFails() {
+        this.unmarshallFails2(
+                SpreadsheetExpressionReference.parseRange("A1:B2")
+        );
+    }
+
+    @Test
+    public void testUnmarshallViewportFails() {
+        this.unmarshallFails2(
+                SpreadsheetExpressionReference.parseViewport("A1:100:200")
+        );
+    }
+
+    private void unmarshallFails2(final SpreadsheetExpressionReference reference) {
+        this.unmarshallFails(
+                JsonNode.string(
+                        reference.toString()
+                )
+        );
+    }
 
     // ClassTesting.....................................................................................................
 
@@ -34,5 +78,21 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // json..............................................................................................................
+
+    @Override
+    public SpreadsheetCellReferenceOrLabelName<?> unmarshall(final JsonNode node,
+                                                             final JsonNodeUnmarshallContext context) {
+        return SpreadsheetExpressionReference.unmarshallSpreadsheetCellReferenceOrLabelName(
+                node,
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetCellReferenceOrLabelName<?> createJsonNodeMappingValue() {
+        return SpreadsheetExpressionReference.parseCellReferenceOrLabelName("A1");
     }
 }
