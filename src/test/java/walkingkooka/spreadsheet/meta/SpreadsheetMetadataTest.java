@@ -29,7 +29,6 @@ import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -84,24 +83,27 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testSetEditCellAbsolute() {
-        this.setAndCheck(SpreadsheetMetadataPropertyName.EDIT_CELL);
+    public void testSetCellAbsolute() {
+        this.setAndCheck(
+                SpreadsheetMetadataPropertyName.CELL,
+                SpreadsheetCellReference.parseCellReference("$B$99")
+        );
+    }
+
+    @Test
+    public void testSetCellLabel() {
+        this.setAndCheck(
+                SpreadsheetMetadataPropertyName.CELL,
+                SpreadsheetCellReference.labelName("Label123")
+        );
     }
 
     @Test
     public void testSetViewportCellAbsolute() {
-        this.setAndCheck(SpreadsheetMetadataPropertyName.VIEWPORT_CELL);
-    }
-
-    private void setAndCheck(final SpreadsheetMetadataPropertyName<SpreadsheetCellReference> property) {
-        this.setAndCheck(property,
-                SpreadsheetCellReference.parseCellReference("$B$99"));
-    }
-
-    @Test
-    public void testSetEditRangeAbsolute() {
-        this.setAndCheck(SpreadsheetMetadataPropertyName.EDIT_RANGE,
-                SpreadsheetRange.parseRange("$B$2:$C$3"));
+        this.setAndCheck(
+                SpreadsheetMetadataPropertyName.VIEWPORT_CELL,
+                SpreadsheetCellReference.parseCellReference("$B$99")
+        );
     }
 
     private <T extends SpreadsheetExpressionReference> void setAndCheck(final SpreadsheetMetadataPropertyName<T> property,

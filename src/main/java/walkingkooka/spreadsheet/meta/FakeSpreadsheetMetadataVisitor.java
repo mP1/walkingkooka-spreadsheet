@@ -33,7 +33,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
@@ -65,6 +65,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void endVisit(final SpreadsheetMetadataPropertyName<?> property, final Object value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitCell(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
         throw new UnsupportedOperationException();
     }
 
@@ -120,16 +125,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitDefaultYear(final int defaultYear) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitEditCell(final SpreadsheetCellReference cell) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitEditRange(final SpreadsheetRange range) {
         throw new UnsupportedOperationException();
     }
 
