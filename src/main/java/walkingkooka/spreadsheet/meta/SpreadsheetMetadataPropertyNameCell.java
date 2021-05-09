@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 
+import walkingkooka.Cast;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 
@@ -27,7 +28,7 @@ import java.util.Optional;
 /**
  * Holds the cell or label name for that cell currently being edited.
  */
-final class SpreadsheetMetadataPropertyNameCell extends SpreadsheetMetadataPropertyName<SpreadsheetCellReferenceOrLabelName> {
+final class SpreadsheetMetadataPropertyNameCell extends SpreadsheetMetadataPropertyName<SpreadsheetCellReferenceOrLabelName<?>> {
 
     /**
      * Singleton
@@ -47,7 +48,7 @@ final class SpreadsheetMetadataPropertyNameCell extends SpreadsheetMetadataPrope
      * After checking the type force the {@link SpreadsheetCellReference#toRelative()}
      */
     @Override
-    final SpreadsheetCellReferenceOrLabelName checkValue0(final Object value) {
+    final SpreadsheetCellReferenceOrLabelName<?> checkValue0(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof SpreadsheetCellReferenceOrLabelName)
                 .toRelative();
@@ -59,13 +60,13 @@ final class SpreadsheetMetadataPropertyNameCell extends SpreadsheetMetadataPrope
     }
 
     @Override
-    final Optional<SpreadsheetCellReferenceOrLabelName> extractLocaleValue(final Locale locale) {
+    final Optional<SpreadsheetCellReferenceOrLabelName<?>> extractLocaleValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    final Class<SpreadsheetCellReferenceOrLabelName> type() {
-        return SpreadsheetCellReferenceOrLabelName.class;
+    final Class<SpreadsheetCellReferenceOrLabelName<?>> type() {
+        return Cast.to(SpreadsheetCellReferenceOrLabelName.class);
     }
 
     @Override

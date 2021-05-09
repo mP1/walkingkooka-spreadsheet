@@ -81,7 +81,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>edit-cell</code> {@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference}.
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetCellReferenceOrLabelName> CELL = registerConstant(SpreadsheetMetadataPropertyNameCell.instance());
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetCellReferenceOrLabelName<?>> CELL = registerConstant(SpreadsheetMetadataPropertyNameCell.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>

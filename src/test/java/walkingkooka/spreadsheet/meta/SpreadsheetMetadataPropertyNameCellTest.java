@@ -25,7 +25,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import java.util.Locale;
 
 
-public final class SpreadsheetMetadataPropertyNameCellTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameCell, SpreadsheetCellReferenceOrLabelName> {
+public final class SpreadsheetMetadataPropertyNameCellTest extends SpreadsheetMetadataPropertyNameTestCase<
+        SpreadsheetMetadataPropertyNameCell,
+        SpreadsheetCellReferenceOrLabelName<?>> {
 
     @Test
     public void testCheckLabel() {
