@@ -56,7 +56,7 @@ final class SpreadsheetMetadataPropertyNameCell extends SpreadsheetMetadataPrope
 
     @Override
     final String expected() {
-        return SpreadsheetCellReference.class.getSimpleName();
+        return SpreadsheetCellReferenceOrLabelName.class.getSimpleName();
     }
 
     @Override

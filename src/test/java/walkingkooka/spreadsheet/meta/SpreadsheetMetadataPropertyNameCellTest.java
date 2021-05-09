@@ -36,7 +36,7 @@ public final class SpreadsheetMetadataPropertyNameCellTest extends SpreadsheetMe
 
     @Test
     public final void testInvalidSpreadsheetCellReferenceFails() {
-        this.checkValueFails("invalid", "Expected SpreadsheetCellReference, but got \"invalid\" for \"" + this.createName().value() + "\"");
+        this.checkValueFails("invalid", "Expected SpreadsheetCellReferenceOrLabelName, but got \"invalid\" for \"" + this.createName().value() + "\"");
     }
 
     @Test
@@ -61,7 +61,7 @@ public final class SpreadsheetMetadataPropertyNameCellTest extends SpreadsheetMe
 
     @Override
     final String propertyValueType() {
-        return SpreadsheetCellReference.class.getSimpleName();
+        return SpreadsheetCellReferenceOrLabelName.class.getSimpleName();
     }
 
     // ClassTesting.....................................................................................................
