@@ -26,7 +26,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Objects;
 
 /**
- * The coordinates of a cell.
+ * Absolute coordinates used to position or locate the top left corner of a cell within an entire spreadsheet.
  */
 public final class SpreadsheetCoordinates implements Comparable<SpreadsheetCoordinates> {
 
