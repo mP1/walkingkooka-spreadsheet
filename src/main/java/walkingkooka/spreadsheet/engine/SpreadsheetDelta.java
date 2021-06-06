@@ -24,8 +24,10 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -36,6 +38,7 @@ import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -54,6 +57,7 @@ import java.util.stream.Collectors;
 public abstract class SpreadsheetDelta implements TreePrintable {
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
+    public final static Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> NO_CELL_TO_LABELS = Maps.empty();
     public final static List<SpreadsheetRectangle> NO_WINDOW = Lists.empty();
     public final static Map<SpreadsheetColumnReference, Double> NO_MAX_COLUMN_WIDTHS = Maps.empty();
     public final static Map<SpreadsheetRowReference, Double> NO_MAX_ROW_HEIGHTS = Maps.empty();
@@ -65,6 +69,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         checkCells(cells);
 
         return SpreadsheetDeltaNonWindowed.withNonWindowed(Sets.immutable(cells),
+                NO_CELL_TO_LABELS,
                 NO_MAX_COLUMN_WIDTHS,
                 NO_MAX_ROW_HEIGHTS);
     }
@@ -73,11 +78,13 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      * Package private to limit sub classing.
      */
     SpreadsheetDelta(final Set<SpreadsheetCell> cells,
+                     final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
                      final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
                      final Map<SpreadsheetRowReference, Double> maxRowHeights) {
         super();
 
         this.cells = cells;
+        this.cellToLabels = cellToLabels;
         this.maxColumnWidths = maxColumnWidths;
         this.maxRowHeights = maxRowHeights;
     }
@@ -104,7 +111,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     abstract SpreadsheetDelta replaceCells(final Set<SpreadsheetCell> cells);
 
     /**
-     * Takes a copy of the cells, possibly filtering out cells if a window is present.
+     * Takes a copy of the cells, possibly filtering out cells if a window is present. Note filtering of {@link #cellToLabels} will happen later.
      */
     abstract Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells);
 
@@ -112,6 +119,36 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
     private static void checkCells(final Set<SpreadsheetCell> cells) {
         Objects.requireNonNull(cells, "cells");
+    }
+
+    // cellToLabels............................................................................................................
+
+    public final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels() {
+        return this.cellToLabels;
+    }
+
+    /**
+     * Would be setter that returns a {@link SpreadsheetDelta} holding the given cellToLabels after they are possibly filtered
+     * using the {@link #window()}
+     */
+    public final SpreadsheetDelta setCellToLabels(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels) {
+        checkCellToLabels(cellToLabels);
+
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> copy = filterCellToLabels(cellToLabels, this.cells);
+        return this.cellToLabels.equals(copy) ?
+                this :
+                this.replaceCellToLabels(copy);
+    }
+
+    /**
+     * Sub classes only need to call the right constructor, the map is already immutable and has been filtered by {#link #cells}
+     */
+    abstract SpreadsheetDelta replaceCellToLabels(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels);
+
+    final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels;
+
+    private static void checkCellToLabels(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels) {
+        Objects.requireNonNull(cellToLabels, "cellToLabels");
     }
 
     // maxColumnWidths..................................................................................................
@@ -184,13 +221,16 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
     private SpreadsheetDelta setWindow0(final List<SpreadsheetRectangle> window) {
         final Set<SpreadsheetCell> cells = this.cells;
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels = this.cellToLabels;
         final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.maxColumnWidths;
         final Map<SpreadsheetRowReference, Double> maxRowHeights = this.maxRowHeights;
 
-        final Set<SpreadsheetCell> filtered = maybeFilterCells(cells, window);
+        final Set<SpreadsheetCell> filteredCells = maybeFilterCells(cells, window);
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filteredCellToLabels = filterCellToLabels(cellToLabels, filteredCells);
+
         return window.isEmpty() ?
-                SpreadsheetDeltaNonWindowed.withNonWindowed(filtered, maxColumnWidths, maxRowHeights) :
-                SpreadsheetDeltaWindowed.withWindowed(filtered, maxColumnWidths, maxRowHeights, window);
+                SpreadsheetDeltaNonWindowed.withNonWindowed(filteredCells, filteredCellToLabels, maxColumnWidths, maxRowHeights) :
+                SpreadsheetDeltaWindowed.withWindowed(filteredCells, filteredCellToLabels, maxColumnWidths, maxRowHeights, window);
     }
 
     /**
@@ -220,6 +260,34 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 .collect(Collectors.toCollection(Sets::sorted));
     }
 
+    /**
+     * Returns a {@link Map} removing any references that are not within {@link Set}.
+     */
+    static Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filterCellToLabels(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
+                                                                                       final Set<SpreadsheetCell> cells) {
+        return cellToLabels.isEmpty() ?
+                Maps.empty() :
+                filterCellToLabels0(cellToLabels, cells);
+    }
+
+    private static Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filterCellToLabels0(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
+                                                                                                final Set<SpreadsheetCell> cells) {
+        // temp Set that aill be used to filter references.
+        final Set<SpreadsheetCellReference> references = cells.stream()
+                .map(SpreadsheetCell::reference)
+                .collect(Collectors.toSet());
+
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filtered = Maps.sorted();
+
+        for (final Map.Entry<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellAndLabels : cellToLabels.entrySet()) {
+            final SpreadsheetCellReference reference = cellAndLabels.getKey();
+            if (references.contains(reference)) {
+                filtered.put(reference, Sets.immutable(cellAndLabels.getValue()));
+            }
+        }
+        return Maps.immutable(filtered);
+    }
+
     // TreePrintable.....................................................................................................
 
     @Override
@@ -236,6 +304,18 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 }
             }
             printer.outdent();
+
+            final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels = this.cellToLabels();
+            if (!cellToLabels.isEmpty()) {
+                printer.println("cellToLabels:");
+                printer.indent();
+                {
+                    for (final Map.Entry<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellAndLabels : cellToLabels.entrySet()) {
+                        printer.println(cellAndLabels.getKey() + ": " + cellAndLabels.getValue().stream().map(SpreadsheetLabelName::toString).collect(Collectors.joining(", ")));
+                    }
+                }
+                printer.outdent();
+            }
 
             this.printTreeMap(
                     "columnWidths",
@@ -276,6 +356,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     static SpreadsheetDelta unmarshall(final JsonNode node,
                                        final JsonNodeUnmarshallContext context) {
         Set<SpreadsheetCell> cells = Sets.empty();
+        Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels = NO_CELL_TO_LABELS;
         Map<SpreadsheetColumnReference, Double> maxColumnWidths = NO_MAX_COLUMN_WIDTHS;
         Map<SpreadsheetRowReference, Double> maxRowsHeights = NO_MAX_ROW_HEIGHTS;
         List<SpreadsheetRectangle> window = NO_WINDOW;
@@ -286,6 +367,9 @@ public abstract class SpreadsheetDelta implements TreePrintable {
             switch (name.value()) {
                 case CELLS_PROPERTY_STRING:
                     cells = unmarshallCells(child, context);
+                    break;
+                case CELL_TO_LABELS_PROPERTY_STRING:
+                    cellToLabels = unmarshallCellToLabels(child, context);
                     break;
                 case MAX_COLUMN_WIDTHS_PROPERTY_STRING:
                     maxColumnWidths = unmarshallMap(child, SpreadsheetColumnReference::parseColumn);
@@ -303,6 +387,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
         return with(cells)
                 .setWindow(window)
+                .setCellToLabels(cellToLabels)
                 .setMaxColumnWidths(maxColumnWidths)
                 .setMaxRowHeights(maxRowsHeights);
     }
@@ -316,6 +401,24 @@ public abstract class SpreadsheetDelta implements TreePrintable {
             cells.add(context.unmarshall(JsonNode.object()
                             .set(child.getKey(), child.getValue()),
                     SpreadsheetCell.class));
+        }
+
+        return cells;
+    }
+
+    private static Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> unmarshallCellToLabels(final JsonNode node,
+                                                        final JsonNodeUnmarshallContext context) {
+
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cells = Maps.sorted();
+
+        for (final Map.Entry<JsonPropertyName, JsonNode> child : node.objectOrFail().asMap().entrySet()) {
+            final JsonPropertyName cell = child.getKey();
+            final String labels = child.getValue().stringOrFail();
+
+            cells.put(
+                    SpreadsheetCellReference.parseCellReference(cell.value()),
+                    Arrays.stream(labels.split(",")).map(SpreadsheetLabelName::labelName).collect(Collectors.toSet())
+            );
         }
 
         return cells;
@@ -358,6 +461,9 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      *       }
      *     }
      *   },
+     *   "labels": {
+     *       "A1": "Label1,Label2"
+     *   }
      *   "window": "A1:E5,F6:Z99"
      * }
      * </pre>
@@ -368,6 +474,11 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         final Set<SpreadsheetCell> cells = this.cells;
         if (!cells.isEmpty()) {
             children.add(marshallCells(cells, context).setName(CELLS_PROPERTY));
+        }
+
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels = this.cellToLabels;
+        if (!cellToLabels.isEmpty()) {
+            children.add(marshallCellToLabels(cellToLabels, context).setName(CELL_TO_LABELS_PROPERTY));
         }
 
         final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.maxColumnWidths;
@@ -411,6 +522,27 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     }
 
     /**
+     * Creates a JSON object with each cell reference is a property and the labels are combined into a single CSV.
+     */
+    private static JsonNode marshallCellToLabels(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
+                                                 final JsonNodeMarshallContext context) {
+        final List<JsonNode> children = Lists.array();
+
+        for (final Map.Entry<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellAndLabel : cellToLabels.entrySet()) {
+            final SpreadsheetCellReference cell = cellAndLabel.getKey();
+            final Set<SpreadsheetLabelName> labels = cellAndLabel.getValue();
+            final String labelsCsv = labels.stream()
+                    .map(SpreadsheetLabelName::toString)
+                    .collect(Collectors.joining(","));
+
+            children.add(JsonNode.string(labelsCsv).setName(JsonPropertyName.with(cell.toString())));
+        }
+
+        return JsonNode.object()
+                .setChildren(children);
+    }
+
+    /**
      * Creates a JSON object where the reference in string form is the key and the max width is the value.
      */
     private static <R extends SpreadsheetColumnOrRowReference<R>> JsonNode marshallMap(final Map<R, Double> referenceToWidth,
@@ -432,12 +564,15 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     private final static String WINDOW_SEPARATOR = ",";
 
     private final static String CELLS_PROPERTY_STRING = "cells";
+    private final static String CELL_TO_LABELS_PROPERTY_STRING = "labels";
     private final static String MAX_COLUMN_WIDTHS_PROPERTY_STRING = "maxColumnWidths";
     private final static String MAX_ROW_HEIGHTS_PROPERTY_STRING = "maxRowHeights";
     private final static String WINDOW_PROPERTY_STRING = "window";
 
     // @VisibleForTesting
     final static JsonPropertyName CELLS_PROPERTY = JsonPropertyName.with(CELLS_PROPERTY_STRING);
+    // @VisibleForTesting
+    final static JsonPropertyName CELL_TO_LABELS_PROPERTY = JsonPropertyName.with(CELL_TO_LABELS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName MAX_COLUMN_WIDTHS_PROPERTY = JsonPropertyName.with(MAX_COLUMN_WIDTHS_PROPERTY_STRING);
     // @VisibleForTesting
@@ -483,6 +618,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
     private boolean equals0(final SpreadsheetDelta other) {
         return this.cells.equals(other.cells) &&
+                this.cellToLabels.equals(other.cellToLabels) &&
                 this.maxColumnWidths.equals(other.maxColumnWidths) &&
                 this.maxRowHeights.equals(other.maxRowHeights) &&
                 this.equals1(other);
@@ -501,7 +637,9 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 .valueSeparator(", ")
                 .enable(ToStringBuilderOption.QUOTE)
                 .label("cells")
-                .value(this.cells);
+                .value(this.cells)
+                .label("cellToLabels")
+                .value(this.cellToLabels);
 
         final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.maxColumnWidths;
         final Map<SpreadsheetRowReference, Double> maxRowHeights = this.maxRowHeights;
