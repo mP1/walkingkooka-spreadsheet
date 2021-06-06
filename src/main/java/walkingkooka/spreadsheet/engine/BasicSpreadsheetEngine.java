@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
@@ -37,6 +38,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
@@ -46,6 +48,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -98,7 +101,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 return evaluated;
             });
             updated.refreshUpdated();
-            return SpreadsheetDelta.with(updated.cells());
+            return this.prepareDelta(updated.cells(), context);
         }
     }
 
@@ -118,7 +121,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                     context);
             updated.refreshUpdated();
-            return SpreadsheetDelta.with(updated.cells());
+            return this.prepareDelta(updated.cells(), context);
         }
     }
 
@@ -138,7 +141,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .cells()
                     .delete(reference);
             updated.refreshUpdated();
-            return SpreadsheetDelta.with(updated.cells());
+            return this.prepareDelta(updated.cells(), context);
         }
     }
 
@@ -156,7 +159,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count, this, context)
                     .delete();
             updated.refreshUpdated();
-            return SpreadsheetDelta.with(updated.cells());
+            return this.prepareDelta(updated.cells(), context);
         }
     }
 
@@ -172,7 +175,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
                     .delete();
             updated.refreshUpdated();
-            return SpreadsheetDelta.with(updated.cells());
+            return this.prepareDelta(updated.cells(), context);
         }
     }
 
@@ -190,7 +193,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     context)
                     .insert();
             updated.refreshUpdated();
-            return SpreadsheetDelta.with(updated.cells());
+            return this.prepareDelta(updated.cells(), context);
         }
     }
 
@@ -229,8 +232,29 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineFillCells.execute(cells, from, to, this, context);
             updated.refreshUpdated();
-            return SpreadsheetDelta.with(updated.cells());
+            return this.prepareDelta(updated.cells(), context);
         }
+    }
+
+    /**
+     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
+     */
+    private SpreadsheetDelta prepareDelta(final Set<SpreadsheetCell> cells,
+                                          final SpreadsheetEngineContext context) {
+        final SpreadsheetLabelStore store = context.storeRepository()
+                .labels();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellsToLabels = Maps.sorted();
+
+        cells.forEach(cell -> {
+            final SpreadsheetCellReference cellReference = cell.reference();
+            final Set<SpreadsheetLabelName> labels = store.labels(cellReference);
+            if (!labels.isEmpty()) {
+                cellsToLabels.put(cellReference, labels);
+            }
+        });
+
+        return SpreadsheetDelta.with(cells)
+                .setCellToLabels(cellsToLabels);
     }
 
     @Override
