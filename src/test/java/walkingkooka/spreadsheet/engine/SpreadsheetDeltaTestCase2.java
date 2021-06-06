@@ -22,10 +22,14 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -83,6 +87,95 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     public final void testSetCellsSame() {
         final D delta = this.createSpreadsheetDelta();
         assertSame(delta, delta.setCells(this.cells()));
+    }
+
+    @Test
+    public final void testSetCellsDifferent() {
+        final D before = this.createSpreadsheetDelta();
+
+        final Set<SpreadsheetCell> different = Sets.of(
+                SpreadsheetCell.with(
+                        SpreadsheetCellReference.parseCellReference("Z99"),
+                        SpreadsheetFormula.with("99")
+                )
+        );
+
+        final SpreadsheetDelta after = before.setCells(different);
+        assertNotSame(before, after);
+        this.checkCells(after, different);
+        this.checkCellToLabels(after, SpreadsheetDelta.NO_CELL_TO_LABELS);
+    }
+
+    @Test
+    public final void testSetCellsDifferentCellToLabelsFiltered() {
+        final D before = this.createSpreadsheetDelta();
+
+        final Set<SpreadsheetCell> different = Sets.of(this.a1());
+        final SpreadsheetDelta after = before.setCells(different);
+
+        assertNotSame(before, after);
+        this.checkCells(after, different);
+
+        this.checkCellToLabels(after, Maps.of(this.a1().reference(), Sets.of(this.label1a(), this.label1b())));
+    }
+
+    // cellToLabels.....................................................................................................
+
+    @Test
+    public final void testCellToLabelsReadOnly() {
+        final D delta = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels = delta.cellToLabels();
+
+        assertThrows(UnsupportedOperationException.class, () -> cellToLabels.put(this.a1().reference(), Sets.empty()));
+
+        this.checkCellToLabels(delta, this.cellToLabels());
+    }
+
+    @Test
+    public final void testSetCellToLabelsNull() {
+        final D delta = this.createSpreadsheetDelta();
+        assertThrows(NullPointerException.class, () -> delta.setCellToLabels(null));
+    }
+
+    @Test
+    public final void testSetCellToLabelsSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(delta, delta.setCellToLabels(this.cellToLabels()));
+    }
+
+    @Test
+    public final void testSetCellToLabelsDifferent() {
+        final D before = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = this.differentCellToLabels();
+
+        final SpreadsheetDelta after = before.setCellToLabels(different);
+        assertNotSame(before, after);
+        this.checkCellToLabels(after, different);
+    }
+
+    @Test
+    public final void testSetCellToLabelsDifferentFiltered() {
+        final D before = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.of(SpreadsheetCellReference.parseCellReference("Z9"), Sets.of(this.label1a()));
+
+        final SpreadsheetDelta after = before.setCellToLabels(different);
+        assertNotSame(before, after);
+        this.checkCellToLabels(after, Maps.empty());
+        this.checkCells(after, before.cells());
+    }
+
+    @Test
+    public final void testSetCellToLabelsDifferentFiltered2() {
+        final D before = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.of(
+                a1().reference(), Sets.of(this.label1a()),
+                SpreadsheetCellReference.parseCellReference("Z9"), Sets.of(this.label2())
+        );
+
+        final SpreadsheetDelta after = before.setCellToLabels(different);
+        assertNotSame(before, after);
+        this.checkCellToLabels(after, Maps.of(a1().reference(), Sets.of(this.label1a())));
+        this.checkCells(after, before.cells());
     }
 
     // setMaxColumnWidths...............................................................................................
@@ -197,6 +290,14 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     }
 
     @Test
+    public final void testDifferentCellToLabels() {
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels = this.differentCellToLabels();
+        assertNotEquals(this.cellToLabels(), cellToLabels, "cellToLabels and differentCellToLabels must be un equal");
+
+        this.checkNotEquals(this.createSpreadsheetDelta().setCellToLabels(cellToLabels));
+    }
+
+    @Test
     public final void testDifferentMaxColumnWidths() {
         final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.differentMaxColumnWidths();
         assertNotEquals(this.maxColumnWidths(), maxColumnWidths, "cells and differentCells must be un equal");
@@ -280,6 +381,14 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
             updated = updated.set(propertyAndValue.getKey(), propertyAndValue.getValue());
         }
         return updated;
+    }
+
+    final JsonNode cellToLabelsJson() {
+        return JsonNode.parse(
+                "{\"A1\": \"LabelA1A,LabelA1B\"," +
+                        "\"B2\": \"LabelB2\"," +
+                        "\"C3\": \"LabelC3\"}"
+        );
     }
 
     @Override

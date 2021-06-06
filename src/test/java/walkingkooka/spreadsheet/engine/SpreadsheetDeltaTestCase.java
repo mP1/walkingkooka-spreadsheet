@@ -22,8 +22,10 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.json.JsonNode;
@@ -43,7 +45,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         super();
     }
 
-    // helpers.........................................................................................................
+    // cells............................................................................................................
 
     final Set<SpreadsheetCell> cells() {
         return Sets.of(this.a1(), this.b2(), this.c3());
@@ -86,6 +88,49 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 .add(this.cell("ZZ99", "read only")));
     }
 
+    // cellToLabels......................................................................................................
+
+    final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels() {
+        return Maps.of(
+                this.a1().reference(), Sets.of(this.label1a(), this.label1b()),
+                this.b2().reference(), Sets.of(this.label2()),
+                this.c3().reference(), Sets.of(this.label3())
+        );
+    }
+
+    final void checkCellToLabels(final SpreadsheetDelta delta) {
+        this.checkCellToLabels(delta, this.cellToLabels());
+    }
+
+    final void checkCellToLabels(final SpreadsheetDelta delta,
+                          final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels) {
+        assertEquals(cellToLabels, delta.cellToLabels(), "cellToLabels");
+        assertThrows(UnsupportedOperationException.class, () -> delta.cellToLabels()
+                .put(SpreadsheetCellReference.parseCellReference("Z9"), Sets.empty()));
+    }
+
+    final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> differentCellToLabels() {
+        return Map.of(this.a1().reference(), Set.of(SpreadsheetLabelName.labelName("different")));
+    }
+
+    final SpreadsheetLabelName label1a() {
+        return SpreadsheetLabelName.labelName("LabelA1A");
+    }
+
+    final SpreadsheetLabelName label1b() {
+        return SpreadsheetLabelName.labelName("LabelA1B");
+    }
+
+    final SpreadsheetLabelName label2() {
+        return SpreadsheetLabelName.labelName("LabelB2");
+    }
+
+    final SpreadsheetLabelName label3() {
+        return SpreadsheetLabelName.labelName("LabelC3");
+    }
+
+    // maxColumnWidths..................................................................................................
+
     final Map<SpreadsheetColumnReference, Double> maxColumnWidths() {
         return Maps.of(SpreadsheetColumnReference.parseColumn("A"), 50.0);
     }
@@ -104,6 +149,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                                     final Map<SpreadsheetColumnReference, Double> maxColumnWidths) {
         assertEquals(maxColumnWidths, delta.maxColumnWidths(), "maxColumnWidths");
     }
+
+    // maxRowHeights....................................................................................................
 
     final Map<SpreadsheetRowReference, Double> maxRowHeights() {
         return Maps.of(SpreadsheetRowReference.parseRow("1"), 75.0);
