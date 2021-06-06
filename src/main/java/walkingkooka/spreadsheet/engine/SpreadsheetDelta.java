@@ -278,7 +278,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         Set<SpreadsheetCell> cells = Sets.empty();
         Map<SpreadsheetColumnReference, Double> maxColumnWidths = NO_MAX_COLUMN_WIDTHS;
         Map<SpreadsheetRowReference, Double> maxRowsHeights = NO_MAX_ROW_HEIGHTS;
-        List<SpreadsheetRectangle> window = null;
+        List<SpreadsheetRectangle> window = NO_WINDOW;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -301,9 +301,10 @@ public abstract class SpreadsheetDelta implements TreePrintable {
             }
         }
 
-        return null == window ?
-                SpreadsheetDeltaNonWindowed.withNonWindowed(cells, maxColumnWidths, maxRowsHeights) :
-                SpreadsheetDeltaWindowed.withWindowed(cells, maxColumnWidths, maxRowsHeights, window);
+        return with(cells)
+                .setWindow(window)
+                .setMaxColumnWidths(maxColumnWidths)
+                .setMaxRowHeights(maxRowsHeights);
     }
 
     private static Set<SpreadsheetCell> unmarshallCells(final JsonNode node,
