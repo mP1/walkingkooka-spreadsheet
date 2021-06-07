@@ -18,21 +18,86 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase2<SpreadsheetDeltaWindowed> {
 
     public SpreadsheetDeltaWindowedTest() {
         super();
         assertNotEquals(this.window(), this.differentWindow(), "window v differentWindow must NOT be equal");
+    }
+
+    @Test
+    public void testSetCellToLabelsEmpty() {
+        final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.empty();
+
+        final SpreadsheetDelta after = before.setCellToLabels(different);
+        assertNotSame(before, after);
+        this.checkCellToLabels(after, different);
+        this.checkCells(after, before.cells());
+    }
+
+    @Test
+    public void testSetCellToLabelsMissingCellKept() {
+        final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.of(
+                SpreadsheetCellReference.parseCellReference("A3"), Sets.of(SpreadsheetLabelName.labelName("Different"))
+        );
+
+        final SpreadsheetDelta after = before.setCellToLabels(different);
+        assertNotSame(before, after);
+        this.checkCellToLabels(after, different);
+        this.checkCells(after, before.cells());
+    }
+
+    @Test
+    public void testSetCellToLabelsOutsideWindowFiltered() {
+        final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.of(
+                SpreadsheetCellReference.parseCellReference("Z99"), Sets.of(SpreadsheetLabelName.labelName("Different"))
+        );
+
+        final SpreadsheetDelta after = before.setCellToLabels(different);
+        assertNotSame(before, after);
+        this.checkCellToLabels(after, Maps.empty());
+        this.checkCells(after, before.cells());
+    }
+
+    @Test
+    public void testSetCellToLabelsOutsideWindowFiltered2() {
+        final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
+
+        final SpreadsheetCellReference a1 = this.a1().reference();
+        final Set<SpreadsheetLabelName> kept = Sets.of(SpreadsheetLabelName.labelName("Kept"));
+
+        final SpreadsheetCellReference a3 = SpreadsheetCellReference.parseCellReference("A3");
+        final Set<SpreadsheetLabelName> kept3 = Sets.of(SpreadsheetLabelName.labelName("Kept2"));
+
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.of(
+                a1, kept,
+                a3, kept3,
+                SpreadsheetCellReference.parseCellReference("Z99"), Sets.of(SpreadsheetLabelName.labelName("Lost"))
+        );
+
+        final SpreadsheetDelta after = before.setCellToLabels(different);
+        assertNotSame(before, after);
+        this.checkCellToLabels(after, Maps.of(a1, kept, a3, kept3));
+        this.checkCells(after, before.cells());
     }
 
     // TreePrintable.....................................................................................................
@@ -60,7 +125,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "        text: \"3\"\n" +
                         "  window:\n" +
                         "    A1:E5\n" +
-                        "    F6:Z99\n"
+                        "    F6:Y99\n"
         );
     }
 
@@ -91,7 +156,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    C3: LabelC3\n" +
                         "  window:\n" +
                         "    A1:E5\n" +
-                        "    F6:Z99\n"
+                        "    F6:Y99\n"
         );
     }
 
@@ -120,7 +185,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    A: 50.0\n" +
                         "  window:\n" +
                         "    A1:E5\n" +
-                        "    F6:Z99\n"
+                        "    F6:Y99\n"
         );
     }
 
@@ -149,7 +214,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    1: 75.0\n" +
                         "  window:\n" +
                         "    A1:E5\n" +
-                        "    F6:Z99\n"
+                        "    F6:Y99\n"
         );
     }
 
@@ -184,14 +249,14 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    1: 75.0\n" +
                         "  window:\n" +
                         "    A1:E5\n" +
-                        "    F6:Z99\n"
+                        "    F6:Y99\n"
         );
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
 
     private final static JsonString WINDOW_PIXEL_RECTANGLE_JSON_STRING = JsonNode.string("B9:300:50");
-    private final static JsonString WINDOW_RANGE_JSON_STRING = JsonNode.string("A1:E5,F6:Z99");
+    private final static JsonString WINDOW_RANGE_JSON_STRING = JsonNode.string("A1:E5,F6:Y99");
 
     @Test
     public void testUnmarshallCells() {
@@ -342,7 +407,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()),
-                "cells: A1=1, B2=2, C3=3 window: A1:E5, F6:Z99");
+                "cells: A1=1, B2=2, C3=3 window: A1:E5, F6:Y99");
     }
 
     @Test
@@ -352,7 +417,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()),
-                "cells: A1=1, B2=2, C3=3 cellToLabels: A1: LabelA1A, LabelA1B, B2: LabelB2, C3: LabelC3 window: A1:E5, F6:Z99");
+                "cells: A1=1, B2=2, C3=3 cellToLabels: A1: LabelA1A, LabelA1B, B2: LabelB2, C3: LabelC3 window: A1:E5, F6:Y99");
     }
 
     @Test
@@ -362,7 +427,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 this.maxColumnWidths(),
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()),
-                "cells: A1=1, B2=2, C3=3 max: A=50.0 window: A1:E5, F6:Z99");
+                "cells: A1=1, B2=2, C3=3 max: A=50.0 window: A1:E5, F6:Y99");
     }
 
     @Test
@@ -372,7 +437,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                 this.maxRowHeights(),
                 this.window()),
-                "cells: A1=1, B2=2, C3=3 max: 1=75.0 window: A1:E5, F6:Z99");
+                "cells: A1=1, B2=2, C3=3 max: 1=75.0 window: A1:E5, F6:Y99");
     }
 
     @Test
@@ -382,14 +447,14 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 this.maxColumnWidths(),
                 this.maxRowHeights(),
                 this.window()),
-                "cells: A1=1, B2=2, C3=3 max: A=50.0, 1=75.0 window: A1:E5, F6:Z99");
+                "cells: A1=1, B2=2, C3=3 max: A=50.0, 1=75.0 window: A1:E5, F6:Y99");
     }
 
     // helpers..........................................................................................................
 
     @Override
     final List<SpreadsheetRectangle> window() {
-        return this.window0("A1:E5", "F6:Z99");
+        return this.window0("A1:E5", "F6:Y99");
     }
 
     private List<SpreadsheetRectangle> windowPixelRectangle() {

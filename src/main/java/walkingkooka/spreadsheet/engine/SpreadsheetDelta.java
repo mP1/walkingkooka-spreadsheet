@@ -23,6 +23,7 @@ import walkingkooka.ToStringBuilderOption;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
@@ -48,6 +49,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -133,7 +135,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     public final SpreadsheetDelta setCellToLabels(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels) {
         checkCellToLabels(cellToLabels);
 
-        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> copy = filterCellToLabels(cellToLabels, this.cells);
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> copy = filterCellToLabels(cellToLabels, this.window());
         return this.cellToLabels.equals(copy) ?
                 this :
                 this.replaceCellToLabels(copy);
@@ -225,7 +227,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         final Map<SpreadsheetRowReference, Double> maxRowHeights = this.maxRowHeights;
 
         final Set<SpreadsheetCell> filteredCells = filterCells0(cells, window);
-        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filteredCellToLabels = filterCellToLabels(cellToLabels, filteredCells);
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filteredCellToLabels = filterCellToLabels(cellToLabels, this.window());
 
         return window.isEmpty() ?
                 SpreadsheetDeltaNonWindowed.withNonWindowed(filteredCells, filteredCellToLabels, maxColumnWidths, maxRowHeights) :
@@ -244,11 +246,6 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 Sets.readOnly(filterCells1(cells, Cast.to(window)));
     }
 
-    private static boolean containsViewport(final List<SpreadsheetRectangle> window) {
-        return window.stream()
-                .anyMatch(SpreadsheetRectangle::isViewport);
-    }
-
     private static Set<SpreadsheetCell> filterCells1(final Set<SpreadsheetCell> cells,
                                                      final List<SpreadsheetRange> ranges) {
         return cells.stream()
@@ -263,28 +260,44 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      * Returns a {@link Map} removing any references that are not within {@link Set}.
      */
     static Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filterCellToLabels(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
-                                                                                       final Set<SpreadsheetCell> cells) {
+                                                                                       final List<SpreadsheetRectangle> window) {
         return cellToLabels.isEmpty() ?
                 Maps.empty() :
-                filterCellToLabels0(cellToLabels, cells);
+                filterCellToLabels0(
+                        cellToLabels,
+                        window
+                );
     }
 
+    /**
+     * Copies and filters the cels using the filter to decide which cell to label mappings are kept.
+     */
     private static Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filterCellToLabels0(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
-                                                                                                final Set<SpreadsheetCell> cells) {
-        // temp Set that aill be used to filter references.
-        final Set<SpreadsheetCellReference> references = cells.stream()
-                .map(SpreadsheetCell::reference)
-                .collect(Collectors.toSet());
+                                                                                                final List<SpreadsheetRectangle> window) {
+
+        final Predicate<SpreadsheetCellReference> filter = window.isEmpty() || containsViewport(window) ?
+                Predicates.always() :
+                windowRangesPredicate(Cast.to(window));
 
         final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filtered = Maps.sorted();
 
         for (final Map.Entry<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellAndLabels : cellToLabels.entrySet()) {
             final SpreadsheetCellReference reference = cellAndLabels.getKey();
-            if (references.contains(reference)) {
+            if (filter.test(reference)) {
                 filtered.put(reference, Sets.immutable(cellAndLabels.getValue()));
             }
         }
         return Maps.immutable(filtered);
+    }
+
+    private static boolean containsViewport(final List<SpreadsheetRectangle> window) {
+        return window.stream()
+                .anyMatch(SpreadsheetRectangle::isViewport);
+    }
+
+    private static Predicate<SpreadsheetCellReference> windowRangesPredicate(final List<SpreadsheetRange> window) {
+        return (r) -> window.stream()
+                .anyMatch(rr -> rr.test(r));
     }
 
     // TreePrintable.....................................................................................................
