@@ -103,7 +103,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells) {
+    Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
         return Sets.immutable(cells); // already empty
     }
 

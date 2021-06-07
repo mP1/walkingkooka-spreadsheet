@@ -102,8 +102,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     private final List<SpreadsheetRectangle> window;
 
     @Override
-    Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells) {
-        return maybeFilterCells(cells, this.window);
+    Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
+        return filterCells0(cells, this.window);
     }
 
     // TreePrintable.....................................................................................................
