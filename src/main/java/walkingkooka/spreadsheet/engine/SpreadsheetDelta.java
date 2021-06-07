@@ -101,7 +101,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     public final SpreadsheetDelta setCells(final Set<SpreadsheetCell> cells) {
         checkCells(cells);
 
-        final Set<SpreadsheetCell> copy = this.copyCells(cells);
+        final Set<SpreadsheetCell> copy = this.filterCells(cells);
         return this.cells.equals(copy) ?
                 this :
                 this.replaceCells(copy);
@@ -112,7 +112,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     /**
      * Takes a copy of the cells, possibly filtering out cells if a window is present. Note filtering of {@link #cellToLabels} will happen later.
      */
-    abstract Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells);
+    abstract Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells);
 
     final Set<SpreadsheetCell> cells;
 
@@ -224,7 +224,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.maxColumnWidths;
         final Map<SpreadsheetRowReference, Double> maxRowHeights = this.maxRowHeights;
 
-        final Set<SpreadsheetCell> filteredCells = maybeFilterCells(cells, window);
+        final Set<SpreadsheetCell> filteredCells = filterCells0(cells, window);
         final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filteredCellToLabels = filterCellToLabels(cellToLabels, filteredCells);
 
         return window.isEmpty() ?
@@ -237,20 +237,20 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      * This abort of filtering for the later is necessary because there is no way of accurately determining if a cell is
      * within the {@link SpreadsheetViewport}.
      */
-    static Set<SpreadsheetCell> maybeFilterCells(final Set<SpreadsheetCell> cells,
-                                                 final List<SpreadsheetRectangle> window) {
-        return window.isEmpty() || isContainsPixelRectangle(window) ?
+    static Set<SpreadsheetCell> filterCells0(final Set<SpreadsheetCell> cells,
+                                             final List<SpreadsheetRectangle> window) {
+        return window.isEmpty() || containsViewport(window) ?
                 Sets.immutable(cells) :
-                Sets.readOnly(filterCells(cells, Cast.to(window)));
+                Sets.readOnly(filterCells1(cells, Cast.to(window)));
     }
 
-    private static boolean isContainsPixelRectangle(final List<SpreadsheetRectangle> window) {
+    private static boolean containsViewport(final List<SpreadsheetRectangle> window) {
         return window.stream()
                 .anyMatch(SpreadsheetRectangle::isViewport);
     }
 
-    private static Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                                    final List<SpreadsheetRange> ranges) {
+    private static Set<SpreadsheetCell> filterCells1(final Set<SpreadsheetCell> cells,
+                                                     final List<SpreadsheetRange> ranges) {
         return cells.stream()
                 .filter(c -> {
                     return ranges.stream()
