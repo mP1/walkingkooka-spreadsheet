@@ -68,7 +68,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         // cells have already been filtered by window
         return new SpreadsheetDeltaNonWindowed(
                 cells,
-                filterCellToLabels(this.cellToLabels, cells),
+                this.cellToLabels,
                 this.maxColumnWidths,
                 this.maxRowHeights
         );

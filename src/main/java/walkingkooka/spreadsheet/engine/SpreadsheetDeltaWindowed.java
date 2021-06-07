@@ -66,7 +66,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         // cells have already been filtered by window
         return new SpreadsheetDeltaWindowed(
                 cells,
-                filterCellToLabels(this.cellToLabels, cells),
+                this.cellToLabels,
                 this.maxColumnWidths,
                 this.maxRowHeights,
                 this.window
