@@ -38,7 +38,6 @@ import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
-import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -241,7 +240,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     static Set<SpreadsheetCell> maybeFilterCells(final Set<SpreadsheetCell> cells,
                                                  final List<SpreadsheetRectangle> window) {
         return window.isEmpty() || isContainsPixelRectangle(window) ?
-                cells :
+                Sets.immutable(cells) :
                 Sets.readOnly(filterCells(cells, Cast.to(window)));
     }
 
