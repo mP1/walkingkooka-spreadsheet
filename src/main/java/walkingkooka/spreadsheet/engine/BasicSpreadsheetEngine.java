@@ -101,7 +101,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 return evaluated;
             });
             updated.refreshUpdated();
-            return this.prepareDelta(updated.cells(), context);
+            return this.prepareDelta(reference, updated.cells(), context);
         }
     }
 
@@ -236,25 +236,40 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    private SpreadsheetDelta prepareDelta(final Set<SpreadsheetCell> cells,
+                                          final SpreadsheetEngineContext context) {
+        return this.prepareDelta(null, cells, context);
+    }
+
     /**
      * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
      */
-    private SpreadsheetDelta prepareDelta(final Set<SpreadsheetCell> cells,
+    private SpreadsheetDelta prepareDelta(final SpreadsheetCellReference get,
+                                          final Set<SpreadsheetCell> cells,
                                           final SpreadsheetEngineContext context) {
         final SpreadsheetLabelStore store = context.storeRepository()
                 .labels();
         final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellsToLabels = Maps.sorted();
 
         cells.forEach(cell -> {
-            final SpreadsheetCellReference cellReference = cell.reference();
-            final Set<SpreadsheetLabelName> labels = store.labels(cellReference);
-            if (!labels.isEmpty()) {
-                cellsToLabels.put(cellReference, labels);
-            }
+            addCellToLabels(cell.reference(), store, cellsToLabels);
         });
+
+        if (null != get && !cellsToLabels.containsKey(get)) {
+            addCellToLabels(get, store, cellsToLabels);
+        }
 
         return SpreadsheetDelta.with(cells)
                 .setCellToLabels(cellsToLabels);
+    }
+
+    private static void addCellToLabels(final SpreadsheetCellReference reference,
+                                        final SpreadsheetLabelStore store,
+                                        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellsToLabels) {
+        final Set<SpreadsheetLabelName> labels = store.labels(reference);
+        if (!labels.isEmpty()) {
+            cellsToLabels.put(reference, labels);
+        }
     }
 
     @Override

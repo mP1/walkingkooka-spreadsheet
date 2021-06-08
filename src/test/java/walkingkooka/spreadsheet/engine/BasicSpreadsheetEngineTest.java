@@ -200,6 +200,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellUnknown() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("K99");
+        assertEquals(Optional.empty(), context.storeRepository().cells().load(reference));
+
+        assertEquals(
+                SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
+                        .setCellToLabels(Maps.empty()
+                        ),
+                engine.loadCell(reference, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context)
+        );
+    }
+
+    @Test
+    public void testLoadCellUnknownWithLabel() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        assertEquals(Optional.empty(), context.storeRepository().cells().load(LABEL_CELL));
+
+        context.storeRepository()
+                .labels()
+                .save(LABEL.mapping(LABEL_CELL));
+
+        assertEquals(
+                SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
+                        .setCellToLabels(Maps.of(LABEL_CELL, Sets.of(LABEL))
+                        ),
+                engine.loadCell(LABEL_CELL, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context)
+        );
+    }
+
+    @Test
     public void testLoadCellSkipEvaluate() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
