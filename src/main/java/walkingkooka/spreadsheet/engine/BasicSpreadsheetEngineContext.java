@@ -209,6 +209,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
+                .globalLength(Integer.MAX_VALUE)
                 .valueLength(Integer.MAX_VALUE)
                 .label("metadata")
                 .value(this.metadata)

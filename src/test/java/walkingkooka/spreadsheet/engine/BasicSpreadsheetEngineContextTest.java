@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
@@ -444,7 +445,184 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"border-bottom-style\": \"SOLID\",\n" +
                         "    \"border-bottom-width\": \"1px\",\n" +
                         "    \"border-left-color\": \"#000000\",\n" +
-                        "    \"border-"
+                        "    \"border-left-style\": \"SOLID\",\n" +
+                        "    \"border-left-width\": \"1px\",\n" +
+                        "    \"border-right-color\": \"#000000\",\n" +
+                        "    \"border-right-style\": \"SOLID\",\n" +
+                        "    \"border-right-width\": \"1px\",\n" +
+                        "    \"border-top-color\": \"#000000\",\n" +
+                        "    \"border-top-style\": \"SOLID\",\n" +
+                        "    \"border-top-width\": \"1px\",\n" +
+                        "    \"color\": \"#000000\",\n" +
+                        "    \"font-family\": \"MS Sans Serif\",\n" +
+                        "    \"font-size\": 11,\n" +
+                        "    \"font-style\": \"NORMAL\",\n" +
+                        "    \"font-variant\": \"NORMAL\",\n" +
+                        "    \"height\": \"30px\",\n" +
+                        "    \"hyphens\": \"NONE\",\n" +
+                        "    \"margin-bottom\": \"none\",\n" +
+                        "    \"margin-left\": \"none\",\n" +
+                        "    \"margin-right\": \"none\",\n" +
+                        "    \"margin-top\": \"none\",\n" +
+                        "    \"padding-bottom\": \"none\",\n" +
+                        "    \"padding-left\": \"none\",\n" +
+                        "    \"padding-right\": \"none\",\n" +
+                        "    \"padding-top\": \"none\",\n" +
+                        "    \"text-align\": \"LEFT\",\n" +
+                        "    \"text-justify\": \"NONE\",\n" +
+                        "    \"vertical-align\": \"TOP\",\n" +
+                        "    \"width\": \"100px\",\n" +
+                        "    \"word-break\": \"NORMAL\",\n" +
+                        "    \"word-wrap\": \"NORMAL\"\n" +
+                        "  },\n" +
+                        "  \"text-format-pattern\": \"@\",\n" +
+                        "  \"time-format-pattern\": \"h:mm:ss AM/PM\",\n" +
+                        "  \"time-parse-patterns\": \"h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
+                        "  \"two-digit-year\": 20,\n" +
+                        "  \"value-separator\": \",\",\n" +
+                        "  \"viewport-cell\": \"A1\",\n" +
+                        "  \"viewport-coordinates\": \"0,0\"\n" +
+                        "}\n" +
+                        "fractioner=Fractioner123"
+        );
+    }
+
+    @Test
+    public void testToStringMetadataLotsProperties() {
+        SpreadsheetMetadata metadata = this.metadata();
+
+        for (int i = 0; i < 60; i++) {
+            metadata = metadata.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
+        }
+
+        this.toStringAndCheck(
+                this.createContext(metadata, SpreadsheetLabelStores.treeMap()),
+                "metadata={\n" +
+                        "  \"cell-character-width\": 1,\n" +
+                        "  \"color-0\": \"#000000\",\n" +
+                        "  \"color-1\": \"#000001\",\n" +
+                        "  \"color-2\": \"#000002\",\n" +
+                        "  \"color-3\": \"#000003\",\n" +
+                        "  \"color-4\": \"#000004\",\n" +
+                        "  \"color-5\": \"#000005\",\n" +
+                        "  \"color-6\": \"#000006\",\n" +
+                        "  \"color-7\": \"#000007\",\n" +
+                        "  \"color-8\": \"#000008\",\n" +
+                        "  \"color-9\": \"#000009\",\n" +
+                        "  \"color-10\": \"#00000a\",\n" +
+                        "  \"color-11\": \"#00000b\",\n" +
+                        "  \"color-12\": \"#00000c\",\n" +
+                        "  \"color-13\": \"#00000d\",\n" +
+                        "  \"color-14\": \"#00000e\",\n" +
+                        "  \"color-15\": \"#00000f\",\n" +
+                        "  \"color-16\": \"#000010\",\n" +
+                        "  \"color-17\": \"#000011\",\n" +
+                        "  \"color-18\": \"#000012\",\n" +
+                        "  \"color-19\": \"#000013\",\n" +
+                        "  \"color-20\": \"#000014\",\n" +
+                        "  \"color-21\": \"#000015\",\n" +
+                        "  \"color-22\": \"#000016\",\n" +
+                        "  \"color-23\": \"#000017\",\n" +
+                        "  \"color-24\": \"#000018\",\n" +
+                        "  \"color-25\": \"#000019\",\n" +
+                        "  \"color-26\": \"#00001a\",\n" +
+                        "  \"color-27\": \"#00001b\",\n" +
+                        "  \"color-28\": \"#00001c\",\n" +
+                        "  \"color-29\": \"#00001d\",\n" +
+                        "  \"color-30\": \"#00001e\",\n" +
+                        "  \"color-31\": \"#00001f\",\n" +
+                        "  \"color-32\": \"#000020\",\n" +
+                        "  \"color-33\": \"#000021\",\n" +
+                        "  \"color-34\": \"#000022\",\n" +
+                        "  \"color-35\": \"#000023\",\n" +
+                        "  \"color-36\": \"#000024\",\n" +
+                        "  \"color-37\": \"#000025\",\n" +
+                        "  \"color-38\": \"#000026\",\n" +
+                        "  \"color-39\": \"#000027\",\n" +
+                        "  \"color-40\": \"#000028\",\n" +
+                        "  \"color-41\": \"#000029\",\n" +
+                        "  \"color-42\": \"#00002a\",\n" +
+                        "  \"color-43\": \"#00002b\",\n" +
+                        "  \"color-44\": \"#00002c\",\n" +
+                        "  \"color-45\": \"#00002d\",\n" +
+                        "  \"color-46\": \"#00002e\",\n" +
+                        "  \"color-47\": \"#00002f\",\n" +
+                        "  \"color-48\": \"#000030\",\n" +
+                        "  \"color-49\": \"#000031\",\n" +
+                        "  \"color-50\": \"#000032\",\n" +
+                        "  \"color-51\": \"#000033\",\n" +
+                        "  \"color-52\": \"#000034\",\n" +
+                        "  \"color-53\": \"#000035\",\n" +
+                        "  \"color-54\": \"#000036\",\n" +
+                        "  \"color-55\": \"#000037\",\n" +
+                        "  \"color-56\": \"#000038\",\n" +
+                        "  \"color-57\": \"#000039\",\n" +
+                        "  \"color-58\": \"#00003a\",\n" +
+                        "  \"color-59\": \"#00003b\",\n" +
+                        "  \"currency-symbol\": \"CURR\",\n" +
+                        "  \"date-format-pattern\": \"dddd, d mmmm yyyy\",\n" +
+                        "  \"date-parse-patterns\": \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
+                        "  \"date-time-format-pattern\": \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
+                        "  \"date-time-offset\": \"-25569\",\n" +
+                        "  \"date-time-parse-patterns\": \"dd/mm/yyyy hh:mm\",\n" +
+                        "  \"decimal-separator\": \".\",\n" +
+                        "  \"default-year\": 1900,\n" +
+                        "  \"exponent-symbol\": \"e\",\n" +
+                        "  \"expression-number-kind\": \"DOUBLE\",\n" +
+                        "  \"grouping-separator\": \",\",\n" +
+                        "  \"locale\": \"en-AU\",\n" +
+                        "  \"negative-sign\": \"!\",\n" +
+                        "  \"number-format-pattern\": \"#,##0.###\",\n" +
+                        "  \"number-parse-patterns\": \"#,##0.###;#,##0\",\n" +
+                        "  \"percentage-symbol\": \"%\",\n" +
+                        "  \"positive-sign\": \"@\",\n" +
+                        "  \"precision\": 10,\n" +
+                        "  \"rounding-mode\": \"HALF_UP\",\n" +
+                        "  \"style\": {\n" +
+                        "    \"background-color\": \"#ffffff\",\n" +
+                        "    \"border-bottom-color\": \"#000000\",\n" +
+                        "    \"border-bottom-style\": \"SOLID\",\n" +
+                        "    \"border-bottom-width\": \"1px\",\n" +
+                        "    \"border-left-color\": \"#000000\",\n" +
+                        "    \"border-left-style\": \"SOLID\",\n" +
+                        "    \"border-left-width\": \"1px\",\n" +
+                        "    \"border-right-color\": \"#000000\",\n" +
+                        "    \"border-right-style\": \"SOLID\",\n" +
+                        "    \"border-right-width\": \"1px\",\n" +
+                        "    \"border-top-color\": \"#000000\",\n" +
+                        "    \"border-top-style\": \"SOLID\",\n" +
+                        "    \"border-top-width\": \"1px\",\n" +
+                        "    \"color\": \"#000000\",\n" +
+                        "    \"font-family\": \"MS Sans Serif\",\n" +
+                        "    \"font-size\": 11,\n" +
+                        "    \"font-style\": \"NORMAL\",\n" +
+                        "    \"font-variant\": \"NORMAL\",\n" +
+                        "    \"height\": \"30px\",\n" +
+                        "    \"hyphens\": \"NONE\",\n" +
+                        "    \"margin-bottom\": \"none\",\n" +
+                        "    \"margin-left\": \"none\",\n" +
+                        "    \"margin-right\": \"none\",\n" +
+                        "    \"margin-top\": \"none\",\n" +
+                        "    \"padding-bottom\": \"none\",\n" +
+                        "    \"padding-left\": \"none\",\n" +
+                        "    \"padding-right\": \"none\",\n" +
+                        "    \"padding-top\": \"none\",\n" +
+                        "    \"text-align\": \"LEFT\",\n" +
+                        "    \"text-justify\": \"NONE\",\n" +
+                        "    \"vertical-align\": \"TOP\",\n" +
+                        "    \"width\": \"100px\",\n" +
+                        "    \"word-break\": \"NORMAL\",\n" +
+                        "    \"word-wrap\": \"NORMAL\"\n" +
+                        "  },\n" +
+                        "  \"text-format-pattern\": \"@\",\n" +
+                        "  \"time-format-pattern\": \"h:mm:ss AM/PM\",\n" +
+                        "  \"time-parse-patterns\": \"h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
+                        "  \"two-digit-year\": 20,\n" +
+                        "  \"value-separator\": \",\",\n" +
+                        "  \"viewport-cell\": \"A1\",\n" +
+                        "  \"viewport-coordinates\": \"0,0\"\n" +
+                        "}\n" +
+                        "fractioner=Fractioner123"
         );
     }
 
@@ -454,8 +632,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore) {
+        return this.createContext(this.metadata(), labelStore);
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
+                                                        final SpreadsheetLabelStore labelStore) {
         return BasicSpreadsheetEngineContext.with(
-                this.metadata(),
+                metadata,
                 this.functions(),
                 this.engine(),
                 FRACTIONER,
