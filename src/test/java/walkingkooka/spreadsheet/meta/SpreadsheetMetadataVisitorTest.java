@@ -22,7 +22,6 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
@@ -470,16 +469,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = cell;
             }
         }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetCellReference.parseCellReference("B99"));
-    }
-
-    @Test
-    public void testVisitViewportCoordinates() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitViewportCoordinates(final SpreadsheetCoordinates coords) {
-                this.visited = coords;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_COORDINATES, SpreadsheetCoordinates.with(1, 2));
     }
 
     private static <T> SpreadsheetMetadata metadata(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {

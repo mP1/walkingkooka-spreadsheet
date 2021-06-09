@@ -481,7 +481,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"two-digit-year\": 20,\n" +
                         "  \"value-separator\": \",\",\n" +
                         "  \"viewport-cell\": \"A1\",\n" +
-                        "  \"viewport-coordinates\": \"0,0\"\n" +
                         "}\n" +
                         "fractioner=Fractioner123"
         );
@@ -620,7 +619,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"two-digit-year\": 20,\n" +
                         "  \"value-separator\": \",\",\n" +
                         "  \"viewport-cell\": \"A1\",\n" +
-                        "  \"viewport-coordinates\": \"0,0\"\n" +
                         "}\n" +
                         "fractioner=Fractioner123"
         );
