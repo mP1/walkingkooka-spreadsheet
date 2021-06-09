@@ -480,7 +480,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"time-parse-patterns\": \"h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"two-digit-year\": 20,\n" +
                         "  \"value-separator\": \",\",\n" +
-                        "  \"viewport-cell\": \"A1\",\n" +
+                        "  \"viewport-cell\": \"A1\"\n" +
                         "}\n" +
                         "fractioner=Fractioner123"
         );
@@ -618,7 +618,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"time-parse-patterns\": \"h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"two-digit-year\": 20,\n" +
                         "  \"value-separator\": \",\",\n" +
-                        "  \"viewport-cell\": \"A1\",\n" +
+                        "  \"viewport-cell\": \"A1\"\n" +
                         "}\n" +
                         "fractioner=Fractioner123"
         );
