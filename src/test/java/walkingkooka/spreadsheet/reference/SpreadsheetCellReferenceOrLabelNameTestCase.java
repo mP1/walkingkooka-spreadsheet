@@ -32,14 +32,18 @@ public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<R extends Spre
     // SpreadsheetViewport.........................................................................................
 
     @Test
-    public void testViewport() {
-        final double width = 100.5;
-        final double height = 20.5;
+    public final void testViewport() {
+        final double xOffset = 10.5;
+        final double yOffset = 20.5;
+        final double width = 30.5;
+        final double height = 40.5;
         final R reference = this.createReference();
 
-        final SpreadsheetViewport viewport = reference.viewport(width, height);
+        final SpreadsheetViewport viewport = reference.viewport(xOffset, yOffset, width, height);
 
         assertEquals(reference.toRelative(), viewport.reference(), "reference");
+        assertEquals(xOffset, viewport.xOffset(), "xOffset");
+        assertEquals(yOffset, viewport.yOffset(), "yOffset");
         assertEquals(width, viewport.width(), "width");
         assertEquals(height, viewport.height(), "height");
     }

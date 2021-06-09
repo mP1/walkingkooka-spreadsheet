@@ -20,7 +20,6 @@ import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.Comparators;
 import walkingkooka.net.http.server.hateos.HateosResource;
-import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -209,16 +208,6 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
      */
     public SpreadsheetRange spreadsheetRange(final SpreadsheetCellReference other) {
         return SpreadsheetRange.with(this.range(other));
-    }
-
-    /**
-     * Creates a {@link SpreadsheetCellBox}
-     */
-    public SpreadsheetCellBox cellBox(final double x,
-                                      final double y,
-                                      final double width,
-                                      final double height) {
-        return SpreadsheetCellBox.with(this, x, y, width, height);
     }
 
     // HateosResource...................................................................................................

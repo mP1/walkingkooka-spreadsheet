@@ -19,13 +19,13 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -167,8 +167,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     private final static int HEIGHT_3 = 32;
 
     @Test
-    public void testCellBoxOrigin() {
-        this.cellBoxAndCheck(0,
+    public void testViewportOrigin() {
+        this.viewportAndCheck(0,
                 0,
                 "A1",
                 0,
@@ -178,8 +178,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxOrigin2() {
-        this.cellBoxAndCheck(3,
+    public void testViewportOrigin2() {
+        this.viewportAndCheck(3,
                 3,
                 "A1",
                 0,
@@ -189,8 +189,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxOrigin3() {
-        this.cellBoxAndCheck(WIDTH_A - 1,
+    public void testViewportOrigin3() {
+        this.viewportAndCheck(WIDTH_A - 1,
                 0,
                 "A1",
                 0,
@@ -200,8 +200,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxOrigin4() {
-        this.cellBoxAndCheck(0,
+    public void testViewportOrigin4() {
+        this.viewportAndCheck(0,
                 HEIGHT_1 - 1,
                 "A1",
                 0,
@@ -211,8 +211,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxOrigin5() {
-        this.cellBoxAndCheck(WIDTH_A - 1,
+    public void testViewportOrigin5() {
+        this.viewportAndCheck(WIDTH_A - 1,
                 HEIGHT_1 - 1,
                 "A1",
                 0,
@@ -222,8 +222,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxColumn() {
-        this.cellBoxAndCheck(WIDTH_A,
+    public void testViewportColumn() {
+        this.viewportAndCheck(WIDTH_A,
                 0,
                 "B1",
                 WIDTH_A,
@@ -233,8 +233,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxColumn2() {
-        this.cellBoxAndCheck(WIDTH_A + 1,
+    public void testViewportColumn2() {
+        this.viewportAndCheck(WIDTH_A + 1,
                 0,
                 "B1",
                 WIDTH_A,
@@ -244,8 +244,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxColumn3() {
-        this.cellBoxAndCheck(WIDTH_A + 1,
+    public void testViewportColumn3() {
+        this.viewportAndCheck(WIDTH_A + 1,
                 2,
                 "B1",
                 WIDTH_A,
@@ -255,8 +255,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxRow() {
-        this.cellBoxAndCheck(0,
+    public void testViewportRow() {
+        this.viewportAndCheck(0,
                 HEIGHT_1,
                 "A2",
                 0,
@@ -266,8 +266,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxRow2() {
-        this.cellBoxAndCheck(0 + 1,
+    public void testViewportRow2() {
+        this.viewportAndCheck(0 + 1,
                 HEIGHT_1 + 1,
                 "A2",
                 0,
@@ -277,8 +277,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxRow3() {
-        this.cellBoxAndCheck(WIDTH_A - 1,
+    public void testViewportRow3() {
+        this.viewportAndCheck(WIDTH_A - 1,
                 HEIGHT_1,
                 "A2",
                 0,
@@ -288,8 +288,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxRow4() {
-        this.cellBoxAndCheck(0,
+    public void testViewportRow4() {
+        this.viewportAndCheck(0,
                 HEIGHT_1 + HEIGHT_2 - 1,
                 "A2",
                 0,
@@ -299,8 +299,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxRow5() {
-        this.cellBoxAndCheck(WIDTH_A - 1,
+    public void testViewportRow5() {
+        this.viewportAndCheck(WIDTH_A - 1,
                 HEIGHT_1 + HEIGHT_2 - 1,
                 "A2",
                 0,
@@ -310,8 +310,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxColumnRow() {
-        this.cellBoxAndCheck(WIDTH_A,
+    public void testViewportColumnRow() {
+        this.viewportAndCheck(WIDTH_A,
                 HEIGHT_1,
                 "B2",
                 WIDTH_A,
@@ -321,8 +321,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxColumnRow2() {
-        this.cellBoxAndCheck(WIDTH_A + 1,
+    public void testViewportColumnRow2() {
+        this.viewportAndCheck(WIDTH_A + 1,
                 HEIGHT_1 + 1,
                 "B2",
                 WIDTH_A,
@@ -332,8 +332,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxColumnRow3() {
-        this.cellBoxAndCheck(WIDTH_A + WIDTH_B - 1,
+    public void testViewportColumnRow3() {
+        this.viewportAndCheck(WIDTH_A + WIDTH_B - 1,
                 HEIGHT_1 + HEIGHT_2 - 1,
                 "B2",
                 WIDTH_A,
@@ -343,8 +343,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testCellBoxColumnRow4() {
-        this.cellBoxAndCheck(WIDTH_A + WIDTH_B,
+    public void testViewportColumnRow4() {
+        this.viewportAndCheck(WIDTH_A + WIDTH_B,
                 HEIGHT_1 + HEIGHT_2,
                 "C3",
                 WIDTH_A + WIDTH_B,
@@ -353,7 +353,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 HEIGHT_3);
     }
 
-    private void cellBoxAndCheck(final double x,
+    private void viewportAndCheck(final double x,
                                  final double y,
                                  final String expectedReference,
                                  final double expectedX,
@@ -374,7 +374,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         store.save(this.cellWithWidthHeight("C2", WIDTH_C, HEIGHT_2));
         store.save(this.cellWithWidthHeight("C3", WIDTH_C, HEIGHT_3));
 
-        this.cellBoxAndCheck(store,
+        this.viewportAndCheck(store,
                 x,
                 y,
                 expectedReference,
@@ -393,37 +393,27 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .set(TextStylePropertyName.HEIGHT, Length.pixel(height)));
     }
 
-    @Test
-    public void testCellBoxWhenEmpty() {
-        this.cellBoxAndCheck(this.createStore(), 0, 0, "A1", 0, 0, 0, 0);
-    }
-
-    @Test
-    public void testCellBoxWhenEmpty2() {
-        this.cellBoxAndCheck(this.createStore(), 123, 456, "A1", 0, 0, 0, 0);
-    }
-
-    private void cellBoxAndCheck(final TreeMapSpreadsheetCellStore store,
-                                 final double x,
-                                 final double y,
-                                 final String expectedReference,
-                                 final double expectedX,
-                                 final double expectedY,
-                                 final double expectedWidth,
-                                 final double expectedHeight) {
-        this.cellBoxAndCheck(store,
+    private void viewportAndCheck(final TreeMapSpreadsheetCellStore store,
+                                  final double x,
+                                  final double y,
+                                  final String expectedReference,
+                                  final double expectedX,
+                                  final double expectedY,
+                                  final double expectedWidth,
+                                  final double expectedHeight) {
+        this.viewportAndCheck(store,
                 x,
                 y,
-                SpreadsheetCellReference.parseCellReference(expectedReference).cellBox(expectedX, expectedY, expectedWidth, expectedHeight));
+                SpreadsheetCellReference.parseCellReference(expectedReference).viewport(expectedX, expectedY, expectedWidth, expectedHeight));
     }
 
-    private void cellBoxAndCheck(final TreeMapSpreadsheetCellStore store,
-                                 final double x,
-                                 final double y,
-                                 final SpreadsheetCellBox expected) {
+    private void viewportAndCheck(final TreeMapSpreadsheetCellStore store,
+                                  final double x,
+                                  final double y,
+                                  final SpreadsheetViewport expected) {
         final SpreadsheetCoordinates coords = SpreadsheetCoordinates.with(x, y);
         assertEquals(expected,
-                store.cellBox(coords),
+                store.viewport(coords),
                 () -> "cellBox " + coords + " store=" + store);
     }
 

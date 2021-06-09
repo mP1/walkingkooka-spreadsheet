@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.store.Store;
 import walkingkooka.store.Stores;
 import walkingkooka.tree.text.Length;
@@ -197,7 +197,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords) {
+    public SpreadsheetViewport viewport(final SpreadsheetCoordinates coords) {
         final double x = coords.x();
         final double y = coords.y();
 
@@ -231,7 +231,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         }
 
         return column.setRow(row)
-                .cellBox(xx, yy, width, height);
+                .viewport(xx, yy, width, height);
     }
 
     private final static SpreadsheetColumnReference COLUMN_REFERENCE_A = SpreadsheetColumnReference.parseColumn("A");

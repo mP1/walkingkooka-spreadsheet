@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.store.Store;
 
 import java.util.Set;
@@ -65,7 +65,7 @@ public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, Sp
     double maxRowHeight(final SpreadsheetRowReference row);
 
     /**
-     * Locates the {@link SpreadsheetCellBox} at the given coordinates.
+     * Locates the {@link SpreadsheetViewport} at the given coordinates.
      */
-    SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords);
+    SpreadsheetViewport viewport(final SpreadsheetCoordinates coords);
 }

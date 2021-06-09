@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
 
@@ -67,7 +67,7 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
     }
 
     @Override
-    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords) {
+    public SpreadsheetViewport viewport(final SpreadsheetCoordinates coords) {
         throw new UnsupportedOperationException();
     }
 }
