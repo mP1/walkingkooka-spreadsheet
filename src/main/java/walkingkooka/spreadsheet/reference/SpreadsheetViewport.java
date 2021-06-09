@@ -19,6 +19,11 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 
@@ -26,7 +31,7 @@ import java.util.Objects;
  * Represents a rectangle selection of cells, starting from an cell reference covering the given pixel dimensions.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetViewport extends SpreadsheetRectangle implements Comparable<SpreadsheetViewport> {
+public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport> {
 
     final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
@@ -37,7 +42,7 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
      * </pre>
      * Where width and height are decimal numbers.
      */
-    static SpreadsheetViewport parseViewport0(final String text) {
+    public static SpreadsheetViewport parse(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
         final String[] tokens = text.split(SEPARATOR.string());
@@ -86,10 +91,6 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
                                     final double width,
                                     final double height) {
         Objects.requireNonNull(reference, "reference");
-        if (reference.isViewport()) {
-            throw new IllegalArgumentException("Invalid reference got " + reference);
-        }
-
         if (width <= 0) {
             throw new IllegalArgumentException("Invalid width " + width + " <= 0");
         }
@@ -138,30 +139,6 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
 
     private final double height;
 
-    /**
-     * Delegates to {@link #equals0(Object)} which is equivalent because {@link SpreadsheetViewport} has no
-     * {@link SpreadsheetReferenceKind} property.
-     */
-    @Override
-    boolean equalsIgnoreReferenceKind0(final Object other) {
-        return this.equals0(other);
-    }
-
-    /**
-     * The {@link #reference()} is already a {@link SpreadsheetReferenceKind#RELATIVE}.
-     */
-    @Override
-    public SpreadsheetViewport toRelative() {
-        return this;
-    }
-
-    // SpreadsheetExpressionReferenceVisitor............................................................................
-
-    @Override
-    void accept(final SpreadsheetExpressionReferenceVisitor visitor) {
-        visitor.visit(this);
-    }
-
     // Object............................................................................................................
 
     @Override
@@ -170,16 +147,13 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
     }
 
     @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetViewport;
+    public final boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SpreadsheetViewport &&
+                        this.equals0((SpreadsheetViewport)other);
     }
 
-    @Override
-    boolean equals0(final Object other) {
-        return this.equals1((SpreadsheetViewport) other);
-    }
-
-    private boolean equals1(final SpreadsheetViewport other) {
+    private boolean equals0(final SpreadsheetViewport other) {
         return this.reference.equals(other.reference) &&
                 this.width == other.width &&
                 this.height == other.height;
@@ -206,5 +180,23 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle implements C
     @Override
     public int compareTo(final SpreadsheetViewport other) {
         throw new UnsupportedOperationException(); // reuired by HateosHandler
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetViewport.class),
+                SpreadsheetViewport::unmarshall,
+                SpreadsheetViewport::marshall,
+                SpreadsheetViewport.class
+        );
+    }
+
+    public final JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonObject.string(this.toString());
+    }
+
+    static SpreadsheetViewport unmarshall(final JsonNode node,
+                                                  final JsonNodeUnmarshallContext context) {
+        return parse(node.stringOrFail());
     }
 }

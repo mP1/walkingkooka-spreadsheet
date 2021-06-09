@@ -81,7 +81,7 @@ public abstract class SpreadsheetExpressionReferenceVisitor extends Visitor<Expr
         // nop
     }
 
-    protected void visit(final SpreadsheetViewport viewport) {
+    protected final void visit(final SpreadsheetViewport viewport) {
         // nop
     }
 }

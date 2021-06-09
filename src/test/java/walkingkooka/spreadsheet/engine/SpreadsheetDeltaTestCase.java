@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.json.JsonNode;
 
@@ -171,8 +171,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         assertEquals(maxRowHeights, delta.maxRowHeights(), "maxRowHeights");
     }
 
-    final void checkWindow(final SpreadsheetDelta delta, final List<SpreadsheetRectangle> window) {
+    final void checkWindow(final SpreadsheetDelta delta, final List<SpreadsheetRange> window) {
         assertEquals(window, delta.window(), "window");
-        assertThrows(UnsupportedOperationException.class, () -> delta.window().add(SpreadsheetRectangle.parseRectangle("A1/1/1")));
+        assertThrows(UnsupportedOperationException.class, () -> delta.window().add(SpreadsheetRange.parseRange("A1:Z99")));
     }
 }

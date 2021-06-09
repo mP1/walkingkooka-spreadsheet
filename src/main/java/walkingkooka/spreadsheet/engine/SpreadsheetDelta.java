@@ -30,10 +30,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -59,7 +59,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
     public final static Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> NO_CELL_TO_LABELS = Maps.empty();
-    public final static List<SpreadsheetRectangle> NO_WINDOW = Lists.empty();
+    public final static List<SpreadsheetRange> NO_WINDOW = Lists.empty();
     public final static Map<SpreadsheetColumnReference, Double> NO_MAX_COLUMN_WIDTHS = Maps.empty();
     public final static Map<SpreadsheetRowReference, Double> NO_MAX_ROW_HEIGHTS = Maps.empty();
 
@@ -203,24 +203,24 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     /**
      * Getter that returns any windows for this delta. An empty list signifies, no filtering.
      */
-    public abstract List<SpreadsheetRectangle> window();
+    public abstract List<SpreadsheetRange> window();
 
     /**
      * Would be setter that if necessary returns a new {@link SpreadsheetDelta} which will also filter cells if necessary,
-     * only if all {@link SpreadsheetRectangle} are all {@link SpreadsheetRange ranges}. Filtering is not possible if a
-     * {@link SpreadsheetViewport} is present because it is not possible to determine if a cell is within those
+     * only if all {@link SpreadsheetRange} are all {@link SpreadsheetRange ranges}. Filtering is not possible if a
+     * {@link SpreadsheetRange} is present because it is not possible to determine if a cell is within those
      * boundaries.
      */
-    public final SpreadsheetDelta setWindow(final List<SpreadsheetRectangle> window) {
+    public final SpreadsheetDelta setWindow(final List<SpreadsheetRange> window) {
         Objects.requireNonNull(window, "window");
 
-        final List<SpreadsheetRectangle> copy = Lists.immutable(window);
+        final List<SpreadsheetRange> copy = Lists.immutable(window);
         return this.window().equals(copy) ?
                 this :
                 this.setWindow0(copy);
     }
 
-    private SpreadsheetDelta setWindow0(final List<SpreadsheetRectangle> window) {
+    private SpreadsheetDelta setWindow0(final List<SpreadsheetRange> window) {
         final Set<SpreadsheetCell> cells = this.cells;
         final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels = this.cellToLabels;
         final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.maxColumnWidths;
@@ -233,15 +233,10 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 SpreadsheetDeltaNonWindowed.withNonWindowed(filteredCells, filteredCellToLabels, maxColumnWidths, maxRowHeights) :
                 SpreadsheetDeltaWindowed.withWindowed(filteredCells, filteredCellToLabels, maxColumnWidths, maxRowHeights, window);
     }
-
-    /**
-     * If the window is empty or contains a single {@link SpreadsheetViewport} do no filtering.
-     * This abort of filtering for the later is necessary because there is no way of accurately determining if a cell is
-     * within the {@link SpreadsheetViewport}.
-     */
+    
     static Set<SpreadsheetCell> filterCells0(final Set<SpreadsheetCell> cells,
-                                             final List<SpreadsheetRectangle> window) {
-        return window.isEmpty() || containsViewport(window) ?
+                                             final List<SpreadsheetRange> window) {
+        return window.isEmpty() ?
                 Sets.immutable(cells) :
                 Sets.readOnly(filterCells1(cells, Cast.to(window)));
     }
@@ -260,7 +255,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      * Returns a {@link Map} removing any references that are not within {@link Set}.
      */
     static Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filterCellToLabels(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
-                                                                                       final List<SpreadsheetRectangle> window) {
+                                                                                       final List<SpreadsheetRange> window) {
         return cellToLabels.isEmpty() ?
                 Maps.empty() :
                 filterCellToLabels0(
@@ -273,9 +268,9 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      * Copies and filters the cels using the filter to decide which cell to label mappings are kept.
      */
     private static Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filterCellToLabels0(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
-                                                                                                final List<SpreadsheetRectangle> window) {
+                                                                                                final List<SpreadsheetRange> window) {
 
-        final Predicate<SpreadsheetCellReference> filter = window.isEmpty() || containsViewport(window) ?
+        final Predicate<SpreadsheetCellReference> filter = window.isEmpty() ?
                 Predicates.always() :
                 windowRangesPredicate(Cast.to(window));
 
@@ -288,11 +283,6 @@ public abstract class SpreadsheetDelta implements TreePrintable {
             }
         }
         return Maps.immutable(filtered);
-    }
-
-    private static boolean containsViewport(final List<SpreadsheetRectangle> window) {
-        return window.stream()
-                .anyMatch(SpreadsheetRectangle::isViewport);
     }
 
     private static Predicate<SpreadsheetCellReference> windowRangesPredicate(final List<SpreadsheetRange> window) {
@@ -371,7 +361,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels = NO_CELL_TO_LABELS;
         Map<SpreadsheetColumnReference, Double> maxColumnWidths = NO_MAX_COLUMN_WIDTHS;
         Map<SpreadsheetRowReference, Double> maxRowsHeights = NO_MAX_ROW_HEIGHTS;
-        List<SpreadsheetRectangle> window = NO_WINDOW;
+        List<SpreadsheetRange> window = NO_WINDOW;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -447,7 +437,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         return max;
     }
 
-    private static List<SpreadsheetRectangle> rangeJsonNodeUnmarshall(final String range) {
+    private static List<SpreadsheetRange> rangeJsonNodeUnmarshall(final String range) {
         return Arrays.stream(range.split(WINDOW_SEPARATOR))
                 .map(SpreadsheetRange::parseRange)
                 .collect(Collectors.toList());
@@ -505,10 +495,10 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                     (r) -> r.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)).setName(MAX_ROW_HEIGHTS_PROPERTY));
         }
 
-        final List<SpreadsheetRectangle> window = this.window();
+        final List<SpreadsheetRange> window = this.window();
         if (!window.isEmpty()) {
             children.add(JsonNode.string(window.stream()
-                    .map(SpreadsheetRectangle::toString)
+                    .map(SpreadsheetRange::toString)
                     .collect(Collectors.joining(WINDOW_SEPARATOR)))
                     .setName(WINDOW_PROPERTY));
         }

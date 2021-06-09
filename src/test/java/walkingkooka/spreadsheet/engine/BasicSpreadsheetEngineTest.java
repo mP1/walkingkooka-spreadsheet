@@ -5080,7 +5080,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testComputeRangeA1() {
         this.computeRangeAndCheck(
-                SpreadsheetViewport.parseViewport("A1:" + WIDTH * 3 + ":" + HEIGHT * 2),
+                SpreadsheetViewport.parse("A1:" + WIDTH * 3 + ":" + HEIGHT * 2),
                 SpreadsheetRange.parseRange("A1:D3")
         );
     }
@@ -5088,7 +5088,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testComputeRangeB2() {
         this.computeRangeAndCheck(
-                SpreadsheetViewport.parseViewport("B2:" + WIDTH * 3 + ":" + HEIGHT * 2),
+                SpreadsheetViewport.parse("B2:" + WIDTH * 3 + ":" + HEIGHT * 2),
                 SpreadsheetRange.parseRange("B2:E4")
         );
     }
@@ -5100,7 +5100,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final int row = 4;
 
         this.computeRangeAndCheck(
-                SpreadsheetViewport.parseViewport(cell + ":" + WIDTH * column + ":" + HEIGHT * row),
+                SpreadsheetViewport.parse(cell + ":" + WIDTH * column + ":" + HEIGHT * row),
                 SpreadsheetRange.parseRange(cell + ":" + cell.addColumn(column).addRow(row))
         );
     }

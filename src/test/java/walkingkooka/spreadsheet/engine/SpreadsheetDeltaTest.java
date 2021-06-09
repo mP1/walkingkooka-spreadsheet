@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -49,13 +48,6 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
     }
 
     @Test
-    public void testSetWindowIncludesSpreadsheetPixelRectangle() {
-        final SpreadsheetDelta delta = SpreadsheetDelta.with(this.cells());
-        final SpreadsheetDelta different = delta.setWindow(Lists.of(SpreadsheetExpressionReference.parseRange("Z99:Z100"), SpreadsheetRectangle.parseRectangle("B1:1:2")));
-        this.checkCells(different, this.cells());
-    }
-
-    @Test
     public void testCopiedCellsSorted() {
         final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("b2"), SpreadsheetFormula.with("2"));
         final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("c3"), SpreadsheetFormula.with("3"));
@@ -67,7 +59,7 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
         cells.add(a1);
 
         final SpreadsheetDelta delta = SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
-                .setWindow(Lists.of(SpreadsheetRectangle.parseRectangle("A1:Z99")))
+                .setWindow(Lists.of(SpreadsheetExpressionReference.parseRange("A1:Z99")))
                 .setCells(cells);
         assertEquals(Lists.of(a1, b2, c3), new ArrayList<>(delta.cells()), "cells should be sorted");
     }
@@ -84,7 +76,7 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
         cells.add(a1);
 
         final SpreadsheetDelta delta = SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
-                .setWindow(Lists.of(SpreadsheetRectangle.parseRectangle("A1:Z99")))
+                .setWindow(Lists.of(SpreadsheetExpressionReference.parseRange("A1:Z99")))
                 .setCells(cells);
         assertEquals(Lists.of(a1, b2, c3), new ArrayList<>(delta.cells()), "cells should be sorted");
     }
