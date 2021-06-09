@@ -53,13 +53,6 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
         );
     }
 
-    @Test
-    public void testUnmarshallViewportFails() {
-        this.unmarshallFails2(
-                SpreadsheetExpressionReference.parseViewport("A1:100:200")
-        );
-    }
-
     private void unmarshallFails2(final SpreadsheetExpressionReference reference) {
         this.unmarshallFails(
                 JsonNode.string(

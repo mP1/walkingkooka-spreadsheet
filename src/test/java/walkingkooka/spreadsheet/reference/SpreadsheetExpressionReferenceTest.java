@@ -168,11 +168,6 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
         this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.parseRange("B2:C3"));
     }
 
-    @Test
-    public void testJsonRoundtripViewport() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.parseViewport("B2:100:200"));
-    }
-
     // parse............................................................................................................
 
     @Test
@@ -223,12 +218,6 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
         this.parseStringAndCheck(range, SpreadsheetExpressionReference.parseRange(range));
     }
 
-    @Test
-    public void testParseViewport() {
-        final SpreadsheetViewport viewport = SpreadsheetExpressionReference.parseViewport("B9:40:50.75");
-        this.parseStringAndCheck(viewport.toString(), viewport);
-    }
-
     // parseCellReferenceOrLabelName....................................................................................
 
     @Test
@@ -251,14 +240,6 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     public void testParseCellReferenceOrLabelNameRangeFails() {
         parseCellReferenceOrLabelNameFails(
                 SpreadsheetExpressionReference.parseRange("A1:B2").toString(),
-                InvalidCharacterException.class
-        );
-    }
-
-    @Test
-    public void testParseCellReferenceOrLabelNameViewportFails() {
-        parseCellReferenceOrLabelNameFails(
-                SpreadsheetExpressionReference.parseViewport("A1:400:500").toString(),
                 InvalidCharacterException.class
         );
     }

@@ -23,7 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 
@@ -256,13 +256,13 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     // JsonNodeMarshallingTesting...........................................................................................
 
     private final static JsonString WINDOW_PIXEL_RECTANGLE_JSON_STRING = JsonNode.string("B9:300:50");
-    private final static JsonString WINDOW_RANGE_JSON_STRING = JsonNode.string("A1:E5,F6:Y99");
+    private final static JsonString WINDOW_JSON_STRING = JsonNode.string("A1:E5,F6:Y99");
 
     @Test
     public void testUnmarshallCells() {
         this.unmarshallAndCheck(JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_RANGE_JSON_STRING),
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING),
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_CELL_TO_LABELS,
@@ -282,7 +282,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 this.window()
                 ),
                 JsonNode.object()
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_RANGE_JSON_STRING));
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
     }
 
     @Test
@@ -296,26 +296,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_RANGE_JSON_STRING));
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
     }
 
     @Test
-    public void testJsonNodeMarshallCellsMaxColumnWidthsPixelRectangleWindow() {
-        this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
-                this.cells(),
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
-                this.maxColumnWidths(),
-                SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
-                this.windowPixelRectangle()
-                ),
-                JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.MAX_COLUMN_WIDTHS_PROPERTY, MAX_COLUMN_WIDTHS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_PIXEL_RECTANGLE_JSON_STRING));
-    }
-
-    @Test
-    public void testJsonNodeMarshallCellsMaxColumnWidthsRangeWindow() {
+    public void testJsonNodeMarshallCellsMaxColumnWidthsWindow() {
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 this.cells(),
                 SpreadsheetDelta.NO_CELL_TO_LABELS,
@@ -326,26 +311,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.MAX_COLUMN_WIDTHS_PROPERTY, MAX_COLUMN_WIDTHS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_RANGE_JSON_STRING));
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
     }
 
     @Test
-    public void testJsonNodeMarshallCellsMaxRowHeightsPixelRectangleWindow() {
-        this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
-                this.cells(),
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
-                SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
-                this.maxRowHeights(),
-                this.windowPixelRectangle()
-                ),
-                JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_PIXEL_RECTANGLE_JSON_STRING));
-    }
-
-    @Test
-    public void testJsonNodeMarshallCellsMaxRowHeightsRangeWindow() {
+    public void testJsonNodeMarshallCellsMaxRowHeightsWindow() {
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 this.cells(),
                 SpreadsheetDelta.NO_CELL_TO_LABELS,
@@ -356,27 +326,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_RANGE_JSON_STRING));
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
     }
 
     @Test
-    public void testJsonNodeMarshallCellsMaxColumnWidthsMaxRowHeightsPixelRectangleWindow() {
-        this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
-                this.cells(),
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
-                this.maxColumnWidths(),
-                this.maxRowHeights(),
-                this.windowPixelRectangle()
-                ),
-                JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.MAX_COLUMN_WIDTHS_PROPERTY, MAX_COLUMN_WIDTHS_JSON)
-                        .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_PIXEL_RECTANGLE_JSON_STRING));
-    }
-
-    @Test
-    public void testJsonNodeMarshallCellsMaxColumnWidthsMaxRowHeightsRangeWindow() {
+    public void testJsonNodeMarshallCellsMaxColumnWidthsMaxRowHeightsWindow() {
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 this.cells(),
                 SpreadsheetDelta.NO_CELL_TO_LABELS,
@@ -388,7 +342,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.MAX_COLUMN_WIDTHS_PROPERTY, MAX_COLUMN_WIDTHS_JSON)
                         .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_RANGE_JSON_STRING));
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
     }
 
     // equals...........................................................................................................
@@ -453,12 +407,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     // helpers..........................................................................................................
 
     @Override
-    final List<SpreadsheetRectangle> window() {
+    final List<SpreadsheetRange> window() {
         return this.window0("A1:E5", "F6:Y99");
-    }
-
-    private List<SpreadsheetRectangle> windowPixelRectangle() {
-        return this.window0("B9:300:50");
     }
 
     @Override
@@ -467,7 +417,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     private SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells,
-                                                            final List<SpreadsheetRectangle> window) {
+                                                            final List<SpreadsheetRange> window) {
         return SpreadsheetDeltaWindowed.withWindowed(
                 cells,
                 this.cellToLabels(),

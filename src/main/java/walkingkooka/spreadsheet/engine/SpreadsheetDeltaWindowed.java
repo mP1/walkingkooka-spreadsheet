@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.printer.IndentingPrinter;
 
@@ -42,7 +42,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                                  final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
                                                  final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
                                                  final Map<SpreadsheetRowReference, Double> maxRowHeights,
-                                                 final List<SpreadsheetRectangle> window) {
+                                                 final List<SpreadsheetRange> window) {
         return new SpreadsheetDeltaWindowed(
                 cells,
                 cellToLabels,
@@ -56,7 +56,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                      final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
                                      final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
                                      final Map<SpreadsheetRowReference, Double> maxRowHeights,
-                                     final List<SpreadsheetRectangle> window) {
+                                     final List<SpreadsheetRange> window) {
         super(cells, cellToLabels, maxColumnWidths, maxRowHeights);
         this.window = window;
     }
@@ -95,11 +95,11 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    public List<SpreadsheetRectangle> window() {
+    public List<SpreadsheetRange> window() {
         return this.window;
     }
 
-    private final List<SpreadsheetRectangle> window;
+    private final List<SpreadsheetRange> window;
 
     @Override
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
@@ -113,7 +113,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         printer.println("window:");
         printer.indent();
         {
-            for (final SpreadsheetRectangle rectangle : this.window()) {
+            for (final SpreadsheetRange rectangle : this.window()) {
                 printer.println(rectangle.toString());
             }
         }

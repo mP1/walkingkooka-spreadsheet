@@ -32,11 +32,6 @@ public final class SpreadsheetLabelMappingExpressionReferenceTest implements Cla
     // unmarshall.....................................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallViewportFails() {
-        this.unmarshallFails(JsonNode.string(viewportString()));
-    }
-
-    @Test
     public void testJsonRoundtripCellReference() {
         this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.parseCellReference("A1"));
     }
@@ -99,18 +94,6 @@ public final class SpreadsheetLabelMappingExpressionReferenceTest implements Cla
     public void testParseRange() {
         final String range = "A2:B2";
         this.parseStringAndCheck(range, SpreadsheetExpressionReference.parseRange(range));
-    }
-
-    @Test
-    public void testParseViewportFails() {
-        this.parseStringFails(
-                viewportString(),
-                IllegalArgumentException.class
-        );
-    }
-
-    private String viewportString() {
-        return SpreadsheetExpressionReference.parseViewport("B9:40:50.75").toString();
     }
 
     // ClassTesting.....................................................................................................

@@ -28,9 +28,9 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -65,7 +65,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     public final void testWindowReadOnly() {
         final SpreadsheetDelta delta = this.createSpreadsheetDelta()
                 .setWindow(this.differentWindow());
-        final List<SpreadsheetRectangle> window = delta.window();
+        final List<SpreadsheetRange> window = delta.window();
 
         assertThrows(UnsupportedOperationException.class, () -> window.add(SpreadsheetRange.parseRange("A1:A2")));
 
@@ -205,7 +205,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     public final void testSetDifferentWindow() {
         final D delta = this.createSpreadsheetDelta();
 
-        final List<SpreadsheetRectangle> window = this.window0("A1:Z9999");
+        final List<SpreadsheetRange> window = this.window0("A1:Z9999");
         assertNotEquals(window, this.window());
 
         final SpreadsheetDelta different = delta.setWindow(window);
@@ -230,7 +230,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     private void setDifferentWindowFilters(final String range1, final String range2) {
         final D delta = this.createSpreadsheetDelta();
 
-        final List<SpreadsheetRectangle> window = this.window0(range1, range2);
+        final List<SpreadsheetRange> window = this.window0(range1, range2);
         final SpreadsheetDelta different = delta.setWindow(window);
 
         this.checkCells(different, Sets.of(this.b2(), this.c3()));
@@ -282,16 +282,16 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
 
     abstract D createSpreadsheetDelta(final Set<SpreadsheetCell> cells);
 
-    abstract List<SpreadsheetRectangle> window();
+    abstract List<SpreadsheetRange> window();
 
-    final List<SpreadsheetRectangle> differentWindow() {
+    final List<SpreadsheetRange> differentWindow() {
         return this.window0("A1:Z99");
     }
 
-    final List<SpreadsheetRectangle> window0(final String... rectangles) {
+    final List<SpreadsheetRange> window0(final String... rectangles) {
         return Lists.immutable(
                 Arrays.stream(rectangles)
-                        .map(SpreadsheetRectangle::parseRectangle)
+                        .map(SpreadsheetExpressionReference::parseRange)
                         .collect(Collectors.toList()));
     }
 

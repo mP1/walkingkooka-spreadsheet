@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
@@ -150,8 +151,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
                 reference = parseRange(text);
                 break;
             default:
-                reference = parseViewport(text);
-                break;
+                throw new IllegalArgumentException("Expected cell, label or range got " + CharSequences.quote(text));
         }
 
         return reference;
@@ -212,13 +212,6 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
-     * Parsers the text expecting a valid {@link SpreadsheetViewport} or fails.
-     */
-    public static SpreadsheetViewport parseViewport(final String text) {
-        return SpreadsheetViewport.parseViewport0(text);
-    }
-
-    /**
      * Package private to limit sub classing.
      */
     SpreadsheetExpressionReference() {
@@ -246,13 +239,6 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
      */
     public final boolean isRange() {
         return this instanceof SpreadsheetRange;
-    }
-
-    /**
-     * Only {@link SpreadsheetViewport} returns true.
-     */
-    public final boolean isViewport() {
-        return this instanceof SpreadsheetViewport;
     }
 
     /**
@@ -363,14 +349,6 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
-     * Accepts a json string and returns a {@link SpreadsheetViewport} or fails.
-     */
-    static SpreadsheetViewport unmarshallViewport(final JsonNode node,
-                                                  final JsonNodeUnmarshallContext context) {
-        return unmarshall0(node, SpreadsheetExpressionReference::parseViewport);
-    }
-
-    /**
      * Generic helper that tries to convert the node into a string and call a parse method.
      */
     private static <R extends ExpressionReference> R unmarshall0(final JsonNode node,
@@ -426,13 +404,6 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
                 SpreadsheetRange::unmarshallRange,
                 SpreadsheetRange::marshall,
                 SpreadsheetRange.class
-        );
-
-        //noinspection StaticInitializerReferencesSubClass
-        register(
-                SpreadsheetViewport::unmarshallViewport,
-                SpreadsheetViewport::marshall,
-                SpreadsheetViewport.class
         );
 
         SpreadsheetLabelMapping.init();

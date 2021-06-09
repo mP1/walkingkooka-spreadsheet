@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.List;
@@ -357,7 +357,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Override
-    final List<SpreadsheetRectangle> window() {
+    final List<SpreadsheetRange> window() {
         return Lists.empty();
     }
 

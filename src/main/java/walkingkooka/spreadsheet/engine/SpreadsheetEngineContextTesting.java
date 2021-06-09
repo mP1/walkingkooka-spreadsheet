@@ -49,11 +49,6 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     @Test
-    default void testResolveCellReferenceViewportFails() {
-        this.resolveCellReferenceAndFail(SpreadsheetExpressionReference.parseViewport("B9:40.5:50.75"));
-    }
-
-    @Test
     default void testResolveCellReferenceRange() {
         this.resolveCellReferenceAndCheck(
                 SpreadsheetExpressionReference.parse("B2:B3"),

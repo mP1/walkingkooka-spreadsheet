@@ -18,19 +18,23 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ToStringTesting;
+import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetViewport>
-        implements ParseStringTesting<SpreadsheetViewport> {
+public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetViewport>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetViewport>,
+        JsonNodeMarshallingTesting<SpreadsheetViewport>,
+        ParseStringTesting<SpreadsheetViewport>,
+        ToStringTesting<SpreadsheetViewport> {
 
     private final static double WIDTH = 50;
     private final static double HEIGHT = 75;
@@ -78,111 +82,6 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
     @Test
     public void testWithAbsoluteReference() {
         this.check(SpreadsheetViewport.with(this.reference().toAbsolute(), WIDTH, HEIGHT));
-    }
-
-    // equalsIgnoreReferenceKind........................................................................................
-
-    @Test
-    public void testEqualsIgnoreReferenceDifferentName() {
-        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
-                SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("Z99"), WIDTH + 1, HEIGHT + 1),
-                false);
-    }
-
-    // toRelative.......................................................................................................
-
-    @Test
-    public void testToRelative() {
-        final SpreadsheetViewport viewport = this.createReference();
-        assertSame(viewport, viewport.toRelative());
-    }
-
-    // SpreadsheetExpressionReferenceVisitor.............................................................................
-
-    @Test
-    public void testAcceptWithCellReference() {
-        final StringBuilder b = new StringBuilder();
-        final SpreadsheetViewport viewport = this.createReference();
-
-        new FakeSpreadsheetExpressionReferenceVisitor() {
-            @Override
-            protected Visiting startVisit(final ExpressionReference r) {
-                assertSame(viewport, r);
-                b.append("1");
-                return Visiting.CONTINUE;
-            }
-
-            @Override
-            protected void endVisit(final ExpressionReference r) {
-                assertSame(viewport, r);
-                b.append("2");
-            }
-
-            @Override
-            protected Visiting startVisit(final SpreadsheetExpressionReference r) {
-                assertSame(viewport, r);
-                b.append("3");
-                return Visiting.CONTINUE;
-            }
-
-            @Override
-            protected void endVisit(final SpreadsheetExpressionReference r) {
-                assertSame(viewport, r);
-                b.append("4");
-            }
-
-            @Override
-            protected void visit(final SpreadsheetViewport r) {
-                assertSame(viewport, r);
-                b.append("5");
-            }
-        }.accept(viewport);
-
-        assertEquals("13542", b.toString());
-    }
-
-    @Test
-    public void testAcceptWithLabel() {
-        final StringBuilder b = new StringBuilder();
-
-        final SpreadsheetLabelName label = this.label();
-        final SpreadsheetViewport viewport = SpreadsheetViewport.with(label, WIDTH, HEIGHT);
-
-        new FakeSpreadsheetExpressionReferenceVisitor() {
-            @Override
-            protected Visiting startVisit(final ExpressionReference r) {
-                assertSame(viewport, r);
-                b.append("1");
-                return Visiting.CONTINUE;
-            }
-
-            @Override
-            protected void endVisit(final ExpressionReference r) {
-                assertSame(viewport, r);
-                b.append("2");
-            }
-
-            @Override
-            protected Visiting startVisit(final SpreadsheetExpressionReference r) {
-                assertSame(viewport, r);
-                b.append("3");
-                return Visiting.CONTINUE;
-            }
-
-            @Override
-            protected void endVisit(final SpreadsheetExpressionReference r) {
-                assertSame(viewport, r);
-                b.append("4");
-            }
-
-            @Override
-            protected void visit(final SpreadsheetViewport r) {
-                assertSame(viewport, r);
-                b.append("5");
-            }
-        }.accept(viewport);
-
-        assertEquals("13542", b.toString());
     }
 
     // equals...........................................................................................................
@@ -235,13 +134,6 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
     @Test
     public void testToStringLabel() {
         this.toStringAndCheck(SpreadsheetViewport.with(this.label(), 40, 50.75), "Label123:40:50.75");
-    }
-
-    // helpers .........................................................................................................
-
-    @Override
-    SpreadsheetViewport createReference() {
-        return this.viewport();
     }
 
     // ParseStringTesting...............................................................................................
@@ -473,19 +365,29 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
         return JavaVisibility.PUBLIC;
     }
 
+    @Override
+    public SpreadsheetViewport createObject() {
+        return SpreadsheetViewport.with(this.reference(), WIDTH, HEIGHT);
+    }
+
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
     public SpreadsheetViewport unmarshall(final JsonNode node,
                                           final JsonNodeUnmarshallContext context) {
-        return SpreadsheetViewport.unmarshallViewport(node, context);
+        return SpreadsheetViewport.unmarshall(node, context);
+    }
+
+    @Override
+    public SpreadsheetViewport createJsonNodeMappingValue() {
+        return this.createObject();
     }
 
     // ParseStringTesting..................................................................................................
 
     @Override
     public SpreadsheetViewport parseString(final String text) {
-        return SpreadsheetViewport.parseViewport0(text);
+        return SpreadsheetViewport.parse(text);
     }
 
     @Override

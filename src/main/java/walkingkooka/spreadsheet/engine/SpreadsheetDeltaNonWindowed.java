@@ -24,8 +24,8 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.List;
@@ -98,7 +98,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
      * There is no window.
      */
     @Override
-    public List<SpreadsheetRectangle> window() {
+    public List<SpreadsheetRange> window() {
         return Lists.empty();
     }
 

@@ -63,11 +63,6 @@ final class BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVis
         this.result = range.begin();
     }
 
-    @Override
-    protected void visit(final SpreadsheetViewport viewport) {
-        throw new IllegalArgumentException("Expected cell, label or range not viewport");
-    }
-
     private SpreadsheetCellReference result;
 
     @Override
