@@ -42,6 +42,5 @@
     "word-wrap": "NORMAL"
   },
   "two-digit-year": 20,
-  "viewport-cell": "A1",
-  "viewport-coordinates": "0,0"
+  "viewport-cell": "A1"
 }

@@ -249,11 +249,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public final static SpreadsheetMetadataPropertyName<SpreadsheetCellReference> VIEWPORT_CELL = registerConstant(SpreadsheetMetadataPropertyNameViewportCell.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>viewport-coordinates {@link SpreadsheetCoordinates}</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetCoordinates> VIEWPORT_COORDINATES = registerConstant(SpreadsheetMetadataPropertyNameViewportCoordinates.instance());
-
-    /**
      * Factory that assumes a valid {@link SpreadsheetMetadataPropertyName} or fails.
      */
     public static SpreadsheetMetadataPropertyName with(final String name) {
