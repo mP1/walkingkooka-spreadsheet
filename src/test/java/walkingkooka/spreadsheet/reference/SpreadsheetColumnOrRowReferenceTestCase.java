@@ -112,6 +112,32 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         assertEquals(false, reference.isFirst());
     }
 
+    @Test
+    public final void testIsFirstWhenLast() {
+        final R reference = this.createReference(this.maxValue());
+        assertEquals(false, reference.isFirst());
+    }
+
+    // isLast...........................................................................................................
+
+    @Test
+    public final void testIsLast() {
+        final R reference = this.createReference(this.maxValue());
+        assertEquals(true, reference.isLast());
+    }
+
+    @Test
+    public final void testIsLastWhenSecondLast() {
+        final R reference = this.createReference(this.maxValue() - 1);
+        assertEquals(false, reference.isLast());
+    }
+
+    @Test
+    public final void testIsLastWhenFirst() {
+        final R reference = this.createReference(0);
+        assertEquals(false, reference.isLast());
+    }
+
     // setReferenceKind.................................................................................................
 
     @Test
