@@ -139,6 +139,13 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     }
 
     /**
+     * Only returns true if this is the first column or row.
+     */
+    public final boolean isFirst() {
+        return this.value == 0;
+    }
+
+    /**
      * Adds a delta to the value and returns an instance with the result.
      */
     abstract SpreadsheetColumnOrRowReference add(final int value);
