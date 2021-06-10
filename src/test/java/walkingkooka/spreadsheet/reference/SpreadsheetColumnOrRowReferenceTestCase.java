@@ -98,6 +98,20 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         assertNotSame(value, this.createReference(value));
     }
 
+    // isFirst..........................................................................................................
+
+    @Test
+    public final void testIsFirst() {
+        final R reference = this.createReference(0);
+        assertEquals(true, reference.isFirst());
+    }
+
+    @Test
+    public final void testIsFirstWhenSecond() {
+        final R reference = this.createReference(1);
+        assertEquals(false, reference.isFirst());
+    }
+
     // setReferenceKind.................................................................................................
 
     @Test
