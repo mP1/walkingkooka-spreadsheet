@@ -146,6 +146,13 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     }
 
     /**
+     * Only returns true if this is the last column or row.
+     */
+    public final boolean isLast() {
+        return this.value == this.max();
+    }
+
+    /**
      * Adds a delta to the value and returns an instance with the result.
      */
     abstract SpreadsheetColumnOrRowReference add(final int value);
