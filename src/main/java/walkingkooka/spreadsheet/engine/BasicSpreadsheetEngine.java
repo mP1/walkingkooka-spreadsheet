@@ -22,7 +22,6 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
-import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -34,7 +33,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
@@ -598,45 +596,163 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     private final SpreadsheetMetadata metadata;
 
+    // RANGE............................................................................................................
+
     @Override
-    public SpreadsheetRange computeRange(final SpreadsheetViewport viewport,
-                                         final SpreadsheetEngineContext context) {
+    public SpreadsheetRange range(final SpreadsheetViewport viewport,
+                                  final SpreadsheetEngineContext context) {
         Objects.requireNonNull(viewport, "viewport");
-        Objects.requireNonNull(context, "context");
+        checkContext(context);
 
         final SpreadsheetCellReference reference = context.resolveCellReference(viewport.reference());
 
+        // columns
+        final double xOffset = viewport.xOffset();
+        double x = xOffset;
+        SpreadsheetColumnReference leftColumn = reference.column();
+
+        // consume xOffset
+        if (0 != xOffset) {
+            if (xOffset < 0) {
+                for (; ; ) {
+                    if (leftColumn.isFirst()) {
+                        x = 0;
+                        break;
+                    }
+                    leftColumn = leftColumn.addSaturated(-1);
+                    x = x + this.columnWidth(leftColumn, context);
+                    if (x >= 0) {
+                        break;
+                    }
+                }
+
+                x = x + 0;
+            } else {
+                for (; ; ) {
+                    final double columnWidth = this.columnWidth(leftColumn, context);
+                    if (x - columnWidth < 0) {
+                        break;
+                    }
+                    x = x - columnWidth;
+                    leftColumn = leftColumn.addSaturated(+1);
+                }
+            }
+        }
+
         final double width = viewport.width();
-        double x = 0;
+        x = x + width;
+        SpreadsheetColumnReference rightColumn = leftColumn;
 
-        SpreadsheetColumnReference column = reference.column()
-                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE);
+        for (; ; ) {
+            if (rightColumn.isLast()) {
+                x = width + (xOffset < 0 ? +xOffset : 0);
+                leftColumn = rightColumn;
 
-        while (x < width) {
-            x = x + this.columnWidth(column, context);
-            column = column.add(1);
+                for (; ; ) {
+                    x = x - this.columnWidth(leftColumn, context);
+                    if (x <= 0) {
+                        break;
+                    }
+                    leftColumn = leftColumn.addSaturated(-1);
+                }
+
+                if (xOffset < 0) {
+                    if (!leftColumn.isFirst()) {
+                        x = xOffset;
+                        for (; ; ) {
+                            leftColumn = leftColumn.addSaturated(-1);
+                            x = x + this.columnWidth(leftColumn, context);
+                            if (x >= 0) {
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+            x = x - this.columnWidth(rightColumn, context);
+            if (x <= 0) {
+                break;
+            }
+            rightColumn = rightColumn.addSaturated(+1);
+        }
+
+
+        // rows
+        final double yOffset = viewport.yOffset();
+        double y = yOffset;
+        SpreadsheetRowReference topRow = reference.row();
+
+        // consume yOffset
+        if (0 != yOffset) {
+            if (yOffset < 0) {
+                for (; ; ) {
+                    if (topRow.isFirst()) {
+                        y = 0;
+                        break;
+                    }
+                    topRow = topRow.addSaturated(-1);
+                    y = y + this.rowHeight(topRow, context);
+                    if (y >= 0) {
+                        break;
+                    }
+                }
+
+                y = y + 0;
+            } else {
+                for (; ; ) {
+                    final double rowHeight = this.rowHeight(topRow, context);
+                    if (y - rowHeight < 0) {
+                        break;
+                    }
+                    y = y - rowHeight;
+                    topRow = topRow.addSaturated(+1);
+                }
+            }
         }
 
         final double height = viewport.height();
+        y = y + height;
+        SpreadsheetRowReference bottomRow = topRow;
 
-        double y = 0;
-        SpreadsheetRowReference row = reference.row()
-                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE);
+        for (; ; ) {
+            if (bottomRow.isLast()) {
+                y = height + (yOffset < 0 ? +yOffset : 0);
+                topRow = bottomRow;
 
-        while (y < height) {
-            y = y + this.rowHeight(row, context);
-            row = row.add(1);
+                for (; ; ) {
+                    y = y - this.rowHeight(topRow, context);
+                    if (y <= 0) {
+                        break;
+                    }
+                    topRow = topRow.addSaturated(-1);
+                }
+
+                if (yOffset < 0) {
+                    if (!topRow.isFirst()) {
+                        y = yOffset;
+                        for (; ; ) {
+                            topRow = topRow.addSaturated(-1);
+                            y = y + this.rowHeight(topRow, context);
+                            if (y >= 0) {
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+            y = y - this.rowHeight(bottomRow, context);
+            if (y <= 0) {
+                break;
+            }
+            bottomRow = bottomRow.addSaturated(+1);
         }
-
-
-        return reference.spreadsheetRange(column.setRow(row));
-    }
-
-    public SpreadsheetViewport viewport(final SpreadsheetCoordinates coords,
-                                        final SpreadsheetEngineContext context) {
-        return context.storeRepository()
-                .cells()
-                .viewport(coords);
+        
+        return leftColumn.setRow(topRow)
+                .spreadsheetRange(
+                        rightColumn.setRow(bottomRow)
+                );
     }
 
     // checkers.........................................................................................................
