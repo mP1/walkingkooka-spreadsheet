@@ -33,15 +33,16 @@ abstract public class SpreadsheetCellReferenceOrLabelName<C extends SpreadsheetC
         super();
     }
 
-
     // SpreadsheetViewport........................................................................................
 
     /**
      * Creates a {@link SpreadsheetViewport} using this as the top/left.
      */
-    public final SpreadsheetViewport viewport(final double width,
+    public final SpreadsheetViewport viewport(final double xOffset,
+                                              final double yOffset,
+                                              final double width,
                                               final double height) {
-        return SpreadsheetViewport.with(this, width, height);
+        return SpreadsheetViewport.with(this, xOffset, yOffset, width, height);
     }
 
     abstract public SpreadsheetCellReferenceOrLabelName<C> toRelative();

@@ -21,7 +21,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -633,11 +632,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return reference.spreadsheetRange(column.setRow(row));
     }
 
-    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords,
-                                      final SpreadsheetEngineContext context) {
-            return context.storeRepository()
-                    .cells()
-                    .cellBox(coords);
+    public SpreadsheetViewport viewport(final SpreadsheetCoordinates coords,
+                                        final SpreadsheetEngineContext context) {
+        return context.storeRepository()
+                .cells()
+                .viewport(coords);
     }
 
     // checkers.........................................................................................................

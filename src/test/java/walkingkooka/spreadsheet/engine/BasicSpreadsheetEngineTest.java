@@ -28,7 +28,6 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
@@ -5080,7 +5079,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testComputeRangeA1() {
         this.computeRangeAndCheck(
-                SpreadsheetViewport.parse("A1:" + WIDTH * 3 + ":" + HEIGHT * 2),
+                SpreadsheetViewport.parse("A1:0:0:" + WIDTH * 3 + ":" + HEIGHT * 2),
                 SpreadsheetRange.parseRange("A1:D3")
         );
     }
@@ -5088,7 +5087,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testComputeRangeB2() {
         this.computeRangeAndCheck(
-                SpreadsheetViewport.parse("B2:" + WIDTH * 3 + ":" + HEIGHT * 2),
+                SpreadsheetViewport.parse("B2:0:0:" + WIDTH * 3 + ":" + HEIGHT * 2),
                 SpreadsheetRange.parseRange("B2:E4")
         );
     }
@@ -5100,31 +5099,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final int row = 4;
 
         this.computeRangeAndCheck(
-                SpreadsheetViewport.parse(cell + ":" + WIDTH * column + ":" + HEIGHT * row),
+                SpreadsheetViewport.parse(cell + ":0:0:" + WIDTH * column + ":" + HEIGHT * row),
                 SpreadsheetRange.parseRange(cell + ":" + cell.addColumn(column).addRow(row))
         );
     }
 
-    //  cellBox.........................................................................................................
+    //  viewport........................................................................................................
 
     @Test
-    public void testCellBox() {
-        final SpreadsheetCellBox box = SpreadsheetCellReference.parseCellReference("B999")
-                .cellBox(12, 34, 56, 78);
+    public void testViewport() {
+        final SpreadsheetViewport viewport = SpreadsheetCellReference.parseCellReference("B999")
+                .viewport(12, 34, 56, 78);
         final SpreadsheetCoordinates coords = SpreadsheetCoordinates.with(1, 2);
 
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(SpreadsheetMetadata.EMPTY);
         assertEquals(
-                box,
-                engine.cellBox(
+                viewport,
+                engine.viewport(
                         coords,
                         this.createContext(
                                 new FakeSpreadsheetCellStore() {
 
                                     @Override
-                                    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates c) {
+                                    public SpreadsheetViewport viewport(final SpreadsheetCoordinates c) {
                                         assertEquals(coords, c);
-                                        return box;
+                                        return viewport;
                                     }
                                 }))
         );

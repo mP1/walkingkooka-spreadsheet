@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -127,8 +126,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords,
-                                      final SpreadsheetEngineContext context) {
+    public SpreadsheetViewport viewport(final SpreadsheetCoordinates coords,
+                                        final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 }

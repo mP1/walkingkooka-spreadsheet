@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
@@ -349,25 +348,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                                           final SpreadsheetReferenceKind rowKind,
                                           final int row) {
         return columnKind.column(column).setRow(rowKind.row(row));
-    }
-
-    // SpreadsheetCellBox...............................................................................................
-
-    @Test
-    public void testCellBox() {
-        final double x = 1;
-        final double y = 23;
-        final double width = 100.5;
-        final double height = 20.5;
-        final SpreadsheetCellReference reference = this.createReference();
-
-        final SpreadsheetCellBox box = reference.cellBox(x, y, width, height);
-
-        assertEquals(reference.toRelative(), box.reference(), "reference");
-        assertEquals(x, box.x(), "x");
-        assertEquals(y, box.y(), "y");
-        assertEquals(width, box.width(), "width");
-        assertEquals(height, box.height(), "height");
     }
 
     // range.............................................................................................................

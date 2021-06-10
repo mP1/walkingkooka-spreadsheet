@@ -47,47 +47,60 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
         final String[] tokens = text.split(SEPARATOR.string());
         switch (tokens.length) {
-            case 1:
-                throw new IllegalArgumentException("Missing width & height in " + CharSequences.quoteAndEscape(text));
-            case 2:
-                throw new IllegalArgumentException("Missing height in " + CharSequences.quoteAndEscape(text));
-            case 3:
+            case 5:
                 break;
             default:
-                throw new IllegalArgumentException("Incorrect number of tokens in " + CharSequences.quoteAndEscape(text));
+                throw new IllegalArgumentException("Expected 5 tokens in " + CharSequences.quoteAndEscape(text));
         }
 
         final SpreadsheetExpressionReference reference;
         try {
             reference = SpreadsheetCellReference.parse(tokens[0]);
         } catch (final NumberFormatException cause) {
-            throw new IllegalArgumentException("Invalid width in " + CharSequences.quoteAndEscape(text));
+            throw new IllegalArgumentException("Invalid reference in " + CharSequences.quoteAndEscape(text));
         }
 
         if (!(reference.isCellReference() || reference.isLabelName())) {
             throw new IllegalArgumentException("Reference must be cell or label got " + reference);
         }
 
+        final double xOffset;
+        try {
+            xOffset = Double.parseDouble(tokens[1]);
+        } catch (final NumberFormatException cause) {
+            throw new IllegalArgumentException("Invalid xOffset in " + CharSequences.quoteAndEscape(text));
+        }
+
+        final double yOffset;
+        try {
+            yOffset = Double.parseDouble(tokens[2]);
+        } catch (final NumberFormatException cause) {
+            throw new IllegalArgumentException("Invalid xOffset in " + CharSequences.quoteAndEscape(text));
+        }
+
         final double width;
         try {
-            width = Double.parseDouble(tokens[1]);
+            width = Double.parseDouble(tokens[3]);
         } catch (final NumberFormatException cause) {
             throw new IllegalArgumentException("Invalid width in " + CharSequences.quoteAndEscape(text));
         }
+
         final double height;
         try {
-            height = Double.parseDouble(tokens[2]);
+            height = Double.parseDouble(tokens[4]);
         } catch (final NumberFormatException cause) {
             throw new IllegalArgumentException("Invalid height in " + CharSequences.quoteAndEscape(text));
         }
 
-        return with((SpreadsheetCellReferenceOrLabelName<?>) reference, width, height);
+        return with((SpreadsheetCellReferenceOrLabelName<?>) reference, xOffset, yOffset, width, height);
     }
 
     /**
      * Factory that creates a new {@link SpreadsheetViewport}.
      */
     static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName<?> reference,
+                                    final double xOffset,
+                                    final double yOffset,
                                     final double width,
                                     final double height) {
         Objects.requireNonNull(reference, "reference");
@@ -97,16 +110,30 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
         if (height <= 0) {
             throw new IllegalArgumentException("Invalid height " + width + " <= 0");
         }
-        return new SpreadsheetViewport(reference, width, height);
+        return new SpreadsheetViewport(reference, xOffset, yOffset, width, height);
     }
 
     private SpreadsheetViewport(final SpreadsheetCellReferenceOrLabelName<?> reference,
+                                final double xOffset,
+                                final double yOffset,
                                 final double width,
                                 final double height) {
         super();
         this.reference = reference.toRelative();
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
         this.width = width;
         this.height = height;
+    }
+
+    /**
+     * Tests if the offset (assumed to be relative to {@link #reference} is within this rectangle.
+     * This will be used to test or load cells to fill a rectangular region or window of the spreadsheet being displayed.
+     */
+    public boolean test(final double x,
+                        final double y) {
+        return x >= 0 && x <= this.width &&
+                y >= 0 && y <= this.height;
     }
 
     // properties.......................................................................................................
@@ -116,6 +143,18 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     }
 
     private final SpreadsheetCellReferenceOrLabelName<?> reference;
+
+    public double xOffset() {
+        return this.xOffset;
+    }
+
+    private final double xOffset;
+
+    public double yOffset() {
+        return this.yOffset;
+    }
+
+    private final double yOffset;
 
     public double width() {
         return this.width;
@@ -133,7 +172,13 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.reference, Double.hashCode(this.width), Double.hashCode(this.height));
+        return Objects.hash(
+                this.reference,
+                this.xOffset,
+                this.yOffset,
+                this.width,
+                this.height
+        );
     }
 
     @Override
@@ -145,6 +190,8 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
     private boolean equals0(final SpreadsheetViewport other) {
         return this.reference.equals(other.reference) &&
+                this.xOffset == other.xOffset &&
+                this.yOffset == other.yOffset &&
                 this.width == other.width &&
                 this.height == other.height;
     }
@@ -152,6 +199,10 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     @Override
     public String toString() {
         return this.reference.toString() +
+                SEPARATOR +
+                toStringWithoutTrailingZero(this.xOffset) +
+                SEPARATOR +
+                toStringWithoutTrailingZero(this.yOffset) +
                 SEPARATOR +
                 toStringWithoutTrailingZero(this.width) +
                 SEPARATOR +
