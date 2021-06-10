@@ -98,11 +98,11 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     /**
      * Factory that creates a new {@link SpreadsheetViewport}.
      */
-    static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName<?> reference,
-                                    final double xOffset,
-                                    final double yOffset,
-                                    final double width,
-                                    final double height) {
+    public static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName<?> reference,
+                                           final double xOffset,
+                                           final double yOffset,
+                                           final double width,
+                                           final double height) {
         Objects.requireNonNull(reference, "reference");
         if (width <= 0) {
             throw new IllegalArgumentException("Invalid width " + width + " <= 0");
