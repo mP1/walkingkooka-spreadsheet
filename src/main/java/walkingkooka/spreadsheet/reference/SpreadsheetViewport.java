@@ -104,11 +104,11 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
                                            final double width,
                                            final double height) {
         Objects.requireNonNull(reference, "reference");
-        if (width <= 0) {
-            throw new IllegalArgumentException("Invalid width " + width + " <= 0");
+        if (width < 0) {
+            throw new IllegalArgumentException("Invalid width " + width + " < 0");
         }
-        if (height <= 0) {
-            throw new IllegalArgumentException("Invalid height " + width + " <= 0");
+        if (height < 0) {
+            throw new IllegalArgumentException("Invalid height " + width + " < 0");
         }
         return new SpreadsheetViewport(reference, xOffset, yOffset, width, height);
     }
