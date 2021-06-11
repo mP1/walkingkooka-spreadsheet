@@ -145,6 +145,30 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
         this.check(SpreadsheetViewport.with(this.reference().toAbsolute(), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT));
     }
 
+    @Test
+    public void testWithZeroWidth() {
+        this.check(
+                SpreadsheetViewport.with(this.reference(), X_OFFSET, Y_OFFSET, 0, HEIGHT),
+                this.reference(),
+                X_OFFSET,
+                Y_OFFSET,
+                0,
+                HEIGHT
+        );
+    }
+
+    @Test
+    public void testWithZeroHeight() {
+        this.check(
+                SpreadsheetViewport.with(this.reference(), X_OFFSET, Y_OFFSET, WIDTH, 0),
+                this.reference(),
+                X_OFFSET,
+                Y_OFFSET,
+                WIDTH,
+                0
+        );
+    }
+
     // equals...........................................................................................................
 
     @Test
