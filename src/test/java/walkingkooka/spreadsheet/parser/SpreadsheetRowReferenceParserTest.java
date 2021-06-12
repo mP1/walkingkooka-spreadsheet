@@ -96,6 +96,11 @@ public final class SpreadsheetRowReferenceParserTest extends SpreadsheetParserTe
         this.parseThrows("$" + value, "Invalid row value 1048576 expected between 0 and 1048576");
     }
 
+    @Test
+    public void testMaxValue() {
+        this.parseAndCheck2("1048576", SpreadsheetReferenceKind.RELATIVE, SpreadsheetRowReference.MAX_VALUE);
+    }
+
     private void parseAndCheck2(final String text, final SpreadsheetReferenceKind referenceKind, final int row) {
         this.parseAndCheck2(text, referenceKind, row, "");
     }
