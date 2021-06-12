@@ -83,6 +83,10 @@ public enum SpreadsheetReferenceKind {
 
     abstract SpreadsheetColumnReference columnFromCache(final int column);
 
+    public final SpreadsheetRowReference firstRow() {
+        return this.row(0);
+    }
+
     public abstract SpreadsheetRowReference row(final int row);
 
     abstract SpreadsheetRowReference rowFromCache(final int column);
