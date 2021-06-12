@@ -52,7 +52,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testWithInvalidValueFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createReference(this.maxValue(), SpreadsheetReferenceKind.RELATIVE));
+        assertThrows(IllegalArgumentException.class, () -> this.createReference(this.maxValue() + 1, SpreadsheetReferenceKind.RELATIVE));
     }
 
     @Test
@@ -261,22 +261,22 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testAddSaturatedOverflow1() {
-        final int max = this.maxValue() - 1;
+        final int max = this.maxValue();
         final R reference = this.createReference(max);
         assertEquals(reference, reference.addSaturated(+1));
     }
 
     @Test
     public final void testAddSaturatedOverflow2() {
-        final int max = this.maxValue() - 1;
+        final int max = this.maxValue();
         final R reference = this.createReference(max);
         assertEquals(reference, reference.addSaturated(+1));
     }
 
     @Test
     public final void testAddSaturatedOverflow3() {
-        final int max = this.maxValue() - 1;
-        final R reference = this.createReference(max - 1);
+        final int max = this.maxValue();
+        final R reference = this.createReference(max);
         assertEquals(this.createReference(max), reference.addSaturated(+2));
     }
 

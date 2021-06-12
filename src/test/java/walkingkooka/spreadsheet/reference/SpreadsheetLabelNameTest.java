@@ -101,8 +101,8 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
     }
 
     @Test
-    public void testWithEnormousRow() {
-        this.createNameAndCheck("A" + (SpreadsheetRowReference.MAX + 1));
+    public void testWithInvalidRow() {
+        this.createNameAndCheck("A" + (SpreadsheetRowReference.MAX_VALUE + 1 + 1));
     }
 
     @Test

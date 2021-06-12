@@ -67,7 +67,7 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
     }
 
     private void lastColumnAndCheck(final SpreadsheetReferenceKind kind) {
-        this.columnCheck(kind.lastColumn(), SpreadsheetColumnReference.MAX - 1, kind, false, true);
+        this.columnCheck(kind.lastColumn(), SpreadsheetColumnReference.MAX_VALUE, kind, false, true);
     }
 
     private void columnCheck(final SpreadsheetColumnReference column,
@@ -120,7 +120,7 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
     }
 
     private void lastRowAndCheck(final SpreadsheetReferenceKind kind) {
-        this.rowCheck(kind.lastRow(), SpreadsheetRowReference.MAX - 1, kind, false, true);
+        this.rowCheck(kind.lastRow(), SpreadsheetRowReference.MAX_VALUE, kind, false, true);
     }
 
     private void rowCheck(final SpreadsheetRowReference row,
