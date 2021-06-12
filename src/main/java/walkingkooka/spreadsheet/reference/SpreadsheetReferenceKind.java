@@ -91,6 +91,10 @@ public enum SpreadsheetReferenceKind {
         return this.row(0);
     }
 
+    public final SpreadsheetRowReference lastRow() {
+        return this.row(SpreadsheetRowReference.MAX - 1);
+    }
+
     public abstract SpreadsheetRowReference row(final int row);
 
     abstract SpreadsheetRowReference rowFromCache(final int column);
