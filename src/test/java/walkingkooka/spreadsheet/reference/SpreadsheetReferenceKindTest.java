@@ -44,6 +44,22 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
         assertSame(kind, column.referenceKind(), "referenceKind");
     }
 
+    @Test
+    public void testFirstRowAbsolute() {
+        this.firstRowAndCheck(SpreadsheetReferenceKind.ABSOLUTE);
+    }
+
+    @Test
+    public void testFirstRowRelative() {
+        this.firstRowAndCheck(SpreadsheetReferenceKind.RELATIVE);
+    }
+
+    private void firstRowAndCheck(final SpreadsheetReferenceKind kind) {
+        final SpreadsheetRowReference row = kind.firstRow();
+        assertEquals(0, row.value(), "value");
+        assertSame(kind, row.referenceKind(), "referenceKind");
+    }
+
     @Override
     public Class<SpreadsheetReferenceKind> type() {
         return SpreadsheetReferenceKind.class;
