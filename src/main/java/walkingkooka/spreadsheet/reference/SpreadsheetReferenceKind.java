@@ -75,6 +75,10 @@ public enum SpreadsheetReferenceKind {
         }
     };
 
+    public final SpreadsheetColumnReference firstColumn() {
+        return this.column(0);
+    }
+
     public abstract SpreadsheetColumnReference column(final int column);
 
     abstract SpreadsheetColumnReference columnFromCache(final int column);

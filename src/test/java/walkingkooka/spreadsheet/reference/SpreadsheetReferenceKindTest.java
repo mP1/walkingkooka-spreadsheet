@@ -17,12 +17,32 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 public final class SpreadsheetReferenceKindTest implements ClassTesting2<SpreadsheetReferenceKind>,
         ToStringTesting<SpreadsheetReferenceKind> {
+
+    @Test
+    public void testFirstColumnAbsolute() {
+        this.firstColumnAndCheck(SpreadsheetReferenceKind.ABSOLUTE);
+    }
+
+    @Test
+    public void testFirstColumnRelative() {
+        this.firstColumnAndCheck(SpreadsheetReferenceKind.RELATIVE);
+    }
+
+    private void firstColumnAndCheck(final SpreadsheetReferenceKind kind) {
+        final SpreadsheetColumnReference column = kind.firstColumn();
+        assertEquals(0, column.value(), "value");
+        assertSame(kind, column.referenceKind(), "referenceKind");
+    }
 
     @Override
     public Class<SpreadsheetReferenceKind> type() {
