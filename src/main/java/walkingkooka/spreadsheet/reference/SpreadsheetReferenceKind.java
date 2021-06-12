@@ -79,6 +79,10 @@ public enum SpreadsheetReferenceKind {
         return this.column(0);
     }
 
+    public final SpreadsheetColumnReference lastColumn() {
+        return this.column(SpreadsheetColumnReference.MAX - 1);
+    }
+
     public abstract SpreadsheetColumnReference column(final int column);
 
     abstract SpreadsheetColumnReference columnFromCache(final int column);
