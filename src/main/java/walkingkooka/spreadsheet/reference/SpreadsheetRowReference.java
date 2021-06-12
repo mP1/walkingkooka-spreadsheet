@@ -28,7 +28,7 @@ import java.util.Objects;
 public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReference<SpreadsheetRowReference> {
 
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
-    public final static int MAX = 1_048_576;
+    public final static int MAX_VALUE = 1_048_576 -1; // max value inclusive
     public final static int RADIX = 10;
 
     /**
@@ -49,7 +49,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
             new SpreadsheetRowReference[CACHE_SIZE]);
 
     private static String invalidRowValue(final int value) {
-        return "Invalid column value " + value + " expected between 0 and " + MAX;
+        return "Invalid row value " + value + " expected between 0 and " + (MAX_VALUE + 1);
     }
 
     private SpreadsheetRowReference(final int value, final SpreadsheetReferenceKind referenceKind) {
@@ -84,7 +84,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
 
     @Override
     int max() {
-        return MAX - 1;
+        return MAX_VALUE;
     }
 
     /**
@@ -99,7 +99,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     private static void checkValue(final int value) {
-        if (value < 0 || value >= MAX) {
+        if (value < 0 || value > MAX_VALUE) {
             throw new IllegalArgumentException(invalidRowValue(value));
         }
     }

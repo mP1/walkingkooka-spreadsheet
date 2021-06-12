@@ -202,10 +202,10 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testAddColumnSaturationOverflows() {
         final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("2");
-        final SpreadsheetCellReference cell = SpreadsheetReferenceKind.RELATIVE.column(SpreadsheetColumnReference.MAX - 2)
+        final SpreadsheetCellReference cell = SpreadsheetReferenceKind.RELATIVE.column(SpreadsheetColumnReference.MAX_VALUE - 2)
                 .setRow(row);
         assertEquals(
-                SpreadsheetReferenceKind.RELATIVE.column(SpreadsheetColumnReference.MAX - 1)
+                SpreadsheetReferenceKind.RELATIVE.lastColumn()
                         .setRow(row),
                 cell.addColumnSaturated(+3)
         );
@@ -252,10 +252,10 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testAddRowSaturationOverflows() {
         final SpreadsheetColumnReference column = SpreadsheetRowReference.parseColumn("B");
-        final SpreadsheetCellReference cell = SpreadsheetReferenceKind.RELATIVE.row(SpreadsheetRowReference.MAX - 2)
+        final SpreadsheetCellReference cell = SpreadsheetReferenceKind.RELATIVE.row(SpreadsheetRowReference.MAX_VALUE - 2)
                 .setColumn(column);
         assertEquals(
-                SpreadsheetCellReference.parseCellReference("" + column + SpreadsheetRowReference.MAX),
+                column.setRow(SpreadsheetReferenceKind.RELATIVE.lastRow()),
                 cell.addRowSaturated(+3)
         );
     }

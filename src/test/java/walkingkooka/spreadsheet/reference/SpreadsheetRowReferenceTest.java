@@ -362,7 +362,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Override
     int maxValue() {
-        return SpreadsheetRowReference.MAX;
+        return SpreadsheetRowReference.MAX_VALUE;
     }
 
     @Override

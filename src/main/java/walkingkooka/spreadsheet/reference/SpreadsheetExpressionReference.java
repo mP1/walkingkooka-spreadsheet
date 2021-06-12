@@ -72,7 +72,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
                 final int digit = SpreadsheetParsers.valueFromDigit(c);
                 if (-1 != digit) {
                     column = column * SpreadsheetColumnReference.RADIX + digit;
-                    if (column >= SpreadsheetColumnReference.MAX) {
+                    if (column > 1 + SpreadsheetColumnReference.MAX_VALUE) {
                         mode = MODE_FAIL;
                         break; // column is too big cant be a cell reference.
                     }
@@ -99,7 +99,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
                 final int digit = Character.digit(c, SpreadsheetRowReference.RADIX);
                 if (-1 != digit) {
                     row = SpreadsheetRowReference.RADIX * row + digit;
-                    if (row >= SpreadsheetRowReference.MAX) {
+                    if (row > 1 + SpreadsheetRowReference.MAX_VALUE) {
                         mode = MODE_FAIL;
                         break; // row is too big cant be a cell reference.
                     }

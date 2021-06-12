@@ -80,7 +80,7 @@ public enum SpreadsheetReferenceKind {
     }
 
     public final SpreadsheetColumnReference lastColumn() {
-        return this.column(SpreadsheetColumnReference.MAX - 1);
+        return this.column(SpreadsheetColumnReference.MAX_VALUE);
     }
 
     public abstract SpreadsheetColumnReference column(final int column);
@@ -92,7 +92,7 @@ public enum SpreadsheetReferenceKind {
     }
 
     public final SpreadsheetRowReference lastRow() {
-        return this.row(SpreadsheetRowReference.MAX - 1);
+        return this.row(SpreadsheetRowReference.MAX_VALUE);
     }
 
     public abstract SpreadsheetRowReference row(final int row);

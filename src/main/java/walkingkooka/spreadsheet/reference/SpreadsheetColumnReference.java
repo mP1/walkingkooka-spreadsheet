@@ -28,13 +28,13 @@ import java.util.Objects;
 public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowReference<SpreadsheetColumnReference> {
 
     /**
-     * The maximum number of columns.
+     * The maximum value, columns -1.
      */
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
-    final static int MAX = 16384;
+    final static int MAX_VALUE = 16384 -1; // inclusive
     final static int RADIX = 26;
 
-    final static String MAX_TOSTRING = toString0(MAX, SpreadsheetReferenceKind.RELATIVE);
+    final static String MAX_TOSTRING = toString0(MAX_VALUE + 1, SpreadsheetReferenceKind.RELATIVE);
 
     /**
      * Factory that creates a new column.
@@ -88,7 +88,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
     @Override
     int max() {
-        return MAX - 1;
+        return MAX_VALUE;
     }
 
     /**
@@ -103,13 +103,13 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     private static void checkValue(final int value) {
-        if (value < 0 || value >= MAX) {
+        if (value < 0 || value > MAX_VALUE) {
             throw new IllegalArgumentException(invalidColumnValue(value));
         }
     }
 
     private static String invalidColumnValue(final int value) {
-        return "Invalid column value " + value + " expected between 0 and " + MAX;
+        return "Invalid column value " + value + " expected between 0 and " + (1+MAX_VALUE);
     }
 
     /**

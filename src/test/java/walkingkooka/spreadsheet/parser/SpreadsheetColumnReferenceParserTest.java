@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 
 public final class SpreadsheetColumnReferenceParserTest extends SpreadsheetParserTestCase<SpreadsheetColumnReferenceParser, SpreadsheetColumnReferenceParserToken> {
@@ -30,7 +31,7 @@ public final class SpreadsheetColumnReferenceParserTest extends SpreadsheetParse
 
     private final static String TEXT_AFTER = "...";
 
-    private final static String INVALID = "XFF";
+    private final static String INVALID = "XFE";
 
     @Test
     public void testInvalidFails() {
@@ -98,13 +99,22 @@ public final class SpreadsheetColumnReferenceParserTest extends SpreadsheetParse
     }
 
     @Test
+    public void testMax() {
+        this.parseAndCheck(
+                "XFD",
+                SpreadsheetColumnReferenceParserToken.columnReference(SpreadsheetReferenceKind.RELATIVE.lastColumn(), "XFD"),
+                "XFD"
+        );
+    }
+
+    @Test
     public void testRelativeReferenceInvalid() {
-        this.parseThrows("" + INVALID, "Invalid column value 16385 expected between 0 and 16384");
+        this.parseThrows("" + INVALID, "Invalid column value 16384 expected between 0 and 16384");
     }
 
     @Test
     public void testAbsoluteReferenceInvalid() {
-        this.parseThrows("$" + INVALID, "Invalid column value 16385 expected between 0 and 16384");
+        this.parseThrows("$" + INVALID, "Invalid column value 16384 expected between 0 and 16384");
     }
 
     private void parseAndCheck2(final String text, final SpreadsheetReferenceKind referenceKind, final int column) {
