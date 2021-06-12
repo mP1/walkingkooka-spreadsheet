@@ -74,8 +74,27 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
     }
 
     private void firstRowAndCheck(final SpreadsheetReferenceKind kind) {
-        final SpreadsheetRowReference row = kind.firstRow();
-        assertEquals(0, row.value(), "value");
+        this.rowCheck(kind.firstRow(), 0, kind);
+    }
+
+    @Test
+    public void testLastRowAbsolute() {
+        this.lastRowAndCheck(SpreadsheetReferenceKind.ABSOLUTE);
+    }
+
+    @Test
+    public void testLastRowRelative() {
+        this.lastRowAndCheck(SpreadsheetReferenceKind.RELATIVE);
+    }
+
+    private void lastRowAndCheck(final SpreadsheetReferenceKind kind) {
+        this.rowCheck(kind.lastRow(), SpreadsheetRowReference.MAX - 1, kind);
+    }
+
+    private void rowCheck(final SpreadsheetRowReference row,
+                          final int value,
+                          final SpreadsheetReferenceKind kind) {
+        assertEquals(value, row.value(), "value");
         assertSame(kind, row.referenceKind(), "referenceKind");
     }
 
