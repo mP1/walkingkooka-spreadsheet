@@ -431,6 +431,18 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
+    public void testParseInvalidCellReferenceLastColumnPlus1Fails() {
+        this.parseStringFails("XFE2",
+                IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testParseInvalidCellReferenceLastRowPlus1Fails() {
+        this.parseStringFails("B1048577",
+                IllegalArgumentException.class);
+    }
+
+    @Test
     public void testParseCellReferenceRelative() {
         this.parseStringAndCheck("A98",
                 SpreadsheetColumnOrRowReference.column(0, SpreadsheetReferenceKind.RELATIVE)
@@ -442,6 +454,22 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.parseStringAndCheck("$A$98",
                 SpreadsheetColumnOrRowReference.column(0, SpreadsheetReferenceKind.ABSOLUTE)
                         .setRow(SpreadsheetColumnOrRowReference.row(97, SpreadsheetReferenceKind.ABSOLUTE)));
+    }
+
+    @Test
+    public void testParseCellReferenceLastColumn() {
+        this.parseStringAndCheck("XFD2",
+                SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                        .setRow(SpreadsheetReferenceKind.RELATIVE.row(1))
+        );
+    }
+
+    @Test
+    public void testParseCellReferenceLastRow() {
+        this.parseStringAndCheck("B1048576",
+                SpreadsheetReferenceKind.RELATIVE.column(1)
+                        .setRow(SpreadsheetReferenceKind.RELATIVE.lastRow())
+        );
     }
 
     // parseCellReferenceRange..........................................................................................
