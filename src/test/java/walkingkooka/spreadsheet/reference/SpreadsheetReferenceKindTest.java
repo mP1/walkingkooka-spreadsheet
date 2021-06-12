@@ -29,6 +29,20 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
         ToStringTesting<SpreadsheetReferenceKind> {
 
     @Test
+    public void testColumnAbsolute() {
+        this.ColumnAndCheck(1, SpreadsheetReferenceKind.ABSOLUTE);
+    }
+
+    @Test
+    public void testColumnRelative() {
+        this.ColumnAndCheck(1, SpreadsheetReferenceKind.RELATIVE);
+    }
+
+    private void ColumnAndCheck(final int value, final SpreadsheetReferenceKind kind) {
+        this.columnCheck(kind.column(value), value, kind, false, false);
+    }
+
+    @Test
     public void testFirstColumnAbsolute() {
         this.firstColumnAndCheck(SpreadsheetReferenceKind.ABSOLUTE);
     }
@@ -39,7 +53,7 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
     }
 
     private void firstColumnAndCheck(final SpreadsheetReferenceKind kind) {
-        this.columnCheck(kind.firstColumn(), 0, kind);
+        this.columnCheck(kind.firstColumn(), 0, kind, true, false);
     }
 
     @Test
@@ -53,14 +67,32 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
     }
 
     private void lastColumnAndCheck(final SpreadsheetReferenceKind kind) {
-        this.columnCheck(kind.lastColumn(), SpreadsheetColumnReference.MAX - 1, kind);
+        this.columnCheck(kind.lastColumn(), SpreadsheetColumnReference.MAX - 1, kind, false, true);
     }
 
     private void columnCheck(final SpreadsheetColumnReference column,
                              final int value,
-                             final SpreadsheetReferenceKind kind) {
+                             final SpreadsheetReferenceKind kind,
+                             final boolean first,
+                             final boolean last) {
         assertEquals(value, column.value(), "value");
         assertSame(kind, column.referenceKind(), "referenceKind");
+        assertEquals(first, column.isFirst(), "first");
+        assertEquals(last, column.isLast(), "last");
+    }
+
+    @Test
+    public void testRowAbsolute() {
+        this.RowAndCheck(1, SpreadsheetReferenceKind.ABSOLUTE);
+    }
+
+    @Test
+    public void testRowRelative() {
+        this.RowAndCheck(1, SpreadsheetReferenceKind.RELATIVE);
+    }
+
+    private void RowAndCheck(final int value, final SpreadsheetReferenceKind kind) {
+        this.rowCheck(kind.row(value), value, kind, false, false);
     }
 
     @Test
@@ -74,7 +106,7 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
     }
 
     private void firstRowAndCheck(final SpreadsheetReferenceKind kind) {
-        this.rowCheck(kind.firstRow(), 0, kind);
+        this.rowCheck(kind.firstRow(), 0, kind, true, false);
     }
 
     @Test
@@ -88,14 +120,18 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
     }
 
     private void lastRowAndCheck(final SpreadsheetReferenceKind kind) {
-        this.rowCheck(kind.lastRow(), SpreadsheetRowReference.MAX - 1, kind);
+        this.rowCheck(kind.lastRow(), SpreadsheetRowReference.MAX - 1, kind, false, true);
     }
 
     private void rowCheck(final SpreadsheetRowReference row,
                           final int value,
-                          final SpreadsheetReferenceKind kind) {
+                          final SpreadsheetReferenceKind kind,
+                          final boolean first,
+                          final boolean last) {
         assertEquals(value, row.value(), "value");
         assertSame(kind, row.referenceKind(), "referenceKind");
+        assertEquals(first, row.isFirst(), "first");
+        assertEquals(last, row.isLast(), "last");
     }
 
     @Override
