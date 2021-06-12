@@ -115,6 +115,26 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     }
 
     @Test
+    public void testIsCellReferenceTextLastColumn() {
+        this.isCellReferenceTextAndCheck("XFD1", true);
+    }
+
+    @Test
+    public void testIsCellReferenceTextLastColumnPlus1() {
+        this.isCellReferenceTextAndCheck("XFE1", false);
+    }
+
+    @Test
+    public void testIsCellReferenceTextLastRow() {
+        this.isCellReferenceTextAndCheck("A1048576", true);
+    }
+
+    @Test
+    public void testIsCellReferenceTextLastRowPlus1() {
+        this.isCellReferenceTextAndCheck("A1048577", false);
+    }
+
+    @Test
     public void testIsCellReferenceTextWithLabel() {
         this.isCellReferenceTextAndCheck("LABEL123", false);
     }
