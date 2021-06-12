@@ -98,6 +98,26 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.parseStringAndCheck("$e", SpreadsheetColumnReference.with(4, SpreadsheetReferenceKind.ABSOLUTE));
     }
 
+    @Test
+    public void testParseColumnAA() {
+        this.parseStringAndCheck("AA", SpreadsheetColumnReference.with(26, SpreadsheetReferenceKind.RELATIVE));
+    }
+
+    @Test
+    public void testParseColumnAAB() {
+        this.parseStringAndCheck("AAB", SpreadsheetColumnReference.with(703, SpreadsheetReferenceKind.RELATIVE));
+    }
+
+    @Test
+    public void testParseColumnXFD() {
+        this.parseStringAndCheck("XFD", SpreadsheetColumnReference.with(16383, SpreadsheetReferenceKind.RELATIVE));
+    }
+
+    @Test
+    public void testParseColumnXFEFails() {
+        this.parseStringFails("XFE", IllegalArgumentException.class);
+    }
+
     // parseColumnRange....................................................................................................
 
     @Test
