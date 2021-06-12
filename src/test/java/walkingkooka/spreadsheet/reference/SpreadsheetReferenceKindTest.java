@@ -39,8 +39,27 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
     }
 
     private void firstColumnAndCheck(final SpreadsheetReferenceKind kind) {
-        final SpreadsheetColumnReference column = kind.firstColumn();
-        assertEquals(0, column.value(), "value");
+        this.columnCheck(kind.firstColumn(), 0, kind);
+    }
+
+    @Test
+    public void testLastColumnAbsolute() {
+        this.lastColumnAndCheck(SpreadsheetReferenceKind.ABSOLUTE);
+    }
+
+    @Test
+    public void testLastColumnRelative() {
+        this.lastColumnAndCheck(SpreadsheetReferenceKind.RELATIVE);
+    }
+
+    private void lastColumnAndCheck(final SpreadsheetReferenceKind kind) {
+        this.columnCheck(kind.lastColumn(), SpreadsheetColumnReference.MAX - 1, kind);
+    }
+
+    private void columnCheck(final SpreadsheetColumnReference column,
+                             final int value,
+                             final SpreadsheetReferenceKind kind) {
+        assertEquals(value, column.value(), "value");
         assertSame(kind, column.referenceKind(), "referenceKind");
     }
 
