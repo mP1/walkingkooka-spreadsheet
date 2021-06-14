@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -128,15 +127,10 @@ public interface SpreadsheetEngine {
     double rowHeight(final SpreadsheetRowReference row,
                      final SpreadsheetEngineContext context);
 
-    /**
-     * Computes the {@link SpreadsheetRange} from the given {@link SpreadsheetViewport} using the column width and row heights.
-     */
-    SpreadsheetRange computeRange(final SpreadsheetViewport viewport,
-                                  final SpreadsheetEngineContext context);
 
     /**
-     * Locates the {@link SpreadsheetViewport} at the given coordinates.
+     * Translates the {@link SpreadsheetViewport} into the actual {@link SpreadsheetRange} of cells that occupy that space.
      */
-    SpreadsheetViewport viewport(final SpreadsheetCoordinates coords,
-                                 final SpreadsheetEngineContext context);
+    SpreadsheetRange range(final SpreadsheetViewport viewport,
+                           final SpreadsheetEngineContext context);
 }

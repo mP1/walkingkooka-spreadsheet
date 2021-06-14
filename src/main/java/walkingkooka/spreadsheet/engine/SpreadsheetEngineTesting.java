@@ -773,34 +773,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "rowHeight " + row + " of " + engine);
     }
 
-    default void computeRangeAndCheck(final SpreadsheetViewport viewport,
-                                      final SpreadsheetRange expected) {
-        this.computeRangeAndCheck(
-                viewport,
-                this.createContext(),
-                expected
-        );
-    }
-
-    default void computeRangeAndCheck(final SpreadsheetViewport viewport,
-                                      final SpreadsheetEngineContext context,
-                                      final SpreadsheetRange expected) {
-        this.computeRangeAndCheck(this.createSpreadsheetEngine(),
-                viewport,
-                context,
-                expected
-        );
-    }
-
-    default void computeRangeAndCheck(final SpreadsheetEngine engine,
-                                      final SpreadsheetViewport viewport,
-                                      final SpreadsheetEngineContext context,
-                                      final SpreadsheetRange expected) {
-        assertEquals(expected,
-                engine.computeRange(viewport, context),
-                () -> "computeRange " + viewport + " of " + engine);
-    }
-
     default Converter<ExpressionNumberConverterContext> converter() {
         return Converters.collection(
                 Lists.of(
