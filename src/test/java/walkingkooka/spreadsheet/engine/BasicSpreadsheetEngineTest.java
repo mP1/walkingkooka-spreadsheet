@@ -4110,11 +4110,61 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 number(5 + 0));
     }
 
+    // loadCells........................................................................................................
+
+    @Test
+    public void testLoadCells() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetCell a1 = this.cell("A1", "=1");
+        cellStore.save(a1);
+
+        final SpreadsheetCell b2 = this.cell("B2", "=2");
+        cellStore.save(b2);
+
+        this.loadCellsAndCheck(
+                engine,
+                "A1:B2",
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                this.formattedCellWithValue(a1, this.expressionNumberKind().create(1)),
+                this.formattedCellWithValue(b2, this.expressionNumberKind().create(2))
+        );
+    }
+
+    @Test
+    public void testLoadCellsWithReferences() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetCell a1 = this.cell("A1", "=B2*2");
+        cellStore.save(a1);
+
+        final SpreadsheetCell b2 = this.cell("B2", "=2");
+        cellStore.save(b2);
+
+        this.loadCellsAndCheck(
+                engine,
+                "A1:B2",
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                this.formattedCellWithValue(a1, this.expressionNumberKind().create(4)),
+                this.formattedCellWithValue(b2, this.expressionNumberKind().create(2))
+        );
+    }
+
     // fillCells........................................................................................................
 
     // fill deletes.....................................................................................................
 
-    @Test 
+    @Test
     public void testFillCellsDeleteOneCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);

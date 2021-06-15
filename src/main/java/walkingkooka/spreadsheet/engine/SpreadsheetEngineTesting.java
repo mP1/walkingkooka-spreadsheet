@@ -43,7 +43,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
@@ -51,7 +50,6 @@ import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.ExpressionReference;
 
 import java.math.MathContext;
 import java.util.Collection;
@@ -682,6 +680,53 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertEquals(delta,
                 engine.insertRows(column, count, context),
                 () -> "insertRows column: " + column + " count: " + count);
+    }
+
+    default void loadCellsAndCheck(final SpreadsheetEngine engine,
+                                   final String range,
+                                   final SpreadsheetEngineEvaluation evaluation,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetCell... updated) {
+        this.loadCellsAndCheck(
+                engine,
+                SpreadsheetRange.parseRange(range),
+                evaluation,
+                context,
+                updated
+        );
+    }
+
+    default void loadCellsAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetRange range,
+                                   final SpreadsheetEngineEvaluation evaluation,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetCell... updated) {
+        this.loadCellsAndCheck(
+                engine,
+                range,
+                evaluation,
+                context,
+                SpreadsheetDelta.with(Sets.of(updated))
+                        .setWindow(Lists.of(range))
+        );
+    }
+
+    default void loadCellsAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetRange range,
+                                   final SpreadsheetEngineEvaluation evaluation,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta delta) {
+        assertEquals(delta,
+                engine.loadCells(range, evaluation, context),
+                () -> "loadCells " + range + " " + evaluation);
+
+        // load and check updated cells again...
+        delta.cells()
+                .forEach(c -> this.loadCellAndCheck(engine,
+                        c.reference(),
+                        SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                        context,
+                        c));
     }
 
     default void fillCellsAndCheck(final SpreadsheetEngine engine,
