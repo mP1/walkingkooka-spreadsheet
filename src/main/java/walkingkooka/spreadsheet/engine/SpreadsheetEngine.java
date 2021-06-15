@@ -84,6 +84,13 @@ public interface SpreadsheetEngine {
                                 final SpreadsheetEngineContext context);
 
     /**
+     * Loads a range of cells. Thsi is useful to fill a range that fills the viewport.
+     */
+    SpreadsheetDelta loadCells(final SpreadsheetRange range,
+                               final SpreadsheetEngineEvaluation evaluation,
+                               final SpreadsheetEngineContext context);
+
+    /**
      * Fill may be used to perform several operations.
      * <ul>
      * <li>If $cells are empty the $from is ignored and the {@link SpreadsheetRange $to} has all cells deleted, aka DELETE</li>

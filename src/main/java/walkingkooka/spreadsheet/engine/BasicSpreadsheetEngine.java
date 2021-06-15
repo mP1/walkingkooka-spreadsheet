@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
@@ -85,7 +86,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                      final SpreadsheetEngineEvaluation evaluation,
                                      final SpreadsheetEngineContext context) {
         Objects.requireNonNull(reference, "reference");
-        Objects.requireNonNull(evaluation, "evaluation");
+        checkEvaluation(evaluation);
         checkContext(context);
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
@@ -213,6 +214,38 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private static void checkCount(final int count) {
         if (count < 0) {
             throw new IllegalArgumentException("Count " + count + " < 0");
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta loadCells(final SpreadsheetRange range,
+                                      final SpreadsheetEngineEvaluation evaluation,
+                                      final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(range, "range");
+        checkEvaluation(evaluation);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+            final SpreadsheetCellStore store = context.storeRepository()
+                    .cells();
+
+            range.cellStream()
+                    .forEach(reference -> {
+                                if (!updated.isLoaded(reference)) {
+                                    final Optional<SpreadsheetCell> loaded = store.load(reference);
+                                    if (loaded.isPresent()) {
+                                        final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(loaded.get(), evaluation, context);
+                                        updated.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+                                    }
+                                }
+                            }
+                    );
+
+            updated.refreshUpdated();
+            return this.prepareDelta(null, updated.cells(), context)
+                    .setWindow(
+                            Lists.of(range)
+                    );
         }
     }
 
@@ -775,6 +808,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     private static void checkRow(SpreadsheetRowReference row) {
         Objects.requireNonNull(row, "row");
+    }
+
+    private static void checkEvaluation(final SpreadsheetEngineEvaluation evaluation) {
+        Objects.requireNonNull(evaluation, "evaluation");
     }
 
     private static void checkContext(final SpreadsheetEngineContext context) {

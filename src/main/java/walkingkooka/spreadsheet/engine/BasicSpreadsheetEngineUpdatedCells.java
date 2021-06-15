@@ -208,6 +208,13 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
     }
 
     /**
+     * Tests if the given {@link SpreadsheetCellReference} has been already been loaded in this request.
+     */
+    boolean isLoaded(final SpreadsheetCellReference reference) {
+        return this.updated.containsKey(reference);
+    }
+
+    /**
      * Returns all the updated {@link SpreadsheetCell}.
      */
     Set<SpreadsheetCell> cells() {
