@@ -255,7 +255,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
 
     /**
      * If the sub class has a {@link SpreadsheetReferenceKind} return a new instance with that set to {@link SpreadsheetReferenceKind#RELATIVE}.
-     * Sub classes such as {@link SpreadsheetLabelName} and {@link SpreadsheetViewport} will always return this.
+     * The sub class {@link SpreadsheetLabelName} will always return <code>this</code>.
      */
     public abstract SpreadsheetExpressionReference toRelative();
 
