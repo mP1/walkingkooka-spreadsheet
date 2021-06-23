@@ -15,8 +15,11 @@
  *
  */
 
-package walkingkooka.spreadsheet.reference;
+package walkingkooka.spreadsheet;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.json.JsonNode;

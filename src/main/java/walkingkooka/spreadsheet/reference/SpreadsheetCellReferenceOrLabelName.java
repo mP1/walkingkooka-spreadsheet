@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.spreadsheet.SpreadsheetViewport;
+
 /**
  * Base class shared by {@link SpreadsheetCellReference} and {@link SpreadsheetLabelName}.
  * This type is necessary to avoid J2clTranspiler failures because of what appears to be a failure of the JDT not being

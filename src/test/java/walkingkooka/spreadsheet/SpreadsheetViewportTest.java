@@ -15,13 +15,18 @@
  *
  */
 
-package walkingkooka.spreadsheet.reference;
+package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -312,16 +317,12 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     //helper............................................................................................................
 
-    private SpreadsheetViewport viewport() {
-        return SpreadsheetViewport.with(this.reference(), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT);
-    }
-
     private SpreadsheetCellReference reference() {
         return SpreadsheetCellReference.parseCellReference("B9");
     }
 
     private SpreadsheetLabelName label() {
-        return SpreadsheetLabelName.with("Label123");
+        return SpreadsheetExpressionReference.labelName("Label123");
     }
 
     private void check(final SpreadsheetViewport viewport) {

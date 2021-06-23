@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting2;
+import walkingkooka.spreadsheet.SpreadsheetViewport;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
