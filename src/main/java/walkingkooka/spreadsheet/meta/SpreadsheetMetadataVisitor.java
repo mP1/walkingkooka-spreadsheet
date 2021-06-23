@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -239,10 +238,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitViewportCell(final SpreadsheetCellReference cell) {
-        // nop
-    }
-
-    protected void visitViewportCoordinates(final SpreadsheetCoordinates coords) {
         // nop
     }
 }
