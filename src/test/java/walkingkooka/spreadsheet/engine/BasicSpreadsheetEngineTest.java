@@ -100,6 +100,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -4113,6 +4114,45 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // loadCells........................................................................................................
 
     @Test
+    public void testLoadCellsNothing() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        this.loadCellsAndCheck(
+                engine,
+                "A1:B2",
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context
+        );
+    }
+
+    @Test
+    public void testLoadCellsNothingWithLabels() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelStore labelStore = context.storeRepository()
+                .labels();
+
+        final SpreadsheetCellReference b2 = SpreadsheetCellReference.parseCellReference("C3");
+        final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelC3");
+
+        labelStore.save(label.mapping(b2));
+
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("B2:C3");
+
+        this.loadCellsAndCheck(
+                engine,
+                range,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
+                        .setWindow(Lists.of(range))
+                        .setCellToLabels(Map.of(b2, Sets.of(label)))
+        );
+    }
+
+    @Test
     public void testLoadCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4120,19 +4160,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
 
-        final SpreadsheetCell a1 = this.cell("A1", "=1");
-        cellStore.save(a1);
-
-        final SpreadsheetCell b2 = this.cell("B2", "=2");
+        final SpreadsheetCell b2 = this.cell("b2", "=2");
         cellStore.save(b2);
+
+        final SpreadsheetCell c3 = this.cell("c3", "=3");
+        cellStore.save(c3);
 
         this.loadCellsAndCheck(
                 engine,
-                "A1:B2",
+                "b2:c3",
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                this.formattedCellWithValue(a1, this.expressionNumberKind().create(1)),
-                this.formattedCellWithValue(b2, this.expressionNumberKind().create(2))
+                this.formattedCellWithValue(b2, this.expressionNumberKind().create(2)),
+                this.formattedCellWithValue(c3, this.expressionNumberKind().create(3))
         );
     }
 
@@ -4144,19 +4184,89 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
 
-        final SpreadsheetCell a1 = this.cell("A1", "=B2*2");
-        cellStore.save(a1);
-
-        final SpreadsheetCell b2 = this.cell("B2", "=2");
+        final SpreadsheetCell b2 = this.cell("b2", "=c3*2");
         cellStore.save(b2);
+
+        final SpreadsheetCell c3 = this.cell("c3", "=2");
+        cellStore.save(c3);
 
         this.loadCellsAndCheck(
                 engine,
-                "A1:B2",
+                "b2:c3",
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                this.formattedCellWithValue(a1, this.expressionNumberKind().create(4)),
-                this.formattedCellWithValue(b2, this.expressionNumberKind().create(2))
+                this.formattedCellWithValue(b2, this.expressionNumberKind().create(4)),
+                this.formattedCellWithValue(c3, this.expressionNumberKind().create(2))
+        );
+    }
+
+    @Test
+    public void testLoadCellsWithLabels() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetCell c3 = this.cell("c3", "=1");
+        cellStore.save(c3);
+
+        final SpreadsheetCell d4 = this.cell("D4", "=2");
+        cellStore.save(d4);
+
+        final SpreadsheetLabelStore labelStore = context.storeRepository()
+                .labels();
+
+        final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelD4");
+
+        labelStore.save(label.mapping(d4.reference()));
+
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("c3:d4");
+
+        this.loadCellsAndCheck(
+                engine,
+                range,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                SpreadsheetDelta.with(Sets.of(
+                        this.formattedCellWithValue(c3, this.expressionNumberKind().create(1)),
+                        this.formattedCellWithValue(d4, this.expressionNumberKind().create(2))
+                ))
+                        .setWindow(Lists.of(range))
+                        .setCellToLabels(Map.of(d4.reference(), Sets.of(label)))
+        );
+    }
+
+    @Test
+    public void testLoadCellsWithLabelsLabelWithoutCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetCell c3 = this.cell("c3", "=1");
+        cellStore.save(c3);
+
+        final SpreadsheetLabelStore labelStore = context.storeRepository()
+                .labels();
+
+        final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelD4");
+        final SpreadsheetCellReference d4 = SpreadsheetCellReference.parseCellReference("d4");
+        labelStore.save(label.mapping(d4));
+
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("c3:d4");
+
+        this.loadCellsAndCheck(
+                engine,
+                range,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                SpreadsheetDelta.with(Sets.of(
+                        this.formattedCellWithValue(c3, this.expressionNumberKind().create(1))
+                ))
+                        .setWindow(Lists.of(range))
+                        .setCellToLabels(Map.of(d4, Sets.of(label)))
         );
     }
 
