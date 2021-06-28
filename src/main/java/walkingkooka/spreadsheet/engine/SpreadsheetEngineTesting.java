@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -522,7 +523,21 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                   final SpreadsheetEngineEvaluation evaluation,
                                   final SpreadsheetEngineContext context,
                                   final SpreadsheetCell... cells) {
-        assertEquals(SpreadsheetDelta.with(Sets.of(cells)),
+        this.loadCellAndCheck(
+                engine,
+                reference,
+                evaluation,
+                context,
+                SpreadsheetDelta.with(Sets.of(cells))
+        );
+    }
+
+    default void loadCellAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetCellReference reference,
+                                  final SpreadsheetEngineEvaluation evaluation,
+                                  final SpreadsheetEngineContext context,
+                                  final SpreadsheetDelta loaded) {
+        assertEquals(loaded,
                 engine.loadCell(reference, evaluation, context),
                 () -> "loadCell " + reference);
     }
@@ -722,11 +737,23 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
         // load and check updated cells again...
         delta.cells()
-                .forEach(c -> this.loadCellAndCheck(engine,
-                        c.reference(),
-                        SpreadsheetEngineEvaluation.SKIP_EVALUATE,
-                        context,
-                        c));
+                .forEach(c -> {
+                    final SpreadsheetCellReference r = c.reference();
+
+                    this.loadCellAndCheck(
+                            engine,
+                            r,
+                            SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                            context,
+                            SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
+                                    .setCells(Sets.of(c))
+                                    .setCellToLabels(
+                                            Maps.of(
+                                                    r,
+                                                    delta.cellToLabels().getOrDefault(r, Sets.empty()))
+                                    )
+                    );
+                });
     }
 
     default void fillCellsAndCheck(final SpreadsheetEngine engine,

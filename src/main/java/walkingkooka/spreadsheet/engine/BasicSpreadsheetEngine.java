@@ -99,7 +99,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 return evaluated;
             });
             updated.refreshUpdated();
-            return this.prepareDelta(reference, updated.cells(), context);
+            return this.prepareDelta(
+                    updated.cells(),
+                    reference.toSpreadsheetRange(),
+                    context
+            );
         }
     }
 
@@ -119,7 +123,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                     context);
             updated.refreshUpdated();
-            return this.prepareDelta(updated.cells(), context);
+            return this.prepareDelta(
+                    updated.cells(),
+                    cell.reference().toSpreadsheetRange(),
+                    context
+            );
         }
     }
 
@@ -242,10 +250,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     );
 
             updated.refreshUpdated();
-            return this.prepareDelta(null, updated.cells(), context)
-                    .setWindow(
-                            Lists.of(range)
-                    );
+            return this.prepareDelta(
+                    updated.cells(),
+                    range,
+                    context
+            ).setWindow(Lists.of(range));
         }
     }
 
@@ -268,25 +277,33 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     private SpreadsheetDelta prepareDelta(final Set<SpreadsheetCell> cells,
                                           final SpreadsheetEngineContext context) {
-        return this.prepareDelta(null, cells, context);
+        return this.prepareDelta(
+                cells,
+                null,
+                context
+        );
     }
 
     /**
      * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
      */
-    private SpreadsheetDelta prepareDelta(final SpreadsheetCellReference get,
-                                          final Set<SpreadsheetCell> cells,
+    private SpreadsheetDelta prepareDelta(final Set<SpreadsheetCell> cells,
+                                          final SpreadsheetRange range,
                                           final SpreadsheetEngineContext context) {
         final SpreadsheetLabelStore store = context.storeRepository()
                 .labels();
         final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellsToLabels = Maps.sorted();
 
-        cells.forEach(cell -> {
-            addCellToLabels(cell.reference(), store, cellsToLabels);
+        cells.forEach(c -> {
+            addCellToLabels(c.reference(), store, cellsToLabels);
         });
 
-        if (null != get && !cellsToLabels.containsKey(get)) {
-            addCellToLabels(get, store, cellsToLabels);
+        if (null != range) {
+            range.cellStream().forEach(c -> {
+                if(!cellsToLabels.containsKey(c)) {
+                    addCellToLabels(c, store, cellsToLabels);
+                }
+            });
         }
 
         return SpreadsheetDelta.with(cells)
