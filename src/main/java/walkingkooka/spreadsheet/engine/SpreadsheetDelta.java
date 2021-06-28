@@ -30,10 +30,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -265,7 +263,8 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     }
 
     /**
-     * Copies and filters the cels using the filter to decide which cell to label mappings are kept.
+     * Copies and filters the cells using the filter to decide which cell to label mappings are kept.
+     * As a bonus, cells with no labels are no kept.
      */
     private static Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filterCellToLabels0(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
                                                                                                 final List<SpreadsheetRange> window) {
@@ -277,9 +276,12 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> filtered = Maps.sorted();
 
         for (final Map.Entry<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellAndLabels : cellToLabels.entrySet()) {
-            final SpreadsheetCellReference reference = cellAndLabels.getKey();
-            if (filter.test(reference)) {
-                filtered.put(reference, Sets.immutable(cellAndLabels.getValue()));
+            final Set<SpreadsheetLabelName> labels = Sets.immutable(cellAndLabels.getValue());
+            if (!labels.isEmpty()) {
+                final SpreadsheetCellReference reference = cellAndLabels.getKey();
+                if (filter.test(reference)) {
+                    filtered.put(reference, labels);
+                }
             }
         }
         return Maps.immutable(filtered);

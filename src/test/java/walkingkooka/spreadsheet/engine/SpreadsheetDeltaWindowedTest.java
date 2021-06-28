@@ -42,17 +42,6 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
-    public void testSetCellToLabelsEmpty() {
-        final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
-        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.empty();
-
-        final SpreadsheetDelta after = before.setCellToLabels(different);
-        assertNotSame(before, after);
-        this.checkCellToLabels(after, different);
-        this.checkCells(after, before.cells());
-    }
-
-    @Test
     public void testSetCellToLabelsMissingCellKept() {
         final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
         final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.of(

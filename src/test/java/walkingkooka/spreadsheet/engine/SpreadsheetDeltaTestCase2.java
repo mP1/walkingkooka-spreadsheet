@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -46,6 +47,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -130,6 +132,17 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     }
 
     @Test
+    public void testSetCellToLabelsEmpty() {
+        final D before = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.empty();
+
+        final SpreadsheetDelta after = before.setCellToLabels(different);
+        assertNotSame(before, after);
+        this.checkCellToLabels(after, different);
+        this.checkCells(after, before.cells());
+    }
+
+    @Test
     public final void testSetCellToLabelsDifferent() {
         final D before = this.createSpreadsheetDelta();
         final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = this.differentCellToLabels();
@@ -137,6 +150,38 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
         final SpreadsheetDelta after = before.setCellToLabels(different);
         assertNotSame(before, after);
         this.checkCellToLabels(after, different);
+    }
+
+    @Test
+    public void testSetCellToLabelsDifferentEmptyLabelsFiltered() {
+        final D before = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.of(
+                SpreadsheetCellReference.parseCellReference("A3"), Sets.empty()
+        );
+
+        final SpreadsheetDelta after = before.setCellToLabels(different);
+        assertNotSame(before, after);
+        assertEquals(Maps.empty(), after.cellToLabels());
+    }
+
+    @Test
+    public void testSetCellToLabelsDifferentEmptyLabelsFiltered2() {
+        final D before = this.createSpreadsheetDelta();
+
+        final SpreadsheetCellReference a3 = SpreadsheetCellReference.parseCellReference("A3");
+        final Set<SpreadsheetLabelName> labels = Sets.of(SpreadsheetLabelName.labelName("Different"));
+
+        final SpreadsheetCellReference a4 = SpreadsheetCellReference.parseCellReference("A4");
+
+        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.of(
+                a3, labels,
+                a4, Sets.empty()
+        );
+
+        final SpreadsheetDelta after = before.setCellToLabels(different);
+        assertNotSame(before, after);
+        this.checkCellToLabels(after, Maps.of(a3, labels));
+        this.checkCells(after, before.cells());
     }
 
     // setMaxColumnWidths...............................................................................................
