@@ -210,6 +210,13 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return SpreadsheetRange.with(this.range(other));
     }
 
+    /**
+     * Returns a {@link SpreadsheetRange} holding only this cell.
+     */
+    public SpreadsheetRange toSpreadsheetRange() {
+        return SpreadsheetRange.with(Range.singleton(this));
+    }
+
     // HateosResource...................................................................................................
 
     @Override
