@@ -230,12 +230,6 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
      */
     abstract boolean equalsIgnoreReferenceKind0(final Object other);
 
-    /**
-     * If the sub class has a {@link SpreadsheetReferenceKind} return a new instance with that set to {@link SpreadsheetReferenceKind#RELATIVE}.
-     * The sub class {@link SpreadsheetLabelName} will always return <code>this</code>.
-     */
-    public abstract SpreadsheetExpressionReference toRelative();
-
     // SpreadsheetExpressionReferenceVisitor............................................................................
 
     abstract void accept(final SpreadsheetExpressionReferenceVisitor visitor);

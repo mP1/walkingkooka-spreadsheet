@@ -29,6 +29,9 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.function.Predicate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelection> implements ClassTesting2<S>,
         HashCodeEqualsDefinedTesting2<S>,
         JsonNodeMarshallingTesting<S>,
@@ -37,6 +40,27 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     SpreadsheetSelectionTestCase() {
         super();
+    }
+
+    final void toRelativeAndCheck(final S selection) {
+        this.toRelativeAndCheck(selection, selection);
+    }
+
+    final void toRelativeAndCheck(final S selection,
+                                  final S expected) {
+        if (expected.equals(selection)) {
+            assertSame(
+                    expected,
+                    selection.toRelative(),
+                    () -> selection.toString()
+            );
+        } else {
+            assertEquals(
+                    expected,
+                    selection.toRelative(),
+                    () -> selection.toString()
+            );
+        }
     }
 
     // ClassTesting.....................................................................................................
