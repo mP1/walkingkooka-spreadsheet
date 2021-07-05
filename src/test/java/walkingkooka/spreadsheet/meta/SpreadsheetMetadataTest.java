@@ -82,17 +82,17 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testSetCellAbsolute() {
+    public void testSetSelectionAbsoluteCell() {
         this.setAndCheck(
-                SpreadsheetMetadataPropertyName.CELL,
+                SpreadsheetMetadataPropertyName.SELECTION,
                 SpreadsheetCellReference.parseCellReference("$B$99")
         );
     }
 
     @Test
-    public void testSetCellLabel() {
+    public void testSetSelectionLabel() {
         this.setAndCheck(
-                SpreadsheetMetadataPropertyName.CELL,
+                SpreadsheetMetadataPropertyName.SELECTION,
                 SpreadsheetCellReference.labelName("Label123")
         );
     }

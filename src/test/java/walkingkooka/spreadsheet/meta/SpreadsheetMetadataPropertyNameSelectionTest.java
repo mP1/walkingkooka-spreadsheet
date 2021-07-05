@@ -25,8 +25,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import java.util.Locale;
 
 
-public final class SpreadsheetMetadataPropertyNameCellTest extends SpreadsheetMetadataPropertyNameTestCase<
-        SpreadsheetMetadataPropertyNameCell,
+public final class SpreadsheetMetadataPropertyNameSelectionTest extends SpreadsheetMetadataPropertyNameTestCase<
+        SpreadsheetMetadataPropertyNameSelection,
         SpreadsheetCellReferenceOrLabelName<?>> {
 
     @Test
@@ -46,12 +46,12 @@ public final class SpreadsheetMetadataPropertyNameCellTest extends SpreadsheetMe
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCell.instance(), "cell");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSelection.instance(), "cell");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameCell createName() {
-        return SpreadsheetMetadataPropertyNameCell.instance();
+    SpreadsheetMetadataPropertyNameSelection createName() {
+        return SpreadsheetMetadataPropertyNameSelection.instance();
     }
 
     @Override
@@ -67,7 +67,7 @@ public final class SpreadsheetMetadataPropertyNameCellTest extends SpreadsheetMe
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameCell> type() {
-        return SpreadsheetMetadataPropertyNameCell.class;
+    public Class<SpreadsheetMetadataPropertyNameSelection> type() {
+        return SpreadsheetMetadataPropertyNameSelection.class;
     }
 }

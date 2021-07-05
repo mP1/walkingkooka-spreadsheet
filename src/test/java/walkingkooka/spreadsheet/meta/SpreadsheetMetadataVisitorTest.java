@@ -114,27 +114,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(metadata);
     }
 
-
-    @Test
-    public void testVisitCellSpreadsheetCellReference() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitCell(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
-                this.visited = cellOrLabel;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.CELL, SpreadsheetCellReference.parseCellReference("A2:B3"));
-    }
-
-    @Test
-    public void testVisitCellSpreadsheetLabelName() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitCell(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
-                this.visited = cellOrLabel;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.CELL, SpreadsheetExpressionReference.labelName("Label123"));
-    }
-
     @Test
     public void testVisitCellCharacterWidth() {
         new TestSpreadsheetMetadataVisitor() {
@@ -389,6 +368,26 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = r;
             }
         }.accept(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
+    }
+
+    @Test
+    public void testVisitSelectionSpreadsheetCellReference() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitSelection(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
+                this.visited = cellOrLabel;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.SELECTION, SpreadsheetCellReference.parseCellReference("A2:B3"));
+    }
+
+    @Test
+    public void testVisitSelectionSpreadsheetLabelName() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitSelection(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
+                this.visited = cellOrLabel;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.SELECTION, SpreadsheetExpressionReference.labelName("Label123"));
     }
 
     @Test
