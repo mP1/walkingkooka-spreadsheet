@@ -18,23 +18,10 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
-import walkingkooka.ToStringTesting;
-import walkingkooka.predicate.Predicates;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.IsMethodTesting;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
-
-import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> implements ClassTesting2<R>,
-        HashCodeEqualsDefinedTesting2<R>,
-        JsonNodeMarshallingTesting<R>,
-        IsMethodTesting<R>,
-        ToStringTesting<R> {
+public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> extends SpreadsheetSelectionTestCase<R> {
 
     SpreadsheetExpressionReferenceTestCase() {
         super();
@@ -44,17 +31,17 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
 
     @Test
     public final void testEqualsIgnoreReferenceKindNullFalse() {
-        this.equalsIgnoreReferenceKindAndCheck(this.createReference(), null, false);
+        this.equalsIgnoreReferenceKindAndCheck(this.createSelection(), null, false);
     }
 
     @Test
     public final void testEqualsIgnoreReferenceKindDifferentTypeFalse() {
-        this.equalsIgnoreReferenceKindAndCheck(this.createReference(), this, false);
+        this.equalsIgnoreReferenceKindAndCheck(this.createSelection(), this, false);
     }
 
     @Test
     public final void testEqualsIgnoreReferenceKindSameTrue() {
-        final R reference = this.createReference();
+        final R reference = this.createSelection();
         this.equalsIgnoreReferenceKindAndCheck(reference,
                 reference,
                 true);
@@ -62,8 +49,8 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
 
     @Test
     public final void testEqualsIgnoreReferenceKindSameTrue2() {
-        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
-                this.createReference(),
+        this.equalsIgnoreReferenceKindAndCheck(this.createSelection(),
+                this.createSelection(),
                 true);
     }
 
@@ -80,51 +67,5 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
                     reference2.equalsIgnoreReferenceKind(reference1),
                     () -> reference2 + " equalsIgnoreReferenceKind " + reference1);
         }
-    }
-
-    // Json..............................................................................................................
-
-    @Test
-    public final void testJsonNodeMarshall() {
-        final R reference = this.createReference();
-        this.marshallAndCheck(reference, JsonNode.string(reference.toString()));
-    }
-
-    abstract R createReference();
-
-    // HashCodeEqualsDefinedTesting.....................................................................................
-
-    @Override
-    public final R createObject() {
-        return this.createReference();
-    }
-
-    // IsMethodTesting...................................................................................................
-
-    @Override
-    public final R createIsMethodObject() {
-        return this.createReference();
-    }
-
-    @Override
-    public final String isMethodTypeNamePrefix() {
-        return "Spreadsheet";
-    }
-
-    @Override
-    public final String isMethodTypeNameSuffix() {
-        return "";//ExpressionReference.class.getSimpleName();
-    }
-
-    @Override
-    public final Predicate<String> isMethodIgnoreMethodFilter() {
-        return Predicates.never();
-    }
-
-    // JsonNodeTesting..................................................................................................
-
-    @Override
-    public final R createJsonNodeMappingValue() {
-        return this.createReference();
     }
 }

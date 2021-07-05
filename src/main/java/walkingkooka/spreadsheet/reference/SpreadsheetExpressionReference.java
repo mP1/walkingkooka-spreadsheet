@@ -34,7 +34,7 @@ import java.util.function.Function;
 /**
  * Base class for all Spreadsheet {@link ExpressionReference}
  */
-abstract public class SpreadsheetExpressionReference implements ExpressionReference {
+abstract public class SpreadsheetExpressionReference extends SpreadsheetSelection implements ExpressionReference {
 
     // modes used by isTextCellReference
     private final static int MODE_COLUMN_FIRST = 0;
@@ -216,29 +216,6 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
      */
     SpreadsheetExpressionReference() {
         super();
-    }
-
-    // is...............................................................................................................
-
-    /**
-     * Only {@link SpreadsheetCellReference} returns true.
-     */
-    public final boolean isCellReference() {
-        return this instanceof SpreadsheetCellReference;
-    }
-
-    /**
-     * Only {@link SpreadsheetLabelName} returns true.
-     */
-    public final boolean isLabelName() {
-        return this instanceof SpreadsheetLabelName;
-    }
-
-    /**
-     * Only {@link SpreadsheetRange} returns true.
-     */
-    public final boolean isRange() {
-        return this instanceof SpreadsheetRange;
     }
 
     /**

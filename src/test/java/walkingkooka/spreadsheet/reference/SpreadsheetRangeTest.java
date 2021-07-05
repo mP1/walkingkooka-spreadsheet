@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.PredicateTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.test.ParseStringTesting;
@@ -452,7 +451,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     private void cellsFails(final List<SpreadsheetCell> cells,
                             final Consumer<SpreadsheetCell> present,
                             final Consumer<SpreadsheetCellReference> absent) {
-        assertThrows(NullPointerException.class, () -> this.createReference().cells(cells, present, absent));
+        assertThrows(NullPointerException.class, () -> this.createSelection().cells(cells, present, absent));
     }
 
     @Test
@@ -708,7 +707,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testToRelative() {
-        final SpreadsheetRange range = this.createReference();
+        final SpreadsheetRange range = this.createSelection();
         assertSame(range, range.toRelative());
     }
 
@@ -740,7 +739,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetRange reference = this.createReference();
+        final SpreadsheetRange reference = this.createSelection();
 
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
@@ -811,7 +810,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     // helpers .........................................................................................................
 
     @Override
-    SpreadsheetRange createReference() {
+    SpreadsheetRange createSelection() {
         return this.range(COLUMN1, ROW1, COLUMN2, ROW2);
     }
 
@@ -1043,11 +1042,6 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     @Override
     public Class<SpreadsheetRange> type() {
         return SpreadsheetRange.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // JsonNodeMarshallingTesting...........................................................................................

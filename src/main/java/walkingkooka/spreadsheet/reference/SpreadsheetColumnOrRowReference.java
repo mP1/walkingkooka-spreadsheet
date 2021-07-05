@@ -42,8 +42,9 @@ import java.util.function.IntFunction;
 /**
  * Captures the common features shared by a row or column.
  */
-abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowReference<R>> implements Value<Integer>,
-        Comparable<R> {
+abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowReference<R>>
+        extends SpreadsheetSelection
+        implements Value<Integer>, Comparable<R> {
 
     /**
      * Creates a new {@link SpreadsheetColumn}

@@ -149,7 +149,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testMaxNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createReference().max(null));
+        assertThrows(NullPointerException.class, () -> this.createSelection().max(null));
     }
 
     @Test
@@ -232,7 +232,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testMinNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createReference().min(null));
+        assertThrows(NullPointerException.class, () -> this.createSelection().min(null));
     }
 
     @Test
