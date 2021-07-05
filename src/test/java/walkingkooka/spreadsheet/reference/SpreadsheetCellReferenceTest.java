@@ -531,10 +531,40 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                 SpreadsheetExpressionReference.parseCellReference("$A$1"));
     }
 
+    // SpreadsheetSelectionVisitor.......................................................................................
+
+    @Test
+    public void testSpreadsheetSelectionVisitorAccept() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetCellReference selection = this.createSelection();
+
+        new FakeSpreadsheetSelectionVisitor() {
+            @Override
+            protected Visiting startVisit(final SpreadsheetSelection s) {
+                assertSame(selection, s);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final SpreadsheetSelection s) {
+                assertSame(selection, s);
+                b.append("2");
+            }
+
+            @Override
+            protected void visit(final SpreadsheetCellReference s) {
+                assertSame(selection, s);
+                b.append("3");
+            }
+        }.accept(selection);
+        assertEquals("132", b.toString());
+    }
+
     // SpreadsheetExpressionReferenceVisitor.............................................................................
 
     @Test
-    public void testAccept() {
+    public void testSpreadsheetExpressionReferenceVisitorAccept() {
         final StringBuilder b = new StringBuilder();
         final SpreadsheetCellReference reference = this.createSelection();
 

@@ -93,6 +93,13 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         return this.name;
     }
 
+    // SpreadsheetSelectionVisitor......................................................................................
+
+    @Override
+    void accept(final SpreadsheetSelectionVisitor visitor) {
+        visitor.visit(this);
+    }
+
     // SpreadsheetExpressionReferenceVisitor............................................................................
 
     @Override
