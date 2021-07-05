@@ -68,11 +68,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitCell(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitCellCharacterWidth(final Integer value) {
         throw new UnsupportedOperationException();
     }
@@ -199,6 +194,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitRoundingMode(final RoundingMode roundingMode) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitSelection(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
         throw new UnsupportedOperationException();
     }
 

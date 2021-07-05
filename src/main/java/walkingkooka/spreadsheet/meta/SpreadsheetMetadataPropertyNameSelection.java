@@ -28,19 +28,19 @@ import java.util.Optional;
 /**
  * Holds the cell or label name for that cell currently being edited.
  */
-final class SpreadsheetMetadataPropertyNameCell extends SpreadsheetMetadataPropertyName<SpreadsheetCellReferenceOrLabelName<?>> {
+final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadataPropertyName<SpreadsheetCellReferenceOrLabelName<?>> {
 
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameCell instance() {
-        return new SpreadsheetMetadataPropertyNameCell();
+    final static SpreadsheetMetadataPropertyNameSelection instance() {
+        return new SpreadsheetMetadataPropertyNameSelection();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameCell() {
+    private SpreadsheetMetadataPropertyNameSelection() {
         super("cell");
     }
 
@@ -77,6 +77,6 @@ final class SpreadsheetMetadataPropertyNameCell extends SpreadsheetMetadataPrope
     @Override
     void accept(final SpreadsheetCellReferenceOrLabelName value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitCell(value);
+        visitor.visitSelection(value);
     }
 }

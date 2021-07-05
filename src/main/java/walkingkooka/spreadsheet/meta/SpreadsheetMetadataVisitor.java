@@ -97,10 +97,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
 
     // properties..........................................................................................................
 
-    protected void visitCell(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
-        // nop
-    }
-
     protected void visitCellCharacterWidth(final Integer value) {
         // nop
     }
@@ -202,6 +198,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitRoundingMode(final RoundingMode roundingMode) {
+        // nop
+    }
+
+    protected void visitSelection(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
         // nop
     }
 
