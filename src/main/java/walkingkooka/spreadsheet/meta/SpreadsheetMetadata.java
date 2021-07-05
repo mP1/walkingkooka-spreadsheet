@@ -831,9 +831,14 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
             }
 
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(child);
-            metadata = metadata.set(name, Cast.to(name.unmarshall(child, context)));
+            metadata = metadata.set(
+                    name,
+                    Cast.to(name.isSelection() ?
+                            context.unmarshallWithType(child) :
+                            context.unmarshall(child, name.type())
+                    )
+            );
         }
-
 
         return metadata;
     }

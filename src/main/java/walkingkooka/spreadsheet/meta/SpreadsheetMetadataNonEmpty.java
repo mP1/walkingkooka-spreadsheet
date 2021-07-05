@@ -367,9 +367,13 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
                             final JsonNodeMarshallContext context) {
         for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.value().entrySet()) {
             final SpreadsheetMetadataPropertyName<?> propertyName = propertyAndValue.getKey();
-            final JsonNode value = context.marshall(propertyAndValue.getValue());
+            final Object value = propertyAndValue.getValue();
 
-            children.add(value.setName(propertyName.jsonPropertyName));
+            final JsonNode value2 = propertyName.isSelection() ?
+                    context.marshallWithType(value) :
+                    context.marshall(value);
+
+            children.add(value2.setName(propertyName.jsonPropertyName));
         }
     }
 }

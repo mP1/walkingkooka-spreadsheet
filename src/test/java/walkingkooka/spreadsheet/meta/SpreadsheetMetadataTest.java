@@ -27,7 +27,8 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -105,8 +106,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
-    private <T extends SpreadsheetExpressionReference> void setAndCheck(final SpreadsheetMetadataPropertyName<T> property,
-                                                                        final T value) {
+    private <S extends SpreadsheetSelection> void setAndCheck(final SpreadsheetMetadataPropertyName<S> property,
+                                                              final S value) {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(property, value);
         assertEquals(value.toRelative(), metadata.getOrFail(property));
@@ -238,6 +239,40 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertEquals(marshallContext.marshall(localDateTime), marshallContext2.marshall(localDateTime), () -> "" + localDateTime);
 
         assertEquals(marshallContext.marshall(metadata), marshallContext2.marshall(metadata), () -> "" + metadata);
+    }
+
+    // json.............................................................................................................
+
+    @Test
+    public void testJsonSelectionCellReference() {
+        this.marshallRoundTripSelectionAndCheck(SpreadsheetSelection.parseCellReference("Z99"));
+    }
+
+    @Test
+    public void testJsonSelectionColumn() {
+        this.marshallRoundTripSelectionAndCheck(SpreadsheetColumnReference.parseColumn("B"));
+    }
+
+    @Test
+    public void testJsonSelectionLabel() {
+        this.marshallRoundTripSelectionAndCheck(SpreadsheetSelection.labelName("Label123"));
+    }
+
+    @Test
+    public void testJsonSelectionRange() {
+        this.marshallRoundTripSelectionAndCheck(SpreadsheetSelection.parseRange("A1:B2"));
+    }
+
+    @Test
+    public void testJsonSelectionRow() {
+        this.marshallRoundTripSelectionAndCheck(SpreadsheetColumnReference.parseRow("123"));
+    }
+
+    private void marshallRoundTripSelectionAndCheck(final SpreadsheetSelection selection) {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.SELECTION,
+                selection
+        ));
     }
 
     // toString.........................................................................................................

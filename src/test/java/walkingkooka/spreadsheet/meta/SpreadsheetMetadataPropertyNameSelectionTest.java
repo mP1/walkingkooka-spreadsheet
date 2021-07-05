@@ -18,16 +18,23 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Locale;
 
 
 public final class SpreadsheetMetadataPropertyNameSelectionTest extends SpreadsheetMetadataPropertyNameTestCase<
         SpreadsheetMetadataPropertyNameSelection,
-        SpreadsheetCellReferenceOrLabelName<?>> {
+        SpreadsheetSelection> {
+
+    @Test
+    public void testCheckColumn() {
+        this.checkValue(SpreadsheetColumnReference.parseColumn("AB"));
+    }
 
     @Test
     public void testCheckLabel() {
@@ -35,8 +42,18 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     }
 
     @Test
-    public final void testInvalidSpreadsheetCellReferenceFails() {
-        this.checkValueFails("invalid", "Expected SpreadsheetCellReferenceOrLabelName, but got \"invalid\" for \"" + this.createName().value() + "\"");
+    public void testCheckRange() {
+        this.checkValue(SpreadsheetRange.parseRange("A1:B2"));
+    }
+
+    @Test
+    public void testCheckRow() {
+        this.checkValue(SpreadsheetRowReference.parseRow("1234"));
+    }
+
+    @Test
+    public final void testInvalidValueFails() {
+        this.checkValueFails("invalid", "Expected SpreadsheetSelection, but got \"invalid\" for \"selection\"");
     }
 
     @Test
@@ -46,7 +63,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSelection.instance(), "cell");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSelection.instance(), "selection");
     }
 
     @Override
@@ -55,13 +72,13 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     }
 
     @Override
-    final SpreadsheetCellReference propertyValue() {
-        return SpreadsheetCellReference.parseCellReference("B99");
+    final SpreadsheetSelection propertyValue() {
+        return SpreadsheetSelection.parseCellReference("B99");
     }
 
     @Override
     final String propertyValueType() {
-        return SpreadsheetCellReferenceOrLabelName.class.getSimpleName();
+        return SpreadsheetSelection.class.getSimpleName();
     }
 
     // ClassTesting.....................................................................................................

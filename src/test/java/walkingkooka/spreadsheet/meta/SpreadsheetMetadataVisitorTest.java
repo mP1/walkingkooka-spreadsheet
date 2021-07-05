@@ -35,8 +35,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 
@@ -374,8 +374,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitSelectionSpreadsheetCellReference() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitSelection(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
-                this.visited = cellOrLabel;
+            protected void visitSelection(final SpreadsheetSelection selection) {
+                this.visited = selection;
             }
         }.accept(SpreadsheetMetadataPropertyName.SELECTION, SpreadsheetCellReference.parseCellReference("A2:B3"));
     }
@@ -384,8 +384,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitSelectionSpreadsheetLabelName() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitSelection(final SpreadsheetCellReferenceOrLabelName cellOrLabel) {
-                this.visited = cellOrLabel;
+            protected void visitSelection(final SpreadsheetSelection selection) {
+                this.visited = selection;
             }
         }.accept(SpreadsheetMetadataPropertyName.SELECTION, SpreadsheetExpressionReference.labelName("Label123"));
     }
