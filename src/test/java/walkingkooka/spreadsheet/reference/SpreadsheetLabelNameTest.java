@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.naming.NameTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
@@ -151,7 +150,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetLabelName reference = this.createReference();
+        final SpreadsheetLabelName reference = this.createSelection();
 
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
@@ -193,7 +192,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
 
     @Test
     public void testEqualsIgnoreReferenceDifferentName() {
-        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
+        this.equalsIgnoreReferenceKindAndCheck(this.createSelection(),
                 SpreadsheetLabelName.with("different"),
                 false);
     }
@@ -202,7 +201,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
 
     @Test
     public void testToRelative() {
-        final SpreadsheetLabelName labelName = this.createReference();
+        final SpreadsheetLabelName labelName = this.createSelection();
         final SpreadsheetLabelName relative = labelName.toRelative();
         assertSame(labelName, relative);
     }
@@ -217,7 +216,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
     }
 
     @Override
-    SpreadsheetLabelName createReference() {
+    SpreadsheetLabelName createSelection() {
         return this.createComparable();
     }
 
@@ -275,11 +274,6 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
     @Override
     public Class<SpreadsheetLabelName> type() {
         return SpreadsheetLabelName.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // JsonNodeMarshallingTesting...........................................................................................

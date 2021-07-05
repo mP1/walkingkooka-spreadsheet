@@ -38,7 +38,7 @@ public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<R extends Spre
         final double yOffset = 20.5;
         final double width = 30.5;
         final double height = 40.5;
-        final R reference = this.createReference();
+        final R reference = this.createSelection();
 
         final SpreadsheetViewport viewport = reference.viewport(xOffset, yOffset, width, height);
 

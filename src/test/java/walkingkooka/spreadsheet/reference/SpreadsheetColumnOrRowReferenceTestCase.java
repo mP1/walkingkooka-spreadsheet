@@ -18,24 +18,17 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.ToStringTesting;
 import walkingkooka.compare.ComparableTesting2;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends SpreadsheetColumnOrRowReference<R>> implements ClassTesting2<R>,
-        ComparableTesting2<R>,
-        JsonNodeMarshallingTesting<R>,
-        ParseStringTesting<R>,
-        ToStringTesting<R> {
+public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends SpreadsheetColumnOrRowReference<R>> extends SpreadsheetSelectionTestCase<R>
+    implements ComparableTesting2<R>,
+        ParseStringTesting<R> {
 
     final static int VALUE = 123;
     final static SpreadsheetReferenceKind REFERENCE_KIND = SpreadsheetReferenceKind.ABSOLUTE;
@@ -142,18 +135,18 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testSetReferenceKindNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createReference().setReferenceKind(null));
+        assertThrows(NullPointerException.class, () -> this.createSelection().setReferenceKind(null));
     }
 
     @Test
     public final void testSetReferenceKindSame() {
-        final R reference = this.createReference();
+        final R reference = this.createSelection();
         assertSame(reference, reference.setReferenceKind(reference.referenceKind()));
     }
 
     @Test
     public final void testSetReferenceKindDifferent() {
-        final R reference = this.createReference();
+        final R reference = this.createSelection();
 
         final R different = reference.setReferenceKind(DIFFERENT_REFERENCE_KIND);
         assertNotSame(reference, different);
@@ -171,18 +164,18 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testSetValueInvalidFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createReference().setValue(-1));
+        assertThrows(IllegalArgumentException.class, () -> this.createSelection().setValue(-1));
     }
 
     @Test
     public final void testSetValueSame() {
-        final R reference = this.createReference();
+        final R reference = this.createSelection();
         assertSame(reference, reference.setValue(VALUE));
     }
 
     @Test
     public final void testSetValueDifferent() {
-        final R reference = this.createReference();
+        final R reference = this.createSelection();
         final int differentValue = 999;
         final SpreadsheetColumnOrRowReference<?> different = reference.setValue(differentValue);
         assertNotSame(reference, different);
@@ -216,13 +209,13 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testAddZero() {
-        final R reference = this.createReference();
+        final R reference = this.createSelection();
         assertSame(reference, reference.add(0));
     }
 
     @Test
     public final void testAddNonZeroPositive() {
-        final R reference = this.createReference();
+        final R reference = this.createSelection();
         final SpreadsheetColumnOrRowReference<?> different = reference.add(100);
         assertNotSame(reference, different);
         this.checkValue(different, VALUE + 100);
@@ -231,7 +224,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testAddNonZeroNegative() {
-        final R reference = this.createReference();
+        final R reference = this.createSelection();
         final SpreadsheetColumnOrRowReference<?> different = reference.add(-100);
         assertNotSame(reference, different);
         this.checkValue(different, VALUE - 100);
@@ -280,27 +273,19 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         assertEquals(this.createReference(max), reference.addSaturated(+2));
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
-
-    @Test
-    public final void testJsonNodeMarshall() {
-        final R reference = this.createReference();
-        this.marshallAndCheck(reference, JsonNode.string(reference.toString()));
-    }
-
     // equalsIgnoreReferenceKind........................................................................................
 
     @Test
     public void testEqualsIgnoreReferenceKindNullFalse() {
-        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
+        this.equalsIgnoreReferenceKindAndCheck(this.createSelection(),
                 null,
                 false);
     }
 
     @Test
     public void testEqualsIgnoreReferenceKindSame() {
-        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
-                this.createReference(),
+        this.equalsIgnoreReferenceKindAndCheck(this.createSelection(),
+                this.createSelection(),
                 true);
     }
 
@@ -374,7 +359,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     // helper............................................................................................................
 
-    final R createReference() {
+    final R createSelection() {
         return this.createReference(VALUE, REFERENCE_KIND);
     }
 
@@ -403,24 +388,12 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     abstract int maxValue();
 
     @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    @Override
     public final R createComparable() {
-        return this.createReference();
+        return this.createSelection();
     }
 
     @Override
     public final boolean compareAndEqualsMatch() {
         return false;
-    }
-
-    // JsonNodeMarshallingTesting...........................................................................................
-
-    @Override
-    public final R createJsonNodeMappingValue() {
-        return this.createReference();
     }
 }

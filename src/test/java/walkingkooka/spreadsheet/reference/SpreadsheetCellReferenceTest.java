@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
@@ -61,18 +60,18 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testSetColumnNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createReference().setColumn(null));
+        assertThrows(NullPointerException.class, () -> this.createSelection().setColumn(null));
     }
 
     @Test
     public void testSetColumnSame() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         assertSame(cell, cell.setColumn(this.column(COLUMN)));
     }
 
     @Test
     public void testSetColumnDifferent() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         final SpreadsheetColumnReference differentColumn = this.column(99);
         final SpreadsheetCellReference different = cell.setColumn(differentColumn);
         this.checkRow(different, this.row());
@@ -83,18 +82,18 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testSetRowNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createReference().setRow(null));
+        assertThrows(NullPointerException.class, () -> this.createSelection().setRow(null));
     }
 
     @Test
     public void testSetRowSame() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         assertSame(cell, cell.setRow(this.row(ROW)));
     }
 
     @Test
     public void testSetRowDifferent() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         final SpreadsheetRowReference differentRow = this.row(99);
         final SpreadsheetCellReference different = cell.setRow(differentRow);
         this.checkColumn(different, this.column());
@@ -174,13 +173,13 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddColumnZero() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         assertSame(cell, cell.addColumn(0));
     }
 
     @Test
     public void testAddColumnNonZero() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         final int delta = 10;
 
         final SpreadsheetCellReference different = cell.addColumn(delta);
@@ -224,13 +223,13 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddRowZero() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         assertSame(cell, cell.addRow(0));
     }
 
     @Test
     public void testAddRowNonZero() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         final int delta = 10;
 
         final SpreadsheetCellReference different = cell.addRow(delta);
@@ -273,13 +272,13 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddColumnRowColumnZeroAndRowZero() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         assertSame(cell, cell.add(0, 0));
     }
 
     @Test
     public void testAddColumnRowColumnNonZeroAndRowNonZero() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         final int column = 10;
         final int row = 100;
 
@@ -290,7 +289,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddColumnRowColumnNonZero() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         final int column = 10;
 
         final SpreadsheetCellReference different = cell.add(column, 0);
@@ -300,7 +299,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddColumnRowRowNonZero() {
-        final SpreadsheetCellReference cell = this.createReference();
+        final SpreadsheetCellReference cell = this.createSelection();
         final int row = 100;
 
         final SpreadsheetCellReference different = cell.add(0, row);
@@ -537,7 +536,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetCellReference reference = this.createReference();
+        final SpreadsheetCellReference reference = this.createSelection();
 
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
@@ -623,11 +622,11 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createReference(), "$DT$457");
+        this.toStringAndCheck(this.createSelection(), "$DT$457");
     }
 
     @Override
-    SpreadsheetCellReference createReference() {
+    SpreadsheetCellReference createSelection() {
         return SpreadsheetCellReference.with(column(), row());
     }
 
@@ -657,7 +656,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Override
     public SpreadsheetCellReference createComparable() {
-        return this.createReference();
+        return this.createSelection();
     }
 
     @Override
@@ -670,16 +669,11 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         return SpreadsheetCellReference.class;
     }
 
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
     // HatoesResourceTesting............................................................................................
 
     @Override
     public SpreadsheetCellReference createHateosResource() {
-        return this.createReference();
+        return this.createSelection();
     }
 
     // ParseStringTesting.........................................................................................
