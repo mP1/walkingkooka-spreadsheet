@@ -255,6 +255,13 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
                 .forEach(SpreadsheetRangeCellsConsumer.with(cells, present, absent));
     }
 
+    // SpreadsheetSelection.............................................................................................
+
+    @Override
+    void accept(final SpreadsheetSelectionVisitor visitor) {
+        visitor.visit(this);
+    }
+
     // SpreadsheetExpressionReferenceVisitor............................................................................
 
     @Override

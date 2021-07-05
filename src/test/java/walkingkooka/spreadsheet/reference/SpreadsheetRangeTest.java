@@ -734,10 +734,40 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
                 () -> start + " toRelative");
     }
 
+    // SpreadsheetSelectionVisitor......................................................................................
+
+    @Test
+    public void testSpreadsheetSelectionVisitorAccept() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetRange selection = this.createSelection();
+
+        new FakeSpreadsheetSelectionVisitor() {
+            @Override
+            protected Visiting startVisit(final SpreadsheetSelection s) {
+                assertSame(selection, s);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final SpreadsheetSelection s) {
+                assertSame(selection, s);
+                b.append("2");
+            }
+
+            @Override
+            protected void visit(final SpreadsheetRange s) {
+                assertSame(selection, s);
+                b.append("3");
+            }
+        }.accept(selection);
+        assertEquals("132", b.toString());
+    }
+
     // SpreadsheetExpressionReferenceVisitor.............................................................................
 
     @Test
-    public void testAccept() {
+    public void testSpreadsheetExpressionReferenceVisitorAccept() {
         final StringBuilder b = new StringBuilder();
         final SpreadsheetRange reference = this.createSelection();
 

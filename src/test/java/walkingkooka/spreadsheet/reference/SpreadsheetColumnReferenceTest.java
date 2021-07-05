@@ -21,8 +21,10 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRowReferenceTestCase<SpreadsheetColumnReference> {
@@ -184,6 +186,36 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
                 SpreadsheetColumnReference.parseColumn("M"),
                 SpreadsheetColumnReference.parseColumn("K").addSaturated(2)
         );
+    }
+
+    // SpreadsheetSelectionVisitor......................................................................................
+
+    @Test
+    public void testSpreadsheetSelectionVisitorAccept() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetColumnReference selection = this.createSelection();
+
+        new FakeSpreadsheetSelectionVisitor() {
+            @Override
+            protected Visiting startVisit(final SpreadsheetSelection s) {
+                assertSame(selection, s);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final SpreadsheetSelection s) {
+                assertSame(selection, s);
+                b.append("2");
+            }
+
+            @Override
+            protected void visit(final SpreadsheetColumnReference s) {
+                assertSame(selection, s);
+                b.append("3");
+            }
+        }.accept(selection);
+        assertEquals("132", b.toString());
     }
 
     // JsonNodeTesting..................................................................................................

@@ -149,6 +149,13 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
                 other;
     }
 
+    // SpreadsheetSelectionVisitor......................................................................................
+
+    @Override
+    void accept(final SpreadsheetSelectionVisitor visitor) {
+        visitor.visit(this);
+    }
+
     // Object...........................................................................................................
 
     @Override

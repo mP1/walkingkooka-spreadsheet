@@ -45,4 +45,8 @@ public abstract class SpreadsheetSelection {
     public final boolean isRowReference() {
         return this instanceof SpreadsheetRowReference;
     }
+
+    // SpreadsheetSelectionVisitor......................................................................................
+
+    abstract void accept(final SpreadsheetSelectionVisitor visitor);
 }
