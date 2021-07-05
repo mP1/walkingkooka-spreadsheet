@@ -43,6 +43,17 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
+    public void testToRelativeAbsolute() {
+        final int value = 123;
+        this.toRelativeAndCheck(SpreadsheetReferenceKind.ABSOLUTE.row(value), SpreadsheetReferenceKind.RELATIVE.row(value));
+    }
+
+    @Test
+    public void testToRelativeRelative() {
+        this.toRelativeAndCheck(SpreadsheetReferenceKind.RELATIVE.row(123));
+    }
+
+    @Test
     public void testEqualReferenceKindIgnored() {
         this.compareToAndCheckEquals(
                 SpreadsheetReferenceKind.ABSOLUTE.row(VALUE),

@@ -46,6 +46,12 @@ public abstract class SpreadsheetSelection {
         return this instanceof SpreadsheetRowReference;
     }
 
+    /**
+     * If the sub class has a {@link SpreadsheetReferenceKind} return a new instance with that set to {@link SpreadsheetReferenceKind#RELATIVE}.
+     * The sub class {@link SpreadsheetLabelName} will always return <code>this</code>.
+     */
+    public abstract SpreadsheetSelection toRelative();
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     abstract void accept(final SpreadsheetSelectionVisitor visitor);

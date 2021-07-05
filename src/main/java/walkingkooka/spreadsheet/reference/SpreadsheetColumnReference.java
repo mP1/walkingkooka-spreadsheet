@@ -149,6 +149,11 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
                 other;
     }
 
+    @Override
+    public SpreadsheetColumnReference toRelative() {
+        return this.setReferenceKind(SpreadsheetReferenceKind.RELATIVE);
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override

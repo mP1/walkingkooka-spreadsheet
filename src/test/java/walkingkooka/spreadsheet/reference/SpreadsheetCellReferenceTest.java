@@ -104,25 +104,25 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testToRelativeAlreadyAbsolute() {
-        this.toRelativeAndCheck(SpreadsheetCellReference.parseCellReference("$B$2"));
+        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCellReference("$B$2"));
     }
 
     @Test
     public void testToRelativeRelative() {
-        this.toRelativeAndCheck(SpreadsheetCellReference.parseCellReference("B2"));
+        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCellReference("B2"));
     }
 
     @Test
     public void testToRelativeMixed() {
-        this.toRelativeAndCheck(SpreadsheetCellReference.parseCellReference("$B2"));
+        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCellReference("$B2"));
     }
 
     @Test
     public void testToRelativeMixed2() {
-        this.toRelativeAndCheck(SpreadsheetCellReference.parseCellReference("B$2"));
+        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCellReference("B$2"));
     }
 
-    private void toRelativeAndCheck(final SpreadsheetCellReference reference) {
+    private void toRelativeAndCheck0(final SpreadsheetCellReference reference) {
         this.toRelativeOrAbsoluteAndCheck(reference,
                 reference.toRelative(),
                 SpreadsheetReferenceKind.RELATIVE);
