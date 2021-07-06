@@ -37,13 +37,12 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.TextStyle;
@@ -200,7 +199,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>edit-selection</code> {@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference}.
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetCellReferenceOrLabelName<?>> SELECTION = registerConstant(SpreadsheetMetadataPropertyNameSelection.instance());
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetSelection> SELECTION = registerConstant(SpreadsheetMetadataPropertyNameSelection.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
@@ -395,6 +394,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      */
     abstract void accept(final T value, final SpreadsheetMetadataVisitor visitor);
 
+    /**
+     * Only {@link SpreadsheetMetadataPropertyNameSelection} returns true.
+     */
+    final boolean isSelection() {
+        return this instanceof SpreadsheetMetadataPropertyNameSelection;
+    }
+
     // Object...........................................................................................................
 
     @Override
@@ -438,12 +444,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
 
     abstract String compareToName();
 
-    // Json...........................................................................................................
-
-    final T unmarshall(final JsonNode node,
-                       final JsonNodeUnmarshallContext context) {
-        return context.unmarshall(node, this.type());
-    }
 
     abstract Class<T> type();
 

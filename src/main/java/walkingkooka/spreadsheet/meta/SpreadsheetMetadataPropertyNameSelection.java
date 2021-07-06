@@ -18,17 +18,15 @@
 package walkingkooka.spreadsheet.meta;
 
 
-import walkingkooka.Cast;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- * Holds the cell or label name for that cell currently being edited.
+ * Holds the {@link SpreadsheetSelection}, which may be a cell, column, row, or range.
  */
-final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadataPropertyName<SpreadsheetCellReferenceOrLabelName<?>> {
+final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadataPropertyName<SpreadsheetSelection> {
 
     /**
      * Singleton
@@ -45,28 +43,28 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
     }
 
     /**
-     * After checking the type force the {@link SpreadsheetCellReference#toRelative()}
+     * After checking the type force the {@link SpreadsheetSelection#toRelative()}
      */
     @Override
-    final SpreadsheetCellReferenceOrLabelName<?> checkValue0(final Object value) {
+    final SpreadsheetSelection checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetCellReferenceOrLabelName)
+                v -> v instanceof SpreadsheetSelection)
                 .toRelative();
     }
 
     @Override
     final String expected() {
-        return SpreadsheetCellReferenceOrLabelName.class.getSimpleName();
+        return SpreadsheetSelection.class.getSimpleName();
     }
 
     @Override
-    final Optional<SpreadsheetCellReferenceOrLabelName<?>> extractLocaleValue(final Locale locale) {
+    final Optional<SpreadsheetSelection> extractLocaleValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    final Class<SpreadsheetCellReferenceOrLabelName<?>> type() {
-        return Cast.to(SpreadsheetCellReferenceOrLabelName.class);
+    final Class<SpreadsheetSelection> type() {
+        return SpreadsheetSelection.class;
     }
 
     @Override
@@ -75,7 +73,7 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
     }
 
     @Override
-    void accept(final SpreadsheetCellReferenceOrLabelName value,
+    void accept(final SpreadsheetSelection value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitSelection(value);
     }
