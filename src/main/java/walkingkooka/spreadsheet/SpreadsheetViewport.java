@@ -58,7 +58,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
         final SpreadsheetExpressionReference reference;
         try {
-            reference = SpreadsheetCellReference.parse(tokens[0]);
+            reference = SpreadsheetCellReference.parseExpressionReference(tokens[0]);
         } catch (final NumberFormatException cause) {
             throw new IllegalArgumentException("Invalid reference in " + CharSequences.quoteAndEscape(text));
         }
