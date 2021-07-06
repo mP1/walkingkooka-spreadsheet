@@ -41,7 +41,7 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameSelection() {
-        super("cell");
+        super("selection");
     }
 
     /**
