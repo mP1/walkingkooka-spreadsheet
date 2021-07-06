@@ -136,7 +136,7 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     /**
      * Parsers the given text into of the sub classes of {@link SpreadsheetExpressionReference}.
      */
-    public static SpreadsheetExpressionReference parse(final String text) {
+    public static SpreadsheetExpressionReference parseExpressionReference(final String text) {
         Objects.requireNonNull(text, "text");
 
         final SpreadsheetExpressionReference reference;
@@ -258,7 +258,7 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
      */
     static SpreadsheetExpressionReference unmarshall(final JsonNode node,
                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshall0(node, SpreadsheetExpressionReference::parse);
+        return unmarshall0(node, SpreadsheetExpressionReference::parseExpressionReference);
     }
 
     /**
@@ -277,7 +277,7 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
                                                                         final JsonNodeUnmarshallContext context) {
         return unmarshall0(
                 node,
-                SpreadsheetExpressionReference::parse
+                SpreadsheetExpressionReference::parseExpressionReference
         );
     }
 

@@ -144,7 +144,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
                 SpreadsheetExpressionReference.isCellReferenceText(text),
                 () -> "isCellReferenceText " + CharSequences.quoteAndEscape(text));
         if (expected) {
-            SpreadsheetExpressionReference.parse(text);
+            SpreadsheetExpressionReference.parseExpressionReference(text);
         }
     }
 
@@ -313,14 +313,14 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
 
     @Override
     public SpreadsheetExpressionReference createJsonNodeMappingValue() {
-        return SpreadsheetExpressionReference.parse("A1");
+        return SpreadsheetExpressionReference.parseExpressionReference("A1");
     }
 
     // ParseStringTesting...............................................................................................
 
     @Override
     public SpreadsheetExpressionReference parseString(final String text) {
-        return SpreadsheetExpressionReference.parse(text);
+        return SpreadsheetExpressionReference.parseExpressionReference(text);
     }
 
     @Override
