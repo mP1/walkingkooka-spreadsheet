@@ -122,8 +122,8 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     /**
      * Accepts a json string and returns a {@link SpreadsheetLabelMappingExpressionReference} or fails.
      */
-    static SpreadsheetCellReferenceOrLabelName<?> unmarshallSpreadsheetCellReferenceOrLabelName(final JsonNode node,
-                                                                                                final JsonNodeUnmarshallContext context) {
+    static SpreadsheetCellReferenceOrLabelName unmarshallSpreadsheetCellReferenceOrLabelName(final JsonNode node,
+                                                                                             final JsonNodeUnmarshallContext context) {
         return unmarshall0(
                 node,
                 SpreadsheetExpressionReference::parseCellReferenceOrLabelName

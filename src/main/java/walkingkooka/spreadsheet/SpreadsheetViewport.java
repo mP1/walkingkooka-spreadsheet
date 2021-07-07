@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.json.JsonNode;
@@ -56,15 +55,15 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
                 throw new IllegalArgumentException("Expected 5 tokens in " + CharSequences.quoteAndEscape(text));
         }
 
-        final SpreadsheetExpressionReference reference;
+        final SpreadsheetCellReferenceOrLabelName cellOrLabel;
         try {
-            reference = SpreadsheetCellReference.parseExpressionReference(tokens[0]);
+            cellOrLabel = SpreadsheetCellReference.parseCellReferenceOrLabelName(tokens[0]);
         } catch (final NumberFormatException cause) {
             throw new IllegalArgumentException("Invalid reference in " + CharSequences.quoteAndEscape(text));
         }
 
-        if (!(reference.isCellReference() || reference.isLabelName())) {
-            throw new IllegalArgumentException("Reference must be cell or label got " + reference);
+        if (!(cellOrLabel.isCellReference() || cellOrLabel.isLabelName())) {
+            throw new IllegalArgumentException("Reference must be cell or label got " + cellOrLabel);
         }
 
         final double xOffset;
@@ -95,13 +94,13 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
             throw new IllegalArgumentException("Invalid height in " + CharSequences.quoteAndEscape(text));
         }
 
-        return with((SpreadsheetCellReferenceOrLabelName<?>) reference, xOffset, yOffset, width, height);
+        return with(cellOrLabel, xOffset, yOffset, width, height);
     }
 
     /**
      * Factory that creates a new {@link SpreadsheetViewport}.
      */
-    public static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName<?> reference,
+    public static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName reference,
                                            final double xOffset,
                                            final double yOffset,
                                            final double width,
@@ -116,7 +115,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
         return new SpreadsheetViewport(reference, xOffset, yOffset, width, height);
     }
 
-    private SpreadsheetViewport(final SpreadsheetCellReferenceOrLabelName<?> reference,
+    private SpreadsheetViewport(final SpreadsheetCellReferenceOrLabelName reference,
                                 final double xOffset,
                                 final double yOffset,
                                 final double width,
@@ -141,11 +140,11 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
     // properties.......................................................................................................
 
-    public SpreadsheetExpressionReference reference() {
+    public SpreadsheetCellReferenceOrLabelName reference() {
         return this.reference;
     }
 
-    private final SpreadsheetCellReferenceOrLabelName<?> reference;
+    private final SpreadsheetCellReferenceOrLabelName reference;
 
     public double xOffset() {
         return this.xOffset;

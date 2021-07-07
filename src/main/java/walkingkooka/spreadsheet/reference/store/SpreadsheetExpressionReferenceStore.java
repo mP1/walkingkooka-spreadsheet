@@ -32,7 +32,7 @@ import java.util.function.Consumer;
  * property if one is present. Any return types of {@link SpreadsheetExpressionReference} will have their
  * {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind} set to {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind#RELATIVE}.
  */
-public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetCellReferenceOrLabelName<T>> extends Store<T, Set<SpreadsheetCellReference>> {
+public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetCellReferenceOrLabelName> extends Store<T, Set<SpreadsheetCellReference>> {
 
     @Override
     default Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> value) {

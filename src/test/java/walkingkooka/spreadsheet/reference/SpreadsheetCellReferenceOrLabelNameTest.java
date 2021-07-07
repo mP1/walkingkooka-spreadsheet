@@ -26,8 +26,8 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 
-public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesting<SpreadsheetCellReferenceOrLabelName<?>>,
-        JsonNodeMarshallingTesting<SpreadsheetCellReferenceOrLabelName<?>> {
+public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesting<SpreadsheetCellReferenceOrLabelName>,
+        JsonNodeMarshallingTesting<SpreadsheetCellReferenceOrLabelName> {
 
     @Test
     public void testUnmarshallCellReference() {
@@ -39,7 +39,7 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
         this.unmarshallAndCheck2(SpreadsheetExpressionReference.labelName("LABEL123456"));
     }
 
-    private void unmarshallAndCheck2(final SpreadsheetCellReferenceOrLabelName<?> reference) {
+    private void unmarshallAndCheck2(final SpreadsheetCellReferenceOrLabelName reference) {
         this.unmarshallAndCheck(
                 JsonNode.string(reference.toString()),
                 reference
@@ -64,7 +64,7 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetCellReferenceOrLabelName<?>> type() {
+    public Class<SpreadsheetCellReferenceOrLabelName> type() {
         return Cast.to(SpreadsheetCellReferenceOrLabelName.class);
     }
 
@@ -76,8 +76,8 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
     // json..............................................................................................................
 
     @Override
-    public SpreadsheetCellReferenceOrLabelName<?> unmarshall(final JsonNode node,
-                                                             final JsonNodeUnmarshallContext context) {
+    public SpreadsheetCellReferenceOrLabelName unmarshall(final JsonNode node,
+                                                          final JsonNodeUnmarshallContext context) {
         return SpreadsheetExpressionReference.unmarshallSpreadsheetCellReferenceOrLabelName(
                 node,
                 context
@@ -85,7 +85,7 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
     }
 
     @Override
-    public SpreadsheetCellReferenceOrLabelName<?> createJsonNodeMappingValue() {
+    public SpreadsheetCellReferenceOrLabelName createJsonNodeMappingValue() {
         return SpreadsheetExpressionReference.parseCellReferenceOrLabelName("A1");
     }
 }

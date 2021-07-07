@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -36,9 +37,11 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetExpressionReferenceStore} that uses a {@link Map} to store an entity to {@link SpreadsheetCellReference}
  */
-final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetCellReferenceOrLabelName<T>> implements SpreadsheetExpressionReferenceStore<T> {
+// using a type parameter of T extends SpreadsheetCellReferenceOrLabelName & Comparable<T> causes a Transpiler ERROR.
+// Error:TreeMapSpreadsheetExpressionReferenceStore.java:39: This class must implement the inherited abstract method SpreadsheetExpressionReference.equalsIgnoreReferenceK
+final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetCellReferenceOrLabelName> implements SpreadsheetExpressionReferenceStore<T> {
 
-    static <T extends SpreadsheetCellReferenceOrLabelName<T>> TreeMapSpreadsheetExpressionReferenceStore<T> create() {
+    static <T extends SpreadsheetCellReferenceOrLabelName> TreeMapSpreadsheetExpressionReferenceStore<T> create() {
         return new TreeMapSpreadsheetExpressionReferenceStore<>();
     }
 
@@ -128,10 +131,14 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetCell
 
         return this.targetToReferences.entrySet()
                 .stream()
-                .filter(e -> e.getKey().compareTo(from) >= 0)
+                .filter(e -> comparable(e.getKey()).compareTo(from) >= 0)
                 .map(Map.Entry::getValue)
                 .limit(count)
                 .collect(Collectors.toCollection(Lists::array));
+    }
+
+    private Comparable<T> comparable(final T cellOrLabel) {
+        return Cast.to(cellOrLabel);
     }
 
     @Override

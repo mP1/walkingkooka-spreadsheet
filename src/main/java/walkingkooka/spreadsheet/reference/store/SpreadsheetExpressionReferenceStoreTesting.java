@@ -36,7 +36,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SuppressWarnings("unchecked")
-public interface SpreadsheetExpressionReferenceStoreTesting<S extends SpreadsheetExpressionReferenceStore<T>, T extends SpreadsheetCellReferenceOrLabelName<T>>
+public interface SpreadsheetExpressionReferenceStoreTesting<S extends SpreadsheetExpressionReferenceStore<T>,
+        T extends SpreadsheetCellReferenceOrLabelName & Comparable<T>>
         extends StoreTesting<S, T, Set<SpreadsheetCellReference>>,
         TypeNameTesting<S> {
 

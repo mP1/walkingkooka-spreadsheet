@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewport;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<R extends SpreadsheetCellReferenceOrLabelName<R>> extends SpreadsheetExpressionReferenceTestCase<R>
+public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<R extends SpreadsheetCellReferenceOrLabelName & Comparable<R>> extends SpreadsheetExpressionReferenceTestCase<R>
         implements ComparableTesting2<R> {
 
     SpreadsheetCellReferenceOrLabelNameTestCase() {

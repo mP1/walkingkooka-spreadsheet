@@ -22,7 +22,6 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -337,7 +336,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     private void check(final SpreadsheetViewport viewport,
-                       final SpreadsheetCellReferenceOrLabelName<?> reference,
+                       final SpreadsheetCellReferenceOrLabelName reference,
                        final double xOffset,
                        final double yOffset,
                        final double width,
@@ -350,7 +349,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     private void checkReference(final SpreadsheetViewport viewport,
-                                final SpreadsheetCellReferenceOrLabelName<?> reference) {
+                                final SpreadsheetCellReferenceOrLabelName reference) {
         assertEquals(reference, viewport.reference(), () -> "viewport width=" + viewport);
     }
 

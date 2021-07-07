@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.reference.store;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 
 public abstract class SpreadsheetExpressionReferenceStoreTestCase<S extends SpreadsheetExpressionReferenceStore<T>,
-        T extends SpreadsheetCellReferenceOrLabelName<T>>
+        T extends SpreadsheetCellReferenceOrLabelName & Comparable<T>>
         implements SpreadsheetExpressionReferenceStoreTesting<S, T> {
 
     SpreadsheetExpressionReferenceStoreTestCase() {
