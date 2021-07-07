@@ -26,8 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends SpreadsheetColumnOrRowReference<R>> extends SpreadsheetSelectionTestCase<R>
-    implements ComparableTesting2<R>,
+public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends SpreadsheetColumnOrRowReference & Comparable<R>>
+        extends SpreadsheetSelectionTestCase<R>
+        implements ComparableTesting2<R>,
         ParseStringTesting<R> {
 
     final static int VALUE = 123;
@@ -148,7 +149,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     public final void testSetReferenceKindDifferent() {
         final R reference = this.createSelection();
 
-        final R different = reference.setReferenceKind(DIFFERENT_REFERENCE_KIND);
+        final SpreadsheetColumnOrRowReference different = reference.setReferenceKind(DIFFERENT_REFERENCE_KIND);
         assertNotSame(reference, different);
 
         this.checkValue(different, VALUE);
@@ -177,7 +178,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     public final void testSetValueDifferent() {
         final R reference = this.createSelection();
         final int differentValue = 999;
-        final SpreadsheetColumnOrRowReference<?> different = reference.setValue(differentValue);
+        final SpreadsheetColumnOrRowReference different = reference.setValue(differentValue);
         assertNotSame(reference, different);
         this.checkValue(different, differentValue);
         this.checkKind(different, REFERENCE_KIND);
@@ -188,7 +189,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         final SpreadsheetReferenceKind kind = SpreadsheetReferenceKind.RELATIVE;
         final R reference = this.createReference(VALUE, kind);
         final int differentValue = 999;
-        final SpreadsheetColumnOrRowReference<?> different = reference.setValue(differentValue);
+        final SpreadsheetColumnOrRowReference different = reference.setValue(differentValue);
         assertNotSame(reference, different);
         this.checkValue(different, differentValue);
         this.checkKind(different, kind);
@@ -216,7 +217,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testAddNonZeroPositive() {
         final R reference = this.createSelection();
-        final SpreadsheetColumnOrRowReference<?> different = reference.add(100);
+        final SpreadsheetColumnOrRowReference different = reference.add(100);
         assertNotSame(reference, different);
         this.checkValue(different, VALUE + 100);
         this.checkType(different);
@@ -225,7 +226,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testAddNonZeroNegative() {
         final R reference = this.createSelection();
-        final SpreadsheetColumnOrRowReference<?> different = reference.add(-100);
+        final SpreadsheetColumnOrRowReference different = reference.add(-100);
         assertNotSame(reference, different);
         this.checkValue(different, VALUE - 100);
         this.checkKind(different, SpreadsheetReferenceKind.ABSOLUTE);
@@ -347,12 +348,12 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
                                                    final R reference2,
                                                    final boolean expected) {
         assertEquals(expected,
-                reference1.equalsIgnoreReferenceKind(reference2),
+                reference1.equalsIgnoreReferenceKind0(reference2),
                 () -> reference1 + " equalsIgnoreReferenceKind " + reference2
         );
         if (null != reference2) {
             assertEquals(expected,
-                    reference2.equalsIgnoreReferenceKind(reference1),
+                    reference2.equalsIgnoreReferenceKind0(reference1),
                     () -> reference2 + " equalsIgnoreReferenceKind " + reference1);
         }
     }
@@ -369,15 +370,15 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     abstract R createReference(final int value, final SpreadsheetReferenceKind kind);
 
-    private void checkValue(final SpreadsheetColumnOrRowReference<?> reference, final Integer value) {
+    private void checkValue(final SpreadsheetColumnOrRowReference reference, final Integer value) {
         assertEquals(value, reference.value(), "value");
     }
 
-    private void checkKind(final SpreadsheetColumnOrRowReference<?> reference, final SpreadsheetReferenceKind kind) {
+    private void checkKind(final SpreadsheetColumnOrRowReference reference, final SpreadsheetReferenceKind kind) {
         assertSame(kind, reference.referenceKind(), "referenceKind");
     }
 
-    private void checkType(final SpreadsheetColumnOrRowReference<?> reference) {
+    private void checkType(final SpreadsheetColumnOrRowReference reference) {
         assertEquals(this.type(), reference.getClass(), "same type");
     }
 

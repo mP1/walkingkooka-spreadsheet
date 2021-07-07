@@ -25,13 +25,13 @@ import java.util.Objects;
  * Represents a column reference. The {@link Comparable} method ignores the {@link SpreadsheetReferenceKind} component
  * only comparing the value.
  */
-public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowReference<SpreadsheetColumnReference> {
+public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowReference implements Comparable<SpreadsheetColumnReference> {
 
     /**
      * The maximum value, columns -1.
      */
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
-    final static int MAX_VALUE = 16384 -1; // inclusive
+    final static int MAX_VALUE = 16384 - 1; // inclusive
     final static int RADIX = 26;
 
     final static String MAX_TOSTRING = toString0(MAX_VALUE + 1, SpreadsheetReferenceKind.RELATIVE);
@@ -68,7 +68,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     public SpreadsheetColumnReference setReferenceKind(final SpreadsheetReferenceKind referenceKind) {
         checkReferenceKind(referenceKind);
 
-        return this.setReferenceKind0(referenceKind);
+        return (SpreadsheetColumnReference) this.setReferenceKind0(referenceKind);
     }
 
     @Override
@@ -171,7 +171,6 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     /**
      * Returns true if the values ignoring the {@link SpreadsheetReferenceKind}.
      */
-    @Override
     public boolean equalsIgnoreReferenceKind(final SpreadsheetColumnReference other) {
         return this.equalsIgnoreReferenceKind0(other);
     }

@@ -42,9 +42,7 @@ import java.util.function.IntFunction;
 /**
  * Captures the common features shared by a row or column.
  */
-abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowReference<R>>
-        extends SpreadsheetSelection
-        implements Value<Integer>, Comparable<R> {
+abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelection implements Value<Integer> {
 
     /**
      * Creates a new {@link SpreadsheetColumn}
@@ -119,7 +117,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     /**
      * Fills an array with what will become a cache of {@link SpreadsheetColumnOrRowReference}.
      */
-    static <R extends SpreadsheetColumnOrRowReference<R>> R[] fillCache(final IntFunction<R> reference, final R[] array) {
+    static <R extends SpreadsheetColumnOrRowReference> R[] fillCache(final IntFunction<R> reference, final R[] array) {
         for (int i = 0; i < CACHE_SIZE; i++) {
             array[i] = reference.apply(i);
         }
@@ -196,13 +194,13 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
         return this.referenceKind;
     }
 
-    abstract R setReferenceKind(final SpreadsheetReferenceKind referenceKind);
+    abstract SpreadsheetColumnOrRowReference setReferenceKind(final SpreadsheetReferenceKind referenceKind);
 
-    final R setReferenceKind0(final SpreadsheetReferenceKind referenceKind) {
+    final SpreadsheetColumnOrRowReference setReferenceKind0(final SpreadsheetReferenceKind referenceKind) {
         checkReferenceKind(referenceKind);
 
         return this.referenceKind == referenceKind ?
-                Cast.to(this) :
+                this :
                 this.replaceReferenceKind(referenceKind);
     }
 
@@ -211,7 +209,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     /**
      * Unconditionally creates a new {@link SpreadsheetColumnOrRowReference} with the given {@link SpreadsheetReferenceKind}.
      */
-    abstract R replaceReferenceKind(final SpreadsheetReferenceKind referenceKind);
+    abstract SpreadsheetColumnOrRowReference replaceReferenceKind(final SpreadsheetReferenceKind referenceKind);
 
     // Object...........................................................................................................
 
@@ -234,8 +232,6 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
         return this.equalsValue(other) &&
                 this.referenceKind == other.referenceKind;
     }
-
-    abstract boolean equalsIgnoreReferenceKind(final R other);
 
     final boolean equalsIgnoreReferenceKind0(final SpreadsheetColumnOrRowReference other) {
         return this == other ||
@@ -290,10 +286,10 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
         );
     }
 
-    private static <T extends SpreadsheetColumnOrRowReference<T>> void register(
-            final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
-            final BiFunction<T, JsonNodeMarshallContext, JsonNode> to,
-            final Class<T> type) {
+    private static <RR extends SpreadsheetColumnOrRowReference> void register(
+            final BiFunction<JsonNode, JsonNodeUnmarshallContext, RR> from,
+            final BiFunction<RR, JsonNodeMarshallContext, JsonNode> to,
+            final Class<RR> type) {
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(type),
                 from,
