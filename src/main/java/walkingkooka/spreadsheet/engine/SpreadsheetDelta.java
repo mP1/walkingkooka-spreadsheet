@@ -339,13 +339,13 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     }
 
     private void printTreeMap(final String label,
-                              final Map<? extends SpreadsheetColumnOrRowReference<?>, Double> references,
+                              final Map<? extends SpreadsheetColumnOrRowReference, Double> references,
                               final IndentingPrinter printer) {
         if (!references.isEmpty()) {
             printer.println(label + ":");
             printer.indent();
             {
-                for (final Map.Entry<? extends SpreadsheetColumnOrRowReference<?>, Double> referenceAndWidth : references.entrySet()) {
+                for (final Map.Entry<? extends SpreadsheetColumnOrRowReference, Double> referenceAndWidth : references.entrySet()) {
                     printer.println(referenceAndWidth.getKey() + ": " + referenceAndWidth.getValue());
                 }
             }
@@ -428,8 +428,8 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         return cells;
     }
 
-    private static <R extends SpreadsheetColumnOrRowReference<R>> Map<R, Double> unmarshallMap(final JsonNode object,
-                                                                                               final Function<String, R> reference) {
+    private static <R extends SpreadsheetColumnOrRowReference> Map<R, Double> unmarshallMap(final JsonNode object,
+                                                                                            final Function<String, R> reference) {
         final Map<R, Double> max = Maps.ordered();
 
         for (final JsonNode entry : object.children()) {
@@ -549,11 +549,11 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     /**
      * Creates a JSON object where the reference in string form is the key and the max width is the value.
      */
-    private static <R extends SpreadsheetColumnOrRowReference<R>> JsonNode marshallMap(final Map<R, Double> referenceToWidth,
-                                                                                       final Function<R, R> withoutAbsolute) {
+    private static <R extends SpreadsheetColumnOrRowReference> JsonNode marshallMap(final Map<R, Double> referenceToWidth,
+                                                                                    final Function<R, R> withoutAbsolute) {
         final List<JsonNode> children = Lists.array();
 
-        for(final Map.Entry<R, Double> referenceAndWidth : referenceToWidth.entrySet()) {
+        for (final Map.Entry<R, Double> referenceAndWidth : referenceToWidth.entrySet()) {
             children.add(JsonNode.number(referenceAndWidth.getValue())
                     .setName(JsonPropertyName.with(withoutAbsolute.apply(referenceAndWidth.getKey()).toString())));
         }
