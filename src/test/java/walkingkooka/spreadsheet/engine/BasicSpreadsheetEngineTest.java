@@ -6908,9 +6908,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 () -> "all mappings in " + store);
     }
 
-    private <E extends SpreadsheetCellReferenceOrLabelName<E>> void loadReferencesAndCheck(final SpreadsheetExpressionReferenceStore<E> store,
-                                                                                           final E cell,
-                                                                                           final SpreadsheetCellReference... out) {
+    private <E extends SpreadsheetCellReferenceOrLabelName & Comparable<E>>
+    void loadReferencesAndCheck(final SpreadsheetExpressionReferenceStore<E> store,
+                                final E cell,
+                                final SpreadsheetCellReference... out) {
         assertEquals(Optional.ofNullable(out.length == 0 ? null : Sets.of(out)),
                 store.load(cell),
                 "references to " + cell);

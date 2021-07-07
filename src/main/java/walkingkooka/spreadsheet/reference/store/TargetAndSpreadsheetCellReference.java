@@ -27,10 +27,10 @@ import java.util.Objects;
 /**
  * Holds a {@link SpreadsheetExpressionReference source} to a {@link SpreadsheetCellReference}.
  */
-public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetCellReferenceOrLabelName<T>> {
+public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetCellReferenceOrLabelName> {
 
-    public static <T extends SpreadsheetCellReferenceOrLabelName<T>> TargetAndSpreadsheetCellReference<T> with(final T target,
-                                                                                                               final SpreadsheetCellReference reference) {
+    public static <T extends SpreadsheetCellReferenceOrLabelName> TargetAndSpreadsheetCellReference<T> with(final T target,
+                                                                                                            final SpreadsheetCellReference reference) {
         Objects.requireNonNull(target, "target");
         Objects.requireNonNull(reference, "reference");
         if (target.equals(reference)) {

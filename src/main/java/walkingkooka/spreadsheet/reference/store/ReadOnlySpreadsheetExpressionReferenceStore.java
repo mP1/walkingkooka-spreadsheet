@@ -29,10 +29,10 @@ import java.util.function.Consumer;
 /**
  * A read only wrapper around a {@link SpreadsheetExpressionReferenceStore}
  */
-final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetCellReferenceOrLabelName<T>>
+final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetCellReferenceOrLabelName>
         implements SpreadsheetExpressionReferenceStore<T> {
 
-    static <T extends SpreadsheetCellReferenceOrLabelName<T>> ReadOnlySpreadsheetExpressionReferenceStore<T> with(final SpreadsheetExpressionReferenceStore<T> store) {
+    static <T extends SpreadsheetCellReferenceOrLabelName> ReadOnlySpreadsheetExpressionReferenceStore<T> with(final SpreadsheetExpressionReferenceStore<T> store) {
         Objects.requireNonNull(store, "store");
         return new ReadOnlySpreadsheetExpressionReferenceStore<>(store);
     }

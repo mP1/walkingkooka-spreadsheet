@@ -28,21 +28,21 @@ public final class SpreadsheetExpressionReferenceStores implements PublicStaticH
     /**
      * {@see FakeSpreadsheetExpressionReferenceStore}
      */
-    public static <T extends SpreadsheetCellReferenceOrLabelName<T>> SpreadsheetExpressionReferenceStore<T> fake() {
+    public static <T extends SpreadsheetCellReferenceOrLabelName> SpreadsheetExpressionReferenceStore<T> fake() {
         return new FakeSpreadsheetExpressionReferenceStore<>();
     }
 
     /**
      * {@see ReadOnlySpreadsheetExpressionReferenceStore}
      */
-    public static <T extends SpreadsheetCellReferenceOrLabelName<T>> SpreadsheetExpressionReferenceStore<T> readOnly(final SpreadsheetExpressionReferenceStore<T> store) {
+    public static <T extends SpreadsheetCellReferenceOrLabelName> SpreadsheetExpressionReferenceStore<T> readOnly(final SpreadsheetExpressionReferenceStore<T> store) {
         return ReadOnlySpreadsheetExpressionReferenceStore.with(store);
     }
 
     /**
      * {@see TreeMapSpreadsheetExpressionReferenceStore}
      */
-    public static <T extends SpreadsheetCellReferenceOrLabelName<T>> SpreadsheetExpressionReferenceStore<T> treeMap() {
+    public static <T extends SpreadsheetCellReferenceOrLabelName & Comparable<T>> SpreadsheetExpressionReferenceStore<T> treeMap() {
         return TreeMapSpreadsheetExpressionReferenceStore.create();
     }
 

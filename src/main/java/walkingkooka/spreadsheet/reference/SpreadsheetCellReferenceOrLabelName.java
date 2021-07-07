@@ -24,9 +24,8 @@ import walkingkooka.spreadsheet.SpreadsheetViewport;
  * This type is necessary to avoid J2clTranspiler failures because of what appears to be a failure of the JDT not being
  * able to handle type parameters with multiple bounds.
  */
-abstract public class SpreadsheetCellReferenceOrLabelName<C extends SpreadsheetCellReferenceOrLabelName<C>> extends SpreadsheetExpressionReference
-        implements SpreadsheetLabelMappingExpressionReference,
-        Comparable<C> {
+abstract public class SpreadsheetCellReferenceOrLabelName extends SpreadsheetExpressionReference
+        implements SpreadsheetLabelMappingExpressionReference {
 
     /**
      * Package private to limit sub classing.
@@ -47,5 +46,5 @@ abstract public class SpreadsheetCellReferenceOrLabelName<C extends SpreadsheetC
         return SpreadsheetViewport.with(this, xOffset, yOffset, width, height);
     }
 
-    abstract public SpreadsheetCellReferenceOrLabelName<C> toRelative();
+    abstract public SpreadsheetCellReferenceOrLabelName toRelative();
 }

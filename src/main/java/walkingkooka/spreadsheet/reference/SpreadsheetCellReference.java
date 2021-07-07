@@ -36,8 +36,9 @@ import java.util.Optional;
  * {@link #compareTo(SpreadsheetCellReference)} ignores the {@link SpreadsheetReferenceKind} of the column and row.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLabelName<SpreadsheetCellReference>
-        implements HateosResource<String> {
+public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLabelName
+        implements Comparable<SpreadsheetCellReference>,
+        HateosResource<String> {
 
     /**
      * Parsers a range of cell referencs.
