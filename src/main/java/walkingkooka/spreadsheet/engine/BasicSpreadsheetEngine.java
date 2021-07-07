@@ -654,7 +654,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(viewport, "viewport");
         checkContext(context);
 
-        final SpreadsheetCellReference reference = context.resolveCellReference(viewport.reference());
+        final SpreadsheetCellReference reference = context.resolveCellReference(viewport.cellOrLabel());
 
         // columns
         final double xOffset = viewport.xOffset();
