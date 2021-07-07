@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -30,7 +29,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Objects;
 
 /**
- * Represents a rectangle selection of cells, starting from an cell reference covering the given pixel dimensions.
+ * Represents a rectangle selection of cells, starting from an cell cellOrLabel covering the given pixel dimensions.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport> {
@@ -40,7 +39,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     /**
      * Parses the width and height from text in the following format.
      * <pre>
-     * cell-reference SEPARATOR width SEPARATOR height
+     * cell-cellOrLabel SEPARATOR width SEPARATOR height
      * </pre>
      * Where width and height are decimal numbers.
      */
@@ -57,13 +56,13 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
         final SpreadsheetCellReferenceOrLabelName cellOrLabel;
         try {
-            cellOrLabel = SpreadsheetCellReference.parseCellReferenceOrLabelName(tokens[0]);
+            cellOrLabel = SpreadsheetCellReferenceOrLabelName.parseCellReferenceOrLabelName(tokens[0]);
         } catch (final NumberFormatException cause) {
-            throw new IllegalArgumentException("Invalid reference in " + CharSequences.quoteAndEscape(text));
+            throw new IllegalArgumentException("Invalid cellOrLabel in " + CharSequences.quoteAndEscape(text));
         }
 
         if (!(cellOrLabel.isCellReference() || cellOrLabel.isLabelName())) {
-            throw new IllegalArgumentException("Reference must be cell or label got " + cellOrLabel);
+            throw new IllegalArgumentException("CellOrLabel must be cell or label got " + cellOrLabel);
         }
 
         final double xOffset;
@@ -100,28 +99,28 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     /**
      * Factory that creates a new {@link SpreadsheetViewport}.
      */
-    public static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName reference,
+    public static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName cellOrLabel,
                                            final double xOffset,
                                            final double yOffset,
                                            final double width,
                                            final double height) {
-        Objects.requireNonNull(reference, "reference");
+        Objects.requireNonNull(cellOrLabel, "cellOrLabel");
         if (width < 0) {
             throw new IllegalArgumentException("Invalid width " + width + " < 0");
         }
         if (height < 0) {
             throw new IllegalArgumentException("Invalid height " + width + " < 0");
         }
-        return new SpreadsheetViewport(reference, xOffset, yOffset, width, height);
+        return new SpreadsheetViewport(cellOrLabel, xOffset, yOffset, width, height);
     }
 
-    private SpreadsheetViewport(final SpreadsheetCellReferenceOrLabelName reference,
+    private SpreadsheetViewport(final SpreadsheetCellReferenceOrLabelName cellOrLabel,
                                 final double xOffset,
                                 final double yOffset,
                                 final double width,
                                 final double height) {
         super();
-        this.reference = reference.toRelative();
+        this.cellOrLabel = cellOrLabel.toRelative();
         this.xOffset = xOffset;
         this.yOffset = yOffset;
         this.width = width;
@@ -129,7 +128,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     }
 
     /**
-     * Tests if the offset (assumed to be relative to {@link #reference} is within this rectangle.
+     * Tests if the offset (assumed to be relative to {@link #cellOrLabel} is within this rectangle.
      * This will be used to test or load cells to fill a rectangular region or window of the spreadsheet being displayed.
      */
     public boolean test(final double x,
@@ -140,11 +139,11 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
     // properties.......................................................................................................
 
-    public SpreadsheetCellReferenceOrLabelName reference() {
-        return this.reference;
+    public SpreadsheetCellReferenceOrLabelName cellOrLabel() {
+        return this.cellOrLabel;
     }
 
-    private final SpreadsheetCellReferenceOrLabelName reference;
+    private final SpreadsheetCellReferenceOrLabelName cellOrLabel;
 
     public double xOffset() {
         return this.xOffset;
@@ -175,7 +174,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.reference,
+                this.cellOrLabel,
                 this.xOffset,
                 this.yOffset,
                 this.width,
@@ -191,7 +190,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     }
 
     private boolean equals0(final SpreadsheetViewport other) {
-        return this.reference.equals(other.reference) &&
+        return this.cellOrLabel.equals(other.cellOrLabel) &&
                 this.xOffset == other.xOffset &&
                 this.yOffset == other.yOffset &&
                 this.width == other.width &&
@@ -200,7 +199,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
     @Override
     public String toString() {
-        return this.reference.toString() +
+        return this.cellOrLabel.toString() +
                 SEPARATOR +
                 toStringWithoutTrailingZero(this.xOffset) +
                 SEPARATOR +
@@ -239,7 +238,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     }
 
     static SpreadsheetViewport unmarshall(final JsonNode node,
-                                                  final JsonNodeUnmarshallContext context) {
+                                          final JsonNodeUnmarshallContext context) {
         return parse(node.stringOrFail());
     }
 }

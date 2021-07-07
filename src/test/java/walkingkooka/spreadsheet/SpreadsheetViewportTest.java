@@ -350,7 +350,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     private void checkReference(final SpreadsheetViewport viewport,
                                 final SpreadsheetCellReferenceOrLabelName reference) {
-        assertEquals(reference, viewport.reference(), () -> "viewport width=" + viewport);
+        assertEquals(reference, viewport.cellOrLabel(), () -> "viewport width=" + viewport);
     }
 
     private void checkXOffset(final SpreadsheetViewport viewport,

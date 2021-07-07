@@ -42,7 +42,7 @@ public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<R extends Spre
 
         final SpreadsheetViewport viewport = reference.viewport(xOffset, yOffset, width, height);
 
-        assertEquals(reference.toRelative(), viewport.reference(), "reference");
+        assertEquals(reference.toRelative(), viewport.cellOrLabel(), "cellOrLabel");
         assertEquals(xOffset, viewport.xOffset(), "xOffset");
         assertEquals(yOffset, viewport.yOffset(), "yOffset");
         assertEquals(width, viewport.width(), "width");
