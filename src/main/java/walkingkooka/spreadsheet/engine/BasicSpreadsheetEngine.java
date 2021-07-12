@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
@@ -430,7 +431,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         } catch (final Exception failed) {
             // parsing or token to expression failed set the error message
-            result = this.setError(result, failed.getMessage());
+            result = this.setError(result, failed);
         }
 
         return result;
@@ -483,7 +484,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
         } catch (final ExpressionEvaluationException cause) {
-            result = this.setError(formula, cause.getMessage());
+            result = this.setError(formula, cause);
         }
         return result;
     }
@@ -491,11 +492,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // ERROR HANDLING..............................................................................................
 
     /**
-     * Sets the error upon the formula.
+     * Sets the error upon the formula using the {@link Throwable#getMessage()} of {@link Throwable#getClass()} if no
+     * message is present.
      */
     private SpreadsheetFormula setError(final SpreadsheetFormula formula,
-                                        final String message) {
-        return formula.setError(Optional.of(SpreadsheetError.with(message)));
+                                        final Throwable cause) {
+        final String message = cause.getMessage();
+        return formula.setError(
+                Optional.of(
+                        SpreadsheetError.with(CharSequences.isNullOrEmpty(message) ? cause.getClass().getName() : message)
+                )
+        );
     }
 
     // FORMAT .........................................................................................................
