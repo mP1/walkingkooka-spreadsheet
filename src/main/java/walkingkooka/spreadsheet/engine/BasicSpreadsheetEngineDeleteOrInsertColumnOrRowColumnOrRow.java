@@ -122,7 +122,6 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     private void fixRowReferences(final SpreadsheetRowReference row, final SpreadsheetEngineContext context) {
         this.rowCells(row)
-                .stream()
                 .forEach(r -> this.fixExpressionReferences(r, context));
     }
 
