@@ -1347,6 +1347,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCell(this.cell(reference, "=99+0"), context);
 
+        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
+
         this.deleteColumnsAndCheck(engine,
                 reference.column(),
                 0,
@@ -1784,6 +1786,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference reference = this.cellReference(0, 1); // A2
 
         engine.saveCell(this.cell(reference, "=99+0"), context);
+
+        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
 
         this.deleteRowsAndCheck(engine,
                 reference.row(),
@@ -2456,6 +2460,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference reference = this.cellReference(1, 0); // A2
 
         engine.saveCell(this.cell(reference, "=99+0"), context);
+
+        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
 
         engine.deleteColumns(reference.column(), 0, context);
 
@@ -3148,6 +3154,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(reference, "=99+0"),
                 context);
 
+        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
+
         this.insertColumnsAndCheck(engine,
                 reference.column(),
                 0,
@@ -3632,6 +3640,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference reference = this.cellReference("$A$100"); // A3
 
         engine.saveCell(this.cell(reference, "=99+0"), context);
+
+        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
 
         this.insertRowsAndCheck(engine,
                 reference.row(),
@@ -6987,6 +6997,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private TextStyle style() {
         return TextStyle.with(Maps.of(TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD));
+    }
+
+    private void addFailingCellSaveWatcherAndDeleteWatcher(final SpreadsheetEngineContext context) {
+        final SpreadsheetCellStore store = context.storeRepository()
+                .cells();
+
+        store.addSaveWatcher((ignored) -> {
+            throw new UnsupportedOperationException();
+        });
+        store.addDeleteWatcher((ignored) -> {
+            throw new UnsupportedOperationException();
+        });
     }
 
     @Override

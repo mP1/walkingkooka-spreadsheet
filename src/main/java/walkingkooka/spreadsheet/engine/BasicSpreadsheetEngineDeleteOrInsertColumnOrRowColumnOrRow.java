@@ -31,7 +31,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -56,11 +55,15 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     }
 
     final void delete() {
-        BasicSpreadsheetEngineDeleteColumnOrRow.delete(this, this.context);
+        if (this.count > 0) {
+            BasicSpreadsheetEngineDeleteColumnOrRow.delete(this, this.context);
+        }
     }
 
     final void insert() {
-        BasicSpreadsheetEngineInsertColumnOrRow.insert(this, this.context);
+        if (this.count > 0) {
+            BasicSpreadsheetEngineInsertColumnOrRow.insert(this, this.context);
+        }
     }
 
     // delete....................................................................................................
@@ -98,7 +101,11 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     private void moveCell(final SpreadsheetCell cell) {
         final SpreadsheetCellReference reference = cell.reference();
         this.deleteCell(reference);
-        this.saveCell(cell.setReference(this.fixCellReference(cell.reference())));
+
+        final SpreadsheetCell fixed = cell.setReference(this.fixCellReference(cell.reference()));
+        if (!fixed.equals(cell)) {
+            this.saveCell(fixed);
+        }
     }
 
     // fix references in all cells .............................................................................
@@ -114,22 +121,25 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     }
 
     private void fixRowReferences(final SpreadsheetRowReference row, final SpreadsheetEngineContext context) {
-        this.rowCells(row).stream()
-                .map(r -> this.fixExpressionReferences(r, context))
-                .forEach(this::saveCell);
+        this.rowCells(row)
+                .stream()
+                .forEach(r -> this.fixExpressionReferences(r, context));
     }
 
     /**
      * Attempts to parse the formula if necessary and then update cell references that may have shifted due to a
-     * delete or insert.
+     * delete or insert and if the cell changed saves the updated.
      */
-    private SpreadsheetCell fixExpressionReferences(final SpreadsheetCell cell,
-                                                    final SpreadsheetEngineContext context) {
-        return cell.setFormula(
+    private void fixExpressionReferences(final SpreadsheetCell cell,
+                                         final SpreadsheetEngineContext context) {
+        final SpreadsheetCell fixed = cell.setFormula(
                 this.engine.parseFormulaIfNecessary(
                         cell.formula(),
                         this::fixCellReferencesWithinExpression,
                         context));
+        if (!cell.equals(fixed)) {
+            this.saveCell(fixed);
+        }
     }
 
     /**
@@ -138,8 +148,10 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * reports an error that the cell was deleted.
      */
     private SpreadsheetParserToken fixCellReferencesWithinExpression(final SpreadsheetParserToken token) {
-        return BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token,
-                this);
+        return BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(
+                token,
+                this
+        );
     }
 
     /**
