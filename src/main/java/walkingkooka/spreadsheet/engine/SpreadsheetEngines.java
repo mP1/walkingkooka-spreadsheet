@@ -18,15 +18,8 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -47,6 +40,14 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
      */
     public static SpreadsheetEngine fake() {
         return new FakeSpreadsheetEngine();
+    }
+
+    /**
+     * {@see SpreadsheetMetadataStampingSpreadsheetEngine}
+     */
+    public static SpreadsheetEngine stamper(final SpreadsheetEngine engine,
+                                            final Function<SpreadsheetMetadata, SpreadsheetMetadata> stamper) {
+        return SpreadsheetMetadataStampingSpreadsheetEngine.with(engine, stamper);
     }
 
     /**
