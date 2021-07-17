@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCoordinates;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -195,47 +193,6 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 .max()
                 .orElse(0.0);
     }
-
-    @Override
-    public SpreadsheetViewport viewport(final SpreadsheetCoordinates coords) {
-        final double x = coords.x();
-        final double y = coords.y();
-
-        final int maxColumns = this.columns();
-        SpreadsheetColumnReference column = COLUMN_REFERENCE_A;
-        double xx = 0;
-        double width = 0;
-
-        for (; ; ) {
-            width = this.maxColumnWidth(column);
-            if (column.value() == maxColumns || x >= xx && x < xx + width) {
-                break;
-            }
-            xx = xx + width;
-            column = column.add(1);
-        }
-
-        final int maxRows = this.rows();
-        SpreadsheetRowReference row = ROW_REFERENCE_1;
-        double yy = 0;
-        double height = 0;
-
-        for (; ; ) {
-            height = this.maxRowHeight(row);
-            if (row.value() == maxRows || y >= yy && y < yy + height) {
-                break;
-            }
-
-            yy = yy + height;
-            row = row.add(1);
-        }
-
-        return column.setRow(row)
-                .viewport(xx, yy, width, height);
-    }
-
-    private final static SpreadsheetColumnReference COLUMN_REFERENCE_A = SpreadsheetColumnReference.parseColumn("A");
-    private final static SpreadsheetRowReference ROW_REFERENCE_1 = SpreadsheetRowReference.parseRow("1");
 
     // VisibleForTesting
     private final Store<SpreadsheetCellReference, SpreadsheetCell> store;

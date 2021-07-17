@@ -18,8 +18,6 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCoordinates;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -63,9 +61,4 @@ public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, Sp
      * Returns the max row height for the given {@link SpreadsheetRowReference}
      */
     double maxRowHeight(final SpreadsheetRowReference row);
-
-    /**
-     * Locates the {@link SpreadsheetViewport} at the given coordinates.
-     */
-    SpreadsheetViewport viewport(final SpreadsheetCoordinates coords);
 }

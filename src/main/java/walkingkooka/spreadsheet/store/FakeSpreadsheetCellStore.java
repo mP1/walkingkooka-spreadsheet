@@ -18,8 +18,6 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCoordinates;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -63,11 +61,6 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
 
     @Override
     public double maxRowHeight(final SpreadsheetRowReference row) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetViewport viewport(final SpreadsheetCoordinates coords) {
         throw new UnsupportedOperationException();
     }
 }

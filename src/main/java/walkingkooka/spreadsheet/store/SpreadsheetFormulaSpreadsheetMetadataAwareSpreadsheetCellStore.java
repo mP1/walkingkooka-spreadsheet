@@ -20,10 +20,8 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -211,11 +209,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     @Override
     public double maxRowHeight(final SpreadsheetRowReference row) {
         return this.store.maxRowHeight(row);
-    }
-
-    @Override
-    public SpreadsheetViewport viewport(final SpreadsheetCoordinates coords) {
-        return this.store.viewport(coords);
     }
 
     // helpers that do the formula tokenization/text thing..............................................................
