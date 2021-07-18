@@ -35,8 +35,7 @@ import java.util.stream.Stream;
  * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetRange extends SpreadsheetExpressionReference implements SpreadsheetLabelMappingExpressionReference,
-        Predicate<SpreadsheetCellReference> {
+public final class SpreadsheetRange extends SpreadsheetExpressionReference implements Predicate<SpreadsheetCellReference> {
 
     /**
      * Factory that parses some text holding a range.

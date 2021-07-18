@@ -119,7 +119,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
         this.mappingAndCheck(SpreadsheetExpressionReference.parseRange("A1:b2"));
     }
 
-    private void mappingAndCheck(final SpreadsheetLabelMappingExpressionReference reference) {
+    private void mappingAndCheck(final SpreadsheetExpressionReference reference) {
         final SpreadsheetLabelName label = SpreadsheetLabelName.with("LABEL123");
 
         final SpreadsheetLabelMapping mapping = label.mapping(reference);
