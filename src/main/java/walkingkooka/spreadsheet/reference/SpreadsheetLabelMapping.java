@@ -38,7 +38,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     /**
      * Creates a new {@link SpreadsheetLabelMapping}
      */
-    public static SpreadsheetLabelMapping with(final SpreadsheetLabelName label, final SpreadsheetLabelMappingExpressionReference reference) {
+    public static SpreadsheetLabelMapping with(final SpreadsheetLabelName label, final SpreadsheetExpressionReference reference) {
         checkLabel(label);
         checkReference(reference, label);
         return new SpreadsheetLabelMapping(label, reference);
@@ -47,7 +47,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     /**
      * Private ctor use factory
      */
-    private SpreadsheetLabelMapping(final SpreadsheetLabelName label, final SpreadsheetLabelMappingExpressionReference reference) {
+    private SpreadsheetLabelMapping(final SpreadsheetLabelName label, final SpreadsheetExpressionReference reference) {
         this.label = label;
         this.reference = reference;
     }
@@ -59,7 +59,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     public SpreadsheetLabelMapping setLabel(final SpreadsheetLabelName label) {
         checkLabel(label);
 
-        final SpreadsheetLabelMappingExpressionReference reference = this.reference;
+        final SpreadsheetExpressionReference reference = this.reference;
         if (label.equals(reference)) {
             throw new IllegalArgumentException(
                     "New label " + CharSequences.quote(label.toString()) + " must be different from reference " + CharSequences.quote(reference.toString())
@@ -78,11 +78,11 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
     private final SpreadsheetLabelName label;
 
-    public SpreadsheetLabelMappingExpressionReference reference() {
+    public SpreadsheetExpressionReference reference() {
         return this.reference;
     }
 
-    public SpreadsheetLabelMapping setReference(final SpreadsheetLabelMappingExpressionReference reference) {
+    public SpreadsheetLabelMapping setReference(final SpreadsheetExpressionReference reference) {
         checkReference(reference, this.label);
 
         return this.reference.equals(reference) ?
@@ -90,9 +90,9 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
                 this.replace(this.label, reference);
     }
 
-    private final SpreadsheetLabelMappingExpressionReference reference;
+    private final SpreadsheetExpressionReference reference;
 
-    private static void checkReference(final SpreadsheetLabelMappingExpressionReference reference,
+    private static void checkReference(final SpreadsheetExpressionReference reference,
                                        final SpreadsheetLabelName label) {
         Objects.requireNonNull(reference, "reference");
         if (reference.equals(label)) {
@@ -104,7 +104,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     }
 
     private SpreadsheetLabelMapping replace(final SpreadsheetLabelName label,
-                                            final SpreadsheetLabelMappingExpressionReference reference) {
+                                            final SpreadsheetExpressionReference reference) {
         return new SpreadsheetLabelMapping(label, reference);
     }
 
@@ -130,7 +130,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         Objects.requireNonNull(node, "node");
 
         SpreadsheetLabelName labelName = null;
-        SpreadsheetLabelMappingExpressionReference reference = null;
+        SpreadsheetExpressionReference reference = null;
 
         for (JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -139,7 +139,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
                     labelName = context.unmarshall(child, SpreadsheetLabelName.class);
                     break;
                 case REFERENCE_PROPERTY_STRING:
-                    reference = context.unmarshall(child, SpreadsheetLabelMappingExpressionReference.class);
+                    reference = context.unmarshall(child, SpreadsheetExpressionReference.class);
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);

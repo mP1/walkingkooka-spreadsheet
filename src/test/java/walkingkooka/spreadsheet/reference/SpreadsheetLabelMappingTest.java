@@ -39,7 +39,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         ToStringTesting<SpreadsheetLabelMapping> {
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetExpressionReference.labelName("label");
-    private final static SpreadsheetLabelMappingExpressionReference REFERENCE = cell(1);
+    private final static SpreadsheetExpressionReference REFERENCE = cell(1);
 
     @Test
     public void testWithNullLabelFails() {
@@ -121,7 +121,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Test
     public void testSetReferenceDifferent() {
         final SpreadsheetLabelMapping mapping = this.createObject();
-        final SpreadsheetLabelMappingExpressionReference differentReference = cell(999);
+        final SpreadsheetExpressionReference differentReference = cell(999);
         final SpreadsheetLabelMapping different = mapping.setReference(differentReference);
 
         assertNotSame(mapping, different);
@@ -162,7 +162,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         this.marshallRoundTrip2(SpreadsheetExpressionReference.parseRange("A1:B2"));
     }
 
-    private void marshallRoundTrip2(final SpreadsheetLabelMappingExpressionReference reference) {
+    private void marshallRoundTrip2(final SpreadsheetExpressionReference reference) {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetLabelName.with("Label123").mapping(reference)
         );
@@ -208,7 +208,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     }
 
     private void checkReference(final SpreadsheetLabelMapping mapping,
-                                final SpreadsheetLabelMappingExpressionReference reference) {
+                                final SpreadsheetExpressionReference reference) {
         assertEquals(reference, mapping.reference(), "reference");
     }
 

@@ -177,10 +177,10 @@ public abstract class SpreadsheetSelection {
     /**
      * {@see #parse}
      */
-    public static SpreadsheetLabelMappingExpressionReference parseSpreadsheetLabelMappingExpressionReference(final String text) {
+    public static SpreadsheetExpressionReference parseSpreadsheetExpressionReference(final String text) {
         Objects.requireNonNull(text, "text");
 
-        final SpreadsheetLabelMappingExpressionReference reference;
+        final SpreadsheetExpressionReference reference;
 
         switch (text.split(":").length) {
             case 1:

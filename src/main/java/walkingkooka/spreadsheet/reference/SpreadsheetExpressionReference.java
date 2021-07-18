@@ -131,17 +131,6 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     }
 
     /**
-     * Accepts a json string and returns a {@link SpreadsheetLabelMappingExpressionReference} or fails.
-     */
-    static SpreadsheetLabelMappingExpressionReference unmarshallSpreadsheetLabelMappingExpressionReference(final JsonNode node,
-                                                                                                           final JsonNodeUnmarshallContext context) {
-        return unmarshall0(
-                node,
-                SpreadsheetExpressionReference::parseSpreadsheetLabelMappingExpressionReference
-        );
-    }
-
-    /**
      * Generic helper that tries to convert the node into a string and call a parse method.
      */
     private static <R extends ExpressionReference> R unmarshall0(final JsonNode node,
@@ -183,13 +172,6 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
                 SpreadsheetLabelName::unmarshallLabelName,
                 SpreadsheetLabelName::marshall,
                 SpreadsheetLabelName.class
-        );
-
-        //noinspection StaticInitializerReferencesSubClass
-        register(
-                SpreadsheetExpressionReference::unmarshallSpreadsheetLabelMappingExpressionReference,
-                SpreadsheetLabelMappingExpressionReference::marshall,
-                SpreadsheetLabelMappingExpressionReference.class
         );
 
         //noinspection StaticInitializerReferencesSubClass

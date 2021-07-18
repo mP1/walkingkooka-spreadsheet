@@ -39,7 +39,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelMappingExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -544,7 +543,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
                                    final SpreadsheetLabelName label,
-                                   final SpreadsheetLabelMappingExpressionReference reference) {
+                                   final SpreadsheetExpressionReference reference) {
         this.loadLabelAndCheck(labelStore,
                 label,
                 SpreadsheetLabelMapping.with(label, reference));
