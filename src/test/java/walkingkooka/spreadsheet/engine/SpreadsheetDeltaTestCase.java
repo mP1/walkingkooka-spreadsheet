@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -88,29 +89,33 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 .add(this.cell("ZZ99", "read only")));
     }
 
-    // cellToLabels......................................................................................................
+    // labels......................................................................................................
 
-    final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels() {
-        return Maps.of(
-                this.a1().reference(), Sets.of(this.label1a(), this.label1b()),
-                this.b2().reference(), Sets.of(this.label2()),
-                this.c3().reference(), Sets.of(this.label3())
+    final Set<SpreadsheetLabelMapping> labels() {
+        return Sets.of(
+                this.label1a().mapping(this.a1().reference()),
+                this.label1b().mapping(this.a1().reference()),
+                this.label2().mapping(this.b2().reference()),
+                this.label3().mapping(this.c3().reference())
         );
     }
 
-    final void checkCellToLabels(final SpreadsheetDelta delta) {
-        this.checkCellToLabels(delta, this.cellToLabels());
+    final void checkLabels(final SpreadsheetDelta delta) {
+        this.checkLabels(delta, this.labels());
     }
 
-    final void checkCellToLabels(final SpreadsheetDelta delta,
-                          final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels) {
-        assertEquals(cellToLabels, delta.cellToLabels(), "cellToLabels");
-        assertThrows(UnsupportedOperationException.class, () -> delta.cellToLabels()
-                .put(SpreadsheetCellReference.parseCellReference("Z9"), Sets.empty()));
+    final void checkLabels(final SpreadsheetDelta delta,
+                           final Set<SpreadsheetLabelMapping> labels) {
+        assertEquals(labels, delta.labels(), "labels");
+        assertThrows(UnsupportedOperationException.class, () -> delta.labels()
+                .add(SpreadsheetLabelName.labelName("LabelZ").mapping(SpreadsheetCellReference.parseCellReference("Z9")))
+        );
     }
 
-    final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> differentCellToLabels() {
-        return Map.of(this.a1().reference(), Set.of(SpreadsheetLabelName.labelName("different")));
+    final Set<SpreadsheetLabelMapping> differentLabels() {
+        return Sets.of(
+                SpreadsheetLabelName.labelName("different").mapping(this.a1().reference())
+        );
     }
 
     final SpreadsheetLabelName label1a() {

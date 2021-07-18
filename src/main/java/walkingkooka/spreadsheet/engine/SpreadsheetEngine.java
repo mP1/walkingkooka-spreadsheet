@@ -37,7 +37,7 @@ public interface SpreadsheetEngine {
     /**
      * Loads which includes parsing the formula as necessary and evaluating the value of the requested cells.
      * Invalid cell requests will be ignored and absent fromt he result. If parsing or evaluation fails the cell will have an error.
-     * If the cell is absent but has a label mapping the {@link SpreadsheetDelta#cellToLabels()} will contain this mapping.
+     * If the cell is absent but has a label mapping the {@link SpreadsheetDelta#labels()} will contain this mapping.
      */
     SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
                               final SpreadsheetEngineEvaluation evaluation,

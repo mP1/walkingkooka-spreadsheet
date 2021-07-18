@@ -55,6 +55,7 @@ import java.math.MathContext;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -746,10 +747,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                             context,
                             SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
                                     .setCells(Sets.of(c))
-                                    .setCellToLabels(
-                                            Maps.of(
-                                                    r,
-                                                    delta.cellToLabels().getOrDefault(r, Sets.empty()))
+                                    .setLabels(delta.labels()
+                                            .stream()
+                                            .filter(l -> l.reference().equalsIgnoreReferenceKind(r))
+                                            .collect(Collectors.toSet())
                                     )
                     );
                 });
