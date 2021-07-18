@@ -18,17 +18,16 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -42,50 +41,51 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
-    public void testSetCellToLabelsMissingCellKept() {
+    public void testSetLabelsMissingCellKept() {
         final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
-        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.of(
-                SpreadsheetCellReference.parseCellReference("A3"), Sets.of(SpreadsheetLabelName.labelName("Different"))
+        final Set<SpreadsheetLabelMapping> different = Sets.of(
+                SpreadsheetLabelName.labelName("Different")
+                        .mapping(SpreadsheetCellReference.parseCellReference("A3"))
         );
 
-        final SpreadsheetDelta after = before.setCellToLabels(different);
+        final SpreadsheetDelta after = before.setLabels(different);
         assertNotSame(before, after);
-        this.checkCellToLabels(after, different);
+        this.checkLabels(after, different);
         this.checkCells(after, before.cells());
     }
 
     @Test
-    public void testSetCellToLabelsOutsideWindowFiltered() {
+    public void testSetLabelsOutsideWindowFiltered() {
         final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
-        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.of(
-                SpreadsheetCellReference.parseCellReference("Z99"), Sets.of(SpreadsheetLabelName.labelName("Different"))
+        final Set<SpreadsheetLabelMapping> different = Sets.of(
+                SpreadsheetLabelName.labelName("Different").mapping(SpreadsheetCellReference.parseCellReference("Z99"))
         );
 
-        final SpreadsheetDelta after = before.setCellToLabels(different);
+        final SpreadsheetDelta after = before.setLabels(different);
         assertNotSame(before, after);
-        this.checkCellToLabels(after, Maps.empty());
+        this.checkLabels(after, SpreadsheetDelta.NO_LABELS);
         this.checkCells(after, before.cells());
     }
 
     @Test
-    public void testSetCellToLabelsOutsideWindowFiltered2() {
+    public void testSetLabelsOutsideWindowFiltered2() {
         final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
 
         final SpreadsheetCellReference a1 = this.a1().reference();
-        final Set<SpreadsheetLabelName> kept = Sets.of(SpreadsheetLabelName.labelName("Kept"));
+        final SpreadsheetLabelName kept = SpreadsheetLabelName.labelName("Kept");
 
         final SpreadsheetCellReference a3 = SpreadsheetCellReference.parseCellReference("A3");
-        final Set<SpreadsheetLabelName> kept3 = Sets.of(SpreadsheetLabelName.labelName("Kept2"));
+        final SpreadsheetLabelName kept3 = SpreadsheetLabelName.labelName("Kept2");
 
-        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> different = Maps.of(
-                a1, kept,
-                a3, kept3,
-                SpreadsheetCellReference.parseCellReference("Z99"), Sets.of(SpreadsheetLabelName.labelName("Lost"))
+        final Set<SpreadsheetLabelMapping> different = Sets.of(
+                kept.mapping(a1),
+                kept3.mapping(a3),
+                SpreadsheetLabelName.labelName("Lost").mapping(SpreadsheetCellReference.parseCellReference("Z99"))
         );
 
-        final SpreadsheetDelta after = before.setCellToLabels(different);
+        final SpreadsheetDelta after = before.setLabels(different);
         assertNotSame(before, after);
-        this.checkCellToLabels(after, Maps.of(a1, kept, a3, kept3));
+        this.checkLabels(after, Sets.of(kept.mapping(a1), kept3.mapping(a3)));
         this.checkCells(after, before.cells());
     }
 
@@ -96,7 +96,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
-                        SpreadsheetDelta.NO_CELL_TO_LABELS,
+                        SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                         this.window()
@@ -119,11 +119,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
-    public void testPrintTreeCellToLabels() {
+    public void testPrintTreeLabels() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
-                        this.cellToLabels(),
+                        this.labels(),
                         SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                         this.window()
@@ -139,10 +139,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    Cell C3\n" +
                         "      Formula\n" +
                         "        text: \"3\"\n" +
-                        "  cellToLabels:\n" +
-                        "    A1: LabelA1A, LabelA1B\n" +
-                        "    B2: LabelB2\n" +
-                        "    C3: LabelC3\n" +
+                        "  labels:\n" +
+                        "    LabelA1A: A1\n" +
+                        "    LabelA1B: A1\n" +
+                        "    LabelB2: B2\n" +
+                        "    LabelC3: C3\n" +
                         "  window:\n" +
                         "    A1:E5\n" +
                         "    F6:Y99\n"
@@ -154,7 +155,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
-                        SpreadsheetDelta.NO_CELL_TO_LABELS,
+                        SpreadsheetDelta.NO_LABELS,
                         this.maxColumnWidths(),
                         SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                         this.window()
@@ -183,7 +184,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
-                        SpreadsheetDelta.NO_CELL_TO_LABELS,
+                        SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                         this.maxRowHeights(),
                         this.window()
@@ -212,7 +213,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
-                        this.cellToLabels(),
+                        this.labels(),
                         this.maxColumnWidths(),
                         this.maxRowHeights(),
                         this.window()
@@ -228,10 +229,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    Cell C3\n" +
                         "      Formula\n" +
                         "        text: \"3\"\n" +
-                        "  cellToLabels:\n" +
-                        "    A1: LabelA1A, LabelA1B\n" +
-                        "    B2: LabelB2\n" +
-                        "    C3: LabelC3\n" +
+                        "  labels:\n" +
+                        "    LabelA1A: A1\n" +
+                        "    LabelA1B: A1\n" +
+                        "    LabelB2: B2\n" +
+                        "    LabelC3: C3\n" +
                         "  columnWidths:\n" +
                         "    A: 50.0\n" +
                         "  rowHeights:\n" +
@@ -254,7 +256,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING),
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
-                        SpreadsheetDelta.NO_CELL_TO_LABELS,
+                        SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                         this.window())
@@ -265,7 +267,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testJsonNodeMarshall() {
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 SpreadsheetDelta.NO_CELLS,
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
+                SpreadsheetDelta.NO_LABELS,
                 SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()
@@ -278,7 +280,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testJsonNodeMarshallCells() {
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 this.cells(), 
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
+                SpreadsheetDelta.NO_LABELS,
                 SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()
@@ -292,7 +294,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testJsonNodeMarshallCellsMaxColumnWidthsWindow() {
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 this.cells(),
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
+                SpreadsheetDelta.NO_LABELS,
                 this.maxColumnWidths(),
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()
@@ -307,7 +309,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testJsonNodeMarshallCellsMaxRowHeightsWindow() {
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 this.cells(),
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
+                SpreadsheetDelta.NO_LABELS,
                 SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                 this.maxRowHeights(),
                 this.window()
@@ -322,7 +324,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testJsonNodeMarshallCellsMaxColumnWidthsMaxRowHeightsWindow() {
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 this.cells(),
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
+                SpreadsheetDelta.NO_LABELS,
                 this.maxColumnWidths(),
                 this.maxRowHeights(),
                 this.window()
@@ -346,7 +348,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     @Test
     public void testToString() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
+                SpreadsheetDelta.NO_LABELS,
                 SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()),
@@ -354,19 +356,19 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
-    public void testToStringCellToLabels() {
+    public void testToStringLabels() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
-                this.cellToLabels(),
+                this.labels(),
                 SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()),
-                "cells: A1=1, B2=2, C3=3 cellToLabels: A1: LabelA1A, LabelA1B, B2: LabelB2, C3: LabelC3 window: A1:E5, F6:Y99");
+                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 window: A1:E5, F6:Y99");
     }
 
     @Test
     public void testToStringMaxColumnWidths() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
+                SpreadsheetDelta.NO_LABELS,
                 this.maxColumnWidths(),
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()),
@@ -376,7 +378,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     @Test
     public void testToStringMaxMaxRowHeights() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
+                SpreadsheetDelta.NO_LABELS,
                 SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                 this.maxRowHeights(),
                 this.window()),
@@ -386,7 +388,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     @Test
     public void testToStringMaxColumnWidthsMaxRowHeights() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
-                SpreadsheetDelta.NO_CELL_TO_LABELS,
+                SpreadsheetDelta.NO_LABELS,
                 this.maxColumnWidths(),
                 this.maxRowHeights(),
                 this.window()),
@@ -409,7 +411,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                                                             final List<SpreadsheetRange> window) {
         return SpreadsheetDeltaWindowed.withWindowed(
                 cells,
-                this.cellToLabels(),
+                this.labels(),
                 this.maxColumnWidths(),
                 this.maxRowHeights(),
                 window

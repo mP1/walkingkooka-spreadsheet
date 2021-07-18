@@ -47,6 +47,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -291,32 +292,33 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetDelta prepareDelta(final Set<SpreadsheetCell> cells,
                                           final SpreadsheetRange range,
                                           final SpreadsheetEngineContext context) {
+        SpreadsheetDelta delta = SpreadsheetDelta.with(cells);
+
         final SpreadsheetLabelStore store = context.storeRepository()
                 .labels();
-        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellsToLabels = Maps.sorted();
+        final Set<SpreadsheetLabelMapping> labels = Sets.ordered();
+        final Set<SpreadsheetCellReference> references = Sets.hash();
 
-        cells.forEach(c -> {
-            addCellToLabels(c.reference(), store, cellsToLabels);
-        });
+        for(final SpreadsheetCell cell : cells) {
+            addLabels(cell.reference(), store, labels);
+        }
 
         if (null != range) {
             range.cellStream().forEach(c -> {
-                if(!cellsToLabels.containsKey(c)) {
-                    addCellToLabels(c, store, cellsToLabels);
+                if(references.add(c)) {
+                    addLabels(c, store, labels);
                 }
             });
         }
 
-        return SpreadsheetDelta.with(cells)
-                .setCellToLabels(cellsToLabels);
+        return delta.setLabels(labels);
     }
 
-    private static void addCellToLabels(final SpreadsheetCellReference reference,
-                                        final SpreadsheetLabelStore store,
-                                        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellsToLabels) {
-        final Set<SpreadsheetLabelName> labels = store.labels(reference);
-        if (!labels.isEmpty()) {
-            cellsToLabels.put(reference, labels);
+    private static void addLabels(final SpreadsheetCellReference reference,
+                                  final SpreadsheetLabelStore store,
+                                  final Set<SpreadsheetLabelMapping> all) {
+        for(final SpreadsheetLabelName label : store.labels(reference)) {
+            all.add(label.mapping(reference));
         }
     }
 

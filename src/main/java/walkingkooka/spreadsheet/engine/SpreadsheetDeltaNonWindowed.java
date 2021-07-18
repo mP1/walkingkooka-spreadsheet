@@ -21,11 +21,10 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.List;
@@ -41,23 +40,23 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
      * Factory that creates a new {@link SpreadsheetDeltaNonWindowed} without copying or filtering the cells.
      */
     static SpreadsheetDeltaNonWindowed withNonWindowed(final Set<SpreadsheetCell> cells,
-                                                       final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
+                                                       final Set<SpreadsheetLabelMapping> labels,
                                                        final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
                                                        final Map<SpreadsheetRowReference, Double> maxRowHeights) {
         return new SpreadsheetDeltaNonWindowed(
                 cells,
-                cellToLabels,
+                labels,
                 maxColumnWidths,
                 maxRowHeights
         );
     }
 
     private SpreadsheetDeltaNonWindowed(final Set<SpreadsheetCell> cells,
-                                        final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels,
+                                        final Set<SpreadsheetLabelMapping> labels,
                                         final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
                                         final Map<SpreadsheetRowReference, Double> maxRowHeights) {
         super(cells,
-                cellToLabels,
+                labels,
                 maxColumnWidths,
                 maxRowHeights
         );
@@ -68,17 +67,17 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         // cells have already been filtered by window
         return new SpreadsheetDeltaNonWindowed(
                 cells,
-                this.cellToLabels,
+                this.labels,
                 this.maxColumnWidths,
                 this.maxRowHeights
         );
     }
 
     @Override
-    SpreadsheetDelta replaceCellToLabels(final Map<SpreadsheetCellReference, Set<SpreadsheetLabelName>> cellToLabels) {
+    SpreadsheetDelta replaceLabels(final Set<SpreadsheetLabelMapping> labels) {
         return new SpreadsheetDeltaNonWindowed(
                 this.cells,
-                cellToLabels,
+                labels,
                 this.maxColumnWidths,
                 this.maxRowHeights
         );
@@ -86,12 +85,12 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
 
     @Override
     SpreadsheetDelta replaceMaxColumnWidths(final Map<SpreadsheetColumnReference, Double> maxColumnWidths) {
-        return new SpreadsheetDeltaNonWindowed(this.cells, this.cellToLabels, maxColumnWidths, this.maxRowHeights);
+        return new SpreadsheetDeltaNonWindowed(this.cells, this.labels, maxColumnWidths, this.maxRowHeights);
     }
 
     @Override
     SpreadsheetDelta replaceMaxRowHeights(final Map<SpreadsheetRowReference, Double> maxRowHeights) {
-        return new SpreadsheetDeltaNonWindowed(this.cells, this.cellToLabels, this.maxColumnWidths, maxRowHeights);
+        return new SpreadsheetDeltaNonWindowed(this.cells, this.labels, this.maxColumnWidths, maxRowHeights);
     }
 
     /**

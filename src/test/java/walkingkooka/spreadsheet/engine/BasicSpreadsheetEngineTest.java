@@ -100,7 +100,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -211,8 +210,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         assertEquals(
                 SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
-                        .setCellToLabels(Maps.empty()
-                        ),
+                        .setLabels(SpreadsheetDelta.NO_LABELS),
                 engine.loadCell(reference, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context)
         );
     }
@@ -230,8 +228,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         assertEquals(
                 SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
-                        .setCellToLabels(Maps.of(LABEL_CELL, Sets.of(LABEL))
-                        ),
+                        .setLabels(Sets.of(LABEL.mapping(LABEL_CELL))),
                 engine.loadCell(LABEL_CELL, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context)
         );
     }
@@ -1043,7 +1040,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.formattedCellWithValue(a1, number(10 + 5)),
                                 this.formattedCellWithValue(b2, number(5))
                         )
-                ).setCellToLabels(Maps.of(b2.reference(), Sets.of(labelB2)))
+                ).setLabels(
+                        Sets.of(
+                                labelB2.mapping(b2.reference())
+                        )
+                )
         );
     }
 
@@ -1632,7 +1633,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.formattedCellWithValue(d.addColumn(-count), "=4+" + LABEL, number(4 + 99 + 0)),
                                 this.formattedCellWithValue(e.addColumn(-count), "=99+0", number(99 + 0))
                         )
-                ).setCellToLabels(Maps.of(SpreadsheetCellReference.parseCellReference("N10"), Sets.of(LABEL)))
+                ).setLabels(
+                        Sets.of(
+                                LABEL.mapping(SpreadsheetCellReference.parseCellReference("N10"))
+                        )
+                )
         ); // old $b delete, $c,$d columns -1.
 
         this.loadLabelAndCheck(labelStore, LABEL, e.addColumn(-count));
@@ -1977,7 +1982,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.with(Sets.of(
                         this.formattedCellWithValue(a, "=1+0+" + LABEL, number(1 + 0 + 2 + 0)),
                         this.formattedCellWithValue(b.addRow(-count), "=2+0", number(2 + 0)))
-                ).setCellToLabels(Maps.of(SpreadsheetCellReference.parseCellReference("A4"), Sets.of(LABEL)))
+                ).setLabels(
+                        Sets.of(
+                                LABEL.mapping(SpreadsheetCellReference.parseCellReference("A4"))
+                        )
+                )
         ); // $b moved
 
         this.countAndCheck(cellStore, 2);
@@ -2341,7 +2350,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Sets.of(
                                 this.formattedCellWithValue(d.addRow(-count), "=20+0", number(20 + 0))
                         )
-                ).setCellToLabels(Maps.of(SpreadsheetCellReference.parseCellReference("A10"), Sets.of(LABEL)))
+                ).setLabels(
+                        Sets.of(
+                                LABEL.mapping(SpreadsheetCellReference.parseCellReference("A10"))
+                        )
+                )
         ); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
@@ -2676,10 +2689,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.with(
                         Sets.of(this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0)))
-                ).setCellToLabels(
-                        Maps.of(
-                                SpreadsheetCellReference.parseCellReference("C1"),
-                                Sets.of(LABEL)
+                ).setLabels(
+                        Sets.of(
+                                LABEL.mapping(SpreadsheetCellReference.parseCellReference("C1"))
                         )
                 )
         ); // $b moved
@@ -3032,7 +3044,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.with(
                         Sets.of(
                                 this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0)))
-                ).setCellToLabels(Maps.of(SpreadsheetCellReference.parseCellReference("J1"), Sets.of(LABEL)))
+                ).setLabels(
+                        Sets.of(
+                                LABEL.mapping(SpreadsheetCellReference.parseCellReference("J1"))
+                        )
+                )
         ); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
@@ -3321,7 +3337,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.formattedCellWithValue("$D$1", "=3+0+" + LABEL, number(3 + 0 + 99 + 0)),
                                 this.formattedCellWithValue("$O$9", "=99+0", number(99 + 0))
                         )
-                ).setCellToLabels(Maps.of(SpreadsheetCellReference.parseCellReference("O9"), Sets.of(LABEL)))
+                ).setLabels(
+                        Sets.of(
+                                LABEL.mapping(SpreadsheetCellReference.parseCellReference("O9"))
+                        )
+                )
         ); // $b insert
 
         this.loadLabelAndCheck(labelStore, LABEL, d.addColumn(count));
@@ -3432,7 +3452,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Sets.of(
                                 this.formattedCellWithValue("$P$1", "=99+0", number(99 + 0))
                         )
-                ).setCellToLabels(Maps.of(SpreadsheetCellReference.parseCellReference("P1"), Sets.of(LABEL)))
+                ).setLabels(
+                        Sets.of(
+                                LABEL.mapping(SpreadsheetCellReference.parseCellReference("P1"))
+                        )
+                )
         ); // $b insert
 
         this.countAndCheck(labelStore, 1);
@@ -4158,7 +4182,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
                         .setWindow(Lists.of(range))
-                        .setCellToLabels(Map.of(b2, Sets.of(label)))
+                        .setLabels(
+                                Sets.of(
+                                        label.mapping(b2)
+                                )
+                        )
         );
     }
 
@@ -4243,7 +4271,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.formattedCellWithValue(d4, this.expressionNumberKind().create(2))
                 ))
                         .setWindow(Lists.of(range))
-                        .setCellToLabels(Map.of(d4.reference(), Sets.of(label)))
+                        .setLabels(
+                                Sets.of(
+                                        label.mapping(d4.reference())
+                                )
+                        )
         );
     }
 
@@ -4276,7 +4308,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.formattedCellWithValue(c3, this.expressionNumberKind().create(1))
                 ))
                         .setWindow(Lists.of(range))
-                        .setCellToLabels(Map.of(d4, Sets.of(label)))
+                        .setLabels(
+                                Sets.of(
+                                        label.mapping(d4)
+                                )
+                        )
         );
     }
 
