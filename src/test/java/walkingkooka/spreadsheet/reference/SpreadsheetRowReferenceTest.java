@@ -42,6 +42,32 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         assertEquals(row, cell.row(), "row");
     }
 
+    // Predicate........................................................................................................
+
+    @Test
+    public void testTestDifferentRowFalse() {
+        final SpreadsheetRowReference selection = this.createSelection();
+        this.testFalse(selection
+                .add(1)
+                .setColumn(this.columnReference())
+        );
+    }
+
+    @Test
+    public void testTestDifferentRowKindTrue() {
+        final SpreadsheetRowReference selection = this.createSelection();
+        this.testTrue(selection
+                .setReferenceKind(selection.referenceKind().flip())
+                .setColumn(this.columnReference())
+        );
+    }
+
+    private SpreadsheetColumnReference columnReference() {
+        return SpreadsheetColumnReference.parseColumn("A");
+    }
+
+    // toRelative........................................................................................................
+
     @Test
     public void testToRelativeAbsolute() {
         final int value = 123;

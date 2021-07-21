@@ -145,6 +145,13 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
                 a1, b2, c3, d4);
     }
 
+    // Predicate........................................................................................................
+
+    @Test
+    public void testTestFails() {
+        assertThrows(UnsupportedOperationException.class, () -> this.createSelection().test(SpreadsheetCellReference.parseCellReference("A1")));
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
@@ -36,6 +37,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         HashCodeEqualsDefinedTesting2<S>,
         JsonNodeMarshallingTesting<S>,
         IsMethodTesting<S>,
+        PredicateTesting2<S, SpreadsheetCellReference>,
         ToStringTesting<S> {
 
     SpreadsheetSelectionTestCase() {
@@ -114,5 +116,26 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Override
     public final S createJsonNodeMappingValue() {
         return this.createSelection();
+    }
+
+    // PredicateTesting.................................................................................................
+
+    @Override
+    public final S createPredicate() {
+        return this.createSelection();
+    }
+
+    public final void testTypeNaming()  {
+        // nop
+    }
+
+    @Override
+    public final String typeNamePrefix() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public final String typeNameSuffix() {
+        throw new UnsupportedOperationException();
     }
 }
