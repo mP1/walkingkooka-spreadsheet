@@ -134,6 +134,21 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
         assertEquals(last, row.isLast(), "last");
     }
 
+    @Test
+    public void testAbsoluteFlip() {
+        this.flipAndCheck(SpreadsheetReferenceKind.ABSOLUTE, SpreadsheetReferenceKind.RELATIVE);
+    }
+
+    @Test
+    public void testRelativeFlip() {
+        this.flipAndCheck(SpreadsheetReferenceKind.RELATIVE, SpreadsheetReferenceKind.ABSOLUTE);
+    }
+
+    private void flipAndCheck(final SpreadsheetReferenceKind before,
+                              final SpreadsheetReferenceKind after) {
+        assertSame(after, before.flip(), () -> before + ".flip");
+    }
+
     @Override
     public Class<SpreadsheetReferenceKind> type() {
         return SpreadsheetReferenceKind.class;
