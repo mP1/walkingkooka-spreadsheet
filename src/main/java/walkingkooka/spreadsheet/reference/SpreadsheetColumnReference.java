@@ -149,6 +149,18 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
                 other;
     }
 
+    // Predicate<SpreadsheetCellReference>..............................................................................
+
+    /**
+     * Returns true if the given {@link SpreadsheetCellReference} has this column.
+     */
+    @Override
+    public boolean test(final SpreadsheetCellReference reference) {
+        return this.equalsIgnoreReferenceKind(reference.column());
+    }
+
+    // toRelative.......................................................................................................
+
     @Override
     public SpreadsheetColumnReference toRelative() {
         return this.setReferenceKind(SpreadsheetReferenceKind.RELATIVE);

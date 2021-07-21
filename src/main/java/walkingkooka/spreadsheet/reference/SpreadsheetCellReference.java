@@ -179,6 +179,17 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return new SpreadsheetCellReference(column, row);
     }
 
+    // Predicate<SpreadsheetCellReference>..............................................................................
+
+    /**
+     * Returns true if the other {@link SpreadsheetCellReference} has the same column and row ignoring {@link SpreadsheetReferenceKind}.
+     */
+    @Override
+    public boolean test(final SpreadsheetCellReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        return this.equalsIgnoreReferenceKind(reference);
+    }
 
     // range/spreadsheetRange...........................................................................................
 

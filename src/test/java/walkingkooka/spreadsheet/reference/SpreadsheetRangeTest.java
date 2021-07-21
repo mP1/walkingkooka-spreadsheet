@@ -831,12 +831,6 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         this.toStringAndCheck(SpreadsheetRange.parseRange0("C3:D4"), "C3:D4");
     }
 
-    // disabled..........................................................................................................
-
-    @Override
-    public void testTypeNaming() {
-    }
-
     // helpers .........................................................................................................
 
     @Override
@@ -1097,12 +1091,5 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
-    }
-
-    // PredicateTesting..................................................................................................
-
-    @Override
-    public SpreadsheetRange createPredicate() {
-        return this.range();
     }
 }

@@ -100,6 +100,35 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.checkRow(different, differentRow);
     }
 
+    // Predicate........................................................................................................
+
+    @Test
+    public void testTestDifferentColumnFalse() {
+        final SpreadsheetCellReference selection = this.createSelection();
+        this.testFalse(selection.setColumn(selection.column().add(1)));
+    }
+
+    @Test
+    public void testTestDifferentRowFalse() {
+        final SpreadsheetCellReference selection = this.createSelection();
+        this.testFalse(selection.setRow(selection.row().add(1)));
+    }
+
+    @Test
+    public void testTestDifferentColumnKindTrue() {
+        final SpreadsheetCellReference selection = this.createSelection();
+        this.testFalse(selection.setRow(selection.row().add(1)));
+    }
+
+    @Test
+    public void testTestDifferentRowKindTrue() {
+        final SpreadsheetCellReference selection = this.createSelection();
+        final SpreadsheetRowReference row = selection.row();
+        final SpreadsheetReferenceKind kind = row.referenceKind();
+
+        this.testTrue(selection.setRow(row.setReferenceKind(kind.flip())));
+    }
+
     // toRelative........................................................................................................
 
     @Test

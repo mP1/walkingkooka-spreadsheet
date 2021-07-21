@@ -22,11 +22,12 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.CharSequences;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Base class for all selection types, including columns, rows, cells, labels and ranges.
  */
-public abstract class SpreadsheetSelection {
+public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellReference> {
 
     // modes used by isTextCellReference
     private final static int MODE_COLUMN_FIRST = 0;
