@@ -47,6 +47,11 @@ public enum SpreadsheetReferenceKind {
         String prefix() {
             return "" + ABSOLUTE_PREFIX;
         }
+
+        @Override
+        public SpreadsheetReferenceKind flip() {
+            return RELATIVE;
+        }
     },
     RELATIVE {
         @Override
@@ -72,6 +77,11 @@ public enum SpreadsheetReferenceKind {
         @Override
         String prefix() {
             return "";
+        }
+
+        @Override
+        public SpreadsheetReferenceKind flip() {
+            return ABSOLUTE;
         }
     };
 
@@ -103,4 +113,6 @@ public enum SpreadsheetReferenceKind {
     abstract String prefix();
 
     final static char ABSOLUTE_PREFIX = '$';
+
+    public abstract SpreadsheetReferenceKind flip();
 }
