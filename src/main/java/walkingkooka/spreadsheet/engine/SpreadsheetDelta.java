@@ -537,7 +537,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String LABELS_PROPERTY_STRING = "labels";
-    private final static String COLUMN_WIDTHS_PROPERTY_STRING = "column-widths";
+    private final static String COLUMN_WIDTHS_PROPERTY_STRING = "columnWidths";
     private final static String MAX_ROW_HEIGHTS_PROPERTY_STRING = "maxRowHeights";
     private final static String WINDOW_PROPERTY_STRING = "window";
 
