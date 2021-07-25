@@ -134,25 +134,25 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return SpreadsheetLabelName.labelName("LabelC3");
     }
 
-    // maxColumnWidths..................................................................................................
+    // columnWidths..................................................................................................
 
-    final Map<SpreadsheetColumnReference, Double> maxColumnWidths() {
+    final Map<SpreadsheetColumnReference, Double> columnWidths() {
         return Maps.of(SpreadsheetColumnReference.parseColumn("A"), 50.0);
     }
 
-    final static JsonNode MAX_COLUMN_WIDTHS_JSON = JsonNode.parse("{\"A\": 50.0}");
+    final static JsonNode COLUMN_WIDTHS_JSON = JsonNode.parse("{\"A\": 50.0}");
 
-    final Map<SpreadsheetColumnReference, Double> differentMaxColumnWidths() {
+    final Map<SpreadsheetColumnReference, Double> differentColumnWidths() {
         return Maps.of(SpreadsheetColumnReference.parseColumn("B"), 999.0);
     }
 
-    final void checkMaxColumnWidths(final SpreadsheetDelta delta) {
-        checkMaxColumnWidths(delta, this.maxColumnWidths());
+    final void checkColumnWidths(final SpreadsheetDelta delta) {
+        checkColumnWidths(delta, this.columnWidths());
     }
 
-    final void checkMaxColumnWidths(final SpreadsheetDelta delta,
-                                    final Map<SpreadsheetColumnReference, Double> maxColumnWidths) {
-        assertEquals(maxColumnWidths, delta.maxColumnWidths(), "maxColumnWidths");
+    final void checkColumnWidths(final SpreadsheetDelta delta,
+                                 final Map<SpreadsheetColumnReference, Double> columnWidths) {
+        assertEquals(columnWidths, delta.columnWidths(), "columnWidths");
     }
 
     // maxRowHeights....................................................................................................

@@ -97,7 +97,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                         this.window()
                 ),
@@ -124,7 +124,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         this.labels(),
-                        SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                         this.window()
                 ),
@@ -156,7 +156,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
-                        this.maxColumnWidths(),
+                        this.columnWidths(),
                         SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                         this.window()
                 ),
@@ -185,7 +185,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         this.maxRowHeights(),
                         this.window()
                 ),
@@ -214,7 +214,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         this.labels(),
-                        this.maxColumnWidths(),
+                        this.columnWidths(),
                         this.maxRowHeights(),
                         this.window()
                 ),
@@ -257,7 +257,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                         this.window())
         );
@@ -268,7 +268,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 SpreadsheetDelta.NO_CELLS,
                 SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                SpreadsheetDelta.NO_COLUMN_WIDTHS,
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()
                 ),
@@ -281,7 +281,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 this.cells(), 
                 SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                SpreadsheetDelta.NO_COLUMN_WIDTHS,
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()
                 ),
@@ -291,17 +291,17 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
-    public void testJsonNodeMarshallCellsMaxColumnWidthsWindow() {
+    public void testJsonNodeMarshallCellsColumnWidthsWindow() {
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 this.cells(),
                 SpreadsheetDelta.NO_LABELS,
-                this.maxColumnWidths(),
+                this.columnWidths(),
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.MAX_COLUMN_WIDTHS_PROPERTY, MAX_COLUMN_WIDTHS_JSON)
+                        .set(SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY, COLUMN_WIDTHS_JSON)
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
     }
 
@@ -310,7 +310,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 this.cells(),
                 SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                SpreadsheetDelta.NO_COLUMN_WIDTHS,
                 this.maxRowHeights(),
                 this.window()
                 ),
@@ -321,17 +321,17 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
-    public void testJsonNodeMarshallCellsMaxColumnWidthsMaxRowHeightsWindow() {
+    public void testJsonNodeMarshallCellsColumnWidthsMaxRowHeightsWindow() {
         this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
                 this.cells(),
                 SpreadsheetDelta.NO_LABELS,
-                this.maxColumnWidths(),
+                this.columnWidths(),
                 this.maxRowHeights(),
                 this.window()
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.MAX_COLUMN_WIDTHS_PROPERTY, MAX_COLUMN_WIDTHS_JSON)
+                        .set(SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY, COLUMN_WIDTHS_JSON)
                         .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
     }
@@ -349,7 +349,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testToString() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
                 SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                SpreadsheetDelta.NO_COLUMN_WIDTHS,
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()),
                 "cells: A1=1, B2=2, C3=3 window: A1:E5, F6:Y99");
@@ -359,17 +359,17 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testToStringLabels() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
                 this.labels(),
-                SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                SpreadsheetDelta.NO_COLUMN_WIDTHS,
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()),
                 "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 window: A1:E5, F6:Y99");
     }
 
     @Test
-    public void testToStringMaxColumnWidths() {
+    public void testToStringColumnWidths() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
                 SpreadsheetDelta.NO_LABELS,
-                this.maxColumnWidths(),
+                this.columnWidths(),
                 SpreadsheetDelta.NO_MAX_ROW_HEIGHTS,
                 this.window()),
                 "cells: A1=1, B2=2, C3=3 max: A=50.0 window: A1:E5, F6:Y99");
@@ -379,17 +379,17 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testToStringMaxMaxRowHeights() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
                 SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
+                SpreadsheetDelta.NO_COLUMN_WIDTHS,
                 this.maxRowHeights(),
                 this.window()),
                 "cells: A1=1, B2=2, C3=3 max: 1=75.0 window: A1:E5, F6:Y99");
     }
 
     @Test
-    public void testToStringMaxColumnWidthsMaxRowHeights() {
+    public void testToStringColumnWidthsMaxRowHeights() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
                 SpreadsheetDelta.NO_LABELS,
-                this.maxColumnWidths(),
+                this.columnWidths(),
                 this.maxRowHeights(),
                 this.window()),
                 "cells: A1=1, B2=2, C3=3 max: A=50.0, 1=75.0 window: A1:E5, F6:Y99");
@@ -412,7 +412,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         return SpreadsheetDeltaWindowed.withWindowed(
                 cells,
                 this.labels(),
-                this.maxColumnWidths(),
+                this.columnWidths(),
                 this.maxRowHeights(),
                 window
         );

@@ -42,7 +42,7 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
     public void testWith() {
         final SpreadsheetDelta delta = SpreadsheetDelta.with(this.cells());
         this.checkCells(delta);
-        this.checkMaxColumnWidths(delta, SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS);
+        this.checkColumnWidths(delta, SpreadsheetDelta.NO_COLUMN_WIDTHS);
         this.checkMaxRowHeights(delta, SpreadsheetDelta.NO_MAX_ROW_HEIGHTS);
         this.checkWindow(delta, Lists.empty());
     }
