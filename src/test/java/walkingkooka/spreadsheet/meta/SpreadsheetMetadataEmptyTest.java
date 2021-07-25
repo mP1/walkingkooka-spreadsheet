@@ -175,7 +175,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
 
         assertEquals(JsonNode.object()
-                .set(SpreadsheetMetadata.DEFAULTS, context.marshall(defaultNotEmpty)),
+                        .set(SpreadsheetMetadata.DEFAULTS, context.marshall(defaultNotEmpty)),
                 context.marshall(SpreadsheetMetadata.EMPTY.setDefaults(defaultNotEmpty)));
     }
 

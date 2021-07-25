@@ -245,7 +245,7 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
                 text + after,
                 SpreadsheetParserToken.number(
                         Lists.of(
-                            SpreadsheetParserToken.digits("1", "1")
+                                SpreadsheetParserToken.digits("1", "1")
                         ),
                         text
                 ),
@@ -440,7 +440,7 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
     public void testHashExponentPlusHashHashDecimalDigitExponentDigit() {
         this.parseAndCheck2(
                 "#E+##",
-                7 + EXPONENT  + 890,
+                7 + EXPONENT + 890,
                 digits(7),
                 exponent(),
                 digits("890")
@@ -457,7 +457,7 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
                 plus(),
                 whitespace(),
                 digits(2)
-                );
+        );
     }
 
     // currency.........................................................................................................
@@ -557,7 +557,7 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
 
     private void parseAndCheck2(final String pattern,
                                 final String text,
-                                final SpreadsheetParserToken ...tokens) {
+                                final SpreadsheetParserToken... tokens) {
         final List<ParserToken> tokensList = Lists.of(tokens);
         this.parseAndCheck(
                 this.createParser(pattern),

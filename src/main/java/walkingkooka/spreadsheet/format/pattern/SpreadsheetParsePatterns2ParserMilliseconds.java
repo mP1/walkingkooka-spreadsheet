@@ -64,7 +64,7 @@ final class SpreadsheetParsePatterns2ParserMilliseconds extends SpreadsheetParse
             value += digit * digitValue;
 
             cursor.next();
-            if(cursor.isEmpty()) {
+            if (cursor.isEmpty()) {
                 token = token(value, start);
                 break;
             }

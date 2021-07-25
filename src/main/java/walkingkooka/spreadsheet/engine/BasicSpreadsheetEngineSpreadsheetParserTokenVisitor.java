@@ -381,7 +381,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     protected final void visit(final SpreadsheetDigitsParserToken token) {
         this.leaf(token);
     }
-    
+
     @Override
     protected final void visit(final SpreadsheetDivideSymbolParserToken token) {
         this.leaf(token);

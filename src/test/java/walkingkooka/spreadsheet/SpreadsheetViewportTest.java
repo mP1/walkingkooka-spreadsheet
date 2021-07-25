@@ -185,7 +185,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     @Test
     public void testEqualsDifferentCellReference() {
-        this.checkNotEquals(SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("a1"), X_OFFSET, Y_OFFSET,WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("a1"), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT));
     }
 
     @Test

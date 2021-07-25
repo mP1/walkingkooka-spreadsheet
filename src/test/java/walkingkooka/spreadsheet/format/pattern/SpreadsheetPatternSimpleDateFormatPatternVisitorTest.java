@@ -108,7 +108,7 @@ public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implemen
 
             String pattern = "";
             try {
-                final SimpleDateFormat dateFormat = (SimpleDateFormat)localeToFormatPattern.apply(locale);
+                final SimpleDateFormat dateFormat = (SimpleDateFormat) localeToFormatPattern.apply(locale);
                 pattern = dateFormat.toPattern();
                 assertNotEquals("",
                         SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(

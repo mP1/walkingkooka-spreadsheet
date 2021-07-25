@@ -47,17 +47,17 @@ public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<S
 
     @Test
     public void testEmptyDoubleQuotedText() {
-        this.parseAndCheck2("" );
+        this.parseAndCheck2("");
     }
 
     @Test
     public void testSingleCharacter() {
-        this.parseAndCheck2("a" );
+        this.parseAndCheck2("a");
     }
 
     @Test
     public void testSingleCharacter2() {
-        this.parseAndCheck2("b" );
+        this.parseAndCheck2("b");
     }
 
     @Test

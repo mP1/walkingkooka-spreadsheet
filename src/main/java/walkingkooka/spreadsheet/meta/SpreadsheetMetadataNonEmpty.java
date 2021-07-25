@@ -216,7 +216,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      * Cached {@link ExpressionNumberConverterContext}.
      */
     private ExpressionNumberConverterContext converterContext;
-    
+
     @Override
     public DateTimeContext dateTimeContext() {
         if (null == this.dateTimeContext) {
@@ -333,7 +333,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     }
 
     private SpreadsheetParserContext parserContext;
-    
+
     // SpreadsheetMetadataVisitor.......................................................................................
 
     @Override

@@ -54,7 +54,7 @@ enum NumberSpreadsheetFormatterNormalOrScientific {
                         digits.substring(0, integerDigitCount) :
                         "";
                 fractionDigits = integerDigitCount >= 0 ?
-                        digits.substring(integerDigitCount):
+                        digits.substring(integerDigitCount) :
                         CharSequences.repeating('0', -integerDigitCount) + digits;
             }
 

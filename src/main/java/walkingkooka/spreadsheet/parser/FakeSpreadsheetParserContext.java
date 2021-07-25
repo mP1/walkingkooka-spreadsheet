@@ -23,7 +23,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.MathContext;
 import java.util.Locale;
 
-public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements SpreadsheetParserContext{
+public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements SpreadsheetParserContext {
 
     @Override
     public String currencySymbol() {

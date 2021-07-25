@@ -56,7 +56,7 @@ final class SpreadsheetNumberParsePatternsRequest {
     final SpreadsheetNumberParsePatternsMode mode;
 
     void setDigitMode(final SpreadsheetNumberParsePatternsComponentDigitMode digitMode) {
-        if(digitMode != this.digitMode) {
+        if (digitMode != this.digitMode) {
             this.digitMode = digitMode;
         }
     }
@@ -101,8 +101,8 @@ final class SpreadsheetNumberParsePatternsRequest {
      * Aggregates the digit characters, which may include grouping separators.
      * This will become the text of any created {@link walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken}.
      */
-    final StringBuilder digits = new StringBuilder();;
-//
+    final StringBuilder digits = new StringBuilder();
+    //
     /**
      * Controls what part of the number the next digit belongs.
      */
@@ -112,10 +112,8 @@ final class SpreadsheetNumberParsePatternsRequest {
      * Calls the nextComponent component if one exists.
      */
     boolean nextComponent(final TextCursor cursor) {
-        return this.next.hasNext() ?
-                this.next.next()
-                    .parse(cursor, this) :
-                true; // finished!
+        return !this.next.hasNext() || this.next.next()
+                .parse(cursor, this); // finished!
     }
 
     /**

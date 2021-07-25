@@ -132,8 +132,8 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
     }
 
     private void convertAndCheck3(final String pattern,
-                                 final String text,
-                                 final Number value) {
+                                  final String text,
+                                  final Number value) {
         this.convertAndCheck2(
                 pattern,
                 text,

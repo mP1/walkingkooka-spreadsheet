@@ -1032,7 +1032,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmpty2);
         this.checkDefaults(withDefaults, notEmpty2);
     }
-    
+
     // HateosResource...................................................................................................
 
     @Test
@@ -1283,20 +1283,20 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testDateTimeContext() {
         Arrays.stream(Locale.getAvailableLocales())
                 .forEach(l -> {
-                    final int twoDigitYear = 49;
-                    final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                            .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-                            .set(SpreadsheetMetadataPropertyName.LOCALE, l)
-                            .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
+                            final int twoDigitYear = 49;
+                            final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                                    .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+                                    .set(SpreadsheetMetadataPropertyName.LOCALE, l)
+                                    .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
 
-                    final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
-                    final DateTimeContext context = metadata.dateTimeContext();
-                    this.amPmAndCheck(context, 13, symbols.getAmPmStrings()[1]);
-                    this.monthNameAndCheck(context, 2, symbols.getMonths()[2]);
-                    this.monthNameAbbreviationAndCheck(context, 3, symbols.getShortMonths()[3]);
-                    this.twoDigitYearAndCheck(context, twoDigitYear);
-                    this.weekDayNameAndCheck(context, 1, symbols.getWeekdays()[2]);
-                    this.weekDayNameAbbreviationAndCheck(context, 3, symbols.getShortWeekdays()[4]);
+                            final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
+                            final DateTimeContext context = metadata.dateTimeContext();
+                            this.amPmAndCheck(context, 13, symbols.getAmPmStrings()[1]);
+                            this.monthNameAndCheck(context, 2, symbols.getMonths()[2]);
+                            this.monthNameAbbreviationAndCheck(context, 3, symbols.getShortMonths()[3]);
+                            this.twoDigitYearAndCheck(context, twoDigitYear);
+                            this.weekDayNameAndCheck(context, 1, symbols.getWeekdays()[2]);
+                            this.weekDayNameAbbreviationAndCheck(context, 3, symbols.getShortWeekdays()[4]);
 
                         }
                 );
@@ -1310,7 +1310,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20);
         assertSame(metadata.dateTimeContext(), metadata.dateTimeContext());
     }
-    
+
     // HasDecimalNumberContext..........................................................................................
 
     @Test

@@ -129,7 +129,7 @@ public final class SpreadsheetParsePatterns2ParserMillisecondsTest extends Sprea
     }
 
     private void parseAndCheck2(final String text,
-                               final int value) {
+                                final int value) {
         final SpreadsheetMillisecondParserToken token = SpreadsheetParserToken.millisecond(value, text);
 
         this.parseAndCheck(

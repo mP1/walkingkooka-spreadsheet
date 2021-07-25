@@ -26,42 +26,42 @@ public final class SpreadsheetNumberParsePatternsComponentDigitSpaceTest extends
     // space.............................................................................................................
 
     @Test
-    public  void testSpaceIntegerOrSign() {
+    public void testSpaceIntegerOrSign() {
         this.testSpace(
                 SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN
         );
     }
 
     @Test
-    public  void testSpaceInteger() {
+    public void testSpaceInteger() {
         this.testSpace(
                 SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
         );
     }
 
     @Test
-    public  void testSpaceDecimalFirst() {
+    public void testSpaceDecimalFirst() {
         this.testSpace(
                 SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST
         );
     }
 
     @Test
-    public  void testSpaceDecimal() {
+    public void testSpaceDecimal() {
         this.testSpace(
                 SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
         );
     }
 
     @Test
-    public  void testSpaceExponentOrSign() {
+    public void testSpaceExponentOrSign() {
         this.testSpace(
                 SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN
         );
     }
 
     @Test
-    public  void testSpaceExponent() {
+    public void testSpaceExponent() {
         this.testSpace(
                 SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
         );

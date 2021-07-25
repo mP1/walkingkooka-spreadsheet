@@ -35,5 +35,5 @@ enum SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds {
     /**
      * Exclude the year component within a pattern. This will make <code>dd/mm/yyyy</code> into <code>dd/mm</code>
      */
-    EXCLUDE;
+    EXCLUDE
 }

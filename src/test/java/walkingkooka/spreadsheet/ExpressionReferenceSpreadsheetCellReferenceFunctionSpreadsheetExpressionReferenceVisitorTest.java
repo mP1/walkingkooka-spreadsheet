@@ -32,7 +32,7 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadshee
     public void testToString() {
         final ExpressionReferenceSpreadsheetCellReferenceFunction f = ExpressionReferenceSpreadsheetCellReferenceFunction.with(SpreadsheetLabelStores.fake(),
                 SpreadsheetRangeStores.fake());
-        this.toStringAndCheck(new ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor(f), f.toString() + " null");
+        this.toStringAndCheck(new ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor(f), f + " null");
     }
 
     @Override

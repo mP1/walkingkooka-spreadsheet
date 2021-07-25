@@ -48,11 +48,11 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
         PublicStaticHelperTesting<SpreadsheetDataValidators> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
-    
+
     private static ExpressionNumber expressionNumber(final int value) {
         return EXPRESSION_NUMBER_KIND.create(value);
     }
-    
+
     private final static ExpressionNumber EXPRESSION_NUMBER_BELOW = expressionNumber(5);
     private final static ExpressionNumber EXPRESSION_NUMBER_LOWER = expressionNumber(10);
     private final static ExpressionNumber EXPRESSION_NUMBER_BETWEEN = expressionNumber(15);

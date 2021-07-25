@@ -68,7 +68,7 @@ public final class SpreadsheetNumberParsePatternsComponentPercentTest extends Sp
                 SpreadsheetParserToken.percentSymbol(textString, textString)
         );
     }
-    
+
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createComponent(), ".");

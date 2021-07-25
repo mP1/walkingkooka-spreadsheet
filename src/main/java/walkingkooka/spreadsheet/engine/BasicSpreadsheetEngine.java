@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
@@ -47,8 +46,6 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -299,13 +296,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final Set<SpreadsheetLabelMapping> labels = Sets.ordered();
         final Set<SpreadsheetCellReference> references = Sets.hash();
 
-        for(final SpreadsheetCell cell : cells) {
+        for (final SpreadsheetCell cell : cells) {
             addLabels(cell.reference(), store, labels);
         }
 
         if (null != range) {
             range.cellStream().forEach(c -> {
-                if(references.add(c)) {
+                if (references.add(c)) {
                     addLabels(c, store, labels);
                 }
             });
@@ -317,7 +314,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private static void addLabels(final SpreadsheetCellReference reference,
                                   final SpreadsheetLabelStore store,
                                   final Set<SpreadsheetLabelMapping> all) {
-        for(final SpreadsheetLabelName label : store.labels(reference)) {
+        for (final SpreadsheetLabelName label : store.labels(reference)) {
             all.add(label.mapping(reference));
         }
     }
@@ -807,7 +804,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
             bottomRow = bottomRow.addSaturated(+1);
         }
-        
+
         return leftColumn.setRow(topRow)
                 .spreadsheetRange(
                         rightColumn.setRow(bottomRow)

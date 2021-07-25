@@ -231,7 +231,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 SpreadsheetDeltaNonWindowed.withNonWindowed(filteredCells, filteredlabels, columnWidths, rowHeights) :
                 SpreadsheetDeltaWindowed.withWindowed(filteredCells, filteredlabels, columnWidths, rowHeights, window);
     }
-    
+
     static Set<SpreadsheetCell> filterCells0(final Set<SpreadsheetCell> cells,
                                              final List<SpreadsheetRange> window) {
         return window.isEmpty() ?
@@ -278,7 +278,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         return (m) -> window.stream()
                 .anyMatch(mm -> {
                     final SpreadsheetExpressionReference r = m.reference();
-                    return r.isCellReference() && mm.test((SpreadsheetCellReference)m.reference());
+                    return r.isCellReference() && mm.test((SpreadsheetCellReference) m.reference());
                 });
     }
 
@@ -496,7 +496,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                                           final JsonNodeMarshallContext context) {
         final List<JsonNode> children = Lists.array();
 
-        for(final SpreadsheetCell cell : cells) {
+        for (final SpreadsheetCell cell : cells) {
             final JsonObject json = context.marshall(cell)
                     .objectOrFail();
             children.add(json.children().get(0));

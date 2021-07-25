@@ -272,7 +272,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final Function<SpreadsheetColorName, Optional<Color>> nameToColor = metadata.nameToColor();
         assertEquals(Optional.ofNullable(color),
                 nameToColor.apply(name),
-                () -> name + " to color " + metadata.toString());
+                () -> name + " to color " + metadata);
     }
 
     // NumberToColor....................................................................................................
@@ -288,7 +288,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final Function<Integer, Optional<Color>> numberToColor = metadata.numberToColor();
         assertEquals(Optional.ofNullable(color),
                 numberToColor.apply(number),
-                () -> number + " to color " + metadata.toString());
+                () -> number + " to color " + metadata);
     }
 
     // HasConverter.....................................................................................................
@@ -436,7 +436,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     final void checkDefaults(final SpreadsheetMetadata metadata,
                              final SpreadsheetMetadata defaults) {
-        if(null == defaults || defaults == SpreadsheetMetadata.EMPTY) {
+        if (null == defaults || defaults == SpreadsheetMetadata.EMPTY) {
             assertSame(null, metadata.defaults, "defaults");
         } else {
             assertSame(defaults, metadata.defaults, "defaults");

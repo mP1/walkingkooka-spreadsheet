@@ -32,7 +32,7 @@ public final class SpreadsheetNumberParsePatternsComponentExponentTest extends S
 
     @Test
     public void testIncomplete2() {
-        this.parseFails(EXPONENT.substring(0, 1) + "!");
+        this.parseFails(EXPONENT.charAt(0) + "!");
     }
 
     @Test
@@ -88,7 +88,7 @@ public final class SpreadsheetNumberParsePatternsComponentExponentTest extends S
     @Test
     public void testCaseUnimportant() {
         this.parseAndCheck2(
-                EXPONENT.toLowerCase().substring(0, 1) + EXPONENT.toUpperCase().substring(1),
+                EXPONENT.toLowerCase().charAt(0) + EXPONENT.toUpperCase().substring(1),
                 ""
         );
     }

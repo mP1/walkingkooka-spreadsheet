@@ -64,7 +64,7 @@ final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserCon
                 cursor.next();
                 final StringBuilder content = new StringBuilder();
 
-                while(!cursor.isEmpty()){
+                while (!cursor.isEmpty()) {
                     final char c = cursor.at();
                     cursor.next();
 
@@ -111,7 +111,7 @@ final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserCon
                 Lists.of(
                         DOUBLE_QUOTE_TOKEN,
                         SpreadsheetParserToken.textLiteral(
-                                contentString, text.substring(1, text.length() -1)
+                                contentString, text.substring(1, text.length() - 1)
                         ),
                         DOUBLE_QUOTE_TOKEN
                 ),

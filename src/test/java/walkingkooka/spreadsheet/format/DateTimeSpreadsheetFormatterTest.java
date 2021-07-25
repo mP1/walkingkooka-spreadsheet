@@ -64,7 +64,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                                                              final Class<T> type) {
                             assertSame(value, v, "value");
                             assertEquals(LocalDateTime.class, type, "type");
-                            return Either.<T, String>right("Failed!");
+                            return Either.right("Failed!");
                         }
                     });
         });

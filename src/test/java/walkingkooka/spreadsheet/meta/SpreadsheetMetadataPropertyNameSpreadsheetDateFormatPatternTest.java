@@ -57,7 +57,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPatternTe
         final String formatted = pattern.formatter()
                 .format(date, spreadsheetFormatterContext()).get().text();
 
-        final SimpleDateFormat simpleDateFormat = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.FULL, locale);
+        final SimpleDateFormat simpleDateFormat = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.FULL, locale);
         final String expected = simpleDateFormat.format(Date.from(date.atStartOfDay().toInstant(ZoneOffset.UTC)));
 
         assertEquals(expected, formatted, () -> pattern + "\nSimpleDateFormat: " + simpleDateFormat.toPattern());

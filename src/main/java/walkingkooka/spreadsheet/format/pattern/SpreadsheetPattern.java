@@ -419,9 +419,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                 seconds,
                 ampm
         );
-        if (!patterns.contains(pattern)) {
-            patterns.add(pattern);
-        }
+        patterns.add(pattern);
     }
 
     /**

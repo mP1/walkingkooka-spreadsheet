@@ -64,7 +64,8 @@ final class SpreadsheetParsePatterns2ParserString extends SpreadsheetParsePatter
 
         int i = 0;
 
-        Exit://
+        Exit:
+//
         for (; ; ) {
             final char c = cursor.at();
 
@@ -78,7 +79,7 @@ final class SpreadsheetParsePatterns2ParserString extends SpreadsheetParsePatter
                 if (null != possible) {
                     if (i < possible.length() && isEqual(possible.charAt(i), c)) {
                         candidates++;
-                        if(1==candidates) {
+                        if (1 == candidates) {
                             choice = j;
                             choiceText = possible;
                         }
@@ -96,7 +97,7 @@ final class SpreadsheetParsePatterns2ParserString extends SpreadsheetParsePatter
                     cursor.next();
                     TextCursorSavePoint save = cursor.save();
 
-                    for(;;) {
+                    for (; ; ) {
                         if (cursor.isEmpty() || i == choiceText.length()) { // lgtm [java/dereferenced-value-may-be-null]
                             token = this.token(choice, start);
                             break Exit;

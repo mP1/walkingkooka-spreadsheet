@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -29,7 +28,6 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
@@ -54,7 +52,6 @@ import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -404,11 +401,11 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             public SpreadsheetParserToken parseFormula(final String formula) {
                 assertEquals(FORMULA_TEXT, formula, "formula text");
                 return SpreadsheetParserToken.text(
-                    Lists.of(
-                            SpreadsheetParserToken.apostropheSymbol("'", "'"),
-                            SpreadsheetParserToken.textLiteral(FORMULA_VALUE, FORMULA_VALUE)
-                    ),
-                    FORMULA_TEXT
+                        Lists.of(
+                                SpreadsheetParserToken.apostropheSymbol("'", "'"),
+                                SpreadsheetParserToken.textLiteral(FORMULA_VALUE, FORMULA_VALUE)
+                        ),
+                        FORMULA_TEXT
                 );
             }
 

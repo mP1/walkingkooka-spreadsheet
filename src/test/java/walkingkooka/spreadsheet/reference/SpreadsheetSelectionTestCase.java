@@ -125,7 +125,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         return this.createSelection();
     }
 
-    public final void testTypeNaming()  {
+    public final void testTypeNaming() {
         // nop
     }
 

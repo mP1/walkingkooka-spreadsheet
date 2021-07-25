@@ -47,7 +47,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreads
             }
         };
         this.toStringAndCheck(new ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor(f, references),
-                f.toString() + " SpreadsheetCellReferences123");
+                f + " SpreadsheetCellReferences123");
     }
 
     @Override

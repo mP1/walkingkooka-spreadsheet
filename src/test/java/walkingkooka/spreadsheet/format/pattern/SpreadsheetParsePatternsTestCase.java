@@ -386,7 +386,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     static SpreadsheetMinuteParserToken minute8() {
         return SpreadsheetParserToken.minute(8, "8");
     }
-    
+
     static SpreadsheetMinuteParserToken minute58() {
         return SpreadsheetParserToken.minute(58, "58");
     }

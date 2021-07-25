@@ -30,7 +30,6 @@ enum SpreadsheetNumberParsePatternsComponentDigitMode {
      * Digits before any decimal separator.
      */
     INTEGER_OR_SIGN {
-
         @Override
         SpreadsheetNumberParsePatternsComponentDigitMode next() {
             return INTEGER;
@@ -41,7 +40,6 @@ enum SpreadsheetNumberParsePatternsComponentDigitMode {
      * Digits before any decimal separator.
      */
     INTEGER {
-
         @Override
         SpreadsheetNumberParsePatternsComponentDigitMode next() {
             return INTEGER;
@@ -52,7 +50,6 @@ enum SpreadsheetNumberParsePatternsComponentDigitMode {
      * Digits after a decimal separator
      */
     DECIMAL_FIRST {
-
         @Override
         SpreadsheetNumberParsePatternsComponentDigitMode next() {
             return DECIMAL;
@@ -64,7 +61,6 @@ enum SpreadsheetNumberParsePatternsComponentDigitMode {
      * Digits after a decimal separator
      */
     DECIMAL {
-
         @Override
         SpreadsheetNumberParsePatternsComponentDigitMode next() {
             return DECIMAL;
@@ -75,7 +71,6 @@ enum SpreadsheetNumberParsePatternsComponentDigitMode {
      * Digits or sign
      */
     EXPONENT_OR_SIGN {
-
         @Override
         SpreadsheetNumberParsePatternsComponentDigitMode next() {
             return EXPONENT;
@@ -86,7 +81,6 @@ enum SpreadsheetNumberParsePatternsComponentDigitMode {
      * Digits belong to an exponent.
      */
     EXPONENT {
-
         @Override
         SpreadsheetNumberParsePatternsComponentDigitMode next() {
             return EXPONENT;
@@ -140,7 +134,7 @@ enum SpreadsheetNumberParsePatternsComponentDigitMode {
      * Handles a decimal separator, possibly switching onDigit mode.
      */
     final void onDecimalSeparator(final SpreadsheetNumberParsePatternsRequest context) {
-        if(this == INTEGER_OR_SIGN || this == INTEGER) {
+        if (this == INTEGER_OR_SIGN || this == INTEGER) {
             context.setDigitMode(SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST);
         }
     }
