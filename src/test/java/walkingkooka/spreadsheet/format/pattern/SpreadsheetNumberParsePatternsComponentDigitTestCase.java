@@ -132,11 +132,11 @@ public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C ext
                 SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
         );
     }
-    
+
     private void testPlus(final SpreadsheetNumberParsePatternsComponentDigitMode mode) {
         final String text = "" + PLUS;
 
-        if(mode.isSign()) {
+        if (mode.isSign()) {
             this.parseAndCheck3(
                     1,
                     mode,
@@ -205,7 +205,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C ext
     private void testMinus(final SpreadsheetNumberParsePatternsComponentDigitMode mode) {
         final String text = "" + MINUS;
 
-        if(mode.isSign()) {
+        if (mode.isSign()) {
             this.parseAndCheck3(
                     1,
                     mode,
@@ -226,7 +226,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C ext
             );
         }
     }
-    
+
     // digits 1, max=1..................................................................................................
 
     @Test
@@ -475,7 +475,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C ext
     }
 
     private void testDigit2Max2(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
-                                     final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode) {
+                                final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode) {
         final String text = TEXT5 + TEXT6;
         this.parseAndCheck3(
                 2,
@@ -541,7 +541,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C ext
     }
 
     private void testDigit2TextMax2(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
-                                         final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode) {
+                                    final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode) {
         final String text = TEXT5 + TEXT6;
         this.parseAndCheck3(
                 2,
@@ -611,7 +611,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C ext
         final String text = TEXT5;
         final String plusText = PLUS + text;
 
-        if(mode.isSign()) {
+        if (mode.isSign()) {
             this.parseAndCheck3(
                     2,
                     mode,
@@ -692,7 +692,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C ext
         final String text = TEXT5;
         final String minusText = MINUS + text;
 
-        if(mode.isSign()) {
+        if (mode.isSign()) {
             this.parseAndCheck3(
                     2,
                     mode,

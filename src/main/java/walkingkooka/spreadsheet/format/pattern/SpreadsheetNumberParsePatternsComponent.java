@@ -141,11 +141,11 @@ abstract class SpreadsheetNumberParsePatternsComponent {
      * Advances the cursor attempting to match the given token in full.
      */
     final boolean parseToken(final TextCursor cursor,
-                          final String token,
-                          final CaseSensitivity caseSensitivity,
-                          final BiFunction<String, String, SpreadsheetParserToken> factory,
-                          final SpreadsheetNumberParsePatternsComponentDigitMode mode,
-                          final SpreadsheetNumberParsePatternsRequest request) {
+                             final String token,
+                             final CaseSensitivity caseSensitivity,
+                             final BiFunction<String, String, SpreadsheetParserToken> factory,
+                             final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                             final SpreadsheetNumberParsePatternsRequest request) {
         final int length = token.length();
         final TextCursorSavePoint save = cursor.save();
 
@@ -169,7 +169,7 @@ abstract class SpreadsheetNumberParsePatternsComponent {
                 final String text = save.textBetween().toString();
                 request.add(factory.apply(text, text));
 
-                if(null != mode) {
+                if (null != mode) {
                     request.setDigitMode(mode);
                 }
 

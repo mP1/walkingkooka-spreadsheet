@@ -322,26 +322,26 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         assertEquals(
                 requires.setFormula(
                         formula.setText(text2)
-                        .setToken(
-                                Optional.of(
-                                        SpreadsheetParserToken.date(
-                                                Lists.of(
-                                                        SpreadsheetParserToken.dayName(2, "martes"),
-                                                        SpreadsheetParserToken.whitespace(" ", " "),
-                                                        SpreadsheetParserToken.dayNumber(9, "9"),
-                                                        SpreadsheetParserToken.textLiteral("/", "/"),
-                                                        SpreadsheetParserToken.monthNumber(2, "2"),
-                                                        SpreadsheetParserToken.textLiteral("/", "/"),
-                                                        SpreadsheetParserToken.year(2021, "2021")
-                                                ),
-                                                text2
+                                .setToken(
+                                        Optional.of(
+                                                SpreadsheetParserToken.date(
+                                                        Lists.of(
+                                                                SpreadsheetParserToken.dayName(2, "martes"),
+                                                                SpreadsheetParserToken.whitespace(" ", " "),
+                                                                SpreadsheetParserToken.dayNumber(9, "9"),
+                                                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                                                SpreadsheetParserToken.monthNumber(2, "2"),
+                                                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                                                SpreadsheetParserToken.year(2021, "2021")
+                                                        ),
+                                                        text2
+                                                )
                                         )
-                                )
-                        ).setExpression(
+                                ).setExpression(
                                 Optional.of(
-                                       Expression.localDate(
-                                               LocalDate.of(2021, 2, 9)
-                                       )
+                                        Expression.localDate(
+                                                LocalDate.of(2021, 2, 9)
+                                        )
                                 )
                         )
                 ),
@@ -410,11 +410,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                                 )
                                         )
                                 ).setExpression(
-                                        Optional.of(
-                                            Expression.localDate(
+                                Optional.of(
+                                        Expression.localDate(
                                                 LocalDate.of(2021, 2, 9)
-                                            )
-                                    )
+                                        )
+                                )
                         )
                 ),
                 loader.loadOrFail(requires.reference()),
@@ -569,11 +569,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         assertEquals(
                 requires.setFormula(
                         formula.setText(text.replace(DECIMAL_SEPARATOR, decimalSeparator2))
-                        .setToken(
-                                Optional.of(
-                                        this.numberParserToken(decimalSeparator2)
-                                )
-                        ).setExpression(
+                                .setToken(
+                                        Optional.of(
+                                                this.numberParserToken(decimalSeparator2)
+                                        )
+                                ).setExpression(
                                 Optional.of(
                                         number(3.5)
                                 )
@@ -808,7 +808,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                 ).setExpression(
                                 Optional.of(
                                         Expression.localTime(
-                                                LocalTime.of(9 +12, 59)
+                                                LocalTime.of(9 + 12, 59)
                                         )
                                 )
                         )

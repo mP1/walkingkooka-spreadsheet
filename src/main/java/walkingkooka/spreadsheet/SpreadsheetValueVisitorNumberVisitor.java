@@ -76,8 +76,8 @@ final class SpreadsheetValueVisitorNumberVisitor extends NumberVisitor {
 
     @Override
     protected void visitUnknown(final Number number) {
-        if(number instanceof ExpressionNumber) {
-            this.visitor.visit((ExpressionNumber)number);
+        if (number instanceof ExpressionNumber) {
+            this.visitor.visit((ExpressionNumber) number);
         } else {
             this.visitor.visit(number);
         }

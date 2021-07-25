@@ -44,27 +44,27 @@ public class FakeSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
     @Override
     protected void visit(final BigDecimal value) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final BigInteger value) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final Boolean value) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final Byte value) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final Double value) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -74,31 +74,31 @@ public class FakeSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
     @Override
     protected void visit(final LocalDate value) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final LocalDateTime value) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final LocalTime value) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final Long value) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final String value) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final Object value) {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 }

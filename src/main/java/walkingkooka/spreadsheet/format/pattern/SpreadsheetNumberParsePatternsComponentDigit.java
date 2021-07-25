@@ -59,7 +59,7 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
      * Attempts to parse the requested number of digits.
      */
     private boolean parseDigits(final TextCursor cursor,
-                             final SpreadsheetNumberParsePatternsRequest request) {
+                                final SpreadsheetNumberParsePatternsRequest request) {
         final DecimalNumberContext context = request.context;
         final SpreadsheetNumberParsePatternsMode mode = request.mode;
         final int max = this.max;
@@ -82,7 +82,7 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
                 continue;
             }
 
-            if(this.shouldHandleWhitespace() && Character.isWhitespace(c)) {
+            if (this.shouldHandleWhitespace() && Character.isWhitespace(c)) {
                 request.addNumberIfNecessary();
 
                 final String whitespaceText = Character.toString(c);
@@ -107,7 +107,7 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
             }
         }
 
-        if(request.addNumberIfNecessary()) {
+        if (request.addNumberIfNecessary()) {
             request.setDigitMode(request.digitMode.next());
         }
         return request.nextComponent(cursor);

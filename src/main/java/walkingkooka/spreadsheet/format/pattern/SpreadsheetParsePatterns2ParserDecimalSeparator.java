@@ -39,12 +39,12 @@ final class SpreadsheetParsePatterns2ParserDecimalSeparator extends SpreadsheetP
 
     @Override
     SpreadsheetDecimalSeparatorSymbolParserToken parseNotEmpty0(final TextCursor cursor,
-                                          final SpreadsheetParserContext context,
-                                          final TextCursorSavePoint start) {
+                                                                final SpreadsheetParserContext context,
+                                                                final TextCursorSavePoint start) {
         SpreadsheetDecimalSeparatorSymbolParserToken token = null;
 
         final char decimal = context.decimalSeparator();
-        if(cursor.at() == decimal) {
+        if (cursor.at() == decimal) {
             cursor.next();
 
             final String text = String.valueOf(decimal);

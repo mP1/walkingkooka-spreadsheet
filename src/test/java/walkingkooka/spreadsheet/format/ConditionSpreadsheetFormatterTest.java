@@ -243,7 +243,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
                 );
             }
 
-            private Converter<ExpressionNumberConverterContext> converter = Converters.parser(
+            private final Converter<ExpressionNumberConverterContext> converter = Converters.parser(
                     BigDecimal.class,
                     Parsers.bigDecimal(),
                     (c) -> ParserContexts.basic(c, c),

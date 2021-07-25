@@ -39,12 +39,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     @Test
-    public void testExtractLocaleValue() throws ParseException{
+    public void testExtractLocaleValue() throws ParseException {
         this.extractLocaleValueAndCheck("1.25");
     }
 
     @Test
-    public void testExtractLocaleValueInteger() throws ParseException{
+    public void testExtractLocaleValueInteger() throws ParseException {
         this.extractLocaleValueAndCheck("789");
     }
 

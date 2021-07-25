@@ -37,7 +37,7 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
-    final static String APOSTROPHE = "\'";
+    final static String APOSTROPHE = "'";
     final static String DOUBLE_QUOTE = "\"";
 
     final static BigInteger NUMBER1 = BigInteger.valueOf(1);
@@ -133,7 +133,7 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
     final SpreadsheetMillisecondParserToken millisecond() {
         return SpreadsheetParserToken.millisecond(MILLISECOND, "" + MILLISECOND);
     }
-    
+
     final static int MINUTE = 58;
 
     final SpreadsheetMinuteParserToken minute() {
@@ -153,7 +153,7 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
     final SpreadsheetMonthNameInitialParserToken monthNameInitial() {
         return SpreadsheetParserToken.monthNameInitial(MONTH, "F");
     }
-    
+
     final SpreadsheetMonthNumberParserToken monthNumber() {
         return SpreadsheetParserToken.monthNumber(MONTH, "" + MONTH);
     }
@@ -192,7 +192,7 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
     final SpreadsheetSecondsParserToken seconds() {
         return SpreadsheetParserToken.seconds(SECONDS, "" + SECONDS);
     }
-    
+
     final SpreadsheetTextLiteralParserToken slashTextLiteral() {
         return SpreadsheetParserToken.textLiteral("/", "/");
     }

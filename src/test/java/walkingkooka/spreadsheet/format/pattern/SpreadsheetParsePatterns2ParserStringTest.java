@@ -120,7 +120,7 @@ public final class SpreadsheetParsePatterns2ParserStringTest extends Spreadsheet
 
     @Test
     public void testParseCompleteAll() {
-        for(final String month : this.monthNames()) {
+        for (final String month : this.monthNames()) {
             this.parseAndCheck2(
                     month,
                     "123"
@@ -139,14 +139,14 @@ public final class SpreadsheetParsePatterns2ParserStringTest extends Spreadsheet
                                 final String after) {
         int index = -1;
         int i = 0;
-        for(final String month : this.monthNames()) {
-            if(CaseSensitivity.INSENSITIVE.startsWith(month, text) || CaseSensitivity.INSENSITIVE.equals(month, text)) {
+        for (final String month : this.monthNames()) {
+            if (CaseSensitivity.INSENSITIVE.startsWith(month, text) || CaseSensitivity.INSENSITIVE.equals(month, text)) {
                 index = i;
                 break;
             }
             i++;
         }
-        assertNotEquals(-1, index, ()-> "failed to match a month with " + CharSequences.quote(text));
+        assertNotEquals(-1, index, () -> "failed to match a month with " + CharSequences.quote(text));
 
         this.parseAndCheck(
                 text + after,

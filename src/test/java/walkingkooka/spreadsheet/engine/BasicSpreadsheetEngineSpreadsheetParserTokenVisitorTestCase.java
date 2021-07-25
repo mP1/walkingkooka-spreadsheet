@@ -21,8 +21,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitor;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitorTesting;
 
 public abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitorTestCase<V extends BasicSpreadsheetEngineSpreadsheetParserTokenVisitor>
-        extends  BasicSpreadsheetEngineTestCase<V>
-        implements SpreadsheetParserTokenVisitorTesting<V>  {
+        extends BasicSpreadsheetEngineTestCase<V>
+        implements SpreadsheetParserTokenVisitorTesting<V> {
 
     BasicSpreadsheetEngineSpreadsheetParserTokenVisitorTestCase() {
         super();

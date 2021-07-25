@@ -225,7 +225,7 @@ public final class Sample {
                 return this.storeRepository;
             }
 
-            private SpreadsheetStoreRepository storeRepository = SpreadsheetStoreRepositories.basic(
+            private final SpreadsheetStoreRepository storeRepository = SpreadsheetStoreRepositories.basic(
                     SpreadsheetCellStores.treeMap(),
                     SpreadsheetExpressionReferenceStores.treeMap(),
                     SpreadsheetGroupStores.fake(),

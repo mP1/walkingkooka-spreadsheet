@@ -78,7 +78,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         return this.value;
     }
 
-    private Long value;
+    private final Long value;
 
     // JsonNodeContext..................................................................................................
 

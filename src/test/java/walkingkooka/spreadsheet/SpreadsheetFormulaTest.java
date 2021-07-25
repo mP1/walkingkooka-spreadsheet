@@ -185,7 +185,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.checkValueAbsent(different);
         this.checkErrorAbsent(different);
     }
-    
+
     // SetExpression.....................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
@@ -511,10 +511,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testEqualsDifferentError() {
         checkNotEquals(
                 this.createFormula(TEXT,
-                this.token(),
-                this.expression(),
-                this.value(),
-                this.error("different error message"))
+                        this.token(),
+                        this.expression(),
+                        this.value(),
+                        this.error("different error message"))
         );
     }
 

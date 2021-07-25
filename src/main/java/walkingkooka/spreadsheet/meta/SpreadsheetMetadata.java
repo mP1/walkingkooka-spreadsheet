@@ -588,7 +588,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
      */
     @Override
     public abstract SpreadsheetFormatter formatter();
-    
+
     final SpreadsheetFormatter formatter0() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
@@ -821,7 +821,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         SpreadsheetMetadata metadata = EMPTY;
 
         final Optional<JsonNode> defaults = node.objectOrFail().get(DEFAULTS);
-        if(defaults.isPresent()) {
+        if (defaults.isPresent()) {
             metadata = metadata.setDefaults(context.unmarshall(defaults.get(), SpreadsheetMetadata.class));
         }
 

@@ -37,7 +37,7 @@ public final class SpreadsheetNumberParsePatternsComponentDecimalSeparatorTest e
     @Test
     public void testDecimalCharacter() {
         this.parseAndCheck2(
-                DECIMAL ,
+                DECIMAL,
                 "!"
         );
     }

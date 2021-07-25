@@ -1960,7 +1960,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.parseThrows(
                 valueOrExpressionParser(),
                 "=" + text,
-                message.substring(0, at + 4) + (column+1) + message.substring(at2)
+                message.substring(0, at + 4) + (column + 1) + message.substring(at2)
         );
     }
 

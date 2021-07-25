@@ -32,7 +32,7 @@ public final class SpreadsheetNumberParsePatternsComponentCurrencyTest extends S
 
     @Test
     public void testIncomplete2() {
-        this.parseFails(CURRENCY.substring(0, 1) + "!");
+        this.parseFails(CURRENCY.charAt(0) + "!");
     }
 
     @Test
@@ -88,7 +88,7 @@ public final class SpreadsheetNumberParsePatternsComponentCurrencyTest extends S
     @Test
     public void testCaseUnimportant() {
         this.parseAndCheck2(
-                CURRENCY.toLowerCase().substring(0, 1) + CURRENCY.toUpperCase().substring(1),
+                CURRENCY.toLowerCase().charAt(0) + CURRENCY.toUpperCase().substring(1),
                 ""
         );
     }

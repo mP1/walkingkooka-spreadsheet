@@ -53,9 +53,9 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
         String result = visitor.pattern
                 .toString()
                 .trim();
-        for(;;) {
+        for (; ; ) {
             final String less = result.replace("  ", " ");
-            if(less.equals(result)) {
+            if (less.equals(result)) {
                 break;
             }
             result = less;
@@ -107,7 +107,7 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
         this.date = true;
     }
 
-    private SpreadsheetPatternSimpleDateFormatPatternVisitorYear year;
+    private final SpreadsheetPatternSimpleDateFormatPatternVisitorYear year;
 
     @Override
     protected void visitWeekYear(int width) {

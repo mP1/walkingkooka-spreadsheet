@@ -454,9 +454,9 @@ final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends
 
             this.sequenceParserBuilder.optional(
                     Parsers.<SpreadsheetParserContext>sequenceParserBuilder()
-                        .required(SpreadsheetParsePatterns2Parser.decimalSeparator())
-                        .optional(SpreadsheetParsePatterns2Parser.milliseconds(CharSequences.repeating('0', millis -1).toString()))
-                    .build()
+                            .required(SpreadsheetParsePatterns2Parser.decimalSeparator())
+                            .optional(SpreadsheetParsePatterns2Parser.milliseconds(CharSequences.repeating('0', millis - 1).toString()))
+                            .build()
             );
 
             this.milliseconds = 0;

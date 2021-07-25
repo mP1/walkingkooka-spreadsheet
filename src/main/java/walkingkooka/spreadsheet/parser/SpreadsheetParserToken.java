@@ -1174,7 +1174,8 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         registerLeafParserToken(
                 SpreadsheetSecondsParserToken.class,
                 SpreadsheetParserToken::unmarshallSeconds
-        );;
+        );
+        ;
 
         registerLeafParserToken(
                 SpreadsheetTextLiteralParserToken.class,

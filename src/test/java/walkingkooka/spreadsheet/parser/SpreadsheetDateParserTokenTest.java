@@ -158,7 +158,7 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     private void toExpressionAndCheck2(final LocalDate expected,
-                                       final SpreadsheetParserToken...tokens) {
+                                       final SpreadsheetParserToken... tokens) {
         this.toExpressionAndCheck2(
                 this.expressionEvaluationContext(DEFAULT_YEAR, 20),
                 expected,
@@ -168,7 +168,7 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
 
     private void toExpressionAndCheck2(final ExpressionEvaluationContext context,
                                        final LocalDate expected,
-                                       final SpreadsheetParserToken...tokens) {
+                                       final SpreadsheetParserToken... tokens) {
         final List<ParserToken> tokensList = Lists.of(tokens);
 
         final SpreadsheetDateParserToken dateParserToken = SpreadsheetDateParserToken.with(

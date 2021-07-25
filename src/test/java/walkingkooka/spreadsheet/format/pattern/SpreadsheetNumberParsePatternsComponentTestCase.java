@@ -190,7 +190,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
                 () -> "tokens\nrequest: " + request
         );
 
-        if(NEXT_CALLED == hasNext) {
+        if (NEXT_CALLED == hasNext) {
             assertEquals(
                     hasNext, // if empty means nothing got consumed and next shouldnt be executed
                     request.next.hasNext(),

@@ -112,7 +112,7 @@ public final class SpreadsheetTextLiteralParserTokenTest extends SpreadsheetNonS
 
     @Override
     public SpreadsheetTextLiteralParserToken unmarshall(final JsonNode from,
-                                                 final JsonNodeUnmarshallContext context) {
+                                                        final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserToken.unmarshallTextLiteral(from, context);
     }
 }

@@ -186,7 +186,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     public final boolean equals(final Object other) {
         return this == other ||
                 other instanceof SpreadsheetViewport &&
-                        this.equals0((SpreadsheetViewport)other);
+                        this.equals0((SpreadsheetViewport) other);
     }
 
     private boolean equals0(final SpreadsheetViewport other) {

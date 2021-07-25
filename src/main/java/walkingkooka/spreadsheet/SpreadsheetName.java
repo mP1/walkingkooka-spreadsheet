@@ -87,7 +87,7 @@ public final class SpreadsheetName implements Comparable<SpreadsheetName>,
         return this.value;
     }
 
-    private String value;
+    private final String value;
 
     // JsonNodeContext..................................................................................................
 

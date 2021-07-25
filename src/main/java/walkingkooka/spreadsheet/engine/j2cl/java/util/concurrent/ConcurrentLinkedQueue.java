@@ -53,7 +53,7 @@ public class ConcurrentLinkedQueue<E> extends AbstractQueue<E> {
         final List<E> list = this.list;
         return list.isEmpty() ?
                 null :
-                list.remove(list.size() -1);
+                list.remove(list.size() - 1);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ConcurrentLinkedQueue<E> extends AbstractQueue<E> {
         final List<E> list = this.list;
         return list.isEmpty() ?
                 null :
-                list.get(list.size() -1);
+                list.get(list.size() - 1);
     }
 
     private final List<E> list = Lists.array();

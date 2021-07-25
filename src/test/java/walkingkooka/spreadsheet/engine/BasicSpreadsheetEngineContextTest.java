@@ -190,7 +190,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 formula,
                 SpreadsheetParserToken.text(
                         Lists.of(
-                                SpreadsheetParserToken.apostropheSymbol("\'", "\'"),
+                                SpreadsheetParserToken.apostropheSymbol("'", "'"),
                                 SpreadsheetParserToken.textLiteral(text, text)
                         ),
                         formula
