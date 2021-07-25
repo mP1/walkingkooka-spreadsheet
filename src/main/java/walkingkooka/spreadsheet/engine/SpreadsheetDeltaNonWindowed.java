@@ -41,23 +41,23 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
      */
     static SpreadsheetDeltaNonWindowed withNonWindowed(final Set<SpreadsheetCell> cells,
                                                        final Set<SpreadsheetLabelMapping> labels,
-                                                       final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
+                                                       final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                        final Map<SpreadsheetRowReference, Double> maxRowHeights) {
         return new SpreadsheetDeltaNonWindowed(
                 cells,
                 labels,
-                maxColumnWidths,
+                columnWidths,
                 maxRowHeights
         );
     }
 
     private SpreadsheetDeltaNonWindowed(final Set<SpreadsheetCell> cells,
                                         final Set<SpreadsheetLabelMapping> labels,
-                                        final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
+                                        final Map<SpreadsheetColumnReference, Double> columnWidths,
                                         final Map<SpreadsheetRowReference, Double> maxRowHeights) {
         super(cells,
                 labels,
-                maxColumnWidths,
+                columnWidths,
                 maxRowHeights
         );
     }
@@ -68,7 +68,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaNonWindowed(
                 cells,
                 this.labels,
-                this.maxColumnWidths,
+                this.columnWidths,
                 this.maxRowHeights
         );
     }
@@ -78,19 +78,19 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaNonWindowed(
                 this.cells,
                 labels,
-                this.maxColumnWidths,
+                this.columnWidths,
                 this.maxRowHeights
         );
     }
 
     @Override
-    SpreadsheetDelta replaceMaxColumnWidths(final Map<SpreadsheetColumnReference, Double> maxColumnWidths) {
-        return new SpreadsheetDeltaNonWindowed(this.cells, this.labels, maxColumnWidths, this.maxRowHeights);
+    SpreadsheetDelta replaceColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
+        return new SpreadsheetDeltaNonWindowed(this.cells, this.labels, columnWidths, this.maxRowHeights);
     }
 
     @Override
     SpreadsheetDelta replaceMaxRowHeights(final Map<SpreadsheetRowReference, Double> maxRowHeights) {
-        return new SpreadsheetDeltaNonWindowed(this.cells, this.labels, this.maxColumnWidths, maxRowHeights);
+        return new SpreadsheetDeltaNonWindowed(this.cells, this.labels, this.columnWidths, maxRowHeights);
     }
 
     /**
