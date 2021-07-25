@@ -155,25 +155,25 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         assertEquals(columnWidths, delta.columnWidths(), "columnWidths");
     }
 
-    // maxRowHeights....................................................................................................
+    // rowHeights....................................................................................................
 
-    final Map<SpreadsheetRowReference, Double> maxRowHeights() {
+    final Map<SpreadsheetRowReference, Double> rowHeights() {
         return Maps.of(SpreadsheetRowReference.parseRow("1"), 75.0);
     }
 
     final static JsonNode MAX_ROW_HEIGHTS_JSON = JsonNode.parse("{\"1\": 75.0}");
 
-    final Map<SpreadsheetRowReference, Double> differentMaxRowHeights() {
+    final Map<SpreadsheetRowReference, Double> differentRowHeights() {
         return Maps.of(SpreadsheetRowReference.parseRow("2"), 999.0);
     }
 
-    final void checkMaxRowHeights(final SpreadsheetDelta delta) {
-        checkMaxRowHeights(delta, this.maxRowHeights());
+    final void checkRowHeights(final SpreadsheetDelta delta) {
+        checkRowHeights(delta, this.rowHeights());
     }
 
-    final void checkMaxRowHeights(final SpreadsheetDelta delta,
-                                  final Map<SpreadsheetRowReference, Double> maxRowHeights) {
-        assertEquals(maxRowHeights, delta.maxRowHeights(), "maxRowHeights");
+    final void checkRowHeights(final SpreadsheetDelta delta,
+                               final Map<SpreadsheetRowReference, Double> rowHeights) {
+        assertEquals(rowHeights, delta.rowHeights(), "rowHeights");
     }
 
     final void checkWindow(final SpreadsheetDelta delta, final List<SpreadsheetRange> window) {
