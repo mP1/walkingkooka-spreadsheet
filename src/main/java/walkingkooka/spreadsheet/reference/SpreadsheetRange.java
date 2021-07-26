@@ -276,17 +276,10 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
     public boolean test(final SpreadsheetCellReference reference) {
         Objects.requireNonNull(reference, "reference");
 
-        final SpreadsheetRowReference row = reference.row();
-        final SpreadsheetColumnReference column = reference.column();
-
-        final SpreadsheetCellReference begin = this.begin();
-        final SpreadsheetCellReference end = this.end();
-
-        return row.compareTo(begin.row()) >= 0 &&
-                column.compareTo(begin.column()) >= 0 &&
-                row.compareTo(end.row()) <= 0 &&
-                column.compareTo(end.column()) <= 0;
-
+        return reference.column()
+                .testRange(this) &&
+                reference.row()
+                        .testRange(this);
     }
 
     // testRange........................................................................................................
