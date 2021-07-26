@@ -67,6 +67,63 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         return SpreadsheetRowReference.parseRow("1");
     }
 
+    // testRange........................................................................................................
+
+    @Test
+    public void testTestRangeBefore() {
+        this.testRangeCheck2(
+                "B",
+                "C3:E5",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRangeLeftEdge() {
+        this.testRangeCheck2(
+                "C",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeCenter() {
+        this.testRangeCheck2(
+                "D",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeRightEdge() {
+        this.testRangeCheck2(
+                "E",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeAfter() {
+        this.testRangeCheck2(
+                "F",
+                "C3:E5",
+                false
+        );
+    }
+
+    private void testRangeCheck2(final String column,
+                                 final String range,
+                                 final boolean expected) {
+        this.testRangeAndCheck(
+                SpreadsheetColumnReference.parseColumn(column),
+                SpreadsheetRange.parseRange(range),
+                expected
+        );
+    }
+
     // toRelative........................................................................................................
 
 

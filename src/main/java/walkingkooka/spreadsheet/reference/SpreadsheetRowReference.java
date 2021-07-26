@@ -149,6 +149,16 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return this.equalsIgnoreReferenceKind(reference.row());
     }
 
+    // testRange........................................................................................................
+
+    @Override
+    public boolean testRange(final SpreadsheetRange range) {
+        Objects.requireNonNull(range, "range");
+
+        return this.compareTo(range.begin().row()) >= 0 &&
+                this.compareTo(range.end().row()) <= 0;
+    }
+
     // toRelative.......................................................................................................
 
     @Override

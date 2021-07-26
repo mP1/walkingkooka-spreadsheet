@@ -289,6 +289,13 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
 
     }
 
+    // testRange........................................................................................................
+
+    @Override
+    public boolean testRange(final SpreadsheetRange range) {
+        throw new UnsupportedOperationException(); // TODO implement when cell range selections are supported.
+    }
+
     // HashCodeEqualsDefined.......................................................................................
 
     @Override

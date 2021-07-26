@@ -208,6 +208,11 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         super();
     }
 
+    /**
+     * Tests if the selection be it a column, row or cell is within the given range.
+     */
+    public abstract boolean testRange(final SpreadsheetRange range);
+
     public final boolean isCellReference() {
         return this instanceof SpreadsheetCellReference;
     }

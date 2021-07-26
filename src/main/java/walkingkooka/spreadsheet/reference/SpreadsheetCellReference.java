@@ -191,6 +191,14 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return this.equalsIgnoreReferenceKind(reference);
     }
 
+    // testRange........................................................................................................
+
+    @Override
+    public boolean testRange(final SpreadsheetRange range) {
+        Objects.requireNonNull(range, "range");
+        return range.test(this);
+    }
+
     // range/spreadsheetRange...........................................................................................
 
     /**
