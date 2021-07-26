@@ -121,6 +121,13 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         throw new UnsupportedOperationException();
     }
 
+    // testRange........................................................................................................
+
+    @Override
+    public boolean testRange(final SpreadsheetRange range) {
+        throw new UnsupportedOperationException();
+    }
+
     // Comparable........................................................................................................
 
     @Override

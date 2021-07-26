@@ -44,6 +44,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         super();
     }
 
+    final void testRangeAndCheck(final S selection,
+                                 final SpreadsheetRange range,
+                                 final boolean expected) {
+        assertEquals(
+                expected,
+                selection.testRange(range),
+                () -> selection + " testRange " + range
+        );
+    }
+
+    // toRelative.......................................................................................................
+
     final void toRelativeAndCheck(final S selection) {
         this.toRelativeAndCheck(selection, selection);
     }

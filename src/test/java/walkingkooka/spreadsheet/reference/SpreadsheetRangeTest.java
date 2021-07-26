@@ -358,6 +358,15 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
                 SpreadsheetExpressionReference.parseCellReference(cell));
     }
 
+    // testRange........................................................................................................
+
+    @Test
+    public void testRangeFails() {
+        final SpreadsheetRange range = this.createSelection();
+
+        assertThrows(UnsupportedOperationException.class, () -> range.testRange(range));
+    }
+
     // stream.................................................................................................
 
     @Test

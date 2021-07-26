@@ -152,6 +152,13 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
         assertThrows(UnsupportedOperationException.class, () -> this.createSelection().test(SpreadsheetCellReference.parseCellReference("A1")));
     }
 
+    // testRange........................................................................................................
+
+    @Test
+    public void testRangeFails() {
+        assertThrows(UnsupportedOperationException.class, () -> this.createSelection().testRange(SpreadsheetRange.parseRange("A1")));
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test

@@ -479,6 +479,180 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // testRange........................................................................................................
+
+    @Test
+    public void testTestRange() {
+        final SpreadsheetCellReference cell = this.createSelection();
+
+
+    }
+
+    // testRange........................................................................................................
+
+    @Test
+    public void testTestRangeBeforeAbove() {
+        this.testRangeCheck2(
+                "B3",
+                "C3:E5",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRangeAbove() {
+        this.testRangeCheck2(
+                "D2",
+                "C3:E5",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRangeAfterAbove() {
+        this.testRangeCheck2(
+                "E2",
+                "C3:E5",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRangeTopLeft() {
+        this.testRangeCheck2(
+                "C3",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeTopCenter() {
+        this.testRangeCheck2(
+                "D3",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeTopRight() {
+        this.testRangeCheck2(
+                "E3",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeMiddleLeft() {
+        this.testRangeCheck2(
+                "C4",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeMiddleCenter() {
+        this.testRangeCheck2(
+                "D4",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeMiddleRight() {
+        this.testRangeCheck2(
+                "E4",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeBottomLeft() {
+        this.testRangeCheck2(
+                "D5",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeBottomCenter() {
+        this.testRangeCheck2(
+                "D5",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeBottomRight() {
+        this.testRangeCheck2(
+                "E5",
+                "C3:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRangeBeforeBelow() {
+        this.testRangeCheck2(
+                "B6",
+                "C3:E5",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRangeBelow() {
+        this.testRangeCheck2(
+                "D6",
+                "C3:E5",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRangeAfterBelow() {
+        this.testRangeCheck2(
+                "E6",
+                "C3:E5",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRangeBeforeMiddle() {
+        this.testRangeCheck2(
+                "A4",
+                "C3:E5",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRangeAfterMiddle() {
+        this.testRangeCheck2(
+                "F4",
+                "C3:E5",
+                false
+        );
+    }
+
+    private void testRangeCheck2(final String cell,
+                                 final String range,
+                                 final boolean expected) {
+        this.testRangeAndCheck(
+                SpreadsheetCellReference.parseCellReference(cell),
+                SpreadsheetRange.parseRange(range),
+                expected
+        );
+    }
+
     // ParseStringTesting...............................................................................................
 
     @Test
@@ -551,6 +725,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                         .and(Range.lessThanEquals(SpreadsheetExpressionReference.parseCellReference("D$4"))),
                 SpreadsheetCellReference.parseCellReferenceRange("$B2:D$4"));
     }
+
+
 
     // JsonNodeMarshallingTesting.......................................................................................
 
