@@ -21,9 +21,9 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.printer.IndentingPrinter;
 
@@ -97,7 +97,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
      * There is no window.
      */
     @Override
-    public List<SpreadsheetRange> window() {
+    public List<SpreadsheetCellRange> window() {
         return Lists.empty();
     }
 

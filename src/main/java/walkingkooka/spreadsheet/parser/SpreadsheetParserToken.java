@@ -425,10 +425,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetRangeParserToken}
+     * {@see SpreadsheetCellRangeParserToken}
      */
-    public static SpreadsheetRangeParserToken range(final List<ParserToken> value, final String text) {
-        return SpreadsheetRangeParserToken.with(value, text);
+    public static SpreadsheetCellRangeParserToken range(final List<ParserToken> value, final String text) {
+        return SpreadsheetCellRangeParserToken.with(value, text);
     }
 
     /**
@@ -924,10 +924,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetRangeParserToken} return true
+     * Only {@link SpreadsheetCellRangeParserToken} return true
      */
     public final boolean isRange() {
-        return this instanceof SpreadsheetRangeParserToken;
+        return this instanceof SpreadsheetCellRangeParserToken;
     }
 
     /**
@@ -1850,7 +1850,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
-                SpreadsheetRangeParserToken.class,
+                SpreadsheetCellRangeParserToken.class,
                 SpreadsheetParserToken::unmarshallRange
         );
 
@@ -2012,8 +2012,8 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetRangeParserToken unmarshallRange(final JsonNode node,
-                                                       final JsonNodeUnmarshallContext context) {
+    static SpreadsheetCellRangeParserToken unmarshallRange(final JsonNode node,
+                                                           final JsonNodeUnmarshallContext context) {
         return unmarshallParentParserToken(
                 node,
                 context,

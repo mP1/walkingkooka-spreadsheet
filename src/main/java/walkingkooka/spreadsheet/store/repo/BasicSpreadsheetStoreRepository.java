@@ -21,9 +21,9 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -42,8 +42,8 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                                 final SpreadsheetLabelStore labels,
                                                 final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
                                                 final SpreadsheetMetadataStore metadatas,
-                                                final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
-                                                final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
+                                                final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
+                                                final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                                 final SpreadsheetUserStore users) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(cellReferences, "cellReferences");
@@ -72,8 +72,8 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                             final SpreadsheetLabelStore labels,
                                             final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
                                             final SpreadsheetMetadataStore metadatas,
-                                            final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
-                                            final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
+                                            final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
+                                            final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                             final SpreadsheetUserStore users) {
         this.cells = cells;
         this.cellReferences = cellReferences;
@@ -129,18 +129,18 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetMetadataStore metadatas;
 
     @Override
-    public SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells() {
+    public SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
         return this.rangeToCells;
     }
 
-    private final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells;
+    private final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells;
 
     @Override
-    public SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
+    public SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
         return this.rangeToConditionalFormattingRules;
     }
 
-    private final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules;
+    private final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules;
 
     @Override
     public SpreadsheetUserStore users() {

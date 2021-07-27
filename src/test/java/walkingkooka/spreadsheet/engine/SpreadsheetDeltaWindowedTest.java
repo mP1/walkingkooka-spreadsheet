@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 
@@ -398,7 +398,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     // helpers..........................................................................................................
 
     @Override
-    final List<SpreadsheetRange> window() {
+    final List<SpreadsheetCellRange> window() {
         return this.window0("A1:E5", "F6:Y99");
     }
 
@@ -408,7 +408,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     private SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells,
-                                                            final List<SpreadsheetRange> window) {
+                                                            final List<SpreadsheetCellRange> window) {
         return SpreadsheetDeltaWindowed.withWindowed(
                 cells,
                 this.labels(),

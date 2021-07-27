@@ -22,8 +22,8 @@ import walkingkooka.reflect.JavaVisibility;
 
 import java.util.Map;
 
-public final class TreeMapSpreadsheetRangeStoreBottomRightEntryTest extends TreeMapSpreadsheetRangeStoreTestCase<TreeMapSpreadsheetRangeStoreBottomRightEntry>
-        implements ClassTesting2<TreeMapSpreadsheetRangeStoreBottomRightEntry> {
+public final class TreeMapSpreadsheetCellRangeStoreBottomRightEntryTest extends TreeMapSpreadsheetCellRangeStoreTestCase<TreeMapSpreadsheetCellRangeStoreBottomRightEntry>
+        implements ClassTesting2<TreeMapSpreadsheetCellRangeStoreBottomRightEntry> {
 
     @Override
     public JavaVisibility typeVisibility() {
@@ -31,8 +31,8 @@ public final class TreeMapSpreadsheetRangeStoreBottomRightEntryTest extends Tree
     }
 
     @Override
-    public Class<TreeMapSpreadsheetRangeStoreBottomRightEntry> type() {
-        return TreeMapSpreadsheetRangeStoreBottomRightEntry.class;
+    public Class<TreeMapSpreadsheetCellRangeStoreBottomRightEntry> type() {
+        return TreeMapSpreadsheetCellRangeStoreBottomRightEntry.class;
     }
 
     @Override

@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.test.Fake;
 
@@ -81,7 +81,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final SpreadsheetRange range,
+    public SpreadsheetDelta loadCells(final SpreadsheetCellRange range,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
@@ -89,8 +89,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
     @Override
     public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                                      final SpreadsheetRange from,
-                                      final SpreadsheetRange to,
+                                      final SpreadsheetCellRange from,
+                                      final SpreadsheetCellRange to,
                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
@@ -126,8 +126,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetRange range(final SpreadsheetViewport viewport,
-                                  final SpreadsheetEngineContext context) {
+    public SpreadsheetCellRange range(final SpreadsheetViewport viewport,
+                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 }

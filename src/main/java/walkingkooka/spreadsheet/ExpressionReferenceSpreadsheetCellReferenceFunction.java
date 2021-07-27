@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
@@ -32,7 +32,7 @@ import java.util.function.Function;
 final class ExpressionReferenceSpreadsheetCellReferenceFunction implements Function<ExpressionReference, Optional<SpreadsheetCellReference>> {
 
     static ExpressionReferenceSpreadsheetCellReferenceFunction with(final SpreadsheetLabelStore labelStore,
-                                                                    final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
+                                                                    final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore) {
         Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(rangeToCellStore, "rangeToCellStore");
 
@@ -40,7 +40,7 @@ final class ExpressionReferenceSpreadsheetCellReferenceFunction implements Funct
     }
 
     private ExpressionReferenceSpreadsheetCellReferenceFunction(final SpreadsheetLabelStore labelStore,
-                                                                final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
+                                                                final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore) {
         this.labelStore = labelStore;
         this.rangeToCellStore = rangeToCellStore;
     }
@@ -53,7 +53,7 @@ final class ExpressionReferenceSpreadsheetCellReferenceFunction implements Funct
     }
 
     final SpreadsheetLabelStore labelStore;
-    final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore;
+    final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore;
 
     @Override
     public String toString() {

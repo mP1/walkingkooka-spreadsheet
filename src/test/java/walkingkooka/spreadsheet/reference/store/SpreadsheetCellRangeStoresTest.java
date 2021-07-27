@@ -17,16 +17,27 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
-import walkingkooka.reflect.TypeNameTesting;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicStaticHelperTesting;
 
-public abstract class TreeMapSpreadsheetRangeStoreTestCase<T> implements TypeNameTesting<T> {
+import java.lang.reflect.Method;
 
-    TreeMapSpreadsheetRangeStoreTestCase() {
-        super();
+public final class SpreadsheetCellRangeStoresTest implements ClassTesting2<SpreadsheetCellRangeStores>,
+        PublicStaticHelperTesting<SpreadsheetCellRangeStores> {
+
+    @Override
+    public Class<SpreadsheetCellRangeStores> type() {
+        return SpreadsheetCellRangeStores.class;
     }
 
     @Override
-    public final String typeNamePrefix() {
-        return TreeMapSpreadsheetRangeStore.class.getSimpleName();
+    public boolean canHavePublicTypes(final Method method) {
+        return false;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }

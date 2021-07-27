@@ -159,7 +159,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Test
     public void testJsonRoundtripRange() {
-        this.marshallRoundTrip2(SpreadsheetExpressionReference.parseRange("A1:B2"));
+        this.marshallRoundTrip2(SpreadsheetExpressionReference.parseCellRange("A1:B2"));
     }
 
     private void marshallRoundTrip2(final SpreadsheetExpressionReference reference) {

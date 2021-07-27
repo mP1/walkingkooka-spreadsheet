@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
@@ -54,7 +54,7 @@ final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpres
     }
 
     @Override
-    protected void visit(final SpreadsheetRange range) {
+    protected void visit(final SpreadsheetCellRange range) {
         this.function.rangeToCellStore.load(range).ifPresent(cells -> this.accept(cells.get(0)));
     }
 

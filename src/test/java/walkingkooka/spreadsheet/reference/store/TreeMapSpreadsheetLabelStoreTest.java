@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.reference.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
 import java.util.TreeMap;
 
@@ -255,8 +255,8 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         return SpreadsheetExpressionReference.parseCellReference("A2");
     }
 
-    private SpreadsheetRange range1() {
-        return SpreadsheetExpressionReference.parseRange("A1:A3");
+    private SpreadsheetCellRange range1() {
+        return SpreadsheetExpressionReference.parseCellRange("A1:A3");
     }
 
     @Override

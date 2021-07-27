@@ -67,10 +67,10 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         return SpreadsheetRowReference.parseRow("1");
     }
 
-    // testRange........................................................................................................
+    // testCellRange.....................................................................................................
 
     @Test
-    public void testTestRangeBefore() {
+    public void testTestCellRangeBefore() {
         this.testRangeCheck2(
                 "B",
                 "C3:E5",
@@ -79,7 +79,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testTestRangeLeftEdge() {
+    public void testTestCellRangeLeftEdge() {
         this.testRangeCheck2(
                 "C",
                 "C3:E5",
@@ -88,7 +88,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testTestRangeCenter() {
+    public void testTestCellRangeCenter() {
         this.testRangeCheck2(
                 "D",
                 "C3:E5",
@@ -97,7 +97,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testTestRangeRightEdge() {
+    public void testTestCellRangeRightEdge() {
         this.testRangeCheck2(
                 "E",
                 "C3:E5",
@@ -106,7 +106,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testTestRangeAfter() {
+    public void testTestCellRangeAfter() {
         this.testRangeCheck2(
                 "F",
                 "C3:E5",
@@ -117,9 +117,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     private void testRangeCheck2(final String column,
                                  final String range,
                                  final boolean expected) {
-        this.testRangeAndCheck(
+        this.testCellRangeAndCheck(
                 SpreadsheetColumnReference.parseColumn(column),
-                SpreadsheetRange.parseRange(range),
+                SpreadsheetCellRange.parseCellRange(range),
                 expected
         );
     }

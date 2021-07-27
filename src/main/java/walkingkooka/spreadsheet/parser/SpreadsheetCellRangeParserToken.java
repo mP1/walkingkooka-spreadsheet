@@ -24,13 +24,13 @@ import java.util.List;
 /**
  * A wrapper around a numeric type that is also a percentage.
  */
-public final class SpreadsheetRangeParserToken extends SpreadsheetBinaryParserToken {
+public final class SpreadsheetCellRangeParserToken extends SpreadsheetBinaryParserToken {
 
-    static SpreadsheetRangeParserToken with(final List<ParserToken> value, final String text) {
-        return new SpreadsheetRangeParserToken(copyAndCheckTokens(value), checkText(text));
+    static SpreadsheetCellRangeParserToken with(final List<ParserToken> value, final String text) {
+        return new SpreadsheetCellRangeParserToken(copyAndCheckTokens(value), checkText(text));
     }
 
-    private SpreadsheetRangeParserToken(final List<ParserToken> value, final String text) {
+    private SpreadsheetCellRangeParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
     }
 
@@ -48,6 +48,6 @@ public final class SpreadsheetRangeParserToken extends SpreadsheetBinaryParserTo
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetRangeParserToken;
+        return other instanceof SpreadsheetCellRangeParserToken;
     }
 }

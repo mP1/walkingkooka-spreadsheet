@@ -57,7 +57,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
 
     @Test
     public void testJsonRoundtripRange() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.parseRange("B2:C3"));
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.parseCellRange("B2:C3"));
     }
 
     // ClassTesting.....................................................................................................

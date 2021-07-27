@@ -21,9 +21,9 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -65,14 +65,14 @@ public interface SpreadsheetStoreRepository {
     SpreadsheetMetadataStore metadatas();
 
     /**
-     * A {@link SpreadsheetRangeStore} that maps ranges to cells
+     * A {@link SpreadsheetCellRangeStore} that maps ranges to cells
      */
-    SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells();
+    SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells();
 
     /**
-     * A {@link SpreadsheetRangeStore} that maps ranges to {@link SpreadsheetConditionalFormattingRule}
+     * A {@link SpreadsheetCellRangeStore} that maps ranges to {@link SpreadsheetConditionalFormattingRule}
      */
-    SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules();
+    SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules();
 
     /**
      * A {@link SpreadsheetUserStore} holding users.

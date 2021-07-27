@@ -21,12 +21,12 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
@@ -217,8 +217,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             }
 
             @Override
-            protected void visit(final SpreadsheetRange range) {
-                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.deleteOrFixSpreadsheetRange(range, mapping);
+            protected void visit(final SpreadsheetCellRange range) {
+                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.deleteOrFixSpreadsheetCellRange(range, mapping);
             }
         }.accept(mapping.reference());
     }
@@ -235,8 +235,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
         }
     }
 
-    private void deleteOrFixSpreadsheetRange(final SpreadsheetRange range,
-                                             final SpreadsheetLabelMapping mapping) {
+    private void deleteOrFixSpreadsheetCellRange(final SpreadsheetCellRange range,
+                                                 final SpreadsheetLabelMapping mapping) {
 
         SpreadsheetCellReference rangeEnd = range.end();
         final int rangeEndValue = this.columnOrRowValue(rangeEnd);
@@ -281,7 +281,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             } while (false);
 
             this.saveLabelIfUpdated(
-                    rangeBegin.spreadsheetRange(rangeEnd),
+                    rangeBegin.spreadsheetCellRange(rangeEnd),
                     mapping);
         }
     }
@@ -304,8 +304,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             }
 
             @Override
-            protected void visit(final SpreadsheetRange range) {
-                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.insertFixSpreadsheetRange(range, mapping);
+            protected void visit(final SpreadsheetCellRange range) {
+                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.insertFixSpreadsheetCellRange(range, mapping);
             }
         }.accept(mapping.reference());
     }
@@ -318,8 +318,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
         }
     }
 
-    private void insertFixSpreadsheetRange(final SpreadsheetRange range,
-                                           final SpreadsheetLabelMapping mapping) {
+    private void insertFixSpreadsheetCellRange(final SpreadsheetCellRange range,
+                                               final SpreadsheetLabelMapping mapping) {
         SpreadsheetCellReference begin = range.begin();
         SpreadsheetCellReference end = range.end();
 
@@ -330,7 +330,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             end = this.fixCellReference(end);
         }
 
-        this.saveLabelIfUpdated(begin.spreadsheetRange(end), mapping);
+        this.saveLabelIfUpdated(begin.spreadsheetCellRange(end), mapping);
     }
 
     // cells....................................................................................................

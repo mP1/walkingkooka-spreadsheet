@@ -77,7 +77,7 @@ public abstract class SpreadsheetExpressionReferenceVisitor extends Visitor<Expr
         // nop
     }
 
-    protected void visit(final SpreadsheetRange range) {
+    protected void visit(final SpreadsheetCellRange range) {
         // nop
     }
 }

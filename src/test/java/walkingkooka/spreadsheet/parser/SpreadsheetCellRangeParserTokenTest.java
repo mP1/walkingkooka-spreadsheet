@@ -30,7 +30,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetRangeParserTokenTest extends SpreadsheetBinaryParserTokenTestCase<SpreadsheetRangeParserToken> {
+public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinaryParserTokenTestCase<SpreadsheetCellRangeParserToken> {
 
     @Test
     public void testAccept() {
@@ -57,7 +57,7 @@ public final class SpreadsheetRangeParserTokenTest extends SpreadsheetBinaryPars
             }
 
             @Override
-            protected Visiting startVisit(final SpreadsheetRangeParserToken t) {
+            protected Visiting startVisit(final SpreadsheetCellRangeParserToken t) {
                 assertSame(binary, t);
                 b.append("3");
                 visited.add(t);
@@ -65,7 +65,7 @@ public final class SpreadsheetRangeParserTokenTest extends SpreadsheetBinaryPars
             }
 
             @Override
-            protected void endVisit(final SpreadsheetRangeParserToken t) {
+            protected void endVisit(final SpreadsheetCellRangeParserToken t) {
                 assertSame(binary, t);
                 b.append("4");
                 visited.add(t);
@@ -107,7 +107,7 @@ public final class SpreadsheetRangeParserTokenTest extends SpreadsheetBinaryPars
     }
 
     @Override
-    SpreadsheetRangeParserToken createToken(final String text, final List<ParserToken> tokens) {
+    SpreadsheetCellRangeParserToken createToken(final String text, final List<ParserToken> tokens) {
         return SpreadsheetParserToken.range(tokens, text);
     }
 
@@ -127,13 +127,13 @@ public final class SpreadsheetRangeParserTokenTest extends SpreadsheetBinaryPars
     }
 
     @Override
-    public Class<SpreadsheetRangeParserToken> type() {
-        return SpreadsheetRangeParserToken.class;
+    public Class<SpreadsheetCellRangeParserToken> type() {
+        return SpreadsheetCellRangeParserToken.class;
     }
 
     @Override
-    public SpreadsheetRangeParserToken unmarshall(final JsonNode from,
-                                                  final JsonNodeUnmarshallContext context) {
+    public SpreadsheetCellRangeParserToken unmarshall(final JsonNode from,
+                                                      final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserToken.unmarshallRange(from, context);
     }
 }

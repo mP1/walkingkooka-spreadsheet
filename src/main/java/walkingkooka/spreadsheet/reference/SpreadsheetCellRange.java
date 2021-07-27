@@ -34,24 +34,24 @@ import java.util.stream.Stream;
  * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetRange extends SpreadsheetExpressionReference {
+public final class SpreadsheetCellRange extends SpreadsheetExpressionReference {
 
     /**
      * Factory that parses some text holding a range.
      */
-    static SpreadsheetRange parseRange0(final String text) {
+    static SpreadsheetCellRange parseCellRange0(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
         final int colon = text.indexOf(SEPARATOR);
 
         return -1 == colon ?
-                cellToRange(parseRange1(text, "range", text)) :
-                parseRange2(text, colon);
+                cellToRange(parseCellRange1(text, "range", text)) :
+                parseCellRange2(text, colon);
     }
 
-    private static SpreadsheetCellReference parseRange1(final String component,
-                                                        final String label,
-                                                        final String text) {
+    private static SpreadsheetCellReference parseCellRange1(final String component,
+                                                            final String label,
+                                                            final String text) {
         try {
             return SpreadsheetExpressionReference.parseCellReference(component);
         } catch (final IllegalArgumentException cause) {
@@ -59,12 +59,12 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
         }
     }
 
-    static SpreadsheetRange cellToRange(final SpreadsheetCellReference cell) {
+    static SpreadsheetCellRange cellToRange(final SpreadsheetCellReference cell) {
         return with(cell.range(cell));
     }
 
-    private static SpreadsheetRange parseRange2(final String text,
-                                                final int colon) {
+    private static SpreadsheetCellRange parseCellRange2(final String text,
+                                                        final int colon) {
         if (0 == colon) {
             throw new IllegalArgumentException("Missing begin =" + CharSequences.quote(text));
         }
@@ -73,8 +73,8 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
             throw new IllegalArgumentException("Missing end =" + CharSequences.quote(text));
         }
 
-        return parseRange1(text.substring(0, colon), "begin", text)
-                .spreadsheetRange(parseRange1(text.substring(colon + SEPARATOR.length()), "end", text));
+        return parseCellRange1(text.substring(0, colon), "begin", text)
+                .spreadsheetCellRange(parseCellRange1(text.substring(colon + SEPARATOR.length()), "end", text));
     }
 
     /**
@@ -85,12 +85,12 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
     /**
      * Computes the range of the given cells.
      */
-    public static SpreadsheetRange fromCells(final List<SpreadsheetCellReference> cells) {
+    public static SpreadsheetCellRange fromCells(final List<SpreadsheetCellReference> cells) {
         Objects.requireNonNull(cells, "cells");
 
         final List<SpreadsheetCellReference> copy = Lists.immutable(cells);
 
-        SpreadsheetRange range;
+        SpreadsheetCellRange range;
         switch (copy.size()) {
             case 0:
                 throw new IllegalArgumentException("Cells empty");
@@ -106,7 +106,7 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
     }
 
     @SuppressWarnings("lgtm[java/dereferenced-value-may-be-null]")
-    private static SpreadsheetRange computeRangeFromManyCells(final List<SpreadsheetCellReference> cells) {
+    private static SpreadsheetCellRange computeRangeFromManyCells(final List<SpreadsheetCellReference> cells) {
         SpreadsheetColumnReference left = null;
         SpreadsheetRowReference top = null;
 
@@ -131,22 +131,22 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
             }
         }
 
-        return left.setRow(top).spreadsheetRange(right.setRow(bottom));
+        return left.setRow(top).spreadsheetCellRange(right.setRow(bottom));
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetRange}
+     * Factory that creates a {@link SpreadsheetCellRange}
      */
-    public static SpreadsheetRange with(final Range<SpreadsheetCellReference> range) {
-        SpreadsheetRangeRangeVisitor.check(range);
+    public static SpreadsheetCellRange with(final Range<SpreadsheetCellReference> range) {
+        SpreadsheetCellRangeRangeVisitor.check(range);
 
-        return new SpreadsheetRange(range);
+        return new SpreadsheetCellRange(range);
     }
 
     /**
      * Private ctor
      */
-    private SpreadsheetRange(final Range<SpreadsheetCellReference> range) {
+    private SpreadsheetCellRange(final Range<SpreadsheetCellReference> range) {
         super();
         this.range = range;
     }
@@ -180,7 +180,7 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
      * Would be setter that accepts a pair of coordinates, and returns a range with those values,
      * creating a new instance if necessary.
      */
-    public SpreadsheetRange setRange(final Range<SpreadsheetCellReference> range) {
+    public SpreadsheetCellRange setRange(final Range<SpreadsheetCellReference> range) {
         return this.range.equals(range) ?
                 this :
                 with(range);
@@ -250,7 +250,7 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
                       final Consumer<? super SpreadsheetCell> present,
                       final Consumer<? super SpreadsheetCellReference> absent) {
         this.cellStream()
-                .forEach(SpreadsheetRangeCellsConsumer.with(cells, present, absent));
+                .forEach(SpreadsheetCellRangeCellsConsumer.with(cells, present, absent));
     }
 
     // SpreadsheetSelection.............................................................................................
@@ -277,15 +277,15 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
         Objects.requireNonNull(reference, "reference");
 
         return reference.column()
-                .testRange(this) &&
+                .testCellRange(this) &&
                 reference.row()
-                        .testRange(this);
+                        .testCellRange(this);
     }
 
-    // testRange........................................................................................................
+    // testCellRange.....................................................................................................
 
     @Override
-    public boolean testRange(final SpreadsheetRange range) {
+    public boolean testCellRange(final SpreadsheetCellRange range) {
         throw new UnsupportedOperationException(); // TODO implement when cell range selections are supported.
     }
 
@@ -298,7 +298,7 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetRange;
+        return other instanceof SpreadsheetCellRange;
     }
 
     @Override
@@ -306,7 +306,7 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
         return this.equals1(Cast.to(other));
     }
 
-    private boolean equals1(final SpreadsheetRange other) {
+    private boolean equals1(final SpreadsheetCellRange other) {
         return this.range.equals(other.range);
     }
 
@@ -323,10 +323,10 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
 
     @Override
     boolean equalsIgnoreReferenceKind0(final Object other) {
-        return this.equalsIgnoreReferenceKind1((SpreadsheetRange) other);
+        return this.equalsIgnoreReferenceKind1((SpreadsheetCellRange) other);
     }
 
-    private boolean equalsIgnoreReferenceKind1(final SpreadsheetRange other) {
+    private boolean equalsIgnoreReferenceKind1(final SpreadsheetCellRange other) {
         return this.begin().equalsIgnoreReferenceKind(other.begin()) &&
                 this.end().equalsIgnoreReferenceKind(other.end());
     }
@@ -334,10 +334,10 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference {
     // toRelative.......................................................................................................
 
     @Override
-    public SpreadsheetRange toRelative() {
-        final SpreadsheetRange relative = this.begin()
+    public SpreadsheetCellRange toRelative() {
+        final SpreadsheetCellRange relative = this.begin()
                 .toRelative()
-                .spreadsheetRange(this.end()
+                .spreadsheetCellRange(this.end()
                         .toRelative());
         return this.equals(relative) ?
                 this :

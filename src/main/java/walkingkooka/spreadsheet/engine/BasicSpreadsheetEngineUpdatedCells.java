@@ -21,10 +21,10 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -236,7 +236,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
                 .ifPresent(r -> r.forEach(this::batchCell));
     }
 
-    private void batchRange(final SpreadsheetRange range) {
+    private void batchRange(final SpreadsheetCellRange range) {
         this.repository.rangeToCells()
                 .load(range)
                 .ifPresent(c -> c.forEach(this::batchCell));

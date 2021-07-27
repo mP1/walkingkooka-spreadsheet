@@ -220,7 +220,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseStringRange() {
         final String range = "A2:B2";
-        this.parseStringAndCheck(range, SpreadsheetExpressionReference.parseRange(range));
+        this.parseStringAndCheck(range, SpreadsheetExpressionReference.parseCellRange(range));
     }
 
 
@@ -245,7 +245,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseCellReferenceOrLabelNameRangeFails() {
         parseCellReferenceOrLabelNameFails(
-                SpreadsheetExpressionReference.parseRange("A1:B2").toString(),
+                SpreadsheetExpressionReference.parseCellRange("A1:B2").toString(),
                 InvalidCharacterException.class
         );
     }

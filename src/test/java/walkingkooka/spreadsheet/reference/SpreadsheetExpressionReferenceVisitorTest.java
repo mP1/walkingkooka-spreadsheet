@@ -47,8 +47,8 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
     }
 
     @Test
-    public void testAcceptSpreadsheetRange() {
-        this.createVisitor().accept(SpreadsheetExpressionReference.parseRange("A1:B2"));
+    public void testAcceptSpreadsheetCellRange() {
+        this.createVisitor().accept(SpreadsheetExpressionReference.parseCellRange("A1:B2"));
     }
 
     @Test

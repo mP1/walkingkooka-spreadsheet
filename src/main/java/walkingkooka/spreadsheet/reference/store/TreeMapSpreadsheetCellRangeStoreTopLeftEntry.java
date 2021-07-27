@@ -18,19 +18,19 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
 import java.util.Comparator;
 import java.util.Set;
 
-final class TreeMapSpreadsheetRangeStoreTopLeftEntry<V> extends TreeMapSpreadsheetRangeStoreEntry<V> {
+final class TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> extends TreeMapSpreadsheetCellRangeStoreEntry<V> {
 
-    static <V> TreeMapSpreadsheetRangeStoreTopLeftEntry<V> with(final SpreadsheetRange range, final V value) {
-        return new TreeMapSpreadsheetRangeStoreTopLeftEntry<>(range, value);
+    static <V> TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> with(final SpreadsheetCellRange range, final V value) {
+        return new TreeMapSpreadsheetCellRangeStoreTopLeftEntry<>(range, value);
     }
 
-    private TreeMapSpreadsheetRangeStoreTopLeftEntry(final SpreadsheetRange range, final V value) {
+    private TreeMapSpreadsheetCellRangeStoreTopLeftEntry(final SpreadsheetCellRange range, final V value) {
         super(range, value);
     }
 
@@ -40,25 +40,25 @@ final class TreeMapSpreadsheetRangeStoreTopLeftEntry<V> extends TreeMapSpreadshe
     }
 
     @Override
-    SpreadsheetCellReference primaryCellReference(final SpreadsheetRange range) {
+    SpreadsheetCellReference primaryCellReference(final SpreadsheetCellRange range) {
         return range.begin();
     }
 
     @Override
-    SpreadsheetCellReference secondaryCellReference(SpreadsheetRange range) {
+    SpreadsheetCellReference secondaryCellReference(SpreadsheetCellRange range) {
         return range.end();
     }
 
     /**
      * Rebuilds all the ranges within this entry.
      */
-    Set<SpreadsheetRange> ranges() {
-        final Set<SpreadsheetRange> ranges = Sets.ordered();
+    Set<SpreadsheetCellRange> ranges() {
+        final Set<SpreadsheetCellRange> ranges = Sets.ordered();
 
         final SpreadsheetCellReference topLeft = this.range.begin();
 
         for (SpreadsheetCellReference bottomRight : this.secondaryCellReferenceToValues.keySet()) {
-            ranges.add(topLeft.spreadsheetRange(bottomRight));
+            ranges.add(topLeft.spreadsheetCellRange(bottomRight));
         }
         return ranges;
     }

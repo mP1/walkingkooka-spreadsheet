@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
 import java.util.Map;
 import java.util.Set;
@@ -80,7 +80,7 @@ final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisi
     }
 
     @Override
-    protected void visit(final SpreadsheetRange range) {
+    protected void visit(final SpreadsheetCellRange range) {
         this.add = this.add | range.cellStream()
                 .anyMatch(r -> r.compareTo(this.reference) == 0);
     }

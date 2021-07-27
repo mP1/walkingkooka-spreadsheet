@@ -74,6 +74,16 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
+    protected Visiting startVisit(final SpreadsheetCellRangeParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetCellRangeParserToken token) {
+        this.exit();
+    }
+
+    @Override
     protected Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
         return this.enter();
     }
@@ -261,16 +271,6 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     @Override
     protected void endVisit(final SpreadsheetPowerParserToken token) {
         this.exitBinary(Expression::power, token);
-    }
-
-    @Override
-    protected Visiting startVisit(final SpreadsheetRangeParserToken token) {
-        return this.enter();
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetRangeParserToken token) {
-        this.exit();
     }
 
     @Override

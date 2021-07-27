@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.reference.store;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -35,12 +35,12 @@ import java.util.TreeMap;
 /**
  * Holds all the values that share a common range top left
  */
-abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMapSpreadsheetRangeStoreEntry<V>> {
+abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<TreeMapSpreadsheetCellRangeStoreEntry<V>> {
 
     /**
      * Package private ctor to limit subclassing.
      */
-    TreeMapSpreadsheetRangeStoreEntry(final SpreadsheetRange range, final V value) {
+    TreeMapSpreadsheetCellRangeStoreEntry(final SpreadsheetCellRange range, final V value) {
         super();
 
         this.range = range;
@@ -51,13 +51,13 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
         this.secondaryCellReferenceToValues.put(this.secondaryCellReference(range), values);
     }
 
-    final SpreadsheetRange range;
+    final SpreadsheetCellRange range;
 
     abstract Comparator<SpreadsheetCellReference> comparator();
 
     // load............................................................................................
 
-    final Optional<List<V>> load(final SpreadsheetRange range) {
+    final Optional<List<V>> load(final SpreadsheetCellRange range) {
         Objects.requireNonNull(range, "range");
 
         final Set<V> values = this.secondaryCellReferenceToValues.get(range.end());
@@ -78,7 +78,7 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
      * Add values for entries that include the given cell.
      */
     final void loadCellReferenceRanges(final SpreadsheetCellReference cell,
-                                       final Collection<SpreadsheetRange> ranges) {
+                                       final Collection<SpreadsheetCellRange> ranges) {
 
         if (this.range.test(cell)) {
             ranges.add(this.range);
@@ -107,7 +107,7 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
 
     // save...................................................................................................
 
-    final void save(final SpreadsheetRange range, final V value) {
+    final void save(final SpreadsheetCellRange range, final V value) {
         final SpreadsheetCellReference ref = this.secondaryCellReference(range);
         Set<V> values = this.secondaryCellReferenceToValues.get(ref);
         //noinspection Java8MapApi
@@ -118,7 +118,7 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
         values.add(value);
     }
 
-    final boolean replace(final SpreadsheetRange range, final V newValue, final V oldValue) {
+    final boolean replace(final SpreadsheetCellRange range, final V newValue, final V oldValue) {
         boolean replaced = false;
 
         final Set<V> values = this.secondaryCellReferenceToValues.get(this.secondaryCellReference(range));
@@ -137,7 +137,7 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
     /**
      * Deletes/removes all values that match the given range, and returns true if there are no longer any values.
      */
-    final boolean delete(final SpreadsheetRange range, final V value) {
+    final boolean delete(final SpreadsheetCellRange range, final V value) {
         boolean empty = false;
 
         final SpreadsheetCellReference end = this.secondaryCellReference(range);
@@ -158,9 +158,9 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
         return this.primaryCellReference(this.range);
     }
 
-    abstract SpreadsheetCellReference primaryCellReference(final SpreadsheetRange range);
+    abstract SpreadsheetCellReference primaryCellReference(final SpreadsheetCellRange range);
 
-    abstract SpreadsheetCellReference secondaryCellReference(final SpreadsheetRange range);
+    abstract SpreadsheetCellReference secondaryCellReference(final SpreadsheetCellRange range);
 
     // count....................................................................................................
 
@@ -180,7 +180,7 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
      * Compares row then column.
      */
     @Override
-    public final int compareTo(final TreeMapSpreadsheetRangeStoreEntry<V> other) {
+    public final int compareTo(final TreeMapSpreadsheetCellRangeStoreEntry<V> other) {
         return this.compareTo0(other.primaryCellReference());
     }
 

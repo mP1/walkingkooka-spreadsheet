@@ -34,12 +34,12 @@ import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
@@ -175,7 +175,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testFillCellsNullCellsFails() {
         final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
-        final SpreadsheetRange range = reference.spreadsheetRange(reference);
+        final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(null,
                 range,
@@ -187,7 +187,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void testFillCellsNullFromFails() {
         final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
-        final SpreadsheetRange range = reference.spreadsheetRange(reference);
+        final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 null,
@@ -199,7 +199,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void testFillCellsNullToFails() {
         final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
-        final SpreadsheetRange range = reference.spreadsheetRange(reference);
+        final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
@@ -211,7 +211,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void testFillCellsNullContextFails() {
         final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
-        final SpreadsheetRange range = reference.spreadsheetRange(reference);
+        final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
@@ -224,7 +224,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("B2");
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
 
-        final SpreadsheetRange range = SpreadsheetRange.fromCells(Lists.of(SpreadsheetCellReference.parseCellReference("C3")));
+        final SpreadsheetCellRange range = SpreadsheetCellRange.fromCells(Lists.of(SpreadsheetCellReference.parseCellReference("C3")));
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
@@ -238,7 +238,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("B2");
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
 
-        final SpreadsheetRange range = SpreadsheetRange.parseRange("C3:D4");
+        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("C3:D4");
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
@@ -254,7 +254,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("C3"), SpreadsheetFormula.with("2"));
         final SpreadsheetCell d4 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("D4"), SpreadsheetFormula.with("3"));
 
-        final SpreadsheetRange range = SpreadsheetRange.parseRange("C3:D4");
+        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("C3:D4");
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(b2, c3, d4),
                 range,
@@ -271,7 +271,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCell d4 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("D4"), SpreadsheetFormula.with("3"));
         final SpreadsheetCell e5 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("E5"), SpreadsheetFormula.with("4"));
 
-        final SpreadsheetRange range = SpreadsheetRange.parseRange("C3:D4");
+        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("C3:D4");
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(b2, c3, d4, e5),
                 range,
@@ -703,7 +703,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetCell... updated) {
         this.loadCellsAndCheck(
                 engine,
-                SpreadsheetRange.parseRange(range),
+                SpreadsheetCellRange.parseCellRange(range),
                 evaluation,
                 context,
                 updated
@@ -711,7 +711,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetRange range,
+                                   final SpreadsheetCellRange range,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
@@ -726,7 +726,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetRange range,
+                                   final SpreadsheetCellRange range,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta delta) {
@@ -757,8 +757,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void fillCellsAndCheck(final SpreadsheetEngine engine,
                                    final Collection<SpreadsheetCell> cells,
-                                   final SpreadsheetRange from,
-                                   final SpreadsheetRange to,
+                                   final SpreadsheetCellRange from,
+                                   final SpreadsheetCellRange to,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
         this.fillCellsAndCheck(engine,
@@ -771,8 +771,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void fillCellsAndCheck(final SpreadsheetEngine engine,
                                    final Collection<SpreadsheetCell> cells,
-                                   final SpreadsheetRange from,
-                                   final SpreadsheetRange to,
+                                   final SpreadsheetCellRange from,
+                                   final SpreadsheetCellRange to,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta delta) {
         assertEquals(delta,

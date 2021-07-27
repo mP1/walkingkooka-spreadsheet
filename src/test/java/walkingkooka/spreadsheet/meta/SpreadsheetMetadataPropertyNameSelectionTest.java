@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -43,7 +43,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
 
     @Test
     public void testCheckRange() {
-        this.checkValue(SpreadsheetRange.parseRange("A1:B2"));
+        this.checkValue(SpreadsheetCellRange.parseCellRange("A1:B2"));
     }
 
     @Test

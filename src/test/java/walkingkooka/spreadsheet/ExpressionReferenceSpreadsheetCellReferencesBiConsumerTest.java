@@ -26,11 +26,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
@@ -43,11 +43,11 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
 
     @Test
     public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(null, SpreadsheetRangeStores.fake()));
+        assertThrows(NullPointerException.class, () -> ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(null, SpreadsheetCellRangeStores.fake()));
     }
 
     @Test
-    public void testWithNullSpreadsheetRangeStoreFails() {
+    public void testWithNullSpreadsheetCellRangeStoreFails() {
         assertThrows(NullPointerException.class, () -> ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(SpreadsheetLabelStores.fake(), null));
     }
 
@@ -98,7 +98,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
     @Test
     public void testToString() {
         final SpreadsheetLabelStore labelStore = SpreadsheetLabelStores.fake();
-        final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore = SpreadsheetRangeStores.fake();
+        final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore = SpreadsheetCellRangeStores.fake();
         this.toStringAndCheck(ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(labelStore, rangeToCellStore),
                 "ExpressionReference->Consumer<SpreadsheetCellReference>(" + labelStore + " " + rangeToCellStore + ")");
     }
@@ -109,12 +109,12 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
         labelStore.save(SpreadsheetLabelMapping.with(labelB1(), this.cellB1()));
         labelStore.save(SpreadsheetLabelMapping.with(labelRangeC1D2(), this.rangeC1C2()));
 
-        final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore = SpreadsheetRangeStores.treeMap();
+        final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore = SpreadsheetCellRangeStores.treeMap();
         rangeToCellStore.addValue(this.rangeC1C2(), this.cellC1());
         rangeToCellStore.addValue(this.rangeC1C2(), this.cellC2());
 
         return ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(SpreadsheetLabelStores.readOnly(labelStore),
-                SpreadsheetRangeStores.readOnly(rangeToCellStore));
+                SpreadsheetCellRangeStores.readOnly(rangeToCellStore));
     }
 
     private SpreadsheetLabelName labelB1() {
@@ -129,8 +129,8 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
         return SpreadsheetExpressionReference.labelName("labelRangeC1D2");
     }
 
-    private SpreadsheetRange rangeC1C2() {
-        return this.cellC1().spreadsheetRange(this.cellC2());
+    private SpreadsheetCellRange rangeC1C2() {
+        return this.cellC1().spreadsheetCellRange(this.cellC2());
     }
 
     private SpreadsheetCellReference cellC1() {

@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
 import java.util.Collection;
@@ -86,21 +86,21 @@ public interface SpreadsheetEngine {
     /**
      * Loads a range of cells. Thsi is useful to fill a range that fills the viewport.
      */
-    SpreadsheetDelta loadCells(final SpreadsheetRange range,
+    SpreadsheetDelta loadCells(final SpreadsheetCellRange range,
                                final SpreadsheetEngineEvaluation evaluation,
                                final SpreadsheetEngineContext context);
 
     /**
      * Fill may be used to perform several operations.
      * <ul>
-     * <li>If $cells are empty the $from is ignored and the {@link SpreadsheetRange $to} has all cells deleted, aka DELETE</li>
+     * <li>If $cells are empty the $from is ignored and the {@link SpreadsheetCellRange $to} has all cells deleted, aka DELETE</li>
      * <li>If $cells is NOT empty and $from and $to are equal the cells are saved without modification, aka SAVE</li>
      * <li>If $cells is NOT empty and $from is smaller than $to cells are repeated and ABSOLUTE references updated aka FILL or COPY then PASTE</li>
      * </ul>
      */
     SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                               final SpreadsheetRange from,
-                               final SpreadsheetRange to,
+                               final SpreadsheetCellRange from,
+                               final SpreadsheetCellRange to,
                                final SpreadsheetEngineContext context);
 
     /**
@@ -136,8 +136,8 @@ public interface SpreadsheetEngine {
 
 
     /**
-     * Translates the {@link SpreadsheetViewport} into the actual {@link SpreadsheetRange} of cells that occupy that space.
+     * Translates the {@link SpreadsheetViewport} into the actual {@link SpreadsheetCellRange} of cells that occupy that space.
      */
-    SpreadsheetRange range(final SpreadsheetViewport viewport,
-                           final SpreadsheetEngineContext context);
+    SpreadsheetCellRange range(final SpreadsheetViewport viewport,
+                               final SpreadsheetEngineContext context);
 }

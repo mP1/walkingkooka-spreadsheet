@@ -20,35 +20,35 @@ package walkingkooka.spreadsheet.reference.store;
 import walkingkooka.reflect.PublicStaticHelper;
 
 /**
- * Contains many factory methods for a variety of {@link SpreadsheetRangeStore} implementations.
+ * Contains many factory methods for a variety of {@link SpreadsheetCellRangeStore} implementations.
  */
-public final class SpreadsheetRangeStores implements PublicStaticHelper {
+public final class SpreadsheetCellRangeStores implements PublicStaticHelper {
 
     /**
-     * {@see FakeSpreadsheetRangeStore}
+     * {@see FakeSpreadsheetCellRangeStore}
      */
-    public static <V> SpreadsheetRangeStore<V> fake() {
-        return new FakeSpreadsheetRangeStore<>();
+    public static <V> SpreadsheetCellRangeStore<V> fake() {
+        return new FakeSpreadsheetCellRangeStore<>();
     }
 
     /**
-     * {@see ReadOnlySpreadsheetRangeStore}
+     * {@see ReadOnlySpreadsheetCellRangeStore}
      */
-    public static <V> SpreadsheetRangeStore<V> readOnly(final SpreadsheetRangeStore<V> store) {
-        return ReadOnlySpreadsheetRangeStore.with(store);
+    public static <V> SpreadsheetCellRangeStore<V> readOnly(final SpreadsheetCellRangeStore<V> store) {
+        return ReadOnlySpreadsheetCellRangeStore.with(store);
     }
 
     /**
-     * {@see TreeMapSpreadsheetRangeStore}
+     * {@see TreeMapSpreadsheetCellRangeStore}
      */
-    public static <V> SpreadsheetRangeStore<V> treeMap() {
-        return TreeMapSpreadsheetRangeStore.create();
+    public static <V> SpreadsheetCellRangeStore<V> treeMap() {
+        return TreeMapSpreadsheetCellRangeStore.create();
     }
 
     /**
      * Stop creation
      */
-    private SpreadsheetRangeStores() {
+    private SpreadsheetCellRangeStores() {
         throw new UnsupportedOperationException();
     }
 }

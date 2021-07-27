@@ -190,7 +190,7 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
     }
 
     /**
-     * Accepts the bounds tokens and creates a {@link SpreadsheetRangeParserToken}
+     * Accepts the bounds tokens and creates a {@link SpreadsheetCellRangeParserToken}
      */
     @Override
     public Parser<SpreadsheetParserContext> range(final EbnfRangeParserToken token,

@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
@@ -32,7 +32,7 @@ public final class SpreadsheetFunctions implements PublicStaticHelper {
      * {@see ExpressionReferenceSpreadsheetCellReferenceFunction}
      */
     public static Function<ExpressionReference, Optional<SpreadsheetCellReference>> expressionReferenceSpreadsheetCellReference(final SpreadsheetLabelStore labelStore,
-                                                                                                                                final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
+                                                                                                                                final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore) {
         return ExpressionReferenceSpreadsheetCellReferenceFunction.with(labelStore, rangeToCellStore);
     }
 

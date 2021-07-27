@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.LoadStoreException;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
@@ -62,7 +62,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     private final SpreadsheetLabelStore store;
 
     @Override
-    protected void visit(final SpreadsheetRange range) {
+    protected void visit(final SpreadsheetCellRange range) {
         this.reference = range.begin();
     }
 
