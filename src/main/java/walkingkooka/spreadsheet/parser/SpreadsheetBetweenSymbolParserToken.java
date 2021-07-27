@@ -42,7 +42,7 @@ public final class SpreadsheetBetweenSymbolParserToken extends SpreadsheetSymbol
 
     @Override
     final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
-        return range(tokens, text);
+        return cellRange(tokens, text);
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

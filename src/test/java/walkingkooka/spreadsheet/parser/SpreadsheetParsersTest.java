@@ -531,7 +531,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetCellReferenceParserToken to = this.cell(1, "B", 1);
 
         final String text = from.text() + "  " + between() + "  " + to.text();
-        final SpreadsheetCellRangeParserToken range = SpreadsheetParserToken.range(Lists.of(from, whitespace(), between(), whitespace(), to), text);
+        final SpreadsheetCellRangeParserToken range = SpreadsheetParserToken.cellRange(Lists.of(from, whitespace(), between(), whitespace(), to), text);
 
         this.rangeParseAndCheck(text, range, text);
     }
@@ -2432,7 +2432,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private SpreadsheetCellRangeParserToken range(final SpreadsheetParserToken from, final SpreadsheetParserToken to) {
         final String text = from.text() + between() + to.text();
-        return SpreadsheetParserToken.range(Lists.of(from, between(), to), text);
+        return SpreadsheetParserToken.cellRange(Lists.of(from, between(), to), text);
     }
 
     private SpreadsheetParserToken valueSeparator() {

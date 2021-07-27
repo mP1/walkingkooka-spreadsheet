@@ -200,7 +200,7 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
 
     private static ParserToken transformRange(final ParserToken token,
                                               final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.range(((SequenceParserToken) token).value(), token.text());
+        return SpreadsheetParserToken.cellRange(((SequenceParserToken) token).value(), token.text());
     }
 
     @Override

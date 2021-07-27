@@ -75,6 +75,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetCellRangeParserToken}
+     */
+    public static SpreadsheetCellRangeParserToken cellRange(final List<ParserToken> value, final String text) {
+        return SpreadsheetCellRangeParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetCellReferenceParserToken}
      */
     public static SpreadsheetCellReferenceParserToken cellReference(final List<ParserToken> value, final String text) {
@@ -425,13 +432,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetCellRangeParserToken}
-     */
-    public static SpreadsheetCellRangeParserToken range(final List<ParserToken> value, final String text) {
-        return SpreadsheetCellRangeParserToken.with(value, text);
-    }
-
-    /**
      * {@see SpreadsheetRowReferenceParserToken}
      */
     public static SpreadsheetRowReferenceParserToken rowReference(final SpreadsheetRowReference value, final String text) {
@@ -564,6 +564,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isBetweenSymbol() {
         return this instanceof SpreadsheetBetweenSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetCellRangeParserToken} return true
+     */
+    public final boolean isCellRange() {
+        return this instanceof SpreadsheetCellRangeParserToken;
     }
 
     /**
@@ -921,13 +928,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isPowerSymbol() {
         return this instanceof SpreadsheetPowerSymbolParserToken;
-    }
-
-    /**
-     * Only {@link SpreadsheetCellRangeParserToken} return true
-     */
-    public final boolean isRange() {
-        return this instanceof SpreadsheetCellRangeParserToken;
     }
 
     /**
@@ -2017,7 +2017,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         return unmarshallParentParserToken(
                 node,
                 context,
-                SpreadsheetParserToken::range
+                SpreadsheetParserToken::cellRange
         );
     }
 
