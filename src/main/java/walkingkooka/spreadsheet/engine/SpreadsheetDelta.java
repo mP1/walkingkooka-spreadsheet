@@ -24,12 +24,12 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -57,7 +57,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
     public final static Set<SpreadsheetLabelMapping> NO_LABELS = Sets.empty();
-    public final static List<SpreadsheetRange> NO_WINDOW = Lists.empty();
+    public final static List<SpreadsheetCellRange> NO_WINDOW = Lists.empty();
     public final static Map<SpreadsheetColumnReference, Double> NO_COLUMN_WIDTHS = Maps.empty();
     public final static Map<SpreadsheetRowReference, Double> NO_ROW_HEIGHTS = Maps.empty();
 
@@ -201,24 +201,24 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     /**
      * Getter that returns any windows for this delta. An empty list signifies, no filtering.
      */
-    public abstract List<SpreadsheetRange> window();
+    public abstract List<SpreadsheetCellRange> window();
 
     /**
      * Would be setter that if necessary returns a new {@link SpreadsheetDelta} which will also filter cells if necessary,
-     * only if all {@link SpreadsheetRange} are all {@link SpreadsheetRange ranges}. Filtering is not possible if a
-     * {@link SpreadsheetRange} is present because it is not possible to determine if a cell is within those
+     * only if all {@link SpreadsheetCellRange} are all {@link SpreadsheetCellRange ranges}. Filtering is not possible if a
+     * {@link SpreadsheetCellRange} is present because it is not possible to determine if a cell is within those
      * boundaries.
      */
-    public final SpreadsheetDelta setWindow(final List<SpreadsheetRange> window) {
+    public final SpreadsheetDelta setWindow(final List<SpreadsheetCellRange> window) {
         Objects.requireNonNull(window, "window");
 
-        final List<SpreadsheetRange> copy = Lists.immutable(window);
+        final List<SpreadsheetCellRange> copy = Lists.immutable(window);
         return this.window().equals(copy) ?
                 this :
                 this.setWindow0(copy);
     }
 
-    private SpreadsheetDelta setWindow0(final List<SpreadsheetRange> window) {
+    private SpreadsheetDelta setWindow0(final List<SpreadsheetCellRange> window) {
         final Set<SpreadsheetCell> cells = this.cells;
         final Set<SpreadsheetLabelMapping> labels = this.labels;
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
@@ -233,14 +233,14 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     }
 
     static Set<SpreadsheetCell> filterCells0(final Set<SpreadsheetCell> cells,
-                                             final List<SpreadsheetRange> window) {
+                                             final List<SpreadsheetCellRange> window) {
         return window.isEmpty() ?
                 Sets.immutable(cells) :
                 Sets.readOnly(filterCells1(cells, Cast.to(window)));
     }
 
     private static Set<SpreadsheetCell> filterCells1(final Set<SpreadsheetCell> cells,
-                                                     final List<SpreadsheetRange> ranges) {
+                                                     final List<SpreadsheetCellRange> ranges) {
         return cells.stream()
                 .filter(c -> {
                     return ranges.stream()
@@ -253,7 +253,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      * Returns a {@link Map} removing any references that are not within {@link Set}.
      */
     static Set<SpreadsheetLabelMapping> filterLabels(final Set<SpreadsheetLabelMapping> labels,
-                                                     final List<SpreadsheetRange> window) {
+                                                     final List<SpreadsheetCellRange> window) {
         return window.isEmpty() ?
                 labels :
                 filterLabels0(
@@ -266,7 +266,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      * Removes all {@link SpreadsheetLabelMapping} that belong to cells that outside the window.
      */
     private static Set<SpreadsheetLabelMapping> filterLabels0(final Set<SpreadsheetLabelMapping> labels,
-                                                              final List<SpreadsheetRange> window) {
+                                                              final List<SpreadsheetCellRange> window) {
         return Sets.immutable(
                 labels.stream()
                         .filter(windowRangesPredicate(window))
@@ -274,7 +274,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         );
     }
 
-    private static Predicate<SpreadsheetLabelMapping> windowRangesPredicate(final List<SpreadsheetRange> window) {
+    private static Predicate<SpreadsheetLabelMapping> windowRangesPredicate(final List<SpreadsheetCellRange> window) {
         return (m) -> window.stream()
                 .anyMatch(mm -> {
                     final SpreadsheetExpressionReference r = m.reference();
@@ -353,7 +353,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         Set<SpreadsheetLabelMapping> labels = NO_LABELS;
         Map<SpreadsheetColumnReference, Double> columnWidths = NO_COLUMN_WIDTHS;
         Map<SpreadsheetRowReference, Double> maxRowsHeights = NO_ROW_HEIGHTS;
-        List<SpreadsheetRange> window = NO_WINDOW;
+        List<SpreadsheetCellRange> window = NO_WINDOW;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -420,9 +420,9 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         return max;
     }
 
-    private static List<SpreadsheetRange> rangeJsonNodeUnmarshall(final String range) {
+    private static List<SpreadsheetCellRange> rangeJsonNodeUnmarshall(final String range) {
         return Arrays.stream(range.split(WINDOW_SEPARATOR))
-                .map(SpreadsheetRange::parseRange)
+                .map(SpreadsheetCellRange::parseCellRange)
                 .collect(Collectors.toList());
     }
 
@@ -478,10 +478,10 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                     (r) -> r.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)).setName(MAX_ROW_HEIGHTS_PROPERTY));
         }
 
-        final List<SpreadsheetRange> window = this.window();
+        final List<SpreadsheetCellRange> window = this.window();
         if (!window.isEmpty()) {
             children.add(JsonNode.string(window.stream()
-                    .map(SpreadsheetRange::toString)
+                    .map(SpreadsheetCellRange::toString)
                     .collect(Collectors.joining(WINDOW_SEPARATOR)))
                     .setName(WINDOW_PROPERTY));
         }

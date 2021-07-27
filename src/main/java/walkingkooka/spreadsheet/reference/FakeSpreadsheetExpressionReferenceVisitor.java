@@ -58,7 +58,7 @@ public class FakeSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpres
     }
 
     @Override
-    protected void visit(final SpreadsheetRange range) {
+    protected void visit(final SpreadsheetCellRange range) {
         throw new UnsupportedOperationException();
     }
 }

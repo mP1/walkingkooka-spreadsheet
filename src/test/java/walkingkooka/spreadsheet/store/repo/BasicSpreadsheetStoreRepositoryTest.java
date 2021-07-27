@@ -23,12 +23,12 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
@@ -163,8 +163,8 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                            final SpreadsheetLabelStore labels,
                            final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
                            final SpreadsheetMetadataStore metadatas,
-                           final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
-                           final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
+                           final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
+                           final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                            final SpreadsheetUserStore users) {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetStoreRepository.with(cells,
                 cellReferences,
@@ -184,9 +184,9 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetGroupStore groups = this.groups();
         final SpreadsheetLabelStore labels = this.labels();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences = this.labelReferences();
-        final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells = this.rangeToCells();
+        final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = this.rangeToCells();
         final SpreadsheetMetadataStore metadatas = this.metadatas();
-        final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = this.rangeToConditionalFormattingRules();
+        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = this.rangeToConditionalFormattingRules();
         final SpreadsheetUserStore users = this.users();
 
         this.toStringAndCheck(BasicSpreadsheetStoreRepository.with(cells,
@@ -238,12 +238,12 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         return SpreadsheetMetadataStores.fake();
     }
 
-    private SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells() {
-        return SpreadsheetRangeStores.fake();
+    private SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
+        return SpreadsheetCellRangeStores.fake();
     }
 
-    private SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
-        return SpreadsheetRangeStores.fake();
+    private SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
+        return SpreadsheetCellRangeStores.fake();
     }
 
     private SpreadsheetUserStore users() {

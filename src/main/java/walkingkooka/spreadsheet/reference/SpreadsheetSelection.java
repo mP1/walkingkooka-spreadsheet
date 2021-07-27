@@ -141,7 +141,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                         labelName(text);
                 break;
             case 2:
-                reference = parseRange(text);
+                reference = parseCellRange(text);
                 break;
             default:
                 throw new IllegalArgumentException("Expected cell, label or range got " + CharSequences.quote(text));
@@ -190,7 +190,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                         labelName(text);
                 break;
             default:
-                reference = parseRange(text);
+                reference = parseCellRange(text);
                 break;
         }
 
@@ -198,10 +198,10 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
-     * Parsers the text expecting a valid {@link SpreadsheetRange} or fails.
+     * Parsers the text expecting a valid {@link SpreadsheetCellRange} or fails.
      */
-    public static SpreadsheetRange parseRange(final String text) {
-        return SpreadsheetRange.parseRange0(text);
+    public static SpreadsheetCellRange parseCellRange(final String text) {
+        return SpreadsheetCellRange.parseCellRange0(text);
     }
 
     SpreadsheetSelection() {
@@ -211,7 +211,11 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     /**
      * Tests if the selection be it a column, row or cell is within the given range.
      */
-    public abstract boolean testRange(final SpreadsheetRange range);
+    public abstract boolean testCellRange(final SpreadsheetCellRange range);
+
+    public final boolean isCellRange() {
+        return this instanceof SpreadsheetCellRange;
+    }
 
     public final boolean isCellReference() {
         return this instanceof SpreadsheetCellReference;
@@ -223,10 +227,6 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     public final boolean isLabelName() {
         return this instanceof SpreadsheetLabelName;
-    }
-
-    public final boolean isRange() {
-        return this instanceof SpreadsheetRange;
     }
 
     public final boolean isRowReference() {

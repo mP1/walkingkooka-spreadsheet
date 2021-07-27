@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
@@ -32,7 +32,7 @@ import java.util.function.Consumer;
 final class ExpressionReferenceSpreadsheetCellReferencesBiConsumer implements BiConsumer<ExpressionReference, Consumer<SpreadsheetCellReference>> {
 
     static ExpressionReferenceSpreadsheetCellReferencesBiConsumer with(final SpreadsheetLabelStore labelStore,
-                                                                       final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
+                                                                       final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore) {
         Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(rangeToCellStore, "rangeToCellStore");
 
@@ -40,7 +40,7 @@ final class ExpressionReferenceSpreadsheetCellReferencesBiConsumer implements Bi
     }
 
     private ExpressionReferenceSpreadsheetCellReferencesBiConsumer(final SpreadsheetLabelStore labelStore,
-                                                                   final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
+                                                                   final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore) {
         super();
         this.labelStore = labelStore;
         this.rangeToCellStore = rangeToCellStore;
@@ -57,7 +57,7 @@ final class ExpressionReferenceSpreadsheetCellReferencesBiConsumer implements Bi
     }
 
     final SpreadsheetLabelStore labelStore;
-    final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore;
+    final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore;
 
     @Override
     public String toString() {

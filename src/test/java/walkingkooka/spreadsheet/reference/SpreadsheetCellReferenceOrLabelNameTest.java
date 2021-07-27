@@ -49,7 +49,7 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
     @Test
     public void testUnmarshallRangeFails() {
         this.unmarshallFails2(
-                SpreadsheetExpressionReference.parseRange("A1:B2")
+                SpreadsheetExpressionReference.parseCellRange("A1:B2")
         );
     }
 

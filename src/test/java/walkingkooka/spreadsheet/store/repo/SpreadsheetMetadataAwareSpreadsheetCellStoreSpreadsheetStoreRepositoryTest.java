@@ -28,9 +28,9 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -168,8 +168,8 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         SpreadsheetLabelStores.treeMap(),
                         SpreadsheetExpressionReferenceStores.treeMap(),
                         metadatas,
-                        SpreadsheetRangeStores.treeMap(),
-                        SpreadsheetRangeStores.treeMap(),
+                        SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetCellRangeStores.treeMap(),
                         SpreadsheetUserStores.treeMap()
                 )
         );

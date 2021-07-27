@@ -112,11 +112,11 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     }
 
     /**
-     * Accepts a json string and returns a {@link SpreadsheetRange} or fails.
+     * Accepts a json string and returns a {@link SpreadsheetCellRange} or fails.
      */
-    static SpreadsheetRange unmarshallRange(final JsonNode node,
-                                            final JsonNodeUnmarshallContext context) {
-        return unmarshall0(node, SpreadsheetExpressionReference::parseRange);
+    static SpreadsheetCellRange unmarshallRange(final JsonNode node,
+                                                final JsonNodeUnmarshallContext context) {
+        return unmarshall0(node, SpreadsheetExpressionReference::parseCellRange);
     }
 
     /**
@@ -176,9 +176,9 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
 
         //noinspection StaticInitializerReferencesSubClass
         register(
-                SpreadsheetRange::unmarshallRange,
-                SpreadsheetRange::marshall,
-                SpreadsheetRange.class
+                SpreadsheetCellRange::unmarshallRange,
+                SpreadsheetCellRange::marshall,
+                SpreadsheetCellRange.class
         );
 
         SpreadsheetLabelMapping.init();

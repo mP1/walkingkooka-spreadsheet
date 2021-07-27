@@ -28,11 +28,11 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -100,7 +100,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             updated.refreshUpdated();
             return this.prepareDelta(
                     updated.cells(),
-                    reference.toSpreadsheetRange(),
+                    reference.toSpreadsheetCellRange(),
                     context
             );
         }
@@ -124,7 +124,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             updated.refreshUpdated();
             return this.prepareDelta(
                     updated.cells(),
-                    cell.reference().toSpreadsheetRange(),
+                    cell.reference().toSpreadsheetCellRange(),
                     context
             );
         }
@@ -225,7 +225,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final SpreadsheetRange range,
+    public SpreadsheetDelta loadCells(final SpreadsheetCellRange range,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final SpreadsheetEngineContext context) {
         Objects.requireNonNull(range, "range");
@@ -259,8 +259,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                                      final SpreadsheetRange from,
-                                      final SpreadsheetRange to,
+                                      final SpreadsheetCellRange from,
+                                      final SpreadsheetCellRange to,
                                       final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(from, "from");
@@ -287,7 +287,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
      */
     private SpreadsheetDelta prepareDelta(final Set<SpreadsheetCell> cells,
-                                          final SpreadsheetRange range,
+                                          final SpreadsheetCellRange range,
                                           final SpreadsheetEngineContext context) {
         SpreadsheetDelta delta = SpreadsheetDelta.with(cells);
 
@@ -655,8 +655,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // RANGE............................................................................................................
 
     @Override
-    public SpreadsheetRange range(final SpreadsheetViewport viewport,
-                                  final SpreadsheetEngineContext context) {
+    public SpreadsheetCellRange range(final SpreadsheetViewport viewport,
+                                      final SpreadsheetEngineContext context) {
         Objects.requireNonNull(viewport, "viewport");
         checkContext(context);
 
@@ -806,7 +806,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
 
         return leftColumn.setRow(topRow)
-                .spreadsheetRange(
+                .spreadsheetCellRange(
                         rightColumn.setRow(bottomRow)
                 );
     }

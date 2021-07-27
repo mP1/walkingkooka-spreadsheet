@@ -863,7 +863,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
 
     private static SpreadsheetMetadata nonLocaleDefaults() {
         EMPTY.id(); // force JsonNodeContext registering of collaborating types.
-        SpreadsheetExpressionReference.parseRange("A1");
+        SpreadsheetExpressionReference.parseCellRange("A1");
         TextStyle.EMPTY.isEmpty();
         return JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake())
                 .unmarshall(JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text()), SpreadsheetMetadata.class);

@@ -22,8 +22,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
 
 import java.util.function.Consumer;
 
@@ -34,7 +34,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreads
     @Test
     public void testToString() {
         final ExpressionReferenceSpreadsheetCellReferencesBiConsumer f = ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(SpreadsheetLabelStores.fake(),
-                SpreadsheetRangeStores.fake());
+                SpreadsheetCellRangeStores.fake());
         final Consumer<SpreadsheetCellReference> references = new Consumer<>() {
             @Override
             public void accept(final SpreadsheetCellReference reference) {

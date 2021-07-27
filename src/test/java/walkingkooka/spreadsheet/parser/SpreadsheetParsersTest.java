@@ -486,7 +486,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetCellReferenceParserToken from = this.cell(0, "A", 0);
         final SpreadsheetCellReferenceParserToken to = this.cell(1, "B", 1);
 
-        final SpreadsheetRangeParserToken range = range(from, to);
+        final SpreadsheetCellRangeParserToken range = range(from, to);
         final String text = range.text();
 
         this.rangeParseAndCheck(text, range, text);
@@ -497,7 +497,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetLabelNameParserToken from = this.label("from");
         final SpreadsheetLabelNameParserToken to = this.label("to");
 
-        final SpreadsheetRangeParserToken range = range(from, to);
+        final SpreadsheetCellRangeParserToken range = range(from, to);
         final String text = range.text();
 
         this.rangeParseAndCheck(text, range, text);
@@ -508,7 +508,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetCellReferenceParserToken from = this.cell(0, "A", 0);
         final SpreadsheetLabelNameParserToken to = this.label("to");
 
-        final SpreadsheetRangeParserToken range = range(from, to);
+        final SpreadsheetCellRangeParserToken range = range(from, to);
         final String text = range.text();
 
         this.rangeParseAndCheck(text, range, text);
@@ -519,7 +519,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetLabelNameParserToken from = this.label("to");
         final SpreadsheetCellReferenceParserToken to = this.cell(0, "A", 0);
 
-        final SpreadsheetRangeParserToken range = range(from, to);
+        final SpreadsheetCellRangeParserToken range = range(from, to);
         final String text = range.text();
 
         this.rangeParseAndCheck(text, range, text);
@@ -531,7 +531,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetCellReferenceParserToken to = this.cell(1, "B", 1);
 
         final String text = from.text() + "  " + between() + "  " + to.text();
-        final SpreadsheetRangeParserToken range = SpreadsheetParserToken.range(Lists.of(from, whitespace(), between(), whitespace(), to), text);
+        final SpreadsheetCellRangeParserToken range = SpreadsheetParserToken.range(Lists.of(from, whitespace(), between(), whitespace(), to), text);
 
         this.rangeParseAndCheck(text, range, text);
     }
@@ -539,7 +539,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     /**
      * First parseCellReference the range using {@link SpreadsheetParsers#range()} and then repeat again with {@link SpreadsheetParsers#expression()}.
      */
-    private void rangeParseAndCheck(final String from, final SpreadsheetRangeParserToken expected, final String text) {
+    private void rangeParseAndCheck(final String from, final SpreadsheetCellRangeParserToken expected, final String text) {
         this.parseAndCheck(SpreadsheetParsers.range(), from, expected, text);
         this.parseExpressionAndCheck(from, expected, text);
     }
@@ -1506,7 +1506,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetCellReferenceParserToken from = this.cell(0, "A", 0);
         final SpreadsheetCellReferenceParserToken to = this.cell(1, "B", 1);
 
-        final SpreadsheetRangeParserToken range = range(from, to);
+        final SpreadsheetCellRangeParserToken range = range(from, to);
         final String rangeText = range.text();
 
         final String text = "xyz(" + rangeText + ")";
@@ -2430,7 +2430,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParserToken.parenthesisCloseSymbol(")", ")");
     }
 
-    private SpreadsheetRangeParserToken range(final SpreadsheetParserToken from, final SpreadsheetParserToken to) {
+    private SpreadsheetCellRangeParserToken range(final SpreadsheetParserToken from, final SpreadsheetParserToken to) {
         final String text = from.text() + between() + to.text();
         return SpreadsheetParserToken.range(Lists.of(from, between(), to), text);
     }

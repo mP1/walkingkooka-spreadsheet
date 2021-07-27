@@ -60,7 +60,7 @@ public abstract class SpreadsheetSelectionVisitor extends Visitor<SpreadsheetSel
         // nop
     }
 
-    protected void visit(final SpreadsheetRange range) {
+    protected void visit(final SpreadsheetCellRange range) {
         // nop
     }
 

@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
 import java.util.Collection;
 import java.util.List;
@@ -30,8 +30,8 @@ import java.util.stream.Collectors;
 final class BasicSpreadsheetEngineFillCells {
 
     static void execute(final Collection<SpreadsheetCell> cells,
-                        final SpreadsheetRange from,
-                        final SpreadsheetRange to,
+                        final SpreadsheetCellRange from,
+                        final SpreadsheetCellRange to,
                         final BasicSpreadsheetEngine engine,
                         final SpreadsheetEngineContext context) {
         new BasicSpreadsheetEngineFillCells(engine, context)
@@ -46,8 +46,8 @@ final class BasicSpreadsheetEngineFillCells {
     }
 
     private void execute(final Collection<SpreadsheetCell> cells,
-                         final SpreadsheetRange from,
-                         final SpreadsheetRange to) {
+                         final SpreadsheetCellRange from,
+                         final SpreadsheetCellRange to) {
         if (cells.isEmpty()) {
             this.clear(to);
         } else {
@@ -63,9 +63,9 @@ final class BasicSpreadsheetEngineFillCells {
     }
 
     /**
-     * Clears aka deletes all the cells in the given {@link SpreadsheetRange}
+     * Clears aka deletes all the cells in the given {@link SpreadsheetCellRange}
      */
-    private void clear(final SpreadsheetRange to) {
+    private void clear(final SpreadsheetCellRange to) {
         to.cellStream().forEach(this::deleteCell);
     }
 
@@ -74,8 +74,8 @@ final class BasicSpreadsheetEngineFillCells {
      * deletion in the $to.
      */
     private void fill(final Collection<SpreadsheetCell> cells,
-                      final SpreadsheetRange from,
-                      final SpreadsheetRange to) {
+                      final SpreadsheetCellRange from,
+                      final SpreadsheetCellRange to) {
         final List<Object> referencesAndCells = Lists.array();
         from.cells(cells,
                 referencesAndCells::add,

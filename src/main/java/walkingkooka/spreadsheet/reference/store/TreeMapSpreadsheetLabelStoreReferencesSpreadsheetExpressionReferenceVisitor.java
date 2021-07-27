@@ -18,18 +18,18 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Map;
 import java.util.Set;
 
 /**
- * A {@link SpreadsheetExpressionReferenceVisitor} that visits all label targets, and aims to return only {@link SpreadsheetCellReference} and {@link SpreadsheetRange}.
+ * A {@link SpreadsheetExpressionReferenceVisitor} that visits all label targets, and aims to return only {@link SpreadsheetCellReference} and {@link SpreadsheetCellRange}.
  */
 final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
 
@@ -64,7 +64,7 @@ final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReference
     }
 
     @Override
-    protected void visit(final SpreadsheetRange range) {
+    protected void visit(final SpreadsheetCellRange range) {
         this.references.add(range);
     }
 

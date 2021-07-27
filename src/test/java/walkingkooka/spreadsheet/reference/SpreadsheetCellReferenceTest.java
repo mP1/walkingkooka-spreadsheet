@@ -382,13 +382,13 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testRangeNullFails() {
-        assertThrows(NullPointerException.class, () -> this.cell(1, 1).spreadsheetRange(null));
+        assertThrows(NullPointerException.class, () -> this.cell(1, 1).spreadsheetCellRange(null));
     }
 
     @Test
     public void testRangeOne() {
         final SpreadsheetCellReference lower = this.cell(1, 1);
-        final SpreadsheetRange range = lower.spreadsheetRange(lower);
+        final SpreadsheetCellRange range = lower.spreadsheetCellRange(lower);
         this.checkEquals(Range.singleton(lower), range.range());
     }
 
@@ -445,45 +445,45 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                 () -> cell + " range " + other);
 
 
-        assertEquals(SpreadsheetRange.with(expected),
-                cell.spreadsheetRange(other),
-                () -> cell + " spreadsheetRange " + other);
+        assertEquals(SpreadsheetCellRange.with(expected),
+                cell.spreadsheetCellRange(other),
+                () -> cell + " spreadsheetCellRange " + other);
     }
 
-    // toSpreadsheetRange...............................................................................................
+    // toSpreadsheetCellRange...........................................................................................
 
     @Test
-    public void testToSpreadsheetRangeAbsolute() {
-        this.toSpreadsheetRangeAndCheck(
+    public void testToSpreadsheetCellRangeAbsolute() {
+        this.toSpreadsheetCellRangeAndCheck(
                 SpreadsheetCellReference.parseCellReference("$B$2"),
-                SpreadsheetRange.parseRange("$B$2")
+                SpreadsheetCellRange.parseCellRange("$B$2")
         );
     }
 
     @Test
-    public void testToSpreadsheetRangeRelative() {
+    public void testToSpreadsheetCellRangeRelative() {
         final String text = "C3";
 
-        this.toSpreadsheetRangeAndCheck(
+        this.toSpreadsheetCellRangeAndCheck(
                 SpreadsheetCellReference.parseCellReference(text),
-                SpreadsheetRange.parseRange(text)
+                SpreadsheetCellRange.parseCellRange(text)
         );
     }
 
-    private void toSpreadsheetRangeAndCheck(final SpreadsheetCellReference reference,
-                                            final SpreadsheetRange range) {
+    private void toSpreadsheetCellRangeAndCheck(final SpreadsheetCellReference reference,
+                                                final SpreadsheetCellRange range) {
         assertEquals(
                 range,
-                reference.toSpreadsheetRange(),
-                () -> reference + " toSpreadsheetRange()"
+                reference.toSpreadsheetCellRange(),
+                () -> reference + " toSpreadsheetCellRange()"
         );
     }
 
-    // testRange........................................................................................................
+    // testCellRange.....................................................................................................
 
     @Test
-    public void testTestRangeBeforeAbove() {
-        this.testRangeCheck2(
+    public void testTestCellRangeBeforeAbove() {
+        this.testCellRangeCheck2(
                 "B3",
                 "C3:E5",
                 false
@@ -491,8 +491,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeAbove() {
-        this.testRangeCheck2(
+    public void testTestCellRangeAbove() {
+        this.testCellRangeCheck2(
                 "D2",
                 "C3:E5",
                 false
@@ -500,8 +500,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeAfterAbove() {
-        this.testRangeCheck2(
+    public void testTestCellRangeAfterAbove() {
+        this.testCellRangeCheck2(
                 "E2",
                 "C3:E5",
                 false
@@ -509,8 +509,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeTopLeft() {
-        this.testRangeCheck2(
+    public void testTestCellRangeTopLeft() {
+        this.testCellRangeCheck2(
                 "C3",
                 "C3:E5",
                 true
@@ -518,8 +518,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeTopCenter() {
-        this.testRangeCheck2(
+    public void testTestCellRangeTopCenter() {
+        this.testCellRangeCheck2(
                 "D3",
                 "C3:E5",
                 true
@@ -527,8 +527,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeTopRight() {
-        this.testRangeCheck2(
+    public void testTestCellRangeTopRight() {
+        this.testCellRangeCheck2(
                 "E3",
                 "C3:E5",
                 true
@@ -536,8 +536,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeMiddleLeft() {
-        this.testRangeCheck2(
+    public void testTestCellRangeMiddleLeft() {
+        this.testCellRangeCheck2(
                 "C4",
                 "C3:E5",
                 true
@@ -545,8 +545,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeMiddleCenter() {
-        this.testRangeCheck2(
+    public void testTestCellRangeMiddleCenter() {
+        this.testCellRangeCheck2(
                 "D4",
                 "C3:E5",
                 true
@@ -554,8 +554,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeMiddleRight() {
-        this.testRangeCheck2(
+    public void testTestCellRangeMiddleRight() {
+        this.testCellRangeCheck2(
                 "E4",
                 "C3:E5",
                 true
@@ -563,8 +563,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeBottomLeft() {
-        this.testRangeCheck2(
+    public void testTestCellRangeBottomLeft() {
+        this.testCellRangeCheck2(
                 "D5",
                 "C3:E5",
                 true
@@ -572,8 +572,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeBottomCenter() {
-        this.testRangeCheck2(
+    public void testTestCellRangeBottomCenter() {
+        this.testCellRangeCheck2(
                 "D5",
                 "C3:E5",
                 true
@@ -581,8 +581,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeBottomRight() {
-        this.testRangeCheck2(
+    public void testTestCellRangeBottomRight() {
+        this.testCellRangeCheck2(
                 "E5",
                 "C3:E5",
                 true
@@ -590,8 +590,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeBeforeBelow() {
-        this.testRangeCheck2(
+    public void testTestCellRangeBeforeBelow() {
+        this.testCellRangeCheck2(
                 "B6",
                 "C3:E5",
                 false
@@ -599,8 +599,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeBelow() {
-        this.testRangeCheck2(
+    public void testTestCellRangeBelow() {
+        this.testCellRangeCheck2(
                 "D6",
                 "C3:E5",
                 false
@@ -608,8 +608,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeAfterBelow() {
-        this.testRangeCheck2(
+    public void testTestCellRangeAfterBelow() {
+        this.testCellRangeCheck2(
                 "E6",
                 "C3:E5",
                 false
@@ -617,8 +617,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeBeforeMiddle() {
-        this.testRangeCheck2(
+    public void testTestCellRangeBeforeMiddle() {
+        this.testCellRangeCheck2(
                 "A4",
                 "C3:E5",
                 false
@@ -626,20 +626,20 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestRangeAfterMiddle() {
-        this.testRangeCheck2(
+    public void testTestCellRangeAfterMiddle() {
+        this.testCellRangeCheck2(
                 "F4",
                 "C3:E5",
                 false
         );
     }
 
-    private void testRangeCheck2(final String cell,
-                                 final String range,
-                                 final boolean expected) {
-        this.testRangeAndCheck(
+    private void testCellRangeCheck2(final String cell,
+                                     final String range,
+                                     final boolean expected) {
+        this.testCellRangeAndCheck(
                 SpreadsheetCellReference.parseCellReference(cell),
-                SpreadsheetRange.parseRange(range),
+                SpreadsheetCellRange.parseCellRange(range),
                 expected
         );
     }

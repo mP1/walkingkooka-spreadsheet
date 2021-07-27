@@ -22,7 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 
 public final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitorTest implements
         SpreadsheetExpressionReferenceVisitorTesting<ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor>,
@@ -31,7 +31,7 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadshee
     @Test
     public void testToString() {
         final ExpressionReferenceSpreadsheetCellReferenceFunction f = ExpressionReferenceSpreadsheetCellReferenceFunction.with(SpreadsheetLabelStores.fake(),
-                SpreadsheetRangeStores.fake());
+                SpreadsheetCellRangeStores.fake());
         this.toStringAndCheck(new ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor(f), f + " null");
     }
 

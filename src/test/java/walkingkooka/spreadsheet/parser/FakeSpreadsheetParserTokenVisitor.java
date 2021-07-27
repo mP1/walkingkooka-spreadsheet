@@ -208,12 +208,12 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetRangeParserToken token) {
+    protected Visiting startVisit(final SpreadsheetCellRangeParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetRangeParserToken token) {
+    protected void endVisit(final SpreadsheetCellRangeParserToken token) {
         throw new UnsupportedOperationException();
     }
 

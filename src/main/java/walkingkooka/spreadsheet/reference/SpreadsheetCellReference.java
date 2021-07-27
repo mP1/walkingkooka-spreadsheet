@@ -191,15 +191,15 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return this.equalsIgnoreReferenceKind(reference);
     }
 
-    // testRange........................................................................................................
+    // testCellRange.....................................................................................................
 
     @Override
-    public boolean testRange(final SpreadsheetRange range) {
+    public boolean testCellRange(final SpreadsheetCellRange range) {
         Objects.requireNonNull(range, "range");
         return range.test(this);
     }
 
-    // range/spreadsheetRange...........................................................................................
+    // range/spreadsheetCellRange.......................................................................................
 
     /**
      * Creates a {@link Range} from the this and the other {@link SpreadsheetCellReference}.
@@ -224,17 +224,17 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     }
 
     /**
-     * Creates a {@link SpreadsheetRange} from the this and the other {@link SpreadsheetCellReference}.
+     * Creates a {@link SpreadsheetCellRange} from the this and the other {@link SpreadsheetCellReference}.
      */
-    public SpreadsheetRange spreadsheetRange(final SpreadsheetCellReference other) {
-        return SpreadsheetRange.with(this.range(other));
+    public SpreadsheetCellRange spreadsheetCellRange(final SpreadsheetCellReference other) {
+        return SpreadsheetCellRange.with(this.range(other));
     }
 
     /**
-     * Returns a {@link SpreadsheetRange} holding only this cell.
+     * Returns a {@link SpreadsheetCellRange} holding only this cell.
      */
-    public SpreadsheetRange toSpreadsheetRange() {
-        return SpreadsheetRange.with(Range.singleton(this));
+    public SpreadsheetCellRange toSpreadsheetCellRange() {
+        return SpreadsheetCellRange.with(Range.singleton(this));
     }
 
     // HateosResource...................................................................................................

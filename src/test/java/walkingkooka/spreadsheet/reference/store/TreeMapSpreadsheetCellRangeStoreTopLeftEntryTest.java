@@ -19,25 +19,24 @@ package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.PublicStaticHelperTesting;
 
-import java.lang.reflect.Method;
+import java.util.Map;
 
-public final class SpreadsheetRangeStoresTest implements ClassTesting2<SpreadsheetRangeStores>,
-        PublicStaticHelperTesting<SpreadsheetRangeStores> {
-
-    @Override
-    public Class<SpreadsheetRangeStores> type() {
-        return SpreadsheetRangeStores.class;
-    }
-
-    @Override
-    public boolean canHavePublicTypes(final Method method) {
-        return false;
-    }
+public final class TreeMapSpreadsheetCellRangeStoreTopLeftEntryTest extends TreeMapSpreadsheetCellRangeStoreTestCase<TreeMapSpreadsheetCellRangeStoreTopLeftEntry>
+        implements ClassTesting2<TreeMapSpreadsheetCellRangeStoreTopLeftEntry> {
 
     @Override
     public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
+        return JavaVisibility.PACKAGE_PRIVATE;
+    }
+
+    @Override
+    public Class<TreeMapSpreadsheetCellRangeStoreTopLeftEntry> type() {
+        return TreeMapSpreadsheetCellRangeStoreTopLeftEntry.class;
+    }
+
+    @Override
+    public String typeNameSuffix() {
+        return Map.Entry.class.getSimpleName();
     }
 }

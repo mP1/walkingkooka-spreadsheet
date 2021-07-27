@@ -260,7 +260,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testJsonSelectionRange() {
-        this.marshallRoundTripSelectionAndCheck(SpreadsheetSelection.parseRange("A1:B2"));
+        this.marshallRoundTripSelectionAndCheck(SpreadsheetSelection.parseCellRange("A1:B2"));
     }
 
     @Test

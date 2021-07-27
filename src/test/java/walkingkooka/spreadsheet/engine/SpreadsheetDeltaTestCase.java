@@ -22,12 +22,12 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.json.JsonNode;
 
@@ -176,8 +176,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         assertEquals(rowHeights, delta.rowHeights(), "rowHeights");
     }
 
-    final void checkWindow(final SpreadsheetDelta delta, final List<SpreadsheetRange> window) {
+    final void checkWindow(final SpreadsheetDelta delta, final List<SpreadsheetCellRange> window) {
         assertEquals(window, delta.window(), "window");
-        assertThrows(UnsupportedOperationException.class, () -> delta.window().add(SpreadsheetRange.parseRange("A1:Z99")));
+        assertThrows(UnsupportedOperationException.class, () -> delta.window().add(SpreadsheetCellRange.parseCellRange("A1:Z99")));
     }
 }

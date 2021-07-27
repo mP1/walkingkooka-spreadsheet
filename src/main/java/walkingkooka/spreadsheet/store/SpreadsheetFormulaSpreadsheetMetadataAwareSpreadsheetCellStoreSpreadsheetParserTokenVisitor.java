@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetAdditionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetAmPmParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetApostropheSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetBetweenSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
@@ -79,7 +80,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetPercentSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetPlusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetPowerParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetPowerSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetSubtractionParserToken;
@@ -125,6 +125,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void endVisit(final SpreadsheetAdditionParserToken token) {
         this.exit(token, SpreadsheetParserToken::addition);
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetCellRangeParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetCellRangeParserToken token) {
+        this.exit(token, SpreadsheetParserToken::range);
     }
 
     @Override
@@ -295,16 +305,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void endVisit(final SpreadsheetPowerParserToken token) {
         this.exit(token, SpreadsheetParserToken::power);
-    }
-
-    @Override
-    protected Visiting startVisit(final SpreadsheetRangeParserToken token) {
-        return this.enter();
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetRangeParserToken token) {
-        this.exit(token, SpreadsheetParserToken::range);
     }
 
     @Override

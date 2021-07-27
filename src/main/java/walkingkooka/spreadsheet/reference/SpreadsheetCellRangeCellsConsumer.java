@@ -26,23 +26,23 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * A {@link Consumer} used by {@link SpreadsheetRange#cells(Collection, Consumer, Consumer)}.
+ * A {@link Consumer} used by {@link SpreadsheetCellRange#cells(Collection, Consumer, Consumer)}.
  */
-final class SpreadsheetRangeCellsConsumer implements Consumer<SpreadsheetCellReference> {
+final class SpreadsheetCellRangeCellsConsumer implements Consumer<SpreadsheetCellReference> {
 
-    static SpreadsheetRangeCellsConsumer with(final Collection<SpreadsheetCell> cells,
-                                              final Consumer<? super SpreadsheetCell> present,
-                                              final Consumer<? super SpreadsheetCellReference> absent) {
+    static SpreadsheetCellRangeCellsConsumer with(final Collection<SpreadsheetCell> cells,
+                                                  final Consumer<? super SpreadsheetCell> present,
+                                                  final Consumer<? super SpreadsheetCellReference> absent) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(present, "present");
         Objects.requireNonNull(absent, "absent");
 
-        return new SpreadsheetRangeCellsConsumer(cells, present, absent);
+        return new SpreadsheetCellRangeCellsConsumer(cells, present, absent);
     }
 
-    private SpreadsheetRangeCellsConsumer(final Collection<SpreadsheetCell> cells,
-                                          final Consumer<? super SpreadsheetCell> present,
-                                          final Consumer<? super SpreadsheetCellReference> absent) {
+    private SpreadsheetCellRangeCellsConsumer(final Collection<SpreadsheetCell> cells,
+                                              final Consumer<? super SpreadsheetCell> present,
+                                              final Consumer<? super SpreadsheetCellReference> absent) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(present, "present");
         Objects.requireNonNull(absent, "absent");

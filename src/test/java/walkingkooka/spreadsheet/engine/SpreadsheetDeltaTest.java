@@ -59,7 +59,7 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
         cells.add(a1);
 
         final SpreadsheetDelta delta = SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
-                .setWindow(Lists.of(SpreadsheetExpressionReference.parseRange("A1:Z99")))
+                .setWindow(Lists.of(SpreadsheetExpressionReference.parseCellRange("A1:Z99")))
                 .setCells(cells);
         assertEquals(Lists.of(a1, b2, c3), new ArrayList<>(delta.cells()), "cells should be sorted");
     }
@@ -76,7 +76,7 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
         cells.add(a1);
 
         final SpreadsheetDelta delta = SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
-                .setWindow(Lists.of(SpreadsheetExpressionReference.parseRange("A1:Z99")))
+                .setWindow(Lists.of(SpreadsheetExpressionReference.parseCellRange("A1:Z99")))
                 .setCells(cells);
         assertEquals(Lists.of(a1, b2, c3), new ArrayList<>(delta.cells()), "cells should be sorted");
     }
