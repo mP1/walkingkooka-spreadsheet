@@ -120,7 +120,7 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     }
 
     /**
-     * Accepts a json string and returns a {@link SpreadsheetLabelMappingExpressionReference} or fails.
+     * Accepts a json string and returns a {@link SpreadsheetCellReferenceOrLabelName} or fails.
      */
     static SpreadsheetCellReferenceOrLabelName unmarshallSpreadsheetCellReferenceOrLabelName(final JsonNode node,
                                                                                              final JsonNodeUnmarshallContext context) {
