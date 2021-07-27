@@ -108,7 +108,7 @@ public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinary
 
     @Override
     SpreadsheetCellRangeParserToken createToken(final String text, final List<ParserToken> tokens) {
-        return SpreadsheetParserToken.range(tokens, text);
+        return SpreadsheetParserToken.cellRange(tokens, text);
     }
 
     @Override

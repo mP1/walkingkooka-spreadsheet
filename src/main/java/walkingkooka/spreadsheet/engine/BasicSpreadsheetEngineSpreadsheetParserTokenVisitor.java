@@ -125,7 +125,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
 
     @Override
     protected final void endVisit(final SpreadsheetCellRangeParserToken token) {
-        this.exit(token, SpreadsheetParserToken::range);
+        this.exit(token, SpreadsheetParserToken::cellRange);
     }
 
     @Override

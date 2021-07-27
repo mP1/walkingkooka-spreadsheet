@@ -134,7 +134,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     @Override
     protected void endVisit(final SpreadsheetCellRangeParserToken token) {
-        this.exit(token, SpreadsheetParserToken::range);
+        this.exit(token, SpreadsheetParserToken::cellRange);
     }
 
     @Override
