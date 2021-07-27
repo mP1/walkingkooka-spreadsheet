@@ -143,20 +143,20 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
      * Returns this in absolute form, creating a new instance if necessary.
      */
     public SpreadsheetCellReference toAbsolute() {
-        return this.toSpreadsheetReferenceKind(SpreadsheetReferenceKind.ABSOLUTE);
+        return this.setSpreadsheetReferenceKind(SpreadsheetReferenceKind.ABSOLUTE);
     }
 
     /**
      * Returns a {@link SpreadsheetCellReference} with both the column and row set to {@link SpreadsheetReferenceKind#RELATIVE}.
      */
     public SpreadsheetCellReference toRelative() {
-        return this.toSpreadsheetReferenceKind(SpreadsheetReferenceKind.RELATIVE);
+        return this.setSpreadsheetReferenceKind(SpreadsheetReferenceKind.RELATIVE);
     }
 
     /**
      * Returns a {@link SpreadsheetCellReference} with both the column and row set to {@link SpreadsheetReferenceKind#RELATIVE}.
      */
-    private SpreadsheetCellReference toSpreadsheetReferenceKind(final SpreadsheetReferenceKind kind) {
+    private SpreadsheetCellReference setSpreadsheetReferenceKind(final SpreadsheetReferenceKind kind) {
         return this.setColumn(this.column().setReferenceKind(kind))
                 .setRow(this.row().setReferenceKind(kind));
     }
