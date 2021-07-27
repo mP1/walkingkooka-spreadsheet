@@ -482,15 +482,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     // testRange........................................................................................................
 
     @Test
-    public void testTestRange() {
-        final SpreadsheetCellReference cell = this.createSelection();
-
-
-    }
-
-    // testRange........................................................................................................
-
-    @Test
     public void testTestRangeBeforeAbove() {
         this.testRangeCheck2(
                 "B3",
