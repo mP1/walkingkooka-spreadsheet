@@ -34,15 +34,14 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
@@ -169,7 +168,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        engine.deleteColumns(SpreadsheetColumnOrRowReference.parseColumn("Z"), 1, context);
+        engine.deleteColumns(SpreadsheetSelection.parseColumn("Z"), 1, context);
 
         this.checkMetadataNotUpdated(context);
     }
@@ -211,7 +210,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        engine.insertColumns(SpreadsheetColumnOrRowReference.parseColumn("Z"), 0, context);
+        engine.insertColumns(SpreadsheetSelection.parseColumn("Z"), 0, context);
 
         this.checkMetadataNotUpdated(context);
     }
@@ -221,7 +220,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        engine.insertColumns(SpreadsheetColumnOrRowReference.parseColumn("B"), 1, context);
+        engine.insertColumns(SpreadsheetSelection.parseColumn("B"), 1, context);
 
         this.checkMetadataNotUpdated(context);
     }
@@ -231,7 +230,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        engine.deleteRows(SpreadsheetColumnOrRowReference.parseRow("99"), 1, context);
+        engine.deleteRows(SpreadsheetSelection.parseRow("99"), 1, context);
 
         this.checkMetadataNotUpdated(context);
     }
@@ -273,7 +272,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        engine.insertRows(SpreadsheetColumnOrRowReference.parseRow("99"), 0, context);
+        engine.insertRows(SpreadsheetSelection.parseRow("99"), 0, context);
 
         this.checkMetadataNotUpdated(context);
     }
@@ -283,7 +282,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        engine.insertRows(SpreadsheetColumnOrRowReference.parseRow("99"), 1, context);
+        engine.insertRows(SpreadsheetSelection.parseRow("99"), 1, context);
 
         this.checkMetadataNotUpdated(context);
     }

@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -138,13 +137,6 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
         Objects.requireNonNull(node, "node");
 
         return parse.apply(node.stringOrFail());
-    }
-
-    /**
-     * The json form of this object is also {@link #toString()}
-     */
-    public final JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonObject.string(this.toString());
     }
 
     static {

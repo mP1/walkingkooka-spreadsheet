@@ -158,10 +158,10 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testArraySort() {
-        final SpreadsheetColumnReference column1 = SpreadsheetColumnOrRowReference.parseColumn("A");
-        final SpreadsheetColumnReference column2 = SpreadsheetColumnOrRowReference.parseColumn("B");
-        final SpreadsheetColumnReference column3 = SpreadsheetColumnOrRowReference.parseColumn("C");
-        final SpreadsheetColumnReference column4 = SpreadsheetColumnOrRowReference.parseColumn("$D");
+        final SpreadsheetColumnReference column1 = SpreadsheetSelection.parseColumn("A");
+        final SpreadsheetColumnReference column2 = SpreadsheetSelection.parseColumn("B");
+        final SpreadsheetColumnReference column3 = SpreadsheetSelection.parseColumn("C");
+        final SpreadsheetColumnReference column4 = SpreadsheetSelection.parseColumn("$D");
 
         this.compareToArraySortAndCheck(column3, column1, column4, column2,
                 column1, column2, column3, column4);
@@ -218,16 +218,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testParseRange() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetColumnOrRowReference.parseColumn("B"))
-                        .and(Range.lessThanEquals(SpreadsheetColumnOrRowReference.parseColumn("D"))),
-                SpreadsheetColumnOrRowReference.parseColumnRange("B:D"));
+        assertEquals(Range.greaterThanEquals(SpreadsheetSelection.parseColumn("B"))
+                        .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("D"))),
+                SpreadsheetSelection.parseColumnRange("B:D"));
     }
 
     @Test
     public void testParseRange2() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetColumnOrRowReference.parseColumn("$B"))
-                        .and(Range.lessThanEquals(SpreadsheetColumnOrRowReference.parseColumn("$D"))),
-                SpreadsheetColumnOrRowReference.parseColumnRange("$B:$D"));
+        assertEquals(Range.greaterThanEquals(SpreadsheetSelection.parseColumn("$B"))
+                        .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("$D"))),
+                SpreadsheetSelection.parseColumnRange("$B:$D"));
     }
 
     // parseString.....................................................................................................
@@ -566,7 +566,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Override
     public SpreadsheetColumnReference parseString(final String text) {
-        return SpreadsheetColumnOrRowReference.parseColumn(text);
+        return SpreadsheetSelection.parseColumn(text);
     }
 
     @Override

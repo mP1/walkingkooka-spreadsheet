@@ -87,10 +87,10 @@ public final class SpreadsheetColumnTest implements ClassTesting2<SpreadsheetCol
 
     @Test
     public void testArraySort() {
-        final SpreadsheetColumn column1 = SpreadsheetColumn.with(SpreadsheetColumnOrRowReference.parseColumn("A"));
-        final SpreadsheetColumn column2 = SpreadsheetColumn.with(SpreadsheetColumnOrRowReference.parseColumn("$B"));
-        final SpreadsheetColumn column3 = SpreadsheetColumn.with(SpreadsheetColumnOrRowReference.parseColumn("C"));
-        final SpreadsheetColumn column4 = SpreadsheetColumn.with(SpreadsheetColumnOrRowReference.parseColumn("$D"));
+        final SpreadsheetColumn column1 = SpreadsheetColumn.with(SpreadsheetSelection.parseColumn("A"));
+        final SpreadsheetColumn column2 = SpreadsheetColumn.with(SpreadsheetSelection.parseColumn("$B"));
+        final SpreadsheetColumn column3 = SpreadsheetColumn.with(SpreadsheetSelection.parseColumn("C"));
+        final SpreadsheetColumn column4 = SpreadsheetColumn.with(SpreadsheetSelection.parseColumn("$D"));
 
         this.compareToArraySortAndCheck(column3, column1, column4, column2,
                 column1, column2, column3, column4);
