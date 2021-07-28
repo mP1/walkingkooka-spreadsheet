@@ -130,7 +130,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Parsers the given text into of the sub classes of {@link SpreadsheetExpressionReference}.
      */
     public static SpreadsheetExpressionReference parseExpressionReference(final String text) {
-        Objects.requireNonNull(text, "text");
+        checkText(text);
 
         final SpreadsheetExpressionReference reference;
 
@@ -168,7 +168,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}
      */
     public static SpreadsheetCellReferenceOrLabelName parseCellReferenceOrLabelName(final String text) {
-        Objects.requireNonNull(text, "text");
+        checkText(text);
 
         return isCellReferenceText(text) ?
                 parseCellReference(text) :
@@ -179,7 +179,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * {@see #parse}
      */
     public static SpreadsheetExpressionReference parseSpreadsheetExpressionReference(final String text) {
-        Objects.requireNonNull(text, "text");
+        checkText(text);
 
         final SpreadsheetExpressionReference reference;
 
@@ -242,4 +242,18 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     // SpreadsheetSelectionVisitor......................................................................................
 
     abstract void accept(final SpreadsheetSelectionVisitor visitor);
+
+    // guards............................................................................................................
+
+    static void checkCellRange(final SpreadsheetCellRange range) {
+        Objects.requireNonNull(range, "range");
+    }
+
+    static void checkCellReference(final SpreadsheetCellReference reference) {
+        Objects.requireNonNull(reference, "reference");
+    }
+
+    static void checkText(final String text) {
+        CharSequences.failIfNullOrEmpty(text, "text");
+    }
 }

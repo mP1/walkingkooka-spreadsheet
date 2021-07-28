@@ -25,8 +25,6 @@ import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
-import java.util.Objects;
-
 /**
  * A label or {@link Name} is a name to a cell reference, range and so on.
  * <pre>
@@ -117,7 +115,7 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
      */
     @Override
     public boolean test(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
+        checkCellReference(reference);
         throw new UnsupportedOperationException();
     }
 

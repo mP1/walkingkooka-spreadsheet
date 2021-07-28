@@ -163,7 +163,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
     @Override
     public boolean testCellRange(final SpreadsheetCellRange range) {
-        Objects.requireNonNull(range, "range");
+        checkCellRange(range);
 
         return this.compareTo(range.begin().column()) >= 0 &&
                 this.compareTo(range.end().column()) <= 0;
