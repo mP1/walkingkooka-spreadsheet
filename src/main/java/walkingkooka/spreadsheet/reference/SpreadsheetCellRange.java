@@ -274,7 +274,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference {
      */
     @Override
     public boolean test(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
+        checkCellReference(reference);
 
         return reference.column()
                 .testCellRange(this) &&
