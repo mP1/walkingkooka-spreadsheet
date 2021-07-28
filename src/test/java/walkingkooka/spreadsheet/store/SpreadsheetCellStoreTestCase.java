@@ -27,9 +27,9 @@ import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.StoreTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -176,7 +176,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         checkEquals("row 1", store.row(a.reference().row()), a, b);
         checkEquals("row 2", store.row(c.reference().row()), c, d);
-        checkEquals("row 99", store.row(SpreadsheetColumnOrRowReference.parseRow("99")));
+        checkEquals("row 99", store.row(SpreadsheetSelection.parseRow("99")));
     }
 
     @Test
@@ -214,7 +214,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         checkEquals("column 1", store.column(a.reference().column()), a, b);
         checkEquals("column 2", store.column(c.reference().column()), c, d);
-        checkEquals("column 99", store.column(SpreadsheetColumnOrRowReference.parseColumn("ZZ")));
+        checkEquals("column 99", store.column(SpreadsheetSelection.parseColumn("ZZ")));
     }
 
     @Test

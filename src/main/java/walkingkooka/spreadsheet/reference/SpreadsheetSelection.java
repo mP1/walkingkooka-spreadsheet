@@ -18,10 +18,24 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.collect.Range;
+import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserException;
+import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
+import java.util.function.BiFunction;
+import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
 /**
@@ -118,10 +132,24 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
+     * Creates a new {@link SpreadsheetColumn}
+     */
+    public static SpreadsheetColumnReference column(final int value, final SpreadsheetReferenceKind referenceKind) {
+        return SpreadsheetColumnReference.with(value, referenceKind);
+    }
+
+    /**
      * {@see SpreadsheetLabelName}
      */
     public static SpreadsheetLabelName labelName(final String name) {
         return SpreadsheetLabelName.with(name);
+    }
+
+    /**
+     * Creates a new {@link SpreadsheetRowReference}
+     */
+    public static SpreadsheetRowReference row(final int value, final SpreadsheetReferenceKind referenceKind) {
+        return SpreadsheetRowReference.with(value, referenceKind);
     }
 
     // parse............................................................................................................
@@ -204,6 +232,73 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         return SpreadsheetCellRange.parseCellRange0(text);
     }
 
+    /**
+     * Parsers the text expecting a valid {@link SpreadsheetColumnReference} or fails.
+     */
+    public static SpreadsheetColumnReference parseColumn(final String text) {
+        return parseColumnOrRow(text, COLUMN_PARSER, SpreadsheetColumnReferenceParserToken.class).value();
+    }
+
+    /**
+     * Leverages the {@link SpreadsheetParsers#column()} combined with an error reporter.
+     */
+    private static final Parser<SpreadsheetParserContext> COLUMN_PARSER = SpreadsheetParsers.column().orReport(ParserReporters.basic());
+
+    /**
+     * Parsers a range of columns.
+     */
+    public static Range<SpreadsheetColumnReference> parseColumnRange(final String text) {
+        return Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetColumnReference::parseColumn);
+    }
+
+    /**
+     * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
+     */
+    public static SpreadsheetRowReference parseRow(final String text) {
+        return parseColumnOrRow(text, ROW_PARSER, SpreadsheetRowReferenceParserToken.class).value();
+    }
+
+    /**
+     * Leverages the {@link SpreadsheetParsers#row()} combined with an error reporter.
+     */
+    private static final Parser<SpreadsheetParserContext> ROW_PARSER = SpreadsheetParsers.row().orReport(ParserReporters.basic());
+
+    /**
+     * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
+     */
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    static <T extends SpreadsheetParserToken> T parseColumnOrRow(final String text,
+                                                                 final Parser<SpreadsheetParserContext> parser,
+                                                                 final Class<T> type) {
+        try {
+            return parser.parse(TextCursors.charSequence(text), SpreadsheetReferenceSpreadsheetParserContext.INSTANCE)
+                    .get()
+                    .cast(type);
+        } catch (final ParserException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
+        }
+    }
+
+    /**
+     * Parsers a range of rows.
+     */
+    public static Range<SpreadsheetRowReference> parseRowRange(final String text) {
+        return Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetRowReference::parseRow);
+    }
+
+    final static int CACHE_SIZE = 100;
+
+    /**
+     * Fills an array with what will become a cache of {@link SpreadsheetColumnOrRowReference}.
+     */
+    static <R extends SpreadsheetColumnOrRowReference> R[] fillCache(final IntFunction<R> reference, final R[] array) {
+        for (int i = 0; i < CACHE_SIZE; i++) {
+            array[i] = reference.apply(i);
+        }
+
+        return array;
+    }
+
     SpreadsheetSelection() {
         super();
     }
@@ -243,6 +338,55 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     abstract void accept(final SpreadsheetSelectionVisitor visitor);
 
+    // JsonNodeContext..................................................................................................
+
+    /**
+     * Expects a {@link JsonNode} and returns a {@link SpreadsheetColumnReference}.
+     */
+    static SpreadsheetColumnReference unmarshallColumn(final JsonNode from,
+                                                       final JsonNodeUnmarshallContext context) {
+        return SpreadsheetSelection.parseColumn(from.stringOrFail());
+    }
+
+    /**
+     * Expects a {@link JsonNode} and returns a {@link SpreadsheetRowReference}.
+     */
+    static SpreadsheetRowReference unmarshallRow(final JsonNode from,
+                                                 final JsonNodeUnmarshallContext context) {
+        return SpreadsheetSelection.parseRow(from.stringOrFail());
+    }
+
+    final JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.toString());
+    }
+
+    static {
+        register(
+                SpreadsheetColumnReference::unmarshallColumn,
+                SpreadsheetColumnReference::marshall,
+                SpreadsheetColumnReference.class
+        );
+
+        //noinspection StaticInitializerReferencesSubClass
+        register(
+                SpreadsheetRowReference::unmarshallRow,
+                SpreadsheetRowReference::marshall,
+                SpreadsheetRowReference.class
+        );
+    }
+
+    private static <RR extends SpreadsheetColumnOrRowReference> void register(
+            final BiFunction<JsonNode, JsonNodeUnmarshallContext, RR> from,
+            final BiFunction<RR, JsonNodeMarshallContext, JsonNode> to,
+            final Class<RR> type) {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(type),
+                from,
+                to,
+                type
+        );
+    }
+
     // guards............................................................................................................
 
     static void checkCellRange(final SpreadsheetCellRange range) {
@@ -251,6 +395,10 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     static void checkCellReference(final SpreadsheetCellReference reference) {
         Objects.requireNonNull(reference, "reference");
+    }
+
+    static void checkReferenceKind(final SpreadsheetReferenceKind referenceKind) {
+        Objects.requireNonNull(referenceKind, "referenceKind");
     }
 
     static void checkText(final String text) {
