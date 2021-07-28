@@ -318,6 +318,26 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     abstract void accept(final SpreadsheetSelectionVisitor visitor);
 
+    // Object...........................................................................................................
+
+    @Override
+    public abstract int hashCode();
+
+    @Override
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+    public final boolean equals(final Object other) {
+        return this == other ||
+                this.canBeEqual(other) &&
+                        this.equals0(other);
+    }
+
+    abstract boolean canBeEqual(final Object other);
+
+    abstract boolean equals0(final Object other);
+
+    @Override
+    abstract public String toString();
+
     // JsonNodeContext..................................................................................................
 
 
