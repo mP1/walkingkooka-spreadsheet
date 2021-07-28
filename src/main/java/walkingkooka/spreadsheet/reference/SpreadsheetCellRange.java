@@ -21,7 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.text.CharSequences;
 
 import java.util.Collection;
 import java.util.List;
@@ -35,52 +34,6 @@ import java.util.stream.Stream;
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetCellRange extends SpreadsheetExpressionReference {
-
-    /**
-     * Factory that parses some text holding a range.
-     */
-    static SpreadsheetCellRange parseCellRange0(final String text) {
-        CharSequences.failIfNullOrEmpty(text, "text");
-
-        final int colon = text.indexOf(SEPARATOR);
-
-        return -1 == colon ?
-                cellToRange(parseCellRange1(text, "range", text)) :
-                parseCellRange2(text, colon);
-    }
-
-    private static SpreadsheetCellReference parseCellRange1(final String component,
-                                                            final String label,
-                                                            final String text) {
-        try {
-            return SpreadsheetExpressionReference.parseCellReference(component);
-        } catch (final IllegalArgumentException cause) {
-            throw new IllegalArgumentException("Invalid " + label + " in " + CharSequences.quote(text), cause);
-        }
-    }
-
-    static SpreadsheetCellRange cellToRange(final SpreadsheetCellReference cell) {
-        return with(cell.range(cell));
-    }
-
-    private static SpreadsheetCellRange parseCellRange2(final String text,
-                                                        final int colon) {
-        if (0 == colon) {
-            throw new IllegalArgumentException("Missing begin =" + CharSequences.quote(text));
-        }
-
-        if (colon + SEPARATOR.length() == text.length()) {
-            throw new IllegalArgumentException("Missing end =" + CharSequences.quote(text));
-        }
-
-        return parseCellRange1(text.substring(0, colon), "begin", text)
-                .spreadsheetCellRange(parseCellRange1(text.substring(colon + SEPARATOR.length()), "end", text));
-    }
-
-    /**
-     * Separator between two cell references.
-     */
-    private final static String SEPARATOR = ":";
 
     /**
      * Computes the range of the given cells.

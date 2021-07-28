@@ -348,14 +348,18 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     private void testTrue(final String range,
                           final String cell) {
-        this.testTrue(SpreadsheetCellRange.parseCellRange0(range),
-                SpreadsheetExpressionReference.parseCellReference(cell));
+        this.testTrue(
+                SpreadsheetCellRange.parseCellRange(range),
+                SpreadsheetExpressionReference.parseCellReference(cell)
+        );
     }
 
     private void testFalse(final String range,
                            final String cell) {
-        this.testFalse(SpreadsheetCellRange.parseCellRange0(range),
-                SpreadsheetExpressionReference.parseCellReference(cell));
+        this.testFalse(
+                SpreadsheetCellRange.parseCellRange(range),
+                SpreadsheetExpressionReference.parseCellReference(cell)
+        );
     }
 
     // testCellRange.....................................................................................................
@@ -832,12 +836,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testToStringSingleton() {
-        this.toStringAndCheck(SpreadsheetCellRange.parseCellRange0("Z9"), "Z9");
+        this.toStringAndCheck(SpreadsheetCellRange.parseCellRange("Z9"), "Z9");
     }
 
     @Test
     public void testString() {
-        this.toStringAndCheck(SpreadsheetCellRange.parseCellRange0("C3:D4"), "C3:D4");
+        this.toStringAndCheck(SpreadsheetCellRange.parseCellRange("C3:D4"), "C3:D4");
     }
 
     // helpers .........................................................................................................
@@ -907,27 +911,30 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testParseMissingSeparatorSingleton() {
-        this.parseStringAndCheck("A1", SpreadsheetCellRange.cellToRange(SpreadsheetExpressionReference.parseCellReference("A1")));
+        this.parseStringAndCheck(
+                "A1",
+                SpreadsheetCellRange.with(Range.singleton(SpreadsheetExpressionReference.parseCellReference("A1")))
+        );
     }
 
     @Test
     public void testParseMissingBeginFails() {
-        this.parseStringFails(":A2", IllegalArgumentException.class);
+        this.parseStringFails(":A2", new IllegalArgumentException("Missing begin in \":A2\""));
     }
 
     @Test
     public void testParseMissingEndFails() {
-        this.parseStringFails("A2:", IllegalArgumentException.class);
+        this.parseStringFails("A2:", new IllegalArgumentException("Missing end in \"A2:\""));
     }
 
     @Test
     public void testParseInvalidBeginFails() {
-        this.parseStringFails("##..A2", IllegalArgumentException.class);
+        this.parseStringFails("##:A2", new IllegalArgumentException("Invalid begin in \"##:A2\""));
     }
 
     @Test
     public void testParseInvalidEndFails() {
-        this.parseStringFails("A1:##", IllegalArgumentException.class);
+        this.parseStringFails("A1:##", new IllegalArgumentException("Invalid end in \"A1:##\""));
     }
 
     @Test
@@ -969,17 +976,17 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testJsonNodeUnmarshall() {
-        this.unmarshallAndCheck(JsonNode.string("A1:A2"), SpreadsheetCellRange.parseCellRange0("A1:A2"));
+        this.unmarshallAndCheck(JsonNode.string("A1:A2"), SpreadsheetCellRange.parseCellRange("A1:A2"));
     }
 
     @Test
     public void testJsonNodeMarshall2() {
-        this.marshallAndCheck(SpreadsheetCellRange.parseCellRange0("A1:A2"), JsonNode.string("A1:A2"));
+        this.marshallAndCheck(SpreadsheetCellRange.parseCellRange("A1:A2"), JsonNode.string("A1:A2"));
     }
 
     @Test
     public void testJsonNodeMarshallRoundtrip() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetCellRange.parseCellRange0("A1:A2"));
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetCellRange.parseCellRange("A1:A2"));
     }
 
     //helper.................................................................................................
@@ -1089,7 +1096,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Override
     public SpreadsheetCellRange parseString(final String text) {
-        return SpreadsheetCellRange.parseCellRange0(text);
+        return SpreadsheetCellRange.parseCellRange(text);
     }
 
     @Override

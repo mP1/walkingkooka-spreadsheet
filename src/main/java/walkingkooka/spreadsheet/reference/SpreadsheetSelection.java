@@ -45,6 +45,11 @@ import java.util.function.Predicate;
  */
 public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellReference> {
 
+    /**
+     * Separator by ranges between cells / columns/ rows.
+     */
+    final static String SEPARATOR = ":";
+
     // modes used by isTextCellReference
     private final static int MODE_COLUMN_FIRST = 0;
     private final static int MODE_COLUMN = MODE_COLUMN_FIRST + 1;
@@ -209,7 +214,11 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Parsers the text expecting a valid {@link SpreadsheetCellRange} or fails.
      */
     public static SpreadsheetCellRange parseCellRange(final String text) {
-        return SpreadsheetCellRange.parseCellRange0(text);
+        return SpreadsheetSelection.parseRange(
+                text,
+                SpreadsheetSelection::parseCellReference,
+                SpreadsheetCellReference::spreadsheetCellRange
+        );
     }
 
     /**
@@ -278,6 +287,55 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
         return array;
     }
+
+    // generic parse range helpers......................................................................................
+
+    /**
+     * Factory that parses some text holding a range.
+     */
+    private static <R extends SpreadsheetSelection, C extends SpreadsheetSelection> R parseRange(final String text,
+                                                                                                 final Function<String, C> componentParser,
+                                                                                                 final BiFunction<C, C, R> rangeFactory) {
+        CharSequences.failIfNullOrEmpty(text, "text");
+
+        final C begin;
+        final C end;
+
+        final int separator = text.indexOf(SEPARATOR);
+        switch (separator) {
+            case -1:
+                begin = componentParser.apply(text);
+                end = begin;
+                break;
+            case 0:
+                throw new IllegalArgumentException("Missing begin in " + CharSequences.quote(text));
+            default:
+                if (separator + SEPARATOR.length() == text.length()) {
+                    throw new IllegalArgumentException("Missing end in " + CharSequences.quote(text));
+                }
+
+                begin = parseRange0(text.substring(0, separator), componentParser, "begin", text);
+                end = parseRange0(text.substring(separator + 1), componentParser, "end", text);
+        }
+
+        return rangeFactory.apply(begin, end);
+    }
+
+    /**
+     * Handles parsing a single component within a range of cells, columns or rows.
+     */
+    private static <C extends SpreadsheetSelection> C parseRange0(final String component,
+                                                                  final Function<String, C> componentParser,
+                                                                  final String label,
+                                                                  final String text) {
+        try {
+            return componentParser.apply(component);
+        } catch (final IllegalArgumentException cause) {
+            throw new IllegalArgumentException("Invalid " + label + " in " + CharSequences.quote(text), cause);
+        }
+    }
+
+    // ctor.............................................................................................................
 
     SpreadsheetSelection() {
         super();
