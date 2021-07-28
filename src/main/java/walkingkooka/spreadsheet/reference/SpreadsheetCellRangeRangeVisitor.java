@@ -47,8 +47,7 @@ final class SpreadsheetCellRangeRangeVisitor extends RangeVisitor<SpreadsheetCel
 
     @Override
     protected void singleton(final SpreadsheetCellReference value) {
-        this.topLeft = value;
-        this.bottomRight = value;
+        // nop
     }
 
     @Override
@@ -63,7 +62,7 @@ final class SpreadsheetCellRangeRangeVisitor extends RangeVisitor<SpreadsheetCel
 
     @Override
     protected void lowerBoundInclusive(final SpreadsheetCellReference value) {
-        this.topLeft = value;
+        // nop
     }
 
     @Override
@@ -78,9 +77,6 @@ final class SpreadsheetCellRangeRangeVisitor extends RangeVisitor<SpreadsheetCel
 
     @Override
     protected void upperBoundInclusive(final SpreadsheetCellReference value) {
-        this.bottomRight = value;
+        // nop
     }
-
-    SpreadsheetCellReference topLeft;
-    SpreadsheetCellReference bottomRight;
 }
