@@ -46,21 +46,4 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     // SpreadsheetExpressionReferenceVisitor............................................................................
 
     abstract void accept(final SpreadsheetExpressionReferenceVisitor visitor);
-
-    // Object...........................................................................................................
-
-    @Override
-    public abstract int hashCode();
-
-    @Override
-    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-    public final boolean equals(final Object other) {
-        return this == other ||
-                this.canBeEqual(other) &&
-                        this.equals0(other);
-    }
-
-    abstract boolean canBeEqual(final Object other);
-
-    abstract boolean equals0(final Object other);
 }

@@ -117,31 +117,23 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     }
 
     @Override
-    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-    public final boolean equals(final Object other) {
-        return this == other ||
-                this.canBeEqual(other) &&
-                        this.equals0(Cast.to(other));
+    boolean equals0(final Object other) {
+        return this.equals1(Cast.to(other));
     }
 
-    abstract boolean canBeEqual(Object other);
-
-    private boolean equals0(final SpreadsheetColumnOrRowReference other) {
+    private boolean equals1(final SpreadsheetColumnOrRowReference other) {
         return this.equalsValue(other) &&
                 this.referenceKind == other.referenceKind;
-    }
-
-    final boolean equalsIgnoreReferenceKind0(final SpreadsheetColumnOrRowReference other) {
-        return this == other ||
-                (null != other && this.equalsValue(Cast.to(other)));
     }
 
     final boolean equalsValue(final SpreadsheetColumnOrRowReference other) {
         return this.value == other.value;
     }
 
-    @Override
-    abstract public String toString();
+    final boolean equalsIgnoreReferenceKind0(final SpreadsheetColumnOrRowReference other) {
+        return this == other ||
+                (null != other && this.equalsValue(Cast.to(other)));
+    }
 
     static void checkOther(final SpreadsheetColumnOrRowReference other) {
         Objects.requireNonNull(other, "other");
