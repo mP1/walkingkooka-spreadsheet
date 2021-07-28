@@ -1082,7 +1082,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     @Override
     public SpreadsheetCellRange unmarshall(final JsonNode node,
                                            final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellRange.unmarshallRange(node, context);
+        return SpreadsheetCellRange.unmarshallCellRange(node, context);
     }
 
     // ParseStringTesting..................................................................................................
