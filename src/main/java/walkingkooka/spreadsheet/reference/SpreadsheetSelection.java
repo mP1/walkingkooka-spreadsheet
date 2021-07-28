@@ -28,6 +28,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -35,6 +36,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
@@ -318,12 +320,60 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     // JsonNodeContext..................................................................................................
 
+
+    final JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.toString());
+    }
+
+    /**
+     * Accepts a json string and returns a {@link SpreadsheetCellRange} or fails.
+     */
+    static SpreadsheetCellRange unmarshallCellRange(final JsonNode node,
+                                                    final JsonNodeUnmarshallContext context) {
+        return unmarshall0(
+                node, SpreadsheetExpressionReference::parseCellRange
+        );
+    }
+
+    /**
+     * Accepts a json string and returns a {@link SpreadsheetCellReference} or fails.
+     */
+    static SpreadsheetCellReference unmarshallCellReference(final JsonNode node,
+                                                            final JsonNodeUnmarshallContext context) {
+        return unmarshall0(
+                node,
+                SpreadsheetExpressionReference::parseCellReference
+        );
+    }
+
     /**
      * Expects a {@link JsonNode} and returns a {@link SpreadsheetColumnReference}.
      */
     static SpreadsheetColumnReference unmarshallColumn(final JsonNode from,
                                                        final JsonNodeUnmarshallContext context) {
         return SpreadsheetSelection.parseColumn(from.stringOrFail());
+    }
+
+    /**
+     * Accepts a json string and returns a {@link SpreadsheetExpressionReference} or fails.
+     */
+    static SpreadsheetExpressionReference unmarshallExpressionReference(final JsonNode node,
+                                                                        final JsonNodeUnmarshallContext context) {
+        return unmarshall0(
+                node,
+                SpreadsheetExpressionReference::parseExpressionReference
+        );
+    }
+
+    /**
+     * Accepts a json string and returns a {@link SpreadsheetLabelName} or fails.
+     */
+    static SpreadsheetLabelName unmarshallLabelName(final JsonNode node,
+                                                    final JsonNodeUnmarshallContext context) {
+        return unmarshall0(
+                node,
+                SpreadsheetExpressionReference::labelName
+        );
     }
 
     /**
@@ -334,33 +384,77 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         return SpreadsheetSelection.parseRow(from.stringOrFail());
     }
 
-    final JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonNode.string(this.toString());
+    /**
+     * Accepts a json string and returns a {@link SpreadsheetCellReferenceOrLabelName} or fails.
+     */
+    static SpreadsheetCellReferenceOrLabelName unmarshallSpreadsheetCellReferenceOrLabelName(final JsonNode node,
+                                                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshall0(
+                node,
+                SpreadsheetExpressionReference::parseCellReferenceOrLabelName
+        );
+    }
+
+    /**
+     * Generic helper that tries to convert the node into a string and call a parse method.
+     */
+    private static <R extends ExpressionReference> R unmarshall0(final JsonNode node,
+                                                                 final Function<String, R> parse) {
+        Objects.requireNonNull(node, "node");
+
+        return parse.apply(node.stringOrFail());
     }
 
     static {
         register(
-                SpreadsheetColumnReference::unmarshallColumn,
-                SpreadsheetColumnReference::marshall,
+                SpreadsheetSelection::unmarshallCellReference,
+                SpreadsheetCellReference.class
+        );
+
+        //noinspection StaticInitializerReferencesSubClass
+        register(
+                SpreadsheetSelection::unmarshallCellRange,
+                SpreadsheetCellRange.class
+        );
+
+
+        register(
+                SpreadsheetSelection::unmarshallColumn,
                 SpreadsheetColumnReference.class
         );
 
         //noinspection StaticInitializerReferencesSubClass
         register(
+                SpreadsheetSelection::unmarshallExpressionReference,
+                SpreadsheetExpressionReference.class
+        );
+
+        register(
+                SpreadsheetSelection::unmarshallLabelName,
+                SpreadsheetLabelName.class
+        );
+
+        //noinspection StaticInitializerReferencesSubClass
+        register(
                 SpreadsheetRowReference::unmarshallRow,
-                SpreadsheetRowReference::marshall,
                 SpreadsheetRowReference.class
         );
+
+        //noinspection StaticInitializerReferencesSubClass
+        register(
+                SpreadsheetExpressionReference::unmarshallSpreadsheetCellReferenceOrLabelName,
+                SpreadsheetCellReferenceOrLabelName.class
+        );
+
+        SpreadsheetLabelMapping.init();
     }
 
-    private static <RR extends SpreadsheetColumnOrRowReference> void register(
-            final BiFunction<JsonNode, JsonNodeUnmarshallContext, RR> from,
-            final BiFunction<RR, JsonNodeMarshallContext, JsonNode> to,
-            final Class<RR> type) {
+    private static <T extends SpreadsheetSelection> void register(final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
+                                                                  final Class<T> type) {
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(type),
                 from,
-                to,
+                SpreadsheetSelection::marshall,
                 type
         );
     }

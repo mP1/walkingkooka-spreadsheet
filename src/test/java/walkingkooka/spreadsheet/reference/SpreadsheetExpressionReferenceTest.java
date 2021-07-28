@@ -35,14 +35,16 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     public void testJsonNodeUnmarshallWithCellReference() {
         final String reference = "A1";
         assertEquals(SpreadsheetExpressionReference.parseCellReference(reference),
-                SpreadsheetExpressionReference.unmarshall(JsonNode.string(reference), this.unmarshallContext()));
+                SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(reference), this.unmarshallContext())
+        );
     }
 
     @Test
     public void testJsonNodeUnmarshallWithLabel() {
         final String label = "label123";
         assertEquals(SpreadsheetExpressionReference.labelName(label),
-                SpreadsheetExpressionReference.unmarshall(JsonNode.string(label), this.unmarshallContext()));
+                SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(label), this.unmarshallContext())
+        );
     }
 
     @Test
