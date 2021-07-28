@@ -204,28 +204,6 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
-     * {@see #parse}
-     */
-    public static SpreadsheetExpressionReference parseSpreadsheetExpressionReference(final String text) {
-        checkText(text);
-
-        final SpreadsheetExpressionReference reference;
-
-        switch (text.split(":").length) {
-            case 1:
-                reference = isCellReferenceText(text) ?
-                        parseCellReference(text) :
-                        labelName(text);
-                break;
-            default:
-                reference = parseCellRange(text);
-                break;
-        }
-
-        return reference;
-    }
-
-    /**
      * Parsers the text expecting a valid {@link SpreadsheetCellRange} or fails.
      */
     public static SpreadsheetCellRange parseCellRange(final String text) {
