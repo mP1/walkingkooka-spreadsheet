@@ -236,8 +236,10 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     /**
      * Parsers a range of columns.
      */
-    public static Range<SpreadsheetColumnReference> parseColumnRange(final String text) {
-        return Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetColumnReference::parseColumn);
+    public static SpreadsheetColumnReferenceRange parseColumnRange(final String text) {
+        return SpreadsheetColumnReferenceRange.with(
+                Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetColumnReference::parseColumn)
+        );
     }
 
     /**
@@ -358,6 +360,10 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         return this instanceof SpreadsheetColumnReference;
     }
 
+    public final boolean isColumnReferenceRange() {
+        return this instanceof SpreadsheetColumnReferenceRange;
+    }
+
     public final boolean isLabelName() {
         return this instanceof SpreadsheetLabelName;
     }
@@ -433,6 +439,14 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
+     * Expects a {@link JsonNode} and returns a {@link SpreadsheetColumnReferenceRange}.
+     */
+    static SpreadsheetColumnReferenceRange unmarshallColumnRange(final JsonNode from,
+                                                                 final JsonNodeUnmarshallContext context) {
+        return SpreadsheetSelection.parseColumnRange(from.stringOrFail());
+    }
+
+    /**
      * Accepts a json string and returns a {@link SpreadsheetExpressionReference} or fails.
      */
     static SpreadsheetExpressionReference unmarshallExpressionReference(final JsonNode node,
@@ -499,6 +513,11 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         register(
                 SpreadsheetSelection::unmarshallColumn,
                 SpreadsheetColumnReference.class
+        );
+
+        register(
+                SpreadsheetSelection::unmarshallColumnRange,
+                SpreadsheetColumnReferenceRange.class
         );
 
         //noinspection StaticInitializerReferencesSubClass

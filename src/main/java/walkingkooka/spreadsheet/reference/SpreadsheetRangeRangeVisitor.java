@@ -26,17 +26,17 @@ import java.util.Objects;
  * A {@link RangeVisitor} used to validate the range is both bounds and they are inclusive. All other forms will
  * throw a {@link IllegalArgumentException}.
  */
-final class SpreadsheetCellRangeRangeVisitor extends RangeVisitor<SpreadsheetCellReference> {
+final class SpreadsheetRangeRangeVisitor<S extends SpreadsheetSelection & Comparable<S>> extends RangeVisitor<S> {
 
     // called by SpreadsheetCellRange
-    static void check(final Range<SpreadsheetCellReference> range) {
+    static <S extends SpreadsheetSelection & Comparable<S>> void check(final Range<S> range) {
         Objects.requireNonNull(range, "range");
 
-        final SpreadsheetCellRangeRangeVisitor visitor = new SpreadsheetCellRangeRangeVisitor();
-        visitor.accept(range);
+        new SpreadsheetRangeRangeVisitor<S>()
+                .accept(range);
     }
 
-    private SpreadsheetCellRangeRangeVisitor() {
+    private SpreadsheetRangeRangeVisitor() {
         super();
     }
 
@@ -46,7 +46,7 @@ final class SpreadsheetCellRangeRangeVisitor extends RangeVisitor<SpreadsheetCel
     }
 
     @Override
-    protected void singleton(final SpreadsheetCellReference value) {
+    protected void singleton(final S value) {
         // nop
     }
 
@@ -56,12 +56,12 @@ final class SpreadsheetCellRangeRangeVisitor extends RangeVisitor<SpreadsheetCel
     }
 
     @Override
-    protected void lowerBoundExclusive(final SpreadsheetCellReference value) {
+    protected void lowerBoundExclusive(final S value) {
         throw new IllegalArgumentException("Range lower bounds must be inclusive: " + value);
     }
 
     @Override
-    protected void lowerBoundInclusive(final SpreadsheetCellReference value) {
+    protected void lowerBoundInclusive(final S value) {
         // nop
     }
 
@@ -71,12 +71,12 @@ final class SpreadsheetCellRangeRangeVisitor extends RangeVisitor<SpreadsheetCel
     }
 
     @Override
-    protected void upperBoundExclusive(final SpreadsheetCellReference value) {
+    protected void upperBoundExclusive(final S value) {
         throw new IllegalArgumentException("Range upper bounds must be inclusive: " + value);
     }
 
     @Override
-    protected void upperBoundInclusive(final SpreadsheetCellReference value) {
+    protected void upperBoundInclusive(final S value) {
         // nop
     }
 }
