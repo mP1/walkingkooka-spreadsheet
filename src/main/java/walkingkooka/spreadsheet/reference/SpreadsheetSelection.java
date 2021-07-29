@@ -146,6 +146,13 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
+     * Creates a new {@link SpreadsheetColumnReferenceRange}
+     */
+    public static SpreadsheetColumnReferenceRange columnRange(final Range<SpreadsheetColumnReference> range) {
+        return SpreadsheetColumnReferenceRange.with(range);
+    }
+
+    /**
      * {@see SpreadsheetLabelName}
      */
     public static SpreadsheetLabelName labelName(final String name) {
@@ -157,6 +164,13 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      */
     public static SpreadsheetRowReference row(final int value, final SpreadsheetReferenceKind referenceKind) {
         return SpreadsheetRowReference.with(value, referenceKind);
+    }
+
+    /**
+     * Creates a new {@link SpreadsheetRowReferenceRange}
+     */
+    public static SpreadsheetRowReferenceRange rowRange(final Range<SpreadsheetRowReference> range) {
+        return SpreadsheetRowReferenceRange.with(range);
     }
 
     // parse............................................................................................................

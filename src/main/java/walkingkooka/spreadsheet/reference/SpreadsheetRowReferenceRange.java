@@ -29,7 +29,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     /**
      * Factory that creates a {@link SpreadsheetRowReferenceRange}
      */
-    public static SpreadsheetRowReferenceRange with(final Range<SpreadsheetRowReference> range) {
+    static SpreadsheetRowReferenceRange with(final Range<SpreadsheetRowReference> range) {
         SpreadsheetRangeRangeVisitor.check(range);
 
         return new SpreadsheetRowReferenceRange(range);

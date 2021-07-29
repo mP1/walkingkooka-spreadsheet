@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.collect.Range;
 
-import java.util.Objects;
-
 /**
  * Holds a column range.
  */
@@ -31,7 +29,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     /**
      * Factory that creates a {@link SpreadsheetColumnReferenceRange}
      */
-    public static SpreadsheetColumnReferenceRange with(final Range<SpreadsheetColumnReference> range) {
+    static SpreadsheetColumnReferenceRange with(final Range<SpreadsheetColumnReference> range) {
         SpreadsheetRangeRangeVisitor.check(range);
 
         return new SpreadsheetColumnReferenceRange(range);
