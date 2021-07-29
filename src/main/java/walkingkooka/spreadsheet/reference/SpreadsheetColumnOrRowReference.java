@@ -25,6 +25,7 @@ import java.util.Objects;
 /**
  * Captures the common features shared by a row or column.
  */
+@SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelection implements Value<Integer> {
 
     /**
