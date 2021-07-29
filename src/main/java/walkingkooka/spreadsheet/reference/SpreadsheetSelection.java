@@ -237,8 +237,10 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Parsers a range of columns.
      */
     public static SpreadsheetColumnReferenceRange parseColumnRange(final String text) {
-        return SpreadsheetColumnReferenceRange.with(
-                Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetColumnReference::parseColumn)
+        return SpreadsheetSelection.parseRange(
+                text,
+                SpreadsheetSelection::parseColumn,
+                SpreadsheetColumnReference::spreadsheetColumnRange
         );
     }
 
@@ -274,8 +276,10 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Parsers a range of rows.
      */
     public static SpreadsheetRowReferenceRange parseRowRange(final String text) {
-        return SpreadsheetRowReferenceRange.with(
-                Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetRowReference::parseRow)
+        return SpreadsheetSelection.parseRange(
+                text,
+                SpreadsheetSelection::parseRow,
+                SpreadsheetRowReference::spreadsheetRowRange
         );
     }
 
