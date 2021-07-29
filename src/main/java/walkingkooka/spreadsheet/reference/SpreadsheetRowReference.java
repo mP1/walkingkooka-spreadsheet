@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.Range;
 
 import java.util.Objects;
 
@@ -157,6 +158,32 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
 
         return this.compareTo(range.begin().row()) >= 0 &&
                 this.compareTo(range.end().row()) <= 0;
+    }
+
+    // range/spreadsheetRowRange.......................................................................................
+
+    /**
+     * Creates a {@link Range} from the this and the other {@link SpreadsheetRowReference}.
+     */
+    public Range<SpreadsheetRowReference> range(final SpreadsheetRowReference other) {
+        Objects.requireNonNull(other, "other");
+
+        return Range.greaterThanEquals(this)
+                .and(Range.lessThanEquals(other));
+    }
+
+    /**
+     * Creates a {@link SpreadsheetRowReferenceRange} from the this and the other {@link SpreadsheetRowReference}.
+     */
+    public SpreadsheetRowReferenceRange spreadsheetRowRange(final SpreadsheetRowReference other) {
+        return SpreadsheetRowReferenceRange.with(this.range(other));
+    }
+
+    /**
+     * Returns a {@link SpreadsheetRowReferenceRange} holding only this row.
+     */
+    public SpreadsheetRowReferenceRange toSpreadsheetRowReferenceRange() {
+        return SpreadsheetRowReferenceRange.with(Range.singleton(this));
     }
 
     // toRelative.......................................................................................................
