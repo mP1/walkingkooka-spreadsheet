@@ -181,19 +181,25 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.parseStringAndCheck("2", SpreadsheetReferenceKind.RELATIVE.row(1));
     }
 
-    // parseColumnRange....................................................................................................
+    // parseRowRange....................................................................................................
 
     @Test
     public void testParseRange() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetSelection.parseRow("2"))
-                        .and(Range.lessThanEquals(SpreadsheetSelection.parseRow("4"))),
+        assertEquals(
+                SpreadsheetRowReferenceRange.with(
+                        Range.greaterThanEquals(SpreadsheetSelection.parseRow("2"))
+                                .and(Range.lessThanEquals(SpreadsheetSelection.parseRow("4")))
+                ),
                 SpreadsheetSelection.parseRowRange("2:4"));
     }
 
     @Test
     public void testParseRange2() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetSelection.parseRow("$2"))
-                        .and(Range.lessThanEquals(SpreadsheetSelection.parseRow("$5"))),
+        assertEquals(
+                SpreadsheetRowReferenceRange.with(
+                        Range.greaterThanEquals(SpreadsheetSelection.parseRow("$2"))
+                                .and(Range.lessThanEquals(SpreadsheetSelection.parseRow("$5")))
+                ),
                 SpreadsheetSelection.parseRowRange("$2:$5"));
     }
 

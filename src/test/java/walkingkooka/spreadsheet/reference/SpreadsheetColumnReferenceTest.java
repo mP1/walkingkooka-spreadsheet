@@ -255,15 +255,21 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testParseRange() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetSelection.parseColumn("B"))
-                        .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("D"))),
+        assertEquals(
+                SpreadsheetColumnReferenceRange.with(
+                        Range.greaterThanEquals(SpreadsheetSelection.parseColumn("B"))
+                                .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("D")))
+                ),
                 SpreadsheetSelection.parseColumnRange("B:D"));
     }
 
     @Test
     public void testParseRange2() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetSelection.parseColumn("$B"))
-                        .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("$D"))),
+        assertEquals(
+                SpreadsheetColumnReferenceRange.with(
+                        Range.greaterThanEquals(SpreadsheetSelection.parseColumn("$B"))
+                        .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("$D")))
+                ),
                 SpreadsheetSelection.parseColumnRange("$B:$D"));
     }
 

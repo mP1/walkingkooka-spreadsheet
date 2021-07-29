@@ -155,6 +155,26 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                         SpreadsheetSelection.parseRow("1")));
     }
 
+    // parseColumnReference...............................................................................................
+
+    @Test
+    public void testParseColumnReference() {
+        assertEquals(
+                SpreadsheetSelection.parseColumn("B")
+                        .spreadsheetColumnRange(SpreadsheetSelection.parseColumn("D")),
+                SpreadsheetExpressionReference.parseColumnRange("B:D")
+        );
+    }
+
+    @Test
+    public void testParseColumnReferenceSingleton() {
+        assertEquals(
+                SpreadsheetSelection.parseColumn("B")
+                        .toSpreadsheetColumnReferenceRange(),
+                SpreadsheetExpressionReference.parseColumnRange("B")
+        );
+    }
+    
     // ParseString...............................................................................................
 
     @Test
