@@ -71,4 +71,8 @@ public abstract class SpreadsheetSelectionVisitor extends Visitor<SpreadsheetSel
     protected void visit(final SpreadsheetRowReference reference) {
         // nop
     }
+
+    protected void visit(final SpreadsheetRowReferenceRange range) {
+        // nop
+    }
 }

@@ -66,6 +66,44 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         return SpreadsheetColumnReference.parseColumn("A");
     }
 
+    // range............................................................................................................
+
+    @Test
+    public void testRange() {
+        final SpreadsheetRowReference lower = SpreadsheetSelection.parseRow("2");
+        final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("4");
+
+        assertEquals(
+                Range.greaterThanEquals(lower).and(Range.lessThanEquals(upper)),
+                lower.range(upper)
+        );
+    }
+
+    // spreadsheetRowRange..............................................................................................
+
+    @Test
+    public void testSpreadsheetRowRange() {
+        final SpreadsheetRowReference lower = SpreadsheetSelection.parseRow("2");
+        final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("4");
+
+        assertEquals(
+                SpreadsheetSelection.parseRowRange("2:4"),
+                lower.spreadsheetRowRange(upper)
+        );
+    }
+
+    // toSpreadsheetRowRange..............................................................................................
+
+    @Test
+    public void testToSpreadsheetRowRange() {
+        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("2");
+
+        assertEquals(
+                SpreadsheetSelection.parseRowRange("2"),
+                row.toSpreadsheetRowReferenceRange()
+        );
+    }
+
     // toRelative........................................................................................................
 
     @Test

@@ -273,8 +273,10 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     /**
      * Parsers a range of rows.
      */
-    public static Range<SpreadsheetRowReference> parseRowRange(final String text) {
-        return Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetRowReference::parseRow);
+    public static SpreadsheetRowReferenceRange parseRowRange(final String text) {
+        return SpreadsheetRowReferenceRange.with(
+                Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetRowReference::parseRow)
+        );
     }
 
     final static int CACHE_SIZE = 100;
@@ -370,6 +372,10 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     public final boolean isRowReference() {
         return this instanceof SpreadsheetRowReference;
+    }
+
+    public final boolean isRowReferenceRange() {
+        return this instanceof SpreadsheetRowReferenceRange;
     }
 
     /**
@@ -477,6 +483,14 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
+     * Expects a {@link JsonNode} and returns a {@link SpreadsheetRowReference}.
+     */
+    static SpreadsheetRowReferenceRange unmarshallRowRange(final JsonNode from,
+                                                           final JsonNodeUnmarshallContext context) {
+        return SpreadsheetSelection.parseRowRange(from.stringOrFail());
+    }
+
+    /**
      * Accepts a json string and returns a {@link SpreadsheetCellReferenceOrLabelName} or fails.
      */
     static SpreadsheetCellReferenceOrLabelName unmarshallSpreadsheetCellReferenceOrLabelName(final JsonNode node,
@@ -535,6 +549,11 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         register(
                 SpreadsheetRowReference::unmarshallRow,
                 SpreadsheetRowReference.class
+        );
+
+        register(
+                SpreadsheetSelection::unmarshallRowRange,
+                SpreadsheetRowReferenceRange.class
         );
 
         //noinspection StaticInitializerReferencesSubClass
