@@ -65,7 +65,89 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.testFalse(SpreadsheetCellReference.parseCellReference("E5"));
     }
 
+    // testCellRange....................................................................................................
 
+    @Test
+    public void testTestCellRangeBefore() {
+        this.testCellRangeAndCheck2(
+                "1:1",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testTestCellRangeBefore2() {
+        this.testCellRangeAndCheck2(
+                "1:2",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testTestCellRangeLeftOverlap() {
+        this.testCellRangeAndCheck2(
+                "1:3",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testTestCellRangeInside() {
+        this.testCellRangeAndCheck2(
+                "4:5",
+                "C3:F6",
+                true
+        );
+    }
+
+    @Test
+    public void testTestCellRangeRightOverlap() {
+        this.testCellRangeAndCheck2(
+                "4:5",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testTestCellRangeAll() {
+        this.testCellRangeAndCheck2(
+                "1:5",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testTestCellRangeAfter() {
+        this.testCellRangeAndCheck2(
+                "5:5",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testTestCellRangeAfter2() {
+        this.testCellRangeAndCheck2(
+                "5:6",
+                "C3:D4",
+                false
+        );
+    }
+
+    private void testCellRangeAndCheck2(final String rowRange,
+                                        final String cellRange,
+                                        final boolean expected) {
+        this.testCellRangeAndCheck(
+                SpreadsheetSelection.parseRowRange(rowRange),
+                SpreadsheetSelection.parseCellRange(cellRange),
+                expected
+        );
+    }
 
     // SpreadsheetSelectionVisitor......................................................................................
 
