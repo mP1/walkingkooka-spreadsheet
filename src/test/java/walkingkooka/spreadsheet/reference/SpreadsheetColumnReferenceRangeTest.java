@@ -65,6 +65,90 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.testFalse(SpreadsheetCellReference.parseCellReference("E1"));
     }
 
+    // testCellRange....................................................................................................
+
+    @Test
+    public void testTestCellRangeBefore() {
+        this.testCellRangeAndCheck2(
+                "A:A",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testTestCellRangeBefore2() {
+        this.testCellRangeAndCheck2(
+                "A:B",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testTestCellRangeLeftOverlap() {
+        this.testCellRangeAndCheck2(
+                "A:C",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testTestCellRangeInside() {
+        this.testCellRangeAndCheck2(
+                "D:E",
+                "C3:F6",
+                true
+        );
+    }
+
+    @Test
+    public void testTestCellRangeRightOverlap() {
+        this.testCellRangeAndCheck2(
+                "D:E",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testTestCellRangeAll() {
+        this.testCellRangeAndCheck2(
+                "A:E",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testTestCellRangeAfter() {
+        this.testCellRangeAndCheck2(
+                "E:E",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testTestCellRangeAfter2() {
+        this.testCellRangeAndCheck2(
+                "E:F",
+                "C3:D4",
+                false
+        );
+    }
+
+    private void testCellRangeAndCheck2(final String columnRange,
+                                        final String cellRange,
+                                        final boolean expected) {
+        this.testCellRangeAndCheck(
+                SpreadsheetSelection.parseColumnRange(columnRange),
+                SpreadsheetSelection.parseCellRange(cellRange),
+                expected
+        );
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test
