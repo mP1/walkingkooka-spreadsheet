@@ -124,8 +124,45 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
-    // toRelative........................................................................................................
+    // range............................................................................................................
 
+    @Test
+    public void testRange() {
+        final SpreadsheetColumnReference lower = SpreadsheetSelection.parseColumn("B");
+        final SpreadsheetColumnReference upper = SpreadsheetSelection.parseColumn("D");
+
+        assertEquals(
+                Range.greaterThanEquals(lower).and(Range.lessThanEquals(upper)),
+                lower.range(upper)
+        );
+    }
+
+    // spreadsheetColumnRange..............................................................................................
+
+    @Test
+    public void testSpreadsheetColumnRange() {
+        final SpreadsheetColumnReference lower = SpreadsheetSelection.parseColumn("B");
+        final SpreadsheetColumnReference upper = SpreadsheetSelection.parseColumn("D");
+
+        assertEquals(
+                SpreadsheetSelection.parseColumnRange("B:D"),
+                lower.spreadsheetColumnRange(upper)
+        );
+    }
+
+    // toSpreadsheetColumnRange..............................................................................................
+
+    @Test
+    public void testToSpreadsheetColumnRange() {
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("C");
+
+        assertEquals(
+                SpreadsheetSelection.parseColumnRange("C"),
+                column.toSpreadsheetColumnReferenceRange()
+        );
+    }
+
+    // toRelative........................................................................................................
 
     @Test
     public void testToRelativeAbsolute() {
