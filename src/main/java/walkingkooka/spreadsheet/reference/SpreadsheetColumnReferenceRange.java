@@ -53,7 +53,8 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
 
     @Override
     public boolean testCellRange(final SpreadsheetCellRange range) {
-        throw new UnsupportedOperationException();
+        return this.end().compareTo(range.begin().column()) >= 0 &&
+                this.begin().compareTo(range.end().column()) <= 0;
     }
 
     @Override
