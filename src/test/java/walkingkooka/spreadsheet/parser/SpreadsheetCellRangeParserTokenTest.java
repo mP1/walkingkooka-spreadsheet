@@ -134,6 +134,6 @@ public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinary
     @Override
     public SpreadsheetCellRangeParserToken unmarshall(final JsonNode from,
                                                       final JsonNodeUnmarshallContext context) {
-        return SpreadsheetParserToken.unmarshallRange(from, context);
+        return SpreadsheetParserToken.unmarshallCellRange(from, context);
     }
 }
