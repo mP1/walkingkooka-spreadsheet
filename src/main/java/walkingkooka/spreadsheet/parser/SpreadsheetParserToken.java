@@ -1851,7 +1851,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
 
         registerParentParserToken(
                 SpreadsheetCellRangeParserToken.class,
-                SpreadsheetParserToken::unmarshallRange
+                SpreadsheetParserToken::unmarshallCellRange
         );
 
         registerParentParserToken(
@@ -1901,6 +1901,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::addition
+        );
+    }
+
+    static SpreadsheetCellRangeParserToken unmarshallCellRange(final JsonNode node,
+                                                               final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::cellRange
         );
     }
 
@@ -2009,15 +2018,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::power
-        );
-    }
-
-    static SpreadsheetCellRangeParserToken unmarshallRange(final JsonNode node,
-                                                           final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
-                node,
-                context,
-                SpreadsheetParserToken::cellRange
         );
     }
 
