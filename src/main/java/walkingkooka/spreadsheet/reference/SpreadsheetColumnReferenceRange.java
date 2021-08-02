@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.collect.Range;
 
-import java.util.Objects;
-
 /**
  * Holds a column range.
  */
@@ -57,7 +55,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
      * Creates a {@link SpreadsheetCellRange} combining this column range and the given row range.
      */
     public SpreadsheetCellRange setRowReferenceRange(final SpreadsheetRowReferenceRange row) {
-        Objects.requireNonNull(row, "row");
+        checkRowReferenceRange(row);
 
         final SpreadsheetColumnReference columnBegin = this.begin();
         final SpreadsheetRowReference rowBegin = row.begin();
