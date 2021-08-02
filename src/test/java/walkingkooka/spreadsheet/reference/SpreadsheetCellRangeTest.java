@@ -35,6 +35,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -212,6 +213,55 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         final SpreadsheetCellRange range = this.range();
         final SpreadsheetCellRange different = range.setRange(this.cellReference(88, 99).range(this.cellReference(1, 2)));
         this.check(different, 1, 2, 88, 99);
+    }
+
+    // columnReferenceRange.............................................................................................
+
+    @Test
+    public void testColumnReferenceRange() {
+        this.columnReferenceRangeAndCheck("B2:D4", "B:D");
+    }
+
+    @Test
+    public void testColumnReferenceRangeSingleton() {
+        this.columnReferenceRangeAndCheck("B2:B4", "B");
+    }
+
+    private void columnReferenceRangeAndCheck(final String cell,
+                                              final String column) {
+        assertEquals(
+                SpreadsheetSelection.parseColumnRange(column),
+                SpreadsheetSelection.parseCellRange(cell).columnReferenceRange(),
+                () -> cell + ".columnReferenceRange()"
+        );
+    }
+
+    // SetColumnReferenceRange.............................................................................................
+
+    @Test
+    public void testSetColumnReferenceRangeNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createSelection().setColumnReferenceRange(null));
+    }
+
+    @Test
+    public void testSetColumnReferenceRangeSame() {
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
+        assertSame(range, range.setColumnReferenceRange(SpreadsheetSelection.parseColumnRange("B:D")));
+    }
+
+    @Test
+    public void testSetColumnReferenceRangeDifferent() {
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
+        final SpreadsheetColumnReferenceRange columns = SpreadsheetSelection.parseColumnRange("F:G");
+        final SpreadsheetCellRange different = range.setColumnReferenceRange(columns);
+
+        assertNotSame(range, different);
+        assertEquals(
+                SpreadsheetSelection.parseCellRange("F2:G4"),
+                different
+        );
+
+        assertEquals(columns, different.columnReferenceRange());
     }
 
     // test.............................................................................................................
