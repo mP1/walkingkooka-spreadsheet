@@ -26,6 +26,7 @@ import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumnOrRowReferenceRangeTestCase<SpreadsheetColumnReferenceRange, SpreadsheetColumnReference> {
 
@@ -146,6 +147,38 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
                 SpreadsheetSelection.parseColumnRange(columnRange),
                 SpreadsheetSelection.parseCellRange(cellRange),
                 expected
+        );
+    }
+
+    // setRowReferenceRange............................................................................................
+
+    @Test
+    public void testSetRowReferenceRangeNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createSelection().setRowReferenceRange(null));
+    }
+
+    @Test
+    public void testSetRowReferenceRange() {
+        this.setRowReferenceRangeAndCheck("B:D", "2:4", "B2:D4");
+    }
+
+    @Test
+    public void testSetRowReferenceRange2() {
+        this.setRowReferenceRangeAndCheck("B", "2", "B2");
+    }
+
+    @Test
+    public void testSetRowReferenceRange3() {
+        this.setRowReferenceRangeAndCheck("B:D", "2", "B2:D2");
+    }
+
+    private void setRowReferenceRangeAndCheck(final String column,
+                                              final String row,
+                                              final String range) {
+        assertEquals(
+                SpreadsheetSelection.parseCellRange(range),
+                SpreadsheetSelection.parseColumnRange(column).setRowReferenceRange(SpreadsheetSelection.parseRowRange(row)),
+                () -> column + " setRowReferenceRange " + row
         );
     }
 
