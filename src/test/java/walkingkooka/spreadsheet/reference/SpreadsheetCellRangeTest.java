@@ -264,6 +264,55 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         assertEquals(columns, different.columnReferenceRange());
     }
 
+    // rowReferenceRange.............................................................................................
+
+    @Test
+    public void testRowReferenceRange() {
+        this.rowReferenceRangeAndCheck("B2:D4", "2:4");
+    }
+
+    @Test
+    public void testRowReferenceRangeSingleton() {
+        this.rowReferenceRangeAndCheck("B2:D2", "2");
+    }
+
+    private void rowReferenceRangeAndCheck(final String cell,
+                                           final String row) {
+        assertEquals(
+                SpreadsheetSelection.parseRowRange(row),
+                SpreadsheetSelection.parseCellRange(cell).rowReferenceRange(),
+                () -> cell + ".rowReferenceRange()"
+        );
+    }
+
+    // SetRowReferenceRange.............................................................................................
+
+    @Test
+    public void testSetRowReferenceRangeNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createSelection().setRowReferenceRange(null));
+    }
+
+    @Test
+    public void testSetRowReferenceRangeSame() {
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
+        assertSame(range, range.setRowReferenceRange(SpreadsheetSelection.parseRowRange("2:4")));
+    }
+
+    @Test
+    public void testSetRowReferenceRangeDifferent() {
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
+        final SpreadsheetRowReferenceRange rows = SpreadsheetSelection.parseRowRange("6:7");
+        final SpreadsheetCellRange different = range.setRowReferenceRange(rows);
+
+        assertNotSame(range, different);
+        assertEquals(
+                SpreadsheetSelection.parseCellRange("B6:D7"),
+                different
+        );
+
+        assertEquals(rows, different.rowReferenceRange());
+    }
+
     // test.............................................................................................................
 
     @Test

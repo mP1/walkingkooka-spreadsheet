@@ -167,6 +167,33 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference {
     }
 
     /**
+     * Getter that returns the {@link SpreadsheetRowReferenceRange} component.
+     */
+    public SpreadsheetRowReferenceRange rowReferenceRange() {
+        return rowRange(
+                Range.greaterThanEquals(this.begin().row())
+                        .and(
+                                Range.lessThanEquals(this.end().row())
+                        )
+        );
+    }
+
+    /**
+     * Would be setter that combines the new column reference range and the current column reference range,
+     * returning a {@link SpreadsheetCellRange} with the result.
+     */
+    public SpreadsheetCellRange setRowReferenceRange(final SpreadsheetRowReferenceRange rowReferenceRange) {
+        checkRowReferenceRange(rowReferenceRange);
+
+        return this.setRange(
+                Range.greaterThanEquals(this.begin().column().setRow(rowReferenceRange.begin()))
+                        .and(
+                                Range.lessThanEquals(this.end().column().setRow(rowReferenceRange.end()))
+                        )
+        );
+    }
+
+    /**
      * Returns true only if this range covers a single cell.
      */
     public boolean isSingleCell() {
