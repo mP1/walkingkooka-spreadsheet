@@ -610,6 +610,10 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         Objects.requireNonNull(reference, "reference");
     }
 
+    static SpreadsheetColumnReferenceRange checkColumnReferenceRange(final SpreadsheetColumnReferenceRange columnReferenceRange) {
+        return Objects.requireNonNull(columnReferenceRange, "columnReferenceRange");
+    }
+
     static void checkReferenceKind(final SpreadsheetReferenceKind referenceKind) {
         Objects.requireNonNull(referenceKind, "referenceKind");
     }
