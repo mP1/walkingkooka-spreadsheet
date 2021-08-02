@@ -90,7 +90,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference {
     /**
      * Factory that creates a {@link SpreadsheetCellRange}
      */
-    public static SpreadsheetCellRange with(final Range<SpreadsheetCellReference> range) {
+    static SpreadsheetCellRange with(final Range<SpreadsheetCellReference> range) {
         SpreadsheetRangeRangeVisitor.check(range);
 
         return new SpreadsheetCellRange(range);
