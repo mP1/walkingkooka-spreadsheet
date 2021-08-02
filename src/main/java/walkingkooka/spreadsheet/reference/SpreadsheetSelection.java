@@ -131,6 +131,13 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     // sub class factories..............................................................................................
 
     /**
+     * {@see SpreadsheetCellRange}
+     */
+    public static SpreadsheetCellRange cellRange(final Range<SpreadsheetCellReference> range) {
+        return SpreadsheetCellRange.with(range);
+    }
+
+    /**
      * {@see SpreadsheetCellReference}
      */
     public static SpreadsheetCellReference cellReference(final SpreadsheetColumnReference column,
