@@ -34,7 +34,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     @Test
     public void testJsonNodeUnmarshallWithCellReference() {
         final String reference = "A1";
-        assertEquals(SpreadsheetExpressionReference.parseCellReference(reference),
+        assertEquals(SpreadsheetExpressionReference.parseCell(reference),
                 SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(reference), this.unmarshallContext())
         );
     }
@@ -49,7 +49,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
 
     @Test
     public void testJsonRoundtripCellReference() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.parseCellReference("A1"));
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.parseCell("A1"));
     }
 
     @Test

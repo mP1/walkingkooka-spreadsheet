@@ -75,7 +75,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final SpreadsheetCell cell(final String cellReference, final String formulaText) {
-        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference(cellReference), SpreadsheetFormula.with(formulaText));
+        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell(cellReference), SpreadsheetFormula.with(formulaText));
     }
 
     final void checkCells(final SpreadsheetDelta delta) {
@@ -108,7 +108,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                            final Set<SpreadsheetLabelMapping> labels) {
         assertEquals(labels, delta.labels(), "labels");
         assertThrows(UnsupportedOperationException.class, () -> delta.labels()
-                .add(SpreadsheetLabelName.labelName("LabelZ").mapping(SpreadsheetCellReference.parseCellReference("Z9")))
+                .add(SpreadsheetLabelName.labelName("LabelZ").mapping(SpreadsheetCellReference.parseCell("Z9")))
         );
     }
 

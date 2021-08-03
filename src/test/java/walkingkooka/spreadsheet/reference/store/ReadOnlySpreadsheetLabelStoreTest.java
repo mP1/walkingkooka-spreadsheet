@@ -122,7 +122,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     @Override
     public void testLabelsWithCellReference() {
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LabelZ99");
-        final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCellReference("Z99");
+        final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCell("Z99");
 
         this.labelsAndCheck(ReadOnlySpreadsheetLabelStore.with(new FakeSpreadsheetLabelStore() {
                     @Override
@@ -171,7 +171,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     private SpreadsheetCellReference reference() {
-        return SpreadsheetExpressionReference.parseCellReference("A1");
+        return SpreadsheetExpressionReference.parseCell("A1");
     }
 
     @Override

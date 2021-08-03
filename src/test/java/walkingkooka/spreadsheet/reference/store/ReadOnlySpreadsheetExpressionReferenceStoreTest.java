@@ -214,31 +214,31 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
     }
 
     private SpreadsheetCellReference a1() {
-        return SpreadsheetExpressionReference.parseCellReference("A1");
+        return SpreadsheetExpressionReference.parseCell("A1");
     }
 
     private SpreadsheetCellReference b1() {
-        return SpreadsheetExpressionReference.parseCellReference("b1");
+        return SpreadsheetExpressionReference.parseCell("b1");
     }
 
     private SpreadsheetCellReference c1() {
-        return SpreadsheetExpressionReference.parseCellReference("c1");
+        return SpreadsheetExpressionReference.parseCell("c1");
     }
 
     private SpreadsheetCellReference f99() {
-        return SpreadsheetExpressionReference.parseCellReference("f99");
+        return SpreadsheetExpressionReference.parseCell("f99");
     }
 
     private SpreadsheetCellReference g99() {
-        return SpreadsheetExpressionReference.parseCellReference("g99");
+        return SpreadsheetExpressionReference.parseCell("g99");
     }
 
     private SpreadsheetCellReference h99() {
-        return SpreadsheetExpressionReference.parseCellReference("h99");
+        return SpreadsheetExpressionReference.parseCell("h99");
     }
 
     private SpreadsheetCellReference i99() {
-        return SpreadsheetExpressionReference.parseCellReference("i99");
+        return SpreadsheetExpressionReference.parseCell("i99");
     }
 
     @Override

@@ -60,7 +60,7 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionTest imple
 
     @Test
     public void testCell() {
-        final SpreadsheetCellReference z99 = SpreadsheetExpressionReference.parseCellReference("Z99");
+        final SpreadsheetCellReference z99 = SpreadsheetExpressionReference.parseCell("Z99");
         this.applyAndCheck(z99, Optional.of(z99));
     }
 
@@ -112,7 +112,7 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionTest imple
     }
 
     private SpreadsheetCellReference cellB1() {
-        return SpreadsheetExpressionReference.parseCellReference("B1");
+        return SpreadsheetExpressionReference.parseCell("B1");
     }
 
     private SpreadsheetLabelName labelRangeC1D2() {
@@ -124,11 +124,11 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionTest imple
     }
 
     private SpreadsheetCellReference cellC1() {
-        return SpreadsheetExpressionReference.parseCellReference("C1");
+        return SpreadsheetExpressionReference.parseCell("C1");
     }
 
     private SpreadsheetCellReference cellC2() {
-        return SpreadsheetExpressionReference.parseCellReference("C2");
+        return SpreadsheetExpressionReference.parseCell("C2");
     }
 
     @Override

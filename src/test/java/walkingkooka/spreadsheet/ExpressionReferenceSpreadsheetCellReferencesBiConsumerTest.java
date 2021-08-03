@@ -22,15 +22,15 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
@@ -64,7 +64,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
 
     @Test
     public void testCell() {
-        final SpreadsheetCellReference z99 = SpreadsheetExpressionReference.parseCellReference("Z99");
+        final SpreadsheetCellReference z99 = SpreadsheetExpressionReference.parseCell("Z99");
         this.acceptAndCheck(z99, z99);
     }
 
@@ -122,7 +122,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
     }
 
     private SpreadsheetCellReference cellB1() {
-        return SpreadsheetExpressionReference.parseCellReference("B1");
+        return SpreadsheetExpressionReference.parseCell("B1");
     }
 
     private SpreadsheetLabelName labelRangeC1D2() {
@@ -134,11 +134,11 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
     }
 
     private SpreadsheetCellReference cellC1() {
-        return SpreadsheetExpressionReference.parseCellReference("C1");
+        return SpreadsheetExpressionReference.parseCell("C1");
     }
 
     private SpreadsheetCellReference cellC2() {
-        return SpreadsheetExpressionReference.parseCellReference("C2");
+        return SpreadsheetExpressionReference.parseCell("C2");
     }
 
     @Override

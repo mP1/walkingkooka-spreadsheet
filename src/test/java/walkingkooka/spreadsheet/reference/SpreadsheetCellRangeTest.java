@@ -449,7 +449,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
                           final String cell) {
         this.testTrue(
                 SpreadsheetCellRange.parseCellRange(range),
-                SpreadsheetExpressionReference.parseCellReference(cell)
+                SpreadsheetExpressionReference.parseCell(cell)
         );
     }
 
@@ -457,7 +457,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
                            final String cell) {
         this.testFalse(
                 SpreadsheetCellRange.parseCellRange(range),
-                SpreadsheetExpressionReference.parseCellReference(cell)
+                SpreadsheetExpressionReference.parseCell(cell)
         );
     }
 
@@ -1112,7 +1112,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     public void testParseMissingSeparatorSingleton() {
         this.parseStringAndCheck(
                 "A1",
-                SpreadsheetCellRange.with(Range.singleton(SpreadsheetExpressionReference.parseCellReference("A1")))
+                SpreadsheetCellRange.with(Range.singleton(SpreadsheetExpressionReference.parseCell("A1")))
         );
     }
 
@@ -1139,36 +1139,36 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     @Test
     public void testParse() {
         this.parseStringAndCheck("A2:C4",
-                SpreadsheetCellRange.with(SpreadsheetExpressionReference.parseCellReference("A2")
-                        .range(SpreadsheetExpressionReference.parseCellReference("C4"))));
+                SpreadsheetCellRange.with(SpreadsheetExpressionReference.parseCell("A2")
+                        .range(SpreadsheetExpressionReference.parseCell("C4"))));
     }
 
     @Test
     public void testParseAbsoluteBegin() {
         this.parseStringAndCheck("$A$2:C4",
-                SpreadsheetCellRange.with(SpreadsheetExpressionReference.parseCellReference("$A$2")
-                        .range(SpreadsheetExpressionReference.parseCellReference("C4"))));
+                SpreadsheetCellRange.with(SpreadsheetExpressionReference.parseCell("$A$2")
+                        .range(SpreadsheetExpressionReference.parseCell("C4"))));
     }
 
     @Test
     public void testParseAbsoluteBegin2() {
         this.parseStringAndCheck("$A2:C4",
-                SpreadsheetCellRange.with(SpreadsheetExpressionReference.parseCellReference("$A2")
-                        .range(SpreadsheetExpressionReference.parseCellReference("C4"))));
+                SpreadsheetCellRange.with(SpreadsheetExpressionReference.parseCell("$A2")
+                        .range(SpreadsheetExpressionReference.parseCell("C4"))));
     }
 
     @Test
     public void testParseAbsoluteEnd() {
         this.parseStringAndCheck("A2:$C4",
-                SpreadsheetCellRange.with(SpreadsheetExpressionReference.parseCellReference("A2")
-                        .range(SpreadsheetExpressionReference.parseCellReference("$C4"))));
+                SpreadsheetCellRange.with(SpreadsheetExpressionReference.parseCell("A2")
+                        .range(SpreadsheetExpressionReference.parseCell("$C4"))));
     }
 
     @Test
     public void testParseAbsoluteEnd2() {
         this.parseStringAndCheck("A2:$C$4",
-                SpreadsheetCellRange.with(SpreadsheetExpressionReference.parseCellReference("A2")
-                        .range(SpreadsheetExpressionReference.parseCellReference("$C$4"))));
+                SpreadsheetCellRange.with(SpreadsheetExpressionReference.parseCell("A2")
+                        .range(SpreadsheetExpressionReference.parseCell("$C$4"))));
     }
 
     // JsonNodeMarshallingTesting...............................................................................................
@@ -1211,7 +1211,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     private SpreadsheetCellReference cellReference(final String text) {
-        return SpreadsheetExpressionReference.parseCellReference(text);
+        return SpreadsheetExpressionReference.parseCell(text);
     }
 
     private SpreadsheetCellReference cellReference(final int column, final int row) {

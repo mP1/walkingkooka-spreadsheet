@@ -49,9 +49,9 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
 
     @Test
     public void testCopiedCellsSorted() {
-        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("b2"), SpreadsheetFormula.with("2"));
-        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("c3"), SpreadsheetFormula.with("3"));
-        final SpreadsheetCell a1 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("a1"), SpreadsheetFormula.with("1"));
+        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("b2"), SpreadsheetFormula.with("2"));
+        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("c3"), SpreadsheetFormula.with("3"));
+        final SpreadsheetCell a1 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("a1"), SpreadsheetFormula.with("1"));
 
         final Set<SpreadsheetCell> cells = Sets.ordered();
         cells.add(b2);
@@ -66,9 +66,9 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
 
     @Test
     public void testCopiedCellsSorted2() {
-        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("c3"), SpreadsheetFormula.with("3"));
-        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("b$2"), SpreadsheetFormula.with("2"));
-        final SpreadsheetCell a1 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("$a$1"), SpreadsheetFormula.with("1"));
+        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("c3"), SpreadsheetFormula.with("3"));
+        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("b$2"), SpreadsheetFormula.with("2"));
+        final SpreadsheetCell a1 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("$a$1"), SpreadsheetFormula.with("1"));
 
         final Set<SpreadsheetCell> cells = Sets.ordered();
         cells.add(c3);

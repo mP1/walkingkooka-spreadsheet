@@ -149,7 +149,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Test
     public void testJsonRoundtripCellReference() {
-        this.marshallRoundTrip2(SpreadsheetExpressionReference.parseCellReference("A1"));
+        this.marshallRoundTrip2(SpreadsheetExpressionReference.parseCell("A1"));
     }
 
     @Test
@@ -173,7 +173,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Test
     public void testHateosLinkId() {
         final String text = "ABC12345678";
-        this.hateosLinkIdAndCheck(SpreadsheetLabelMapping.with(SpreadsheetLabelName.with(text), SpreadsheetExpressionReference.parseCellReference("A1")),
+        this.hateosLinkIdAndCheck(SpreadsheetLabelMapping.with(SpreadsheetLabelName.with(text), SpreadsheetExpressionReference.parseCell("A1")),
                 text);
     }
 

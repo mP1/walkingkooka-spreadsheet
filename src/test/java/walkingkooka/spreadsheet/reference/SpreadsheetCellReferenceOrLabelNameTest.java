@@ -31,7 +31,7 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
 
     @Test
     public void testUnmarshallCellReference() {
-        this.unmarshallAndCheck2(SpreadsheetExpressionReference.parseCellReference("B2"));
+        this.unmarshallAndCheck2(SpreadsheetExpressionReference.parseCell("B2"));
     }
 
     @Test

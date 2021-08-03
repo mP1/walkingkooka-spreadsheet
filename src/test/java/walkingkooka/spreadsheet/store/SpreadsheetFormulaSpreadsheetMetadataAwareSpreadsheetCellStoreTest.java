@@ -150,7 +150,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 );
 
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCellReference("B2"),
+                SpreadsheetCellReference.parseCell("B2"),
                 formula
         );
 
@@ -168,7 +168,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetFormula formula = SpreadsheetFormula.with(text);
 
         final SpreadsheetCell requires = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCellReference("B2"),
+                SpreadsheetCellReference.parseCell("B2"),
                 formula
         );
 
@@ -202,7 +202,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetFormula formula = SpreadsheetFormula.with(text);
 
         final SpreadsheetCell requires = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCellReference("B2"),
+                SpreadsheetCellReference.parseCell("B2"),
                 formula
         );
 
@@ -228,7 +228,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetFormula formula = SpreadsheetFormula.with(text);
 
         final SpreadsheetCell requires = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCellReference("B2"),
+                SpreadsheetCellReference.parseCell("B2"),
                 formula
         );
 
@@ -352,7 +352,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
     private SpreadsheetCell cell(SpreadsheetFormula formula) {
         return SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCellReference("C3"),
+                SpreadsheetCellReference.parseCell("C3"),
                 formula
         );
     }

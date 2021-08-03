@@ -193,7 +193,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         switch (text.split(":").length) {
             case 1:
                 reference = isCellReferenceText(text) ?
-                        parseCellReference(text) :
+                        parseCell(text) :
                         labelName(text);
                 break;
             case 2:
@@ -209,7 +209,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     /**
      * Parsers the text expecting a valid {@link SpreadsheetCellReference} or fails.
      */
-    public static SpreadsheetCellReference parseCellReference(final String text) {
+    public static SpreadsheetCellReference parseCell(final String text) {
         return SpreadsheetCellReference.parseCellReference0(text);
     }
 
@@ -220,7 +220,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         checkText(text);
 
         return isCellReferenceText(text) ?
-                parseCellReference(text) :
+                parseCell(text) :
                 labelName(text);
     }
 
@@ -230,7 +230,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     public static SpreadsheetCellRange parseCellRange(final String text) {
         return SpreadsheetSelection.parseRange(
                 text,
-                SpreadsheetSelection::parseCellReference,
+                SpreadsheetSelection::parseCell,
                 SpreadsheetCellReference::spreadsheetCellRange
         );
     }
@@ -454,7 +454,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                                                             final JsonNodeUnmarshallContext context) {
         return unmarshall0(
                 node,
-                SpreadsheetExpressionReference::parseCellReference
+                SpreadsheetExpressionReference::parseCell
         );
     }
 

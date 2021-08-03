@@ -133,22 +133,22 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testToRelativeAlreadyAbsolute() {
-        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCellReference("$B$2"));
+        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCell("$B$2"));
     }
 
     @Test
     public void testToRelativeRelative() {
-        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCellReference("B2"));
+        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCell("B2"));
     }
 
     @Test
     public void testToRelativeMixed() {
-        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCellReference("$B2"));
+        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCell("$B2"));
     }
 
     @Test
     public void testToRelativeMixed2() {
-        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCellReference("B$2"));
+        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCell("B$2"));
     }
 
     private void toRelativeAndCheck0(final SpreadsheetCellReference reference) {
@@ -161,22 +161,22 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testToAbsoluteAlreadyAbsolute() {
-        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCellReference("$B$2"));
+        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCell("$B$2"));
     }
 
     @Test
     public void testToAbsoluteRelative() {
-        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCellReference("B2"));
+        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCell("B2"));
     }
 
     @Test
     public void testToAbsoluteMixed() {
-        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCellReference("$B2"));
+        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCell("$B2"));
     }
 
     @Test
     public void testToAbsoluteMixed2() {
-        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCellReference("B$2"));
+        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCell("B$2"));
     }
 
     private void toAbsoluteAndCheck(final SpreadsheetCellReference reference) {
@@ -220,9 +220,9 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddColumnSaturationUnderflows() {
-        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCellReference("B2");
+        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B2");
         assertEquals(
-                SpreadsheetCellReference.parseCellReference("A2"),
+                SpreadsheetCellReference.parseCell("A2"),
                 cell.addColumnSaturated(-3)
         );
     }
@@ -241,9 +241,9 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddColumnSaturation() {
-        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCellReference("B2");
+        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B2");
         assertEquals(
-                SpreadsheetCellReference.parseCellReference("D2"),
+                SpreadsheetCellReference.parseCell("D2"),
                 cell.addColumnSaturated(+2)
         );
     }
@@ -270,9 +270,9 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddRowSaturationUnderflows() {
-        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCellReference("B3");
+        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B3");
         assertEquals(
-                SpreadsheetCellReference.parseCellReference("B1"),
+                SpreadsheetCellReference.parseCell("B1"),
                 cell.addRowSaturated(-3)
         );
     }
@@ -290,9 +290,9 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddRowSaturation() {
-        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCellReference("B2");
+        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B2");
         assertEquals(
-                SpreadsheetCellReference.parseCellReference("B4"),
+                SpreadsheetCellReference.parseCell("B4"),
                 cell.addRowSaturated(+2)
         );
     }
@@ -455,7 +455,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testToSpreadsheetCellRangeAbsolute() {
         this.toSpreadsheetCellRangeAndCheck(
-                SpreadsheetCellReference.parseCellReference("$B$2"),
+                SpreadsheetCellReference.parseCell("$B$2"),
                 SpreadsheetCellRange.parseCellRange("$B$2")
         );
     }
@@ -465,7 +465,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final String text = "C3";
 
         this.toSpreadsheetCellRangeAndCheck(
-                SpreadsheetCellReference.parseCellReference(text),
+                SpreadsheetCellReference.parseCell(text),
                 SpreadsheetCellRange.parseCellRange(text)
         );
     }
@@ -638,7 +638,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                                      final String range,
                                      final boolean expected) {
         this.testCellRangeAndCheck(
-                SpreadsheetCellReference.parseCellReference(cell),
+                SpreadsheetCellReference.parseCell(cell),
                 SpreadsheetCellRange.parseCellRange(range),
                 expected
         );
@@ -706,7 +706,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testJsonNodeUnmarshallString() {
         this.unmarshallAndCheck(JsonNode.string("$A$1"),
-                SpreadsheetExpressionReference.parseCellReference("$A$1"));
+                SpreadsheetExpressionReference.parseCell("$A$1"));
     }
 
     // SpreadsheetSelectionVisitor.......................................................................................
@@ -808,8 +808,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     private void equalsIgnoreReferenceKindAndCheck(final String reference1,
                                                    final String reference2,
                                                    final boolean expected) {
-        this.equalsIgnoreReferenceKindAndCheck(SpreadsheetCellReference.parseCellReference(reference1),
-                SpreadsheetCellReference.parseCellReference(reference2),
+        this.equalsIgnoreReferenceKindAndCheck(SpreadsheetCellReference.parseCell(reference1),
+                SpreadsheetCellReference.parseCell(reference2),
                 expected);
     }
 
@@ -817,10 +817,10 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testArraySort() {
-        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCellReference("A1");
-        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCellReference("$B2");
-        final SpreadsheetCellReference c3 = SpreadsheetExpressionReference.parseCellReference("c$3");
-        final SpreadsheetCellReference d4 = SpreadsheetExpressionReference.parseCellReference("$D$4");
+        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCell("A1");
+        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCell("$B2");
+        final SpreadsheetCellReference c3 = SpreadsheetExpressionReference.parseCell("c$3");
+        final SpreadsheetCellReference d4 = SpreadsheetExpressionReference.parseCell("$D$4");
 
         this.compareToArraySortAndCheck(c3, a1, d4, b2,
                 a1, b2, c3, d4);
@@ -888,7 +888,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Override
     public SpreadsheetCellReference parseString(final String text) {
-        return SpreadsheetExpressionReference.parseCellReference(text);
+        return SpreadsheetExpressionReference.parseCell(text);
     }
 
     @Override

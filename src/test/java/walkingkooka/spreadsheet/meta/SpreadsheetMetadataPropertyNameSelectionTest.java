@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -73,7 +73,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
 
     @Override
     final SpreadsheetSelection propertyValue() {
-        return SpreadsheetSelection.parseCellReference("B99");
+        return SpreadsheetSelection.parseCell("B99");
     }
 
     @Override

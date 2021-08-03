@@ -26,11 +26,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
@@ -79,8 +79,8 @@ public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadshe
                 BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE
         );
 
-        cells.onCellSavedImmediate(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetFormula.with("1+2")));
-        cells.onCellSavedImmediate(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("B2"), SpreadsheetFormula.with("3+4")));
+        cells.onCellSavedImmediate(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell("A1"), SpreadsheetFormula.with("1+2")));
+        cells.onCellSavedImmediate(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell("B2"), SpreadsheetFormula.with("3+4")));
 
         this.toStringAndCheck(cells, "{A1=A1=1+2, B2=B2=3+4}");
     }

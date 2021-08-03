@@ -46,7 +46,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     static Range<SpreadsheetCellReference> parseCellReferenceRange0(final String text) {
         return Range.parse(text,
                 SpreadsheetParsers.RANGE_SEPARATOR.character(),
-                SpreadsheetCellReference::parseCellReference);
+                SpreadsheetCellReference::parseCell);
     }
 
     /**

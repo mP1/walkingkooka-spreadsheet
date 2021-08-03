@@ -309,7 +309,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Override
     public final SpreadsheetCellReference id() {
-        return SpreadsheetExpressionReference.parseCellReference("A1");
+        return SpreadsheetExpressionReference.parseCell("A1");
     }
 
     @Override
@@ -332,7 +332,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     private SpreadsheetCell cell(final String reference) {
-        return this.cell(SpreadsheetExpressionReference.parseCellReference(reference));
+        return this.cell(SpreadsheetExpressionReference.parseCell(reference));
     }
 
     private SpreadsheetCell cell(final SpreadsheetCellReference cellReference) {
