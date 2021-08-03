@@ -79,7 +79,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     private SpreadsheetCell cellWithWidth(final String cellReference,
                                           final double pixels) {
-        SpreadsheetCell cell = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference(cellReference), SpreadsheetFormula.with("1+2"));
+        SpreadsheetCell cell = SpreadsheetCell.with(SpreadsheetCellReference.parseCell(cellReference), SpreadsheetFormula.with("1+2"));
         if (pixels > 0) {
             cell = cell.setStyle(TextStyle.EMPTY
                     .set(TextStylePropertyName.WIDTH, Length.pixel(pixels)));
@@ -139,7 +139,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     private SpreadsheetCell cellWithHeight(final String cellReference,
                                            final double pixels) {
-        SpreadsheetCell cell = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference(cellReference), SpreadsheetFormula.with("1+2"));
+        SpreadsheetCell cell = SpreadsheetCell.with(SpreadsheetCellReference.parseCell(cellReference), SpreadsheetFormula.with("1+2"));
         if (pixels > 0) {
             cell = cell.setStyle(TextStyle.EMPTY
                     .set(TextStylePropertyName.HEIGHT, Length.pixel(pixels)));
@@ -160,7 +160,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     @Test
     public void testToString() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
-        store.save(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetFormula.with("1+2")));
+        store.save(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell("A1"), SpreadsheetFormula.with("1+2")));
 
         this.toStringAndCheck(store, "[A1=1+2]");
     }

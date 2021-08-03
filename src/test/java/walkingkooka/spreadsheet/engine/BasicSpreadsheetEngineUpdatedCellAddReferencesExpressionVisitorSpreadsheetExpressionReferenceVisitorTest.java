@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorT
 public final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor>
         implements SpreadsheetExpressionReferenceVisitorTesting<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor> {
 
-    private final static SpreadsheetCellReference CELL = SpreadsheetExpressionReference.parseCellReference("A99");
+    private final static SpreadsheetCellReference CELL = SpreadsheetExpressionReference.parseCell("A99");
 
     @Test
     public void testToString() {

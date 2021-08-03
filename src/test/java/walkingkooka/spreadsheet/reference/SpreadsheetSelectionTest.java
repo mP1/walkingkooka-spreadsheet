@@ -150,7 +150,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseCell() {
-        assertEquals(SpreadsheetExpressionReference.parseCellReference("A1"),
+        assertEquals(SpreadsheetExpressionReference.parseCell("A1"),
                 SpreadsheetExpressionReference.cell(SpreadsheetSelection.parseColumn("A"),
                         SpreadsheetSelection.parseRow("1")));
     }
@@ -293,7 +293,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseCellReferenceOrLabelNameCell() {
         final String text = "A1";
-        this.parseCellReferenceOrLabelNameAndCheck(text, SpreadsheetCellReference.parseCellReference(text));
+        this.parseCellReferenceOrLabelNameAndCheck(text, SpreadsheetCellReference.parseCell(text));
     }
 
     @Test

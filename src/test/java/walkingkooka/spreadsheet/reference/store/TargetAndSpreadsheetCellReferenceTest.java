@@ -64,7 +64,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
 
     @Test
     public void testDifferentCellReference() {
-        this.checkNotEquals(TargetAndSpreadsheetCellReference.with(this.label(), SpreadsheetExpressionReference.parseCellReference("Z99")));
+        this.checkNotEquals(TargetAndSpreadsheetCellReference.with(this.label(), SpreadsheetExpressionReference.parseCell("Z99")));
     }
 
     @Test
@@ -82,7 +82,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     }
 
     private SpreadsheetCellReference reference() {
-        return SpreadsheetExpressionReference.parseCellReference("A1");
+        return SpreadsheetExpressionReference.parseCell("A1");
     }
 
     @Override

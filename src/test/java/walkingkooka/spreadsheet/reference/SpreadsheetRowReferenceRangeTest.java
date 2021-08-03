@@ -48,22 +48,22 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testTestAbove() {
-        this.testFalse(SpreadsheetCellReference.parseCellReference("A1"));
+        this.testFalse(SpreadsheetCellReference.parseCell("A1"));
     }
 
     @Test
     public void testTestLeft() {
-        this.testTrue(SpreadsheetCellReference.parseCellReference("B2"));
+        this.testTrue(SpreadsheetCellReference.parseCell("B2"));
     }
 
     @Test
     public void testTestRight() {
-        this.testTrue(SpreadsheetCellReference.parseCellReference("D4"));
+        this.testTrue(SpreadsheetCellReference.parseCell("D4"));
     }
 
     @Test
     public void testTestBelow() {
-        this.testFalse(SpreadsheetCellReference.parseCellReference("E5"));
+        this.testFalse(SpreadsheetCellReference.parseCell("E5"));
     }
 
     // testCellRange....................................................................................................

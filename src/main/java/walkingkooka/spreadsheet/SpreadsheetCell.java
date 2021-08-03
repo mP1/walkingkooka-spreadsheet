@@ -274,7 +274,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
             }
 
-            cell = unmarshall0(SpreadsheetCellReference.parseCellReference(name.value()),
+            cell = unmarshall0(SpreadsheetCellReference.parseCell(name.value()),
                     child,
                     context);
         }

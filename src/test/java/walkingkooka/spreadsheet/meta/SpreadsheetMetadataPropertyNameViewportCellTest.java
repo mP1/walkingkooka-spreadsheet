@@ -47,7 +47,7 @@ public final class SpreadsheetMetadataPropertyNameViewportCellTest extends Sprea
 
     @Override
     final SpreadsheetCellReference propertyValue() {
-        return SpreadsheetCellReference.parseCellReference("B99");
+        return SpreadsheetCellReference.parseCell("B99");
     }
 
     @Override

@@ -377,7 +377,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitSelection(final SpreadsheetSelection selection) {
                 this.visited = selection;
             }
-        }.accept(SpreadsheetMetadataPropertyName.SELECTION, SpreadsheetCellReference.parseCellReference("A2:B3"));
+        }.accept(SpreadsheetMetadataPropertyName.SELECTION, SpreadsheetCellReference.parseCell("A2:B3"));
     }
 
     @Test
@@ -467,7 +467,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitViewportCell(final SpreadsheetCellReference cell) {
                 this.visited = cell;
             }
-        }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetCellReference.parseCellReference("B99"));
+        }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetCellReference.parseCell("B99"));
     }
 
     private static <T> SpreadsheetMetadata metadata(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {

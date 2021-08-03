@@ -29,8 +29,8 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionRefere
 
     @Test
     public void testToString() {
-        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCellReference("A1");
-        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCellReference("B2");
+        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCell("A1");
+        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCell("B2");
 
         final SpreadsheetLabelName label1 = SpreadsheetExpressionReference.labelName("ABCDEF123");
         final SpreadsheetLabelName label2 = SpreadsheetExpressionReference.labelName("DEFGHI456");

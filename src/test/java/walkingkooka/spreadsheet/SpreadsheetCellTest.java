@@ -87,8 +87,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testWithAbsoluteReference() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("$B$2");
-        final SpreadsheetCell cell = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("$B$2"),
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("$B$2");
+        final SpreadsheetCell cell = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("$B$2"),
                 formula(FORMULA));
 
         this.checkReference(cell, reference.toRelative());
@@ -506,7 +506,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private SpreadsheetCell createCell(final String reference) {
-        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference(reference), formula("1+2"));
+        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell(reference), formula("1+2"));
     }
 
     // treePrintable....................................................................................................
@@ -515,7 +515,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testTreePrintableFormula() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetCellReference.parseCell("$A1$1"),
                         SpreadsheetFormula.with("1+2")
                 ),
                 "Cell A1\n" +
@@ -528,7 +528,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testTreePrintableFormulaToken() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetCellReference.parseCell("$A1$1"),
                         SpreadsheetFormula.with(FORMULA_TEXT)
                                 .setToken(token())
 
@@ -551,7 +551,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testTreePrintableFormulaTokenExpression() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetCellReference.parseCell("$A1$1"),
                         SpreadsheetFormula.with(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
@@ -579,7 +579,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testTreePrintableFormulaTokenExpressionValue() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetCellReference.parseCell("$A1$1"),
                         SpreadsheetFormula.with(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
@@ -609,7 +609,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testTreePrintableFormulaTokenExpressionError() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetCellReference.parseCell("$A1$1"),
                         SpreadsheetFormula.with(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
@@ -639,7 +639,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testTreePrintableFormulaTokenExpressionValueStyle() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCellReference("$A1$1"),
+                        SpreadsheetCellReference.parseCell("$A1$1"),
                         SpreadsheetFormula.with(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
@@ -671,12 +671,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testTreePrintableFormulaTokenExpressionValueStyleFormat() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCellReference("$A1$1"),
-                        SpreadsheetFormula.with(FORMULA_TEXT)
-                                .setToken(token())
-                                .setExpression(expression())
-                                .setValue(Optional.of(3))
-                ).setStyle(this.boldAndItalics())
+                                SpreadsheetCellReference.parseCell("$A1$1"),
+                                SpreadsheetFormula.with(FORMULA_TEXT)
+                                        .setToken(token())
+                                        .setExpression(expression())
+                                        .setValue(Optional.of(3))
+                        ).setStyle(this.boldAndItalics())
                         .setFormat(format()),
                 "Cell A1\n" +
                         "  Formula\n" +
@@ -705,12 +705,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testTreePrintableFormulaTokenExpressionValueStyleFormatFormatted() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCellReference("$A1$1"),
-                        SpreadsheetFormula.with(FORMULA_TEXT)
-                                .setToken(token())
-                                .setExpression(expression())
-                                .setValue(Optional.of(3))
-                ).setStyle(this.boldAndItalics())
+                                SpreadsheetCellReference.parseCell("$A1$1"),
+                                SpreadsheetFormula.with(FORMULA_TEXT)
+                                        .setToken(token())
+                                        .setExpression(expression())
+                                        .setValue(Optional.of(3))
+                        ).setStyle(this.boldAndItalics())
                         .setFormat(format())
                         .setFormatted(formatted()),
                 "Cell A1\n" +

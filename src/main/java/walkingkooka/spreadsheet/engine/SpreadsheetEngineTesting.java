@@ -174,7 +174,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullCellsFails() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("A1");
         final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(null,
@@ -185,7 +185,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullFromFails() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("A1");
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
         final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
 
@@ -197,7 +197,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullToFails() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("A1");
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
         final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
 
@@ -209,7 +209,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullContextFails() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("A1");
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
         final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
 
@@ -221,10 +221,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsCellOutOfFromRangeFails() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("B2");
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("B2");
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
 
-        final SpreadsheetCellRange range = SpreadsheetCellRange.fromCells(Lists.of(SpreadsheetCellReference.parseCellReference("C3")));
+        final SpreadsheetCellRange range = SpreadsheetCellRange.fromCells(Lists.of(SpreadsheetCellReference.parseCell("C3")));
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
@@ -235,7 +235,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsCellOutOfFromRangeFails2() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("B2");
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("B2");
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
 
         final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("C3:D4");
@@ -250,9 +250,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsOneCellsOutOfManyOutOfRange() {
-        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("B2"), SpreadsheetFormula.with("1"));
-        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("C3"), SpreadsheetFormula.with("2"));
-        final SpreadsheetCell d4 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("D4"), SpreadsheetFormula.with("3"));
+        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("B2"), SpreadsheetFormula.with("1"));
+        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("C3"), SpreadsheetFormula.with("2"));
+        final SpreadsheetCell d4 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("D4"), SpreadsheetFormula.with("3"));
 
         final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("C3:D4");
 
@@ -266,10 +266,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsSeveralCellsOutOfFromRangeFails() {
-        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("B2"), SpreadsheetFormula.with("1"));
-        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("C3"), SpreadsheetFormula.with("2"));
-        final SpreadsheetCell d4 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("D4"), SpreadsheetFormula.with("3"));
-        final SpreadsheetCell e5 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("E5"), SpreadsheetFormula.with("4"));
+        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("B2"), SpreadsheetFormula.with("1"));
+        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("C3"), SpreadsheetFormula.with("2"));
+        final SpreadsheetCell d4 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("D4"), SpreadsheetFormula.with("3"));
+        final SpreadsheetCell e5 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("E5"), SpreadsheetFormula.with("4"));
 
         final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("C3:D4");
 
@@ -289,7 +289,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testSaveLabelNullContextFails() {
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().saveLabel(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("LABEL123"),
-                SpreadsheetExpressionReference.parseCellReference("A1")), null));
+                SpreadsheetExpressionReference.parseCell("A1")), null));
     }
 
     default void saveLabelAndCheck(final SpreadsheetEngine engine,

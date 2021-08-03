@@ -94,7 +94,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
 
         final Set<SpreadsheetCell> different = Sets.of(
                 SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCellReference("Y99"),
+                        SpreadsheetCellReference.parseCell("Y99"),
                         SpreadsheetFormula.with("99")
                 )
         );

@@ -185,7 +185,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     @Test
     public void testEqualsDifferentCellReference() {
-        this.checkNotEquals(SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("a1"), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetViewport.with(SpreadsheetCellReference.parseCell("a1"), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT));
     }
 
     @Test
@@ -236,7 +236,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     @Test
     public void testParseCellReferenceAbsoluteColumnAbsoluteRow() {
-        this.parseStringAndCheck("$B$9:100:200:300:400", SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("$B$9"), 100, 200, 300, 400));
+        this.parseStringAndCheck("$B$9:100:200:300:400", SpreadsheetViewport.with(SpreadsheetCellReference.parseCell("$B$9"), 100, 200, 300, 400));
     }
 
     @Test
@@ -274,7 +274,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     @Test
     public void testJsonNodeUnmarshall3() {
-        this.unmarshallAndCheck(JsonNode.string("$B$9:10:20:30:40"), SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("$B$9"), 10, 20, 30, 40));
+        this.unmarshallAndCheck(JsonNode.string("$B$9:10:20:30:40"), SpreadsheetViewport.with(SpreadsheetCellReference.parseCell("$B$9"), 10, 20, 30, 40));
     }
 
     @Test
@@ -317,7 +317,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     //helper............................................................................................................
 
     private SpreadsheetCellReference reference() {
-        return SpreadsheetCellReference.parseCellReference("B9");
+        return SpreadsheetCellReference.parseCell("B9");
     }
 
     private SpreadsheetLabelName label() {

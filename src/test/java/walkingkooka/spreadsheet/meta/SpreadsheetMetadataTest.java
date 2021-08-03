@@ -86,7 +86,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testSetSelectionAbsoluteCell() {
         this.setAndCheck(
                 SpreadsheetMetadataPropertyName.SELECTION,
-                SpreadsheetCellReference.parseCellReference("$B$99")
+                SpreadsheetCellReference.parseCell("$B$99")
         );
     }
 
@@ -102,7 +102,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testSetViewportCellAbsolute() {
         this.setAndCheck(
                 SpreadsheetMetadataPropertyName.VIEWPORT_CELL,
-                SpreadsheetCellReference.parseCellReference("$B$99")
+                SpreadsheetCellReference.parseCell("$B$99")
         );
     }
 
@@ -179,7 +179,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.ROUNDING_MODE));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR));
 
-        assertEquals(Optional.of(SpreadsheetCellReference.parseCellReference("A1")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT_CELL));
+        assertEquals(Optional.of(SpreadsheetCellReference.parseCell("A1")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT_CELL));
     }
 
     // loadFromLocale...................................................................................................
@@ -245,7 +245,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testJsonSelectionCellReference() {
-        this.marshallRoundTripSelectionAndCheck(SpreadsheetSelection.parseCellReference("Z99"));
+        this.marshallRoundTripSelectionAndCheck(SpreadsheetSelection.parseCell("Z99"));
     }
 
     @Test

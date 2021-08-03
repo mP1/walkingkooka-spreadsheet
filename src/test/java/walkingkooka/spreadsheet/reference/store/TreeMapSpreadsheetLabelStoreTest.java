@@ -248,11 +248,11 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private SpreadsheetCellReference a1() {
-        return SpreadsheetExpressionReference.parseCellReference("A1");
+        return SpreadsheetExpressionReference.parseCell("A1");
     }
 
     private SpreadsheetCellReference a2() {
-        return SpreadsheetExpressionReference.parseCellReference("A2");
+        return SpreadsheetExpressionReference.parseCell("A2");
     }
 
     private SpreadsheetCellRange range1() {
