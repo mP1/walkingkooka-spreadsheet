@@ -312,6 +312,29 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    // parseRow.........................................................................................................
+
+    @Test
+    public void testParseRowWithRangeFails() {
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetSelection.parseRow("12:3"));
+    }
+
+    @Test
+    public void testParseRow() {
+        assertEquals(
+                SpreadsheetReferenceKind.RELATIVE.row(2 - 1),
+                SpreadsheetSelection.parseRow("2")
+        );
+    }
+
+    @Test
+    public void testParseRow2() {
+        assertEquals(
+                SpreadsheetReferenceKind.RELATIVE.row(23 - 1),
+                SpreadsheetSelection.parseRow("23")
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
