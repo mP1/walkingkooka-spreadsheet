@@ -55,7 +55,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     static SpreadsheetCellReference parseCellReference0(final String text) {
         try {
             return PARSER.parse(TextCursors.charSequence(text),
-                    SpreadsheetReferenceSpreadsheetParserContext.INSTANCE)
+                            SpreadsheetReferenceSpreadsheetParserContext.INSTANCE)
                     .get()
                     .cast(SpreadsheetCellReferenceParserToken.class)
                     .cell();
@@ -64,7 +64,9 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         }
     }
 
-    private static final Parser<SpreadsheetParserContext> PARSER = SpreadsheetParsers.columnAndRow().orReport(ParserReporters.basic());
+    private static final Parser<SpreadsheetParserContext> PARSER = SpreadsheetParsers.columnAndRow()
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .orReport(ParserReporters.basic());
 
     /**
      * Factory that creates a {@link SpreadsheetCellReference} with the given column and row.
