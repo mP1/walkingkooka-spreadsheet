@@ -56,11 +56,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetCellStore;
@@ -965,7 +965,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference b2Reference = SpreadsheetCellReference.parseCellReference("$B2$2");
+        final SpreadsheetCellReference b2Reference = SpreadsheetCellReference.parseCellReference("$B$2");
         final SpreadsheetCell a1 = this.cell("$A$1", "=" + b2Reference + "+5");
         engine.saveCell(a1, context);
 
