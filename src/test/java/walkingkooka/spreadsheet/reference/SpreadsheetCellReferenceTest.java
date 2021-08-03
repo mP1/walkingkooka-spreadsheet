@@ -701,31 +701,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    // parseCellReferenceRange..........................................................................................
-
-    @Test
-    public void testParseRange() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetExpressionReference.parseCellReference("B2"))
-                        .and(Range.lessThanEquals(SpreadsheetExpressionReference.parseCellReference("D4"))),
-                SpreadsheetCellReference.parseCellReferenceRange("B2:D4"));
-    }
-
-    @Test
-    public void testParseRange2() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetExpressionReference.parseCellReference("$B$2"))
-                        .and(Range.lessThanEquals(SpreadsheetExpressionReference.parseCellReference("$D$4"))),
-                SpreadsheetCellReference.parseCellReferenceRange("$B$2:$D$4"));
-    }
-
-    @Test
-    public void testParseRange3() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetExpressionReference.parseCellReference("$B2"))
-                        .and(Range.lessThanEquals(SpreadsheetExpressionReference.parseCellReference("D$4"))),
-                SpreadsheetCellReference.parseCellReferenceRange("$B2:D$4"));
-    }
-
-
-
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test

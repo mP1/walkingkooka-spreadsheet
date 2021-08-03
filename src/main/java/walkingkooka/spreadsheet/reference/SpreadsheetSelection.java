@@ -207,13 +207,6 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
-     * Parsers a range of cell referencs.
-     */
-    public static Range<SpreadsheetCellReference> parseCellReferenceRange(final String text) {
-        return SpreadsheetCellReference.parseCellReferenceRange0(text);
-    }
-
-    /**
      * Parsers the text expecting a valid {@link SpreadsheetCellReference} or fails.
      */
     public static SpreadsheetCellReference parseCellReference(final String text) {
