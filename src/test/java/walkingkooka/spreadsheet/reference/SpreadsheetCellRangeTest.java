@@ -464,10 +464,110 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     // testCellRange.....................................................................................................
 
     @Test
-    public void testRangeFails() {
-        final SpreadsheetCellRange range = this.createSelection();
+    public void testCellRangeLeft() {
+        this.testCellRangeAndCheck2(
+                "C3:D4",
+                "A3:B3",
+                false
+        );
+    }
 
-        assertThrows(UnsupportedOperationException.class, () -> range.testCellRange(range));
+    @Test
+    public void testCellRangeRight() {
+        this.testCellRangeAndCheck2(
+                "C3:D4",
+                "C5:C6",
+                false
+        );
+    }
+
+    @Test
+    public void testCellRangeAboveLeft() {
+        this.testCellRangeAndCheck2(
+                "C3:D4",
+                "A1:B2",
+                false
+        );
+    }
+
+    @Test
+    public void testCellRangePartialLeft() {
+        this.testCellRangeAndCheck2(
+                "C3:D4",
+                "C1:C3",
+                true
+        );
+    }
+
+    @Test
+    public void testCellRangePartialRight() {
+        this.testCellRangeAndCheck2(
+                "C3:D4",
+                "D4:F4",
+                true
+        );
+    }
+
+    @Test
+    public void testCellRangePartialAbove() {
+        this.testCellRangeAndCheck2(
+                "C3:D4",
+                "C1:C3",
+                true
+        );
+    }
+
+    @Test
+    public void testCellRangePartialBelow() {
+        this.testCellRangeAndCheck2(
+                "C3:D4",
+                "D4:D6",
+                true
+        );
+    }
+
+    @Test
+    public void testCellRangePartialLeftAbove() {
+        this.testCellRangeAndCheck2(
+                "C3:D4",
+                "A1:C3",
+                true
+        );
+    }
+
+    @Test
+    public void testCellRangePartialRightBelow() {
+        this.testCellRangeAndCheck2(
+                "C3:D4",
+                "D4:E5",
+                true
+        );
+    }
+
+    @Test
+    public void testCellRangePartialInside() {
+        this.testCellRangeAndCheck2(
+                "C3:D4",
+                "C3:C3",
+                true
+        );
+    }
+
+    @Test
+    public void testCellRangePartialInside2() {
+        this.testCellRangeAndCheck2(
+                "C3:D4",
+                "C3:D4",
+                true
+        );
+    }
+
+    private void testCellRangeAndCheck2(final String range, final String testRange, final boolean expected) {
+        this.testCellRangeAndCheck(
+                SpreadsheetSelection.parseCellRange(range),
+                SpreadsheetSelection.parseCellRange(testRange),
+                expected
+        );
     }
 
     // stream.................................................................................................
