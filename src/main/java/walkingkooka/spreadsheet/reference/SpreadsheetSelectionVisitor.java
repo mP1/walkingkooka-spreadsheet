@@ -48,6 +48,10 @@ public abstract class SpreadsheetSelectionVisitor extends Visitor<SpreadsheetSel
         // nop
     }
 
+    protected void visit(final SpreadsheetCellRange range) {
+        // nop
+    }
+
     protected void visit(final SpreadsheetCellReference reference) {
         // nop
     }
@@ -61,10 +65,6 @@ public abstract class SpreadsheetSelectionVisitor extends Visitor<SpreadsheetSel
     }
 
     protected void visit(final SpreadsheetLabelName label) {
-        // nop
-    }
-
-    protected void visit(final SpreadsheetCellRange range) {
         // nop
     }
 
