@@ -277,7 +277,9 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     /**
      * Leverages the {@link SpreadsheetParsers#row()} combined with an error reporter.
      */
-    private static final Parser<SpreadsheetParserContext> ROW_PARSER = SpreadsheetParsers.row().orReport(ParserReporters.basic());
+    private static final Parser<SpreadsheetParserContext> ROW_PARSER = SpreadsheetParsers.row()
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .orReport(ParserReporters.basic());
 
     /**
      * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.

@@ -97,6 +97,11 @@ public final class SpreadsheetRowReferenceParserTest extends SpreadsheetParserTe
     }
 
     @Test
+    public void testRange() {
+        this.parseAndCheck2("2:34", SpreadsheetReferenceKind.RELATIVE, 2, ":34");
+    }
+
+    @Test
     public void testMaxValue() {
         this.parseAndCheck2("1048576", SpreadsheetReferenceKind.RELATIVE, SpreadsheetRowReference.MAX_VALUE);
     }
