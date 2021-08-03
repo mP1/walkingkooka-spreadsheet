@@ -835,7 +835,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private static SpreadsheetCellReference reference(final int column, final int row) {
-        return SpreadsheetExpressionReference.cellReference(
+        return SpreadsheetExpressionReference.cell(
                 SpreadsheetReferenceKind.RELATIVE.column(column),
                 SpreadsheetReferenceKind.RELATIVE.row(row)
         );
