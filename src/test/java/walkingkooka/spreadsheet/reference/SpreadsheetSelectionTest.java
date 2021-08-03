@@ -259,52 +259,52 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
 
-    // parseCellReferenceOrLabelName....................................................................................
+    // parseCellOrLabelName....................................................................................
 
     @Test
-    public void testParseCellReferenceOrLabelNameNullFails() {
-        parseCellReferenceOrLabelNameFails(
+    public void testParseCellOrLabelNameNullFails() {
+        parseCellOrLabelNameFails(
                 null,
                 NullPointerException.class
         );
     }
 
     @Test
-    public void testParseCellReferenceOrLabelNameEmptyFails() {
-        parseCellReferenceOrLabelNameFails(
+    public void testParseCellOrLabelNameEmptyFails() {
+        parseCellOrLabelNameFails(
                 "",
                 IllegalArgumentException.class
         );
     }
 
     @Test
-    public void testParseCellReferenceOrLabelNameRangeFails() {
-        parseCellReferenceOrLabelNameFails(
+    public void testParseCellOrLabelNameRangeFails() {
+        parseCellOrLabelNameFails(
                 SpreadsheetExpressionReference.parseCellRange("A1:B2").toString(),
                 InvalidCharacterException.class
         );
     }
 
-    private void parseCellReferenceOrLabelNameFails(final String text,
-                                                    final Class<? extends RuntimeException> thrown) {
-        assertThrows(thrown, () -> SpreadsheetCellReferenceOrLabelName.parseCellReferenceOrLabelName(text));
+    private void parseCellOrLabelNameFails(final String text,
+                                           final Class<? extends RuntimeException> thrown) {
+        assertThrows(thrown, () -> SpreadsheetCellReferenceOrLabelName.parseCellOrLabelName(text));
     }
 
     @Test
-    public void testParseCellReferenceOrLabelNameCell() {
+    public void testParseCellOrLabelNameCell() {
         final String text = "A1";
-        this.parseCellReferenceOrLabelNameAndCheck(text, SpreadsheetCellReference.parseCell(text));
+        this.parseCellOrLabelNameAndCheck(text, SpreadsheetCellReference.parseCell(text));
     }
 
     @Test
-    public void testParseCellReferenceOrLabelNameLabel() {
+    public void testParseCellOrLabelNameLabel() {
         final String text = "Label123";
-        this.parseCellReferenceOrLabelNameAndCheck(text, SpreadsheetCellReference.labelName(text));
+        this.parseCellOrLabelNameAndCheck(text, SpreadsheetCellReference.labelName(text));
     }
 
-    private void parseCellReferenceOrLabelNameAndCheck(final String text,
-                                                       final SpreadsheetCellReferenceOrLabelName expected) {
-        final SpreadsheetCellReferenceOrLabelName parsed = SpreadsheetCellReferenceOrLabelName.parseCellReferenceOrLabelName(text);
+    private void parseCellOrLabelNameAndCheck(final String text,
+                                              final SpreadsheetCellReferenceOrLabelName expected) {
+        final SpreadsheetCellReferenceOrLabelName parsed = SpreadsheetCellReferenceOrLabelName.parseCellOrLabelName(text);
         assertEquals(
                 expected,
                 parsed,
