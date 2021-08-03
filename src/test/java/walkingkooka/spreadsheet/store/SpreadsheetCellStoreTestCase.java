@@ -343,7 +343,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     final SpreadsheetCellReference cellReference(final int column, final int row) {
-        return SpreadsheetExpressionReference.cellReference(SpreadsheetReferenceKind.RELATIVE.column(column),
+        return SpreadsheetExpressionReference.cell(SpreadsheetReferenceKind.RELATIVE.column(column),
                 SpreadsheetReferenceKind.RELATIVE.row(row));
     }
 

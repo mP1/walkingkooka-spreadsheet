@@ -146,12 +146,12 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         }
     }
 
-    // parseCellReference...............................................................................................
+    // parseCell.......................................................................................................
 
     @Test
-    public void testParseCellReference() {
+    public void testParseCell() {
         assertEquals(SpreadsheetExpressionReference.parseCellReference("A1"),
-                SpreadsheetExpressionReference.cellReference(SpreadsheetSelection.parseColumn("A"),
+                SpreadsheetExpressionReference.cell(SpreadsheetSelection.parseColumn("A"),
                         SpreadsheetSelection.parseRow("1")));
     }
 

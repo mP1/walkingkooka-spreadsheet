@@ -140,8 +140,8 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     /**
      * {@see SpreadsheetCellReference}
      */
-    public static SpreadsheetCellReference cellReference(final SpreadsheetColumnReference column,
-                                                         final SpreadsheetRowReference row) {
+    public static SpreadsheetCellReference cell(final SpreadsheetColumnReference column,
+                                                final SpreadsheetRowReference row) {
         return SpreadsheetCellReference.with(column, row);
     }
 

@@ -94,7 +94,7 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
     private void checkCell(final SpreadsheetCellReferenceParserToken cell,
                            final SpreadsheetRowReferenceParserToken row,
                            final SpreadsheetColumnReferenceParserToken column) {
-        assertEquals(SpreadsheetExpressionReference.cellReference(column.value(), row.value()),
+        assertEquals(SpreadsheetExpressionReference.cell(column.value(), row.value()),
                 cell.cell(),
                 "cell");
     }

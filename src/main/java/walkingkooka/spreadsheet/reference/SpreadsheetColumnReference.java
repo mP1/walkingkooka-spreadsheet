@@ -117,7 +117,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
      * Creates a {@link SpreadsheetCellReference} fromt this column and the new row.
      */
     public SpreadsheetCellReference setRow(final SpreadsheetRowReference row) {
-        return SpreadsheetExpressionReference.cellReference(this, row);
+        return SpreadsheetExpressionReference.cell(this, row);
     }
 
     public String hateosLinkId() {
