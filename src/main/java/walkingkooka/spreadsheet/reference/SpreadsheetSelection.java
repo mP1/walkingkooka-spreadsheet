@@ -252,7 +252,9 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     /**
      * Leverages the {@link SpreadsheetParsers#column()} combined with an error reporter.
      */
-    private static final Parser<SpreadsheetParserContext> COLUMN_PARSER = SpreadsheetParsers.column().orReport(ParserReporters.basic());
+    private static final Parser<SpreadsheetParserContext> COLUMN_PARSER = SpreadsheetParsers.column()
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .orReport(ParserReporters.basic());
 
     /**
      * Parsers a range of columns.

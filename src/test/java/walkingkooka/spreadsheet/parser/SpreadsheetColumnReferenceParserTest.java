@@ -98,6 +98,11 @@ public final class SpreadsheetColumnReferenceParserTest extends SpreadsheetParse
     }
 
     @Test
+    public void testRange() {
+        this.parseAndCheck2("A", SpreadsheetReferenceKind.RELATIVE, A_VALUE, ":B");
+    }
+
+    @Test
     public void testMax() {
         this.parseAndCheck(
                 "XFD",

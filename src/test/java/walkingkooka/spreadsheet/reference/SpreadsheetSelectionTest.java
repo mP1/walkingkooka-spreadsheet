@@ -155,6 +155,21 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                         SpreadsheetSelection.parseRow("1")));
     }
 
+    // parseColumn......................................................................................................
+
+    @Test
+    public void testParseColumnWithRangeFails() {
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetSelection.parseColumn("B:C"));
+    }
+
+    @Test
+    public void testParseColumn() {
+        assertEquals(
+                SpreadsheetSelection.parseColumn("B"),
+                SpreadsheetReferenceKind.RELATIVE.column(1)
+        );
+    }
+
     // parseColumnReference...............................................................................................
 
     @Test
