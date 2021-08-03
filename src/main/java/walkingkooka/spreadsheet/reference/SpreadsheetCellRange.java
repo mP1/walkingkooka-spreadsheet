@@ -291,9 +291,15 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference {
 
     // testCellRange.....................................................................................................
 
+    /**
+     * Returns true if any part of the given range intersects this range.
+     */
     @Override
     public boolean testCellRange(final SpreadsheetCellRange range) {
-        throw new UnsupportedOperationException(); // TODO implement when cell range selections are supported.
+        checkCellRange(range);
+
+        return this.columnReferenceRange().testCellRange(range) &&
+                this.rowReferenceRange().testCellRange(range);
     }
 
     // HashCodeEqualsDefined.......................................................................................
