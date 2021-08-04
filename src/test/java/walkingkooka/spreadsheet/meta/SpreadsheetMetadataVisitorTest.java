@@ -377,7 +377,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitSelection(final SpreadsheetSelection selection) {
                 this.visited = selection;
             }
-        }.accept(SpreadsheetMetadataPropertyName.SELECTION, SpreadsheetCellReference.parseCell("A2:B3"));
+        }.accept(SpreadsheetMetadataPropertyName.SELECTION, SpreadsheetCellReference.parseCell("A2"));
     }
 
     @Test

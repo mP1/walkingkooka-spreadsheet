@@ -98,7 +98,7 @@ public final class SpreadsheetRowReferenceParserTest extends SpreadsheetParserTe
 
     @Test
     public void testRange() {
-        this.parseAndCheck2("2:34", SpreadsheetReferenceKind.RELATIVE, 2, ":34");
+        this.parseAndCheck2("2", SpreadsheetReferenceKind.RELATIVE, 1, ":34");
     }
 
     @Test
