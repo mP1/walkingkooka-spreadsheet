@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
@@ -6538,11 +6539,704 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // range with selection within......................................................................................
+
+    @Test
+    public void testRangeSelectionCellWithin() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("B2"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellWithin2() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("C3"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellWithin3() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("D4"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeWithin() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("B2:D4"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeWithin2() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("B2:B3"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeWithin3() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("C3:D4"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnWithin() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("B"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnWithin2() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("B:D"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnWithin3() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("C:D"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowWithin() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("2"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowWithin2() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("2:4"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowWithin3() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("3:4"),
+                "B2:D4"
+        );
+    }
+
+    // range Selection Outside..........................................................................................
+
+    @Test
+    public void testRangeSelectionColumnRangeAll() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("B:D"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnRangeAllLeft() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("A:D"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnRangeAllRight() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("B:E"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnRangeAllLeftAndRight() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("A:E"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowRangeAll() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("2:4"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowRangeAllAbove() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("1:4"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowRangeAllBelow() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("2:5"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowRangeAllAboveAndBelow() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("1:5"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeAll() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("B2:D4"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeAllAbove() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("B1:D4"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeAllBelow() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("B2:D5"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeAllLeft() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("A2:D4"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeAllRight() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("B2:E4"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeAll2() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("A1:E5"),
+                "B2:D4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeAll3() {
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("A1:I9"),
+                "C3:E5"
+        );
+    }
+
+    // range Selection Outside..........................................................................................
+
+    @Test
+    public void testRangeSelectionCellLeft() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("A2"),
+                "A2:C4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellLeft2() {
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("A3"),
+                "A3:C5"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRight() {
+        // B2:D4 -> 1
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("E2"),
+                "C2:E4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRight2() {
+        // B2:D4 -> 2
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("F2"),
+                "D2:F4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellTop() {
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("B1"),
+                "B1:D3"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellTop2() {
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("C1"),
+                "C1:E3"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellBottom() {
+        // B2:D4 -> 1
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("B5"),
+                "B3:D5"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellBottom2() {
+        // B2:D4 -> 2
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("B6"),
+                "B4:D6"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellTopLeft() {
+        // C3:E5
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("A2"),
+                "A2:C4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellBottomRight() {
+        // C3:E5
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCell("G6"),
+                "E4:G6"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnLeft() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumn("A"),
+                "A2:C4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnLeft2() {
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumn("A"),
+                "A3:C5"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnRight() {
+        // B2:D4 -> 1
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumn("E"),
+                "C2:E4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnRight2() {
+        // B2:D4 -> 2
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumn("F"),
+                "D2:F4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowTop() {
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRow("1"),
+                "B1:D3"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowTop2() {
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRow("1"),
+                "C1:E3"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowBottom() {
+        // B2:D4 -> 1
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRow("5"),
+                "B3:D5"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowBottom2() {
+        // B2:D4 -> 2
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRow("6"),
+                "B4:D6"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnReferenceLeft() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("A"),
+                "A2:C4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnReferenceLeft2() {
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("A"),
+                "A3:C5"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnReferenceLeft3() {
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                "A3:C5"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnReferenceReferenceRight() {
+        // B2:D4 -> 1
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("E"),
+                "C2:E4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnReferenceReferenceRight2() {
+        // B2:D4 -> 1
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("E:F"),
+                "D2:F4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnReferenceReferenceRight3() {
+        // B2:D4 -> 2
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("F"),
+                "D2:F4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionColumnReferenceReferenceRight4() {
+        // B2:D4 -> 2
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseColumnRange("F:G"),
+                "E2:G4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowRangeTop() {
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("1"),
+                "B1:D3"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowRangeTop2() {
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("1"),
+                "C1:E3"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowRangeTop3() {
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("1:2"),
+                "C1:E3"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowRangeBottom() {
+        // B2:D4 -> 1
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("5"),
+                "B3:D5"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowRangeBottom2() {
+        // B2:D4 -> 2
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("6"),
+                "B4:D6"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionRowRangeBottom3() {
+        // B2:D4 -> 2
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseRowRange("6:7"),
+                "B5:D7"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeLeft() {
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("A2"),
+                "A2:C4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeLeft2() {
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("A3"),
+                "A3:C5"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeRight() {
+        // B2:D4 -> 1
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("E2"),
+                "C2:E4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeRight2() {
+        // B2:D4 -> 2
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("F2"),
+                "D2:F4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeTop() {
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("B1"),
+                "B1:D3"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeTop2() {
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("C1"),
+                "C1:E3"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeBottom() {
+        // B2:D4 -> 1
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("B5"),
+                "B3:D5"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeBottom2() {
+        // B2:D4 -> 2
+        // BCD:234
+        this.rangeAndCheck(
+                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("B6"),
+                "B4:D6"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeTopLeft() {
+        // C3:E5
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("A2"),
+                "A2:C4"
+        );
+    }
+
+    @Test
+    public void testRangeSelectionCellRangeBottomRight() {
+        // C3:E5
+        this.rangeAndCheck(
+                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                SpreadsheetSelection.parseCellRange("G6"),
+                "E4:G6"
+        );
+    }
+
+    // range helpers....................................................................................................
+
     private void rangeAndCheck(final String cellOrLabel,
                                final double xOffset,
                                final double yOffset,
                                final double width,
                                final double height,
+                               final String range) {
+        this.rangeAndCheck(
+                cellOrLabel,
+                xOffset,
+                yOffset,
+                width,
+                height,
+                Optional.empty(),
+                range
+        );
+    }
+
+    private void rangeAndCheck(final String cellOrLabel,
+                               final double xOffset,
+                               final double yOffset,
+                               final double width,
+                               final double height,
+                               final SpreadsheetSelection selection,
+                               final String range) {
+        this.rangeAndCheck(
+                cellOrLabel,
+                xOffset,
+                yOffset,
+                width,
+                height,
+                Optional.of(selection),
+                range
+        );
+    }
+
+    private void rangeAndCheck(final String cellOrLabel,
+                               final double xOffset,
+                               final double yOffset,
+                               final double width,
+                               final double height,
+                               final Optional<SpreadsheetSelection> selection,
                                final String range) {
         this.rangeAndCheck(
                 SpreadsheetViewport.with(
@@ -6552,19 +7246,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         width,
                         height
                 ),
+                selection,
                 SpreadsheetCellRange.parseCellRange(range)
         );
     }
 
     private void rangeAndCheck(final SpreadsheetViewport viewport,
+                               final Optional<SpreadsheetSelection> selection,
                                final SpreadsheetCellRange range) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         assertEquals(
                 range,
-                engine.range(viewport, context),
-                () -> "viewportRange " + viewport
+                engine.range(viewport, selection, context),
+                () -> "range " + viewport + selection.map(s -> " selection:" + s).orElse("")
         );
     }
 

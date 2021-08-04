@@ -19,12 +19,13 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -134,10 +135,12 @@ public interface SpreadsheetEngine {
     double rowHeight(final SpreadsheetRowReference row,
                      final SpreadsheetEngineContext context);
 
-
     /**
      * Translates the {@link SpreadsheetViewport} into the actual {@link SpreadsheetCellRange} of cells that occupy that space.
+     * The combination of parameters make it possible to load the range of cells that occupy the selected range and
+     * automatically pan across as necessary to include the provided {@link SpreadsheetSelection}.
      */
     SpreadsheetCellRange range(final SpreadsheetViewport viewport,
+                               final Optional<SpreadsheetSelection> selection,
                                final SpreadsheetEngineContext context);
 }
