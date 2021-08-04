@@ -31,9 +31,12 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.CharSequences;
@@ -656,16 +659,51 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public SpreadsheetCellRange range(final SpreadsheetViewport viewport,
+                                      final Optional<SpreadsheetSelection> selection,
                                       final SpreadsheetEngineContext context) {
         Objects.requireNonNull(viewport, "viewport");
+        Objects.requireNonNull(selection, "selection");
         checkContext(context);
 
         final SpreadsheetCellReference reference = context.resolveCellReference(viewport.cellOrLabel());
 
+        final SpreadsheetColumnReferenceRange columns = this.columnRange(
+                reference.column(),
+                viewport.xOffset(),
+                viewport.width(),
+                context
+        );
+
+        final SpreadsheetRowReferenceRange rows = this.rowRange(
+                reference.row(),
+                viewport.yOffset(),
+                viewport.height(),
+                context
+        );
+
+        SpreadsheetCellRange cells = columns.setRowReferenceRange(rows);
+
+        if (selection.isPresent()) {
+            cells = this.range1(
+                    selection.get(),
+                    cells,
+                    viewport,
+                    context
+            );
+        }
+        return cells;
+    }
+
+    /**
+     * Uses the given home cell of the viewport and a X offset and width to compute the start and end columns.
+     */
+    SpreadsheetColumnReferenceRange columnRange(final SpreadsheetColumnReference column,
+                                                final double xOffset,
+                                                final double width,
+                                                final SpreadsheetEngineContext context) {
         // columns
-        final double xOffset = viewport.xOffset();
         double x = xOffset;
-        SpreadsheetColumnReference leftColumn = reference.column();
+        SpreadsheetColumnReference leftColumn = column;
 
         // consume xOffset
         if (0 != xOffset) {
@@ -695,7 +733,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
         }
 
-        final double width = viewport.width();
         x = x + width;
         SpreadsheetColumnReference rightColumn = leftColumn;
 
@@ -733,11 +770,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             rightColumn = rightColumn.addSaturated(+1);
         }
 
+        return leftColumn.spreadsheetColumnRange(rightColumn);
+    }
 
+    /**
+     * Uses the given home cell of the viewport and a Y offset and height to compute the start and end rows.
+     */
+    SpreadsheetRowReferenceRange rowRange(final SpreadsheetRowReference row,
+                                          final double yOffset,
+                                          final double height,
+                                          final SpreadsheetEngineContext context) {
         // rows
-        final double yOffset = viewport.yOffset();
         double y = yOffset;
-        SpreadsheetRowReference topRow = reference.row();
+        SpreadsheetRowReference topRow = row;
 
         // consume yOffset
         if (0 != yOffset) {
@@ -767,7 +812,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
         }
 
-        final double height = viewport.height();
         y = y + height;
         SpreadsheetRowReference bottomRow = topRow;
 
@@ -805,9 +849,50 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             bottomRow = bottomRow.addSaturated(+1);
         }
 
-        return leftColumn.setRow(topRow)
-                .spreadsheetCellRange(
-                        rightColumn.setRow(bottomRow)
+        return topRow.spreadsheetRowRange(bottomRow);
+    }
+
+    double sumColumnWidths(final SpreadsheetColumnReference start,
+                           final SpreadsheetColumnReference end,
+                           final SpreadsheetEngineContext context) {
+        double sum = 0;
+        SpreadsheetColumnReference column = start;
+
+        do {
+            sum += this.columnWidth(column, context);
+            column = column.addSaturated(1);
+        } while (!column.isLast() && column.compareTo(end) <= 0);
+
+        return sum;
+    }
+
+    double sumRowHeights(final SpreadsheetRowReference start,
+                         final SpreadsheetRowReference end,
+                         final SpreadsheetEngineContext context) {
+        double sum = 0;
+        SpreadsheetRowReference row = start;
+
+        do {
+            sum += this.rowHeight(row, context);
+            row = row.addSaturated(1);
+        } while (!row.isLast() && row.compareTo(end) <= 0);
+
+        return sum;
+    }
+
+    private SpreadsheetCellRange range1(final SpreadsheetSelection selection,
+                                        final SpreadsheetCellRange range,
+                                        final SpreadsheetViewport viewport,
+                                        final SpreadsheetEngineContext context) {
+        // if selection is outside range, need to adjust the range.
+        return selection.testCellRange(range) ?
+                range :
+                BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor.pan(
+                        range,
+                        viewport,
+                        selection,
+                        this,
+                        context
                 );
     }
 

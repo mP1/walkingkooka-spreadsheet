@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
@@ -186,8 +187,9 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
 
     @Override
     public SpreadsheetCellRange range(final SpreadsheetViewport viewport,
+                                      final Optional<SpreadsheetSelection> selection,
                                       final SpreadsheetEngineContext context) {
-        return this.engine.range(viewport, context);
+        return this.engine.range(viewport, selection, context);
     }
 
     private <T> T stamp(final Supplier<T> supplier,
