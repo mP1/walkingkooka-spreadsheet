@@ -50,9 +50,9 @@ final class BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor extends Sprea
     }
 
     BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor(final SpreadsheetCellRange range,
-                                                                   final SpreadsheetViewport viewport,
-                                                                   final BasicSpreadsheetEngine engine,
-                                                                   final SpreadsheetEngineContext context) {
+                                                           final SpreadsheetViewport viewport,
+                                                           final BasicSpreadsheetEngine engine,
+                                                           final SpreadsheetEngineContext context) {
         super();
 
         this.range = range;
@@ -96,7 +96,7 @@ final class BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor extends Sprea
         if (left.compareTo(beginColumn) < 0) {
 
             // set new left...
-            this.range = this.range.setColumnReferenceRange(
+            this.range = range.setColumnReferenceRange(
                     this.engine.columnRange(
                             left,
                             0,
@@ -118,7 +118,7 @@ final class BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor extends Sprea
                         context
                 );
 
-                this.range = this.range.setColumnReferenceRange(
+                this.range = range.setColumnReferenceRange(
                         engine.columnRange(
                                 beginColumn,
                                 rightOffset,
@@ -153,7 +153,7 @@ final class BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor extends Sprea
         if (top.compareTo(beginRow) < 0) {
 
             // set new top...
-            this.range = this.range.setRowReferenceRange(
+            this.range = range.setRowReferenceRange(
                     this.engine.rowRange(
                             top,
                             0,
@@ -175,7 +175,7 @@ final class BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor extends Sprea
                         context
                 );
 
-                this.range = this.range.setRowReferenceRange(
+                this.range = range.setRowReferenceRange(
                         engine.rowRange(
                                 beginRow,
                                 bottomOffset,
@@ -187,6 +187,10 @@ final class BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor extends Sprea
         }
     }
 
+    /**
+     * Starts with the initial {@link SpreadsheetCellRange} and then possibly due to the selection is adjusted
+     * to enable minimum movement of the viewport but with the selection included.
+     */
     private SpreadsheetCellRange range;
     private final SpreadsheetViewport viewport;
     private final BasicSpreadsheetEngine engine;
