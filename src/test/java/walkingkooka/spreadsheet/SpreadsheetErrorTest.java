@@ -121,7 +121,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetError createJsonNodeMappingValue() {
+    public SpreadsheetError createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 

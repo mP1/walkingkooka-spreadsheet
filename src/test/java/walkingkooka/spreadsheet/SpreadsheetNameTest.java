@@ -166,7 +166,7 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
     // JsonNodeMarshallingTesting...............................................................................................
 
     @Override
-    public SpreadsheetName createJsonNodeMappingValue() {
+    public SpreadsheetName createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 

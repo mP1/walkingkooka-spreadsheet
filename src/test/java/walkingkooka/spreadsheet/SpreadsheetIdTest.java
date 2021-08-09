@@ -136,7 +136,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     // JsonNodeMarshallingTesting...............................................................................................
 
     @Override
-    public SpreadsheetId createJsonNodeMappingValue() {
+    public SpreadsheetId createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 

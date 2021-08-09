@@ -927,7 +927,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetCell createJsonNodeMappingValue() {
+    public SpreadsheetCell createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 

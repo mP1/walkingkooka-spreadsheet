@@ -253,13 +253,13 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     @Test
     public void testJsonNode() {
-        this.marshallAndCheck(this.createJsonNodeMappingValue(),
+        this.marshallAndCheck(this.createJsonNodeMarshallingValue(),
                 "\"B9:1:2:50:30\"");
     }
 
     @Test
     public void testJsonNodeMarshallRoundtripTwice() {
-        this.marshallRoundTripTwiceAndCheck(this.createJsonNodeMappingValue());
+        this.marshallRoundTripTwiceAndCheck(this.createJsonNodeMarshallingValue());
     }
 
     @Test
@@ -399,7 +399,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     @Override
-    public SpreadsheetViewport createJsonNodeMappingValue() {
+    public SpreadsheetViewport createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 

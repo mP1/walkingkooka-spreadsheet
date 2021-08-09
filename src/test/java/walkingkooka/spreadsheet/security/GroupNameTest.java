@@ -160,7 +160,7 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public final GroupName createJsonNodeMappingValue() {
+    public final GroupName createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 

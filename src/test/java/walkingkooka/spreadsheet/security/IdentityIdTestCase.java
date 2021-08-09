@@ -71,7 +71,7 @@ public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> i
     abstract I createId(long value);
 
     @Override
-    public I createJsonNodeMappingValue() {
+    public I createJsonNodeMarshallingValue() {
         return this.createId(1L);
     }
 }

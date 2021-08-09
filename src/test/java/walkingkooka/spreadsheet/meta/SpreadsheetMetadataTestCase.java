@@ -492,7 +492,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     }
 
     @Override
-    public final SpreadsheetMetadata createJsonNodeMappingValue() {
+    public final SpreadsheetMetadata createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 

@@ -109,7 +109,7 @@ final public class SpreadsheetFunctionNameTest implements ClassTesting2<Spreadsh
     }
 
     @Override
-    public SpreadsheetFunctionName createJsonNodeMappingValue() {
+    public SpreadsheetFunctionName createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 }

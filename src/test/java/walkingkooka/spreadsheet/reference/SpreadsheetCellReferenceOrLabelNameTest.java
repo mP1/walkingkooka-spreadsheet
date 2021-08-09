@@ -85,7 +85,7 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
     }
 
     @Override
-    public SpreadsheetCellReferenceOrLabelName createJsonNodeMappingValue() {
+    public SpreadsheetCellReferenceOrLabelName createJsonNodeMarshallingValue() {
         return SpreadsheetExpressionReference.parseCellOrLabelName("A1");
     }
 }

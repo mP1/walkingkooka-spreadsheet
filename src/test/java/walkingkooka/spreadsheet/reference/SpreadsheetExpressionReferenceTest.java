@@ -83,7 +83,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     }
 
     @Override
-    public SpreadsheetExpressionReference createJsonNodeMappingValue() {
+    public SpreadsheetExpressionReference createJsonNodeMarshallingValue() {
         return SpreadsheetExpressionReference.parseExpressionReference("A1");
     }
 }

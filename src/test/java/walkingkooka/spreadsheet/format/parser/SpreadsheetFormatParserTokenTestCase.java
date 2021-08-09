@@ -157,7 +157,7 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
     // JsonNodeMarshallTesting..........................................................................................
 
     @Override
-    public final T createJsonNodeMappingValue() {
+    public final T createJsonNodeMarshallingValue() {
         return this.createToken();
     }
 }
