@@ -238,7 +238,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     }
 
     @Override
-    public SpreadsheetLabelMapping createJsonNodeMappingValue() {
+    public SpreadsheetLabelMapping createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 

@@ -86,7 +86,7 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetEngineEvaluation createJsonNodeMappingValue() {
+    public SpreadsheetEngineEvaluation createJsonNodeMarshallingValue() {
         return SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY;
     }
 

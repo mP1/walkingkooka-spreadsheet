@@ -867,7 +867,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetFormula createJsonNodeMappingValue() {
+    public SpreadsheetFormula createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 

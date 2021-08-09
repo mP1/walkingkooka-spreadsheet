@@ -50,7 +50,7 @@ public interface IdentityTesting<I extends Identity<ID>, ID extends IdentityId>
     }
 
     @Override
-    default I createJsonNodeMappingValue() {
+    default I createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 

@@ -126,7 +126,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     // JsonNodeTesting..................................................................................................
 
     @Override
-    public final S createJsonNodeMappingValue() {
+    public final S createJsonNodeMarshallingValue() {
         return this.createSelection();
     }
 

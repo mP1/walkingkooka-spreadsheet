@@ -199,7 +199,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetCellFormat createJsonNodeMappingValue() {
+    public SpreadsheetCellFormat createJsonNodeMarshallingValue() {
         return SpreadsheetCellFormat.with(PATTERN);
     }
 

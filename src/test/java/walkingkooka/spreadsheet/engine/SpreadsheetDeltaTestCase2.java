@@ -327,7 +327,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public final D createJsonNodeMappingValue() {
+    public final D createJsonNodeMarshallingValue() {
         return this.createSpreadsheetDelta();
     }
 

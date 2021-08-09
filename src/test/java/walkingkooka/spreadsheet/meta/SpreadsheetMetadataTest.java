@@ -347,7 +347,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Override
-    public SpreadsheetMetadata createJsonNodeMappingValue() {
+    public SpreadsheetMetadata createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 }

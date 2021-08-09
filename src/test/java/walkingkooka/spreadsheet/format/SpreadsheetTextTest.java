@@ -217,7 +217,7 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     }
 
     @Override
-    public SpreadsheetText createJsonNodeMappingValue() {
+    public SpreadsheetText createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 }

@@ -225,7 +225,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
     // JsonNodeMarshallingTesting................................................................................................
 
     @Override
-    public final P createJsonNodeMappingValue() {
+    public final P createJsonNodeMarshallingValue() {
         return this.createPattern();
     }
 
