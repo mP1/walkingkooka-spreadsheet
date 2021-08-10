@@ -590,6 +590,11 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.checkToString(2, SpreadsheetReferenceKind.ABSOLUTE, "$C");
     }
 
+    @Test
+    public void testToStringMaxValue() {
+        this.checkToString(SpreadsheetColumnReference.MAX_VALUE, SpreadsheetReferenceKind.RELATIVE, "XFD");
+    }
+
     @Override
     SpreadsheetColumnReference createReference(final int value, final SpreadsheetReferenceKind kind) {
         return SpreadsheetColumnOrRowReference.column(value, kind);
