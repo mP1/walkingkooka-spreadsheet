@@ -197,7 +197,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public final static SpreadsheetMetadataPropertyName<RoundingMode> ROUNDING_MODE = registerConstant(SpreadsheetMetadataPropertyNameRoundingMode.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>edit-selection</code> {@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference}.
+     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>selection</code> {@link SpreadsheetSelection}.
      */
     public final static SpreadsheetMetadataPropertyName<SpreadsheetSelection> SELECTION = registerConstant(SpreadsheetMetadataPropertyNameSelection.instance());
 
