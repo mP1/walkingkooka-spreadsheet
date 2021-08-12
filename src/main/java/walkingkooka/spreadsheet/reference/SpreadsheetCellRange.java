@@ -33,7 +33,7 @@ import java.util.stream.Stream;
  * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetCellRange extends SpreadsheetExpressionReference {
+public final class SpreadsheetCellRange extends SpreadsheetExpressionReference implements SpreadsheetSelectionRange {
 
     /**
      * Computes the range of the given cells.

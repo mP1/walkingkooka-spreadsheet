@@ -20,13 +20,12 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 
-import java.util.Objects;
-
 /**
  * Base class for a range that holds a column or row range.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnOrRowReference & Comparable<T>> extends SpreadsheetSelection {
+abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnOrRowReference & Comparable<T>> extends SpreadsheetSelection
+        implements SpreadsheetSelectionRange {
 
     /**
      * Package private ctor
