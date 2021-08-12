@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.tool;
 
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -45,6 +46,7 @@ public final class EnumJavaScriptSourceTool {
         generateExpressionNumberKind(Paths.get(reactSrc.toString(), "math"));
         generateRoundingMode(Paths.get(reactSrc.toString(), "math"));
         generateSpreadsheetEngineEvaluation(Paths.get(reactSrc.toString(), "spreadsheet", "engine"));
+        generateSpreadsheetViewportSelectionAnchor(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
         generateTextStylePropertyNames(Paths.get(reactSrc.toString(), "text"));
     }
 
@@ -65,6 +67,13 @@ public final class EnumJavaScriptSourceTool {
     private static void generateSpreadsheetEngineEvaluation(final Path dest) throws Exception {
         generateEnums(
                 SpreadsheetEngineEvaluation.class,
+                dest
+        );
+    }
+
+    private static void generateSpreadsheetViewportSelectionAnchor(final Path dest) throws Exception {
+        generateEnums(
+                SpreadsheetViewportSelectionAnchor.class,
                 dest
         );
     }
