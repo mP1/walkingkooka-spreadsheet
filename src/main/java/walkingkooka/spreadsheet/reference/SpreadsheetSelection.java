@@ -35,6 +35,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -405,6 +406,15 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * The sub class {@link SpreadsheetLabelName} will always return <code>this</code>.
      */
     public abstract SpreadsheetSelection toRelative();
+
+    // SpreadsheetViewportSelection......................................................................................
+
+    /**
+     * Factory that creates a {@link SpreadsheetViewportSelection} using this selection and the given anchor.
+     */
+    public SpreadsheetViewportSelection setAnchor(final Optional<SpreadsheetViewportSelectionAnchor> anchor) {
+        return SpreadsheetViewportSelection.with(this, anchor);
+    }
 
     // SpreadsheetSelectionVisitor......................................................................................
 
