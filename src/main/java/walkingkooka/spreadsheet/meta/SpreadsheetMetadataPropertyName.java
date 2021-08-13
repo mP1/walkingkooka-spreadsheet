@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -197,9 +198,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public final static SpreadsheetMetadataPropertyName<RoundingMode> ROUNDING_MODE = registerConstant(SpreadsheetMetadataPropertyNameRoundingMode.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>selection</code> {@link SpreadsheetSelection}.
+     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>selection</code> {@link SpreadsheetViewportSelection}.
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetSelection> SELECTION = registerConstant(SpreadsheetMetadataPropertyNameSelection.instance());
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetViewportSelection> SELECTION = registerConstant(SpreadsheetMetadataPropertyNameSelection.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>

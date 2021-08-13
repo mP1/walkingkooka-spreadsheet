@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -80,37 +81,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .toArray(),
                 SpreadsheetMetadata.SWAPPABLE_PROPERTIES
         );
-    }
-
-    @Test
-    public void testSetSelectionAbsoluteCell() {
-        this.setAndCheck(
-                SpreadsheetMetadataPropertyName.SELECTION,
-                SpreadsheetCellReference.parseCell("$B$99")
-        );
-    }
-
-    @Test
-    public void testSetSelectionLabel() {
-        this.setAndCheck(
-                SpreadsheetMetadataPropertyName.SELECTION,
-                SpreadsheetCellReference.labelName("Label123")
-        );
-    }
-
-    @Test
-    public void testSetViewportCellAbsolute() {
-        this.setAndCheck(
-                SpreadsheetMetadataPropertyName.VIEWPORT_CELL,
-                SpreadsheetCellReference.parseCell("$B$99")
-        );
-    }
-
-    private <S extends SpreadsheetSelection> void setAndCheck(final SpreadsheetMetadataPropertyName<S> property,
-                                                              final S value) {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(property, value);
-        assertEquals(value.toRelative(), metadata.getOrFail(property));
     }
 
     // NON_LOCALE_DEFAULTS..............................................................................................
@@ -239,40 +209,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertEquals(marshallContext.marshall(localDateTime), marshallContext2.marshall(localDateTime), () -> "" + localDateTime);
 
         assertEquals(marshallContext.marshall(metadata), marshallContext2.marshall(metadata), () -> "" + metadata);
-    }
-
-    // json.............................................................................................................
-
-    @Test
-    public void testJsonSelectionCellReference() {
-        this.marshallRoundTripSelectionAndCheck(SpreadsheetSelection.parseCell("Z99"));
-    }
-
-    @Test
-    public void testJsonSelectionColumn() {
-        this.marshallRoundTripSelectionAndCheck(SpreadsheetColumnReference.parseColumn("B"));
-    }
-
-    @Test
-    public void testJsonSelectionLabel() {
-        this.marshallRoundTripSelectionAndCheck(SpreadsheetSelection.labelName("Label123"));
-    }
-
-    @Test
-    public void testJsonSelectionRange() {
-        this.marshallRoundTripSelectionAndCheck(SpreadsheetSelection.parseCellRange("A1:B2"));
-    }
-
-    @Test
-    public void testJsonSelectionRow() {
-        this.marshallRoundTripSelectionAndCheck(SpreadsheetColumnReference.parseRow("123"));
-    }
-
-    private void marshallRoundTripSelectionAndCheck(final SpreadsheetSelection selection) {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SELECTION,
-                selection
-        ));
     }
 
     // toString.........................................................................................................

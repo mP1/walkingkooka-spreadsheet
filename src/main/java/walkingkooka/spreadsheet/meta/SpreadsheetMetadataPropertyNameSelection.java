@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -26,7 +27,7 @@ import java.util.Optional;
 /**
  * Holds the {@link SpreadsheetSelection}, which may be a cell, column, row, or range.
  */
-final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadataPropertyName<SpreadsheetSelection> {
+final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadataPropertyName<SpreadsheetViewportSelection> {
 
     /**
      * Singleton
@@ -43,13 +44,12 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
     }
 
     /**
-     * After checking the type force the {@link SpreadsheetSelection#toRelative()}
+     * After checking the type force the {@link SpreadsheetViewportSelection}
      */
     @Override
-    final SpreadsheetSelection checkValue0(final Object value) {
+    final SpreadsheetViewportSelection checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetSelection)
-                .toRelative();
+                v -> v instanceof SpreadsheetSelection);
     }
 
     @Override
@@ -58,13 +58,13 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
     }
 
     @Override
-    final Optional<SpreadsheetSelection> extractLocaleValue(final Locale locale) {
+    final Optional<SpreadsheetViewportSelection> extractLocaleValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    final Class<SpreadsheetSelection> type() {
-        return SpreadsheetSelection.class;
+    final Class<SpreadsheetViewportSelection> type() {
+        return SpreadsheetViewportSelection.class;
     }
 
     @Override
@@ -73,7 +73,7 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
     }
 
     @Override
-    void accept(final SpreadsheetSelection value,
+    void accept(final SpreadsheetViewportSelection value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitSelection(value);
     }
