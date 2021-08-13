@@ -48,6 +48,25 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     private static final SpreadsheetSelection SELECTION = CELL_RANGE;
     private static final Optional<SpreadsheetViewportSelectionAnchor> ANCHOR = Optional.of(SpreadsheetViewportSelectionAnchor.TOP_LEFT);
 
+    @Test
+    public void testWithNullSelectorFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetViewportSelection.with(null, SpreadsheetViewportSelection.NO_ANCHOR));
+    }
+
+    @Test
+    public void testWithNullAnchorFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetViewportSelection.with(CELL, null));
+    }
+
+    @Test
+    public void testWithLabelFails() {
+        this.withFails(
+                SpreadsheetSelection.labelName("Label123"),
+                SpreadsheetViewportSelection.NO_ANCHOR,
+                "Labels cannot be a viewport range=Label123"
+        );
+    }
+
     // cell.............................................................................................................
 
     @Test
@@ -229,7 +248,20 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     private void withFails(final SpreadsheetSelection selection,
                            final SpreadsheetViewportSelectionAnchor anchor,
                            final String message) {
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> anchor.setSelection(selection));
+        this.withFails(selection, Optional.of(anchor), message);
+    }
+
+    private void withFails(final SpreadsheetSelection selection,
+                           final Optional<SpreadsheetViewportSelectionAnchor> anchor,
+                           final String message) {
+        if (anchor.isPresent()) {
+            final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> anchor.get().setSelection(selection));
+            if (null != message) {
+                assertEquals(message, thrown.getMessage(), "message");
+            }
+
+        }
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportSelection.with(selection, anchor));
         if (null != message) {
             assertEquals(message, thrown.getMessage(), "message");
         }
