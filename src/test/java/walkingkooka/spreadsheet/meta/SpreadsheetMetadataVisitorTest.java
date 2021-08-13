@@ -35,8 +35,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 
@@ -371,23 +370,17 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitSelectionSpreadsheetCellReference() {
+    public void testVisitSelection() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitSelection(final SpreadsheetSelection selection) {
+            protected void visitSelection(final SpreadsheetViewportSelection selection) {
                 this.visited = selection;
             }
-        }.accept(SpreadsheetMetadataPropertyName.SELECTION, SpreadsheetCellReference.parseCell("A2"));
-    }
-
-    @Test
-    public void testVisitSelectionSpreadsheetLabelName() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitSelection(final SpreadsheetSelection selection) {
-                this.visited = selection;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.SELECTION, SpreadsheetExpressionReference.labelName("Label123"));
+        }.accept(
+                SpreadsheetMetadataPropertyName.SELECTION,
+                SpreadsheetCellReference.parseCell("A2")
+                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
+        );
     }
 
     @Test
