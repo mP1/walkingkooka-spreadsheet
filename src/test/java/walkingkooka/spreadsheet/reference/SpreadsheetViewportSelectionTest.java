@@ -45,6 +45,8 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     private static final SpreadsheetCellRange CELL_RANGE = SpreadsheetSelection.parseCellRange("B2:C3");
     private static final SpreadsheetRowReferenceRange ROW_RANGE = SpreadsheetSelection.parseRowRange("2:3");
 
+    private static final SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("Label123");
+
     private static final SpreadsheetSelection SELECTION = CELL_RANGE;
     private static final Optional<SpreadsheetViewportSelectionAnchor> ANCHOR = Optional.of(SpreadsheetViewportSelectionAnchor.TOP_LEFT);
 
@@ -56,15 +58,6 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     @Test
     public void testWithNullAnchorFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetViewportSelection.with(CELL, null));
-    }
-
-    @Test
-    public void testWithLabelFails() {
-        this.withFails(
-                SpreadsheetSelection.labelName("Label123"),
-                SpreadsheetViewportSelection.NO_ANCHOR,
-                "Labels cannot be a viewport range=Label123"
-        );
     }
 
     // cell.............................................................................................................
@@ -230,6 +223,20 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     @Test
     public void testWithRowRangeAndBottomAnchor() {
         this.withAndCheck(ROW_RANGE, SpreadsheetViewportSelectionAnchor.BOTTOM);
+    }
+
+    // label............................................................................................................
+
+    @Test
+    public void testWithLabelWithoutAnchor() {
+        this.withAndCheck(LABEL);
+    }
+
+    @Test
+    public void testWithLabelAnyAnchor() {
+        for (final SpreadsheetViewportSelectionAnchor anchor : SpreadsheetViewportSelectionAnchor.values()) {
+            this.withAndCheck(LABEL, anchor);
+        }
     }
 
     // helpers..........................................................................................................

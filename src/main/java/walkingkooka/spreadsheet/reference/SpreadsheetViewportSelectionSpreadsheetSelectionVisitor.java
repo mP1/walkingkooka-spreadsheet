@@ -79,7 +79,7 @@ final class SpreadsheetViewportSelectionSpreadsheetSelectionVisitor extends Spre
 
     @Override
     protected void visit(final SpreadsheetLabelName label) {
-        throw new IllegalArgumentException("Labels cannot be a viewport range=" + label);
+        // a label may point to a cell or cell-range
     }
 
     @Override
