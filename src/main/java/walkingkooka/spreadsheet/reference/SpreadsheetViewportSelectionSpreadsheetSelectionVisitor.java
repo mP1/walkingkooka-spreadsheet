@@ -44,8 +44,12 @@ final class SpreadsheetViewportSelectionSpreadsheetSelectionVisitor extends Spre
     }
 
     private final static EnumSet<SpreadsheetViewportSelectionAnchor> CELL = EnumSet.of(
+            SpreadsheetViewportSelectionAnchor.LEFT,
+            SpreadsheetViewportSelectionAnchor.RIGHT,
+            SpreadsheetViewportSelectionAnchor.TOP,
             SpreadsheetViewportSelectionAnchor.TOP_LEFT,
             SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+            SpreadsheetViewportSelectionAnchor.BOTTOM,
             SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
             SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
     );
