@@ -37,7 +37,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -460,5 +459,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
         SpreadsheetPattern.parseNumberFormatPattern(" ");
         //noinspection ResultOfMethodCallIgnored
         SpreadsheetId.with(0);
+        SpreadsheetViewportSelection.NO_ANCHOR.isPresent();
     }
 }
