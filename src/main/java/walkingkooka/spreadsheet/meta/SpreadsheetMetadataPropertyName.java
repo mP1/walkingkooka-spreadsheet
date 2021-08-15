@@ -395,13 +395,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      */
     abstract void accept(final T value, final SpreadsheetMetadataVisitor visitor);
 
-    /**
-     * Only {@link SpreadsheetMetadataPropertyNameSelection} returns true.
-     */
-    final boolean isSelection() {
-        return this instanceof SpreadsheetMetadataPropertyNameSelection;
-    }
-
     // Object...........................................................................................................
 
     @Override

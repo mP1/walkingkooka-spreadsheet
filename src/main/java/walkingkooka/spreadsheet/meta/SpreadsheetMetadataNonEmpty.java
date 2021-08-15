@@ -369,11 +369,10 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
             final SpreadsheetMetadataPropertyName<?> propertyName = propertyAndValue.getKey();
             final Object value = propertyAndValue.getValue();
 
-            final JsonNode value2 = propertyName.isSelection() ?
-                    context.marshallWithType(value) :
-                    context.marshall(value);
-
-            children.add(value2.setName(propertyName.jsonPropertyName));
+            children.add(
+                    context.marshall(value)
+                            .setName(propertyName.jsonPropertyName)
+            );
         }
     }
 }

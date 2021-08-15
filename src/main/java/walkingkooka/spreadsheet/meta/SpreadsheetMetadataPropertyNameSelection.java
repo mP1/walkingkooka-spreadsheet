@@ -49,7 +49,7 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
     @Override
     final SpreadsheetViewportSelection checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetSelection);
+                v -> v instanceof SpreadsheetViewportSelection);
     }
 
     @Override
