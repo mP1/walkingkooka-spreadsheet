@@ -24,8 +24,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 
 import java.util.Locale;
+import java.util.Optional;
 
 
 public final class SpreadsheetMetadataPropertyNameSelectionTest extends SpreadsheetMetadataPropertyNameTestCase<
@@ -33,32 +35,46 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
         SpreadsheetViewportSelection> {
 
     @Test
+    public void testCheckCellRange() {
+        this.checkValue(
+                SpreadsheetCellRange.parseCellRange("A1:B2")
+                        .setAnchor(
+                                Optional.of(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
+                        )
+        );
+    }
+
+    @Test
     public void testCheckColumn() {
-        this.checkValue(SpreadsheetColumnReference.parseColumn("AB"));
+        this.checkValue(
+                SpreadsheetColumnReference.parseColumn("AB")
+                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
+        );
     }
 
     @Test
     public void testCheckLabel() {
-        this.checkValue(SpreadsheetLabelName.labelName("Label123"));
-    }
-
-    @Test
-    public void testCheckRange() {
-        this.checkValue(SpreadsheetCellRange.parseCellRange("A1:B2"));
+        this.checkValue(
+                SpreadsheetLabelName.labelName("Label123")
+                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
+        );
     }
 
     @Test
     public void testCheckRow() {
-        this.checkValue(SpreadsheetRowReference.parseRow("1234"));
+        this.checkValue(
+                SpreadsheetRowReference.parseRow("1234")
+                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
+        );
     }
 
     @Test
-    public final void testInvalidValueFails() {
+    public void testInvalidValueFails() {
         this.checkValueFails("invalid", "Expected SpreadsheetSelection, but got \"invalid\" for \"selection\"");
     }
 
     @Test
-    public final void testExtractLocaleValue() {
+    public void testExtractLocaleValue() {
         this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
     }
 
