@@ -132,7 +132,7 @@ final class BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor extends Sprea
 
     @Override
     protected void visit(final SpreadsheetLabelName label) {
-        throw new UnsupportedOperationException("Label not expected: " + label);
+        this.accept(this.context.resolveCellReference(label));
     }
 
     @Override
