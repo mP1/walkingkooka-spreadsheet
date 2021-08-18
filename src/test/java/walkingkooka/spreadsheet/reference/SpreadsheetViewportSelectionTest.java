@@ -102,23 +102,23 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     // cellRange.........................................................................................................
 
     @Test
-    public void testWithCellRangeAndLeftAnchor() {
-        this.withAndCheck(CELL_RANGE, SpreadsheetViewportSelectionAnchor.LEFT);
+    public void testWithCellRangeAndLeftAnchorFails() {
+        this.withFails(CELL_RANGE, SpreadsheetViewportSelectionAnchor.LEFT);
     }
 
     @Test
-    public void testWithCellRangeAndRightAnchor() {
-        this.withAndCheck(CELL_RANGE, SpreadsheetViewportSelectionAnchor.RIGHT);
+    public void testWithCellRangeAndRightAnchorFails() {
+        this.withFails(CELL_RANGE, SpreadsheetViewportSelectionAnchor.RIGHT);
     }
 
     @Test
-    public void testWithCellRangeAndTopAnchor() {
-        this.withAndCheck(CELL_RANGE, SpreadsheetViewportSelectionAnchor.TOP);
+    public void testWithCellRangeAndTopAnchorFails() {
+        this.withFails(CELL_RANGE, SpreadsheetViewportSelectionAnchor.TOP);
     }
 
     @Test
-    public void testWithCellRangeAndBottomAnchor() {
-        this.withAndCheck(CELL_RANGE, SpreadsheetViewportSelectionAnchor.BOTTOM);
+    public void testWithCellRangeAndBottomAnchorFails() {
+        this.withFails(CELL_RANGE, SpreadsheetViewportSelectionAnchor.BOTTOM);
     }
 
     @Test
