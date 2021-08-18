@@ -39,17 +39,13 @@ final class SpreadsheetViewportSelectionSpreadsheetSelectionVisitor extends Spre
     protected void visit(final SpreadsheetCellRange range) {
         this.checkAnchor(
                 range,
-                CELL
+                CELL_RANGE
         );
     }
 
-    private final static EnumSet<SpreadsheetViewportSelectionAnchor> CELL = EnumSet.of(
-            SpreadsheetViewportSelectionAnchor.LEFT,
-            SpreadsheetViewportSelectionAnchor.RIGHT,
-            SpreadsheetViewportSelectionAnchor.TOP,
+    private final static EnumSet<SpreadsheetViewportSelectionAnchor> CELL_RANGE = EnumSet.of(
             SpreadsheetViewportSelectionAnchor.TOP_LEFT,
             SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
-            SpreadsheetViewportSelectionAnchor.BOTTOM,
             SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
             SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
     );
