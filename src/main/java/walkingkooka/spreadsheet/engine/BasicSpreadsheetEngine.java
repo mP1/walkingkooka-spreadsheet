@@ -256,7 +256,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     updated.cells(),
                     range,
                     context
-            ).setWindow(Lists.of(range));
+            ).setWindow(Optional.of(range));
         }
     }
 

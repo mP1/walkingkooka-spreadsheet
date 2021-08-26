@@ -32,8 +32,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -176,8 +176,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         assertEquals(rowHeights, delta.rowHeights(), "rowHeights");
     }
 
-    final void checkWindow(final SpreadsheetDelta delta, final List<SpreadsheetCellRange> window) {
+    final void checkWindow(final SpreadsheetDelta delta,
+                           final Optional<SpreadsheetCellRange> window) {
         assertEquals(window, delta.window(), "window");
-        assertThrows(UnsupportedOperationException.class, () -> delta.window().add(SpreadsheetCellRange.parseCellRange("A1:Z99")));
     }
 }

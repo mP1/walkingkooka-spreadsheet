@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,7 +36,7 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
 
     @Test
     public void testNoWindowConstant() {
-        assertEquals(Lists.empty(), SpreadsheetDelta.NO_WINDOW);
+        assertEquals(Optional.empty(), SpreadsheetDelta.NO_WINDOW);
     }
 
     @Test
@@ -44,7 +45,7 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
         this.checkCells(delta);
         this.checkColumnWidths(delta, SpreadsheetDelta.NO_COLUMN_WIDTHS);
         this.checkRowHeights(delta, SpreadsheetDelta.NO_ROW_HEIGHTS);
-        this.checkWindow(delta, Lists.empty());
+        this.checkWindow(delta, SpreadsheetDelta.NO_WINDOW);
     }
 
     @Test
@@ -59,7 +60,7 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
         cells.add(a1);
 
         final SpreadsheetDelta delta = SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
-                .setWindow(Lists.of(SpreadsheetExpressionReference.parseCellRange("A1:Z99")))
+                .setWindow(Optional.of(SpreadsheetExpressionReference.parseCellRange("A1:Z99")))
                 .setCells(cells);
         assertEquals(Lists.of(a1, b2, c3), new ArrayList<>(delta.cells()), "cells should be sorted");
     }
@@ -76,7 +77,7 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
         cells.add(a1);
 
         final SpreadsheetDelta delta = SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
-                .setWindow(Lists.of(SpreadsheetExpressionReference.parseCellRange("A1:Z99")))
+                .setWindow(Optional.of(SpreadsheetExpressionReference.parseCellRange("A1:Z99")))
                 .setCells(cells);
         assertEquals(Lists.of(a1, b2, c3), new ArrayList<>(delta.cells()), "cells should be sorted");
     }

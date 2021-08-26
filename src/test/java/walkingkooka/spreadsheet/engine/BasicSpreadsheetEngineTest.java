@@ -4182,7 +4182,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
-                        .setWindow(Lists.of(range))
+                        .setWindow(Optional.of(range))
                         .setLabels(
                                 Sets.of(
                                         label.mapping(b2)
@@ -4268,10 +4268,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 SpreadsheetDelta.with(Sets.of(
-                        this.formattedCellWithValue(c3, this.expressionNumberKind().create(1)),
-                        this.formattedCellWithValue(d4, this.expressionNumberKind().create(2))
-                ))
-                        .setWindow(Lists.of(range))
+                                this.formattedCellWithValue(c3, this.expressionNumberKind().create(1)),
+                                this.formattedCellWithValue(d4, this.expressionNumberKind().create(2))
+                        ))
+                        .setWindow(Optional.of(range))
                         .setLabels(
                                 Sets.of(
                                         label.mapping(d4.reference())
@@ -4306,9 +4306,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 SpreadsheetDelta.with(Sets.of(
-                        this.formattedCellWithValue(c3, this.expressionNumberKind().create(1))
-                ))
-                        .setWindow(Lists.of(range))
+                                this.formattedCellWithValue(c3, this.expressionNumberKind().create(1))
+                        ))
+                        .setWindow(Optional.of(range))
                         .setLabels(
                                 Sets.of(
                                         label.mapping(d4)
