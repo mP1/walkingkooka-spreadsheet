@@ -721,7 +721,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 evaluation,
                 context,
                 SpreadsheetDelta.with(Sets.of(updated))
-                        .setWindow(Lists.of(range))
+                        .setWindow(Optional.of(range))
         );
     }
 

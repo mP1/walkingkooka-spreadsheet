@@ -41,23 +41,22 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * Captures changes following an operation. A window when non empty is applied to any given cells as a filter.
+ * Captures changes following an operation. A window when non empty is applied to any given cells and label mappings returned as a filter.
  */
 public abstract class SpreadsheetDelta implements TreePrintable {
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
     public final static Set<SpreadsheetLabelMapping> NO_LABELS = Sets.empty();
-    public final static List<SpreadsheetCellRange> NO_WINDOW = Lists.empty();
+    public final static Optional<SpreadsheetCellRange> NO_WINDOW = Optional.empty();
     public final static Map<SpreadsheetColumnReference, Double> NO_COLUMN_WIDTHS = Maps.empty();
     public final static Map<SpreadsheetRowReference, Double> NO_ROW_HEIGHTS = Maps.empty();
 
@@ -199,9 +198,9 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     // window............................................................................................................
 
     /**
-     * Getter that returns any windows for this delta. An empty list signifies, no filtering.
+     * Getter that returns the windows for this delta. Empty means no filtering was performed on the cells etc contained.
      */
-    public abstract List<SpreadsheetCellRange> window();
+    public abstract Optional<SpreadsheetCellRange> window();
 
     /**
      * Would be setter that if necessary returns a new {@link SpreadsheetDelta} which will also filter cells if necessary,
@@ -209,77 +208,79 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      * {@link SpreadsheetCellRange} is present because it is not possible to determine if a cell is within those
      * boundaries.
      */
-    public final SpreadsheetDelta setWindow(final List<SpreadsheetCellRange> window) {
+    public final SpreadsheetDelta setWindow(final Optional<SpreadsheetCellRange> window) {
         Objects.requireNonNull(window, "window");
 
-        final List<SpreadsheetCellRange> copy = Lists.immutable(window);
-        return this.window().equals(copy) ?
+        return this.window().equals(window) ?
                 this :
-                this.setWindow0(copy);
+                this.setWindow0(window);
     }
 
-    private SpreadsheetDelta setWindow0(final List<SpreadsheetCellRange> window) {
+    private SpreadsheetDelta setWindow0(final Optional<SpreadsheetCellRange> window) {
         final Set<SpreadsheetCell> cells = this.cells;
         final Set<SpreadsheetLabelMapping> labels = this.labels;
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         final Map<SpreadsheetRowReference, Double> rowHeights = this.rowHeights;
 
-        final Set<SpreadsheetCell> filteredCells = filterCells0(cells, window);
-        final Set<SpreadsheetLabelMapping> filteredlabels = filterLabels(labels, this.window());
+        final SpreadsheetDelta delta;
+        if (window.isPresent()) {
+            final SpreadsheetCellRange filter = window.get();
 
-        return window.isEmpty() ?
-                SpreadsheetDeltaNonWindowed.withNonWindowed(filteredCells, filteredlabels, columnWidths, rowHeights) :
-                SpreadsheetDeltaWindowed.withWindowed(filteredCells, filteredlabels, columnWidths, rowHeights, window);
+            delta = SpreadsheetDeltaWindowed.withWindowed(
+                    filterCells0(cells, filter),
+                    filterLabels0(labels, filter),
+                    columnWidths,
+                    rowHeights,
+                    window);
+        } else {
+            delta = SpreadsheetDeltaNonWindowed.withNonWindowed(cells, labels, columnWidths, rowHeights);
+        }
+
+        return delta;
     }
 
-    static Set<SpreadsheetCell> filterCells0(final Set<SpreadsheetCell> cells,
-                                             final List<SpreadsheetCellRange> window) {
-        return window.isEmpty() ?
-                Sets.immutable(cells) :
-                Sets.readOnly(filterCells1(cells, Cast.to(window)));
+    static Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                            final Optional<SpreadsheetCellRange> window) {
+        return window.isPresent() ?
+                filterCells0(cells, window.get()) :
+                cells;
     }
 
-    private static Set<SpreadsheetCell> filterCells1(final Set<SpreadsheetCell> cells,
-                                                     final List<SpreadsheetCellRange> ranges) {
-        return cells.stream()
-                .filter(c -> {
-                    return ranges.stream()
-                            .anyMatch(r -> r.test(c.reference()));
-                })
-                .collect(Collectors.toCollection(Sets::sorted));
+    private static Set<SpreadsheetCell> filterCells0(final Set<SpreadsheetCell> cells,
+                                                     final SpreadsheetCellRange window) {
+        return Sets.immutable(
+                cells.stream()
+                        .filter(c -> window.test(c.reference()))
+                        .collect(Collectors.toCollection(Sets::sorted))
+        );
     }
 
     /**
-     * Returns a {@link Map} removing any references that are not within {@link Set}.
+     * Returns a {@link Set} removing any references that are not within the window if present.
      */
     static Set<SpreadsheetLabelMapping> filterLabels(final Set<SpreadsheetLabelMapping> labels,
-                                                     final List<SpreadsheetCellRange> window) {
-        return window.isEmpty() ?
-                labels :
+                                                     final Optional<SpreadsheetCellRange> window) {
+        return window.isPresent() ?
                 filterLabels0(
                         labels,
-                        window
-                );
+                        window.get()
+                ) :
+                labels;
     }
 
     /**
      * Removes all {@link SpreadsheetLabelMapping} that belong to cells that outside the window.
      */
     private static Set<SpreadsheetLabelMapping> filterLabels0(final Set<SpreadsheetLabelMapping> labels,
-                                                              final List<SpreadsheetCellRange> window) {
+                                                              final SpreadsheetCellRange window) {
         return Sets.immutable(
                 labels.stream()
-                        .filter(windowRangesPredicate(window))
+                        .filter(m -> {
+                            final SpreadsheetExpressionReference r = m.reference();
+                            return r.isCellReference() && window.test((SpreadsheetCellReference) m.reference());
+                        })
                         .collect(Collectors.toCollection(Sets::ordered))
         );
-    }
-
-    private static Predicate<SpreadsheetLabelMapping> windowRangesPredicate(final List<SpreadsheetCellRange> window) {
-        return (m) -> window.stream()
-                .anyMatch(mm -> {
-                    final SpreadsheetExpressionReference r = m.reference();
-                    return r.isCellReference() && mm.test((SpreadsheetCellReference) m.reference());
-                });
     }
 
     // TreePrintable.....................................................................................................
@@ -353,7 +354,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         Set<SpreadsheetLabelMapping> labels = NO_LABELS;
         Map<SpreadsheetColumnReference, Double> columnWidths = NO_COLUMN_WIDTHS;
         Map<SpreadsheetRowReference, Double> maxRowsHeights = NO_ROW_HEIGHTS;
-        List<SpreadsheetCellRange> window = NO_WINDOW;
+        Optional<SpreadsheetCellRange> window = NO_WINDOW;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -372,7 +373,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                     maxRowsHeights = unmarshallMap(child, SpreadsheetRowReference::parseRow);
                     break;
                 case WINDOW_PROPERTY_STRING:
-                    window = rangeJsonNodeUnmarshall(child.stringOrFail());
+                    window = Optional.of(SpreadsheetCellRange.parseCellRange(child.stringOrFail()));
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
@@ -419,13 +420,6 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
         return max;
     }
-
-    private static List<SpreadsheetCellRange> rangeJsonNodeUnmarshall(final String range) {
-        return Arrays.stream(range.split(WINDOW_SEPARATOR))
-                .map(SpreadsheetCellRange::parseCellRange)
-                .collect(Collectors.toList());
-    }
-
     /**
      * <pre>
      * {
@@ -478,12 +472,12 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                     (r) -> r.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)).setName(MAX_ROW_HEIGHTS_PROPERTY));
         }
 
-        final List<SpreadsheetCellRange> window = this.window();
-        if (!window.isEmpty()) {
-            children.add(JsonNode.string(window.stream()
-                    .map(SpreadsheetCellRange::toString)
-                    .collect(Collectors.joining(WINDOW_SEPARATOR)))
-                    .setName(WINDOW_PROPERTY));
+        final Optional<SpreadsheetCellRange> window = this.window();
+        if (window.isPresent()) {
+            children.add(
+                    context.marshall(window.get())
+                            .setName(WINDOW_PROPERTY)
+            );
         }
 
         return JsonNode.object().setChildren(children);

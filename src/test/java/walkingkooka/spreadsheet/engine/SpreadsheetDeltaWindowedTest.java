@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -113,8 +113,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "      Formula\n" +
                         "        text: \"3\"\n" +
                         "  window:\n" +
-                        "    A1:E5\n" +
-                        "    F6:Y99\n"
+                        "    A1:E5\n"
         );
     }
 
@@ -145,8 +144,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    LabelB2: B2\n" +
                         "    LabelC3: C3\n" +
                         "  window:\n" +
-                        "    A1:E5\n" +
-                        "    F6:Y99\n"
+                        "    A1:E5\n"
         );
     }
 
@@ -174,8 +172,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "  columnWidths:\n" +
                         "    A: 50.0\n" +
                         "  window:\n" +
-                        "    A1:E5\n" +
-                        "    F6:Y99\n"
+                        "    A1:E5\n"
         );
     }
 
@@ -203,8 +200,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "  rowHeights:\n" +
                         "    1: 75.0\n" +
                         "  window:\n" +
-                        "    A1:E5\n" +
-                        "    F6:Y99\n"
+                        "    A1:E5\n"
         );
     }
 
@@ -239,15 +235,13 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "  rowHeights:\n" +
                         "    1: 75.0\n" +
                         "  window:\n" +
-                        "    A1:E5\n" +
-                        "    F6:Y99\n"
+                        "    A1:E5\n"
         );
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
 
-    private final static JsonString WINDOW_PIXEL_RECTANGLE_JSON_STRING = JsonNode.string("B9:300:50");
-    private final static JsonString WINDOW_JSON_STRING = JsonNode.string("A1:E5,F6:Y99");
+    private final static JsonString WINDOW_JSON_STRING = JsonNode.string("A1:E5");
 
     @Test
     public void testUnmarshallCells() {
@@ -348,58 +342,58 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     @Test
     public void testToString() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                SpreadsheetDelta.NO_ROW_HEIGHTS,
-                this.window()),
-                "cells: A1=1, B2=2, C3=3 window: A1:E5, F6:Y99");
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window()),
+                "cells: A1=1, B2=2, C3=3 window: A1:E5");
     }
 
     @Test
     public void testToStringLabels() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
-                this.labels(),
-                SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                SpreadsheetDelta.NO_ROW_HEIGHTS,
-                this.window()),
-                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 window: A1:E5, F6:Y99");
+                        this.labels(),
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window()),
+                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 window: A1:E5");
     }
 
     @Test
     public void testToStringColumnWidths() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                this.columnWidths(),
-                SpreadsheetDelta.NO_ROW_HEIGHTS,
-                this.window()),
-                "cells: A1=1, B2=2, C3=3 max: A=50.0 window: A1:E5, F6:Y99");
+                        SpreadsheetDelta.NO_LABELS,
+                        this.columnWidths(),
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window()),
+                "cells: A1=1, B2=2, C3=3 max: A=50.0 window: A1:E5");
     }
 
     @Test
     public void testToStringMaxRowHeights() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                this.rowHeights(),
-                this.window()),
-                "cells: A1=1, B2=2, C3=3 max: 1=75.0 window: A1:E5, F6:Y99");
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        this.rowHeights(),
+                        this.window()),
+                "cells: A1=1, B2=2, C3=3 max: 1=75.0 window: A1:E5");
     }
 
     @Test
     public void testToStringColumnWidthsRowHeights() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                this.columnWidths(),
-                this.rowHeights(),
-                this.window()),
-                "cells: A1=1, B2=2, C3=3 max: A=50.0, 1=75.0 window: A1:E5, F6:Y99");
+                        SpreadsheetDelta.NO_LABELS,
+                        this.columnWidths(),
+                        this.rowHeights(),
+                        this.window()),
+                "cells: A1=1, B2=2, C3=3 max: A=50.0, 1=75.0 window: A1:E5");
     }
 
     // helpers..........................................................................................................
 
     @Override
-    final List<SpreadsheetCellRange> window() {
-        return this.window0("A1:E5", "F6:Y99");
+    final Optional<SpreadsheetCellRange> window() {
+        return this.window0("A1:E5");
     }
 
     @Override
@@ -408,7 +402,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     private SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells,
-                                                            final List<SpreadsheetCellRange> window) {
+                                                            final Optional<SpreadsheetCellRange> window) {
         return SpreadsheetDeltaWindowed.withWindowed(
                 cells,
                 this.labels(),

@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
@@ -27,8 +26,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.printer.IndentingPrinter;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -97,8 +96,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
      * There is no window.
      */
     @Override
-    public List<SpreadsheetCellRange> window() {
-        return Lists.empty();
+    public Optional<SpreadsheetCellRange> window() {
+        return NO_WINDOW;
     }
 
     @Override

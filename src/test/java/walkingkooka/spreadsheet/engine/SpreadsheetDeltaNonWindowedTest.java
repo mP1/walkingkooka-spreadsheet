@@ -18,12 +18,11 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.tree.json.JsonNode;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestCase2<SpreadsheetDeltaNonWindowed> {
@@ -359,8 +358,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Override
-    final List<SpreadsheetCellRange> window() {
-        return Lists.empty();
+    final Optional<SpreadsheetCellRange> window() {
+        return SpreadsheetDelta.NO_WINDOW;
     }
 
     @Override

@@ -25,8 +25,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.printer.IndentingPrinter;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -41,7 +41,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                                  final Set<SpreadsheetLabelMapping> labels,
                                                  final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                  final Map<SpreadsheetRowReference, Double> rowHeights,
-                                                 final List<SpreadsheetCellRange> window) {
+                                                 final Optional<SpreadsheetCellRange> window) {
         return new SpreadsheetDeltaWindowed(
                 cells,
                 labels,
@@ -55,7 +55,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                      final Set<SpreadsheetLabelMapping> labels,
                                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                                      final Map<SpreadsheetRowReference, Double> rowHeights,
-                                     final List<SpreadsheetCellRange> window) {
+                                     final Optional<SpreadsheetCellRange> window) {
         super(cells, labels, columnWidths, rowHeights);
         this.window = window;
     }
@@ -94,15 +94,15 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    public List<SpreadsheetCellRange> window() {
+    public Optional<SpreadsheetCellRange> window() {
         return this.window;
     }
 
-    private final List<SpreadsheetCellRange> window;
+    private final Optional<SpreadsheetCellRange> window;
 
     @Override
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
-        return filterCells0(cells, this.window);
+        return filterCells(cells, this.window);
     }
 
     // TreePrintable.....................................................................................................
@@ -112,8 +112,9 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         printer.println("window:");
         printer.indent();
         {
-            for (final SpreadsheetCellRange rectangle : this.window()) {
-                printer.println(rectangle.toString());
+            final Optional<SpreadsheetCellRange> window = this.window();
+            if (window.isPresent()) {
+                printer.println(window.get().toString());
             }
         }
 
