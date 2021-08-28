@@ -25,7 +25,7 @@ import walkingkooka.tree.json.JsonNode;
 import java.util.Optional;
 import java.util.Set;
 
-public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestCase2<SpreadsheetDeltaNonWindowed> {
+public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestCase<SpreadsheetDeltaNonWindowed> {
 
     @Test
     public void testWith() {
@@ -176,19 +176,6 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "    A: 50.0\n" +
                         "  rowHeights:\n" +
                         "    1: 75.0\n"
-        );
-    }
-
-    // equals...........................................................................................................
-
-    @Test
-    public void testEqualsSpreadsheetDeltaWindowed() {
-        this.checkNotEquals(SpreadsheetDeltaWindowed.withWindowed(
-                this.cells(),
-                this.labels(),
-                this.columnWidths(),
-                this.rowHeights(),
-                this.window0("A1:Z99"))
         );
     }
 
