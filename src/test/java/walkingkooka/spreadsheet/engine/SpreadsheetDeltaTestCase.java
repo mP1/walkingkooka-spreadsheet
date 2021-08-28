@@ -360,6 +360,31 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return SpreadsheetLabelName.labelName("LabelC3");
     }
 
+    // deletedCells.....................................................................................................
+
+    final Set<SpreadsheetCellReference> deletedCells() {
+        return Set.of(
+                SpreadsheetExpressionReference.parseCell("C1"),
+                SpreadsheetExpressionReference.parseCell("C2")
+        );
+    }
+
+    final Set<SpreadsheetCellReference> differentDeletedCells() {
+        return Set.of(SpreadsheetExpressionReference.parseCell("C2"));
+    }
+
+    final void checkDeletedCells(final SpreadsheetDelta delta) {
+        this.checkDeletedCells(delta, this.deletedCells());
+    }
+
+    final void checkDeletedCells(final SpreadsheetDelta delta,
+                                 final Set<SpreadsheetCellReference> cells) {
+        assertEquals(cells,
+                delta.deletedCells(),
+                "deletedCells");
+        assertThrows(UnsupportedOperationException.class, () -> delta.deletedCells().add(null));
+    }
+
     // columnWidths..................................................................................................
 
     final Map<SpreadsheetColumnReference, Double> columnWidths() {
@@ -492,6 +517,13 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                                 this.label2().mapping(this.b2().reference()),
                                 this.label3().mapping(this.c3().reference())
                         )
+                );
+    }
+
+    final JsonNode deletedCellsJson() {
+        return this.marshallContext()
+                .marshallSet(
+                        this.deletedCells()
                 );
     }
 

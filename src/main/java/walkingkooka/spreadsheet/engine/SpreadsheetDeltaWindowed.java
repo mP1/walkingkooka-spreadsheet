@@ -20,9 +20,12 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.text.Indentation;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.Map;
@@ -39,12 +42,14 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
      */
     static SpreadsheetDeltaWindowed withWindowed(final Set<SpreadsheetCell> cells,
                                                  final Set<SpreadsheetLabelMapping> labels,
+                                                 final Set<SpreadsheetCellReference> deletedCells,
                                                  final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                  final Map<SpreadsheetRowReference, Double> rowHeights,
                                                  final Optional<SpreadsheetCellRange> window) {
         return new SpreadsheetDeltaWindowed(
                 cells,
                 labels,
+                deletedCells,
                 columnWidths,
                 rowHeights,
                 window
@@ -53,10 +58,11 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
 
     private SpreadsheetDeltaWindowed(final Set<SpreadsheetCell> cells,
                                      final Set<SpreadsheetLabelMapping> labels,
+                                     final Set<SpreadsheetCellReference> deletedCells,
                                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                                      final Map<SpreadsheetRowReference, Double> rowHeights,
                                      final Optional<SpreadsheetCellRange> window) {
-        super(cells, labels, columnWidths, rowHeights);
+        super(cells, labels, deletedCells, columnWidths, rowHeights);
         this.window = window;
     }
 
@@ -66,6 +72,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaWindowed(
                 cells,
                 this.labels,
+                this.deletedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.window
@@ -77,6 +84,19 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaWindowed(
                 this.cells,
                 labels,
+                this.deletedCells,
+                this.columnWidths,
+                this.rowHeights,
+                this.window
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
+        return new SpreadsheetDeltaWindowed(
+                this.cells,
+                this.labels,
+                deletedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.window
@@ -85,12 +105,26 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
 
     @Override
     SpreadsheetDelta replaceColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
-        return new SpreadsheetDeltaWindowed(this.cells, this.labels, columnWidths, this.rowHeights, this.window);
+        return new SpreadsheetDeltaWindowed(
+                this.cells,
+                this.labels,
+                this.deletedCells,
+                columnWidths,
+                this.rowHeights,
+                this.window
+        );
     }
 
     @Override
     SpreadsheetDelta replaceRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
-        return new SpreadsheetDeltaWindowed(this.cells, this.labels, this.columnWidths, rowHeights, this.window);
+        return new SpreadsheetDeltaWindowed(
+                this.cells,
+                this.labels,
+                this.deletedCells,
+                this.columnWidths,
+                rowHeights,
+                this.window
+        );
     }
 
     @Override
@@ -103,6 +137,11 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     @Override
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
         return filterCells(cells, this.window);
+    }
+
+    @Override
+    Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
+        return filterDeletedCells(deletedCells, this.window);
     }
 
     // TreePrintable.....................................................................................................
@@ -130,5 +169,10 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 .labelSeparator(": ")
                 .separator(" ")
                 .value(this.window());
+    }
+
+    @Override
+    public String treeToString(Indentation indentation, LineEnding eol) {
+        return super.treeToString(indentation, eol);
     }
 }

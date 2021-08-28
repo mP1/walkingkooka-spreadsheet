@@ -56,6 +56,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
     public final static Set<SpreadsheetLabelMapping> NO_LABELS = Sets.empty();
+    public final static Set<SpreadsheetCellReference> NO_DELETED_CELLS = Sets.empty();
     public final static Optional<SpreadsheetCellRange> NO_WINDOW = Optional.empty();
     public final static Map<SpreadsheetColumnReference, Double> NO_COLUMN_WIDTHS = Maps.empty();
     public final static Map<SpreadsheetRowReference, Double> NO_ROW_HEIGHTS = Maps.empty();
@@ -66,8 +67,10 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     public static SpreadsheetDelta with(final Set<SpreadsheetCell> cells) {
         checkCells(cells);
 
-        return SpreadsheetDeltaNonWindowed.withNonWindowed(Sets.immutable(cells),
+        return SpreadsheetDeltaNonWindowed.withNonWindowed(
+                Sets.immutable(cells),
                 NO_LABELS,
+                NO_DELETED_CELLS,
                 NO_COLUMN_WIDTHS,
                 NO_ROW_HEIGHTS);
     }
@@ -77,12 +80,14 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      */
     SpreadsheetDelta(final Set<SpreadsheetCell> cells,
                      final Set<SpreadsheetLabelMapping> labels,
+                     final Set<SpreadsheetCellReference> deleteCells,
                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                      final Map<SpreadsheetRowReference, Double> rowHeights) {
         super();
 
         this.cells = cells;
         this.labels = labels;
+        this.deletedCells = deleteCells;
         this.columnWidths = columnWidths;
         this.rowHeights = rowHeights;
     }
@@ -147,6 +152,38 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
     private static void checkLabels(final Set<SpreadsheetLabelMapping> labels) {
         Objects.requireNonNull(labels, "labels");
+    }
+
+    // deletedCells............................................................................................................
+
+    public final Set<SpreadsheetCellReference> deletedCells() {
+        return this.deletedCells;
+    }
+
+    /**
+     * Would be setter that returns a {@link SpreadsheetDelta} holding the given deletedCells after they are possibly filtered
+     * using the {@link #window()}
+     */
+    public final SpreadsheetDelta setDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
+        checkDeletedCells(deletedCells);
+
+        final Set<SpreadsheetCellReference> copy = this.filterDeletedCells(deletedCells);
+        return this.deletedCells.equals(copy) ?
+                this :
+                this.replaceDeletedCells(copy);
+    }
+
+    abstract SpreadsheetDelta replaceDeletedCells(final Set<SpreadsheetCellReference> deletedCells);
+
+    /**
+     * Takes a copy of the deleted cells, possibly filtering out deleted Cells if a window is present.
+     */
+    abstract Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells);
+
+    final Set<SpreadsheetCellReference> deletedCells;
+
+    private static void checkDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
+        Objects.requireNonNull(deletedCells, "deletedCells");
     }
 
     // columnWidths..................................................................................................
@@ -219,6 +256,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     private SpreadsheetDelta setWindow0(final Optional<SpreadsheetCellRange> window) {
         final Set<SpreadsheetCell> cells = this.cells;
         final Set<SpreadsheetLabelMapping> labels = this.labels;
+        final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         final Map<SpreadsheetRowReference, Double> rowHeights = this.rowHeights;
 
@@ -229,11 +267,18 @@ public abstract class SpreadsheetDelta implements TreePrintable {
             delta = SpreadsheetDeltaWindowed.withWindowed(
                     filterCells0(cells, filter),
                     filterLabels0(labels, filter),
+                    filterDeletedCells0(deletedCells, filter),
                     columnWidths,
                     rowHeights,
                     window);
         } else {
-            delta = SpreadsheetDeltaNonWindowed.withNonWindowed(cells, labels, columnWidths, rowHeights);
+            delta = SpreadsheetDeltaNonWindowed.withNonWindowed(
+                    cells,
+                    labels,
+                    deletedCells,
+                    columnWidths,
+                    rowHeights
+            );
         }
 
         return delta;
@@ -283,6 +328,22 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         );
     }
 
+    static Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells,
+                                                            final Optional<SpreadsheetCellRange> window) {
+        return window.isPresent() ?
+                filterDeletedCells0(deletedCells, window.get()) :
+                deletedCells;
+    }
+
+    private static Set<SpreadsheetCellReference> filterDeletedCells0(final Set<SpreadsheetCellReference> deletedCells,
+                                                                     final SpreadsheetCellRange window) {
+        return Sets.immutable(
+                deletedCells.stream()
+                        .filter(c -> window.test(c))
+                        .collect(Collectors.toCollection(Sets::sorted))
+        );
+    }
+
     // TreePrintable.....................................................................................................
 
     @Override
@@ -307,6 +368,18 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 {
                     for (final SpreadsheetLabelMapping mapping : labels) {
                         printer.println(mapping.label() + ": " + mapping.reference());
+                    }
+                }
+                printer.outdent();
+            }
+
+            final Set<SpreadsheetCellReference> deletedCells = this.deletedCells();
+            if (!deletedCells.isEmpty()) {
+                printer.println("deletedCells:");
+                printer.indent();
+                {
+                    for (final SpreadsheetCellReference deleted : deletedCells) {
+                        printer.println(deleted.toString());
                     }
                 }
                 printer.outdent();
@@ -352,6 +425,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                                        final JsonNodeUnmarshallContext context) {
         Set<SpreadsheetCell> cells = Sets.empty();
         Set<SpreadsheetLabelMapping> labels = NO_LABELS;
+        Set<SpreadsheetCellReference> deletedCells = Sets.empty();
         Map<SpreadsheetColumnReference, Double> columnWidths = NO_COLUMN_WIDTHS;
         Map<SpreadsheetRowReference, Double> maxRowsHeights = NO_ROW_HEIGHTS;
         Optional<SpreadsheetCellRange> window = NO_WINDOW;
@@ -365,6 +439,9 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                     break;
                 case LABELS_PROPERTY_STRING:
                     labels = unmarshallLabels(child, context);
+                    break;
+                case DELETED_CELLS_PROPERTY_STRING:
+                    deletedCells = context.unmarshallSet(child, SpreadsheetCellReference.class);
                     break;
                 case COLUMN_WIDTHS_PROPERTY_STRING:
                     columnWidths = unmarshallMap(child, SpreadsheetColumnReference::parseColumn);
@@ -383,6 +460,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         return with(cells)
                 .setWindow(window)
                 .setLabels(labels)
+                .setDeletedCells(deletedCells)
                 .setColumnWidths(columnWidths)
                 .setRowHeights(maxRowsHeights);
     }
@@ -460,6 +538,12 @@ public abstract class SpreadsheetDelta implements TreePrintable {
             children.add(marshallLabels(labels, context).setName(LABELS_PROPERTY));
         }
 
+        final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
+        if (!deletedCells.isEmpty()) {
+            children.add(context.marshallSet(deletedCells)
+                    .setName(DELETED_CELLS_PROPERTY));
+        }
+
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         if (!columnWidths.isEmpty()) {
             children.add(marshallMap(columnWidths,
@@ -531,6 +615,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String LABELS_PROPERTY_STRING = "labels";
+    private final static String DELETED_CELLS_PROPERTY_STRING = "deletedCells";
     private final static String COLUMN_WIDTHS_PROPERTY_STRING = "columnWidths";
     private final static String MAX_ROW_HEIGHTS_PROPERTY_STRING = "rowHeights";
     private final static String WINDOW_PROPERTY_STRING = "window";
@@ -539,6 +624,8 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     final static JsonPropertyName CELLS_PROPERTY = JsonPropertyName.with(CELLS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName LABELS_PROPERTY = JsonPropertyName.with(LABELS_PROPERTY_STRING);
+    // @VisibleForTesting
+    final static JsonPropertyName DELETED_CELLS_PROPERTY = JsonPropertyName.with(DELETED_CELLS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName COLUMN_WIDTHS_PROPERTY = JsonPropertyName.with(COLUMN_WIDTHS_PROPERTY_STRING);
     // @VisibleForTesting
