@@ -309,6 +309,14 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
+    public final void testDifferentDeletedLabels() {
+        final Set<SpreadsheetCellReference> deletedCells = this.differentDeletedCells();
+        assertNotEquals(this.labels(), deletedCells, "deletedCells() and differentDeletedCells() must be un equal");
+
+        this.checkNotEquals(this.createSpreadsheetDelta().setDeletedCells(deletedCells));
+    }
+
+    @Test
     public final void testDifferentColumnWidths() {
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.differentColumnWidths();
         assertNotEquals(this.columnWidths(), columnWidths, "columnWidths() and differentColumnWidths() must be un equal");
