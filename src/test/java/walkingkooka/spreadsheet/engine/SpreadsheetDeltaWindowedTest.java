@@ -97,6 +97,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()
@@ -123,6 +124,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         this.labels(),
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()
@@ -149,11 +151,47 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
+    public void testPrintTreeDeletedCells() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.cells(),
+                        this.labels(),
+                        this.deletedCells(),
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window()
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  labels:\n" +
+                        "    LabelA1A: A1\n" +
+                        "    LabelA1B: A1\n" +
+                        "    LabelB2: B2\n" +
+                        "    LabelC3: C3\n" +
+                        "  deletedCells:\n" +
+                        "    C1\n" +
+                        "    C2\n" +
+                        "  window:\n" +
+                        "    A1:E5\n"
+        );
+    }
+
+    @Test
     public void testPrintTreeColumnWidths() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         this.columnWidths(),
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()
@@ -182,6 +220,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         this.rowHeights(),
                         this.window()
@@ -210,6 +249,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         this.labels(),
+                        this.deletedCells(),
                         this.columnWidths(),
                         this.rowHeights(),
                         this.window()
@@ -230,6 +270,9 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    LabelA1B: A1\n" +
                         "    LabelB2: B2\n" +
                         "    LabelC3: C3\n" +
+                        "  deletedCells:\n" +
+                        "    C1\n" +
+                        "    C2\n" +
                         "  columnWidths:\n" +
                         "    A: 50.0\n" +
                         "  rowHeights:\n" +
@@ -252,6 +295,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window())
@@ -264,6 +308,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()
@@ -280,6 +325,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         this.labels(),
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()
@@ -297,6 +343,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         this.columnWidths(),
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()
@@ -314,6 +361,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         this.rowHeights(),
                         this.window()
@@ -331,6 +379,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         this.cells(),
                         this.labels(),
+                        this.deletedCells(),
                         this.columnWidths(),
                         this.rowHeights(),
                         this.window()
@@ -338,6 +387,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.LABELS_PROPERTY, labelsJson())
+                        .set(SpreadsheetDelta.DELETED_CELLS_PROPERTY, deletedCellsJson())
                         .set(SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY, COLUMN_WIDTHS_JSON)
                         .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
@@ -350,6 +400,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()
@@ -365,6 +416,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testToString() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()),
@@ -375,6 +427,18 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testToStringLabels() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
                         this.labels(),
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window()),
+                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 window: A1:E5");
+    }
+
+    @Test
+    public void testToStringDeletedCells() {
+        this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
+                        this.labels(),
+                        this.deletedCells(),
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()),
@@ -385,6 +449,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testToStringColumnWidths() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         this.columnWidths(),
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()),
@@ -395,6 +460,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testToStringMaxRowHeights() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         this.rowHeights(),
                         this.window()),
@@ -405,6 +471,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testToStringColumnWidthsRowHeights() {
         this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
                         SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
                         this.columnWidths(),
                         this.rowHeights(),
                         this.window()),
@@ -428,6 +495,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         return SpreadsheetDeltaWindowed.withWindowed(
                 cells,
                 this.labels(),
+                this.deletedCells(),
                 this.columnWidths(),
                 this.rowHeights(),
                 window

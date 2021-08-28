@@ -21,6 +21,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -40,11 +41,13 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
      */
     static SpreadsheetDeltaNonWindowed withNonWindowed(final Set<SpreadsheetCell> cells,
                                                        final Set<SpreadsheetLabelMapping> labels,
+                                                       final Set<SpreadsheetCellReference> deletedCells,
                                                        final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                        final Map<SpreadsheetRowReference, Double> rowHeights) {
         return new SpreadsheetDeltaNonWindowed(
                 cells,
                 labels,
+                deletedCells,
                 columnWidths,
                 rowHeights
         );
@@ -52,10 +55,13 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
 
     private SpreadsheetDeltaNonWindowed(final Set<SpreadsheetCell> cells,
                                         final Set<SpreadsheetLabelMapping> labels,
+                                        final Set<SpreadsheetCellReference> deletedCells,
                                         final Map<SpreadsheetColumnReference, Double> columnWidths,
                                         final Map<SpreadsheetRowReference, Double> rowHeights) {
-        super(cells,
+        super(
+                cells,
                 labels,
+                deletedCells,
                 columnWidths,
                 rowHeights
         );
@@ -67,6 +73,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaNonWindowed(
                 cells,
                 this.labels,
+                this.deletedCells,
                 this.columnWidths,
                 this.rowHeights
         );
@@ -77,6 +84,18 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaNonWindowed(
                 this.cells,
                 labels,
+                this.deletedCells,
+                this.columnWidths,
+                this.rowHeights
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
+        return new SpreadsheetDeltaNonWindowed(
+                this.cells,
+                this.labels,
+                deletedCells,
                 this.columnWidths,
                 this.rowHeights
         );
@@ -84,12 +103,24 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
 
     @Override
     SpreadsheetDelta replaceColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
-        return new SpreadsheetDeltaNonWindowed(this.cells, this.labels, columnWidths, this.rowHeights);
+        return new SpreadsheetDeltaNonWindowed(
+                this.cells,
+                this.labels,
+                this.deletedCells,
+                columnWidths,
+                this.rowHeights
+        );
     }
 
     @Override
     SpreadsheetDelta replaceRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
-        return new SpreadsheetDeltaNonWindowed(this.cells, this.labels, this.columnWidths, rowHeights);
+        return new SpreadsheetDeltaNonWindowed(
+                this.cells,
+                this.labels,
+                this.deletedCells,
+                this.columnWidths,
+                rowHeights
+        );
     }
 
     /**
@@ -103,6 +134,11 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     @Override
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
         return Sets.immutable(cells); // already empty
+    }
+
+    @Override
+    Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
+        return Sets.immutable(deletedCells);
     }
 
     // TreePrintable.....................................................................................................
