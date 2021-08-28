@@ -121,12 +121,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         printer.outdent();
     }
 
-    // OBject..........................................................................................................
-
-    @Override
-    boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetDeltaWindowed;
-    }
+    // Object..........................................................................................................
 
     @Override
     void toStringWindow(final ToStringBuilder b) {
