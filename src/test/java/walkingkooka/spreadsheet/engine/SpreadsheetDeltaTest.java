@@ -28,6 +28,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelta> {
 
     @Test
+    public void testEmpty() {
+        final SpreadsheetDelta empty = SpreadsheetDelta.EMPTY;
+
+        assertEquals(SpreadsheetDelta.NO_CELLS, empty.cells());
+        assertEquals(SpreadsheetDelta.NO_LABELS, empty.labels());
+        assertEquals(SpreadsheetDelta.NO_DELETED_CELLS, empty.deletedCells());
+        assertEquals(SpreadsheetDelta.NO_COLUMN_WIDTHS, empty.columnWidths());
+        assertEquals(SpreadsheetDelta.NO_ROW_HEIGHTS, empty.rowHeights());
+    }
+
+    @Test
     public void testNoWindowConstant() {
         assertEquals(Optional.empty(), SpreadsheetDelta.NO_WINDOW);
     }

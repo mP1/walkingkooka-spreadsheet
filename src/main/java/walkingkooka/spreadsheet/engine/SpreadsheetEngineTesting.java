@@ -306,7 +306,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.saveLabelAndCheck(engine,
                 label,
                 context,
-                SpreadsheetDelta.with(cells));
+                SpreadsheetDelta.EMPTY.setCells(cells));
     }
 
     default void saveLabelAndCheck(final SpreadsheetEngine engine,
@@ -342,7 +342,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.removeLabelAndCheck(engine,
                 label,
                 context,
-                SpreadsheetDelta.with(cells));
+                SpreadsheetDelta.EMPTY.setCells(cells));
     }
 
     default void removeLabelAndCheck(final SpreadsheetEngine engine,
@@ -527,7 +527,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 reference,
                 evaluation,
                 context,
-                SpreadsheetDelta.with(Sets.of(cells))
+                SpreadsheetDelta.EMPTY.setCells(Sets.of(cells))
         );
     }
 
@@ -571,7 +571,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.saveCellAndCheck(engine,
                 save,
                 context,
-                SpreadsheetDelta.with(Sets.of(updated)));
+                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
     }
 
     default void saveCellAndCheck(final SpreadsheetEngine engine,
@@ -590,7 +590,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.deleteCellAndCheck(engine,
                 delete,
                 context,
-                SpreadsheetDelta.with(Sets.of(updated)));
+                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
     }
 
     default void deleteCellAndCheck(final SpreadsheetEngine engine,
@@ -617,7 +617,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 column,
                 count,
                 context,
-                SpreadsheetDelta.with(Sets.of(updated)));
+                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
     }
 
     default void deleteColumnsAndCheck(final SpreadsheetEngine engine,
@@ -639,7 +639,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 row,
                 count,
                 context,
-                SpreadsheetDelta.with(Sets.of(updated)));
+                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
     }
 
     default void deleteRowsAndCheck(final SpreadsheetEngine engine,
@@ -661,7 +661,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 column,
                 count,
                 context,
-                SpreadsheetDelta.with(Sets.of(updated)));
+                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
     }
 
     default void insertColumnsAndCheck(final SpreadsheetEngine engine,
@@ -683,7 +683,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 row,
                 count,
                 context,
-                SpreadsheetDelta.with(Sets.of(updated)));
+                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
     }
 
     default void insertRowsAndCheck(final SpreadsheetEngine engine,
@@ -720,7 +720,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 range,
                 evaluation,
                 context,
-                SpreadsheetDelta.with(Sets.of(updated))
+                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated))
                         .setWindow(Optional.of(range))
         );
     }
@@ -744,7 +744,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                             r,
                             SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                             context,
-                            SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
+                            SpreadsheetDelta.EMPTY.setCells(SpreadsheetDelta.NO_CELLS)
                                     .setCells(Sets.of(c))
                                     .setLabels(delta.labels()
                                             .stream()
@@ -766,7 +766,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 from,
                 to,
                 context,
-                SpreadsheetDelta.with(Sets.of(updated)));
+                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
     }
 
     default void fillCellsAndCheck(final SpreadsheetEngine engine,

@@ -217,7 +217,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
                     .insert();
             updated.refreshUpdated();
-            return SpreadsheetDelta.with(updated.cells());
+            return SpreadsheetDelta.EMPTY.setCells(updated.cells());
         }
     }
 
@@ -292,7 +292,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetDelta prepareDelta(final Set<SpreadsheetCell> cells,
                                           final SpreadsheetCellRange window,
                                           final SpreadsheetEngineContext context) {
-        final SpreadsheetDelta delta = SpreadsheetDelta.with(cells);
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(cells);
 
         final SpreadsheetLabelStore store = context.storeRepository()
                 .labels();
@@ -334,7 +334,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .labels()
                     .save(mapping);
             updated.refreshUpdated();
-            return SpreadsheetDelta.with(updated.cells());
+            return SpreadsheetDelta.EMPTY.setCells(updated.cells());
         }
     }
 
@@ -349,7 +349,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .labels()
                     .delete(label);
             updated.refreshUpdated();
-            return SpreadsheetDelta.with(updated.cells());
+            return SpreadsheetDelta.EMPTY.setCells(updated.cells());
         }
     }
 
