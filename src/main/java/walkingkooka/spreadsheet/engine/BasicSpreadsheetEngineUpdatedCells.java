@@ -193,9 +193,12 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
                 continue;
             }
 
-            this.engine.loadCell(potential,
+            this.engine.loadCell0(
+                    potential,
                     SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                    this.context);
+                    this,
+                    this.context
+            );
         }
     }
 

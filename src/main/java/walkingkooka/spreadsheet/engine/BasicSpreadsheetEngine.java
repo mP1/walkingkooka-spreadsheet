@@ -92,21 +92,28 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
-            final Optional<SpreadsheetCell> loaded = context.storeRepository()
-                    .cells()
-                    .load(reference);
-            loaded.map(c -> {
-                final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(c, evaluation, context);
-                updated.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
-                return evaluated;
-            });
-            updated.refreshUpdated();
+            this.loadCell0(reference, evaluation, updated, context);
             return this.prepareDelta(
                     updated.cells(),
                     reference.toSpreadsheetCellRange(),
                     context
             );
         }
+    }
+
+    void loadCell0(final SpreadsheetCellReference reference,
+                   final SpreadsheetEngineEvaluation evaluation,
+                   final BasicSpreadsheetEngineUpdatedCells updated,
+                   final SpreadsheetEngineContext context) {
+        final Optional<SpreadsheetCell> loaded = context.storeRepository()
+                .cells()
+                .load(reference);
+        loaded.map(c -> {
+            final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(c, evaluation, context);
+            updated.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+            return evaluated;
+        });
+        updated.refreshUpdated();
     }
 
     // SAVE CELL........................................................................................................
