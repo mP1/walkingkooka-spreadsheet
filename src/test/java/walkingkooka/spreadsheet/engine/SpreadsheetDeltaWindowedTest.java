@@ -245,7 +245,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
     @Test
     public void testUnmarshallCells() {
-        this.unmarshallAndCheck(JsonNode.object()
+        this.unmarshallAndCheck(
+                JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING),
                 SpreadsheetDeltaWindowed.withWindowed(
@@ -258,76 +259,104 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
-    public void testJsonNodeMarshall() {
-        this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
-                SpreadsheetDelta.NO_CELLS,
-                SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                SpreadsheetDelta.NO_ROW_HEIGHTS,
-                this.window()
-                ),
-                JsonNode.object()
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
-    }
-
-    @Test
-    public void testJsonNodeMarshallCells() {
-        this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
-                this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                SpreadsheetDelta.NO_ROW_HEIGHTS,
-                this.window()
+    public void testMarshallCells() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.cells(),
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window()
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
+        );
     }
 
     @Test
-    public void testJsonNodeMarshallCellsColumnWidthsWindow() {
-        this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
-                this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                this.columnWidths(),
-                SpreadsheetDelta.NO_ROW_HEIGHTS,
-                this.window()
+    public void testMarshallCellsLabels() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.cells(),
+                        this.labels(),
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window()
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY, COLUMN_WIDTHS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
+                        .set(SpreadsheetDelta.LABELS_PROPERTY, labelsJson())
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
+        );
     }
 
     @Test
-    public void testJsonNodeMarshallCellsRowHeightsWindow() {
-        this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
-                this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                this.rowHeights(),
-                this.window()
-                ),
-                JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
-    }
-
-    @Test
-    public void testJsonNodeMarshallCellsColumnWidthsRowHeightsWindow() {
-        this.marshallAndCheck(SpreadsheetDeltaWindowed.withWindowed(
-                this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                this.columnWidths(),
-                this.rowHeights(),
-                this.window()
+    public void testMarshallCellsColumnWidthsWindow() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.cells(),
+                        SpreadsheetDelta.NO_LABELS,
+                        this.columnWidths(),
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window()
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY, COLUMN_WIDTHS_JSON)
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
+        );
+    }
+
+    @Test
+    public void testMarshallCellsRowHeightsWindow() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.cells(),
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        this.rowHeights(),
+                        this.window()
+                ),
+                JsonNode.object()
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING));
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
+        );
+    }
+
+    @Test
+    public void testMarshallCellsColumnWidthsRowHeightsWindow() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.cells(),
+                        this.labels(),
+                        this.columnWidths(),
+                        this.rowHeights(),
+                        this.window()
+                ),
+                JsonNode.object()
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
+                        .set(SpreadsheetDelta.LABELS_PROPERTY, labelsJson())
+                        .set(SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY, COLUMN_WIDTHS_JSON)
+                        .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
+        );
+    }
+
+    @Test
+    public void testMarshallEmptyWindow() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window()
+                ),
+                JsonNode.object()
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
+        );
     }
 
     // equals...........................................................................................................
