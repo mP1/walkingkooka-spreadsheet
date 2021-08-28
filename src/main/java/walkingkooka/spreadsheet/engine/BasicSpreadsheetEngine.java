@@ -290,9 +290,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
      */
     private SpreadsheetDelta prepareDelta(final Set<SpreadsheetCell> cells,
-                                          final SpreadsheetCellRange range,
+                                          final SpreadsheetCellRange window,
                                           final SpreadsheetEngineContext context) {
-        SpreadsheetDelta delta = SpreadsheetDelta.with(cells);
+        final SpreadsheetDelta delta = SpreadsheetDelta.with(cells);
 
         final SpreadsheetLabelStore store = context.storeRepository()
                 .labels();
@@ -303,12 +303,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             addLabels(cell.reference(), store, labels);
         }
 
-        if (null != range) {
-            range.cellStream().forEach(c -> {
-                if (references.add(c)) {
-                    addLabels(c, store, labels);
-                }
-            });
+        if (null != window) {
+            window.cellStream()
+                    .forEach(c -> {
+                        if (references.add(c)) {
+                            addLabels(c, store, labels);
+                        }
+                    });
         }
 
         return delta.setLabels(labels);
