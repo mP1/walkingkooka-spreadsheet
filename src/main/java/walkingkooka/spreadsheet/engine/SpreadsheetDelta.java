@@ -577,11 +577,9 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this == other ||
-                this.canBeEquals(other) &&
+                other instanceof SpreadsheetDelta &&
                         this.equals0(Cast.to(other));
     }
-
-    abstract boolean canBeEquals(final Object other);
 
     private boolean equals0(final SpreadsheetDelta other) {
         return this.cells.equals(other.cells) &&

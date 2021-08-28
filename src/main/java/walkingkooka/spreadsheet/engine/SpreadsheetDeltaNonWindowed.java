@@ -115,11 +115,6 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     // Object...........................................................................................................
 
     @Override
-    boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetDeltaNonWindowed;
-    }
-
-    @Override
     void toStringWindow(final ToStringBuilder b) {
     }
 }
