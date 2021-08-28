@@ -44,6 +44,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
@@ -112,7 +113,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 delta,
                 Sets.of(a1, b2)
         );
-        assertEquals(Lists.of(a1, b2), Lists.of(delta.cells()));
+        assertEquals(Lists.of(a1, b2), new ArrayList<>(delta.cells()));
     }
 
     // labels.....................................................................................................
@@ -189,6 +190,22 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkCells(after);
         this.checkLabels(after, before.labels());
         this.checkDeletedCells(after, different);
+    }
+
+
+    @Test
+    public final void testSetDeletedCellsSorted() {
+        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCell("A1");
+        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCell("B2");
+
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
+                .setDeletedCells(Sets.of(b2, a1));
+
+        this.checkDeletedCells(
+                delta,
+                Sets.of(a1, b2)
+        );
+        assertEquals(Lists.of(a1, b2), new ArrayList<>(delta.deletedCells()));
     }
 
     // setColumnWidths...............................................................................................
@@ -414,7 +431,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     // deletedCells.....................................................................................................
 
     final Set<SpreadsheetCellReference> deletedCells() {
-        return Set.of(
+        return Sets.of(
                 SpreadsheetExpressionReference.parseCell("C1"),
                 SpreadsheetExpressionReference.parseCell("C2")
         );
