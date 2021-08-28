@@ -129,11 +129,6 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    boolean equals1(final SpreadsheetDelta other) {
-        return this.window.equals(other.window());
-    }
-
-    @Override
     void toStringWindow(final ToStringBuilder b) {
         b.append(' ');
         b.label("window")

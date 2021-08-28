@@ -120,11 +120,6 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    boolean equals1(final SpreadsheetDelta other) {
-        return true;
-    }
-
-    @Override
     void toStringWindow(final ToStringBuilder b) {
     }
 }

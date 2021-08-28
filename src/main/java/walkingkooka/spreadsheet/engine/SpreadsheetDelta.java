@@ -588,10 +588,8 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 this.labels.equals(other.labels) &&
                 this.columnWidths.equals(other.columnWidths) &&
                 this.rowHeights.equals(other.rowHeights) &&
-                this.equals1(other);
+                this.window().equals(other.window());
     }
-
-    abstract boolean equals1(final SpreadsheetDelta other);
 
     /**
      * Produces a {@link String} the cells, max columnWidths/rowHeights and window if present.
