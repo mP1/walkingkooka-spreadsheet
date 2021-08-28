@@ -567,13 +567,11 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         return Objects.hash(
                 this.cells,
                 this.labels,
-                this.hashWindow(),
+                this.window().hashCode(),
                 this.columnWidths,
                 this.rowHeights
         );
     }
-
-    abstract int hashWindow();
 
     @Override
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")

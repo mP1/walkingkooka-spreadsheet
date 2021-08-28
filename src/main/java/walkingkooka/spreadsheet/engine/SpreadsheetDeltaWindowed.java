@@ -121,10 +121,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         printer.outdent();
     }
 
-    @Override
-    int hashWindow() {
-        return this.window.hashCode();
-    }
+    // OBject..........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {
