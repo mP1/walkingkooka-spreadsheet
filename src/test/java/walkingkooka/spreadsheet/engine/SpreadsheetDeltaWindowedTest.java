@@ -33,7 +33,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 
-public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase2<SpreadsheetDeltaWindowed> {
+public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase<SpreadsheetDeltaWindowed> {
 
     public SpreadsheetDeltaWindowedTest() {
         super();
@@ -357,13 +357,6 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 JsonNode.object()
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
         );
-    }
-
-    // equals...........................................................................................................
-
-    @Test
-    public final void testEqualsDifferentWindow() {
-        this.checkNotEquals(this.createSpreadsheetDelta(this.cells(), this.differentWindow()));
     }
 
     // toString..........................................................................................................

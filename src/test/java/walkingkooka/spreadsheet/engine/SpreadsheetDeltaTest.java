@@ -18,68 +18,18 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
-import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<SpreadsheetDelta> {
+public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelta> {
 
     @Test
     public void testNoWindowConstant() {
         assertEquals(Optional.empty(), SpreadsheetDelta.NO_WINDOW);
-    }
-
-    @Test
-    public void testWith() {
-        final SpreadsheetDelta delta = SpreadsheetDelta.with(this.cells());
-        this.checkCells(delta);
-        this.checkColumnWidths(delta, SpreadsheetDelta.NO_COLUMN_WIDTHS);
-        this.checkRowHeights(delta, SpreadsheetDelta.NO_ROW_HEIGHTS);
-        this.checkWindow(delta, SpreadsheetDelta.NO_WINDOW);
-    }
-
-    @Test
-    public void testCopiedCellsSorted() {
-        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("b2"), SpreadsheetFormula.with("2"));
-        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("c3"), SpreadsheetFormula.with("3"));
-        final SpreadsheetCell a1 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("a1"), SpreadsheetFormula.with("1"));
-
-        final Set<SpreadsheetCell> cells = Sets.ordered();
-        cells.add(b2);
-        cells.add(c3);
-        cells.add(a1);
-
-        final SpreadsheetDelta delta = SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
-                .setWindow(Optional.of(SpreadsheetExpressionReference.parseCellRange("A1:Z99")))
-                .setCells(cells);
-        assertEquals(Lists.of(a1, b2, c3), new ArrayList<>(delta.cells()), "cells should be sorted");
-    }
-
-    @Test
-    public void testCopiedCellsSorted2() {
-        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("c3"), SpreadsheetFormula.with("3"));
-        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("b$2"), SpreadsheetFormula.with("2"));
-        final SpreadsheetCell a1 = SpreadsheetCell.with(SpreadsheetCellReference.parseCell("$a$1"), SpreadsheetFormula.with("1"));
-
-        final Set<SpreadsheetCell> cells = Sets.ordered();
-        cells.add(c3);
-        cells.add(b2);
-        cells.add(a1);
-
-        final SpreadsheetDelta delta = SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
-                .setWindow(Optional.of(SpreadsheetExpressionReference.parseCellRange("A1:Z99")))
-                .setCells(cells);
-        assertEquals(Lists.of(a1, b2, c3), new ArrayList<>(delta.cells()), "cells should be sorted");
     }
 
     // ClassTesting.....................................................................................................
