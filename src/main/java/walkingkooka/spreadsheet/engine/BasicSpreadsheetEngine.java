@@ -91,10 +91,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkEvaluation(evaluation);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
-            this.loadCell0(reference, evaluation, updated, context);
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createUpdatedCells(this, context)) {
+            this.loadCell0(reference, evaluation, changes, context);
             return this.prepareDelta(
-                    updated.cells(),
+                    changes,
                     reference.toSpreadsheetCellRange(),
                     context
             );
@@ -103,17 +103,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     void loadCell0(final SpreadsheetCellReference reference,
                    final SpreadsheetEngineEvaluation evaluation,
-                   final BasicSpreadsheetEngineUpdatedCells updated,
+                   final BasicSpreadsheetEngineChanges changes,
                    final SpreadsheetEngineContext context) {
         final Optional<SpreadsheetCell> loaded = context.storeRepository()
                 .cells()
                 .load(reference);
         loaded.map(c -> {
             final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(c, evaluation, context);
-            updated.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+            changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
             return evaluated;
         });
-        updated.refreshUpdated();
+        changes.refreshUpdated();
     }
 
     // SAVE CELL........................................................................................................
@@ -127,13 +127,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(cell, "cell");
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createUpdatedCells(this, context)) {
             this.maybeParseAndEvaluateAndFormat(cell,
                     SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                     context);
-            updated.refreshUpdated();
+            changes.refreshUpdated();
             return this.prepareDelta(
-                    updated.cells(),
+                    changes,
                     cell.reference().toSpreadsheetCellRange(),
                     context
             );
@@ -151,12 +151,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkReference(reference);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createUpdatedCells(this, context)) {
             context.storeRepository()
                     .cells()
                     .delete(reference);
-            updated.refreshUpdated();
-            return this.prepareDelta(updated.cells(), context);
+            changes.refreshUpdated();
+            return this.prepareDelta(changes, context);
         }
     }
 
@@ -170,11 +170,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkCount(count);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count, this, context)
                     .delete();
-            updated.refreshUpdated();
-            return this.prepareDelta(updated.cells(), context);
+            changes.refreshUpdated();
+            return this.prepareDelta(changes, context);
         }
     }
 
@@ -186,11 +186,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkCount(count);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
                     .delete();
-            updated.refreshUpdated();
-            return this.prepareDelta(updated.cells(), context);
+            changes.refreshUpdated();
+            return this.prepareDelta(changes, context);
         }
     }
 
@@ -202,13 +202,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkCount(count);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count,
                     this,
                     context)
                     .insert();
-            updated.refreshUpdated();
-            return this.prepareDelta(updated.cells(), context);
+            changes.refreshUpdated();
+            return this.prepareDelta(changes, context);
         }
     }
 
@@ -220,11 +220,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkCount(count);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
                     .insert();
-            updated.refreshUpdated();
-            return SpreadsheetDelta.EMPTY.setCells(updated.cells());
+            changes.refreshUpdated();
+            return this.prepareDelta(changes, context);
         }
     }
 
@@ -242,25 +242,25 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkEvaluation(evaluation);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createUpdatedCells(this, context)) {
             final SpreadsheetCellStore store = context.storeRepository()
                     .cells();
 
             range.cellStream()
                     .forEach(reference -> {
-                                if (!updated.isLoaded(reference)) {
+                                if (!changes.isLoaded(reference)) {
                                     final Optional<SpreadsheetCell> loaded = store.load(reference);
                                     if (loaded.isPresent()) {
                                         final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(loaded.get(), evaluation, context);
-                                        updated.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+                                        changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
                                     }
                                 }
                             }
                     );
 
-            updated.refreshUpdated();
+            changes.refreshUpdated();
             return this.prepareDelta(
-                    updated.cells(),
+                    changes,
                     range,
                     context
             ).setWindow(Optional.of(range));
@@ -277,17 +277,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(to, "to");
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineFillCells.execute(cells, from, to, this, context);
-            updated.refreshUpdated();
-            return this.prepareDelta(updated.cells(), context);
+            changes.refreshUpdated();
+            return this.prepareDelta(changes, context);
         }
     }
 
-    private SpreadsheetDelta prepareDelta(final Set<SpreadsheetCell> cells,
+    private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
                                           final SpreadsheetEngineContext context) {
         return this.prepareDelta(
-                cells,
+                changes,
                 null,
                 context
         );
@@ -296,17 +296,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
      */
-    private SpreadsheetDelta prepareDelta(final Set<SpreadsheetCell> cells,
+    private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
                                           final SpreadsheetCellRange window,
                                           final SpreadsheetEngineContext context) {
-        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(cells);
+        final Set<SpreadsheetCell> updatedCells = changes.updatedCells();
+
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(updatedCells);
 
         final SpreadsheetLabelStore store = context.storeRepository()
                 .labels();
         final Set<SpreadsheetLabelMapping> labels = Sets.ordered();
         final Set<SpreadsheetCellReference> references = Sets.hash();
 
-        for (final SpreadsheetCell cell : cells) {
+        for (final SpreadsheetCell cell : updatedCells) {
             addLabels(cell.reference(), store, labels);
         }
 
@@ -319,7 +321,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     });
         }
 
-        return delta.setLabels(labels);
+        return delta.setLabels(labels)
+                .setDeletedCells(changes.deletedCells());
     }
 
     private static void addLabels(final SpreadsheetCellReference reference,
@@ -336,12 +339,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkMapping(mapping);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createUpdatedCells(this, context)) {
             context.storeRepository()
                     .labels()
                     .save(mapping);
-            updated.refreshUpdated();
-            return SpreadsheetDelta.EMPTY.setCells(updated.cells());
+            changes.refreshUpdated();
+            return this.prepareDelta(changes, context);
         }
     }
 
@@ -351,12 +354,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkLabel(label);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createUpdatedCells(this, context)) {
             context.storeRepository()
                     .labels()
                     .delete(label);
-            updated.refreshUpdated();
-            return SpreadsheetDelta.EMPTY.setCells(updated.cells());
+            changes.refreshUpdated();
+            return this.prepareDelta(changes, context);
         }
     }
 

@@ -22,12 +22,12 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionVisitor;
 import walkingkooka.tree.expression.ExpressionVisitorTesting;
 
-public final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor>
-        implements ExpressionVisitorTesting<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor> {
+public final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor>
+        implements ExpressionVisitorTesting<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor> {
 
     @Test
     public void testProcessReferences() {
-        BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor.processReferences(Expression.string("abc123"), null, null);
+        BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor.processReferences(Expression.string("abc123"), null, null);
     }
 
     // TypeNameTesting..........................................................................
@@ -40,14 +40,14 @@ public final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisit
     // ClassTesting..........................................................................
 
     @Override
-    public Class<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor> type() {
-        return BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor.class;
+    public Class<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor> type() {
+        return BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor.class;
     }
 
     // VisitingTesting....................................................................................
 
     @Override
-    public BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor createVisitor() {
-        return new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor(null, null);
+    public BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor createVisitor() {
+        return new BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor(null, null);
     }
 }

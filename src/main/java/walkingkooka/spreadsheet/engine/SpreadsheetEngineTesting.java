@@ -593,10 +593,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                     final SpreadsheetCellReference delete,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetCell... updated) {
-        this.deleteCellAndCheck(engine,
+        this.deleteCellAndCheck(
+                engine,
                 delete,
                 context,
-                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
+                SpreadsheetDelta.EMPTY
+                        .setCells(Sets.of(updated))
+                        .setDeletedCells(Sets.of(delete))
+        );
     }
 
     default void deleteCellAndCheck(final SpreadsheetEngine engine,

@@ -27,18 +27,18 @@ import walkingkooka.tree.expression.ReferenceExpression;
 /**
  * Accepts an {@link Expression} passes all {@link ExpressionReference} to a {@link SpreadsheetExpressionReferenceVisitor}.
  */
-final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor extends ExpressionVisitor {
+final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor extends ExpressionVisitor {
 
     static void processReferences(final Expression node,
                                   final SpreadsheetCellReference target,
                                   final SpreadsheetEngineContext context) {
-        new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor(target, context)
+        new BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor(target, context)
                 .accept(node);
     }
 
     // VisibleForTesting
-    BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor(final SpreadsheetCellReference target,
-                                                                    final SpreadsheetEngineContext context) {
+    BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor(final SpreadsheetCellReference target,
+                                                                final SpreadsheetEngineContext context) {
         super();
         this.target = target;
         this.context = context;
@@ -47,7 +47,7 @@ final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor exte
     @Override
     protected void visit(final ReferenceExpression node) {
         if (null == this.visitor) {
-            this.visitor = BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor.with(
+            this.visitor = BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor.with(
                     this.target,
                     this.context
             );
@@ -63,9 +63,9 @@ final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor exte
     private final SpreadsheetEngineContext context;
 
     /**
-     * Cache of the {@link BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor} that will process each and every encountered {@link ReferenceExpression}.
+     * Cache of the {@link BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor} that will process each and every encountered {@link ReferenceExpression}.
      */
-    private BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor visitor;
+    private BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor visitor;
 
     @Override
     public String toString() {
