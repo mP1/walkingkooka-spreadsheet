@@ -651,6 +651,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         return Objects.hash(
                 this.cells,
                 this.labels,
+                this.deletedCells,
                 this.window().hashCode(),
                 this.columnWidths,
                 this.rowHeights
@@ -668,6 +669,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     private boolean equals0(final SpreadsheetDelta other) {
         return this.cells.equals(other.cells) &&
                 this.labels.equals(other.labels) &&
+                this.deletedCells.equals(other.deletedCells) &&
                 this.columnWidths.equals(other.columnWidths) &&
                 this.rowHeights.equals(other.rowHeights) &&
                 this.window().equals(other.window());
