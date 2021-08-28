@@ -1232,7 +1232,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCell("123");
+        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCell("A1");
 
         engine.saveCell(this.cell(a1, "=123"), context);
         this.deleteCellAndCheck(engine, a1, context);
