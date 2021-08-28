@@ -62,18 +62,15 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     public final static Map<SpreadsheetRowReference, Double> NO_ROW_HEIGHTS = Maps.empty();
 
     /**
-     * Factory that creates a new {@link SpreadsheetDelta} with an id.
+     * A {@link SpreadsheetDelta} with everything empty.
      */
-    public static SpreadsheetDelta with(final Set<SpreadsheetCell> cells) {
-        checkCells(cells);
-
-        return SpreadsheetDeltaNonWindowed.withNonWindowed(
-                Sets.immutable(cells),
-                NO_LABELS,
-                NO_DELETED_CELLS,
-                NO_COLUMN_WIDTHS,
-                NO_ROW_HEIGHTS);
-    }
+    public final static SpreadsheetDelta EMPTY = SpreadsheetDeltaNonWindowed.withNonWindowed(
+            NO_CELLS,
+            NO_LABELS,
+            NO_DELETED_CELLS,
+            NO_COLUMN_WIDTHS,
+            NO_ROW_HEIGHTS
+    );
 
     /**
      * Package private to limit sub classing.
@@ -457,7 +454,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
             }
         }
 
-        return with(cells)
+        return EMPTY.setCells(cells)
                 .setWindow(window)
                 .setLabels(labels)
                 .setDeletedCells(deletedCells)

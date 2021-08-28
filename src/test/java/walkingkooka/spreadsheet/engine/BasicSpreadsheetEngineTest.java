@@ -210,7 +210,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         assertEquals(Optional.empty(), context.storeRepository().cells().load(reference));
 
         assertEquals(
-                SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
+                SpreadsheetDelta.EMPTY
+                        .setCells(SpreadsheetDelta.NO_CELLS)
                         .setLabels(SpreadsheetDelta.NO_LABELS),
                 engine.loadCell(reference, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context)
         );
@@ -228,7 +229,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .save(LABEL.mapping(LABEL_CELL));
 
         assertEquals(
-                SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
+                SpreadsheetDelta.EMPTY
+                        .setCells(SpreadsheetDelta.NO_CELLS)
                         .setLabels(Sets.of(LABEL.mapping(LABEL_CELL))),
                 engine.loadCell(LABEL_CELL, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context)
         );
@@ -1036,7 +1038,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.saveCellAndCheck(engine,
                 b2,
                 context,
-                SpreadsheetDelta.with(
+                SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
                                 this.formattedCellWithValue(a1, number(10 + 5)),
                                 this.formattedCellWithValue(b2, number(5))
@@ -1224,6 +1226,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     // deleteCell....................................................................................................
+
+    @Test
+    public void testDeleteCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCell("123");
+
+        engine.saveCell(this.cell(a1, "=123"), context);
+        this.deleteCellAndCheck(engine, a1, context);
+    }
 
     @Test
     public void testDeleteCellWithReferences() {
@@ -1627,18 +1640,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                SpreadsheetDelta.with(
-                        Sets.of(
-                                this.formattedCellWithValue(a, "=1+" + LABEL, number(1 + 99 + 0)),
-                                this.formattedCellWithValue(c.addColumn(-count), "=3+0", number(3 + 0)),
-                                this.formattedCellWithValue(d.addColumn(-count), "=4+" + LABEL, number(4 + 99 + 0)),
-                                this.formattedCellWithValue(e.addColumn(-count), "=99+0", number(99 + 0))
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(a, "=1+" + LABEL, number(1 + 99 + 0)),
+                                        this.formattedCellWithValue(c.addColumn(-count), "=3+0", number(3 + 0)),
+                                        this.formattedCellWithValue(d.addColumn(-count), "=4+" + LABEL, number(4 + 99 + 0)),
+                                        this.formattedCellWithValue(e.addColumn(-count), "=99+0", number(99 + 0))
+                                )
+                        ).setLabels(
+                                Sets.of(
+                                        LABEL.mapping(SpreadsheetCellReference.parseCell("N10"))
+                                )
                         )
-                ).setLabels(
-                        Sets.of(
-                                LABEL.mapping(SpreadsheetCellReference.parseCell("N10"))
-                        )
-                )
         ); // old $b delete, $c,$d columns -1.
 
         this.loadLabelAndCheck(labelStore, LABEL, e.addColumn(-count));
@@ -1980,14 +1994,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a.row().add(1),
                 count,
                 context,
-                SpreadsheetDelta.with(Sets.of(
-                        this.formattedCellWithValue(a, "=1+0+" + LABEL, number(1 + 0 + 2 + 0)),
-                        this.formattedCellWithValue(b.addRow(-count), "=2+0", number(2 + 0)))
-                ).setLabels(
-                        Sets.of(
-                                LABEL.mapping(SpreadsheetCellReference.parseCell("A4"))
+                SpreadsheetDelta.EMPTY
+                        .setCells(Sets.of(
+                                this.formattedCellWithValue(a, "=1+0+" + LABEL, number(1 + 0 + 2 + 0)),
+                                this.formattedCellWithValue(b.addRow(-count), "=2+0", number(2 + 0)))
+                        ).setLabels(
+                                Sets.of(
+                                        LABEL.mapping(SpreadsheetCellReference.parseCell("A4"))
+                                )
                         )
-                )
         ); // $b moved
 
         this.countAndCheck(cellStore, 2);
@@ -2347,15 +2362,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                SpreadsheetDelta.with(
-                        Sets.of(
-                                this.formattedCellWithValue(d.addRow(-count), "=20+0", number(20 + 0))
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(d.addRow(-count), "=20+0", number(20 + 0))
+                                )
+                        ).setLabels(
+                                Sets.of(
+                                        LABEL.mapping(SpreadsheetCellReference.parseCell("A10"))
+                                )
                         )
-                ).setLabels(
-                        Sets.of(
-                                LABEL.mapping(SpreadsheetCellReference.parseCell("A10"))
-                        )
-                )
         ); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
@@ -2688,13 +2704,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a.column().add(1),
                 count,
                 context,
-                SpreadsheetDelta.with(
-                        Sets.of(this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0)))
-                ).setLabels(
-                        Sets.of(
-                                LABEL.mapping(SpreadsheetCellReference.parseCell("C1"))
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0)))
+                        ).setLabels(
+                                Sets.of(
+                                        LABEL.mapping(SpreadsheetCellReference.parseCell("C1"))
+                                )
                         )
-                )
         ); // $b moved
 
         this.countAndCheck(cellStore, 2);
@@ -3042,14 +3059,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                SpreadsheetDelta.with(
-                        Sets.of(
-                                this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0)))
-                ).setLabels(
-                        Sets.of(
-                                LABEL.mapping(SpreadsheetCellReference.parseCell("J1"))
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0)))
+                        ).setLabels(
+                                Sets.of(
+                                        LABEL.mapping(SpreadsheetCellReference.parseCell("J1"))
+                                )
                         )
-                )
         ); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
@@ -3333,16 +3351,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                SpreadsheetDelta.with(
-                        Sets.of(this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0)),
-                                this.formattedCellWithValue("$D$1", "=3+0+" + LABEL, number(3 + 0 + 99 + 0)),
-                                this.formattedCellWithValue("$O$9", "=99+0", number(99 + 0))
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0)),
+                                        this.formattedCellWithValue("$D$1", "=3+0+" + LABEL, number(3 + 0 + 99 + 0)),
+                                        this.formattedCellWithValue("$O$9", "=99+0", number(99 + 0))
+                                )
+                        ).setLabels(
+                                Sets.of(
+                                        LABEL.mapping(SpreadsheetCellReference.parseCell("O9"))
+                                )
                         )
-                ).setLabels(
-                        Sets.of(
-                                LABEL.mapping(SpreadsheetCellReference.parseCell("O9"))
-                        )
-                )
         ); // $b insert
 
         this.loadLabelAndCheck(labelStore, LABEL, d.addColumn(count));
@@ -3449,15 +3468,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 c.column().value() - b.column().value(),
                 context,
-                SpreadsheetDelta.with(
-                        Sets.of(
-                                this.formattedCellWithValue("$P$1", "=99+0", number(99 + 0))
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$P$1", "=99+0", number(99 + 0))
+                                )
+                        ).setLabels(
+                                Sets.of(
+                                        LABEL.mapping(SpreadsheetCellReference.parseCell("P1"))
+                                )
                         )
-                ).setLabels(
-                        Sets.of(
-                                LABEL.mapping(SpreadsheetCellReference.parseCell("P1"))
-                        )
-                )
         ); // $b insert
 
         this.countAndCheck(labelStore, 1);
@@ -4181,7 +4201,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 range,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS)
+                SpreadsheetDelta.EMPTY
+                        .setCells(SpreadsheetDelta.NO_CELLS)
                         .setWindow(Optional.of(range))
                         .setLabels(
                                 Sets.of(
@@ -4267,7 +4288,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 range,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                SpreadsheetDelta.with(Sets.of(
+                SpreadsheetDelta.EMPTY
+                        .setCells(Sets.of(
                                 this.formattedCellWithValue(c3, this.expressionNumberKind().create(1)),
                                 this.formattedCellWithValue(d4, this.expressionNumberKind().create(2))
                         ))
@@ -4305,7 +4327,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 range,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                SpreadsheetDelta.with(Sets.of(
+                SpreadsheetDelta.EMPTY
+                        .setCells(Sets.of(
                                 this.formattedCellWithValue(c3, this.expressionNumberKind().create(1))
                         ))
                         .setWindow(Optional.of(range))
