@@ -144,6 +144,37 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkLabels(after, different);
     }
 
+    // deletedCells.....................................................................................................
+
+    @Test
+    public final void testDeletedCellsReadOnly() {
+        final D delta = this.createSpreadsheetDelta();
+        final Set<SpreadsheetCellReference> deletedCells = delta.deletedCells();
+
+        assertThrows(UnsupportedOperationException.class, () -> deletedCells.add(this.a1().reference()));
+
+        this.checkDeletedCells(delta, this.deletedCells());
+    }
+
+    @Test
+    public final void testSetDeletedCellsSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(delta, delta.setDeletedCells(this.deletedCells()));
+    }
+
+    @Test
+    public final void testSetDeletedCellsDifferent() {
+        final D before = this.createSpreadsheetDelta();
+
+        final Set<SpreadsheetCellReference> different = this.differentDeletedCells();
+
+        final SpreadsheetDelta after = before.setDeletedCells(different);
+        assertNotSame(before, after);
+        this.checkCells(after);
+        this.checkLabels(after, before.labels());
+        this.checkDeletedCells(after, different);
+    }
+
     // setColumnWidths...............................................................................................
 
     @Test
@@ -166,6 +197,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         assertNotSame(delta, differentDelta);
 
         this.checkCells(differentDelta);
+        this.checkLabels(differentDelta);
+        this.checkDeletedCells(differentDelta);
         this.checkColumnWidths(differentDelta, different);
         this.checkRowHeights(differentDelta);
         this.checkWindow(differentDelta);
@@ -193,6 +226,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         assertNotSame(delta, differentDelta);
 
         this.checkCells(differentDelta);
+        this.checkLabels(differentDelta);
+        this.checkDeletedCells(differentDelta);
         this.checkColumnWidths(differentDelta);
         this.checkRowHeights(differentDelta, different);
         this.checkWindow(differentDelta);
