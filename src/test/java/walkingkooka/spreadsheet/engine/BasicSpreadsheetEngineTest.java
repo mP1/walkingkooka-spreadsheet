@@ -2365,6 +2365,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
+                                        this.formattedCellWithValue(a, "=1+0+" + LABEL, number(1 + 0 + 20 + 0)),
                                         this.formattedCellWithValue(d.addRow(-count), "=20+0", number(20 + 0))
                                 )
                         ).setLabels(
@@ -2706,7 +2707,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
-                                Sets.of(this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0)))
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$1", "=1+0+LABEL", number(1 + 0 + 2 + 0)),
+                                        this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0))
+                                )
                         ).setLabels(
                                 Sets.of(
                                         LABEL.mapping(SpreadsheetCellReference.parseCell("C1"))
@@ -3062,7 +3066,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0)))
+                                        this.formattedCellWithValue(a, "=1+0+" + LABEL, number(1 + 0 + 20 + 0)),
+                                        this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0))
+                                )
                         ).setLabels(
                                 Sets.of(
                                         LABEL.mapping(SpreadsheetCellReference.parseCell("J1"))
@@ -3353,7 +3359,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
-                                Sets.of(this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0)),
+                                Sets.of(
+                                        this.formattedCellWithValue(a, "=1+" + LABEL, number(1 + 99 + 0)),
+                                        this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0)),
                                         this.formattedCellWithValue("$D$1", "=3+0+" + LABEL, number(3 + 0 + 99 + 0)),
                                         this.formattedCellWithValue("$O$9", "=99+0", number(99 + 0))
                                 )
@@ -3471,6 +3479,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
+                                        this.formattedCellWithValue(a, "=1+" + LABEL, number(1 + 99 + 0)),
                                         this.formattedCellWithValue("$P$1", "=99+0", number(99 + 0))
                                 )
                         ).setLabels(
@@ -3862,9 +3871,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
+                this.formattedCellWithValue("$A$1", "=1+" + LABEL, number(1 + 99 + 0)),
                 this.formattedCellWithValue("$A$3", "=2+0", number(2 + 0)),
                 this.formattedCellWithValue("$A$4", "=3+0+" + LABEL, number(3 + 0 + 99)),
-                this.formattedCellWithValue("$I$15", "=99+0", number(99 + 0))); // $b insert
+                this.formattedCellWithValue("$I$15", "=99+0", number(99 + 0))
+        ); // $b insert
 
         this.loadLabelAndCheck(labelStore, LABEL, d.addRow(+count));
 
@@ -3969,7 +3980,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 c.row().value() - b.row().value(),
                 context,
-                this.formattedCellWithValue("$A$16", "=99+0", number(99 + 0))); // $b insert
+                this.formattedCellWithValue(a, "=1+99+0", number(99 + 0)),
+                this.formattedCellWithValue("$A$16", "=99+0", number(99 + 0))
+        ); // $b insert
 
         this.countAndCheck(labelStore, 1);
         this.loadLabelAndCheck(labelStore, LABEL, d.spreadsheetCellRange(e));
@@ -4257,6 +4270,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithValue(b2, this.expressionNumberKind().create(4)),
                 this.formattedCellWithValue(c3, this.expressionNumberKind().create(2))
+        );
+    }
+
+    @Test
+    public void testLoadCellsWithReferencesToReferences() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetCell a1 = this.cell("a1", "=b2+100");
+        cellStore.save(a1);
+
+        final SpreadsheetCell b2 = this.cell("b2", "=c3+10");
+        cellStore.save(b2);
+
+        final SpreadsheetCell c3 = this.cell("c3", "=1");
+        cellStore.save(c3);
+
+        this.loadCellsAndCheck(
+                engine,
+                "a1",
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                this.formattedCellWithValue(a1, this.expressionNumberKind().create(1 + 10 + 100)),
+                this.formattedCellWithValue(b2, this.expressionNumberKind().create(1 + 10)),
+                this.formattedCellWithValue(c3, this.expressionNumberKind().create(1))
         );
     }
 
