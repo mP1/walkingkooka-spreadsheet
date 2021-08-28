@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
@@ -97,6 +98,21 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         assertNotSame(before, after);
         this.checkCells(after, different);
         this.checkLabels(after, before.labels());
+    }
+
+    @Test
+    public final void testSetCellsSorted() {
+        final SpreadsheetCell a1 = SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell("A1"), SpreadsheetFormula.with("1"));
+        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell("B2"), SpreadsheetFormula.with("2"));
+
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
+                .setCells(Sets.of(b2, a1));
+
+        this.checkCells(
+                delta,
+                Sets.of(a1, b2)
+        );
+        assertEquals(Lists.of(a1, b2), Lists.of(delta.cells()));
     }
 
     // labels.....................................................................................................

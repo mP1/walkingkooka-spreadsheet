@@ -133,12 +133,21 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
 
     @Override
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
-        return Sets.immutable(cells); // already empty
+        return copy(cells); // already empty
     }
 
     @Override
     Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
-        return Sets.immutable(deletedCells);
+        return copy(deletedCells);
+    }
+
+    /**
+     * Copies the source {@link Set} into a {@link Set} that is sorted
+     */
+    private static <T extends Comparable<T>> Set<T> copy(final Set<T> from) {
+        final Set<T> copy = Sets.sorted();
+        copy.addAll(from);
+        return Sets.immutable(copy);
     }
 
     // TreePrintable.....................................................................................................
