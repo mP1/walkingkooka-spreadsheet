@@ -195,8 +195,9 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Test
-    public void testFromJsonCells() {
-        this.unmarshallAndCheck(JsonNode.object()
+    public void testUnmarshallCells() {
+        this.unmarshallAndCheck(
+                JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson()),
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         this.cells(),
@@ -207,8 +208,9 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testFromJsonLabels() {
-        this.unmarshallAndCheck(JsonNode.object()
+    public void testUnmarshallLabels() {
+        this.unmarshallAndCheck(
+                JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.LABELS_PROPERTY, labelsJson()),
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
@@ -220,23 +222,25 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testJsonNodeMarshall() {
-        this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(
-                SpreadsheetDelta.NO_CELLS,
-                SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                SpreadsheetDelta.NO_ROW_HEIGHTS),
+    public void testMarshall() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS),
                 JsonNode.object()
         );
     }
 
     @Test
-    public void testJsonNodeMarshallCells() {
-        this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(
-                this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                SpreadsheetDelta.NO_ROW_HEIGHTS
+    public void testMarshallCells() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.cells(),
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
@@ -244,12 +248,13 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testJsonNodeMarshallCellsAndCellsToLabels() {
-        this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(
-                this.cells(),
-                this.labels(),
-                SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                SpreadsheetDelta.NO_ROW_HEIGHTS
+    public void testMarshallCellsAndCellsToLabels() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.cells(),
+                        this.labels(),
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
@@ -258,12 +263,13 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testJsonNodeMarshallCellsMaxCellWidths() {
-        this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(
-                this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                this.columnWidths(),
-                SpreadsheetDelta.NO_ROW_HEIGHTS
+    public void testMarshallCellsMaxCellWidths() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.cells(),
+                        SpreadsheetDelta.NO_LABELS,
+                        this.columnWidths(),
+                        SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
@@ -272,12 +278,13 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testJsonNodeMarshallCellsRowHeights() {
-        this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(
-                this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                this.rowHeights()
+    public void testMarshallCellsRowHeights() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.cells(),
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        this.rowHeights()
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
@@ -286,12 +293,13 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testJsonNodeMarshallCellsMaxCellWidthsRowHeights() {
-        this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(
-                this.cells(),
-                SpreadsheetDelta.NO_LABELS,
-                this.columnWidths(),
-                this.rowHeights()
+    public void testMarshallCellsMaxCellWidthsRowHeights() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.cells(),
+                        SpreadsheetDelta.NO_LABELS,
+                        this.columnWidths(),
+                        this.rowHeights()
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
