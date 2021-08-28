@@ -442,7 +442,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()),
-                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 window: A1:E5");
+                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 deletedCells: C1, C2 window: A1:E5");
     }
 
     @Test

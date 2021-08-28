@@ -689,7 +689,9 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 .label("cells")
                 .value(this.cells)
                 .label("labels")
-                .value(this.labels);
+                .value(this.labels)
+                .label("deletedCells")
+                .value(this.deletedCells);
 
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         final Map<SpreadsheetRowReference, Double> rowHeights = this.rowHeights;

@@ -409,7 +409,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.deletedCells(),
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS),
-                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3");
+                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 deletedCells: C1, C2");
     }
 
     @Test
