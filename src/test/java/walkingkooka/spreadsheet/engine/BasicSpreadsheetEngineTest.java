@@ -1364,10 +1364,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.addFailingCellSaveWatcherAndDeleteWatcher(context);
 
-        this.deleteColumnsAndCheck(engine,
+        this.deleteColumnsAndCheck(
+                engine,
                 reference.column(),
                 0,
-                context);
+                context
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 1);
     }
@@ -1385,10 +1387,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(b, "=3+4"), context);
         engine.saveCell(this.cell(c, "=5+6"), context);
 
-        this.deleteColumnsAndCheck(engine,
+        this.deleteColumnsAndCheck(
+                engine,
                 c.column(),
                 1,
-                context);
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setDeletedCells(Sets.of(c))
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 2);
     }
@@ -1406,11 +1412,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(b, "=3+4"), context); // deleted/replaced by $c
         engine.saveCell(this.cell(c, "=5+6"), context); // becomes b3
 
-        this.deleteColumnsAndCheck(engine,
+        this.deleteColumnsAndCheck(
+                engine,
                 b.column(),
                 1,
                 context,
-                this.formattedCellWithValue("b3", "=5+6", number(5 + 6)));
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("b3", "=5+6", number(5 + 6))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b, c)
+                        )
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 2);
     }
@@ -1548,11 +1563,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(b, "=3+4"), context); // deleted/replaced by $c
         engine.saveCell(this.cell(c, formula), context); // becomes b3
 
-        this.deleteColumnsAndCheck(engine,
+        this.deleteColumnsAndCheck(
+                engine,
                 b.column(),
                 1,
                 context,
-                this.formattedCellWithValue("b3", formula, value));
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("b3", formula, value)
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b, c)
+                        )
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 2);
     }
@@ -1577,8 +1601,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("B3", "=5+6", number(5 + 6)),
-                this.formattedCellWithValue("Y99", "=7+8", number(7 + 8)));
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("B3", "=5+6", number(5 + 6)),
+                                        this.formattedCellWithValue("Y99", "=7+8", number(7 + 8))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b, c, d)
+                        )
+
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 3);
     }
@@ -1605,7 +1638,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column().add(-1),
                 count,
                 context,
-                this.formattedCellWithValue(b.addColumn(-1), "=2+0+" + LABEL, number(2 + 99)));
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(b.addColumn(-1), "=2+0+" + LABEL, number(2 + 99))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b)
+                        )
+        );
 
         this.countAndCheck(cellStore, 2);
 
@@ -1652,6 +1693,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         LABEL.mapping(SpreadsheetCellReference.parseCell("N10"))
                                 )
+                        ).setDeletedCells(
+                                Sets.of(c, d, e)
                         )
         ); // old $b delete, $c,$d columns -1.
 
@@ -1676,10 +1719,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, b));
 
         final int count = 1;
-        this.deleteColumnsAndCheck(engine,
+        this.deleteColumnsAndCheck(
+                engine,
                 b.column(),
                 count,
-                context); // $b delete, $c,$d columns -1.
+                context,
+                SpreadsheetDelta.EMPTY
+        ); // $b delete, $c columns -1.
 
         this.loadLabelFailCheck(labelStore, LABEL);
 
@@ -1708,9 +1754,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue(a, "=1+" + d.addColumn(-count), number(1 + 4)),
-                this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
-                this.formattedCellWithValue(e.addColumn(-count), "=5+" + b, number(5 + 2))); // $c delete
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(a, "=1+" + d.addColumn(-count), number(1 + 4)),
+                                        this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
+                                        this.formattedCellWithValue(e.addColumn(-count), "=5+" + b, number(5 + 2))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c, d, e)
+                        )
+        ); // $c delete
 
         this.countAndCheck(context.storeRepository().cells(), 4);
     }
@@ -1737,9 +1791,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue(a, "=1+" + d.addColumn(-count), number(1 + 4)),
-                this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
-                this.formattedCellWithValue(e.addColumn(-count), "=5+" + b, number(5 + 2))); // $c deleted, old-d & old-e refreshed
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(a, "=1+" + d.addColumn(-count), number(1 + 4)),
+                                        this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
+                                        this.formattedCellWithValue(e.addColumn(-count), "=5+" + b, number(5 + 2))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c, d, e)
+                        )
+        ); // $c deleted, old-d & old-e refreshed
 
         this.countAndCheck(context.storeRepository().cells(), 4);
     }
@@ -1760,7 +1822,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: " + b)); // $b delete
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: " + b)
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b)
+                        )
+        ); // $b delete
 
         this.countAndCheck(context.storeRepository().cells(), 1);
     }
@@ -1789,9 +1859,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.column(7),
                 count,
                 context,
-                this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
-                this.formattedCellWithValue(e.addColumn(-count), "=5", number(5)),
-                this.formattedCellWithValue(f.addColumn(-count), "=6", number(6))); // $b & $c
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
+                                        this.formattedCellWithValue(e.addColumn(-count), "=5", number(5)),
+                                        this.formattedCellWithValue(f.addColumn(-count), "=6", number(6))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b, c, d, e, f)
+                        )
+        ); // $b & $c
 
         this.countAndCheck(context.storeRepository().cells(), 4);
     }
@@ -1834,7 +1912,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 1,
                 context,
-                this.formattedCellWithValue(c.addRow(-1), "=5+6", number(5 + 6)));
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(c.addRow(-1), "=5+6", number(5 + 6))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c)
+                        )
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 2);
 
@@ -1866,8 +1952,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue(c.addRow(-count), "=5+6", number(5 + 6)),
-                this.formattedCellWithValue(d.addRow(-count), "=7+8", number(7 + 8))); // $b delete
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(c.addRow(-count), "=5+6", number(5 + 6)),
+                                        this.formattedCellWithValue(d.addRow(-count), "=7+8", number(7 + 8))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c, d)
+                        )
+        ); // $b delete
 
         this.countAndCheck(context.storeRepository().cells(), 3);
 
@@ -1899,7 +1993,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue(d.addRow(-count), "=7+8", number(7 + 8)));
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(d.addRow(-count), "=7+8", number(7 + 8))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b, c, d)
+                        )
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 2);
 
@@ -1944,7 +2046,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row().add(count),
                 count,
                 context,
-                this.formattedCellWithValue("$A$4", "=99+0", number(99 + 0))); // $c moved, $b unmodified label refs $a also unmodified.
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$4", "=99+0", number(99 + 0))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c)
+                        )
+        ); // $c moved, $b unmodified label refs $a also unmodified.
 
         this.countAndCheck(cellStore, 3);
 
@@ -2002,6 +2112,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         LABEL.mapping(SpreadsheetCellReference.parseCell("A4"))
                                 )
+                        ).setDeletedCells(
+                                Sets.of(b)
                         )
         ); // $b moved
 
@@ -2039,7 +2151,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 1,
                 context,
-                this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $A$6"));
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $A$6")
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b)
+                        )
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 1);
 
@@ -2073,9 +2193,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "=1+$I$13", number(1 + 4)),
-                this.formattedCellWithValue("$I$13", "=4", number(4)),
-                this.formattedCellWithValue("$J$14", "=5+$A$2", number(5 + 2))); // $c delete
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$1", "=1+$I$13", number(1 + 4)),
+                                        this.formattedCellWithValue("$I$13", "=4", number(4)),
+                                        this.formattedCellWithValue("$J$14", "=5+$A$2", number(5 + 2))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c, d, e)
+                        )
+        ); // $c delete
 
         this.countAndCheck(context.storeRepository().cells(), 4);
 
@@ -2130,9 +2258,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "=1+$I$12", number(1 + 4)),
-                this.formattedCellWithValue("$I$12", "=4", number(4)),
-                this.formattedCellWithValue("$J$13", "=5+$A$2", number(5 + 2))); // $c delete
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$1", "=1+$I$12", number(1 + 4)),
+                                        this.formattedCellWithValue("$I$12", "=4", number(4)),
+                                        this.formattedCellWithValue("$J$13", "=5+$A$2", number(5 + 2))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c, d, e)
+                        )
+        ); // $c delete
 
         this.countAndCheck(
                 context.storeRepository()
@@ -2196,7 +2332,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.deleteRowsAndCheck(engine,
                 d.row(),
                 count,
-                context);
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setDeletedCells(
+                                Sets.of(d)
+                        )
+        );
 
         this.countAndCheck(cellStore, 2); // a&c
         this.countAndCheck(labelStore, 1);
@@ -2278,7 +2419,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue(d.addRow(-count), "=20+0", number(20 + 0))); // b..c deleted, d moved
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(d.addRow(-count), "=20+0", number(20 + 0))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(d)
+                        )
+        ); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
         this.countAndCheck(labelStore, 0);
@@ -2322,7 +2471,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                formattedCellWithError(a, "=1+0+" + LABEL, "Unknown label: " + LABEL)); // b..c deleted
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        formattedCellWithError(a, "=1+0+" + LABEL, "Unknown label: " + LABEL)
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b)
+                        )
+        ); // b..c deleted
 
         this.countAndCheck(cellStore, 1); // a
         this.countAndCheck(labelStore, 0);
@@ -2372,6 +2529,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         LABEL.mapping(SpreadsheetCellReference.parseCell("A10"))
                                 )
+                        ).setDeletedCells(
+                                Sets.of(d)
                         )
         ); // b..c deleted, d moved
 
@@ -2518,12 +2677,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(a, "=1+2"), context);
         engine.saveCell(this.cell(b, "=3+4"), context);
         engine.saveCell(this.cell(c, "=5+6"), context);
-
-        this.deleteColumnsAndCheck(engine,
+        System.out.println("@@@@");
+        this.deleteColumnsAndCheck(
+                engine,
                 b.column(),
                 1,
                 context,
-                this.formattedCellWithValue("$B$1", "=5+6", number(5 + 6)));
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$B$1", "=5+6", number(5 + 6))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c)
+                        )
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 2);
 
@@ -2558,12 +2726,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(d, "=7+8"), context);
 
         final int count = 1;
+
         this.deleteColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$B$1", "=5+6", number(5 + 6)),
-                this.formattedCellWithValue("$I$2", "=7+8", number(7 + 8))); // $b delete
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$B$1", "=5+6", number(5 + 6)),
+                                        this.formattedCellWithValue("$I$2", "=7+8", number(7 + 8))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c, d)
+                        )
+        ); // $b delete
 
         this.countAndCheck(context.storeRepository().cells(), 3);
 
@@ -2609,7 +2786,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$H$2", "=7+8", number(7 + 8))); // $b, $c deleted
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$H$2", "=7+8", number(7 + 8))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b, c, d)
+                        )
+                ); // $b, $c deleted
 
         this.countAndCheck(context.storeRepository().cells(), 2);
 
@@ -2654,7 +2839,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column().add(2),
                 count,
                 context,
-                this.formattedCellWithValue("$D$1", "=99+0", number(99 + 0)));
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$D$1", "=99+0", number(99 + 0))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c)
+                        )
+        );
 
         this.countAndCheck(cellStore, 3);
 
@@ -2708,13 +2901,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$1", "=1+0+LABEL", number(1 + 0 + 2 + 0)),
+                                        this.formattedCellWithValue("$A$1", "=1+0+" + LABEL, number(1 + 0 + 2 + 0)),
                                         this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0))
                                 )
                         ).setLabels(
                                 Sets.of(
                                         LABEL.mapping(SpreadsheetCellReference.parseCell("C1"))
                                 )
+                        ).setDeletedCells(
+                                Sets.of(b)
                         )
         ); // $b moved
 
@@ -2752,7 +2947,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 1,
                 context,
-                this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $E$1")); // $v delete
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $E$1")
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b)
+                        )
+        ); // $v delete
 
         this.countAndCheck(context.storeRepository().cells(), 1);
 
@@ -2786,18 +2989,29 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "=1+$M$9", number(1 + 4)),
-                this.formattedCellWithValue("$M$9", "=4", number(4)),
-                this.formattedCellWithValue("$N$10", "=5+" + b, number(5 + 2))); // $c delete
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$1", "=1+$M$9", number(1 + 4)),
+                                        this.formattedCellWithValue("$M$9", "=4", number(4)),
+                                        this.formattedCellWithValue("$N$10", "=5+" + b, number(5 + 2))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c, d, e)
+                        )
+        ); // $c delete
 
         this.countAndCheck(context.storeRepository().cells(), 4);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+" + d.addColumn(-count),
-                number(1 + 4)); // reference should have been fixed.
+
+                number(1 + 4)
+        ); // reference should have been fixed.
 
         this.loadCellAndCheckFormatted2(engine,
                 b,
@@ -2843,9 +3057,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "=1+$L$9", number(1 + 4)),
-                this.formattedCellWithValue("$L$9", "=4", number(4)),
-                this.formattedCellWithValue("$M$10", "=5+$B$1", number(5 + 2))); // $c delete
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$1", "=1+$L$9", number(1 + 4)),
+                                        this.formattedCellWithValue("$L$9", "=4", number(4)),
+                                        this.formattedCellWithValue("$M$10", "=5+$B$1", number(5 + 2))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c, d, e)
+                        )
+        ); // $c delete
 
         this.countAndCheck(context.storeRepository().cells(), 4);
 
@@ -2902,10 +3124,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(d, "=99+0"), context); // deleted!!!
 
         final int count = 2;
-        this.deleteColumnsAndCheck(engine,
+        this.deleteColumnsAndCheck(
+                engine,
                 d.column(),
                 count,
-                context); // $d moved
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setDeletedCells(
+                                Sets.of(d)
+                        )
+        ); // $d moved
 
         this.countAndCheck(cellStore, 2); // a&c
         this.countAndCheck(labelStore, 1);
@@ -2987,7 +3215,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0))); // b..c deleted, d moved
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(d)
+                        )
+        ); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
         this.countAndCheck(labelStore, 0);
@@ -3024,7 +3260,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithError("$A$1", "=1+0+" + LABEL, "Unknown label: " + LABEL)); // b..c deleted
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithError("$A$1", "=1+0+" + LABEL, "Unknown label: " + LABEL)
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b)
+                        )
+        ); // b..c deleted
 
         this.countAndCheck(cellStore, 1); // a
         this.countAndCheck(labelStore, 0);
@@ -3067,12 +3311,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formattedCellWithValue(a, "=1+0+" + LABEL, number(1 + 0 + 20 + 0)),
-                                        this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0))
-                                )
+                                        this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0)))
                         ).setLabels(
                                 Sets.of(
                                         LABEL.mapping(SpreadsheetCellReference.parseCell("J1"))
                                 )
+                        ).setDeletedCells(
+                                Sets.of(d)
                         )
         ); // b..c deleted, d moved
 
@@ -3226,12 +3471,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(c, "=5+6"), context);
 
         final int count = 1;
-        this.insertColumnsAndCheck(engine,
+        this.insertColumnsAndCheck(
+                engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$C$1", "=3+4", number(3 + 4)),
-                this.formattedCellWithValue("$D$1", "=5+6", number(5 + 6)));
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$C$1", "=3+4", number(3 + 4)),
+                                        this.formattedCellWithValue("$D$1", "=5+6", number(5 + 6))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b)
+                        )
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 3);
 
@@ -3257,12 +3511,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(c, "=5+6"), context);
 
         final int count = 1;
-        this.insertColumnsAndCheck(engine,
+        this.insertColumnsAndCheck(
+                engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$C$1", "=3+4", number(3 + 4)),
-                this.formattedCellWithValue("$D$1", "=5+6", number(5 + 6))); // $b insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$C$1", "=3+4", number(3 + 4)),
+                                        this.formattedCellWithValue("$D$1", "=5+6", number(5 + 6))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b)
+                        )
+        ); // $b insert
 
         this.countAndCheck(context.storeRepository().cells(), 3);
 
@@ -3310,7 +3573,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$F$4", "=2+" + LABEL, number(2 + 100))); // $b insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$F$4", "=2+" + LABEL, number(2 + 100))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b)
+                        )
+        ); // $b insert
 
         this.loadLabelAndCheck(labelStore, LABEL, a);
 
@@ -3369,6 +3640,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         LABEL.mapping(SpreadsheetCellReference.parseCell("O9"))
                                 )
+                        ).setDeletedCells(
+                                Sets.of(b, d)
                         )
         ); // $b insert
 
@@ -3428,7 +3701,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$G$6", "=2+0+" + LABEL, number(2 + 0 + 99 + 0))); // $b insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$G$6", "=2+0+" + LABEL, number(2 + 0 + 99 + 0))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b)
+                        )
+        ); // $b insert
 
         this.countAndCheck(labelStore, 1);
 
@@ -3486,6 +3767,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         LABEL.mapping(SpreadsheetCellReference.parseCell("P1"))
                                 )
+                        ).setDeletedCells(
+                                Sets.of(c)
                         )
         ); // $b insert
 
@@ -3529,9 +3812,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "=1+0+$O$9", number(1 + 0 + 4 + 0 + 2 + 0)),
-                this.formattedCellWithValue("$L$1", "=3+0", number(3 + 0)),
-                this.formattedCellWithValue("$O$9", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$1", "=1+0+$O$9", number(1 + 0 + 4 + 0 + 2 + 0)),
+                                        this.formattedCellWithValue("$L$1", "=3+0", number(3 + 0)),
+                                        this.formattedCellWithValue("$O$9", "=4+0+" + b, number(4 + 0 + 2 + 0))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c, d)
+                        )
+        ); // $c insert
 
         this.countAndCheck(context.storeRepository().cells(), 4);
 
@@ -3584,9 +3875,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "=1+0+$P$9", number(1 + 0 + 4 + 0 + 2 + 0)),
-                this.formattedCellWithValue("$M$1", "=3+0", number(3 + 0)),
-                this.formattedCellWithValue("$P$9", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$1", "=1+0+$P$9", number(1 + 0 + 4 + 0 + 2 + 0)),
+                                        this.formattedCellWithValue("$M$1", "=3+0", number(3 + 0)),
+                                        this.formattedCellWithValue("$P$9", "=4+0+" + b, number(4 + 0 + 2 + 0))
+                                )
+                        )
+                        .setDeletedCells(
+                                Sets.of(c, d)
+                        )
+        ); // $c insert
 
         this.countAndCheck(context.storeRepository().cells(), 4);
 
@@ -3641,10 +3941,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.column(7),
                 count,
                 context,
-                this.formattedCellWithValue("$P$1", "=2+0", number(2 + 0)),
-                this.formattedCellWithValue("$Q$1", "=3+0", number(3 + 0)),
-                this.formattedCellWithValue("$R$3", "=4+0", number(4 + 0)),
-                this.formattedCellWithValue("$Z$4", "=5+0", number(5 + 0))); // $b & $c
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$P$1", "=2+0", number(2 + 0)),
+                                        this.formattedCellWithValue("$Q$1", "=3+0", number(3 + 0)),
+                                        this.formattedCellWithValue("$R$3", "=4+0", number(4 + 0)),
+                                        this.formattedCellWithValue("$Z$4", "=5+0", number(5 + 0))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b, c, d, e)
+                        )
+        ); // $b & $c
 
         this.countAndCheck(context.storeRepository().cells(), 5);
 
@@ -3697,10 +4005,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.addFailingCellSaveWatcherAndDeleteWatcher(context);
 
-        this.insertRowsAndCheck(engine,
+        this.insertRowsAndCheck(
+                engine,
                 reference.row(),
                 0,
-                context);
+                context
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 1);
 
@@ -3730,8 +4040,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$3", "=3+4", number(3 + 4)),
-                this.formattedCellWithValue("$A$4", "=5+6", number(5 + 6)));
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$3", "=3+4", number(3 + 4)),
+                                        this.formattedCellWithValue("$A$4", "=5+6", number(5 + 6))
+                                )
+                        )
+                        .setDeletedCells(
+                                Sets.of(
+                                        b
+                                )
+                        )
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 3);
 
@@ -3775,8 +4096,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$3", "=3+4", number(3 + 4)),
-                this.formattedCellWithValue("$A$4", "=5+6", number(5 + 6))); // $b insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$3", "=3+4", number(3 + 4)),
+                                        this.formattedCellWithValue("$A$4", "=5+6", number(5 + 6))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(
+                                        b
+                                )
+                        )
+        ); // $b insert
 
         this.countAndCheck(context.storeRepository().cells(), 3);
 
@@ -3824,7 +4155,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$D$6", "=2+" + LABEL, number(2 + 100))); // $b insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$D$6", "=2+" + LABEL, number(2 + 100))
+                                )
+                        )
+                        .setDeletedCells(
+                                Sets.of(b)
+                        )
+        ); // $b insert
 
         this.loadLabelAndCheck(labelStore, LABEL, a);
 
@@ -3871,11 +4211,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "=1+" + LABEL, number(1 + 99 + 0)),
-                this.formattedCellWithValue("$A$3", "=2+0", number(2 + 0)),
-                this.formattedCellWithValue("$A$4", "=3+0+" + LABEL, number(3 + 0 + 99)),
-                this.formattedCellWithValue("$I$15", "=99+0", number(99 + 0))
-        ); // $b insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$1", "=1+" + LABEL, number(1 + 99 + 0)),
+                                        this.formattedCellWithValue("$A$3", "=2+0", number(2 + 0)),
+                                        this.formattedCellWithValue("$A$4", "=3+0+" + LABEL, number(3 + 0 + 99)),
+                                        this.formattedCellWithValue("$I$15", "=99+0", number(99 + 0)) // $b insert
+                                )
+                        ).setLabels(
+                                Sets.of(
+                                        SpreadsheetLabelMapping.with(LABEL, SpreadsheetExpressionReference.parseCell("I15"))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b, d)
+                        )
+        );
 
         this.loadLabelAndCheck(labelStore, LABEL, d.addRow(+count));
 
@@ -3933,7 +4284,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$F$7", "=2+0+" + LABEL, number(2 + 0 + 99 + 0))); // $b insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$F$7", "=2+0+" + LABEL, number(2 + 0 + 99 + 0)) // $b insert
+                                )
+                        )
+                        .setDeletedCells(
+                                Sets.of(b)
+                        )
+        );
 
         this.countAndCheck(labelStore, 1);
 
@@ -3980,9 +4340,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 c.row().value() - b.row().value(),
                 context,
-                this.formattedCellWithValue(a, "=1+99+0", number(99 + 0)),
-                this.formattedCellWithValue("$A$16", "=99+0", number(99 + 0))
-        ); // $b insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(a, "=1+" + LABEL, number(1 + 99 + 0)),
+                                        this.formattedCellWithValue("$A$16", "=99+0", number(99 + 0))// $b insert
+                                )
+                        )
+                        .setLabels(
+                                Sets.of(
+                                        LABEL.mapping(SpreadsheetExpressionReference.parseCell("A16"))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(c)
+                        )
+        );
 
         this.countAndCheck(labelStore, 1);
         this.loadLabelAndCheck(labelStore, LABEL, d.spreadsheetCellRange(e));
@@ -4024,9 +4396,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "=1+0+$I$15", number(3 + 4)),
-                this.formattedCellWithValue("$A$12", "=3+0", number(3 + 0)),
-                this.formattedCellWithValue("$I$15", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$1", "=1+0+$I$15", number(3 + 4)),
+                                        this.formattedCellWithValue("$A$12", "=3+0", number(3 + 0)),
+                                        this.formattedCellWithValue("$I$15", "=4+0+" + b, number(4 + 0 + 2 + 0))// $c insert
+                                )
+                        )
+                        .setDeletedCells(
+                                Sets.of(c, d)
+                        )
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 4);
 
@@ -4079,9 +4460,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "=1+0+$I$16", number(1 + 0 + 4 + 0 + 2 + 0)),
-                this.formattedCellWithValue("$A$13", "=3+0", number(3 + 0)),
-                this.formattedCellWithValue("$I$16", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$1", "=1+0+$I$16", number(1 + 0 + 4 + 0 + 2 + 0)),
+                                        this.formattedCellWithValue("$A$13", "=3+0", number(3 + 0)),
+                                        this.formattedCellWithValue("$I$16", "=4+0+" + b, number(4 + 0 + 2 + 0))  // $c insert
+                                )
+                        )
+                        .setDeletedCells(
+                                Sets.of(c, d)
+                        )
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 4);
 
@@ -4136,10 +4526,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.row(7),
                 count,
                 context,
-                this.formattedCellWithValue("$A$16", "=2+0", number(2 + 0)),
-                this.formattedCellWithValue("$A$17", "=3+0", number(3 + 0)),
-                this.formattedCellWithValue("$C$18", "=4+0", number(4 + 0)),
-                this.formattedCellWithValue("$D$26", "=5+0", number(5 + 0))); // $b & $c
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue("$A$16", "=2+0", number(2 + 0)),
+                                        this.formattedCellWithValue("$A$17", "=3+0", number(3 + 0)),
+                                        this.formattedCellWithValue("$C$18", "=4+0", number(4 + 0)),
+                                        this.formattedCellWithValue("$D$26", "=5+0", number(5 + 0))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(b, c, d, e)
+                        )
+        ); // $b & $c
 
         this.countAndCheck(context.storeRepository().cells(), 5);
 
@@ -4404,7 +4802,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.NO_CELLS,
                 rangeA,
                 rangeA,
-                context);
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setDeletedCells(
+                                Sets.of(a)
+                        )
+        );
 
         this.countAndCheck(cellStore, 0); // a deleted
     }
@@ -4427,11 +4830,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellRange rangeA = a.spreadsheetCellRange(a);
 
-        this.fillCellsAndCheck(engine,
+        this.fillCellsAndCheck(
+                engine,
                 SpreadsheetDelta.NO_CELLS,
                 rangeA,
                 rangeA,
-                context);
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setDeletedCells(
+                                Sets.of(a)
+                        )
+        );
 
         this.countAndCheck(cellStore, 1); // a deleted
 
@@ -4458,13 +4867,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell cellB = this.cell(b, "=2+0");
         cellStore.save(cellB);
 
-        final SpreadsheetCellRange rangeA = a.spreadsheetCellRange(b);
+        final SpreadsheetCellRange rangeAtoB = a.spreadsheetCellRange(b);
 
-        this.fillCellsAndCheck(engine,
+        this.fillCellsAndCheck(
+                engine,
                 SpreadsheetDelta.NO_CELLS,
-                rangeA,
-                rangeA,
-                context);
+                rangeAtoB,
+                rangeAtoB,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setDeletedCells(
+                                Sets.of(a, b)
+                        )
+        );
 
         this.countAndCheck(cellStore, 0); // a deleted
     }
@@ -4485,17 +4900,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell cellB = this.cell(b, "=2+0");
         cellStore.save(cellB);
 
-        final SpreadsheetCellRange rangeA = a.spreadsheetCellRange(b);
+        final SpreadsheetCellRange rangeAtoB = a.spreadsheetCellRange(b);
 
         final SpreadsheetCellReference c = this.cellReference(10, 10);
         final SpreadsheetCell cellC = this.cell(c, "=3+0");
         cellStore.save(cellC);
 
-        this.fillCellsAndCheck(engine,
+        this.fillCellsAndCheck(
+                engine,
                 SpreadsheetDelta.NO_CELLS,
-                rangeA,
-                rangeA,
-                context);
+                rangeAtoB,
+                rangeAtoB,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setDeletedCells(
+                                Sets.of(a, b)
+                        )
+        );
 
         this.countAndCheck(cellStore, 1); // a&b deleted, leaving c
 
@@ -4615,11 +5036,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         cellStore.save(cellB);
         cellStore.save(cellC);
 
-        this.fillCellsAndCheck(engine,
+        this.fillCellsAndCheck(
+                engine,
                 SpreadsheetDelta.NO_CELLS,
                 a.spreadsheetCellRange(a),
                 SpreadsheetCellRange.fromCells(Lists.of(b)),
-                context);
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setDeletedCells(
+                                Sets.of(b)
+                        )
+        );
 
         this.countAndCheck(cellStore, 2); // a + c, b deleted
 
@@ -4656,11 +5083,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         cellStore.save(cellB);
         cellStore.save(cellC);
 
-        this.fillCellsAndCheck(engine,
+        this.fillCellsAndCheck(
+                engine,
                 SpreadsheetDelta.NO_CELLS,
                 a.spreadsheetCellRange(a),
                 SpreadsheetCellRange.fromCells(Lists.of(a, b)),
-                context);
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setDeletedCells(
+                                Sets.of(a, b)
+                        )
+        );
 
         this.countAndCheck(cellStore, 1);
 

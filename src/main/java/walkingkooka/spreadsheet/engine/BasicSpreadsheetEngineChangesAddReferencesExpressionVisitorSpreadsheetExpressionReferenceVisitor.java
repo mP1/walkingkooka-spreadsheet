@@ -26,16 +26,16 @@ import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReferenc
 /**
  * A {@link SpreadsheetExpressionReferenceVisitor} that adds references to each reference present within cell formula.
  */
-final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
+final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
 
-    static BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor with(final SpreadsheetCellReference target,
-                                                                                                                     final SpreadsheetEngineContext context) {
-        return new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(target, context);
+    static BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor with(final SpreadsheetCellReference target,
+                                                                                                                 final SpreadsheetEngineContext context) {
+        return new BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(target, context);
     }
 
     // VisibleForTesting
-    BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(final SpreadsheetCellReference target,
-                                                                                                         final SpreadsheetEngineContext context) {
+    BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(final SpreadsheetCellReference target,
+                                                                                                     final SpreadsheetEngineContext context) {
         super();
         this.target = target;
         this.context = context;

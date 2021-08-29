@@ -36,14 +36,14 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
-public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCells>
-        implements ToStringTesting<BasicSpreadsheetEngineUpdatedCells> {
+public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChanges>
+        implements ToStringTesting<BasicSpreadsheetEngineChanges> {
 
     @Test
     public void testToString() {
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(SpreadsheetMetadata.EMPTY);
 
-        final BasicSpreadsheetEngineUpdatedCells cells = BasicSpreadsheetEngineUpdatedCells.with(
+        final BasicSpreadsheetEngineChanges cells = BasicSpreadsheetEngineChanges.with(
                 engine,
                 new FakeSpreadsheetEngineContext() {
                     @Override
@@ -76,7 +76,7 @@ public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadshe
                         };
                     }
                 },
-                BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE
+                BasicSpreadsheetEngineChangesMode.IMMEDIATE
         );
 
         cells.onCellSavedImmediate(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell("A1"), SpreadsheetFormula.with("1+2")));
@@ -86,8 +86,8 @@ public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadshe
     }
 
     @Override
-    public Class<BasicSpreadsheetEngineUpdatedCells> type() {
-        return BasicSpreadsheetEngineUpdatedCells.class;
+    public Class<BasicSpreadsheetEngineChanges> type() {
+        return BasicSpreadsheetEngineChanges.class;
     }
 
     @Override

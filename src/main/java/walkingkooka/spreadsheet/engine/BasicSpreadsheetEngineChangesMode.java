@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReferenc
 /**
  * Controls what happens whenever a save to cell store happens.
  */
-enum BasicSpreadsheetEngineUpdatedCellsMode {
+enum BasicSpreadsheetEngineChangesMode {
 
     /**
      * Perform any associated actions immediately
@@ -34,31 +34,31 @@ enum BasicSpreadsheetEngineUpdatedCellsMode {
     IMMEDIATE {
         @Override
         void onCellSaved(final SpreadsheetCell cell,
-                         final BasicSpreadsheetEngineUpdatedCells cells) {
+                         final BasicSpreadsheetEngineChanges cells) {
             cells.onCellSavedImmediate(cell);
         }
 
         @Override
         void onCellDeleted(final SpreadsheetCellReference cell,
-                           final BasicSpreadsheetEngineUpdatedCells cells) {
+                           final BasicSpreadsheetEngineChanges cells) {
             cells.onCellDeletedImmediate(cell);
         }
 
         @Override
         void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
-                                    final BasicSpreadsheetEngineUpdatedCells cells) {
+                                    final BasicSpreadsheetEngineChanges cells) {
             cells.onCellReferenceDeletedImmediate(targetAndReference);
         }
 
         @Override
         void onLabelSaved(final SpreadsheetLabelMapping mapping,
-                          final BasicSpreadsheetEngineUpdatedCells cells) {
+                          final BasicSpreadsheetEngineChanges cells) {
             cells.onLabelSavedImmediate(mapping);
         }
 
         @Override
         void onLabelDeleted(final SpreadsheetLabelName label,
-                            final BasicSpreadsheetEngineUpdatedCells cells) {
+                            final BasicSpreadsheetEngineChanges cells) {
             cells.onLabelDeletedImmediate(label);
         }
     },
@@ -69,55 +69,55 @@ enum BasicSpreadsheetEngineUpdatedCellsMode {
     BATCH {
         @Override
         void onCellSaved(final SpreadsheetCell cell,
-                         final BasicSpreadsheetEngineUpdatedCells cells) {
+                         final BasicSpreadsheetEngineChanges cells) {
             cells.onCellSavedBatch(cell);
         }
 
         @Override
         void onCellDeleted(final SpreadsheetCellReference cell,
-                           final BasicSpreadsheetEngineUpdatedCells cells) {
+                           final BasicSpreadsheetEngineChanges cells) {
             cells.onCellDeletedBatch(cell);
         }
 
         @Override
         void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
-                                    final BasicSpreadsheetEngineUpdatedCells cells) {
+                                    final BasicSpreadsheetEngineChanges cells) {
             cells.onCellReferenceDeletedBatch(targetAndReference);
         }
 
         @Override
         void onLabelSaved(final SpreadsheetLabelMapping mapping,
-                          final BasicSpreadsheetEngineUpdatedCells cells) {
+                          final BasicSpreadsheetEngineChanges cells) {
             cells.onLabelSavedBatch(mapping);
         }
 
         @Override
         void onLabelDeleted(final SpreadsheetLabelName label,
-                            final BasicSpreadsheetEngineUpdatedCells cells) {
+                            final BasicSpreadsheetEngineChanges cells) {
             cells.onLabelDeletedBatch(label);
         }
     };
 
     /**
-     * Factory that creates a {@link BasicSpreadsheetEngineUpdatedCells}
+     * Factory that creates a {@link BasicSpreadsheetEngineChanges}
      */
-    final BasicSpreadsheetEngineUpdatedCells createUpdatedCells(final BasicSpreadsheetEngine engine,
-                                                                final SpreadsheetEngineContext context) {
-        return BasicSpreadsheetEngineUpdatedCells.with(engine, context, this);
+    final BasicSpreadsheetEngineChanges createUpdatedCells(final BasicSpreadsheetEngine engine,
+                                                           final SpreadsheetEngineContext context) {
+        return BasicSpreadsheetEngineChanges.with(engine, context, this);
     }
 
     abstract void onCellSaved(final SpreadsheetCell cell,
-                              final BasicSpreadsheetEngineUpdatedCells cells);
+                              final BasicSpreadsheetEngineChanges cells);
 
     abstract void onCellDeleted(final SpreadsheetCellReference cell,
-                                final BasicSpreadsheetEngineUpdatedCells cells);
+                                final BasicSpreadsheetEngineChanges cells);
 
     abstract void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
-                                         final BasicSpreadsheetEngineUpdatedCells cells);
+                                         final BasicSpreadsheetEngineChanges cells);
 
     abstract void onLabelSaved(final SpreadsheetLabelMapping mapping,
-                               final BasicSpreadsheetEngineUpdatedCells cells);
+                               final BasicSpreadsheetEngineChanges cells);
 
     abstract void onLabelDeleted(final SpreadsheetLabelName label,
-                                 final BasicSpreadsheetEngineUpdatedCells cells);
+                                 final BasicSpreadsheetEngineChanges cells);
 }
