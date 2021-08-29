@@ -349,14 +349,17 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         printer.indent();
         {
 
-            printer.println("cells:");
-            printer.indent();
-            {
-                for (final SpreadsheetCell cell : this.cells()) {
-                    cell.printTree(printer);
+            final Set<SpreadsheetCell> cells = this.cells();
+            if (!cells.isEmpty()) {
+                printer.println("cells:");
+                printer.indent();
+                {
+                    for (final SpreadsheetCell cell : cells) {
+                        cell.printTree(printer);
+                    }
                 }
+                printer.outdent();
             }
-            printer.outdent();
 
             final Set<SpreadsheetLabelMapping> labels = this.labels();
             if (!labels.isEmpty()) {

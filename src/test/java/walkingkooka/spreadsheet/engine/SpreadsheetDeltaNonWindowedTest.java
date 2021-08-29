@@ -47,7 +47,21 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     // TreePrintable.....................................................................................................
 
     @Test
-    public void testPrintTree() {
+    public void testPrintTreeNoCells() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS
+                ),
+                "SpreadsheetDelta\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeCells() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         this.cells(),
@@ -72,6 +86,25 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
 
     @Test
     public void testPrintTreeLabels() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_CELLS,
+                        this.labels(),
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS
+                ),
+                "SpreadsheetDelta\n" +
+                        "  labels:\n" +
+                        "    LabelA1A: A1\n" +
+                        "    LabelA1B: A1\n" +
+                        "    LabelB2: B2\n" +
+                        "    LabelC3: C3\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeCellsAndLabels() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         this.cells(),
