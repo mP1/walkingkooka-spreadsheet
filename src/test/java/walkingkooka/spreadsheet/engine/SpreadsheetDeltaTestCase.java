@@ -192,7 +192,6 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkDeletedCells(after, different);
     }
 
-
     @Test
     public final void testSetDeletedCellsSorted() {
         final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCell("A1");
@@ -204,6 +203,28 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkDeletedCells(
                 delta,
                 Sets.of(a1, b2)
+        );
+        assertEquals(Lists.of(a1, b2), new ArrayList<>(delta.deletedCells()));
+    }
+
+    @Test
+    public final void testSetDeletedCellsAllRelative() {
+        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCell("$A$1");
+        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCell("B$2");
+        final SpreadsheetCellReference c3 = SpreadsheetExpressionReference.parseCell("C$3");
+        final SpreadsheetCellReference d4 = SpreadsheetExpressionReference.parseCell("D4");
+
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
+                .setDeletedCells(Sets.of(b2, a1, d4, c3));
+
+        this.checkDeletedCells(
+                delta,
+                Sets.of(
+                        a1.toRelative(),
+                        b2.toRelative(),
+                        c3.toRelative(),
+                        d4.toRelative()
+                )
         );
         assertEquals(Lists.of(a1, b2), new ArrayList<>(delta.deletedCells()));
     }
