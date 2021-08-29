@@ -30,6 +30,7 @@ import walkingkooka.text.printer.IndentingPrinter;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetDelta} without any window/filtering.
@@ -133,21 +134,18 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
 
     @Override
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
-        return copy(cells); // already empty
+        final Set<SpreadsheetCell> copy = Sets.sorted();
+        copy.addAll(cells);
+        return Sets.immutable(copy);
     }
 
     @Override
     Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
-        return copy(deletedCells);
-    }
-
-    /**
-     * Copies the source {@link Set} into a {@link Set} that is sorted
-     */
-    private static <T extends Comparable<T>> Set<T> copy(final Set<T> from) {
-        final Set<T> copy = Sets.sorted();
-        copy.addAll(from);
-        return Sets.immutable(copy);
+        return Sets.immutable(
+                deletedCells.stream()
+                        .map(SpreadsheetCellReference::toRelative)
+                        .collect(Collectors.toCollection(Sets::sorted))
+        );
     }
 
     // TreePrintable.....................................................................................................

@@ -337,6 +337,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         return Sets.immutable(
                 deletedCells.stream()
                         .filter(c -> window.test(c))
+                        .map(SpreadsheetCellReference::toRelative)
                         .collect(Collectors.toCollection(Sets::sorted))
         );
     }
