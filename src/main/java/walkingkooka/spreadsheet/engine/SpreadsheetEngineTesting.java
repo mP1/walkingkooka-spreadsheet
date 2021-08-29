@@ -45,6 +45,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.Indentation;
+import walkingkooka.text.LineEnding;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -54,6 +57,7 @@ import java.math.MathContext;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -578,9 +582,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                   final SpreadsheetCell save,
                                   final SpreadsheetEngineContext context,
                                   final SpreadsheetDelta delta) {
-        assertEquals(delta,
+        checkEquals(
+                delta,
                 engine.saveCell(save, context),
-                () -> "saveCell " + save);
+                () -> "saveCell " + save
+        );
     }
 
     default void deleteCellAndCheck(final SpreadsheetEngine engine,
@@ -597,9 +603,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                     final SpreadsheetCellReference delete,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetDelta delta) {
-        assertEquals(delta,
+        checkEquals(
+                delta,
                 engine.deleteCell(delete, context),
-                () -> "deleteCell " + delete);
+                () -> "deleteCell " + delete
+        );
     }
 
     default void countAndCheck(final Store<?, ?> store, final int count) {
@@ -625,9 +633,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                        final int count,
                                        final SpreadsheetEngineContext context,
                                        final SpreadsheetDelta delta) {
-        assertEquals(delta,
+        checkEquals(
+                delta,
                 engine.deleteColumns(column, count, context),
-                () -> "deleteColumns column: " + column + " count: " + count);
+                () -> "deleteColumns column: " + column + " count: " + count
+        );
     }
 
     default void deleteRowsAndCheck(final SpreadsheetEngine engine,
@@ -647,9 +657,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                     final int count,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetDelta delta) {
-        assertEquals(delta,
+        checkEquals(
+                delta,
                 engine.deleteRows(column, count, context),
-                () -> "deleteRows column: " + column + " count: " + count);
+                () -> "deleteRows column: " + column + " count: " + count
+        );
     }
 
     default void insertColumnsAndCheck(final SpreadsheetEngine engine,
@@ -669,9 +681,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                        final int count,
                                        final SpreadsheetEngineContext context,
                                        final SpreadsheetDelta delta) {
-        assertEquals(delta,
+        checkEquals(
+                delta,
                 engine.insertColumns(column, count, context),
-                () -> "insertColumns column: " + column + " count: " + count);
+                () -> "insertColumns column: " + column + " count: " + count
+        );
     }
 
     default void insertRowsAndCheck(final SpreadsheetEngine engine,
@@ -691,9 +705,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                     final int count,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetDelta delta) {
-        assertEquals(delta,
+        checkEquals(
+                delta,
                 engine.insertRows(column, count, context),
-                () -> "insertRows column: " + column + " count: " + count);
+                () -> "insertRows column: " + column + " count: " + count
+        );
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
@@ -730,9 +746,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta delta) {
-        assertEquals(delta,
+        checkEquals(
+                delta,
                 engine.loadCells(range, evaluation, context),
-                () -> "loadCells " + range + " " + evaluation);
+                () -> "loadCells " + range + " " + evaluation
+        );
 
         // load and check updated cells again...
         delta.cells()
@@ -775,9 +793,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetCellRange to,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta delta) {
-        assertEquals(delta,
+        checkEquals(
+                delta,
                 engine.fillCells(cells, from, to, context),
-                () -> "fillCells " + cells + " " + from + " to " + to);
+                () -> "fillCells " + cells + " " + from + " to " + to
+        );
 
         // load and check updated cells again...
         delta.cells()
@@ -876,6 +896,19 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.american(MathContext.DECIMAL32);
+    }
+
+    default void checkEquals(final TreePrintable expected,
+                             final TreePrintable actual,
+                             final Supplier<String> message) {
+        final Indentation indentation = Indentation.with("  ");
+        final LineEnding eol = LineEnding.SYSTEM;
+
+        assertEquals(
+                expected.treeToString(indentation, eol),
+                actual.treeToString(indentation, eol),
+                message
+        );
     }
 
     @Override
