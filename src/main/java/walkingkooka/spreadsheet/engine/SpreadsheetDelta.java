@@ -195,12 +195,17 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     public final SpreadsheetDelta setColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
         Objects.requireNonNull(columnWidths, "columnWidths");
 
-        final Map<SpreadsheetColumnReference, Double> copy = Maps.immutable(columnWidths);
+        final Map<SpreadsheetColumnReference, Double> copy = this.filterColumnWidths(columnWidths);
         return this.columnWidths.equals(copy) ?
                 this :
                 this.replaceColumnWidths(copy);
 
     }
+
+    /**
+     * Takes a copy of the columnWidths, possibly filtering out deleted Cells if a window is present.
+     */
+    abstract Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths);
 
     abstract SpreadsheetDelta replaceColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths);
 
@@ -265,7 +270,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                     filterCells0(cells, filter),
                     filterLabels0(labels, filter),
                     filterDeletedCells0(deletedCells, filter),
-                    columnWidths,
+                    filterColumnWidths0(columnWidths, filter),
                     rowHeights,
                     window);
         } else {
@@ -340,6 +345,27 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                         .map(SpreadsheetCellReference::toRelative)
                         .collect(Collectors.toCollection(Sets::sorted))
         );
+    }
+
+    static Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths,
+                                                                      final Optional<SpreadsheetCellRange> window) {
+        return window.isPresent() ?
+                filterColumnWidths0(columnWidths, window.get()) :
+                columnWidths;
+    }
+
+    private static Map<SpreadsheetColumnReference, Double> filterColumnWidths0(final Map<SpreadsheetColumnReference, Double> columnWidths,
+                                                                               final SpreadsheetCellRange window) {
+        final Map<SpreadsheetColumnReference, Double> filtered = Maps.ordered();
+
+        for (final Map.Entry<SpreadsheetColumnReference, Double> columnAndWidth : columnWidths.entrySet()) {
+            final SpreadsheetColumnReference column = columnAndWidth.getKey();
+            if (window.columnReferenceRange().testColumn(column)) {
+                filtered.put(column, columnAndWidth.getValue());
+            }
+        }
+
+        return Maps.immutable(filtered);
     }
 
     // TreePrintable.....................................................................................................

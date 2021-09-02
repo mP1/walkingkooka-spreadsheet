@@ -22,11 +22,14 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -86,6 +89,41 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         final SpreadsheetDelta after = before.setLabels(different);
         assertNotSame(before, after);
         this.checkLabels(after, Sets.of(kept.mapping(a1), kept3.mapping(a3)));
+        this.checkCells(after, before.cells());
+    }
+
+    // setColumnWidths..................................................................................................
+
+    @Test
+    public void testSetColumnWidthsOutsideWindowFiltered() {
+        final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
+
+        final Map<SpreadsheetColumnReference, Double> different = Map.of(
+                SpreadsheetSelection.parseColumn("F"), 30.0
+        );
+
+        final SpreadsheetDelta after = before.setColumnWidths(different);
+        assertNotSame(before, after);
+        this.checkColumnWidths(after, SpreadsheetDelta.NO_COLUMN_WIDTHS);
+        this.checkCells(after, before.cells());
+    }
+
+    @Test
+    public void testSetColumnWidthsOutsideWindowFiltered2() {
+        final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
+
+        final SpreadsheetColumnReference kept = SpreadsheetSelection.parseColumn("B");
+        final Map<SpreadsheetColumnReference, Double> different = Map.of(
+                kept, 20.0,
+                SpreadsheetSelection.parseColumn("F"), 30.0
+        );
+
+        final SpreadsheetDelta after = before.setColumnWidths(different);
+        assertNotSame(before, after);
+        this.checkColumnWidths(
+                after,
+                Map.of(kept, 20.0)
+        );
         this.checkCells(after, before.cells());
     }
 
