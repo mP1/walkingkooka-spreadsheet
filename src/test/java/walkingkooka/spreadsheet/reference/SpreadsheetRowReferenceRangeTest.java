@@ -150,6 +150,91 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // testRow..........................................................................................................
+
+    @Test
+    public void testTestRowAbove() {
+        this.testRowAndCheck(
+                "2:2",
+                "1",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRowAbove2() {
+        this.testRowAndCheck(
+                "2:3",
+                "1",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRowTopOverlap() {
+        this.testRowAndCheck(
+                "1:3",
+                "1",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRowInside() {
+        this.testRowAndCheck(
+                "4:6",
+                "5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRowBottomOverlap() {
+        this.testRowAndCheck(
+                "4:5",
+                "5",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRowAll() {
+        this.testRowAndCheck(
+                "2:2",
+                "2",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRowAfter() {
+        this.testRowAndCheck(
+                "5:5",
+                "6",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRowAfter2() {
+        this.testRowAndCheck(
+                "5:6",
+                "8",
+                false
+        );
+    }
+
+    private void testRowAndCheck(final String rowRange,
+                                 final String row,
+                                 final boolean expected) {
+        assertEquals(
+                expected,
+                SpreadsheetExpressionReference.parseRowRange(rowRange)
+                        .testRow(SpreadsheetExpressionReference.parseRow(row)),
+                () -> rowRange + " testRow " + row
+        );
+    }
+
     // setColumnReferenceRange............................................................................................
 
     @Test
