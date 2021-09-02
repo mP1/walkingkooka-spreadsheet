@@ -223,12 +223,16 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     public final SpreadsheetDelta setRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
         Objects.requireNonNull(rowHeights, "rowHeights");
 
-        final Map<SpreadsheetRowReference, Double> copy = Maps.immutable(rowHeights);
+        final Map<SpreadsheetRowReference, Double> copy = this.filterRowHeights(rowHeights);
         return this.rowHeights.equals(copy) ?
                 this :
                 this.replaceRowHeights(copy);
-
     }
+
+    /**
+     * Takes a copy of the rowHeights, possibly filtering out deleted Cells if a window is present.
+     */
+    abstract Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights);
 
     abstract SpreadsheetDelta replaceRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights);
 
@@ -271,7 +275,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                     filterLabels0(labels, filter),
                     filterDeletedCells0(deletedCells, filter),
                     filterColumnWidths0(columnWidths, filter),
-                    rowHeights,
+                    filterRowHeights0(rowHeights, filter),
                     window);
         } else {
             delta = SpreadsheetDeltaNonWindowed.withNonWindowed(
@@ -362,6 +366,27 @@ public abstract class SpreadsheetDelta implements TreePrintable {
             final SpreadsheetColumnReference column = columnAndWidth.getKey();
             if (window.columnReferenceRange().testColumn(column)) {
                 filtered.put(column, columnAndWidth.getValue());
+            }
+        }
+
+        return Maps.immutable(filtered);
+    }
+
+    static Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights,
+                                                                 final Optional<SpreadsheetCellRange> window) {
+        return window.isPresent() ?
+                filterRowHeights0(rowHeights, window.get()) :
+                rowHeights;
+    }
+
+    private static Map<SpreadsheetRowReference, Double> filterRowHeights0(final Map<SpreadsheetRowReference, Double> rowHeights,
+                                                                          final SpreadsheetCellRange window) {
+        final Map<SpreadsheetRowReference, Double> filtered = Maps.ordered();
+
+        for (final Map.Entry<SpreadsheetRowReference, Double> rowAndHeight : rowHeights.entrySet()) {
+            final SpreadsheetRowReference row = rowAndHeight.getKey();
+            if (window.rowReferenceRange().testRow(row)) {
+                filtered.put(row, rowAndHeight.getValue());
             }
         }
 

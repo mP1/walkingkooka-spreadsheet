@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -148,6 +147,11 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     @Override
     Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
         return filterColumnWidths(columnWidths, this.window);
+    }
+
+    @Override
+    Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
+        return filterRowHeights(rowHeights, this.window);
     }
 
     // TreePrintable.....................................................................................................
