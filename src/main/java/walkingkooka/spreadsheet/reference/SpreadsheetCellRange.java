@@ -302,6 +302,16 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference i
                 this.rowReferenceRange().testCellRange(range);
     }
 
+    // testColumn.....................................................................................................
+
+    /**
+     * Returns true if the column is within this range.
+     */
+    public boolean testColumn(final SpreadsheetColumnReference column) {
+        return this.columnReferenceRange()
+                .testColumn(column);
+    }
+
     // HashCodeEqualsDefined.......................................................................................
 
     @Override
