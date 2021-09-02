@@ -570,6 +570,63 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         );
     }
 
+    // testTestColumn.....................................................................................................
+
+    @Test
+    public void testTestColumnBefore() {
+        this.testTestColumnAndCheck2(
+                "C3:D4",
+                "B",
+                false
+        );
+    }
+
+    @Test
+    public void testTestColumnAfter() {
+        this.testTestColumnAndCheck2(
+                "C3:D4",
+                "E",
+                false
+        );
+    }
+
+    @Test
+    public void testTestColumnLeft() {
+        this.testTestColumnAndCheck2(
+                "C3:D4",
+                "C",
+                true
+        );
+    }
+
+    @Test
+    public void testTestColumnRight() {
+        this.testTestColumnAndCheck2(
+                "C3:D4",
+                "D",
+                true
+        );
+    }
+
+    @Test
+    public void testTestColumnWithin() {
+        this.testTestColumnAndCheck2(
+                "C3:E5",
+                "D",
+                true
+        );
+    }
+
+    private void testTestColumnAndCheck2(final String range,
+                                         final String column,
+                                         final boolean expected) {
+        assertEquals(
+                expected,
+                SpreadsheetSelection.parseCellRange(range).testColumn(SpreadsheetSelection.parseColumn(column)),
+                range + " testColumn " + column
+        );
+    }
+
     // stream.................................................................................................
 
     @Test
