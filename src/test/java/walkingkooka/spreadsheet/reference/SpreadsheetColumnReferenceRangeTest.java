@@ -150,6 +150,82 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // testColumn....................................................................................................
+
+    @Test
+    public void testTestColumnBefore() {
+        this.testColumnAndCheck2(
+                "A:B",
+                "C",
+                false
+        );
+    }
+
+    @Test
+    public void testTestColumnBefore2() {
+        this.testColumnAndCheck2(
+                "A:B",
+                "D",
+                false
+        );
+    }
+
+    @Test
+    public void testTestColumnLeftOverlap() {
+        this.testColumnAndCheck2(
+                "B:C",
+                "B",
+                true
+        );
+    }
+
+    @Test
+    public void testTestColumnInside() {
+        this.testColumnAndCheck2(
+                "D:F",
+                "E",
+                true
+        );
+    }
+
+    @Test
+    public void testTestColumnRightOverlap() {
+        this.testColumnAndCheck2(
+                "D:E",
+                "E",
+                true
+        );
+    }
+
+    @Test
+    public void testTestColumnAfter() {
+        this.testColumnAndCheck2(
+                "D:E",
+                "F",
+                false
+        );
+    }
+
+    @Test
+    public void testTestColumnAfter2() {
+        this.testColumnAndCheck2(
+                "E:F",
+                "H",
+                false
+        );
+    }
+
+    private void testColumnAndCheck2(final String columnRange,
+                                     final String column,
+                                     final boolean expected) {
+        assertEquals(
+                expected,
+                SpreadsheetExpressionReference.parseColumnRange(columnRange)
+                        .testColumn(SpreadsheetExpressionReference.parseColumn(column)),
+                columnRange + ".testColumn(" + column + ")"
+        );
+    }
+
     // setRowReferenceRange............................................................................................
 
     @Test
