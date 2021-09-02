@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
@@ -146,6 +147,11 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                         .map(SpreadsheetCellReference::toRelative)
                         .collect(Collectors.toCollection(Sets::sorted))
         );
+    }
+
+    @Override
+    Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
+        return Maps.immutable(columnWidths);
     }
 
     // TreePrintable.....................................................................................................
