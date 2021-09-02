@@ -226,7 +226,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                         d4.toRelative()
                 )
         );
-        assertEquals(Lists.of(a1, b2), new ArrayList<>(delta.deletedCells()));
+        assertEquals(Lists.of(a1.toRelative(), b2.toRelative(), c3.toRelative(), d4), new ArrayList<>(delta.deletedCells()));
     }
 
     // setColumnWidths...............................................................................................
