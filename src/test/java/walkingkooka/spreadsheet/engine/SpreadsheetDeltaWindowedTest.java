@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
@@ -121,6 +122,41 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         final SpreadsheetDelta after = before.setColumnWidths(different);
         assertNotSame(before, after);
         this.checkColumnWidths(
+                after,
+                Map.of(kept, 20.0)
+        );
+        this.checkCells(after, before.cells());
+    }
+
+    // setRowHeights..................................................................................................
+
+    @Test
+    public void testSetRowHeightsOutsideWindowFiltered() {
+        final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
+
+        final Map<SpreadsheetRowReference, Double> different = Map.of(
+                SpreadsheetSelection.parseRow("6"), 30.0
+        );
+
+        final SpreadsheetDelta after = before.setRowHeights(different);
+        assertNotSame(before, after);
+        this.checkRowHeights(after, SpreadsheetDelta.NO_ROW_HEIGHTS);
+        this.checkCells(after, before.cells());
+    }
+
+    @Test
+    public void testSetRowHeightsOutsideWindowFiltered2() {
+        final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
+
+        final SpreadsheetRowReference kept = SpreadsheetSelection.parseRow("2");
+        final Map<SpreadsheetRowReference, Double> different = Map.of(
+                kept, 20.0,
+                SpreadsheetSelection.parseRow("6"), 30.0
+        );
+
+        final SpreadsheetDelta after = before.setRowHeights(different);
+        assertNotSame(before, after);
+        this.checkRowHeights(
                 after,
                 Map.of(kept, 20.0)
         );

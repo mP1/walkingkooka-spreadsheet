@@ -154,6 +154,11 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         return Maps.immutable(columnWidths);
     }
 
+    @Override
+    Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
+        return Maps.immutable(rowHeights);
+    }
+
     // TreePrintable.....................................................................................................
 
     @Override
