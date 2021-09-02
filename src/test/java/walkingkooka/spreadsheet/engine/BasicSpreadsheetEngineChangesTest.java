@@ -92,6 +92,6 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
 
     @Override
     public String typeNameSuffix() {
-        return "UpdatedCells";
+        return "Changes";
     }
 }
