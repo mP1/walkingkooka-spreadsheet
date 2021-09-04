@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
@@ -49,7 +50,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     /**
      * Separator by ranges between cells / columns/ rows.
      */
-    final static String SEPARATOR = ":";
+    public final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
     // modes used by isTextCellReference
     private final static int MODE_COLUMN_FIRST = 0;
@@ -328,7 +329,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         final C begin;
         final C end;
 
-        final int separator = text.indexOf(SEPARATOR);
+        final int separator = text.indexOf(SEPARATOR.character());
         switch (separator) {
             case -1:
                 begin = componentParser.apply(text);

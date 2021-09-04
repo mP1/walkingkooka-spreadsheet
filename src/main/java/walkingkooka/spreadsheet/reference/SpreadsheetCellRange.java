@@ -349,7 +349,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference i
     public String toString() {
         return this.isSingleCell() ?
                 this.begin().toString() :
-                this.begin() + SEPARATOR + this.end();
+                this.begin() + SEPARATOR.string() + this.end();
     }
 
     // equalsIgnoreReferenceKind........................................................................................

@@ -103,6 +103,6 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     public final String toString() {
         return this.isSingle() ?
                 this.begin().toString() :
-                this.begin() + SEPARATOR + this.end();
+                this.begin() + SEPARATOR.string() + this.end();
     }
 }
