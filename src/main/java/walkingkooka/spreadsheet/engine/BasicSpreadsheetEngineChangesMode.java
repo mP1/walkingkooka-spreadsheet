@@ -101,8 +101,8 @@ enum BasicSpreadsheetEngineChangesMode {
     /**
      * Factory that creates a {@link BasicSpreadsheetEngineChanges}
      */
-    final BasicSpreadsheetEngineChanges createUpdatedCells(final BasicSpreadsheetEngine engine,
-                                                           final SpreadsheetEngineContext context) {
+    final BasicSpreadsheetEngineChanges createChanges(final BasicSpreadsheetEngine engine,
+                                                      final SpreadsheetEngineContext context) {
         return BasicSpreadsheetEngineChanges.with(engine, context, this);
     }
 
