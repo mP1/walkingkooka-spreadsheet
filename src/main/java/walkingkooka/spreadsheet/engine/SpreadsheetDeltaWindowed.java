@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -40,13 +41,15 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     /**
      * Factory that creates a new {@link SpreadsheetDeltaWindowed} without copying or filtering the cells.
      */
-    static SpreadsheetDeltaWindowed withWindowed(final Set<SpreadsheetCell> cells,
+    static SpreadsheetDeltaWindowed withWindowed(final Optional<SpreadsheetSelection> selection,
+                                                 final Set<SpreadsheetCell> cells,
                                                  final Set<SpreadsheetLabelMapping> labels,
                                                  final Set<SpreadsheetCellReference> deletedCells,
                                                  final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                  final Map<SpreadsheetRowReference, Double> rowHeights,
                                                  final Optional<SpreadsheetCellRange> window) {
         return new SpreadsheetDeltaWindowed(
+                selection,
                 cells,
                 labels,
                 deletedCells,
@@ -56,20 +59,35 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         );
     }
 
-    private SpreadsheetDeltaWindowed(final Set<SpreadsheetCell> cells,
+    private SpreadsheetDeltaWindowed(final Optional<SpreadsheetSelection> selection,
+                                     final Set<SpreadsheetCell> cells,
                                      final Set<SpreadsheetLabelMapping> labels,
                                      final Set<SpreadsheetCellReference> deletedCells,
                                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                                      final Map<SpreadsheetRowReference, Double> rowHeights,
                                      final Optional<SpreadsheetCellRange> window) {
-        super(cells, labels, deletedCells, columnWidths, rowHeights);
+        super(selection, cells, labels, deletedCells, columnWidths, rowHeights);
         this.window = window;
+    }
+
+    @Override
+    SpreadsheetDelta replaceSelection(final Optional<SpreadsheetSelection> selection) {
+        return new SpreadsheetDeltaWindowed(
+                selection,
+                this.cells,
+                this.labels,
+                this.deletedCells,
+                this.columnWidths,
+                this.rowHeights,
+                this.window
+        );
     }
 
     @Override
     SpreadsheetDelta replaceCells(final Set<SpreadsheetCell> cells) {
         // cells have already been filtered by window
         return new SpreadsheetDeltaWindowed(
+                this.selection,
                 cells,
                 this.labels,
                 this.deletedCells,
@@ -82,6 +100,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceLabels(final Set<SpreadsheetLabelMapping> labels) {
         return new SpreadsheetDeltaWindowed(
+                this.selection,
                 this.cells,
                 labels,
                 this.deletedCells,
@@ -94,6 +113,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
         return new SpreadsheetDeltaWindowed(
+                this.selection,
                 this.cells,
                 this.labels,
                 deletedCells,
@@ -106,6 +126,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
         return new SpreadsheetDeltaWindowed(
+                this.selection,
                 this.cells,
                 this.labels,
                 this.deletedCells,
@@ -118,6 +139,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
         return new SpreadsheetDeltaWindowed(
+                this.selection,
                 this.cells,
                 this.labels,
                 this.deletedCells,

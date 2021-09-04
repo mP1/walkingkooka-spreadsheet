@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
@@ -67,6 +68,33 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     SpreadsheetDeltaTestCase() {
         super();
     }
+
+    // selection........................................................................................................
+
+    @Test
+    public final void testSetSelectionSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(delta, delta.setSelection(this.selection()));
+    }
+
+    @Test
+    public final void testSetSelectionDifferent() {
+        final D before = this.createSpreadsheetDelta();
+
+        final Optional<SpreadsheetSelection> different = this.differentSelection();
+
+        final SpreadsheetDelta after = before.setSelection(different);
+        assertNotSame(before, after);
+
+        this.checkSelection(after, different);
+        this.checkCells(after);
+        this.checkLabels(after, before.labels());
+        this.checkDeletedCells(after);
+        this.checkColumnWidths(after);
+        this.checkRowHeights(after);
+    }
+
+    // cells............................................................................................................
 
     @Test
     public final void testCellsReadOnly() {
@@ -314,6 +342,14 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     // equals...........................................................................................................
 
     @Test
+    public final void testDifferentSelection() {
+        final Optional<SpreadsheetSelection> selection = this.differentSelection();
+        assertNotEquals(this.selection(), selection, "selection() and differentSelection() must be un equal");
+
+        this.checkNotEquals(this.createSpreadsheetDelta().setSelection(selection));
+    }
+
+    @Test
     public final void testDifferentCells() {
         final Set<SpreadsheetCell> cells = this.differentCells();
         assertNotEquals(this.cells(), cells, "cells() and differentCells() must be un equal");
@@ -368,6 +404,29 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     abstract D createSpreadsheetDelta(final Set<SpreadsheetCell> cells);
+
+    // selection........................................................................................................
+
+    final Optional<SpreadsheetSelection> selection() {
+        return Optional.of(
+                SpreadsheetSelection.parseCellRange("A1:B2")
+        );
+    }
+
+    final Optional<SpreadsheetSelection> differentSelection() {
+        return Optional.of(
+                SpreadsheetSelection.parseCell("C3")
+        );
+    }
+
+    final void checkSelection(final SpreadsheetDelta delta) {
+        this.checkSelection(delta, this.selection());
+    }
+
+    final void checkSelection(final SpreadsheetDelta delta,
+                              final Optional<SpreadsheetSelection> selection) {
+        assertEquals(selection, delta.selection(), "selection");
+    }
 
     // cells............................................................................................................
 
@@ -579,6 +638,12 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     @Override
     public final D createJsonNodeMarshallingValue() {
         return this.createSpreadsheetDelta();
+    }
+
+    final JsonNode selectionJson() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        return context.marshallWithType(this.selection().get());
     }
 
     final JsonNode cellsJson() {
