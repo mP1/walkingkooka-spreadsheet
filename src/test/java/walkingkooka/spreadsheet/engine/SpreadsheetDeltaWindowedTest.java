@@ -169,6 +169,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testPrintTreeEmptyOnlyWindow() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -183,9 +184,30 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
+    public void testPrintTreeSelection() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.selection(),
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window()
+                ),
+                "SpreadsheetDelta\n" +
+                        "  selection:\n" +
+                        "    A1:B2\n" +
+                        "  window:\n" +
+                        "    A1:E5\n"
+        );
+    }
+
+    @Test
     public void testPrintTreeCells() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -213,6 +235,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testPrintTreeLabels() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         SpreadsheetDelta.NO_CELLS,
                         this.labels(),
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -235,6 +258,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testPrintTreeCellsAndLabels() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         this.cells(),
                         this.labels(),
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -267,6 +291,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testPrintTreeDeletedCells() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         this.cells(),
                         this.labels(),
                         this.deletedCells(),
@@ -302,6 +327,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testPrintTreeColumnWidths() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -331,6 +357,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testPrintTreeRowHeights() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -360,6 +387,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testPrintTreeNothingEmpty() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        this.selection(),
                         this.cells(),
                         this.labels(),
                         this.deletedCells(),
@@ -368,6 +396,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         this.window()
                 ),
                 "SpreadsheetDelta\n" +
+                        "  selection:\n" +
+                        "    A1:B2\n" +
                         "  cells:\n" +
                         "    Cell A1\n" +
                         "      Formula\n" +
@@ -400,13 +430,14 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     private final static JsonString WINDOW_JSON_STRING = JsonNode.string("A1:E5");
 
     @Test
-    public void testUnmarshallCells() {
+    public void testUnmarshallSelection() {
         this.unmarshallAndCheck(
                 JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
+                        .set(SpreadsheetDelta.SELECTION_PROPERTY, this.selectionJson())
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING),
                 SpreadsheetDeltaWindowed.withWindowed(
-                        this.cells(),
+                        this.selection(),
+                        SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
@@ -419,6 +450,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testMarshallCells() {
         this.marshallAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -436,6 +468,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testMarshallCellsLabels() {
         this.marshallAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         this.cells(),
                         this.labels(),
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -454,6 +487,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testMarshallCellsColumnWidthsWindow() {
         this.marshallAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -472,6 +506,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testMarshallCellsRowHeightsWindow() {
         this.marshallAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         this.cells(),
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -487,9 +522,10 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
-    public void testMarshallCellsColumnWidthsRowHeightsWindow() {
+    public void testMarshallNothingEmpty() {
         this.marshallAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        this.selection(),
                         this.cells(),
                         this.labels(),
                         this.deletedCells(),
@@ -498,6 +534,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         this.window()
                 ),
                 JsonNode.object()
+                        .set(SpreadsheetDelta.SELECTION_PROPERTY, this.selectionJson())
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.LABELS_PROPERTY, labelsJson())
                         .set(SpreadsheetDelta.DELETED_CELLS_PROPERTY, deletedCellsJson())
@@ -511,6 +548,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testMarshallEmptyWindow() {
         this.marshallAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -526,68 +564,107 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     // toString..........................................................................................................
 
     @Test
-    public void testToString() {
-        this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
+    public void testToStringSelection() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.selection(),
+                        SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        this.window()),
+                        this.window()
+                ),
+                "selection: A1:B2 window: A1:E5");
+    }
+
+    @Test
+    public void testToStringCells() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        this.cells(),
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window()
+                ),
                 "cells: A1=1, B2=2, C3=3 window: A1:E5");
     }
 
     @Test
     public void testToStringLabels() {
-        this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        this.cells(),
                         this.labels(),
                         SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        this.window()),
+                        this.window()
+                ),
                 "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 window: A1:E5");
     }
 
     @Test
     public void testToStringDeletedCells() {
-        this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        this.cells(),
                         this.labels(),
                         this.deletedCells(),
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        this.window()),
+                        this.window()
+                ),
                 "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 deletedCells: C1, C2 window: A1:E5");
     }
 
     @Test
     public void testToStringColumnWidths() {
-        this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        this.cells(),
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
                         this.columnWidths(),
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        this.window()),
+                        this.window()
+                ),
                 "cells: A1=1, B2=2, C3=3 max: A=50.0 window: A1:E5");
     }
 
     @Test
     public void testToStringMaxRowHeights() {
-        this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        this.cells(),
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         this.rowHeights(),
-                        this.window()),
+                        this.window()
+                ),
                 "cells: A1=1, B2=2, C3=3 max: 1=75.0 window: A1:E5");
     }
 
     @Test
     public void testToStringColumnWidthsRowHeights() {
-        this.toStringAndCheck(SpreadsheetDeltaWindowed.withWindowed(this.cells(),
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        this.cells(),
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
                         this.columnWidths(),
                         this.rowHeights(),
-                        this.window()),
+                        this.window()
+                ),
                 "cells: A1=1, B2=2, C3=3 max: A=50.0, 1=75.0 window: A1:E5");
     }
 
@@ -606,6 +683,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     private SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells,
                                                             final Optional<SpreadsheetCellRange> window) {
         return SpreadsheetDeltaWindowed.withWindowed(
+                this.selection(),
                 cells,
                 this.labels(),
                 this.deletedCells(),

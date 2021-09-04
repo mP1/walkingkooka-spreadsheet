@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -54,6 +55,7 @@ import java.util.stream.Collectors;
  */
 public abstract class SpreadsheetDelta implements TreePrintable {
 
+    public final static Optional<SpreadsheetSelection> NO_SELECTION = Optional.empty();
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
     public final static Set<SpreadsheetLabelMapping> NO_LABELS = Sets.empty();
     public final static Set<SpreadsheetCellReference> NO_DELETED_CELLS = Sets.empty();
@@ -65,6 +67,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      * A {@link SpreadsheetDelta} with everything empty.
      */
     public final static SpreadsheetDelta EMPTY = SpreadsheetDeltaNonWindowed.withNonWindowed(
+            NO_SELECTION,
             NO_CELLS,
             NO_LABELS,
             NO_DELETED_CELLS,
@@ -75,18 +78,45 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetDelta(final Set<SpreadsheetCell> cells,
+    SpreadsheetDelta(final Optional<SpreadsheetSelection> selection,
+                     final Set<SpreadsheetCell> cells,
                      final Set<SpreadsheetLabelMapping> labels,
                      final Set<SpreadsheetCellReference> deleteCells,
                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                      final Map<SpreadsheetRowReference, Double> rowHeights) {
         super();
 
+        this.selection = selection;
         this.cells = cells;
         this.labels = labels;
         this.deletedCells = deleteCells;
         this.columnWidths = columnWidths;
         this.rowHeights = rowHeights;
+    }
+
+    // selection............................................................................................................
+
+    public final Optional<SpreadsheetSelection> selection() {
+        return this.selection;
+    }
+
+    /**
+     * Would be setter that returns a {@link SpreadsheetDelta} holding the given selection.
+     */
+    public final SpreadsheetDelta setSelection(final Optional<SpreadsheetSelection> selection) {
+        checkSelection(selection);
+
+        return this.selection.equals(selection) ?
+                this :
+                this.replaceSelection(selection);
+    }
+
+    abstract SpreadsheetDelta replaceSelection(final Optional<SpreadsheetSelection> selection);
+
+    final Optional<SpreadsheetSelection> selection;
+
+    private static void checkSelection(final Optional<SpreadsheetSelection> selection) {
+        Objects.requireNonNull(selection, "selection");
     }
 
     // cells............................................................................................................
@@ -260,6 +290,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     }
 
     private SpreadsheetDelta setWindow0(final Optional<SpreadsheetCellRange> window) {
+        final Optional<SpreadsheetSelection> selection = this.selection;
         final Set<SpreadsheetCell> cells = this.cells;
         final Set<SpreadsheetLabelMapping> labels = this.labels;
         final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
@@ -271,6 +302,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
             final SpreadsheetCellRange filter = window.get();
 
             delta = SpreadsheetDeltaWindowed.withWindowed(
+                    selection,
                     filterCells0(cells, filter),
                     filterLabels0(labels, filter),
                     filterDeletedCells0(deletedCells, filter),
@@ -279,6 +311,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                     window);
         } else {
             delta = SpreadsheetDeltaNonWindowed.withNonWindowed(
+                    selection,
                     cells,
                     labels,
                     deletedCells,
@@ -400,6 +433,15 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         printer.println("SpreadsheetDelta");
         printer.indent();
         {
+            final Optional<SpreadsheetSelection> selection = this.selection();
+            if (selection.isPresent()) {
+                printer.println("selection:");
+                printer.indent();
+                {
+                    printer.println(selection.get().toString());
+                }
+                printer.outdent();
+            }
 
             final Set<SpreadsheetCell> cells = this.cells();
             if (!cells.isEmpty()) {
@@ -475,6 +517,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
     static SpreadsheetDelta unmarshall(final JsonNode node,
                                        final JsonNodeUnmarshallContext context) {
+        Optional<SpreadsheetSelection> selection = NO_SELECTION;
         Set<SpreadsheetCell> cells = Sets.empty();
         Set<SpreadsheetLabelMapping> labels = NO_LABELS;
         Set<SpreadsheetCellReference> deletedCells = Sets.empty();
@@ -486,6 +529,11 @@ public abstract class SpreadsheetDelta implements TreePrintable {
             final JsonPropertyName name = child.name();
 
             switch (name.value()) {
+                case SELECTION_PROPERTY_STRING:
+                    selection = Optional.of(
+                            context.unmarshallWithType(child)
+                    );
+                    break;
                 case CELLS_PROPERTY_STRING:
                     cells = unmarshallCells(child, context);
                     break;
@@ -509,7 +557,9 @@ public abstract class SpreadsheetDelta implements TreePrintable {
             }
         }
 
-        return EMPTY.setCells(cells)
+        return EMPTY
+                .setSelection(selection)
+                .setCells(cells)
                 .setWindow(window)
                 .setLabels(labels)
                 .setDeletedCells(deletedCells)
@@ -550,9 +600,14 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
         return max;
     }
+
     /**
      * <pre>
      * {
+     *   "selection": {
+     *      "type": "spreadsheet-column",
+     *      "value: "Z"
+     *   },
      *   "cells": {
      *     "A1": {
      *       "formula": {
@@ -579,6 +634,14 @@ public abstract class SpreadsheetDelta implements TreePrintable {
      */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> children = Lists.array();
+
+        final Optional<SpreadsheetSelection> selection = this.selection;
+        if (selection.isPresent()) {
+            children.add(
+                    context.marshallWithType(selection.get())
+                            .setName(SELECTION_PROPERTY)
+            );
+        }
 
         final Set<SpreadsheetCell> cells = this.cells;
         if (!cells.isEmpty()) {
@@ -660,8 +723,8 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 .setChildren(children);
     }
 
-    ;
 
+    private final static String SELECTION_PROPERTY_STRING = "selection";
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String LABELS_PROPERTY_STRING = "labels";
     private final static String DELETED_CELLS_PROPERTY_STRING = "deletedCells";
@@ -669,6 +732,8 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     private final static String MAX_ROW_HEIGHTS_PROPERTY_STRING = "rowHeights";
     private final static String WINDOW_PROPERTY_STRING = "window";
 
+    // @VisibleForTesting
+    final static JsonPropertyName SELECTION_PROPERTY = JsonPropertyName.with(SELECTION_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName CELLS_PROPERTY = JsonPropertyName.with(CELLS_PROPERTY_STRING);
     // @VisibleForTesting
@@ -701,6 +766,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     @Override
     public int hashCode() {
         return Objects.hash(
+                this.selection,
                 this.cells,
                 this.labels,
                 this.deletedCells,
@@ -719,7 +785,8 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     }
 
     private boolean equals0(final SpreadsheetDelta other) {
-        return this.cells.equals(other.cells) &&
+        return this.selection.equals(other.selection) &&
+                this.cells.equals(other.cells) &&
                 this.labels.equals(other.labels) &&
                 this.deletedCells.equals(other.deletedCells) &&
                 this.columnWidths.equals(other.columnWidths) &&
@@ -737,6 +804,8 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 .separator(" ")
                 .valueSeparator(", ")
                 .enable(ToStringBuilderOption.QUOTE)
+                .label("selection")
+                .value(this.selection)
                 .label("cells")
                 .value(this.cells)
                 .label("labels")
