@@ -660,10 +660,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 .setChildren(children);
     }
 
-    /**
-     * Constant used to separate individual ranges in the window list.
-     */
-    private final static String WINDOW_SEPARATOR = ",";
+    ;
 
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String LABELS_PROPERTY_STRING = "labels";
