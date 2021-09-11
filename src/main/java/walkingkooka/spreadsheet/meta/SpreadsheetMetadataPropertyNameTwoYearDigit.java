@@ -22,7 +22,7 @@ final class SpreadsheetMetadataPropertyNameTwoYearDigit extends SpreadsheetMetad
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameTwoYearDigit instance() {
+    static SpreadsheetMetadataPropertyNameTwoYearDigit instance() {
         return new SpreadsheetMetadataPropertyNameTwoYearDigit();
     }
 

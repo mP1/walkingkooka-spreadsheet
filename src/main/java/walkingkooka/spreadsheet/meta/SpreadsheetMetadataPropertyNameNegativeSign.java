@@ -24,7 +24,7 @@ final class SpreadsheetMetadataPropertyNameNegativeSign extends SpreadsheetMetad
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameNegativeSign instance() {
+    static SpreadsheetMetadataPropertyNameNegativeSign instance() {
         return new SpreadsheetMetadataPropertyNameNegativeSign();
     }
 

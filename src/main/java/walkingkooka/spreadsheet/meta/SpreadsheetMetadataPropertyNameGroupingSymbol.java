@@ -24,7 +24,7 @@ final class SpreadsheetMetadataPropertyNameGroupingSymbol extends SpreadsheetMet
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameGroupingSymbol instance() {
+    static SpreadsheetMetadataPropertyNameGroupingSymbol instance() {
         return new SpreadsheetMetadataPropertyNameGroupingSymbol();
     }
 

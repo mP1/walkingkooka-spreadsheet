@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameSelection instance() {
+    static SpreadsheetMetadataPropertyNameSelection instance() {
         return new SpreadsheetMetadataPropertyNameSelection();
     }
 
@@ -47,28 +47,28 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
      * After checking the type force the {@link SpreadsheetViewportSelection}
      */
     @Override
-    final SpreadsheetViewportSelection checkValue0(final Object value) {
+    SpreadsheetViewportSelection checkValue0(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof SpreadsheetViewportSelection);
     }
 
     @Override
-    final String expected() {
+    String expected() {
         return SpreadsheetSelection.class.getSimpleName();
     }
 
     @Override
-    final Optional<SpreadsheetViewportSelection> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetViewportSelection> extractLocaleValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    final Class<SpreadsheetViewportSelection> type() {
+    Class<SpreadsheetViewportSelection> type() {
         return SpreadsheetViewportSelection.class;
     }
 
     @Override
-    final String compareToName() {
+    String compareToName() {
         return this.value();
     }
 

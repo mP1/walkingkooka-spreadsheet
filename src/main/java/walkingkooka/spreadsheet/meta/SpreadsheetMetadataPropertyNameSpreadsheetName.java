@@ -28,7 +28,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetName extends SpreadsheetMe
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameSpreadsheetName instance() {
+    static SpreadsheetMetadataPropertyNameSpreadsheetName instance() {
         return new SpreadsheetMetadataPropertyNameSpreadsheetName();
     }
 

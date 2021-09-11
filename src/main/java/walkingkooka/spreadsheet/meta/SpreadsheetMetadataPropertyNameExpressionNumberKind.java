@@ -27,7 +27,7 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameExpressionNumberKind instance() {
+    static SpreadsheetMetadataPropertyNameExpressionNumberKind instance() {
         return new SpreadsheetMetadataPropertyNameExpressionNumberKind();
     }
 

@@ -22,7 +22,7 @@ final class SpreadsheetMetadataPropertyNameCellCharacterWidth extends Spreadshee
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameCellCharacterWidth instance() {
+    static SpreadsheetMetadataPropertyNameCellCharacterWidth instance() {
         return new SpreadsheetMetadataPropertyNameCellCharacterWidth();
     }
 

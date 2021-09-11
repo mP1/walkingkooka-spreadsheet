@@ -41,12 +41,12 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
                 new SpreadsheetMetadataPropertyNameNumberedColor(number);
     }
 
-    final static int MAX_NUMBER = 32;
+    static int MAX_NUMBER = 32;
 
     /**
      * Cache of 0 to {@link #MAX_NUMBER} names.
      */
-    private final static SpreadsheetMetadataPropertyNameNumberedColor[] NUMBER_TO_COLOR = new SpreadsheetMetadataPropertyNameNumberedColor[MAX_NUMBER];
+    private static SpreadsheetMetadataPropertyNameNumberedColor[] NUMBER_TO_COLOR = new SpreadsheetMetadataPropertyNameNumberedColor[MAX_NUMBER];
 
     /*
      * Fills the cache of {@link SpreadsheetMetadataPropertyNameNumberedColor} for color numbers 0 to {@link #MAX_NUMBER}.

@@ -24,7 +24,7 @@ final class SpreadsheetMetadataPropertyNamePercentageSymbol extends SpreadsheetM
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNamePercentageSymbol instance() {
+    static SpreadsheetMetadataPropertyNamePercentageSymbol instance() {
         return new SpreadsheetMetadataPropertyNamePercentageSymbol();
     }
 

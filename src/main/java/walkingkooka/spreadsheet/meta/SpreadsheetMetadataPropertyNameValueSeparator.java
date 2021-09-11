@@ -24,7 +24,7 @@ final class SpreadsheetMetadataPropertyNameValueSeparator extends SpreadsheetMet
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameValueSeparator instance() {
+    static SpreadsheetMetadataPropertyNameValueSeparator instance() {
         return new SpreadsheetMetadataPropertyNameValueSeparator();
     }
 

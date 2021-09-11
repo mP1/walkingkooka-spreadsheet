@@ -31,7 +31,7 @@ final class SpreadsheetMetadataPropertyNameViewportCell extends SpreadsheetMetad
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameViewportCell instance() {
+    static SpreadsheetMetadataPropertyNameViewportCell instance() {
         return new SpreadsheetMetadataPropertyNameViewportCell();
     }
 
@@ -46,29 +46,29 @@ final class SpreadsheetMetadataPropertyNameViewportCell extends SpreadsheetMetad
      * After checking the type force the {@link SpreadsheetCellReference#toRelative()}
      */
     @Override
-    final SpreadsheetCellReference checkValue0(final Object value) {
+    SpreadsheetCellReference checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetCellReference)
+                        v -> v instanceof SpreadsheetCellReference)
                 .toRelative();
     }
 
     @Override
-    final String expected() {
+    String expected() {
         return SpreadsheetCellReference.class.getSimpleName();
     }
 
     @Override
-    final Optional<SpreadsheetCellReference> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetCellReference> extractLocaleValue(Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    final Class<SpreadsheetCellReference> type() {
+    Class<SpreadsheetCellReference> type() {
         return SpreadsheetCellReference.class;
     }
 
     @Override
-    final String compareToName() {
+    String compareToName() {
         return this.value();
     }
 
