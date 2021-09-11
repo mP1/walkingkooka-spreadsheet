@@ -22,7 +22,7 @@ final class SpreadsheetMetadataPropertyNamePrecision extends SpreadsheetMetadata
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNamePrecision instance() {
+    static SpreadsheetMetadataPropertyNamePrecision instance() {
         return new SpreadsheetMetadataPropertyNamePrecision();
     }
 

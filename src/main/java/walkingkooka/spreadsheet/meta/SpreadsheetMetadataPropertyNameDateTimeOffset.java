@@ -25,7 +25,7 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameDateTimeOffset instance() {
+    static SpreadsheetMetadataPropertyNameDateTimeOffset instance() {
         return new SpreadsheetMetadataPropertyNameDateTimeOffset();
     }
 

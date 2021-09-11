@@ -24,7 +24,7 @@ final class SpreadsheetMetadataPropertyNameCreateDateTime extends SpreadsheetMet
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameCreateDateTime instance() {
+    static SpreadsheetMetadataPropertyNameCreateDateTime instance() {
         return new SpreadsheetMetadataPropertyNameCreateDateTime();
     }
 

@@ -30,7 +30,7 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameStyle instance() {
+    static SpreadsheetMetadataPropertyNameStyle instance() {
         return new SpreadsheetMetadataPropertyNameStyle();
     }
 

@@ -22,7 +22,7 @@ final class SpreadsheetMetadataPropertyNameDefaultYear extends SpreadsheetMetada
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameDefaultYear instance() {
+    static SpreadsheetMetadataPropertyNameDefaultYear instance() {
         return new SpreadsheetMetadataPropertyNameDefaultYear();
     }
 

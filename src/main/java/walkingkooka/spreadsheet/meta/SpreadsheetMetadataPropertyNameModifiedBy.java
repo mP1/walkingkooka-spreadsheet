@@ -24,7 +24,7 @@ final class SpreadsheetMetadataPropertyNameModifiedBy extends SpreadsheetMetadat
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameModifiedBy instance() {
+    static SpreadsheetMetadataPropertyNameModifiedBy instance() {
         return new SpreadsheetMetadataPropertyNameModifiedBy();
     }
 
