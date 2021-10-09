@@ -27,11 +27,10 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -52,6 +51,7 @@ import walkingkooka.tree.text.WordBreak;
 import walkingkooka.tree.text.WordWrap;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
@@ -231,6 +231,187 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertSame(SpreadsheetMetadata.EMPTY,
                 SpreadsheetMetadata.unmarshall(JsonNode.object(), this.unmarshallContext()));
     }
+
+    // patch............................................................................................................
+
+    @Test
+    public void testPatchNullJsonFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetMetadata.EMPTY.patch(null));
+    }
+
+    @Test
+    public void testPatchEmptyObject() {
+        this.patchAndCheck(
+                SpreadsheetMetadata.EMPTY,
+                JsonNode.object()
+        );
+    }
+
+    @Test
+    public void testPatchEmptyObject2() {
+        this.patchAndCheck(
+                SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com")),
+                JsonNode.object()
+        );
+    }
+
+    @Test
+    public void testPatchRemoveUnknownProperty() {
+        this.patchAndCheck(
+                SpreadsheetMetadata.EMPTY,
+                JsonNode.object()
+                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL.value()), JsonNode.nullNode())
+        );
+    }
+
+    @Test
+    public void testPatchRemoveUnknownProperty2() {
+        this.patchAndCheck(
+                SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD"),
+                JsonNode.object()
+                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR.value()), JsonNode.nullNode())
+        );
+    }
+
+    @Test
+    public void testPatchSetProperty() {
+        final SpreadsheetMetadata before = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 1)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
+
+        this.patchAndCheck(
+                before,
+                JsonNode.object()
+                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL.value()), marshall("AUD")),
+                before
+                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
+        );
+    }
+
+    @Test
+    public void testPatchSetProperty2() {
+        final SpreadsheetMetadata before = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 1)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
+
+        this.patchAndCheck(
+                before.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD"),
+                JsonNode.object()
+                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR.value()), marshall('.')),
+                before.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
+                        .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
+        );
+    }
+
+    @Test
+    public void testPatchSetStyleProperty() {
+        final SpreadsheetMetadata before = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 1)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
+
+        final TextStyle style = TextStyle.EMPTY
+                .set(TextStylePropertyName.COLOR, Color.BLACK);
+
+        this.patchAndCheck(
+                before,
+                JsonNode.object()
+                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.STYLE.value()), marshall(style)),
+                before
+                        .set(SpreadsheetMetadataPropertyName.STYLE, style)
+        );
+    }
+
+    @Test
+    public void testPatchSetStyleProperty2() {
+        final TextStyle styleBefore = TextStyle.EMPTY
+                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.BLACK);
+
+        final SpreadsheetMetadata before = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 1)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
+                .set(SpreadsheetMetadataPropertyName.STYLE, styleBefore);
+
+        final TextStyle style = TextStyle.EMPTY
+                .set(TextStylePropertyName.COLOR, Color.WHITE);
+
+        this.patchAndCheck(
+                before,
+                JsonNode.object()
+                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.STYLE.value()), marshall(style)),
+                before.set(
+                        SpreadsheetMetadataPropertyName.STYLE,
+                        styleBefore.set(TextStylePropertyName.COLOR, Color.WHITE)
+                )
+        );
+    }
+
+    @Test
+    public void testPatchReplaceProperty() {
+        final SpreadsheetMetadata before = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 1)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
+
+        this.patchAndCheck(
+                before
+                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD"),
+                JsonNode.object()
+                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL.value()), marshall("NZD")),
+                before
+                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "NZD")
+        );
+    }
+
+    @Test
+    public void testPatchSetReplaceAndRemove() {
+        final SpreadsheetMetadata before = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 1)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
+                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
+                .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%');
+
+        this.patchAndCheck(
+                before,
+                JsonNode.object()
+                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL.value()), marshall("NZD"))
+                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR.value()), marshall('/'))
+                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL.value()), JsonNode.nullNode()),
+                before
+                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "NZD")
+                        .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '/')
+                        .remove(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL)
+        );
+    }
+
+    private JsonNode marshall(final Object value) {
+        return JsonNodeMarshallContexts.basic()
+                .marshall(value);
+    }
+
+    private void patchAndCheck(final SpreadsheetMetadata before,
+                               final JsonObject patch) {
+        this.patchAndCheck(before, patch, before);
+    }
+
+    private void patchAndCheck(final SpreadsheetMetadata before,
+                               final JsonObject patch,
+                               final SpreadsheetMetadata after) {
+        assertEquals(
+                after,
+                before.patch(patch),
+                () -> before + " patch " + patch
+        );
+    }
+
+    // helpers..........................................................................................................
 
     @Override
     public SpreadsheetMetadata createObject() {
