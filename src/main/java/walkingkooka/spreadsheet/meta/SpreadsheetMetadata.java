@@ -68,6 +68,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -866,5 +867,44 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         TextStyle.EMPTY.isEmpty();
         return JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake())
                 .unmarshall(JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text()), SpreadsheetMetadata.class);
+    }
+
+    /**
+     * Accepts a JSON object that represents a PATCH to this {@link SpreadsheetMetadata}, where properties with null values
+     * will remove that property and other properties will set the new value.
+     */
+    public SpreadsheetMetadata patch(final JsonObject patch) {
+        Objects.requireNonNull(patch, "patch");
+
+        SpreadsheetMetadata result = this;
+
+        for (final JsonNode nameAndValue : patch.children()) {
+            final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(nameAndValue);
+
+            if (nameAndValue.isNull()) {
+                result = result.remove(name);
+            } else {
+                final Object value;
+                if (name instanceof SpreadsheetMetadataPropertyNameStyle) {
+                    final TextStyle style = result.getIgnoringDefaults(SpreadsheetMetadataPropertyName.STYLE)
+                            .orElse(TextStyle.EMPTY);
+
+                    value = style.patch(
+                            nameAndValue.objectOrFail(),
+                            result.jsonNodeUnmarshallContext()
+                    );
+                } else {
+                    value = result.jsonNodeUnmarshallContext()
+                            .unmarshall(nameAndValue, name.type());
+                }
+
+                result = result.set(
+                        name,
+                        Cast.to(value)
+                );
+            }
+        }
+
+        return result;
     }
 }
