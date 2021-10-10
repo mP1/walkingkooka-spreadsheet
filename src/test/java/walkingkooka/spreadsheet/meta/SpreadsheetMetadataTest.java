@@ -193,6 +193,31 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .converter();
     }
 
+    // setOrRemove......................................................................................................
+
+    @Test
+    public void testSetOrRemoveNullValue() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD");
+
+        assertEquals(
+                metadata,
+                metadata.set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
+                        .setOrRemove(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, null)
+        );
+    }
+
+    @Test
+    public void testSetOrRemoveNonNullValue() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD");
+
+        assertEquals(
+                metadata.set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.'),
+                metadata.setOrRemove(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
+        );
+    }
+
     // HasJsonNodeMarshallContext.......................................................................................
 
     @Test
