@@ -350,6 +350,18 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         Objects.requireNonNull(propertyName, "propertyName");
     }
 
+    // setOrRemove......................................................................................................
+
+    /**
+     * Performs a set if the value is non null or removes the property when the value is null.
+     */
+    public final <V> SpreadsheetMetadata setOrRemove(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                                     final V value) {
+        return null != value ?
+                this.set(propertyName, value) :
+                this.remove(propertyName);
+    }
+
     // HasExpressionNumberKind...........................................................................................
 
     public final ExpressionNumberKind expressionNumberKind() {
