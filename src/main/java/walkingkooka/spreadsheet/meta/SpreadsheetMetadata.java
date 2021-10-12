@@ -68,13 +68,13 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.tree.text.TextStylePropertyValueException;
@@ -101,6 +101,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         HasSpreadsheetFormatter,
         HasSpreadsheetFormatterContext,
         HateosResource<SpreadsheetId>,
+        Patchable<SpreadsheetMetadata>,
         Value<Map<SpreadsheetMetadataPropertyName<?>, Object>> {
 
     /**
@@ -881,16 +882,21 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
                 .unmarshall(JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text()), SpreadsheetMetadata.class);
     }
 
+    // Patchable.....................................................................................................
+
     /**
      * Accepts a JSON object that represents a PATCH to this {@link SpreadsheetMetadata}, where properties with null values
      * will remove that property and other properties will set the new value.
      */
-    public SpreadsheetMetadata patch(final JsonObject patch) {
+    @Override
+    public SpreadsheetMetadata patch(final JsonNode patch,
+                                     final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(patch, "patch");
+        Objects.requireNonNull(context, "context");
 
         SpreadsheetMetadata result = this;
 
-        for (final JsonNode nameAndValue : patch.children()) {
+        for (final JsonNode nameAndValue : patch.objectOrFail().children()) {
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(nameAndValue);
 
             if (nameAndValue.isNull()) {
@@ -902,12 +908,11 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
                             .orElse(TextStyle.EMPTY);
 
                     value = style.patch(
-                            nameAndValue.objectOrFail(),
-                            result.jsonNodeUnmarshallContext()
+                            nameAndValue,
+                            context
                     );
                 } else {
-                    value = result.jsonNodeUnmarshallContext()
-                            .unmarshall(nameAndValue, name.type());
+                    value = context.unmarshall(nameAndValue, name.type());
                 }
 
                 result = result.set(

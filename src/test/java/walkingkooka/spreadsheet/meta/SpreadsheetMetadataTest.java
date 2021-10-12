@@ -27,14 +27,16 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+import walkingkooka.tree.json.patch.PatchableTesting;
 import walkingkooka.tree.text.BorderStyle;
 import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
@@ -51,6 +53,7 @@ import walkingkooka.tree.text.WordBreak;
 import walkingkooka.tree.text.WordWrap;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -65,6 +68,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetMetadata>,
         HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
         JsonNodeMarshallingTesting<SpreadsheetMetadata>,
+        PatchableTesting<SpreadsheetMetadata>,
         ToStringTesting<SpreadsheetMetadata> {
 
     @Test
@@ -260,11 +264,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     // patch............................................................................................................
 
     @Test
-    public void testPatchNullJsonFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetMetadata.EMPTY.patch(null));
-    }
-
-    @Test
     public void testPatchEmptyObject() {
         this.patchAndCheck(
                 SpreadsheetMetadata.EMPTY,
@@ -421,21 +420,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .marshall(value);
     }
 
-    private void patchAndCheck(final SpreadsheetMetadata before,
-                               final JsonObject patch) {
-        this.patchAndCheck(before, patch, before);
-    }
-
-    private void patchAndCheck(final SpreadsheetMetadata before,
-                               final JsonObject patch,
-                               final SpreadsheetMetadata after) {
-        assertEquals(
-                after,
-                before.patch(patch),
-                () -> before + " patch " + patch
-        );
-    }
-
     // helpers..........................................................................................................
 
     @Override
@@ -491,5 +475,24 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     @Override
     public SpreadsheetMetadata createJsonNodeMarshallingValue() {
         return this.createObject();
+    }
+
+    // PatchableTesting.................................................................................................
+
+    @Override
+    public SpreadsheetMetadata createPatchable() {
+        return this.createObject();
+    }
+
+    @Override
+    public JsonNode createPatch() {
+        return JsonNode.object();
+    }
+
+    @Override
+    public JsonNodeUnmarshallContext createPatchContext() {
+        return JsonNodeUnmarshallContexts.basic(
+                ExpressionNumberContexts.basic(ExpressionNumberKind.BIG_DECIMAL, MathContext.UNLIMITED)
+        );
     }
 }
