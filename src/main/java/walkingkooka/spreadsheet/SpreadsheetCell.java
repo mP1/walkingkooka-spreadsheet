@@ -32,6 +32,7 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
+import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 
@@ -43,6 +44,7 @@ import java.util.Optional;
  */
 public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         HateosResource<SpreadsheetCellReference>,
+        Patchable<SpreadsheetCell>,
         TreePrintable,
         UsesToStringBuilder {
 
@@ -228,6 +230,53 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         return this.reference().compareTo(other.reference());
     }
 
+    // Patchable.......................................................................................................
+
+    /**
+     * Patches the given {@link SpreadsheetCell}. The cell and formatted properties cannot be updated via a patch.
+     */
+    @Override
+    public SpreadsheetCell patch(final JsonNode json,
+                                 final JsonNodeUnmarshallContext context) {
+        Objects.requireNonNull(json, "json");
+        Objects.requireNonNull(context, "context");
+
+        SpreadsheetCell patched = this;
+
+        for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
+            final JsonPropertyName propertyName = propertyAndValue.name();
+            switch (propertyName.value()) {
+                case FORMULA_PROPERTY_STRING:
+                    patched = patched.setFormula(
+                            patched.formula()
+                                    .patch(propertyAndValue, context)
+                    );
+                    break;
+                case STYLE_PROPERTY_STRING:
+                    patched = patched.setStyle(
+                            patched.style().patch(propertyAndValue, context)
+                    );
+                    break;
+                case FORMAT_PROPERTY_STRING:
+                    patched = patched.setFormat(
+                            Optional.ofNullable(
+                                    context.unmarshall(propertyAndValue, SpreadsheetCellFormat.class)
+                            )
+                    );
+                    break;
+                case REFERENCE_PROPERTY_STRING:
+                case FORMATTED_PROPERTY_STRING:
+                    Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
+                    break;
+                default:
+                    Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
+                    break;
+            }
+        }
+
+        return patched;
+    }
+
     // TreePrintable.....................................................................................................
 
     @Override
@@ -343,11 +392,13 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         return object;
     }
 
+    private final static String REFERENCE_PROPERTY_STRING = "reference";
     private final static String FORMULA_PROPERTY_STRING = "formula";
     private final static String STYLE_PROPERTY_STRING = "style";
     private final static String FORMAT_PROPERTY_STRING = "format";
     private final static String FORMATTED_PROPERTY_STRING = "formatted";
 
+    final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
     final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING);
     final static JsonPropertyName FORMAT_PROPERTY = JsonPropertyName.with(FORMAT_PROPERTY_STRING);

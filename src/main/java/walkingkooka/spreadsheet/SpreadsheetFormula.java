@@ -36,6 +36,7 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
+import walkingkooka.tree.json.patch.Patchable;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -44,6 +45,7 @@ import java.util.Optional;
  * A spreadsheet formula, including its compiled {@link Expression} and possibly its {@link Object value} or {@link SpreadsheetError}.
  */
 public final class SpreadsheetFormula implements HasText,
+        Patchable<SpreadsheetFormula>,
         TreePrintable,
         UsesToStringBuilder {
 
@@ -285,6 +287,43 @@ public final class SpreadsheetFormula implements HasText,
                 value,
                 error
         );
+    }
+
+    // Patchable.......................................................................................................
+
+    @Override
+    public SpreadsheetFormula patch(final JsonNode json,
+                                    final JsonNodeUnmarshallContext context) {
+        Objects.requireNonNull(json, "json");
+        Objects.requireNonNull(context, "context");
+
+        SpreadsheetFormula patched = this;
+
+        for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
+            final JsonPropertyName propertyName = propertyAndValue.name();
+            switch (propertyName.value()) {
+                case TEXT_PROPERTY_STRING:
+                    final String text;
+                    try {
+                        text = propertyAndValue.stringOrFail();
+                    } catch (final JsonNodeException cause) {
+                        throw new JsonNodeUnmarshallException("Node " + TEXT_PROPERTY_STRING + " is not a string=" + propertyAndValue, propertyAndValue);
+                    }
+                    patched = patched.setText(text);
+                    break;
+                case TOKEN_PROPERTY_STRING:
+                case EXPRESSION_PROPERTY_STRING:
+                case VALUE_PROPERTY_STRING:
+                case ERROR_PROPERTY_STRING:
+                    Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
+                    break;
+                default:
+                    Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
+                    break;
+            }
+        }
+
+        return patched;
     }
 
     // TreePrintable....................................................................................................
