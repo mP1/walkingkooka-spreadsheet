@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
@@ -31,18 +32,24 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+import walkingkooka.tree.json.patch.PatchableTesting;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
+import java.math.MathContext;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +62,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         ComparableTesting2<SpreadsheetCell>,
         JsonNodeMarshallingTesting<SpreadsheetCell>,
         HateosResourceTesting<SpreadsheetCell>,
+        PatchableTesting<SpreadsheetCell>,
         ToStringTesting<SpreadsheetCell>,
         TreePrintableTesting {
 
@@ -507,6 +515,190 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     private SpreadsheetCell createCell(final String reference) {
         return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell(reference), formula("1+2"));
+    }
+
+    // patch............................................................................................................
+
+    @Test
+    public void testPatchEmptyObject() {
+        this.patchAndCheck(
+                this.createPatchable(),
+                JsonNode.object()
+        );
+    }
+
+    @Test
+    public void testPatchSameText() {
+        final String text = "=123";
+
+        this.patchAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetExpressionReference.parseCell("A1"),
+                        SpreadsheetFormula.with(text)
+                ),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetCell.FORMULA_PROPERTY,
+                                JsonObject.object()
+                                        .set(
+                                                JsonPropertyName.with("text"),
+                                                JsonNode.string(text)
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testPatchDifferentText() {
+        final SpreadsheetCellReference cellReference = SpreadsheetExpressionReference.parseCell("A1");
+        final String text = "=2";
+
+        this.patchAndCheck(
+                SpreadsheetCell.with(
+                        cellReference,
+                        SpreadsheetFormula.with("=1")
+                ),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetCell.FORMULA_PROPERTY,
+                                JsonObject.object()
+                                        .set(
+                                                JsonPropertyName.with("text"),
+                                                JsonNode.string(text)
+                                        )
+                        ),
+                SpreadsheetCell.with(
+                        cellReference,
+                        SpreadsheetFormula.with(text)
+                )
+        );
+    }
+
+    @Test
+    public void testPatchSetFormat() {
+        final SpreadsheetCell cell = SpreadsheetCell.with(
+                SpreadsheetExpressionReference.parseCell("A1"),
+                SpreadsheetFormula.with("=1")
+        ).setFormat(
+                Optional.of(
+                        SpreadsheetCellFormat.with("@")
+                )
+        );
+
+        final SpreadsheetCellFormat format = SpreadsheetCellFormat.with("2");
+
+        this.patchAndCheck(
+                cell,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetCell.FORMAT_PROPERTY,
+                                JsonNodeMarshallContexts.basic().marshall(format)
+                        ),
+                cell.setFormat(
+                        Optional.of(
+                                format
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testPatchRemoveFormat() {
+        final SpreadsheetCell cell = SpreadsheetCell.with(
+                SpreadsheetExpressionReference.parseCell("A1"),
+                SpreadsheetFormula.with("=1")
+        ).setFormat(
+                Optional.of(
+                        SpreadsheetCellFormat.with("@")
+                )
+        );
+
+        this.patchAndCheck(
+                cell,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetCell.FORMAT_PROPERTY,
+                                JsonNode.nullNode()
+                        ),
+                cell.setFormat(
+                        SpreadsheetCell.NO_FORMAT
+                )
+        );
+    }
+
+    @Test
+    public void testPatchStyleAddProperty() {
+        final TextStyle style = TextStyle.EMPTY
+                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.BLACK);
+
+        final SpreadsheetCell cell = SpreadsheetCell.with(
+                SpreadsheetExpressionReference.parseCell("A1"),
+                SpreadsheetFormula.with("=1")
+        ).setStyle(style);
+
+        final TextStylePropertyName<Color> color = TextStylePropertyName.COLOR;
+        final Color colorValue = Color.WHITE;
+
+        this.patchAndCheck(
+                cell,
+                JsonNode.object()
+                        .set(SpreadsheetCell.STYLE_PROPERTY, JsonObject.object()
+                                .set(
+                                        JsonPropertyName.with(color.value()),
+                                        JsonNodeMarshallContexts.basic().marshall(colorValue)
+                                )
+                        ),
+                cell.setStyle(
+                        style.set(color, colorValue)
+                )
+        );
+    }
+
+    @Test
+    public void testPatchCellReferenceFails() {
+        final JsonPropertyName name = SpreadsheetCell.REFERENCE_PROPERTY;
+        final JsonNode value = JsonNode.string("A1");
+
+        this.patchInvalidPropertyFails(
+                this.createPatchable(),
+                JsonNode.object()
+                        .set(name, value),
+                name,
+                value
+        );
+    }
+
+    @Test
+    public void testPatchFormattedFails() {
+        final JsonPropertyName name = SpreadsheetCell.FORMATTED_PROPERTY;
+        final JsonNode value = JsonNode.string("@");
+
+        this.patchInvalidPropertyFails(
+                this.createPatchable(),
+                JsonNode.object()
+                        .set(name, value),
+                name,
+                value
+        );
+    }
+
+    // PatchableTesting.................................................................................................
+
+    @Override
+    public SpreadsheetCell createPatchable() {
+        return this.createObject();
+    }
+
+    @Override
+    public JsonNode createPatch() {
+        return JsonNode.object();
+    }
+
+    @Override
+    public JsonNodeUnmarshallContext createPatchContext() {
+        return JsonNodeUnmarshallContexts.basic(
+                ExpressionNumberContexts.basic(ExpressionNumberKind.BIG_DECIMAL, MathContext.UNLIMITED)
+        );
     }
 
     // treePrintable....................................................................................................

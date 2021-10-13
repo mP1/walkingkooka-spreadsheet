@@ -27,11 +27,16 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+import walkingkooka.tree.json.patch.PatchableTesting;
 
+import java.math.MathContext;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,6 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
         HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
         JsonNodeMarshallingTesting<SpreadsheetFormula>,
+        PatchableTesting<SpreadsheetFormula>,
         ToStringTesting<SpreadsheetFormula>,
         TreePrintableTesting {
 
@@ -749,6 +755,65 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testJsonNodeMarshallRoundtripTextAndError() {
         this.marshallRoundTripTwiceAndCheck(SpreadsheetFormula.with(TEXT)
                 .setError(Optional.of(SpreadsheetError.with("error message #1"))));
+    }
+
+    // patch............................................................................................................
+
+    @Test
+    public void testPatchEmptyObject() {
+        this.patchAndCheck(
+                this.createPatchable(),
+                JsonNode.object()
+        );
+    }
+
+    @Test
+    public void testPatchSameText() {
+        this.patchAndCheck(
+                SpreadsheetFormula.with("=1"),
+                JsonNode.object()
+                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string("=1"))
+        );
+    }
+
+    @Test
+    public void testPatchDifferentText() {
+        this.patchAndCheck(
+                SpreadsheetFormula.with("=1"),
+                JsonNode.object()
+                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string("=2")),
+                SpreadsheetFormula.with("=2")
+        );
+    }
+
+    @Test
+    public void testPatchSetInvalidProperty() {
+        this.patchInvalidPropertyFails(
+                SpreadsheetFormula.with("=1"),
+                JsonNode.object()
+                        .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.nullNode()),
+                SpreadsheetFormula.VALUE_PROPERTY,
+                JsonNode.nullNode()
+        );
+    }
+
+    // PatchableTesting.................................................................................................
+
+    @Override
+    public SpreadsheetFormula createPatchable() {
+        return this.createObject();
+    }
+
+    @Override
+    public JsonNode createPatch() {
+        return JsonNode.object();
+    }
+
+    @Override
+    public JsonNodeUnmarshallContext createPatchContext() {
+        return JsonNodeUnmarshallContexts.basic(
+                ExpressionNumberContexts.basic(ExpressionNumberKind.BIG_DECIMAL, MathContext.UNLIMITED)
+        );
     }
 
     // toString...............................................................................................
