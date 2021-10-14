@@ -18,8 +18,13 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
 import java.util.Optional;
 
@@ -41,6 +46,74 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testNoWindowConstant() {
         assertEquals(Optional.empty(), SpreadsheetDelta.NO_WINDOW);
+    }
+
+    // cell.............................................................................................................
+
+    @Test
+    public void testCellWhenEmpty() {
+        this.cellAndCheck(
+                SpreadsheetDelta.EMPTY,
+                SpreadsheetExpressionReference.parseCell("A1"),
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testCellNotFound() {
+        this.cellAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.cell()
+                        )
+                ),
+                SpreadsheetExpressionReference.parseCell("B2"),
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testCellFound() {
+        final SpreadsheetCell cell = this.cell();
+        this.cellAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(cell)
+                ),
+                cell.reference(),
+                Optional.of(cell)
+        );
+    }
+
+    @Test
+    public void testCellFoundDifferentKind() {
+        final SpreadsheetCell cell = this.cell();
+        final SpreadsheetCellReference reference = cell.reference();
+        assertEquals(reference.toRelative(), reference, "reference should be relative");
+
+        this.cellAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(cell)
+                ),
+                reference.toAbsolute(),
+                Optional.of(cell)
+        );
+    }
+
+    private SpreadsheetCell cell() {
+        return SpreadsheetCell.with(
+                SpreadsheetExpressionReference.parseCell("A1"),
+                SpreadsheetFormula.with("=1+2")
+        );
+    }
+
+    private void cellAndCheck(final SpreadsheetDelta delta,
+                              final SpreadsheetCellReference reference,
+                              final Optional<SpreadsheetCell> cell) {
+        assertEquals(
+                cell,
+                delta.cell(reference),
+                () -> delta + " cell " + reference
+        );
     }
 
     // ClassTesting.....................................................................................................
