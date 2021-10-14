@@ -151,6 +151,18 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         Objects.requireNonNull(cells, "cells");
     }
 
+    /**
+     * Finds a {@link SpreadsheetCell} matching the given {@link SpreadsheetCellReference}.
+     */
+    public Optional<SpreadsheetCell> cell(final SpreadsheetCellReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        return this.cells()
+                .stream()
+                .filter(c -> c.reference().equalsIgnoreReferenceKind(reference))
+                .findFirst();
+    }
+
     // labels............................................................................................................
 
     public final Set<SpreadsheetLabelMapping> labels() {
