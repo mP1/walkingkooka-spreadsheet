@@ -556,7 +556,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 case COLUMN_WIDTHS_PROPERTY_STRING:
                     columnWidths = unmarshallMap(child, SpreadsheetColumnReference::parseColumn);
                     break;
-                case MAX_ROW_HEIGHTS_PROPERTY_STRING:
+                case ROW_HEIGHTS_PROPERTY_STRING:
                     maxRowsHeights = unmarshallMap(child, SpreadsheetRowReference::parseRow);
                     break;
                 case WINDOW_PROPERTY_STRING:
@@ -683,7 +683,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         final Map<SpreadsheetRowReference, Double> maxRowsHeights = this.rowHeights;
         if (!maxRowsHeights.isEmpty()) {
             children.add(marshallMap(maxRowsHeights,
-                    (r) -> r.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)).setName(MAX_ROW_HEIGHTS_PROPERTY));
+                    (r) -> r.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)).setName(ROW_HEIGHTS_PROPERTY));
         }
 
         final Optional<SpreadsheetCellRange> window = this.window();
@@ -744,7 +744,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     private final static String LABELS_PROPERTY_STRING = "labels";
     private final static String DELETED_CELLS_PROPERTY_STRING = "deletedCells";
     private final static String COLUMN_WIDTHS_PROPERTY_STRING = "columnWidths";
-    private final static String MAX_ROW_HEIGHTS_PROPERTY_STRING = "rowHeights";
+    private final static String ROW_HEIGHTS_PROPERTY_STRING = "rowHeights";
     private final static String WINDOW_PROPERTY_STRING = "window";
 
     // @VisibleForTesting
@@ -758,7 +758,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     // @VisibleForTesting
     final static JsonPropertyName COLUMN_WIDTHS_PROPERTY = JsonPropertyName.with(COLUMN_WIDTHS_PROPERTY_STRING);
     // @VisibleForTesting
-    final static JsonPropertyName MAX_ROW_HEIGHTS_PROPERTY = JsonPropertyName.with(MAX_ROW_HEIGHTS_PROPERTY_STRING);
+    final static JsonPropertyName ROW_HEIGHTS_PROPERTY = JsonPropertyName.with(ROW_HEIGHTS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName WINDOW_PROPERTY = JsonPropertyName.with(WINDOW_PROPERTY_STRING);
 
