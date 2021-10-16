@@ -619,7 +619,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return Maps.of(SpreadsheetRowReference.parseRow("1"), 75.0);
     }
 
-    final static JsonNode MAX_ROW_HEIGHTS_JSON = JsonNode.parse("{\"1\": 75.0}");
+    final static JsonNode ROW_HEIGHTS_JSON = JsonNode.parse("{\"1\": 75.0}");
 
     final Map<SpreadsheetRowReference, Double> differentRowHeights() {
         return Maps.of(SpreadsheetRowReference.parseRow("2"), 999.0);

@@ -519,7 +519,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
+                        .set(SpreadsheetDelta.ROW_HEIGHTS_PROPERTY, ROW_HEIGHTS_JSON)
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
         );
     }
@@ -542,7 +542,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         .set(SpreadsheetDelta.LABELS_PROPERTY, labelsJson())
                         .set(SpreadsheetDelta.DELETED_CELLS_PROPERTY, deletedCellsJson())
                         .set(SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY, COLUMN_WIDTHS_JSON)
-                        .set(SpreadsheetDelta.ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
+                        .set(SpreadsheetDelta.ROW_HEIGHTS_PROPERTY, ROW_HEIGHTS_JSON)
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
         );
     }

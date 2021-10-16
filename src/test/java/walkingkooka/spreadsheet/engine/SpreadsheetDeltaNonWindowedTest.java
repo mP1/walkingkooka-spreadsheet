@@ -458,7 +458,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
+                        .set(SpreadsheetDelta.ROW_HEIGHTS_PROPERTY, ROW_HEIGHTS_JSON)
         );
     }
 
@@ -476,7 +476,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY, COLUMN_WIDTHS_JSON)
-                        .set(SpreadsheetDelta.ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
+                        .set(SpreadsheetDelta.ROW_HEIGHTS_PROPERTY, ROW_HEIGHTS_JSON)
         );
     }
 
