@@ -168,12 +168,12 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
 
     @Override
     Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
-        return filterColumnWidths(columnWidths, this.window);
+        return filterColumnWidths0(columnWidths, this.window.get());
     }
 
     @Override
     Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
-        return filterRowHeights(rowHeights, this.window);
+        return filterRowHeights0(rowHeights, this.window.get());
     }
 
     // TreePrintable.....................................................................................................

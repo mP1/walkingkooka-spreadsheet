@@ -274,14 +274,28 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testSetColumnWidthsDifferent() {
         final D delta = this.createSpreadsheetDelta();
         final Map<SpreadsheetColumnReference, Double> different = this.differentColumnWidths();
-        final SpreadsheetDelta differentDelta = delta.setColumnWidths(different);
+        final SpreadsheetDelta differentDelta = delta.setColumnWidths(
+                Map.of(
+                        SpreadsheetExpressionReference.parseColumn("$B"),
+                        50.0
+                )
+        );
 
         assertNotSame(delta, differentDelta);
 
         this.checkCells(differentDelta);
         this.checkLabels(differentDelta);
         this.checkDeletedCells(differentDelta);
-        this.checkColumnWidths(differentDelta, different);
+
+
+        this.checkColumnWidths(
+                differentDelta,
+                Map.of(
+                        SpreadsheetExpressionReference.parseColumn("B"),
+                        50.0
+                )
+        );
+
         this.checkRowHeights(differentDelta);
         this.checkWindow(differentDelta);
     }
@@ -302,8 +316,12 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     @Test
     public final void testSetRowHeightsDifferent() {
         final D delta = this.createSpreadsheetDelta();
-        final Map<SpreadsheetRowReference, Double> different = this.differentRowHeights();
-        final SpreadsheetDelta differentDelta = delta.setRowHeights(different);
+        final SpreadsheetDelta differentDelta = delta.setRowHeights(
+                Maps.of(
+                        SpreadsheetExpressionReference.parseRow("$1"),
+                        50.0
+                )
+        );
 
         assertNotSame(delta, differentDelta);
 
@@ -311,7 +329,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkLabels(differentDelta);
         this.checkDeletedCells(differentDelta);
         this.checkColumnWidths(differentDelta);
-        this.checkRowHeights(differentDelta, different);
+
+        this.checkRowHeights(
+                differentDelta,
+                Maps.of(
+                        SpreadsheetExpressionReference.parseRow("1"),
+                        50.0
+                )
+        );
+
         this.checkWindow(differentDelta);
     }
 
@@ -595,13 +621,19 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     // columnWidths..................................................................................................
 
     final Map<SpreadsheetColumnReference, Double> columnWidths() {
-        return Maps.of(SpreadsheetColumnReference.parseColumn("A"), 50.0);
+        return Maps.of(
+                SpreadsheetColumnReference.parseColumn("A"),
+                50.0
+        );
     }
 
     final static JsonNode COLUMN_WIDTHS_JSON = JsonNode.parse("{\"A\": 50.0}");
 
     final Map<SpreadsheetColumnReference, Double> differentColumnWidths() {
-        return Maps.of(SpreadsheetColumnReference.parseColumn("B"), 999.0);
+        return Maps.of(
+                SpreadsheetColumnReference.parseColumn("$B"),
+                999.0
+        );
     }
 
     final void checkColumnWidths(final SpreadsheetDelta delta) {
@@ -610,19 +642,29 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final void checkColumnWidths(final SpreadsheetDelta delta,
                                  final Map<SpreadsheetColumnReference, Double> columnWidths) {
-        assertEquals(columnWidths, delta.columnWidths(), "columnWidths");
+        assertEquals(
+                columnWidths,
+                delta.columnWidths(),
+                "columnWidths"
+        );
     }
 
     // rowHeights.......................................................................................................
 
     final Map<SpreadsheetRowReference, Double> rowHeights() {
-        return Maps.of(SpreadsheetRowReference.parseRow("1"), 75.0);
+        return Maps.of(
+                SpreadsheetRowReference.parseRow("1"),
+                75.0
+        );
     }
 
     final static JsonNode ROW_HEIGHTS_JSON = JsonNode.parse("{\"1\": 75.0}");
 
     final Map<SpreadsheetRowReference, Double> differentRowHeights() {
-        return Maps.of(SpreadsheetRowReference.parseRow("2"), 999.0);
+        return Maps.of(
+                SpreadsheetRowReference.parseRow("$2"),
+                999.0
+        );
     }
 
     final void checkRowHeights(final SpreadsheetDelta delta) {
@@ -631,7 +673,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final void checkRowHeights(final SpreadsheetDelta delta,
                                final Map<SpreadsheetRowReference, Double> rowHeights) {
-        assertEquals(rowHeights, delta.rowHeights(), "rowHeights");
+        assertEquals(
+                rowHeights,
+                delta.rowHeights(),
+                "rowHeights"
+        );
     }
 
     final void checkWindow(final SpreadsheetDelta delta,

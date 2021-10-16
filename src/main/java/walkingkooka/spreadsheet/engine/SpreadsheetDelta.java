@@ -228,7 +228,8 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     // columnWidths..................................................................................................
 
     /**
-     * Returns a map of columns to max column width for each. The included columns should appear within one of the cells.
+     * Returns a map of columns with the column width for each. The included columns should appear within one of the cells.
+     * Note that keys will always be relative, absolute column are not present.
      */
     public final Map<SpreadsheetColumnReference, Double> columnWidths() {
         return this.columnWidths;
@@ -256,7 +257,8 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     // rowHeights..................................................................................................
 
     /**
-     * Returns a map of rows to max row height for each. The included rows should appear within one of the cells.
+     * Returns a map of rows to the row height for each. The included rows should appear within one of the cells.
+     * Note that keys will always be relative, absolute rows are not present.
      */
     public final Map<SpreadsheetRowReference, Double> rowHeights() {
         return this.rowHeights;
@@ -396,42 +398,28 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         );
     }
 
-    static Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths,
-                                                                      final Optional<SpreadsheetCellRange> window) {
-        return window.isPresent() ?
-                filterColumnWidths0(columnWidths, window.get()) :
-                columnWidths;
-    }
-
-    private static Map<SpreadsheetColumnReference, Double> filterColumnWidths0(final Map<SpreadsheetColumnReference, Double> columnWidths,
-                                                                               final SpreadsheetCellRange window) {
+    static Map<SpreadsheetColumnReference, Double> filterColumnWidths0(final Map<SpreadsheetColumnReference, Double> columnWidths,
+                                                                       final SpreadsheetCellRange window) {
         final Map<SpreadsheetColumnReference, Double> filtered = Maps.ordered();
 
         for (final Map.Entry<SpreadsheetColumnReference, Double> columnAndWidth : columnWidths.entrySet()) {
             final SpreadsheetColumnReference column = columnAndWidth.getKey();
             if (window.columnReferenceRange().testColumn(column)) {
-                filtered.put(column, columnAndWidth.getValue());
+                filtered.put(column.toRelative(), columnAndWidth.getValue());
             }
         }
 
         return Maps.immutable(filtered);
     }
 
-    static Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights,
-                                                                 final Optional<SpreadsheetCellRange> window) {
-        return window.isPresent() ?
-                filterRowHeights0(rowHeights, window.get()) :
-                rowHeights;
-    }
-
-    private static Map<SpreadsheetRowReference, Double> filterRowHeights0(final Map<SpreadsheetRowReference, Double> rowHeights,
-                                                                          final SpreadsheetCellRange window) {
+    static Map<SpreadsheetRowReference, Double> filterRowHeights0(final Map<SpreadsheetRowReference, Double> rowHeights,
+                                                                  final SpreadsheetCellRange window) {
         final Map<SpreadsheetRowReference, Double> filtered = Maps.ordered();
 
         for (final Map.Entry<SpreadsheetRowReference, Double> rowAndHeight : rowHeights.entrySet()) {
             final SpreadsheetRowReference row = rowAndHeight.getKey();
             if (window.rowReferenceRange().testRow(row)) {
-                filtered.put(row, rowAndHeight.getValue());
+                filtered.put(row.toRelative(), rowAndHeight.getValue());
             }
         }
 
