@@ -173,12 +173,30 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
 
     @Override
     Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
-        return Maps.immutable(columnWidths);
+        final Map<SpreadsheetColumnReference, Double> copy = Maps.sorted();
+
+        for(final Map.Entry<SpreadsheetColumnReference, Double> columnAndWidth : columnWidths.entrySet()) {
+            copy.put(
+                    columnAndWidth.getKey().toRelative(),
+                    columnAndWidth.getValue()
+            );
+        }
+
+        return Maps.immutable(copy);
     }
 
     @Override
     Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
-        return Maps.immutable(rowHeights);
+        final Map<SpreadsheetRowReference, Double> copy = Maps.sorted();
+
+        for(final Map.Entry<SpreadsheetRowReference, Double> rowAndHeight : rowHeights.entrySet()) {
+            copy.put(
+                    rowAndHeight.getKey().toRelative(),
+                    rowAndHeight.getValue()
+            );
+        }
+
+        return Maps.immutable(copy);
     }
 
     // TreePrintable.....................................................................................................
