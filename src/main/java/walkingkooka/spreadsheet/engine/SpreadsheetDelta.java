@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
@@ -40,6 +41,7 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.patch.Patchable;
 
 import java.util.List;
 import java.util.Map;
@@ -51,7 +53,8 @@ import java.util.stream.Collectors;
 /**
  * Captures changes following an operation. A window when non empty is applied to any given cells and label mappings returned as a filter.
  */
-public abstract class SpreadsheetDelta implements TreePrintable {
+public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
+        TreePrintable {
 
     public final static Optional<SpreadsheetSelection> NO_SELECTION = Optional.empty();
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
@@ -422,6 +425,93 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         }
 
         return Maps.immutable(filtered);
+    }
+
+    // Patchable.......................................................................................................
+
+    /**
+     * Patches the given {@link SpreadsheetDelta}. Note only some properties may be patched (selection, cell and window)
+     * others will throw an exception as invalid.
+     */
+    @Override
+    public SpreadsheetDelta patch(final JsonNode json,
+                                  final JsonNodeUnmarshallContext context) {
+        Objects.requireNonNull(json, "json");
+        Objects.requireNonNull(context, "context");
+
+        SpreadsheetDelta patched = this;
+
+        Set<SpreadsheetCell> cells = this.cells();
+        Optional<SpreadsheetCellRange> window = this.window();
+
+
+        for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
+            final JsonPropertyName propertyName = propertyAndValue.name();
+            switch (propertyName.value()) {
+                case SELECTION_PROPERTY_STRING:
+                    patched = patched.setSelection(
+                            unmarshallSelection(propertyAndValue, context)
+                    );
+                    break;
+                case CELLS_PROPERTY_STRING:
+                    cells = patchCells(propertyAndValue, context);
+                    break;
+                case LABELS_PROPERTY_STRING:
+                case DELETED_CELLS_PROPERTY_STRING:
+                case COLUMN_WIDTHS_PROPERTY_STRING:
+                case ROW_HEIGHTS_PROPERTY_STRING:
+                    Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
+                    break;
+                case WINDOW_PROPERTY_STRING:
+                    window = unmarshallWindow(propertyAndValue, context);
+                    break;
+                default:
+                    Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
+                    break;
+            }
+        }
+
+        return patched.setCells(NO_CELLS)
+                .setWindow(window)
+                .setCells(cells)
+                .setWindow(window);
+    }
+
+    private Set<SpreadsheetCell> patchCells(final JsonNode node,
+                                            final JsonNodeUnmarshallContext context) {
+
+        return node.isNull() ?
+                NO_CELLS :
+                this.patchCellsFromObject(node, context);
+    }
+
+    /**
+     * Takes a json object of reference to cell and patches the existing cells in this {@link SpreadsheetDelta}.
+     * If any of the patch cell is missing an empty cell be created and then patched.
+     */
+    private Set<SpreadsheetCell> patchCellsFromObject(final JsonNode node,
+                                                      final JsonNodeUnmarshallContext context) {
+        final Map<SpreadsheetCellReference, SpreadsheetCell> referenceToCell = Maps.ordered();
+
+        for (final Map.Entry<JsonPropertyName, JsonNode> child : node.objectOrFail().asMap().entrySet()) {
+            final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCell(child.getKey().value());
+            SpreadsheetCell cell = referenceToCell.get(reference);
+            if (null == cell) {
+                cell = SpreadsheetCell.with(
+                        reference,
+                        SpreadsheetFormula.EMPTY
+                );
+            }
+
+            referenceToCell.put(
+                    reference,
+                    cell.patch(child.getValue(), context)
+            );
+        }
+
+        final Set<SpreadsheetCell> patchCells = Sets.ordered();
+        patchCells.addAll(referenceToCell.values());
+        return patchCells;
     }
 
     // TreePrintable.....................................................................................................
