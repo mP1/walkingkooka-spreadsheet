@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.Optional;
@@ -281,18 +282,22 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
 
     // JsonNodeMarshallingTesting...........................................................................................
 
-    @Test
-    public void testUnmarshallSelection() {
+    @Override
+    final void unmarshallSelectionAndCheck(final SpreadsheetSelection selection) {
         this.unmarshallAndCheck(
                 JsonNode.object()
-                        .set(SpreadsheetDelta.SELECTION_PROPERTY, this.selectionJson()),
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        this.selection(),
+                        .set(SpreadsheetDelta.SELECTION_PROPERTY, this.marshallContext().marshallWithType(selection)),
+                SpreadsheetDeltaWindowed.withWindowed(
+                        Optional.ofNullable(
+                                selection
+                        ),
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS)
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_WINDOW
+                )
         );
     }
 

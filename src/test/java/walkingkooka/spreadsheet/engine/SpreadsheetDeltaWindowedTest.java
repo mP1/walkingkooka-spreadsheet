@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -429,37 +430,23 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
     private final static JsonString WINDOW_JSON_STRING = JsonNode.string("A1:E5");
 
-    @Test
-    public void testUnmarshallSelection() {
+    @Override
+    final void unmarshallSelectionAndCheck(final SpreadsheetSelection selection) {
         this.unmarshallAndCheck(
                 JsonNode.object()
-                        .set(SpreadsheetDelta.SELECTION_PROPERTY, this.selectionJson())
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING),
+                        .set(SpreadsheetDelta.SELECTION_PROPERTY, this.marshallContext().marshallWithType(selection))
+                        .set(SpreadsheetDelta.WINDOW_PROPERTY, WINDOW_JSON_STRING),
                 SpreadsheetDeltaWindowed.withWindowed(
-                        this.selection(),
+                        Optional.ofNullable(
+                                selection
+                        ),
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        this.window())
-        );
-    }
-
-    @Test
-    public void testUnmarshallNullSelection() {
-        this.unmarshallAndCheck(
-                JsonNode.object()
-                        .set(SpreadsheetDelta.SELECTION_PROPERTY, JsonNode.nullNode())
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING),
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_SELECTION,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        this.window())
+                        this.window()
+                )
         );
     }
 
