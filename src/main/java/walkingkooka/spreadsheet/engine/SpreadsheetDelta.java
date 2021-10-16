@@ -562,7 +562,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                     maxRowsHeights = unmarshallMap(child, SpreadsheetRowReference::parseRow);
                     break;
                 case WINDOW_PROPERTY_STRING:
-                    window = Optional.of(SpreadsheetCellRange.parseCellRange(child.stringOrFail()));
+                    window = unmarshallWindow(child, context);
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
@@ -611,6 +611,13 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         }
 
         return max;
+    }
+
+    private static Optional<SpreadsheetCellRange> unmarshallWindow(final JsonNode json,
+                                                                   final JsonNodeUnmarshallContext context) {
+        return Optional.ofNullable(
+                context.unmarshall(json, SpreadsheetCellRange.class)
+        );
     }
 
     /**
