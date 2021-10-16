@@ -338,6 +338,57 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkCells(delta);
         this.checkWindow(delta);
     }
+    
+    // unmarshall.......................................................................................................
+
+    @Test
+    public final void testUnmarshallSelectionCell() {
+        this.unmarshallSelectionAndCheck(
+                SpreadsheetExpressionReference.parseCell("B2")
+        );
+    }
+
+    @Test
+    public final void testUnmarshallSelectionCellRange() {
+        this.unmarshallSelectionAndCheck(
+                SpreadsheetExpressionReference.parseCellRange("B2:C3")
+        );
+    }
+
+    @Test
+    public final void testUnmarshallSelectionColumn() {
+        this.unmarshallSelectionAndCheck(
+                SpreadsheetExpressionReference.parseColumn("B")
+        );
+    }
+
+    @Test
+    public final void testUnmarshallSelectionColumnRange() {
+        this.unmarshallSelectionAndCheck(
+                SpreadsheetExpressionReference.parseColumnRange("B:CD")
+        );
+    }
+
+    @Test
+    public final void testUnmarshallSelectionRow() {
+        this.unmarshallSelectionAndCheck(
+                SpreadsheetExpressionReference.parseRow("2")
+        );
+    }
+
+    @Test
+    public final void testUnmarshallSelectionRowRange() {
+        this.unmarshallSelectionAndCheck(
+                SpreadsheetExpressionReference.parseRowRange("2:34")
+        );
+    }
+
+    @Test
+    public final void testUnmarshallNullSelection() {
+        this.unmarshallSelectionAndCheck(null);
+    }
+
+    abstract void unmarshallSelectionAndCheck(final SpreadsheetSelection selection);
 
     // equals...........................................................................................................
 
