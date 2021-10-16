@@ -447,6 +447,23 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
+    public void testUnmarshallNullSelection() {
+        this.unmarshallAndCheck(
+                JsonNode.object()
+                        .set(SpreadsheetDelta.SELECTION_PROPERTY, JsonNode.nullNode())
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING),
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.window())
+        );
+    }
+
+    @Test
     public void testMarshallCells() {
         this.marshallAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
