@@ -542,9 +542,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
             switch (name.value()) {
                 case SELECTION_PROPERTY_STRING:
-                    selection = Optional.of(
-                            context.unmarshallWithType(child)
-                    );
+                    selection = unmarshallSelection(child, context);
                     break;
                 case CELLS_PROPERTY_STRING:
                     cells = unmarshallCells(child, context);
@@ -577,6 +575,13 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 .setDeletedCells(deletedCells)
                 .setColumnWidths(columnWidths)
                 .setRowHeights(maxRowsHeights);
+    }
+
+    private static Optional<SpreadsheetSelection> unmarshallSelection(final JsonNode node,
+                                                                      final JsonNodeUnmarshallContext context) {
+        return Optional.ofNullable(
+                context.unmarshallWithType(node)
+        );
     }
 
     private static Set<SpreadsheetCell> unmarshallCells(final JsonNode node,
