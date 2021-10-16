@@ -550,7 +550,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                     cells = unmarshallCells(child, context);
                     break;
                 case LABELS_PROPERTY_STRING:
-                    labels = unmarshallLabels(child, context);
+                    labels = context.unmarshallSet(child, SpreadsheetLabelMapping.class);
                     break;
                 case DELETED_CELLS_PROPERTY_STRING:
                     deletedCells = context.unmarshallSet(child, SpreadsheetCellReference.class);
@@ -591,15 +591,6 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         }
 
         return cells;
-    }
-
-    private static Set<SpreadsheetLabelMapping> unmarshallLabels(final JsonNode node,
-                                                                 final JsonNodeUnmarshallContext context) {
-        return node.arrayOrFail()
-                .children()
-                .stream()
-                .map(n -> context.unmarshall(n, SpreadsheetLabelMapping.class))
-                .collect(Collectors.toCollection(Sets::ordered));
     }
 
     private static <R extends SpreadsheetColumnOrRowReference> Map<R, Double> unmarshallMap(final JsonNode object,
