@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -47,7 +46,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -522,7 +520,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         Set<SpreadsheetLabelMapping> labels = NO_LABELS;
         Set<SpreadsheetCellReference> deletedCells = Sets.empty();
         Map<SpreadsheetColumnReference, Double> columnWidths = NO_COLUMN_WIDTHS;
-        Map<SpreadsheetRowReference, Double> maxRowsHeights = NO_ROW_HEIGHTS;
+        Map<SpreadsheetRowReference, Double> rowsHeights = NO_ROW_HEIGHTS;
         Optional<SpreadsheetCellRange> window = NO_WINDOW;
 
         for (final JsonNode child : node.objectOrFail().children()) {
@@ -542,10 +540,10 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                     deletedCells = context.unmarshallSet(child, SpreadsheetCellReference.class);
                     break;
                 case COLUMN_WIDTHS_PROPERTY_STRING:
-                    columnWidths = unmarshallMap(child, SpreadsheetColumnReference::parseColumn);
+                    columnWidths = context.unmarshallMap(child, SpreadsheetColumnReference.class, Double.class);
                     break;
                 case ROW_HEIGHTS_PROPERTY_STRING:
-                    maxRowsHeights = unmarshallMap(child, SpreadsheetRowReference::parseRow);
+                    rowsHeights = context.unmarshallMap(child, SpreadsheetRowReference.class, Double.class);
                     break;
                 case WINDOW_PROPERTY_STRING:
                     window = unmarshallWindow(child, context);
@@ -562,7 +560,7 @@ public abstract class SpreadsheetDelta implements TreePrintable {
                 .setLabels(labels)
                 .setDeletedCells(deletedCells)
                 .setColumnWidths(columnWidths)
-                .setRowHeights(maxRowsHeights);
+                .setRowHeights(rowsHeights);
     }
 
     private static Optional<SpreadsheetSelection> unmarshallSelection(final JsonNode node,
@@ -584,17 +582,6 @@ public abstract class SpreadsheetDelta implements TreePrintable {
         }
 
         return cells;
-    }
-
-    private static <R extends SpreadsheetColumnOrRowReference> Map<R, Double> unmarshallMap(final JsonNode object,
-                                                                                            final Function<String, R> reference) {
-        final Map<R, Double> max = Maps.ordered();
-
-        for (final JsonNode entry : object.children()) {
-            max.put(reference.apply(entry.name().value()), entry.numberOrFail().doubleValue());
-        }
-
-        return max;
     }
 
     private static Optional<SpreadsheetCellRange> unmarshallWindow(final JsonNode json,
@@ -653,7 +640,10 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
         final Set<SpreadsheetLabelMapping> labels = this.labels;
         if (!labels.isEmpty()) {
-            children.add(marshallLabels(labels, context).setName(LABELS_PROPERTY));
+            children.add(
+                    marshallLabels(labels, context)
+                            .setName(LABELS_PROPERTY)
+            );
         }
 
         final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
@@ -664,14 +654,18 @@ public abstract class SpreadsheetDelta implements TreePrintable {
 
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         if (!columnWidths.isEmpty()) {
-            children.add(marshallMap(columnWidths,
-                    (r) -> r.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)).setName(COLUMN_WIDTHS_PROPERTY));
+            children.add(
+                    context.marshallMap(columnWidths)
+                            .setName(COLUMN_WIDTHS_PROPERTY)
+            );
         }
 
-        final Map<SpreadsheetRowReference, Double> maxRowsHeights = this.rowHeights;
-        if (!maxRowsHeights.isEmpty()) {
-            children.add(marshallMap(maxRowsHeights,
-                    (r) -> r.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)).setName(ROW_HEIGHTS_PROPERTY));
+        final Map<SpreadsheetRowReference, Double> rowsHeights = this.rowHeights;
+        if (!rowsHeights.isEmpty()) {
+            children.add(
+                    context.marshallMap(rowsHeights)
+                            .setName(ROW_HEIGHTS_PROPERTY)
+            );
         }
 
         final Optional<SpreadsheetCellRange> window = this.window();
@@ -708,22 +702,6 @@ public abstract class SpreadsheetDelta implements TreePrintable {
     private static JsonNode marshallLabels(final Set<SpreadsheetLabelMapping> labels,
                                            final JsonNodeMarshallContext context) {
         return context.marshallSet(labels);
-    }
-
-    /**
-     * Creates a JSON object where the reference in string form is the key and the max width is the value.
-     */
-    private static <R extends SpreadsheetColumnOrRowReference> JsonNode marshallMap(final Map<R, Double> referenceToWidth,
-                                                                                    final Function<R, R> withoutAbsolute) {
-        final List<JsonNode> children = Lists.array();
-
-        for (final Map.Entry<R, Double> referenceAndWidth : referenceToWidth.entrySet()) {
-            children.add(JsonNode.number(referenceAndWidth.getValue())
-                    .setName(JsonPropertyName.with(withoutAbsolute.apply(referenceAndWidth.getKey()).toString())));
-        }
-
-        return JsonNode.object()
-                .setChildren(children);
     }
 
 
