@@ -290,7 +290,8 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     private SpreadsheetCell cell() {
         return SpreadsheetCell.with(
                 SpreadsheetCellReference.parseCell("A1"),
-                SpreadsheetFormula.with(FORMULA_TEXT)
+                SpreadsheetFormula.EMPTY
+                        .setText(FORMULA_TEXT)
         );
     }
 

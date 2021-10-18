@@ -136,7 +136,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testSaveFormulaWithExpressionTextUnchanged() {
         final String text = "1";
 
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text)
                 .setToken(
                         Optional.of(SpreadsheetParserToken.number(
                                 Lists.of(SpreadsheetParserToken.digits(text, text)),
@@ -165,7 +166,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testSaveFormulaWithoutToken() {
         final String text = "2";
 
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text);
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text);
 
         final SpreadsheetCell requires = SpreadsheetCell.with(
                 SpreadsheetCellReference.parseCell("B2"),
@@ -199,7 +201,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testSaveFormulaWithInvalidDate() {
         final String text = "99:12:00";
 
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text);
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text);
 
         final SpreadsheetCell requires = SpreadsheetCell.with(
                 SpreadsheetCellReference.parseCell("B2"),
@@ -225,7 +228,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testSaveFormulaWithInvalidDate2() {
         final String text = "99/12/00";
 
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text);
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text);
 
         final SpreadsheetCell requires = SpreadsheetCell.with(
                 SpreadsheetCellReference.parseCell("B2"),
@@ -289,7 +293,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testSaveFormulaWithTokenTextUpdateRequiredDayName() {
         final String text = "Tuesday 9/2/2021";
 
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text)
                 .setToken(
                         Optional.of(
                                 SpreadsheetParserToken.date(
@@ -361,7 +366,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testSaveFormulaWithTokenTextUpdateRequiredDayNameAbbreviation() {
         final String text = "Tuesday 9/2/2021";
 
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text)
                 .setToken(
                         Optional.of(
                                 SpreadsheetParserToken.date(
@@ -426,7 +432,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testSaveFormulaWithTokenTextUpdateRequiredMonthName() {
         final String text = "9/February/2021";
 
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text)
                 .setToken(
                         Optional.of(
                                 SpreadsheetParserToken.date(
@@ -487,7 +494,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testSaveFormulaWithTokenTextUpdateRequiredMonthNameAbbreviation() {
         final String text = "9/Feb/2021";
 
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text)
                 .setToken(
                         Optional.of(
                                 SpreadsheetParserToken.date(
@@ -547,7 +555,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     @Test
     public void testSaveFormulaWithTokenTextUpdateRequiredNumber() {
         final String text = "3" + DECIMAL_SEPARATOR + "5";
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text)
                 .setToken(
                         Optional.of(
                                 this.numberParserToken(DECIMAL_SEPARATOR)
@@ -587,7 +596,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     @Test
     public void testSaveFormulaWithTokenTextUpdateRequiredPercet() {
         final String text = "=150" + PERCENT;
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text)
                 .setToken(
                         Optional.of(
                                 this.expressionNumberWithPercentParserToken(PERCENT)
@@ -644,7 +654,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     @Test
     public void testSaveFormulaWithTokenAndExpressionTextUpdateRequired() {
         final String text = "3" + DECIMAL_SEPARATOR + "5";
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text)
                 .setToken(
                         Optional.of(
                                 this.numberParserToken(DECIMAL_SEPARATOR)
@@ -688,7 +699,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     @Test
     public void testSaveFormulaWithTokenAndExpressionTextUpdateRequired2() {
         final String text = "=3" + DECIMAL_SEPARATOR + "5";
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text)
                 .setToken(
                         Optional.of(
                                 SpreadsheetParserToken.expression(
@@ -761,7 +773,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testSaveFormulaWithTokenTextUpdateRequiredAmpm() {
         final String text = "9:59 PM";
 
-        final SpreadsheetFormula formula = SpreadsheetFormula.with(text)
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText(text)
                 .setToken(
                         Optional.of(
                                 SpreadsheetParserToken.time(

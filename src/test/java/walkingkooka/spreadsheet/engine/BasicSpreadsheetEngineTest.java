@@ -678,7 +678,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         return SpreadsheetConditionalFormattingRule.with(SpreadsheetDescription.with(priority + "=" + result),
                 priority,
-                SpreadsheetFormula.with(String.valueOf(result)).setExpression(Optional.of(Expression.booleanExpression(result))),
+                SpreadsheetFormula.EMPTY
+                        .setText(
+                                String.valueOf(result)
+                        ).setExpression(
+                                Optional.of(
+                                        Expression.booleanExpression(result)
+                                )
+                        ),
                 (c) -> style);
     }
 
@@ -810,9 +817,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
 
-        final SpreadsheetCell cell = this.cell(cellReference,
-                SpreadsheetFormula.with("=1+2")
-                        .setError(Optional.of(SpreadsheetError.with("error!"))));
+        final SpreadsheetCell cell = this.cell(
+                cellReference,
+                SpreadsheetFormula.EMPTY
+                        .setText("=1+2")
+                        .setError(
+                                Optional.of(
+                                        SpreadsheetError.with("error!")
+                                )
+                        )
+        );
 
         this.saveCellAndCheck(engine,
                 cell,
@@ -8215,8 +8229,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return this.cell(SpreadsheetExpressionReference.parseCell(reference), formula);
     }
 
-    private SpreadsheetCell cell(final SpreadsheetCellReference reference, final String formula) {
-        return this.cell(reference, SpreadsheetFormula.with(formula));
+    private SpreadsheetCell cell(final SpreadsheetCellReference reference,
+                                 final String formula) {
+        return this.cell(
+                reference,
+                SpreadsheetFormula.EMPTY
+                        .setText(formula)
+        );
     }
 
     private SpreadsheetCell cell(final SpreadsheetCellReference reference, final SpreadsheetFormula formula) {

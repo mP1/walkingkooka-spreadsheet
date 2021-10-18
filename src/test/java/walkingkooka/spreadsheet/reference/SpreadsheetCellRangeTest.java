@@ -935,7 +935,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     private SpreadsheetCell cell(final String reference, final String formula) {
-        return SpreadsheetCell.with(this.cellReference(reference), SpreadsheetFormula.with(formula));
+        return SpreadsheetCell.with(
+                this.cellReference(reference),
+                SpreadsheetFormula.EMPTY
+                        .setText(formula)
+        );
     }
 
     private void cellsPresent(final SpreadsheetCell cell) {

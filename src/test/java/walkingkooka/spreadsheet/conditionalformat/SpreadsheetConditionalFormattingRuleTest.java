@@ -131,7 +131,13 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
     @Test
     public void testSetFormulaDifferent() {
         final SpreadsheetConditionalFormattingRule rule = this.createObject();
-        final SpreadsheetFormula formula = SpreadsheetFormula.with("99").setExpression(Optional.of(Expression.string("\"99\"")));
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText("99")
+                .setExpression(
+                        Optional.of(
+                                Expression.string("\"99\"")
+                        )
+                );
         final SpreadsheetConditionalFormattingRule different = rule.setFormula(formula);
         checkDescription(different);
         checkPriority(different);
@@ -183,10 +189,19 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
 
     @Test
     public void testEqualsDifferentFormula() {
-        this.checkNotEquals(SpreadsheetConditionalFormattingRule.with(description(),
-                priority(),
-                SpreadsheetFormula.with("999").setExpression(Optional.of(Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(99)))),
-                style()));
+        this.checkNotEquals(
+                SpreadsheetConditionalFormattingRule.with(description(),
+                        priority(),
+                        SpreadsheetFormula.EMPTY
+                                .setText("999")
+                                .setExpression(
+                                        Optional.of(
+                                                Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(99))
+                                        )
+                                ),
+                        style()
+                )
+        );
     }
 
     @Test
@@ -219,11 +234,17 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
     }
 
     private SpreadsheetFormula formula() {
-        return this.formulaUncompiled().setExpression(Optional.of(Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(123))));
+        return this.formulaUncompiled()
+                .setExpression(
+                        Optional.of(
+                                Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(123))
+                        )
+                );
     }
 
     private SpreadsheetFormula formulaUncompiled() {
-        return SpreadsheetFormula.with("123");
+        return SpreadsheetFormula.EMPTY
+                .setText("123");
     }
 
     private Function<SpreadsheetCell, TextStyle> style() {

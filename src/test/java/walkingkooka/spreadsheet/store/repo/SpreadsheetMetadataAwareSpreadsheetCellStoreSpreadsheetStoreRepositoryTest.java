@@ -70,7 +70,12 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         final SpreadsheetCellStore cellStore = repository.cells();
         assertNotSame(repository.repository.cells(), repository.cells(), "cells");
 
-        cellStore.save(SpreadsheetCell.with(SpreadsheetCellReference.parseCell("A1"), SpreadsheetFormula.with("=4+5+6")));
+        cellStore.save(
+                SpreadsheetCell.with(
+                        SpreadsheetCellReference.parseCell("A1"),
+                        SpreadsheetFormula.EMPTY.setText("=4+5+6")
+                )
+        );
     }
 
     @Test
@@ -131,7 +136,8 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
 
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetCellReference.parseCell("A1"),
-                SpreadsheetFormula.with("1.5")
+                SpreadsheetFormula.EMPTY
+                        .setText("1.5")
         );
 
         repository.cells().save(cell);

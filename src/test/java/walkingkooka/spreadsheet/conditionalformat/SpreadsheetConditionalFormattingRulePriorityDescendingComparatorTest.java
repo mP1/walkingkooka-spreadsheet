@@ -42,10 +42,18 @@ public final class SpreadsheetConditionalFormattingRulePriorityDescendingCompara
     }
 
     private SpreadsheetConditionalFormattingRule createRule(final int priority) {
-        return SpreadsheetConditionalFormattingRule.with(SpreadsheetDescription.with("description"),
+        return SpreadsheetConditionalFormattingRule.with(
+                SpreadsheetDescription.with("description"),
                 priority,
-                SpreadsheetFormula.with("1").setExpression(Optional.of(Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(1)))),
-                (c) -> null);
+                SpreadsheetFormula.EMPTY
+                        .setText("1")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(1))
+                                )
+                        ),
+                (c) -> null
+        );
     }
 
     @Test

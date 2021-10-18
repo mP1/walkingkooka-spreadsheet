@@ -80,17 +80,15 @@ public final class SpreadsheetFormula implements HasText,
     public final static SpreadsheetParserToken INVALID_CELL_REFERENCE_PARSER_TOKEN = SpreadsheetParserToken.functionName(INVALID_CELL_REFERENCE, INVALID_CELL_REFERENCE.toString());
 
     /**
-     * Factory that creates a new {@link SpreadsheetFormula}
+     * A formula with no text, token, expression, value or error.
      */
-    public static SpreadsheetFormula with(final String text) {
-        checkText(text);
-
-        return new SpreadsheetFormula(text,
-                NO_TOKEN,
-                NO_EXPRESSION,
-                NO_VALUE,
-                NO_ERROR);
-    }
+    public final static SpreadsheetFormula EMPTY = new SpreadsheetFormula(
+            "",
+            NO_TOKEN,
+            NO_EXPRESSION,
+            NO_VALUE,
+            NO_ERROR
+    );
 
     private SpreadsheetFormula(final String text,
                                final Optional<SpreadsheetParserToken> token,
@@ -117,13 +115,15 @@ public final class SpreadsheetFormula implements HasText,
         checkText(text);
         return this.text.equals(text) ?
                 this :
-                this.replace(
-                        text,
-                        NO_TOKEN,
-                        NO_EXPRESSION,
-                        NO_VALUE,
-                        NO_ERROR
-                );
+                text.equals("") ?
+                        EMPTY :
+                        this.replace(
+                                text,
+                                NO_TOKEN,
+                                NO_EXPRESSION,
+                                NO_VALUE,
+                                NO_ERROR
+                        );
     }
 
     /**
