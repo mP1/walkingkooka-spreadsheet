@@ -102,7 +102,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     private SpreadsheetCell cell() {
         return SpreadsheetCell.with(
                 SpreadsheetExpressionReference.parseCell("A1"),
-                SpreadsheetFormula.with("=1+2")
+                SpreadsheetFormula.EMPTY
+                        .setText("=1+2")
         );
     }
 

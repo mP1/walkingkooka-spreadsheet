@@ -79,8 +79,20 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
                 BasicSpreadsheetEngineChangesMode.IMMEDIATE
         );
 
-        cells.onCellSavedImmediate(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell("A1"), SpreadsheetFormula.with("1+2")));
-        cells.onCellSavedImmediate(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell("B2"), SpreadsheetFormula.with("3+4")));
+        cells.onCellSavedImmediate(
+                SpreadsheetCell.with(
+                        SpreadsheetExpressionReference.parseCell("A1"),
+                        SpreadsheetFormula.EMPTY
+                                .setText("1+2")
+                )
+        );
+        cells.onCellSavedImmediate(
+                SpreadsheetCell.with(
+                        SpreadsheetExpressionReference.parseCell("B2"),
+                        SpreadsheetFormula.EMPTY
+                                .setText("3+4")
+                )
+        );
 
         this.toStringAndCheck(cells, "{A1=A1=1+2, B2=B2=3+4}");
     }

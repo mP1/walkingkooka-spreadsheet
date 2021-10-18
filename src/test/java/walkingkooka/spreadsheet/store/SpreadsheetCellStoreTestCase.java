@@ -357,7 +357,9 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     private SpreadsheetFormula formula() {
         final String text = "1+2";
-        return SpreadsheetFormula.with(text)
+
+        return SpreadsheetFormula.EMPTY
+                .setText(text)
                 .setToken(Optional.of(
                         SpreadsheetParserToken.addition(
                                 List.of(

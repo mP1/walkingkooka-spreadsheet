@@ -453,7 +453,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testJsonNode() {
-        this.marshallAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA)),
+        this.marshallAndCheck(
+                SpreadsheetCell.with(
+                        reference(COLUMN, ROW),
+                        SpreadsheetFormula.EMPTY
+                                .setText(FORMULA)
+                ),
                 "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}}}");
     }
 
@@ -461,7 +466,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testJsonNodeWithTextStyle() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
-        this.marshallAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA))
+        this.marshallAndCheck(
+                SpreadsheetCell.with(
+                                reference(COLUMN, ROW),
+                                SpreadsheetFormula.EMPTY
+                                        .setText(FORMULA)
+                        )
                         .setStyle(boldAndItalics),
                 "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}, \"style\": " +
                         this.marshallContext()
@@ -534,7 +544,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.patchAndCheck(
                 SpreadsheetCell.with(
                         SpreadsheetExpressionReference.parseCell("A1"),
-                        SpreadsheetFormula.with(text)
+                        formula(text)
                 ),
                 JsonNode.object()
                         .set(
@@ -556,7 +566,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.patchAndCheck(
                 SpreadsheetCell.with(
                         cellReference,
-                        SpreadsheetFormula.with("=1")
+                        formula("=1")
                 ),
                 JsonNode.object()
                         .set(
@@ -569,7 +579,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         ),
                 SpreadsheetCell.with(
                         cellReference,
-                        SpreadsheetFormula.with(text)
+                        formula(text)
                 )
         );
     }
@@ -578,7 +588,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testPatchSetFormat() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetExpressionReference.parseCell("A1"),
-                SpreadsheetFormula.with("=1")
+                formula("=1")
         ).setFormat(
                 Optional.of(
                         SpreadsheetCellFormat.with("@")
@@ -606,7 +616,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testPatchRemoveFormat() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetExpressionReference.parseCell("A1"),
-                SpreadsheetFormula.with("=1")
+                formula("=1")
         ).setFormat(
                 Optional.of(
                         SpreadsheetCellFormat.with("@")
@@ -633,7 +643,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetExpressionReference.parseCell("A1"),
-                SpreadsheetFormula.with("=1")
+                formula("=1")
         ).setStyle(style);
 
         final TextStylePropertyName<Color> color = TextStylePropertyName.COLOR;
@@ -708,7 +718,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                         SpreadsheetCellReference.parseCell("$A$1"),
-                        SpreadsheetFormula.with("1+2")
+                        formula("1+2")
                 ),
                 "Cell A1\n" +
                         "  Formula\n" +
@@ -721,7 +731,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                         SpreadsheetCellReference.parseCell("$A$1"),
-                        SpreadsheetFormula.with(FORMULA_TEXT)
+                        formula(FORMULA_TEXT)
                                 .setToken(token())
 
                 ),
@@ -744,7 +754,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                         SpreadsheetCellReference.parseCell("$A$1"),
-                        SpreadsheetFormula.with(FORMULA_TEXT)
+                        formula(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
 
@@ -772,7 +782,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                         SpreadsheetCellReference.parseCell("$A$1"),
-                        SpreadsheetFormula.with(FORMULA_TEXT)
+                        formula(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
                                 .setValue(Optional.of(3))
@@ -802,7 +812,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                         SpreadsheetCellReference.parseCell("$A$1"),
-                        SpreadsheetFormula.with(FORMULA_TEXT)
+                        formula(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
                                 .setError(Optional.of(SpreadsheetError.with("error message 1")))
@@ -832,7 +842,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                         SpreadsheetCellReference.parseCell("$A$1"),
-                        SpreadsheetFormula.with(FORMULA_TEXT)
+                        formula(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
                                 .setValue(Optional.of(3))
@@ -864,7 +874,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                                 SpreadsheetCellReference.parseCell("$A$1"),
-                                SpreadsheetFormula.with(FORMULA_TEXT)
+                                formula(FORMULA_TEXT)
                                         .setToken(token())
                                         .setExpression(expression())
                                         .setValue(Optional.of(3))
@@ -898,7 +908,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                                 SpreadsheetCellReference.parseCell("$A$1"),
-                                SpreadsheetFormula.with(FORMULA_TEXT)
+                                formula(FORMULA_TEXT)
                                         .setToken(token())
                                         .setExpression(expression())
                                         .setValue(Optional.of(3))
@@ -983,15 +993,22 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testToStringWithoutErrorWithoutFormatWithoutFormatted() {
-        this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
-                this.formula()),
-                REFERENCE + "=" + this.formula());
+        this.toStringAndCheck(
+                SpreadsheetCell.with(
+                        REFERENCE,
+                        this.formula()
+                ),
+                REFERENCE + "=" + this.formula()
+        );
     }
 
     @Test
     public void testToStringWithoutErrorWithFormatWithoutFormatted() {
-        this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
-                this.formula())
+        this.toStringAndCheck(
+                SpreadsheetCell.with(
+                                REFERENCE,
+                                this.formula()
+                        )
                         .setFormat(this.format()),
                 REFERENCE + "=" + this.formula() + " \"pattern\"");
     }
@@ -1013,7 +1030,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     private SpreadsheetCell createComparable(final int column, final int row, final String formula) {
         return SpreadsheetCell.with(reference(column, row),
-                SpreadsheetFormula.with(formula))
+                        formula(formula))
                 .setFormat(this.format())
                 .setFormatted(this.formatted());
     }
@@ -1046,7 +1063,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private SpreadsheetFormula formula(final String text) {
-        return SpreadsheetFormula.with(text);
+        return SpreadsheetFormula.EMPTY
+                .setText(text);
     }
 
     private void checkFormula(final SpreadsheetCell cell) {
