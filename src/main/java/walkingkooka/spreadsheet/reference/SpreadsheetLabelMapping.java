@@ -143,6 +143,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
             }
         }
 

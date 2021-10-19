@@ -102,6 +102,7 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
                 break;
             default:
                 NeverError.unhandledCase(year, SpreadsheetPatternSimpleDateFormatPatternVisitorYear.values());
+                break;
         }
 
         this.date = true;
@@ -278,6 +279,7 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
                 default:
                     this.add('\\');
                     this.add(c);
+                    break;
             }
         }
 

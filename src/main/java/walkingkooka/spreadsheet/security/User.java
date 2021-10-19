@@ -91,6 +91,7 @@ public final class User extends Identity<UserId> {
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
             }
         }
 

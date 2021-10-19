@@ -632,6 +632,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
             }
         }
 

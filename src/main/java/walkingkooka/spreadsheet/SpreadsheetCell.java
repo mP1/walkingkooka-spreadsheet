@@ -360,6 +360,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
             }
         }
 

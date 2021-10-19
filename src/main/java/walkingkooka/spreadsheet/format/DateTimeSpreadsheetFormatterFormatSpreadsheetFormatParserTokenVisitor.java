@@ -101,6 +101,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
                 break;
             default:
                 secondRounding = 0;
+                break;
         }
         this.secondRounding = secondRounding;
 
