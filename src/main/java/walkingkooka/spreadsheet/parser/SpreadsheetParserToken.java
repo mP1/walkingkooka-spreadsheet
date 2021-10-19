@@ -1759,6 +1759,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
             }
         }
 
@@ -2118,6 +2119,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
             }
         }
 

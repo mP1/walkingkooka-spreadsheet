@@ -117,6 +117,7 @@ final class SpreadsheetParsePatterns2ParserString extends SpreadsheetParsePatter
                         break Exit;
                     }
                     // keep trying remaining candidates
+                    break;
             }
         }
 

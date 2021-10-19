@@ -344,6 +344,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
                 begin = parseRange0(text.substring(0, separator), componentParser, "begin", text);
                 end = parseRange0(text.substring(separator + 1), componentParser, "end", text);
+                break;
         }
 
         return rangeFactory.apply(begin, end);

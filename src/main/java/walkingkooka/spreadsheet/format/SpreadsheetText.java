@@ -174,6 +174,7 @@ public final class SpreadsheetText implements HasText,
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
             }
         }
 

@@ -87,6 +87,7 @@ public final class Group extends Identity<GroupId> {
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
             }
         }
 

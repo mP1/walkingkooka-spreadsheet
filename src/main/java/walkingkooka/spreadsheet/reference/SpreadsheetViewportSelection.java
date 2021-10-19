@@ -120,6 +120,7 @@ public final class SpreadsheetViewportSelection implements UsesToStringBuilder {
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
             }
         }
 

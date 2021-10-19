@@ -82,6 +82,7 @@ final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorFor
                             condition = negative();
                             break;
                         default:
+                            break;
                     }
                     break;
                 default:

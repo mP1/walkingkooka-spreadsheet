@@ -413,6 +413,7 @@ public final class SpreadsheetFormula implements HasText,
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
             }
         }
 
