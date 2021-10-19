@@ -24,7 +24,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
@@ -430,8 +429,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // Patchable.......................................................................................................
 
     /**
-     * Patches the given {@link SpreadsheetDelta}. Note only some properties may be patched (selection, cell and window)
-     * others will throw an exception as invalid.
+     * Patches the given {@link SpreadsheetDelta}.
+     * Note only some properties may be patched (selection, cell and window) others will throw an exception as invalid.
+     * Attempts to patch an unknown cell will fail with an {@link IllegalArgumentException} being thrown.
      */
     @Override
     public SpreadsheetDelta patch(final JsonNode json,
@@ -487,31 +487,23 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     /**
      * Takes a json object of reference to cell and patches the existing cells in this {@link SpreadsheetDelta}.
-     * If any of the patch cell is missing an empty cell be created and then patched.
+     * If any of the patch cell is missing an {@link IllegalArgumentException} will be thrown.
      */
     private Set<SpreadsheetCell> patchCellsFromObject(final JsonNode node,
                                                       final JsonNodeUnmarshallContext context) {
-        final Map<SpreadsheetCellReference, SpreadsheetCell> referenceToCell = Maps.ordered();
+        final Set<SpreadsheetCell> patched = Sets.ordered();
 
         for (final Map.Entry<JsonPropertyName, JsonNode> child : node.objectOrFail().asMap().entrySet()) {
             final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCell(child.getKey().value());
-            SpreadsheetCell cell = referenceToCell.get(reference);
-            if (null == cell) {
-                cell = SpreadsheetCell.with(
-                        reference,
-                        SpreadsheetFormula.EMPTY
-                );
-            }
 
-            referenceToCell.put(
-                    reference,
+            final SpreadsheetCell cell = this.cell(reference)
+                    .orElseThrow(() -> new IllegalArgumentException("Missing patch cell: " + reference));
+            patched.add(
                     cell.patch(child.getValue(), context)
             );
         }
 
-        final Set<SpreadsheetCell> patchCells = Sets.ordered();
-        patchCells.addAll(referenceToCell.values());
-        return patchCells;
+        return patched;
     }
 
     // TreePrintable.....................................................................................................

@@ -39,6 +39,7 @@ import java.math.MathContext;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelta>,
         PatchableTesting<SpreadsheetDelta> {
@@ -241,7 +242,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchNewCell() {
+    public void testPatchUnknownCellFails() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetExpressionReference.parseCell("a1"),
                 SpreadsheetFormula.EMPTY
@@ -251,15 +252,17 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Sets.of(cell)
                 );
 
-        this.patchAndCheck(
-                SpreadsheetDelta.EMPTY,
-                marshall(delta),
-                delta
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    SpreadsheetDelta.EMPTY
+                            .patch(marshall(delta), this.createPatchContext());
+                }
         );
+        assertEquals("Missing patch cell: A1", thrown.getMessage(), "message");
     }
 
     @Test
-    public void testPatchReplaceCell() {
+    public void testPatchReplacesCell() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetExpressionReference.parseCell("a1"),
                 SpreadsheetFormula.EMPTY
@@ -276,41 +279,6 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 SpreadsheetFormula.EMPTY
                                         .setText("=2")
                         )
-                )
-        );
-
-        this.patchAndCheck(
-                before,
-                marshall(after),
-                after
-        );
-    }
-
-    @Test
-    public void testPatchCell2() {
-        final SpreadsheetCell a1 = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("a1"),
-                SpreadsheetFormula.EMPTY
-                        .setText("=1")
-        );
-        final SpreadsheetCell b2 = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("b2"),
-                SpreadsheetFormula.EMPTY
-                        .setText("=99")
-        );
-
-        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1)
-                );
-
-        final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("=2")
-                        ),
-                        b2
                 )
         );
 
