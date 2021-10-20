@@ -515,8 +515,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Examines the JSON holding a {@link SpreadsheetDelta} traversing the cells property replacing labels with their
      * cell-reference equivalent. Note no attempt is made to validate other properties.
      */
-    public static JsonNode resolveCellLabels(final JsonObject json,
-                                             final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell) {
+    public static JsonObject resolveCellLabels(final JsonObject json,
+                                               final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell) {
         Objects.requireNonNull(json, "json");
         Objects.requireNonNull(labelToCell, "labelToCell");
 
