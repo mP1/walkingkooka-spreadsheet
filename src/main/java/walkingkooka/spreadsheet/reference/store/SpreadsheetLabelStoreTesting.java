@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.StoreTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -160,6 +161,27 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         assertEquals(labels,
                 store.labels(reference),
                 () -> "labels for " + reference);
+    }
+
+    @Test
+    default void testCellReferenceOrFail() {
+        final S store = this.createStore();
+        boolean tested = false;
+
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label" + i);
+            if (!store.load(label).isPresent()) {
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> store.cellReference(label),
+                        () -> "Unknown label: " + label + " should have failed"
+                );
+                tested = true;
+                break;
+            }
+        }
+
+        assertEquals(true, tested, () -> "Unable to find an unknown label");
     }
 
     @Override

@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.store.Store;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
@@ -54,5 +55,18 @@ public interface SpreadsheetLabelStore extends Store<SpreadsheetLabelName, Sprea
      */
     default Optional<SpreadsheetCellReference> cellReference(final SpreadsheetExpressionReference reference) {
         return SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor.reference(reference, this);
+    }
+
+    /**
+     * Attempts to resolve any labels to a {@link SpreadsheetCellReference} throwing an {@link IllegalArgumentException}
+     * if any label resolution fails.
+     */
+    default SpreadsheetCellReference cellReferenceOrFail(final SpreadsheetExpressionReference reference) {
+        return this.cellReference(reference)
+                .orElseThrow(() -> new IllegalArgumentException(
+                                "Unknown label " +
+                                        CharSequences.quote(reference.toString())
+                        )
+                );
     }
 }
