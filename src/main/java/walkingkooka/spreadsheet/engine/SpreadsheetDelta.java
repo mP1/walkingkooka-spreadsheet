@@ -26,10 +26,12 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -47,6 +49,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -504,6 +507,64 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         return patched;
+    }
+
+    // labels...........................................................................................................
+
+    /**
+     * Examines the JSON holding a {@link SpreadsheetDelta} traversing the cells property replacing labels with their
+     * cell-reference equivalent. Note no attempt is made to validate other properties.
+     */
+    public static JsonNode resolveCellLabels(final JsonObject json,
+                                             final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell) {
+        Objects.requireNonNull(json, "json");
+        Objects.requireNonNull(labelToCell, "labelToCell");
+
+        JsonObject after = json;
+
+        final Optional<JsonNode> maybeCells = json.get(CELLS_PROPERTY);
+        if (maybeCells.isPresent()) {
+            final JsonNode cells = maybeCells.get();
+            if (!cells.isNull()) {
+                after = after.set(
+                        CELLS_PROPERTY,
+                        resolveCellLabelsCell(
+                                cells.objectOrFail(),
+                                labelToCell
+                        )
+                );
+            }
+        }
+
+        return after;
+    }
+
+    /**
+     * Loops over the cells json replacing the key if it is a label with its cell equivalent. If the label is unknown this will fail.
+     */
+    private static JsonObject resolveCellLabelsCell(final JsonObject cells,
+                                                    final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell) {
+
+        final List<JsonNode> resolved = Lists.array();
+
+        for (final Map.Entry<JsonPropertyName, JsonNode> child : cells.objectOrFail().asMap().entrySet()) {
+            final SpreadsheetCellReferenceOrLabelName cellReferenceOrLabelName = SpreadsheetExpressionReference.parseCellOrLabelName(child.getKey().value());
+
+            final JsonNode value = child.getValue();
+            resolved.add(
+                    cellReferenceOrLabelName.isLabelName() ?
+                            value.setName(
+                                    JsonPropertyName.with(
+                                            labelToCell.apply(
+                                                    (SpreadsheetLabelName) cellReferenceOrLabelName
+                                            ).toString()
+                                    )
+                            ) :
+                            value
+            );
+        }
+
+        return cells.setChildren(resolved);
     }
 
     // TreePrintable.....................................................................................................

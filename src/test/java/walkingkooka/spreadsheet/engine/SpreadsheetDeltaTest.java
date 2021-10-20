@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
@@ -26,10 +27,12 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -37,6 +40,7 @@ import walkingkooka.tree.json.patch.PatchableTesting;
 
 import java.math.MathContext;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -484,6 +488,137 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         ExpressionNumberKind.BIG_DECIMAL,
                         MathContext.UNLIMITED
                 )
+        );
+    }
+
+    // resolveCellLabels.....................................................................................................
+
+    final Function<SpreadsheetLabelName, SpreadsheetCellReference> LABEL_TO_CELL = (l) -> {
+        throw new UnsupportedOperationException();
+    };
+
+    @Test
+    public void testResolveLabelsNullJsonFails() {
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            SpreadsheetDelta.resolveCellLabels(null, LABEL_TO_CELL);
+        });
+    }
+
+    @Test
+    public void testResolveLabelsNullCellToLabelsFails() {
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            SpreadsheetDelta.resolveCellLabels(JsonNode.object(), null);
+        });
+    }
+
+    @Test
+    public void testResolveLabelsCellPropertyAbsent() {
+        this.resolveCellLabelsAndCheck(
+                JsonNode.object(),
+                LABEL_TO_CELL
+        );
+    }
+
+    @Test
+    public void testResolveLabelsCellPropertyNull() {
+        this.resolveCellLabelsAndCheck(
+                JsonNode.object()
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, JsonNode.nullNode()),
+                LABEL_TO_CELL
+        );
+    }
+
+    @Test
+    public void testResolveLabelsOnlyCells() {
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                SpreadsheetCell.with(
+                                        SpreadsheetSelection.parseCell("A1"),
+                                        SpreadsheetFormula.EMPTY
+                                )
+                        )
+                );
+
+        this.resolveCellLabelsAndCheck(
+                marshall(delta).objectOrFail(),
+                LABEL_TO_CELL
+        );
+    }
+
+
+    @Test
+    public void testResolveLabelsOnlyCells2() {
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                SpreadsheetCell.with(
+                                        SpreadsheetSelection.parseCell("A1"),
+                                        SpreadsheetFormula.EMPTY
+                                ),
+                                SpreadsheetCell.with(
+                                        SpreadsheetSelection.parseCell("B2"),
+                                        SpreadsheetFormula.EMPTY
+                                )
+                        )
+                );
+
+        this.resolveCellLabelsAndCheck(
+                marshall(delta).objectOrFail(),
+                LABEL_TO_CELL
+        );
+    }
+
+    @Test
+    public void testResolveLabelsIncludesLabel() {
+        final SpreadsheetCellReference z99 = SpreadsheetSelection.parseCell("Z99");
+
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                SpreadsheetCell.with(
+                                        z99,
+                                        SpreadsheetFormula.EMPTY
+                                ),
+                                SpreadsheetCell.with(
+                                        SpreadsheetSelection.parseCell("B2"),
+                                        SpreadsheetFormula.EMPTY
+                                )
+                        )
+                );
+        final JsonObject json = marshall(delta).objectOrFail();
+
+        final String label = "Label123";
+        final JsonObject jsonWithLabel = JsonNode.parse(
+                json.toString().replace("Z99", label)
+        ).objectOrFail();
+
+        this.resolveCellLabelsAndCheck(
+                jsonWithLabel,
+                (l) -> {
+                    assertEquals(label, l.value(), "label");
+                    return z99;
+                },
+                json
+        );
+    }
+
+    private void resolveCellLabelsAndCheck(final JsonObject json,
+                                           final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell) {
+        this.resolveCellLabelsAndCheck(
+                json,
+                labelToCell,
+                json
+        );
+    }
+
+    private void resolveCellLabelsAndCheck(final JsonObject json,
+                                           final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell,
+                                           final JsonObject expected) {
+        assertEquals(
+                expected,
+                SpreadsheetDelta.resolveCellLabels(json, labelToCell),
+                () -> "resolveCellLabels " + json
         );
     }
 
