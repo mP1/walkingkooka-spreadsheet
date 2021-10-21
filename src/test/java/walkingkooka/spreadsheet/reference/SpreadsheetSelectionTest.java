@@ -142,7 +142,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 SpreadsheetExpressionReference.isCellReferenceText(text),
                 () -> "isCellReferenceText " + CharSequences.quoteAndEscape(text));
         if (expected) {
-            SpreadsheetExpressionReference.parseExpressionReference(text);
+            SpreadsheetSelection.parseExpressionReference(text);
         }
     }
 
@@ -150,7 +150,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseCell() {
-        assertEquals(SpreadsheetExpressionReference.parseCell("A1"),
+        assertEquals(SpreadsheetSelection.parseCell("A1"),
                 SpreadsheetExpressionReference.cell(SpreadsheetSelection.parseColumn("A"),
                         SpreadsheetSelection.parseRow("1")));
     }
@@ -177,7 +177,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         assertEquals(
                 SpreadsheetSelection.parseColumn("B")
                         .spreadsheetColumnRange(SpreadsheetSelection.parseColumn("D")),
-                SpreadsheetExpressionReference.parseColumnRange("B:D")
+                SpreadsheetSelection.parseColumnRange("B:D")
         );
     }
 
@@ -186,7 +186,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         assertEquals(
                 SpreadsheetSelection.parseColumn("B")
                         .toSpreadsheetColumnReferenceRange(),
-                SpreadsheetExpressionReference.parseColumnRange("B")
+                SpreadsheetSelection.parseColumnRange("B")
         );
     }
     
@@ -255,7 +255,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseStringRange() {
         final String range = "A2:B2";
-        this.parseStringAndCheck(range, SpreadsheetExpressionReference.parseCellRange(range));
+        this.parseStringAndCheck(range, SpreadsheetSelection.parseCellRange(range));
     }
 
 
@@ -280,14 +280,14 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseCellOrLabelNameRangeFails() {
         parseCellOrLabelNameFails(
-                SpreadsheetExpressionReference.parseCellRange("A1:B2").toString(),
+                SpreadsheetSelection.parseCellRange("A1:B2").toString(),
                 InvalidCharacterException.class
         );
     }
 
     private void parseCellOrLabelNameFails(final String text,
                                            final Class<? extends RuntimeException> thrown) {
-        assertThrows(thrown, () -> SpreadsheetCellReferenceOrLabelName.parseCellOrLabelName(text));
+        assertThrows(thrown, () -> SpreadsheetSelection.parseCellOrLabelName(text));
     }
 
     @Test
@@ -304,7 +304,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     private void parseCellOrLabelNameAndCheck(final String text,
                                               final SpreadsheetCellReferenceOrLabelName expected) {
-        final SpreadsheetCellReferenceOrLabelName parsed = SpreadsheetCellReferenceOrLabelName.parseCellOrLabelName(text);
+        final SpreadsheetCellReferenceOrLabelName parsed = SpreadsheetSelection.parseCellOrLabelName(text);
         assertEquals(
                 expected,
                 parsed,
@@ -351,7 +351,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Override
     public SpreadsheetExpressionReference parseString(final String text) {
-        return SpreadsheetExpressionReference.parseExpressionReference(text);
+        return SpreadsheetSelection.parseExpressionReference(text);
     }
 
     @Override

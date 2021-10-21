@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.ReadOnlyStoreTesting;
 
 import java.util.Set;
@@ -122,7 +123,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     @Override
     public void testLabelsWithCellReference() {
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LabelZ99");
-        final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCell("Z99");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
 
         this.labelsAndCheck(ReadOnlySpreadsheetLabelStore.with(new FakeSpreadsheetLabelStore() {
                     @Override
@@ -171,7 +172,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     private SpreadsheetCellReference reference() {
-        return SpreadsheetExpressionReference.parseCell("A1");
+        return SpreadsheetSelection.parseCell("A1");
     }
 
     @Override

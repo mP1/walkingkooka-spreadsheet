@@ -24,6 +24,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -64,7 +65,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
 
     @Test
     public void testDifferentCellReference() {
-        this.checkNotEquals(TargetAndSpreadsheetCellReference.with(this.label(), SpreadsheetExpressionReference.parseCell("Z99")));
+        this.checkNotEquals(TargetAndSpreadsheetCellReference.with(this.label(), SpreadsheetSelection.parseCell("Z99")));
     }
 
     @Test
@@ -82,7 +83,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     }
 
     private SpreadsheetCellReference reference() {
-        return SpreadsheetExpressionReference.parseCell("A1");
+        return SpreadsheetSelection.parseCell("A1");
     }
 
     @Override

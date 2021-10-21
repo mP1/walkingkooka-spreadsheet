@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
@@ -70,7 +69,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testCellWhenEmpty() {
         this.cellAndCheck(
                 SpreadsheetDelta.EMPTY,
-                SpreadsheetExpressionReference.parseCell("A1"),
+                SpreadsheetSelection.parseCell("A1"),
                 Optional.empty()
         );
     }
@@ -83,7 +82,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 this.cell()
                         )
                 ),
-                SpreadsheetExpressionReference.parseCell("B2"),
+                SpreadsheetSelection.parseCell("B2"),
                 Optional.empty()
         );
     }
@@ -117,7 +116,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     private SpreadsheetCell cell() {
         return SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("A1"),
+                SpreadsheetSelection.parseCell("A1"),
                 SpreadsheetFormula.EMPTY
                         .setText("=1+2")
         );
@@ -248,7 +247,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchUnknownCellFails() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("a1"),
+                SpreadsheetSelection.parseCell("a1"),
                 SpreadsheetFormula.EMPTY
         );
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
@@ -268,7 +267,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchReplacesCell() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("a1"),
+                SpreadsheetSelection.parseCell("a1"),
                 SpreadsheetFormula.EMPTY
                         .setText("=1")
         );
@@ -305,7 +304,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 without.setCells(
                         Sets.of(
                                 SpreadsheetCell.with(
-                                        SpreadsheetExpressionReference.parseCell("a1"),
+                                        SpreadsheetSelection.parseCell("a1"),
                                         SpreadsheetFormula.EMPTY
                                                 .setText("=1")
                                 )
@@ -324,12 +323,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchCellWithWindow() {
         final SpreadsheetCell a1 = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("a1"),
+                SpreadsheetSelection.parseCell("a1"),
                 SpreadsheetFormula.EMPTY
                         .setText("=1")
         );
         final SpreadsheetCell b2 = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("b2"),
+                SpreadsheetSelection.parseCell("b2"),
                 SpreadsheetFormula.EMPTY
                         .setText("=99")
         );
@@ -367,12 +366,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchWindow() {
         final SpreadsheetCell a1 = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("a1"),
+                SpreadsheetSelection.parseCell("a1"),
                 SpreadsheetFormula.EMPTY
                         .setText("=1")
         );
         final SpreadsheetCell b2 = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("b2"),
+                SpreadsheetSelection.parseCell("b2"),
                 SpreadsheetFormula.EMPTY
                         .setText("=99")
         );
@@ -401,12 +400,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchWindowReplaced() {
         final SpreadsheetCell a1 = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("a1"),
+                SpreadsheetSelection.parseCell("a1"),
                 SpreadsheetFormula.EMPTY
                         .setText("=1")
         );
         final SpreadsheetCell b2 = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("b2"),
+                SpreadsheetSelection.parseCell("b2"),
                 SpreadsheetFormula.EMPTY
                         .setText("=99")
         );
@@ -439,12 +438,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchWindowRemoved() {
         final SpreadsheetCell a1 = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("a1"),
+                SpreadsheetSelection.parseCell("a1"),
                 SpreadsheetFormula.EMPTY
                         .setText("=1")
         );
         final SpreadsheetCell b2 = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("b2"),
+                SpreadsheetSelection.parseCell("b2"),
                 SpreadsheetFormula.EMPTY
                         .setText("=99")
         );

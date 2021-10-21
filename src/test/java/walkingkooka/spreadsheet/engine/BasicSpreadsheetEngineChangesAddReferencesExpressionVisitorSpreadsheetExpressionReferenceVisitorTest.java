@@ -19,13 +19,13 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor>
         implements SpreadsheetExpressionReferenceVisitorTesting<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor> {
 
-    private final static SpreadsheetCellReference CELL = SpreadsheetExpressionReference.parseCell("A99");
+    private final static SpreadsheetCellReference CELL = SpreadsheetSelection.parseCell("A99");
 
     @Test
     public void testToString() {

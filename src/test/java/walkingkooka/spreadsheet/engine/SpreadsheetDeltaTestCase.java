@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -223,8 +222,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     @Test
     public final void testSetDeletedCellsSorted() {
-        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCell("A1");
-        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCell("B2");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
 
         final SpreadsheetDelta delta = this.createSpreadsheetDelta()
                 .setDeletedCells(Sets.of(b2, a1));
@@ -238,10 +237,10 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     @Test
     public final void testSetDeletedCellsAllRelative() {
-        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCell("$A$1");
-        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCell("B$2");
-        final SpreadsheetCellReference c3 = SpreadsheetExpressionReference.parseCell("C$3");
-        final SpreadsheetCellReference d4 = SpreadsheetExpressionReference.parseCell("D4");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B$2");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C$3");
+        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("D4");
 
         final SpreadsheetDelta delta = this.createSpreadsheetDelta()
                 .setDeletedCells(Sets.of(b2, a1, d4, c3));
@@ -277,7 +276,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final Map<SpreadsheetColumnReference, Double> different = this.differentColumnWidths();
         final SpreadsheetDelta differentDelta = delta.setColumnWidths(
                 Map.of(
-                        SpreadsheetExpressionReference.parseColumn("$B"),
+                        SpreadsheetSelection.parseColumn("$B"),
                         50.0
                 )
         );
@@ -292,7 +291,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkColumnWidths(
                 differentDelta,
                 Map.of(
-                        SpreadsheetExpressionReference.parseColumn("B"),
+                        SpreadsheetSelection.parseColumn("B"),
                         50.0
                 )
         );
@@ -319,7 +318,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final D delta = this.createSpreadsheetDelta();
         final SpreadsheetDelta differentDelta = delta.setRowHeights(
                 Maps.of(
-                        SpreadsheetExpressionReference.parseRow("$1"),
+                        SpreadsheetSelection.parseRow("$1"),
                         50.0
                 )
         );
@@ -334,7 +333,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkRowHeights(
                 differentDelta,
                 Maps.of(
-                        SpreadsheetExpressionReference.parseRow("1"),
+                        SpreadsheetSelection.parseRow("1"),
                         50.0
                 )
         );
@@ -371,42 +370,42 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     @Test
     public final void testUnmarshallSelectionCell() {
         this.unmarshallSelectionAndCheck(
-                SpreadsheetExpressionReference.parseCell("B2")
+                SpreadsheetSelection.parseCell("B2")
         );
     }
 
     @Test
     public final void testUnmarshallSelectionCellRange() {
         this.unmarshallSelectionAndCheck(
-                SpreadsheetExpressionReference.parseCellRange("B2:C3")
+                SpreadsheetSelection.parseCellRange("B2:C3")
         );
     }
 
     @Test
     public final void testUnmarshallSelectionColumn() {
         this.unmarshallSelectionAndCheck(
-                SpreadsheetExpressionReference.parseColumn("B")
+                SpreadsheetSelection.parseColumn("B")
         );
     }
 
     @Test
     public final void testUnmarshallSelectionColumnRange() {
         this.unmarshallSelectionAndCheck(
-                SpreadsheetExpressionReference.parseColumnRange("B:CD")
+                SpreadsheetSelection.parseColumnRange("B:CD")
         );
     }
 
     @Test
     public final void testUnmarshallSelectionRow() {
         this.unmarshallSelectionAndCheck(
-                SpreadsheetExpressionReference.parseRow("2")
+                SpreadsheetSelection.parseRow("2")
         );
     }
 
     @Test
     public final void testUnmarshallSelectionRowRange() {
         this.unmarshallSelectionAndCheck(
-                SpreadsheetExpressionReference.parseRowRange("2:34")
+                SpreadsheetSelection.parseRowRange("2:34")
         );
     }
 
@@ -536,7 +535,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final SpreadsheetCell cell(final String cellReference, final String formulaText) {
         return SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell(cellReference),
+                SpreadsheetSelection.parseCell(cellReference),
                 SpreadsheetFormula.EMPTY
                         .setText(formulaText)
         );
@@ -602,13 +601,13 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Set<SpreadsheetCellReference> deletedCells() {
         return Sets.of(
-                SpreadsheetExpressionReference.parseCell("C1"),
-                SpreadsheetExpressionReference.parseCell("C2")
+                SpreadsheetSelection.parseCell("C1"),
+                SpreadsheetSelection.parseCell("C2")
         );
     }
 
     final Set<SpreadsheetCellReference> differentDeletedCells() {
-        return Set.of(SpreadsheetExpressionReference.parseCell("C2"));
+        return Set.of(SpreadsheetSelection.parseCell("C2"));
     }
 
     final void checkDeletedCells(final SpreadsheetDelta delta) {
@@ -700,7 +699,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Optional<SpreadsheetCellRange> window0(final String window) {
         return Optional.of(
-                SpreadsheetExpressionReference.parseCellRange(window)
+                SpreadsheetSelection.parseCellRange(window)
         );
     }
 

@@ -23,8 +23,8 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
@@ -81,14 +81,14 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
 
         cells.onCellSavedImmediate(
                 SpreadsheetCell.with(
-                        SpreadsheetExpressionReference.parseCell("A1"),
+                        SpreadsheetSelection.parseCell("A1"),
                         SpreadsheetFormula.EMPTY
                                 .setText("1+2")
                 )
         );
         cells.onCellSavedImmediate(
                 SpreadsheetCell.with(
-                        SpreadsheetExpressionReference.parseCell("B2"),
+                        SpreadsheetSelection.parseCell("B2"),
                         SpreadsheetFormula.EMPTY
                                 .setText("3+4")
                 )

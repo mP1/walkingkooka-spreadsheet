@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.ReadOnlyStoreTesting;
 
 import java.util.Set;
@@ -214,31 +214,31 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
     }
 
     private SpreadsheetCellReference a1() {
-        return SpreadsheetExpressionReference.parseCell("A1");
+        return SpreadsheetSelection.parseCell("A1");
     }
 
     private SpreadsheetCellReference b1() {
-        return SpreadsheetExpressionReference.parseCell("b1");
+        return SpreadsheetSelection.parseCell("b1");
     }
 
     private SpreadsheetCellReference c1() {
-        return SpreadsheetExpressionReference.parseCell("c1");
+        return SpreadsheetSelection.parseCell("c1");
     }
 
     private SpreadsheetCellReference f99() {
-        return SpreadsheetExpressionReference.parseCell("f99");
+        return SpreadsheetSelection.parseCell("f99");
     }
 
     private SpreadsheetCellReference g99() {
-        return SpreadsheetExpressionReference.parseCell("g99");
+        return SpreadsheetSelection.parseCell("g99");
     }
 
     private SpreadsheetCellReference h99() {
-        return SpreadsheetExpressionReference.parseCell("h99");
+        return SpreadsheetSelection.parseCell("h99");
     }
 
     private SpreadsheetCellReference i99() {
-        return SpreadsheetExpressionReference.parseCell("i99");
+        return SpreadsheetSelection.parseCell("i99");
     }
 
     @Override

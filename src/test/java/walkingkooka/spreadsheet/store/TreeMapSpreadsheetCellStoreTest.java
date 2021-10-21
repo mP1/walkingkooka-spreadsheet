@@ -22,8 +22,8 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -170,7 +170,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(
                 SpreadsheetCell.with(
-                        SpreadsheetExpressionReference.parseCell("A1"),
+                        SpreadsheetSelection.parseCell("A1"),
                         SpreadsheetFormula.EMPTY
                                 .setText("1+2")
                 )
