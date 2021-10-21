@@ -23,8 +23,8 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.StoreTesting;
 
 import java.util.List;
@@ -248,7 +248,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     @Override
     default SpreadsheetCellRange id() {
-        return SpreadsheetExpressionReference.parseCellRange("A1:B2");
+        return SpreadsheetSelection.parseCellRange("A1:B2");
     }
 
     @Override

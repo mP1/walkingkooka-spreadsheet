@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
@@ -181,7 +182,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullCellsFails() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("A1");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
         final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(null,
@@ -192,7 +193,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullFromFails() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("A1");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 reference,
                 SpreadsheetFormula.EMPTY
@@ -208,7 +209,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullToFails() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("A1");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 reference,
                 SpreadsheetFormula.EMPTY
@@ -224,7 +225,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullContextFails() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("A1");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 reference,
                 SpreadsheetFormula.EMPTY
@@ -240,13 +241,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsCellOutOfFromRangeFails() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("B2");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 reference,
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRange range = SpreadsheetCellRange.fromCells(Lists.of(SpreadsheetCellReference.parseCell("C3")));
+        final SpreadsheetCellRange range = SpreadsheetCellRange.fromCells(Lists.of(SpreadsheetSelection.parseCell("C3")));
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
@@ -257,7 +258,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsCellOutOfFromRangeFails2() {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("B2");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 reference,
                 SpreadsheetFormula.EMPTY
@@ -276,17 +277,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testFillCellsOneCellsOutOfManyOutOfRange() {
         final SpreadsheetCell b2 = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("B2"),
+                SpreadsheetSelection.parseCell("B2"),
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
         final SpreadsheetCell c3 = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("C3"),
+                SpreadsheetSelection.parseCell("C3"),
                 SpreadsheetFormula.EMPTY
                         .setText("2")
         );
         final SpreadsheetCell d4 = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("D4"),
+                SpreadsheetSelection.parseCell("D4"),
                 SpreadsheetFormula.EMPTY
                         .setText("3")
         );
@@ -304,22 +305,22 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testFillCellsSeveralCellsOutOfFromRangeFails() {
         final SpreadsheetCell b2 = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("B2"),
+                SpreadsheetSelection.parseCell("B2"),
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
         final SpreadsheetCell c3 = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("C3"),
+                SpreadsheetSelection.parseCell("C3"),
                 SpreadsheetFormula.EMPTY
                         .setText("2")
         );
         final SpreadsheetCell d4 = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("D4"),
+                SpreadsheetSelection.parseCell("D4"),
                 SpreadsheetFormula.EMPTY
                         .setText("3")
         );
         final SpreadsheetCell e5 = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("E5"),
+                SpreadsheetSelection.parseCell("E5"),
                 SpreadsheetFormula.EMPTY
                         .setText("4")
         );

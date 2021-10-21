@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.tree.expression.Expression;
@@ -51,7 +52,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void testResolveCellReferenceRange() {
         this.resolveCellReferenceAndCheck(
                 SpreadsheetExpressionReference.parseExpressionReference("B2:B3"),
-                SpreadsheetCellReference.parseCell("B2")
+                SpreadsheetSelection.parseCell("B2")
         );
     }
 
