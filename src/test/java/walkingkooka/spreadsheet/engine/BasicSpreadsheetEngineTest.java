@@ -7751,7 +7751,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                final String range) {
         this.rangeAndCheck(
                 SpreadsheetViewport.with(
-                        SpreadsheetSelection.parseCellOrLabelName(cellOrLabel),
+                        SpreadsheetSelection.parseCellOrLabel(cellOrLabel),
                         xOffset,
                         yOffset,
                         width,
