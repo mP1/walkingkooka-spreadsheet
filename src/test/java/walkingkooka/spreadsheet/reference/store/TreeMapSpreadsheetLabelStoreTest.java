@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.TreeMap;
 
@@ -248,15 +249,15 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private SpreadsheetCellReference a1() {
-        return SpreadsheetExpressionReference.parseCell("A1");
+        return SpreadsheetSelection.parseCell("A1");
     }
 
     private SpreadsheetCellReference a2() {
-        return SpreadsheetExpressionReference.parseCell("A2");
+        return SpreadsheetSelection.parseCell("A2");
     }
 
     private SpreadsheetCellRange range1() {
-        return SpreadsheetExpressionReference.parseCellRange("A1:A3");
+        return SpreadsheetSelection.parseCellRange("A1:A3");
     }
 
     @Override

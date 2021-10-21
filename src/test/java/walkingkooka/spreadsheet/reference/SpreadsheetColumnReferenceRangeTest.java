@@ -220,8 +220,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
                                      final boolean expected) {
         assertEquals(
                 expected,
-                SpreadsheetExpressionReference.parseColumnRange(columnRange)
-                        .testColumn(SpreadsheetExpressionReference.parseColumn(column)),
+                SpreadsheetSelection.parseColumnRange(columnRange)
+                        .testColumn(SpreadsheetSelection.parseColumn(column)),
                 columnRange + ".testColumn(" + column + ")"
         );
     }

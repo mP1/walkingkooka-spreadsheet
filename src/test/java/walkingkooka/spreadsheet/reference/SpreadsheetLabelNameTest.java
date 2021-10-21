@@ -106,7 +106,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
 
     @Test
     public void testMappingCellReference() {
-        this.mappingAndCheck(SpreadsheetExpressionReference.parseCell("A1"));
+        this.mappingAndCheck(SpreadsheetSelection.parseCell("A1"));
     }
 
     @Test
@@ -116,7 +116,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
 
     @Test
     public void testMappingRange() {
-        this.mappingAndCheck(SpreadsheetExpressionReference.parseCellRange("A1:b2"));
+        this.mappingAndCheck(SpreadsheetSelection.parseCellRange("A1:b2"));
     }
 
     private void mappingAndCheck(final SpreadsheetExpressionReference reference) {

@@ -31,7 +31,7 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
 
     @Test
     public void testUnmarshallCellReference() {
-        this.unmarshallAndCheck2(SpreadsheetExpressionReference.parseCell("B2"));
+        this.unmarshallAndCheck2(SpreadsheetSelection.parseCell("B2"));
     }
 
     @Test
@@ -49,7 +49,7 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
     @Test
     public void testUnmarshallRangeFails() {
         this.unmarshallFails2(
-                SpreadsheetExpressionReference.parseCellRange("A1:B2")
+                SpreadsheetSelection.parseCellRange("A1:B2")
         );
     }
 
@@ -86,6 +86,6 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
 
     @Override
     public SpreadsheetCellReferenceOrLabelName createJsonNodeMarshallingValue() {
-        return SpreadsheetExpressionReference.parseCellOrLabelName("A1");
+        return SpreadsheetSelection.parseCellOrLabelName("A1");
     }
 }

@@ -706,7 +706,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testJsonNodeUnmarshallString() {
         this.unmarshallAndCheck(JsonNode.string("$A$1"),
-                SpreadsheetExpressionReference.parseCell("$A$1"));
+                SpreadsheetSelection.parseCell("$A$1"));
     }
 
     // SpreadsheetSelectionVisitor.......................................................................................
@@ -817,10 +817,10 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testArraySort() {
-        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCell("A1");
-        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCell("$B2");
-        final SpreadsheetCellReference c3 = SpreadsheetExpressionReference.parseCell("c$3");
-        final SpreadsheetCellReference d4 = SpreadsheetExpressionReference.parseCell("$D$4");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B2");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c$3");
+        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("$D$4");
 
         this.compareToArraySortAndCheck(c3, a1, d4, b2,
                 a1, b2, c3, d4);
@@ -888,7 +888,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Override
     public SpreadsheetCellReference parseString(final String text) {
-        return SpreadsheetExpressionReference.parseCell(text);
+        return SpreadsheetSelection.parseCell(text);
     }
 
     @Override

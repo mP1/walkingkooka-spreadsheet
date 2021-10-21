@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
@@ -524,7 +525,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private SpreadsheetCell createCell(final String reference) {
-        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCell(reference), formula("1+2"));
+        return SpreadsheetCell.with(SpreadsheetSelection.parseCell(reference), formula("1+2"));
     }
 
     // patch............................................................................................................
@@ -543,7 +544,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         this.patchAndCheck(
                 SpreadsheetCell.with(
-                        SpreadsheetExpressionReference.parseCell("A1"),
+                        SpreadsheetSelection.parseCell("A1"),
                         formula(text)
                 ),
                 JsonNode.object()
@@ -560,7 +561,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testPatchDifferentText() {
-        final SpreadsheetCellReference cellReference = SpreadsheetExpressionReference.parseCell("A1");
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.parseCell("A1");
         final String text = "=2";
 
         this.patchAndCheck(
@@ -587,7 +588,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testPatchSetFormat() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("A1"),
+                SpreadsheetSelection.parseCell("A1"),
                 formula("=1")
         ).setFormat(
                 Optional.of(
@@ -615,7 +616,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testPatchRemoveFormat() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("A1"),
+                SpreadsheetSelection.parseCell("A1"),
                 formula("=1")
         ).setFormat(
                 Optional.of(
@@ -642,7 +643,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 .set(TextStylePropertyName.BACKGROUND_COLOR, Color.BLACK);
 
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetExpressionReference.parseCell("A1"),
+                SpreadsheetSelection.parseCell("A1"),
                 formula("=1")
         ).setStyle(style);
 

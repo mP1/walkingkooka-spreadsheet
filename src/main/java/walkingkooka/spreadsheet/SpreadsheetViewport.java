@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.json.JsonNode;
@@ -56,7 +57,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
         final SpreadsheetCellReferenceOrLabelName cellOrLabel;
         try {
-            cellOrLabel = SpreadsheetCellReferenceOrLabelName.parseCellOrLabelName(tokens[0]);
+            cellOrLabel = SpreadsheetSelection.parseCellOrLabelName(tokens[0]);
         } catch (final NumberFormatException cause) {
             throw new IllegalArgumentException("Invalid cellOrLabel in " + CharSequences.quoteAndEscape(text));
         }

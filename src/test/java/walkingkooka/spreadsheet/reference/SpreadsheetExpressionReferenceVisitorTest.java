@@ -38,7 +38,7 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
 
     @Test
     public void testAcceptSpreadsheetCellReference() {
-        this.createVisitor().accept(SpreadsheetExpressionReference.parseCell("A1"));
+        this.createVisitor().accept(SpreadsheetSelection.parseCell("A1"));
     }
 
     @Test
@@ -48,14 +48,14 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
 
     @Test
     public void testAcceptSpreadsheetCellRange() {
-        this.createVisitor().accept(SpreadsheetExpressionReference.parseCellRange("A1:B2"));
+        this.createVisitor().accept(SpreadsheetSelection.parseCellRange("A1:B2"));
     }
 
     @Test
     public void testStartVisitExpressionReferenceSkip() {
         final StringBuilder b = new StringBuilder();
 
-        final SpreadsheetCellReference cell = SpreadsheetExpressionReference.parseCell("A1");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A1");
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
             protected Visiting startVisit(final ExpressionReference reference) {
@@ -78,7 +78,7 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
     public void testStartVisitSpreadsheetExpressionReferenceSkip() {
         final StringBuilder b = new StringBuilder();
 
-        final SpreadsheetCellReference cell = SpreadsheetExpressionReference.parseCell("A1");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A1");
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
             protected Visiting startVisit(final ExpressionReference reference) {

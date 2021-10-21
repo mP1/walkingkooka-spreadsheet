@@ -229,8 +229,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
                                  final boolean expected) {
         assertEquals(
                 expected,
-                SpreadsheetExpressionReference.parseRowRange(rowRange)
-                        .testRow(SpreadsheetExpressionReference.parseRow(row)),
+                SpreadsheetSelection.parseRowRange(rowRange)
+                        .testRow(SpreadsheetSelection.parseRow(row)),
                 () -> rowRange + " testRow " + row
         );
     }
