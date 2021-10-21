@@ -173,7 +173,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
             if (!store.load(label).isPresent()) {
                 assertThrows(
                         IllegalArgumentException.class,
-                        () -> store.cellReference(label),
+                        () -> store.cellReferenceOrFail(label),
                         () -> "Unknown label: " + label + " should have failed"
                 );
                 tested = true;
