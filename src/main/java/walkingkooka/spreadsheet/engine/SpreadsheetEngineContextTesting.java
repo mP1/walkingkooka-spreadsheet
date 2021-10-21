@@ -51,7 +51,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     @Test
     default void testResolveCellReferenceRange() {
         this.resolveCellReferenceAndCheck(
-                SpreadsheetExpressionReference.parseExpressionReference("B2:B3"),
+                SpreadsheetSelection.parseExpressionReference("B2:B3"),
                 SpreadsheetSelection.parseCell("B2")
         );
     }
