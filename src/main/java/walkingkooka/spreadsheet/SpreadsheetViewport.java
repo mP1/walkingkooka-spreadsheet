@@ -57,7 +57,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
         final SpreadsheetCellReferenceOrLabelName cellOrLabel;
         try {
-            cellOrLabel = SpreadsheetSelection.parseCellOrLabelName(tokens[0]);
+            cellOrLabel = SpreadsheetSelection.parseCellOrLabel(tokens[0]);
         } catch (final NumberFormatException cause) {
             throw new IllegalArgumentException("Invalid cellOrLabel in " + CharSequences.quoteAndEscape(text));
         }
