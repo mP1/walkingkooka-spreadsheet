@@ -497,7 +497,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final Set<SpreadsheetCell> patched = Sets.ordered();
 
         for (final Map.Entry<JsonPropertyName, JsonNode> child : node.objectOrFail().asMap().entrySet()) {
-            final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCell(child.getKey().value());
+            final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell(child.getKey().value());
 
             final SpreadsheetCell cell = this.cell(reference)
                     .orElseThrow(() -> new IllegalArgumentException("Missing patch cell: " + reference));
@@ -548,7 +548,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final List<JsonNode> resolved = Lists.array();
 
         for (final Map.Entry<JsonPropertyName, JsonNode> child : cells.objectOrFail().asMap().entrySet()) {
-            final SpreadsheetCellReferenceOrLabelName cellReferenceOrLabelName = SpreadsheetExpressionReference.parseCellOrLabelName(child.getKey().value());
+            final SpreadsheetCellReferenceOrLabelName cellReferenceOrLabelName = SpreadsheetSelection.parseCellOrLabelName(child.getKey().value());
 
             final JsonNode value = child.getValue();
             resolved.add(

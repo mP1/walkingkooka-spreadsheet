@@ -343,7 +343,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testSaveLabelNullContextFails() {
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().saveLabel(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("LABEL123"),
-                SpreadsheetExpressionReference.parseCell("A1")), null));
+                SpreadsheetSelection.parseCell("A1")), null));
     }
 
     default void saveLabelAndCheck(final SpreadsheetEngine engine,

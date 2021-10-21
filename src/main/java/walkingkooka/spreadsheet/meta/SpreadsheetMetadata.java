@@ -56,7 +56,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
@@ -876,7 +876,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
 
     private static SpreadsheetMetadata nonLocaleDefaults() {
         EMPTY.id(); // force JsonNodeContext registering of collaborating types.
-        SpreadsheetExpressionReference.parseCellRange("A1");
+        SpreadsheetSelection.parseCellRange("A1");
         TextStyle.EMPTY.isEmpty();
         return JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake())
                 .unmarshall(JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text()), SpreadsheetMetadata.class);
