@@ -22,6 +22,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -323,9 +324,11 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
             }
 
-            cell = unmarshall0(SpreadsheetCellReference.parseCell(name.value()),
+            cell = unmarshall0(
+                    SpreadsheetSelection.parseCell(name.value()),
                     child,
-                    context);
+                    context
+            );
         }
 
         if (null == cell) {

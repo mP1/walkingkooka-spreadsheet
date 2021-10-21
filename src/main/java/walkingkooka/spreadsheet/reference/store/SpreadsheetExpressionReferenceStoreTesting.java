@@ -23,7 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.StoreTesting;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
     @Test
     default void testSaveNullFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().save(Sets.of(SpreadsheetExpressionReference.parseCell("A1"))));
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().save(Sets.of(SpreadsheetSelection.parseCell("A1"))));
     }
 
     @Test
@@ -86,7 +86,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final S store = this.createStore();
 
         final T target = this.id();
-        final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCell("Z99");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
 
         final List<TargetAndSpreadsheetCellReference<T>> fired = Lists.array();
         store.addAddReferenceWatcher(fired::add);
@@ -126,7 +126,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final S store = this.createStore();
 
         final T target = this.id();
-        final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCell("Z99");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
 
         final List<TargetAndSpreadsheetCellReference<T>> fired = Lists.array();
         store.addAddReferenceWatcher(fired::add);
@@ -143,7 +143,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final S store = this.createStore();
 
         final T target = this.id();
-        final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCell("Z99");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
 
         store.saveReferences(target, Sets.of(reference));
 
@@ -161,7 +161,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
     @Test
     default void testSaveReferencesNullIdFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().saveReferences(null, Sets.of(SpreadsheetExpressionReference.parseCell("A1"))));
+        assertThrows(NullPointerException.class, () -> this.createStore().saveReferences(null, Sets.of(SpreadsheetSelection.parseCell("A1"))));
     }
 
     @Test
@@ -207,7 +207,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final S store = this.createStore();
 
         final T id = this.id();
-        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCell("B2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
 
         store.saveReferences(id, Sets.of(b2));
 
@@ -225,7 +225,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final S store = this.createStore();
 
         final T id = this.id();
-        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCell("B2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
 
         store.saveReferences(id, Sets.of(b2));
 
@@ -235,7 +235,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final List<TargetAndSpreadsheetCellReference<T>> removeFired = Lists.array();
         store.addRemoveReferenceWatcher(removeFired::add);
 
-        final SpreadsheetCellReference z9 = SpreadsheetExpressionReference.parseCell("Z9");
+        final SpreadsheetCellReference z9 = SpreadsheetSelection.parseCell("Z9");
         store.saveReferences(id, Sets.of(z9));
 
         assertEquals(Lists.of(TargetAndSpreadsheetCellReference.with(id, z9)),
@@ -251,8 +251,8 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final S store = this.createStore();
 
         final T id = this.id();
-        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCell("B2");
-        final SpreadsheetCellReference c3 = SpreadsheetExpressionReference.parseCell("C3");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
 
         store.saveReferences(id, Sets.of(b2, c3));
 
@@ -262,7 +262,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final List<TargetAndSpreadsheetCellReference<T>> removeFired = Lists.array();
         store.addRemoveReferenceWatcher(removeFired::add);
 
-        final SpreadsheetCellReference d4 = SpreadsheetExpressionReference.parseCell("d4");
+        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
         store.saveReferences(id, Sets.of(c3, d4));
 
         assertEquals(Lists.of(TargetAndSpreadsheetCellReference.with(id, d4)),
