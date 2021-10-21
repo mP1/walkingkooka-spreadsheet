@@ -656,40 +656,69 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // JsonNodeContext..................................................................................................
 
+    // @VisibleForTesting
     static SpreadsheetDelta unmarshall(final JsonNode node,
                                        final JsonNodeUnmarshallContext context) {
-        Optional<SpreadsheetSelection> selection = NO_SELECTION;
-        Set<SpreadsheetCell> cells = Sets.empty();
-        Set<SpreadsheetLabelMapping> labels = NO_LABELS;
-        Set<SpreadsheetCellReference> deletedCells = Sets.empty();
-        Map<SpreadsheetColumnReference, Double> columnWidths = NO_COLUMN_WIDTHS;
-        Map<SpreadsheetRowReference, Double> rowsHeights = NO_ROW_HEIGHTS;
-        Optional<SpreadsheetCellRange> window = NO_WINDOW;
+        SpreadsheetDelta unmarshalled = EMPTY;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
 
             switch (name.value()) {
                 case SELECTION_PROPERTY_STRING:
-                    selection = unmarshallSelection(child, context);
+                    unmarshalled = unmarshalled.setSelection(
+                            unmarshallSelection(
+                                    child,
+                                    context
+                            )
+                    );
                     break;
                 case CELLS_PROPERTY_STRING:
-                    cells = unmarshallCells(child, context);
+                    unmarshalled = unmarshalled.setCells(
+                            unmarshallCells(child, context)
+                    );
                     break;
                 case LABELS_PROPERTY_STRING:
-                    labels = context.unmarshallSet(child, SpreadsheetLabelMapping.class);
+                    unmarshalled = unmarshalled.setLabels(
+                            context.unmarshallSet(
+                                    child,
+                                    SpreadsheetLabelMapping.class
+                            )
+                    );
                     break;
                 case DELETED_CELLS_PROPERTY_STRING:
-                    deletedCells = context.unmarshallSet(child, SpreadsheetCellReference.class);
+                    unmarshalled = unmarshalled.setDeletedCells(
+                            context.unmarshallSet(
+                                    child,
+                                    SpreadsheetCellReference.class
+                            )
+                    );
                     break;
                 case COLUMN_WIDTHS_PROPERTY_STRING:
-                    columnWidths = context.unmarshallMap(child, SpreadsheetColumnReference.class, Double.class);
+                    unmarshalled = unmarshalled.setColumnWidths(
+                            context.unmarshallMap(
+                                    child,
+                                    SpreadsheetColumnReference.class,
+                                    Double.class
+                            )
+                    );
                     break;
                 case ROW_HEIGHTS_PROPERTY_STRING:
-                    rowsHeights = context.unmarshallMap(child, SpreadsheetRowReference.class, Double.class);
+                    unmarshalled = unmarshalled.setRowHeights(
+                            context.unmarshallMap(
+                                    child,
+                                    SpreadsheetRowReference.class,
+                                    Double.class
+                            )
+                    );
                     break;
                 case WINDOW_PROPERTY_STRING:
-                    window = unmarshallWindow(child, context);
+                    unmarshalled = unmarshalled.setWindow(
+                            unmarshallWindow(
+                                    child,
+                                    context
+                            )
+                    );
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
@@ -697,14 +726,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             }
         }
 
-        return EMPTY
-                .setSelection(selection)
-                .setCells(cells)
-                .setWindow(window)
-                .setLabels(labels)
-                .setDeletedCells(deletedCells)
-                .setColumnWidths(columnWidths)
-                .setRowHeights(rowsHeights);
+        return unmarshalled;
     }
 
     private static Optional<SpreadsheetSelection> unmarshallSelection(final JsonNode node,
