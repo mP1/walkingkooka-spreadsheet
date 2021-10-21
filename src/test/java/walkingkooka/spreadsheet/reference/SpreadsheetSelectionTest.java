@@ -24,6 +24,8 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 
+import java.util.function.Function;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -262,7 +264,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     // parseCellOrLabel....................................................................................
 
     @Test
-    public void testParseCellOrLabelNameNullFails() {
+    public void testParseCellOrLabelNullFails() {
         parseCellOrLabelFails(
                 null,
                 NullPointerException.class
@@ -270,7 +272,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseCellOrLabelNameEmptyFails() {
+    public void testParseCellOrLabelEmptyFails() {
         parseCellOrLabelFails(
                 "",
                 IllegalArgumentException.class
@@ -278,7 +280,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseCellOrLabelNameRangeFails() {
+    public void testParseCellOrLabelRangeFails() {
         parseCellOrLabelFails(
                 SpreadsheetSelection.parseCellRange("A1:B2").toString(),
                 InvalidCharacterException.class
@@ -291,13 +293,13 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseCellOrLabelNameCell() {
+    public void testParseCellOrLabelCell() {
         final String text = "A1";
         this.parseCellOrLabelAndCheck(text, SpreadsheetCellReference.parseCell(text));
     }
 
     @Test
-    public void testParseCellOrLabelNameLabel() {
+    public void testParseCellOrLabelLabel() {
         final String text = "Label123";
         this.parseCellOrLabelAndCheck(text, SpreadsheetCellReference.labelName(text));
     }
@@ -305,6 +307,98 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     private void parseCellOrLabelAndCheck(final String text,
                                           final SpreadsheetCellReferenceOrLabelName expected) {
         final SpreadsheetCellReferenceOrLabelName parsed = SpreadsheetSelection.parseCellOrLabel(text);
+        assertEquals(
+                expected,
+                parsed,
+                () -> "Parsing of " + CharSequences.quoteAndEscape(text) + " failed"
+        );
+    }
+
+    // parseCellOrLabelResolvingLabels..................................................................................
+
+    private final static Function<SpreadsheetLabelName, SpreadsheetCellReference> LABEL_TO_CELL = (l) -> {
+        throw new UnsupportedOperationException();
+    };
+
+    @Test
+    public void testParseCellOrLabelResolvingLabelsNullTextFails() {
+        parseCellOrLabelResolvingLabelsFails(
+                null,
+                LABEL_TO_CELL,
+                NullPointerException.class
+        );
+    }
+
+    @Test
+    public void testParseCellOrLabelResolvingLabelsEmptyTextFails() {
+        parseCellOrLabelResolvingLabelsFails(
+                "",
+                LABEL_TO_CELL,
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
+    public void testParseCellOrLabelResolvingLabelsNullLabelToCellFails() {
+        parseCellOrLabelResolvingLabelsFails(
+                "A1",
+                null,
+                NullPointerException.class
+        );
+    }
+
+    @Test
+    public void testParseCellOrLabelResolvingLabelsRangeFails() {
+        parseCellOrLabelResolvingLabelsFails(
+                SpreadsheetExpressionReference.parseCellRange("A1:B2").toString(),
+                LABEL_TO_CELL,
+                InvalidCharacterException.class
+        );
+    }
+
+    private void parseCellOrLabelResolvingLabelsFails(final String text,
+                                                          final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell,
+                                                          final Class<? extends RuntimeException> thrown) {
+        assertThrows(
+                thrown, () -> SpreadsheetSelection.parseCellOrLabelResolvingLabels(
+                        text,
+                        labelToCell)
+        );
+    }
+
+    @Test
+    public void testParseCellOrLabelResolvingLabelsCell() {
+        final String text = "A1";
+        this.parseCellOrLabelResolvingLabelsAndCheck(
+                text,
+                LABEL_TO_CELL,
+                SpreadsheetSelection.parseCell(text)
+        );
+    }
+
+    @Test
+    public void testParseCellOrLabelResolvingLabelsLabel() {
+        final String text = "Label123";
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName(text);
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.parseCell("A123");
+
+        this.parseCellOrLabelResolvingLabelsAndCheck(
+                text,
+                (l) -> {
+                    assertEquals(label, l, "label");
+                    return cellReference;
+                },
+                cellReference
+        );
+    }
+
+    private void parseCellOrLabelResolvingLabelsAndCheck(final String text,
+                                                             final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell,
+                                                             final SpreadsheetCellReference expected) {
+        final SpreadsheetCellReference parsed = SpreadsheetSelection.parseCellOrLabelResolvingLabels(
+                text,
+                labelToCell
+        );
         assertEquals(
                 expected,
                 parsed,
