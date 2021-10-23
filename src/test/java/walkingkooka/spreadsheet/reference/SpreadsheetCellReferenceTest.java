@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
-import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -31,8 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReferenceOrLabelNameTestCase<SpreadsheetCellReference>
-        implements HateosResourceTesting<SpreadsheetCellReference>,
-        ParseStringTesting<SpreadsheetCellReference> {
+        implements HateosResourceTesting<SpreadsheetCellReference> {
 
     private final static int COLUMN = 123;
     private final static int ROW = 456;
@@ -889,16 +887,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Override
     public SpreadsheetCellReference parseString(final String text) {
         return SpreadsheetSelection.parseCell(text);
-    }
-
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
-        return expected;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
-        return expected;
     }
 
     // JsonNodeMarshallingTesting...........................................................................................

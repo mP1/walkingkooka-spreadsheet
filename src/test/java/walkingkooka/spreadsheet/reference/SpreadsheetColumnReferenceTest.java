@@ -617,16 +617,6 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         return SpreadsheetSelection.parseColumn(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
-        return expected;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
-        return expected;
-    }
-
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
