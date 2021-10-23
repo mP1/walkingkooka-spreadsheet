@@ -20,15 +20,13 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.ComparableTesting2;
-import walkingkooka.test.ParseStringTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends SpreadsheetColumnOrRowReferenceRange & Comparable<S>,
         R extends SpreadsheetColumnOrRowReference & Comparable<R>>
         extends SpreadsheetSelectionTestCase<S>
-        implements ComparableTesting2<S>,
-        ParseStringTesting<S> {
+        implements ComparableTesting2<S> {
 
     SpreadsheetColumnOrRowReferenceRangeTestCase() {
         super();
@@ -59,15 +57,5 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
     @Override
     public final boolean compareAndEqualsMatch() {
         return false;
-    }
-
-    @Override
-    public final Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
-        return expected;
-    }
-
-    @Override
-    public final RuntimeException parseStringFailedExpected(final RuntimeException expected) {
-        return expected;
     }
 }

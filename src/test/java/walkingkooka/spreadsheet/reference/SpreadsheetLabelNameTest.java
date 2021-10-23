@@ -327,4 +327,11 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
                                            final JsonNodeUnmarshallContext context) {
         return SpreadsheetLabelName.unmarshallLabelName(from, context);
     }
+
+    // ParseStringTesting...............................................................................................
+
+    @Override
+    public SpreadsheetLabelName parseString(final String text) {
+        return SpreadsheetSelection.labelName(text);
+    }
 }

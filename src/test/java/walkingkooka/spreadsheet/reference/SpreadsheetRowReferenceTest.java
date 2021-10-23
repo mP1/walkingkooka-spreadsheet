@@ -522,14 +522,4 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public SpreadsheetRowReference parseString(final String text) {
         return SpreadsheetSelection.parseRow(text);
     }
-
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
-        return expected;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
-        return expected;
-    }
 }

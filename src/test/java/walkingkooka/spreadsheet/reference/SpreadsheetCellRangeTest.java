@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -40,8 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetCellRange>
-        implements ParseStringTesting<SpreadsheetCellRange>,
-        PredicateTesting2<SpreadsheetCellRange, SpreadsheetCellReference> {
+        implements PredicateTesting2<SpreadsheetCellRange, SpreadsheetCellReference> {
 
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
@@ -1414,15 +1412,5 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     @Override
     public SpreadsheetCellRange parseString(final String text) {
         return SpreadsheetCellRange.parseCellRange(text);
-    }
-
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> classs) {
-        return classs;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
-        return cause;
     }
 }
