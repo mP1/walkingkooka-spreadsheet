@@ -126,6 +126,13 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         throw new UnsupportedOperationException();
     }
 
+    // TreePrintable....................................................................................................
+
+    @Override
+    String printTreeLabel() {
+        return "label";
+    }
+
     // Comparable........................................................................................................
 
     @Override

@@ -265,6 +265,13 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         visitor.visit(this);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Override
+    String printTreeLabel() {
+        return "cell";
+    }
+
     // Object...........................................................................................................
 
     @Override

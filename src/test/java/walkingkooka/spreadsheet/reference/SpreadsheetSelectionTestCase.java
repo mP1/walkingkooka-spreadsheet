@@ -26,6 +26,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
@@ -41,7 +42,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         IsMethodTesting<S>,
         ParseStringTesting<S>,
         PredicateTesting2<S, SpreadsheetCellReference>,
-        ToStringTesting<S> {
+        ToStringTesting<S>,
+        TreePrintableTesting {
 
     SpreadsheetSelectionTestCase() {
         super();

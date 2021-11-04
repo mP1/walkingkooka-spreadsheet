@@ -200,6 +200,13 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         visitor.visit(this);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Override
+    String printTreeLabel() {
+        return "row";
+    }
+
     // Object...........................................................................................................
 
     @Override
