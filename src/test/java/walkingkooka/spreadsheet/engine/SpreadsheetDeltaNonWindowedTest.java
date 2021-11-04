@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.Optional;
@@ -75,7 +75,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 ),
                 "SpreadsheetDelta\n" +
                         "  selection:\n" +
-                        "    A1:B2\n"
+                        "    A1:B2 BOTTOM_RIGHT\n"
         );
     }
 
@@ -254,7 +254,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 ),
                 "SpreadsheetDelta\n" +
                         "  selection:\n" +
-                        "    A1:B2\n" +
+                        "    A1:B2 BOTTOM_RIGHT\n" +
                         "  cells:\n" +
                         "    Cell A1\n" +
                         "      Formula\n" +
@@ -283,10 +283,14 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    final void unmarshallSelectionAndCheck(final SpreadsheetSelection selection) {
+    final void unmarshallSelectionAndCheck(final SpreadsheetViewportSelection selection) {
         this.unmarshallAndCheck(
                 JsonNode.object()
-                        .set(SpreadsheetDelta.SELECTION_PROPERTY, this.marshallContext().marshallWithType(selection)),
+                        .set(
+                                SpreadsheetDelta.SELECTION_PROPERTY,
+                                this.marshallContext()
+                                        .marshall(selection)
+                        ),
                 SpreadsheetDeltaWindowed.withWindowed(
                         Optional.ofNullable(
                                 selection
@@ -493,7 +497,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
-                "selection: A1:B2 cells: A1=1, B2=2, C3=3");
+                "selection: A1:B2 BOTTOM_RIGHT cells: A1=1, B2=2, C3=3");
     }
 
     @Test
@@ -507,7 +511,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
-                "selection: A1:B2 cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3");
+                "selection: A1:B2 BOTTOM_RIGHT cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3");
     }
 
     @Test

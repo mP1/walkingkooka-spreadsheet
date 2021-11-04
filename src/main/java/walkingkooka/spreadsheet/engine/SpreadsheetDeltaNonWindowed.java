@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.Map;
@@ -42,7 +42,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     /**
      * Factory that creates a new {@link SpreadsheetDeltaNonWindowed} without copying or filtering the cells.
      */
-    static SpreadsheetDeltaNonWindowed withNonWindowed(final Optional<SpreadsheetSelection> selection,
+    static SpreadsheetDeltaNonWindowed withNonWindowed(final Optional<SpreadsheetViewportSelection> selection,
                                                        final Set<SpreadsheetCell> cells,
                                                        final Set<SpreadsheetLabelMapping> labels,
                                                        final Set<SpreadsheetCellReference> deletedCells,
@@ -58,7 +58,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         );
     }
 
-    private SpreadsheetDeltaNonWindowed(final Optional<SpreadsheetSelection> selection,
+    private SpreadsheetDeltaNonWindowed(final Optional<SpreadsheetViewportSelection> selection,
                                         final Set<SpreadsheetCell> cells,
                                         final Set<SpreadsheetLabelMapping> labels,
                                         final Set<SpreadsheetCellReference> deletedCells,
@@ -75,7 +75,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    SpreadsheetDelta replaceSelection(final Optional<SpreadsheetSelection> selection) {
+    SpreadsheetDelta replaceSelection(final Optional<SpreadsheetViewportSelection> selection) {
         return new SpreadsheetDeltaNonWindowed(
                 selection,
                 this.cells,

@@ -28,6 +28,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
@@ -208,12 +210,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.NO_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseColumn("C")
+                                .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
                 )
         );
     }
 
-    private void patchSelectionAndCheck(final Optional<SpreadsheetSelection> before,
-                                        final Optional<SpreadsheetSelection> after) {
+    private void patchSelectionAndCheck(final Optional<SpreadsheetViewportSelection> before,
+                                        final Optional<SpreadsheetViewportSelection> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
                 .setSelection(after);
 
@@ -232,6 +235,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:B2")
+                                                .setAnchor(
+                                                        Optional.of(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
+                                                )
                                 )
                         )
                 ,
@@ -298,6 +304,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setSelection(
                         Optional.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
+                                        .setAnchor(
+                                                Optional.of(
+                                                        SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                                                )
+                                        )
                         )
                 );
         this.patchAndCheck(
