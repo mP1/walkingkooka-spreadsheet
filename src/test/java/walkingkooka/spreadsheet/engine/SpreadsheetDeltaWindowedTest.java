@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 
@@ -197,7 +198,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 ),
                 "SpreadsheetDelta\n" +
                         "  selection:\n" +
-                        "    A1:B2\n" +
+                        "    A1:B2 BOTTOM_RIGHT\n" +
                         "  window:\n" +
                         "    A1:E5\n"
         );
@@ -397,7 +398,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 ),
                 "SpreadsheetDelta\n" +
                         "  selection:\n" +
-                        "    A1:B2\n" +
+                        "    A1:B2 BOTTOM_RIGHT\n" +
                         "  cells:\n" +
                         "    Cell A1\n" +
                         "      Formula\n" +
@@ -430,10 +431,14 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     private final static JsonString WINDOW_JSON_STRING = JsonNode.string("A1:E5");
 
     @Override
-    final void unmarshallSelectionAndCheck(final SpreadsheetSelection selection) {
+    void unmarshallSelectionAndCheck(final SpreadsheetViewportSelection selection) {
         this.unmarshallAndCheck(
                 JsonNode.object()
-                        .set(SpreadsheetDelta.SELECTION_PROPERTY, this.marshallContext().marshallWithType(selection))
+                        .set(
+                                SpreadsheetDelta.SELECTION_PROPERTY,
+                                this.marshallContext()
+                                        .marshall(selection)
+                        )
                         .set(SpreadsheetDelta.WINDOW_PROPERTY, WINDOW_JSON_STRING),
                 SpreadsheetDeltaWindowed.withWindowed(
                         Optional.ofNullable(
@@ -578,7 +583,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()
                 ),
-                "selection: A1:B2 window: A1:E5");
+                "selection: A1:B2 BOTTOM_RIGHT window: A1:E5");
     }
 
     @Test

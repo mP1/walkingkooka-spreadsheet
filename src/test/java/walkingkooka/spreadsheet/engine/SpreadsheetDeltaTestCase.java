@@ -36,6 +36,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
@@ -80,7 +82,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testSetSelectionDifferent() {
         final D before = this.createSpreadsheetDelta();
 
-        final Optional<SpreadsheetSelection> different = this.differentSelection();
+        final Optional<SpreadsheetViewportSelection> different = this.differentSelection();
 
         final SpreadsheetDelta after = before.setSelection(different);
         assertNotSame(before, after);
@@ -371,6 +373,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallSelectionCell() {
         this.unmarshallSelectionAndCheck(
                 SpreadsheetSelection.parseCell("B2")
+                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
         );
     }
 
@@ -378,6 +381,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallSelectionCellRange() {
         this.unmarshallSelectionAndCheck(
                 SpreadsheetSelection.parseCellRange("B2:C3")
+                        .setAnchor(
+                                Optional.of(
+                                        SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                                )
+                        )
         );
     }
 
@@ -385,6 +393,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallSelectionColumn() {
         this.unmarshallSelectionAndCheck(
                 SpreadsheetSelection.parseColumn("B")
+                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
         );
     }
 
@@ -392,6 +401,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallSelectionColumnRange() {
         this.unmarshallSelectionAndCheck(
                 SpreadsheetSelection.parseColumnRange("B:CD")
+                        .setAnchor(
+                                Optional.of(
+                                        SpreadsheetViewportSelectionAnchor.RIGHT
+                                )
+                        )
         );
     }
 
@@ -399,6 +413,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallSelectionRow() {
         this.unmarshallSelectionAndCheck(
                 SpreadsheetSelection.parseRow("2")
+                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
         );
     }
 
@@ -406,6 +421,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallSelectionRowRange() {
         this.unmarshallSelectionAndCheck(
                 SpreadsheetSelection.parseRowRange("2:34")
+                        .setAnchor(
+                                Optional.of(
+                                        SpreadsheetViewportSelectionAnchor.BOTTOM
+                                )
+                        )
         );
     }
 
@@ -414,13 +434,13 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.unmarshallSelectionAndCheck(null);
     }
 
-    abstract void unmarshallSelectionAndCheck(final SpreadsheetSelection selection);
+    abstract void unmarshallSelectionAndCheck(final SpreadsheetViewportSelection selection);
 
     // equals...........................................................................................................
 
     @Test
     public final void testDifferentSelection() {
-        final Optional<SpreadsheetSelection> selection = this.differentSelection();
+        final Optional<SpreadsheetViewportSelection> selection = this.differentSelection();
         assertNotEquals(this.selection(), selection, "selection() and differentSelection() must be un equal");
 
         this.checkNotEquals(this.createSpreadsheetDelta().setSelection(selection));
@@ -484,15 +504,19 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     // selection........................................................................................................
 
-    final Optional<SpreadsheetSelection> selection() {
+    final Optional<SpreadsheetViewportSelection> selection() {
         return Optional.of(
                 SpreadsheetSelection.parseCellRange("A1:B2")
+                        .setAnchor(
+                                Optional.of(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
+                        )
         );
     }
 
-    final Optional<SpreadsheetSelection> differentSelection() {
+    final Optional<SpreadsheetViewportSelection> differentSelection() {
         return Optional.of(
                 SpreadsheetSelection.parseCell("C3")
+                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
         );
     }
 
@@ -501,7 +525,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final void checkSelection(final SpreadsheetDelta delta,
-                              final Optional<SpreadsheetSelection> selection) {
+                              final Optional<SpreadsheetViewportSelection> selection) {
         assertEquals(selection, delta.selection(), "selection");
     }
 
@@ -744,7 +768,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     final JsonNode selectionJson() {
         final JsonNodeMarshallContext context = this.marshallContext();
 
-        return context.marshallWithType(this.selection().get());
+        return context.marshall(this.selection().get());
     }
 
     final JsonNode cellsJson() {

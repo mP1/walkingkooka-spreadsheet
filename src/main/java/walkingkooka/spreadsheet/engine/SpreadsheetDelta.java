@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -58,7 +59,7 @@ import java.util.stream.Collectors;
 public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         TreePrintable {
 
-    public final static Optional<SpreadsheetSelection> NO_SELECTION = Optional.empty();
+    public final static Optional<SpreadsheetViewportSelection> NO_SELECTION = Optional.empty();
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
     public final static Set<SpreadsheetLabelMapping> NO_LABELS = Sets.empty();
     public final static Set<SpreadsheetCellReference> NO_DELETED_CELLS = Sets.empty();
@@ -81,7 +82,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetDelta(final Optional<SpreadsheetSelection> selection,
+    SpreadsheetDelta(final Optional<SpreadsheetViewportSelection> selection,
                      final Set<SpreadsheetCell> cells,
                      final Set<SpreadsheetLabelMapping> labels,
                      final Set<SpreadsheetCellReference> deleteCells,
@@ -99,14 +100,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // selection............................................................................................................
 
-    public final Optional<SpreadsheetSelection> selection() {
+    public final Optional<SpreadsheetViewportSelection> selection() {
         return this.selection;
     }
 
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given selection.
      */
-    public final SpreadsheetDelta setSelection(final Optional<SpreadsheetSelection> selection) {
+    public final SpreadsheetDelta setSelection(final Optional<SpreadsheetViewportSelection> selection) {
         checkSelection(selection);
 
         return this.selection.equals(selection) ?
@@ -114,11 +115,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.replaceSelection(selection);
     }
 
-    abstract SpreadsheetDelta replaceSelection(final Optional<SpreadsheetSelection> selection);
+    abstract SpreadsheetDelta replaceSelection(final Optional<SpreadsheetViewportSelection> selection);
 
-    final Optional<SpreadsheetSelection> selection;
+    final Optional<SpreadsheetViewportSelection> selection;
 
-    private static void checkSelection(final Optional<SpreadsheetSelection> selection) {
+    private static void checkSelection(final Optional<SpreadsheetViewportSelection> selection) {
         Objects.requireNonNull(selection, "selection");
     }
 
@@ -307,7 +308,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     private SpreadsheetDelta setWindow0(final Optional<SpreadsheetCellRange> window) {
-        final Optional<SpreadsheetSelection> selection = this.selection;
+        final Optional<SpreadsheetViewportSelection> selection = this.selection;
         final Set<SpreadsheetCell> cells = this.cells;
         final Set<SpreadsheetLabelMapping> labels = this.labels;
         final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
@@ -574,7 +575,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         printer.println("SpreadsheetDelta");
         printer.indent();
         {
-            final Optional<SpreadsheetSelection> selection = this.selection();
+            final Optional<SpreadsheetViewportSelection> selection = this.selection();
             if (selection.isPresent()) {
                 printer.println("selection:");
                 printer.indent();
@@ -729,10 +730,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return unmarshalled;
     }
 
-    private static Optional<SpreadsheetSelection> unmarshallSelection(final JsonNode node,
-                                                                      final JsonNodeUnmarshallContext context) {
+    private static Optional<SpreadsheetViewportSelection> unmarshallSelection(final JsonNode node,
+                                                                              final JsonNodeUnmarshallContext context) {
         return Optional.ofNullable(
-                context.unmarshallWithType(node)
+                context.unmarshall(node, SpreadsheetViewportSelection.class)
         );
     }
 
@@ -791,10 +792,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> children = Lists.array();
 
-        final Optional<SpreadsheetSelection> selection = this.selection;
+        final Optional<SpreadsheetViewportSelection> selection = this.selection;
         if (selection.isPresent()) {
             children.add(
-                    context.marshallWithType(selection.get())
+                    context.marshall(selection.get())
                             .setName(SELECTION_PROPERTY)
             );
         }
