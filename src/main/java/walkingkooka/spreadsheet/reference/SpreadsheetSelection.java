@@ -453,8 +453,13 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * </pre>
      */
     @Override
-    public void printTree(final IndentingPrinter printer) {
-        printer.println(this.printTreeLabel() + " " + this.toString());
+    final public void printTree(final IndentingPrinter printer) {
+        printer.println(this.treeString());
+    }
+
+    // only called by SpreadsheetViewportSelection
+    final String treeString() {
+        return this.printTreeLabel() + " " + this;
     }
 
     abstract String printTreeLabel();

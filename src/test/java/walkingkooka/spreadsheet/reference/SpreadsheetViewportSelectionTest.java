@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -35,7 +36,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetViewportSelectionTest implements ClassTesting<SpreadsheetViewportSelection>,
         HashCodeEqualsDefinedTesting2<SpreadsheetViewportSelection>,
         JsonNodeMarshallingTesting<SpreadsheetViewportSelection>,
-        ToStringTesting<SpreadsheetViewportSelection> {
+        ToStringTesting<SpreadsheetViewportSelection>,
+        TreePrintableTesting {
 
     private static final SpreadsheetColumnReference COLUMN = SpreadsheetSelection.parseColumn("B");
     private static final SpreadsheetCellReference CELL = SpreadsheetSelection.parseCell("B2");
@@ -299,6 +301,35 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                         SELECTION,
                         Optional.of(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
                 )
+        );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetSelection.parseCell("A1")
+                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR),
+                "cell A1" + EOL
+        );
+    }
+
+    @Test
+    public void testTreePrint2() {
+        this.treePrintAndCheck(
+                SpreadsheetSelection.parseRow("12")
+                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR),
+                "row 12" + EOL
+        );
+    }
+
+    @Test
+    public void testTreePrintWithAnchor() {
+        this.treePrintAndCheck(
+                SpreadsheetSelection.parseRowRange("12:34")
+                        .setAnchor(Optional.of(SpreadsheetViewportSelectionAnchor.TOP)),
+                "row-range 12:34 TOP" + EOL
         );
     }
 

@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -32,7 +34,8 @@ import java.util.Optional;
 /**
  * Represents a selection within a viewport. Non ranges must not have an anchor, while ranges must have an anchor.
  */
-public final class SpreadsheetViewportSelection implements UsesToStringBuilder {
+public final class SpreadsheetViewportSelection implements TreePrintable,
+        UsesToStringBuilder {
 
     /**
      * Constant representing no anchor.
@@ -65,6 +68,23 @@ public final class SpreadsheetViewportSelection implements UsesToStringBuilder {
     }
 
     private Optional<SpreadsheetViewportSelectionAnchor> anchor;
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.print(this.selection().treeString());
+
+        final Optional<SpreadsheetViewportSelectionAnchor> anchor = this.anchor();
+        if (anchor.isPresent()) {
+            printer.print(" ");
+            printer.print(anchor.get().toString());
+        }
+
+        printer.println();
+    }
+
+    // Object...........................................................................................................
 
     @Override
     public int hashCode() {
