@@ -322,6 +322,13 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference i
                 .testRow(row);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Override
+    String printTreeLabel() {
+        return "cell-range";
+    }
+
     // HashCodeEqualsDefined.......................................................................................
 
     @Override

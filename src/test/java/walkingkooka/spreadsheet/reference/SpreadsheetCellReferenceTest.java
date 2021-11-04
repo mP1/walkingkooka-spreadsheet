@@ -780,6 +780,16 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         assertEquals("13542", b.toString());
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetSelection.parseCell("A12"),
+                "cell A12" + EOL
+        );
+    }
+
     // equalsIgnoreReferenceKind........................................................................................
 
     @Test

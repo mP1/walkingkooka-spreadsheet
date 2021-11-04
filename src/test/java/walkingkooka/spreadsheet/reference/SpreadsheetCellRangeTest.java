@@ -1135,6 +1135,16 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         assertEquals("13542", b.toString());
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                "cell-range A1:B2" + EOL
+        );
+    }
+
     // equals...............................................................................
 
     @Test

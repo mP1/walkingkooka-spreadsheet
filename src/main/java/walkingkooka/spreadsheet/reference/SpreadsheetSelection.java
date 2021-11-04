@@ -29,6 +29,8 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -45,7 +47,8 @@ import java.util.function.Predicate;
 /**
  * Base class for all selection types, including columns, rows, cells, labels and ranges.
  */
-public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellReference> {
+public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellReference>,
+        TreePrintable {
 
     /**
      * Separator by ranges between cells / columns/ rows.
@@ -436,6 +439,25 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     // SpreadsheetSelectionVisitor......................................................................................
 
     abstract void accept(final SpreadsheetSelectionVisitor visitor);
+
+    // TreePrintable....................................................................................................
+
+    /**
+     * Prints a label and the toString representation of this selection. This is necessary due to ambiguities where
+     * some labels can appear to be columns.
+     * <pre>
+     * cell A1
+     * column BC
+     * Label BC
+     * row 2
+     * </pre>
+     */
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.printTreeLabel() + " " + this.toString());
+    }
+
+    abstract String printTreeLabel();
 
     // Object...........................................................................................................
 

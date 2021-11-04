@@ -449,6 +449,16 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetSelection.parseRow("12"),
+                "row 12" + EOL
+        );
+    }
+
     // JsonNodeTesting..................................................................................................
 
     @Test

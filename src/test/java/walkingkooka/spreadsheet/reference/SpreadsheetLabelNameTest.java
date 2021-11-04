@@ -250,6 +250,16 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
         assertSame(labelName, relative);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetSelection.labelName("Label123"),
+                "label Label123" + EOL
+        );
+    }
+
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test

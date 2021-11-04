@@ -184,6 +184,13 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         visitor.visit(this);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Override
+    String printTreeLabel() {
+        return "column";
+    }
+
     // range/spreadsheetColumnRange.......................................................................................
 
     /**

@@ -288,6 +288,18 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         assertEquals("132", b.toString());
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                "column-range A:B" + EOL
+        );
+    }
+
+    // json.............................................................................................................
+
     @Test
     public void testFromJson() {
         this.unmarshallAndCheck(JsonNode.string("B:D"), this.createSelection());

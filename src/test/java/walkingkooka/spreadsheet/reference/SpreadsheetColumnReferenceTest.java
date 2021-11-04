@@ -355,6 +355,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         assertEquals("132", b.toString());
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetSelection.parseColumn("AB"),
+                "column AB" + EOL
+        );
+    }
+
     // JsonNodeTesting..................................................................................................
 
     @Test

@@ -94,6 +94,15 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
         visitor.visit(this);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Override
+    String printTreeLabel() {
+        return "row-range";
+    }
+
+    // Object...........................................................................................................
+
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetRowReferenceRange;
