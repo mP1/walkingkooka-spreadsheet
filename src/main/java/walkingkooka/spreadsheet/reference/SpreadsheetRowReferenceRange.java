@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.collect.Range;
 
+import java.util.Optional;
+
 /**
  * Holds a row range.
  */
@@ -87,6 +89,11 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
         return this.equals(relative) ?
                 this :
                 relative;
+    }
+
+    @Override
+    public Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor() {
+        return Optional.of(SpreadsheetViewportSelectionAnchor.TOP);
     }
 
     @Override

@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Represents a column reference. The {@link Comparable} method ignores the {@link SpreadsheetReferenceKind} component

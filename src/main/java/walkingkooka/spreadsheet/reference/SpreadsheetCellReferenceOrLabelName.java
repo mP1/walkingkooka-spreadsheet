@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 
+import java.util.Optional;
+
 /**
  * Base class shared by {@link SpreadsheetCellReference} and {@link SpreadsheetLabelName}.
  * This type is necessary to avoid J2clTranspiler failures because of what appears to be a failure of the JDT not being
@@ -31,6 +33,12 @@ abstract public class SpreadsheetCellReferenceOrLabelName extends SpreadsheetExp
      */
     SpreadsheetCellReferenceOrLabelName() {
         super();
+    }
+
+    // cell or label have no default anchor.
+    @Override
+    public final Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor() {
+        return SpreadsheetViewportSelection.NO_ANCHOR;
     }
 
     // SpreadsheetViewport........................................................................................
