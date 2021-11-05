@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Captures the common features shared by a row or column.
@@ -109,6 +110,12 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
      * Unconditionally creates a new {@link SpreadsheetColumnOrRowReference} with the given {@link SpreadsheetReferenceKind}.
      */
     abstract SpreadsheetColumnOrRowReference replaceReferenceKind(final SpreadsheetReferenceKind referenceKind);
+
+    // column or row have no default anchor.
+    @Override
+    public final Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor() {
+        return SpreadsheetViewportSelection.NO_ANCHOR;
+    }
 
     // Object...........................................................................................................
 

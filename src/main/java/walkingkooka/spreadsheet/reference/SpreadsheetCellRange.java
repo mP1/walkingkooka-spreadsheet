@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -258,6 +259,11 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference i
                       final Consumer<? super SpreadsheetCellReference> absent) {
         this.cellStream()
                 .forEach(SpreadsheetCellRangeCellsConsumer.with(cells, present, absent));
+    }
+
+    @Override
+    public Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor() {
+        return Optional.of(SpreadsheetViewportSelectionAnchor.TOP_LEFT);
     }
 
     // SpreadsheetSelection.............................................................................................

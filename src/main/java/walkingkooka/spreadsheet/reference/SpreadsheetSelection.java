@@ -432,9 +432,16 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     /**
      * Factory that creates a {@link SpreadsheetViewportSelection} using this selection and the given anchor.
      */
-    public SpreadsheetViewportSelection setAnchor(final Optional<SpreadsheetViewportSelectionAnchor> anchor) {
+    public final SpreadsheetViewportSelection setAnchor(final Optional<SpreadsheetViewportSelectionAnchor> anchor) {
         return SpreadsheetViewportSelection.with(this, anchor);
     }
+
+    /**
+     * Getter that returns the default if any anchor for this type of {@link SpreadsheetSelection}.
+     * Label is a special case and will return {@link Optional#empty()} because it cant guess if its pointing to a
+     * cell or cell-range.
+     */
+    public abstract Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor();
 
     // SpreadsheetSelectionVisitor......................................................................................
 
