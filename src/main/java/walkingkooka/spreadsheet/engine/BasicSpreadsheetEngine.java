@@ -389,8 +389,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return result;
     }
 
-    final SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                  final SpreadsheetEngineContext context) {
+    SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                            final SpreadsheetEngineContext context) {
         return this.formatAndApplyStyle(
                 cell.setFormula(this.parseFormulaAndEvaluate(cell.formula(), context)),
                 context);
@@ -410,9 +410,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Parsers the formula for this cell, and sets its expression or error if parsing fails.
      */
-    final SpreadsheetFormula parseFormulaIfNecessary(final SpreadsheetFormula formula,
-                                                     final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed,
-                                                     final SpreadsheetEngineContext context) {
+    SpreadsheetFormula parseFormulaIfNecessary(final SpreadsheetFormula formula,
+                                               final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed,
+                                               final SpreadsheetEngineContext context) {
         SpreadsheetFormula result = formula;
 
         try {
