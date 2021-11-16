@@ -4638,6 +4638,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellsWithExpressionError() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetCell z9 = this.cell("z9", "=0/0");
+        cellStore.save(z9);
+
+        this.loadCellsAndCheck(
+                engine,
+                "z9",
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                this.formattedCellWithError(z9, "Division by zero")
+        );
+    }
+
+    @Test
     public void testLoadCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
