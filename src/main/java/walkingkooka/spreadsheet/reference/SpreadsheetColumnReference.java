@@ -21,7 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Represents a column reference. The {@link Comparable} method ignores the {@link SpreadsheetReferenceKind} component
@@ -37,6 +36,16 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     final static int RADIX = 26;
 
     final static String MAX_TOSTRING = toString0(MAX_VALUE + 1, SpreadsheetReferenceKind.RELATIVE);
+
+    /**
+     * The left most possible column
+     */
+    public final static SpreadsheetColumnReference MIN = with(0, SpreadsheetReferenceKind.RELATIVE);
+
+    /**
+     * The right most possible column
+     */
+    public final static SpreadsheetColumnReference MAX = with(MAX_VALUE, SpreadsheetReferenceKind.RELATIVE);
 
     /**
      * Factory that creates a new column.
