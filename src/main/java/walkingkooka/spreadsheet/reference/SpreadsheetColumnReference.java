@@ -38,16 +38,6 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     final static String MAX_TOSTRING = toString0(MAX_VALUE + 1, SpreadsheetReferenceKind.RELATIVE);
 
     /**
-     * The left most possible column
-     */
-    public final static SpreadsheetColumnReference MIN = with(0, SpreadsheetReferenceKind.RELATIVE);
-
-    /**
-     * The right most possible column
-     */
-    public final static SpreadsheetColumnReference MAX = with(MAX_VALUE, SpreadsheetReferenceKind.RELATIVE);
-
-    /**
      * Factory that creates a new column.
      */
     static SpreadsheetColumnReference with(final int value, final SpreadsheetReferenceKind referenceKind) {
