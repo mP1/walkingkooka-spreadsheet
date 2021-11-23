@@ -98,11 +98,11 @@ public enum SpreadsheetReferenceKind {
     abstract SpreadsheetColumnReference columnFromCache(final int column);
 
     public final SpreadsheetRowReference firstRow() {
-        return this.row(0);
+        return SpreadsheetRowReference.MIN;
     }
 
     public final SpreadsheetRowReference lastRow() {
-        return this.row(SpreadsheetRowReference.MAX_VALUE);
+        return SpreadsheetRowReference.MAX;
     }
 
     public abstract SpreadsheetRowReference row(final int row);
