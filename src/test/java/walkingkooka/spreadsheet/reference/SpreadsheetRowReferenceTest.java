@@ -28,6 +28,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowReferenceTestCase<SpreadsheetRowReference> {
 
     @Test
+    public void testMin() {
+        final SpreadsheetRowReference min = SpreadsheetRowReference.MIN;
+        assertEquals(0, min.value(), "value");
+        assertEquals(SpreadsheetReferenceKind.RELATIVE, min.referenceKind(), "referenceKind");
+    }
+
+    @Test
+    public void testMax() {
+        final SpreadsheetRowReference max = SpreadsheetRowReference.MAX;
+        assertEquals(SpreadsheetRowReference.MAX, max.value(), "value");
+        assertEquals(SpreadsheetReferenceKind.RELATIVE, max.referenceKind(), "referenceKind");
+    }
+
+    @Test
     public void testSetColumnNullFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetReferenceKind.ABSOLUTE.row(23).setColumn(null));
     }
