@@ -86,11 +86,11 @@ public enum SpreadsheetReferenceKind {
     };
 
     public final SpreadsheetColumnReference firstColumn() {
-        return this.column(0);
+        return SpreadsheetColumnReference.MIN;
     }
 
     public final SpreadsheetColumnReference lastColumn() {
-        return this.column(SpreadsheetColumnReference.MAX_VALUE);
+        return SpreadsheetColumnReference.MAX;
     }
 
     public abstract SpreadsheetColumnReference column(final int column);
