@@ -64,6 +64,18 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     static final SpreadsheetColumnReference[] RELATIVE = fillCache(i -> new SpreadsheetColumnReference(i, SpreadsheetReferenceKind.RELATIVE),
             new SpreadsheetColumnReference[CACHE_SIZE]);
 
+    // both MIN & MAX constants must appear after ABSOLUTE & RELATIVE to avoid nulls in j2cl...........................
+
+    /**
+     * The left most possible column
+     */
+    public final static SpreadsheetColumnReference MIN = with(0, SpreadsheetReferenceKind.RELATIVE);
+
+    /**
+     * The right most possible column
+     */
+    public final static SpreadsheetColumnReference MAX = with(MAX_VALUE, SpreadsheetReferenceKind.RELATIVE);
+
     /**
      * Private ctor use factory
      */
