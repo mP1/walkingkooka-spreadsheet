@@ -53,6 +53,18 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return "Invalid row value " + value + " expected between 0 and " + (MAX_VALUE + 1);
     }
 
+    // both MIN & MAX constants must appear after ABSOLUTE & RELATIVE to avoid nulls in j2cl...........................
+
+    /**
+     * The left most possible Row
+     */
+    public final static SpreadsheetRowReference MIN = with(0, SpreadsheetReferenceKind.RELATIVE);
+
+    /**
+     * The right most possible Row
+     */
+    public final static SpreadsheetRowReference MAX = with(MAX_VALUE, SpreadsheetReferenceKind.RELATIVE);
+
     private SpreadsheetRowReference(final int value, final SpreadsheetReferenceKind referenceKind) {
         super(value, referenceKind);
     }
