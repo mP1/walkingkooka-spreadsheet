@@ -2691,7 +2691,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(a, "=1+2"), context);
         engine.saveCell(this.cell(b, "=3+4"), context);
         engine.saveCell(this.cell(c, "=5+6"), context);
-        System.out.println("@@@@");
+
         this.deleteColumnsAndCheck(
                 engine,
                 b.column(),
