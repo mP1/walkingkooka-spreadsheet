@@ -20,6 +20,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Holds a text expression in both forms an apostrophe prefixed string literal and a double quoted string.
@@ -27,7 +28,10 @@ import java.util.List;
 public final class SpreadsheetTextParserToken extends SpreadsheetParentParserToken {
 
     static SpreadsheetTextParserToken with(final List<ParserToken> value, final String text) {
-        return new SpreadsheetTextParserToken(copyAndCheckTokens(value), checkText(text));
+        return new SpreadsheetTextParserToken(
+                copyAndCheckTokens(value),
+                Objects.requireNonNull(text, "text") // empty text is allowed to support a formula with empty text
+        );
     }
 
     private SpreadsheetTextParserToken(final List<ParserToken> value, final String text) {
