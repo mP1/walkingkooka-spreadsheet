@@ -457,10 +457,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     final static Optional<SpreadsheetParserToken> EMPTY_TOKEN = Optional.of(
             SpreadsheetParserToken.text(
                     Lists.<ParserToken>of( // J2clTranspiler: Error:BasicSpreadsheetEngine.java:386: The method of(T...) of type Lists is not applicable as the formal varargs element type T is not accessible here
-                            SpreadsheetParserToken.apostropheSymbol("\"", "\""),
                             SpreadsheetParserToken.textLiteral("", "")
                     ),
-                    "\"")
+                    "")
     );
 
     /**
