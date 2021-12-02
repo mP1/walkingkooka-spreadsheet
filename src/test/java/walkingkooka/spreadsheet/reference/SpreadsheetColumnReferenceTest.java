@@ -39,7 +39,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testMax() {
         final SpreadsheetColumnReference max = SpreadsheetColumnReference.MAX;
-        assertEquals(SpreadsheetColumnReference.MAX, max.value(), "value");
+        assertEquals(SpreadsheetColumnReference.MAX_VALUE, max.value(), "value");
         assertEquals(SpreadsheetReferenceKind.RELATIVE, max.referenceKind(), "referenceKind");
     }
 

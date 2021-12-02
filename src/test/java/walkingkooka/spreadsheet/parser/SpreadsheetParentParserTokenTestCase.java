@@ -62,11 +62,6 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
     }
 
     @Test
-    public final void testWithEmptyTextFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createToken(""));
-    }
-
-    @Test
     public final void testWithCopiesTokens() {
         final List<ParserToken> tokens = this.tokens();
         final String text = this.text();
