@@ -25,8 +25,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTestCase implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetFormatParserTokenVisitor> {
 
     @Test
@@ -77,12 +75,12 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("135138421394213742642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                open, open, open, open, open,
-                name, name, name, name, name,
-                close, close, close, close, close,
-                token, token, token),
+        this.checkEquals("135138421394213742642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        open, open, open, open, open,
+                        name, name, name, name, name,
+                        close, close, close, close, close,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -151,13 +149,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("1351384213A421394213742642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                open, open, open, open, open,
-                symbol, symbol, symbol, symbol, symbol,
-                number, number, number, number, number,
-                close, close, close, close, close,
-                token, token, token),
+        this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        open, open, open, open, open,
+                        symbol, symbol, symbol, symbol, symbol,
+                        number, number, number, number, number,
+                        close, close, close, close, close,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -224,13 +222,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("1351384213A421394213742642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                open, open, open, open, open,
-                symbol, symbol, symbol, symbol, symbol,
-                number, number, number, number, number,
-                close, close, close, close, close,
-                token, token, token),
+        this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        open, open, open, open, open,
+                        symbol, symbol, symbol, symbol, symbol,
+                        number, number, number, number, number,
+                        close, close, close, close, close,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -297,13 +295,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("1351384213A421394213742642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                open, open, open, open, open,
-                symbol, symbol, symbol, symbol, symbol,
-                number, number, number, number, number,
-                close, close, close, close, close,
-                token, token, token),
+        this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        open, open, open, open, open,
+                        symbol, symbol, symbol, symbol, symbol,
+                        number, number, number, number, number,
+                        close, close, close, close, close,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -370,13 +368,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("1351384213A421394213742642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                open, open, open, open, open,
-                symbol, symbol, symbol, symbol, symbol,
-                number, number, number, number, number,
-                close, close, close, close, close,
-                token, token, token),
+        this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        open, open, open, open, open,
+                        symbol, symbol, symbol, symbol, symbol,
+                        number, number, number, number, number,
+                        close, close, close, close, close,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -443,13 +441,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("1351384213A421394213742642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                open, open, open, open, open,
-                symbol, symbol, symbol, symbol, symbol,
-                number, number, number, number, number,
-                close, close, close, close, close,
-                token, token, token),
+        this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        open, open, open, open, open,
+                        symbol, symbol, symbol, symbol, symbol,
+                        number, number, number, number, number,
+                        close, close, close, close, close,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -516,13 +514,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("1351384213A421394213742642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                open, open, open, open, open,
-                symbol, symbol, symbol, symbol, symbol,
-                number, number, number, number, number,
-                close, close, close, close, close,
-                token, token, token),
+        this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        open, open, open, open, open,
+                        symbol, symbol, symbol, symbol, symbol,
+                        number, number, number, number, number,
+                        close, close, close, close, close,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -581,12 +579,12 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("135137421384213942642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                d, d, d, d, d,
-                m, m, m, m, m,
-                y, y, y, y, y,
-                token, token, token),
+        this.checkEquals("135137421384213942642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        d, d, d, d, d,
+                        m, m, m, m, m,
+                        y, y, y, y, y,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -663,15 +661,15 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("135137421394213B42138421394213A42642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                d, d, d, d, d,
-                month, month, month, month, month,
-                y, y, y, y, y,
-                h, h, h, h, h,
-                min, min, min, min, min,
-                s, s, s, s, s,
-                token, token, token),
+        this.checkEquals("135137421394213B42138421394213A42642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        d, d, d, d, d,
+                        month, month, month, month, month,
+                        y, y, y, y, y,
+                        h, h, h, h, h,
+                        min, min, min, min, min,
+                        s, s, s, s, s,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -722,11 +720,11 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("1351374213842642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                e, e, e, e, e,
-                digit, digit, digit, digit, digit,
-                token, token, token),
+        this.checkEquals("1351374213842642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        e, e, e, e, e,
+                        digit, digit, digit, digit, digit,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -802,14 +800,14 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13513713A4213B4213942842642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                color, color, color,
-                open, open, open, open, open,
-                name, name, name, name, name,
-                close, close, close, close, close,
-                color, color, color,
-                token, token, token),
+        this.checkEquals("13513713A4213B4213942842642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        color, color, color,
+                        open, open, open, open, open,
+                        name, name, name, name, name,
+                        close, close, close, close, close,
+                        color, color, color,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -862,12 +860,12 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("135138421374213842642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                top, top, top, top, top,
-                symbol, symbol, symbol, symbol, symbol,
-                bottom, bottom, bottom, bottom, bottom,
-                token, token, token),
+        this.checkEquals("135138421374213842642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        top, top, top, top, top,
+                        symbol, symbol, symbol, symbol, symbol,
+                        bottom, bottom, bottom, bottom, bottom,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -914,10 +912,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13513742642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                general, general, general, general, general,
-                token, token, token),
+        this.checkEquals("13513742642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        general, general, general, general, general,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -976,12 +974,12 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("135138421374213942642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                integer, integer, integer, integer, integer,
-                decimalPoint, decimalPoint, decimalPoint, decimalPoint, decimalPoint,
-                decimals, decimals, decimals, decimals, decimals,
-                token, token, token),
+        this.checkEquals("135138421374213942642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        integer, integer, integer, integer, integer,
+                        decimalPoint, decimalPoint, decimalPoint, decimalPoint, decimalPoint,
+                        decimals, decimals, decimals, decimals, decimals,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1032,11 +1030,11 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("1351384213742642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                whitespace, whitespace, whitespace, whitespace, whitespace,
-                placeholder, placeholder, placeholder, placeholder, placeholder,
-                token, token, token),
+        this.checkEquals("1351384213742642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        whitespace, whitespace, whitespace, whitespace, whitespace,
+                        placeholder, placeholder, placeholder, placeholder, placeholder,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1095,12 +1093,12 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("135137421384213942642", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token,
-                h, h, h, h, h,
-                m, m, m, m, m,
-                s, s, s, s, s,
-                token, token, token),
+        this.checkEquals("135137421384213942642", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token,
+                        h, h, h, h, h,
+                        m, m, m, m, m,
+                        s, s, s, s, s,
+                        token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1128,8 +1126,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1155,8 +1153,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1182,8 +1180,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1209,8 +1207,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1236,8 +1234,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1262,8 +1260,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1289,8 +1287,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1316,8 +1314,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1343,8 +1341,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1370,8 +1368,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1397,8 +1395,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1424,8 +1422,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1451,8 +1449,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1478,8 +1476,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1505,8 +1503,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1532,8 +1530,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1559,8 +1557,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1585,8 +1583,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1612,8 +1610,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1639,8 +1637,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1666,8 +1664,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1693,8 +1691,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1722,8 +1720,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1749,8 +1747,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1776,8 +1774,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1803,8 +1801,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1830,8 +1828,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1857,8 +1855,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1884,8 +1882,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1911,8 +1909,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1938,8 +1936,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1965,8 +1963,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -1992,8 +1990,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -2019,8 +2017,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }
@@ -2046,8 +2044,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
         };
         visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
                 visited,
                 "visitedTokens");
     }

@@ -30,7 +30,6 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.MathContext;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetParserContextTest implements ClassTesting2<BasicSpreadsheetParserContext>,
@@ -100,7 +99,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     @Test
     public void testValueSeparator() {
         final BasicSpreadsheetParserContext context = this.createContext();
-        assertEquals(',', context.valueSeparator(), "valueSeparator");
+        this.checkEquals(',', context.valueSeparator(), "valueSeparator");
     }
 
     @Test

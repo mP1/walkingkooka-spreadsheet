@@ -33,7 +33,6 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -90,8 +89,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
         final SpreadsheetCellRange spreadsheetCellRange = SpreadsheetCellRange.with(range);
         assertSame(range, spreadsheetCellRange.range(), "range");
-        assertEquals(begin, spreadsheetCellRange.begin(), "begin");
-        assertEquals(end, spreadsheetCellRange.end(), "end");
+        this.checkEquals(begin, spreadsheetCellRange.begin(), "begin");
+        this.checkEquals(end, spreadsheetCellRange.end(), "end");
         this.checkIsSingleCell(spreadsheetCellRange, false);
     }
 
@@ -227,7 +226,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     private void columnReferenceRangeAndCheck(final String cell,
                                               final String column) {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetSelection.parseColumnRange(column),
                 SpreadsheetSelection.parseCellRange(cell).columnReferenceRange(),
                 () -> cell + ".columnReferenceRange()"
@@ -254,12 +253,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         final SpreadsheetCellRange different = range.setColumnReferenceRange(columns);
 
         assertNotSame(range, different);
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetSelection.parseCellRange("F2:G4"),
                 different
         );
 
-        assertEquals(columns, different.columnReferenceRange());
+        this.checkEquals(columns, different.columnReferenceRange());
     }
 
     // rowReferenceRange.............................................................................................
@@ -276,7 +275,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     private void rowReferenceRangeAndCheck(final String cell,
                                            final String row) {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetSelection.parseRowRange(row),
                 SpreadsheetSelection.parseCellRange(cell).rowReferenceRange(),
                 () -> cell + ".rowReferenceRange()"
@@ -303,12 +302,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         final SpreadsheetCellRange different = range.setRowReferenceRange(rows);
 
         assertNotSame(range, different);
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetSelection.parseCellRange("B6:D7"),
                 different
         );
 
-        assertEquals(rows, different.rowReferenceRange());
+        this.checkEquals(rows, different.rowReferenceRange());
     }
 
     // test.............................................................................................................
@@ -618,7 +617,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     private void testTestColumnAndCheck2(final String range,
                                          final String column,
                                          final boolean expected) {
-        assertEquals(
+        this.checkEquals(
                 expected,
                 SpreadsheetSelection.parseCellRange(range).testColumn(SpreadsheetSelection.parseColumn(column)),
                 range + " testColumn " + column
@@ -675,7 +674,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     private void testTestRowAndCheck2(final String range,
                                       final String row,
                                       final boolean expected) {
-        assertEquals(
+        this.checkEquals(
                 expected,
                 SpreadsheetSelection.parseCellRange(range).testRow(SpreadsheetSelection.parseRow(row)),
                 range + " testRow " + row
@@ -746,7 +745,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     private <T> void checkStream(final SpreadsheetCellRange range, final Stream<?> stream, final Object... expected) {
         final List<Object> actual = stream.collect(Collectors.toList());
-        assertEquals(Lists.of(expected), actual, range::toString);
+        this.checkEquals(Lists.of(expected), actual, range::toString);
     }
 
     // cells............................................................................................................
@@ -785,7 +784,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         final List<SpreadsheetCellReference> absent = Lists.array();
         range.cells(Lists.empty(), this::cellsPresent, absent::add);
 
-        assertEquals(range.cellStream().collect(Collectors.toList()), absent, "absent");
+        this.checkEquals(range.cellStream().collect(Collectors.toList()), absent, "absent");
     }
 
     @Test
@@ -805,7 +804,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
                 present::add,
                 this::cellsAbsent);
 
-        assertEquals(Lists.of(b1, c1, b2, c2, b3, c3), present, "present");
+        this.checkEquals(Lists.of(b1, c1, b2, c2, b3, c3), present, "present");
     }
 
     @Test
@@ -823,12 +822,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
         range.cells(Lists.of(b1, b2, c3), consumed::add, consumed::add);
 
-        assertEquals(Lists.of(b1,
-                c1,
-                b2,
-                c2,
-                b3,
-                c3),
+        this.checkEquals(Lists.of(b1,
+                        c1,
+                        b2,
+                        c2,
+                        b3,
+                        c3),
                 consumed,
                 "consumed");
     }
@@ -848,12 +847,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
         range.cells(Lists.of(b3, c3), consumed::add, consumed::add);
 
-        assertEquals(Lists.of(b1,
-                c1,
-                b2,
-                c2,
-                b3,
-                c3),
+        this.checkEquals(Lists.of(b1,
+                        c1,
+                        b2,
+                        c2,
+                        b3,
+                        c3),
                 consumed,
                 "consumed");
     }
@@ -873,12 +872,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
         range.cells(Lists.of(b1), consumed::add, consumed::add);
 
-        assertEquals(Lists.of(b1,
-                c1,
-                b2,
-                c2,
-                b3,
-                c3),
+        this.checkEquals(Lists.of(b1,
+                        c1,
+                        b2,
+                        c2,
+                        b3,
+                        c3),
                 consumed,
                 "consumed");
     }
@@ -899,12 +898,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
         range.cells(Lists.of(b1), consumed::add, consumed::add);
 
-        assertEquals(Lists.of(b1,
-                c1,
-                b2,
-                c2,
-                b3,
-                c3),
+        this.checkEquals(Lists.of(b1,
+                        c1,
+                        b2,
+                        c2,
+                        b3,
+                        c3),
                 consumed,
                 "consumed");
     }
@@ -924,10 +923,10 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
         range.cells(Lists.of(b1), consumed::add, consumed::add);
 
-        assertEquals(Lists.of(b1,
-                c1,
-                b2,
-                c2),
+        this.checkEquals(Lists.of(b1,
+                        c1,
+                        b2,
+                        c2),
                 consumed,
                 "consumed");
     }
@@ -1057,7 +1056,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     private void toRelativeAndCheck(final String start,
                                     final String expected) {
         final SpreadsheetCellRange actual = SpreadsheetCellRange.parseCellRange(start).toRelative();
-        assertEquals(SpreadsheetCellRange.parseCellRange(expected),
+        this.checkEquals(SpreadsheetCellRange.parseCellRange(expected),
                 actual,
                 () -> start + " toRelative");
     }
@@ -1089,7 +1088,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
                 b.append("3");
             }
         }.accept(selection);
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     // SpreadsheetExpressionReferenceVisitor.............................................................................
@@ -1132,7 +1131,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
                 b.append("5");
             }
         }.accept(reference);
-        assertEquals("13542", b.toString());
+        this.checkEquals("13542", b.toString());
     }
 
     // TreePrintable....................................................................................................
@@ -1197,7 +1196,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
         final SpreadsheetCellRange range = SpreadsheetCellRange.fromCells(Lists.of(a));
         this.check(range, column, row, column, row);
-        assertEquals(Range.singleton(a), range.range(), "range");
+        this.checkEquals(Range.singleton(a), range.range(), "range");
     }
 
     @Test
@@ -1379,7 +1378,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     private void checkBegin(final SpreadsheetCellRange range, final SpreadsheetCellReference begin) {
-        assertEquals(begin, range.begin(), () -> "range begin=" + range);
+        this.checkEquals(begin, range.begin(), () -> "range begin=" + range);
     }
 
     private void checkEnd(final SpreadsheetCellRange range, final int column, final int row) {
@@ -1387,19 +1386,19 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     private void checkEnd(final SpreadsheetCellRange range, final SpreadsheetCellReference end) {
-        assertEquals(end, range.end(), () -> "range end=" + range);
+        this.checkEquals(end, range.end(), () -> "range end=" + range);
     }
 
     private void checkWidth(final SpreadsheetCellRange range, final int width) {
-        assertEquals(width, range.width(), () -> "range width=" + range);
+        this.checkEquals(width, range.width(), () -> "range width=" + range);
     }
 
     private void checkHeight(final SpreadsheetCellRange range, final int height) {
-        assertEquals(height, range.height(), () -> "range height=" + range);
+        this.checkEquals(height, range.height(), () -> "range height=" + range);
     }
 
     private void checkIsSingleCell(final SpreadsheetCellRange range, final boolean expected) {
-        assertEquals(expected, range.isSingleCell(), () -> "range=" + range + " isSingleCell");
+        this.checkEquals(expected, range.isSingleCell(), () -> "range=" + range + " isSingleCell");
     }
 
     // ClassTesting.....................................................................................................

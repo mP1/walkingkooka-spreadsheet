@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -92,7 +90,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
         store.delete(range);
 
-        assertEquals(Lists.of(range), fired, "fired values");
+        this.checkEquals(Lists.of(range), fired, "fired values");
     }
 
     @Test
@@ -156,7 +154,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     }
 
     default void loadRangeFails(final SpreadsheetCellRangeStore<V> store, final SpreadsheetCellRange range) {
-        assertEquals(Optional.empty(),
+        this.checkEquals(Optional.empty(),
                 store.load(range),
                 () -> "load range " + range + " should have returned no values");
     }
@@ -166,8 +164,8 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
                                    final SpreadsheetCellRange range,
                                    final V... expected) {
         final Optional<List<V>> values = store.load(range);
-        assertNotEquals(Optional.empty(), values, () -> "load of " + range + " failed");
-        assertEquals(Lists.of(expected), values.get(), () -> "load range " + range);
+        this.checkNotEquals(Optional.empty(), values, () -> "load of " + range + " failed");
+        this.checkEquals(Lists.of(expected), values.get(), () -> "load range " + range);
     }
 
     // loadCellReferenceRanges.........................................................................................
@@ -178,7 +176,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     default void loadCellReferenceRangesFails(final SpreadsheetCellRangeStore<V> store,
                                               final SpreadsheetCellReference cell) {
-        assertEquals(Sets.empty(),
+        this.checkEquals(Sets.empty(),
                 this.loadCellReferenceRanges(store, cell),
                 () -> "load cell " + cell + " should have returned no ranges");
     }
@@ -186,7 +184,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     default void loadCellReferenceRangesAndCheck(final SpreadsheetCellRangeStore<V> store,
                                                  final SpreadsheetCellReference cell,
                                                  final SpreadsheetCellRange... ranges) {
-        assertEquals(Sets.of(ranges),
+        this.checkEquals(Sets.of(ranges),
                 this.loadCellReferenceRanges(store, cell),
                 () -> "load cell reference ranges for " + cell);
     }
@@ -206,7 +204,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     default void loadCellReferenceValuesFails(final SpreadsheetCellRangeStore<V> store,
                                               final SpreadsheetCellReference cell) {
-        assertEquals(Sets.empty(),
+        this.checkEquals(Sets.empty(),
                 this.loadCellReferenceValues(store, cell),
                 () -> "load cell " + cell + " should have returned no values");
     }
@@ -215,7 +213,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     default void loadCellReferenceValuesAndCheck(final SpreadsheetCellRangeStore<V> store,
                                                  final SpreadsheetCellReference cell,
                                                  final V... values) {
-        assertEquals(Sets.of(values),
+        this.checkEquals(Sets.of(values),
                 this.loadCellReferenceValues(store, cell),
                 () -> "load cell reference values for " + cell);
     }
@@ -230,7 +228,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     default void rangesWithValuesAndCheck(final SpreadsheetCellRangeStore<V> store,
                                           final V value,
                                           final SpreadsheetCellRange... ranges) {
-        assertEquals(Sets.of(ranges),
+        this.checkEquals(Sets.of(ranges),
                 this.rangesWithValues(store, value),
                 () -> "ranges with values for " + value);
     }

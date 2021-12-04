@@ -32,7 +32,6 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetDataValidatorContextTest implements SpreadsheetDataValidatorContextTesting<BasicSpreadsheetDataValidatorContext> {
@@ -54,7 +53,7 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
 
     @Test
     public void testCellReference() {
-        assertEquals(this.cellReference(), this.createContext().cellReference());
+        this.checkEquals(this.cellReference(), this.createContext().cellReference());
     }
 
     @Test

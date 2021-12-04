@@ -29,7 +29,6 @@ import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -74,7 +73,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                 new TestSpreadsheetFormatterContext() {
                     @Override
                     public Optional<Color> colorName(final SpreadsheetColorName name) {
-                        assertEquals(SpreadsheetColorName.with("RED"), name, "color name");
+                        checkEquals(SpreadsheetColorName.with("RED"), name, "color name");
                         return color;
                     }
                 },
@@ -91,7 +90,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                 new TestSpreadsheetFormatterContext() {
                     @Override
                     public Optional<Color> colorName(final SpreadsheetColorName name) {
-                        assertEquals(SpreadsheetColorName.with("RED"), name, "color name");
+                        checkEquals(SpreadsheetColorName.with("RED"), name, "color name");
                         return color;
                     }
                 },
@@ -108,7 +107,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                 new TestSpreadsheetFormatterContext() {
                     @Override
                     public Optional<Color> colorNumber(final int number) {
-                        assertEquals(15, number);
+                        checkEquals(15, number);
                         return color;
                     }
                 },
@@ -122,25 +121,27 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
 
         this.parseFormatAndCheck0(
                 ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 2]"),
-                        ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 1]"), new SpreadsheetFormatter() {
-                            @Override
-                            public boolean canFormat(final Object value,
-                                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-                                return true;
-                            }
+                        ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 1]"),
+                                new SpreadsheetFormatter() {
+                                    @Override
+                                    public boolean canFormat(final Object value,
+                                                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                        return true;
+                                    }
 
-                            @Override
-                            public Optional<SpreadsheetText> format(final Object value,
-                                                                    final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-                                assertEquals(text, value, "value");
-                                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text + text));
-                            }
-                        })),
+                                    @Override
+                                    public Optional<SpreadsheetText> format(final Object value,
+                                                                            final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                        checkEquals(text, value, "value");
+                                        return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text + text));
+                                    }
+                                })
+                ),
                 text,
                 new TestSpreadsheetFormatterContext() {
                     @Override
                     public Optional<Color> colorNumber(final int number) {
-                        assertEquals(2, number);
+                        checkEquals(2, number);
                         return color;
                     }
                 },
@@ -157,7 +158,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                 new TestSpreadsheetFormatterContext() {
                     @Override
                     public Optional<Color> colorNumber(final int number) {
-                        assertEquals(15, number);
+                        checkEquals(15, number);
                         return color;
                     }
                 },
@@ -218,7 +219,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
 
             @Override
             public Optional<Color> colorNumber(final int number) {
-                assertEquals(COLOR_NUMBER, number, "color number");
+                checkEquals(COLOR_NUMBER, number, "color number");
                 return Optional.of(COLOR);
             }
 

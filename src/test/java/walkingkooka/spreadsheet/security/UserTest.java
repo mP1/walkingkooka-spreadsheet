@@ -25,7 +25,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -42,8 +41,8 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
     public void testWith() {
         final Optional<UserId> id = this.createId();
         final User user = User.with(id, EMAIL);
-        assertEquals(id, user.value(), "id");
-        assertEquals(EMAIL, user.email(), "email");
+        this.checkEquals(id, user.value(), "id");
+        this.checkEquals(EMAIL, user.email(), "email");
     }
 
     @Test
@@ -58,8 +57,8 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
         final Optional<UserId> id = Optional.of(UserId.with(999));
 
         final User different = user.setId(id);
-        assertEquals(id, different.id(), "id");
-        assertEquals(EMAIL, different.email(), "email");
+        this.checkEquals(id, different.id(), "id");
+        this.checkEquals(EMAIL, different.email(), "email");
     }
 
     // JsonNodeMarshallingTesting.................................................................................................

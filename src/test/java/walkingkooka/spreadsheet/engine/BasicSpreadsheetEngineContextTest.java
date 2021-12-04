@@ -60,7 +60,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext> {
@@ -676,7 +675,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions() {
         return (n) -> {
-            assertEquals(functionName(), n, "function name");
+            this.checkEquals(functionName(), n, "function name");
             return new FakeExpressionFunction<>() {
                 @Override
                 public Object apply(final List<Object> parameters,

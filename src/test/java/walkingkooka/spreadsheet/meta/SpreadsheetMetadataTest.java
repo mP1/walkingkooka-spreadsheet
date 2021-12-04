@@ -60,8 +60,6 @@ import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -73,7 +71,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testMaxNumberColorConstant() {
-        assertEquals(SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER, SpreadsheetMetadata.MAX_NUMBER_COLOR);
+        this.checkEquals(SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER, SpreadsheetMetadata.MAX_NUMBER_COLOR);
     }
 
     @Test
@@ -93,8 +91,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testNonLocaleDefaults() {
         final SpreadsheetMetadata nonLocaleDefaults = SpreadsheetMetadata.NON_LOCALE_DEFAULTS;
 
-        assertNotEquals(SpreadsheetMetadata.EMPTY, nonLocaleDefaults);
-        assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DATETIME_OFFSET));
+        this.checkNotEquals(SpreadsheetMetadata.EMPTY, nonLocaleDefaults);
+        this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DATETIME_OFFSET));
 
         final Length<?> borderWidth = Length.pixel(1.0);
         final Color borderColor = Color.BLACK;
@@ -144,16 +142,16 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
                 .set(TextStylePropertyName.HEIGHT, Length.pixel(30.0))
                 .set(TextStylePropertyName.WIDTH, Length.pixel(100.0));
-        assertEquals(Optional.of(style), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.STYLE));
+        this.checkEquals(Optional.of(style), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.STYLE));
 
-        assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH));
-        assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_YEAR));
-        assertNotEquals(Optional.of(ExpressionNumberKind.DEFAULT), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND));
-        assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.PRECISION));
-        assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.ROUNDING_MODE));
-        assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR));
+        this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH));
+        this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_YEAR));
+        this.checkNotEquals(Optional.of(ExpressionNumberKind.DEFAULT), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND));
+        this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.PRECISION));
+        this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.ROUNDING_MODE));
+        this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR));
 
-        assertEquals(Optional.of(SpreadsheetCellReference.parseCell("A1")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT_CELL));
+        this.checkEquals(Optional.of(SpreadsheetCellReference.parseCell("A1")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT_CELL));
     }
 
     // loadFromLocale...................................................................................................
@@ -165,7 +163,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testLoadFromLocale() {
-        assertEquals(SpreadsheetMetadata.EMPTY
+        this.checkEquals(SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "¤")
                         .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("dddd, mmmm d, yyyy"))
                         .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetPattern.parseDateParsePatterns("dddd, mmmm d, yyyy;dddd, mmmm d, yy;dddd, mmmm d;mmmm d, yyyy;mmmm d, yy;mmmm d;mmm d, yyyy;mmm d, yy;mmm d;m/d/yy;m/d/yyyy;m/d"))
@@ -204,7 +202,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD");
 
-        assertEquals(
+        this.checkEquals(
                 metadata,
                 metadata.set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
                         .setOrRemove(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, null)
@@ -216,7 +214,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD");
 
-        assertEquals(
+        this.checkEquals(
                 metadata.set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.'),
                 metadata.setOrRemove(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
         );
@@ -231,13 +229,13 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final JsonNodeMarshallContext marshallContext2 = JsonNodeMarshallContexts.basic();
 
         final BigDecimal bigDecimal = BigDecimal.valueOf(1.25);
-        assertEquals(marshallContext.marshall(bigDecimal), marshallContext2.marshall(bigDecimal), () -> "" + bigDecimal);
+        this.checkEquals(marshallContext.marshall(bigDecimal), marshallContext2.marshall(bigDecimal), () -> "" + bigDecimal);
 
         final LocalDateTime localDateTime = LocalDateTime.now();
 
-        assertEquals(marshallContext.marshall(localDateTime), marshallContext2.marshall(localDateTime), () -> "" + localDateTime);
+        this.checkEquals(marshallContext.marshall(localDateTime), marshallContext2.marshall(localDateTime), () -> "" + localDateTime);
 
-        assertEquals(marshallContext.marshall(metadata), marshallContext2.marshall(metadata), () -> "" + metadata);
+        this.checkEquals(marshallContext.marshall(metadata), marshallContext2.marshall(metadata), () -> "" + metadata);
     }
 
     // toString.........................................................................................................

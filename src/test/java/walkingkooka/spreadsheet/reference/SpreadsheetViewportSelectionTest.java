@@ -29,7 +29,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -98,7 +97,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
         final Optional<SpreadsheetViewportSelectionAnchor> anchor = SpreadsheetViewportSelection.NO_ANCHOR;
         final SpreadsheetViewportSelection viewportSelection = SpreadsheetViewportSelection.with(selection, anchor);
         assertSame(selection, viewportSelection.selection(), "selection");
-        assertEquals(anchor, viewportSelection.anchor(), "anchor");
+        this.checkEquals(anchor, viewportSelection.anchor(), "anchor");
     }
 
     // cellRange.........................................................................................................
@@ -266,13 +265,13 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
         if (anchor.isPresent()) {
             final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> anchor.get().setSelection(selection));
             if (null != message) {
-                assertEquals(message, thrown.getMessage(), "message");
+                this.checkEquals(message, thrown.getMessage(), "message");
             }
 
         }
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportSelection.with(selection, anchor));
         if (null != message) {
-            assertEquals(message, thrown.getMessage(), "message");
+            this.checkEquals(message, thrown.getMessage(), "message");
         }
     }
 
@@ -280,7 +279,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                               final SpreadsheetViewportSelectionAnchor anchor) {
         final SpreadsheetViewportSelection viewportSelection = anchor.setSelection(selection);
         assertSame(selection, viewportSelection.selection(), "selection");
-        assertEquals(Optional.of(anchor), viewportSelection.anchor(), "anchor");
+        this.checkEquals(Optional.of(anchor), viewportSelection.anchor(), "anchor");
     }
 
     // equals...........................................................................................................

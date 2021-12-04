@@ -24,8 +24,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<SpreadsheetExpressionReference>,
         JsonNodeMarshallingTesting<SpreadsheetExpressionReference> {
 
@@ -34,7 +32,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     @Test
     public void testJsonNodeUnmarshallWithCellReference() {
         final String reference = "A1";
-        assertEquals(SpreadsheetSelection.parseCell(reference),
+        this.checkEquals(SpreadsheetSelection.parseCell(reference),
                 SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(reference), this.unmarshallContext())
         );
     }
@@ -42,7 +40,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     @Test
     public void testJsonNodeUnmarshallWithLabel() {
         final String label = "label123";
-        assertEquals(SpreadsheetExpressionReference.labelName(label),
+        this.checkEquals(SpreadsheetExpressionReference.labelName(label),
                 SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(label), this.unmarshallContext())
         );
     }

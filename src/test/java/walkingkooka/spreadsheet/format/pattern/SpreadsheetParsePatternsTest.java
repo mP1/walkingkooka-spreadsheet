@@ -36,32 +36,30 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import java.util.List;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetParsePatternsTest implements ClassTesting2<SpreadsheetParsePatterns<?>> {
 
     @Test
     public void testWithDate() {
         final List<SpreadsheetFormatDateParserToken> tokens = Lists.of(this.dmyy(), this.ddmmyyyy());
-        assertEquals(tokens, SpreadsheetParsePatterns.dateParse(tokens).value());
+        this.checkEquals(tokens, SpreadsheetParsePatterns.dateParse(tokens).value());
     }
 
     @Test
     public void testWithDateTime() {
         final List<SpreadsheetFormatDateTimeParserToken> tokens = Lists.of(this.hhmmyyyy(), this.yyyymmhh());
-        assertEquals(tokens, SpreadsheetParsePatterns.dateTimeParsePatterns(tokens).value());
+        this.checkEquals(tokens, SpreadsheetParsePatterns.dateTimeParsePatterns(tokens).value());
     }
 
     @Test
     public void testWithNumber() {
         final List<SpreadsheetFormatNumberParserToken> tokens = Lists.of(this.number(), this.money());
-        assertEquals(tokens, SpreadsheetParsePatterns.numberParsePatterns(tokens).value());
+        this.checkEquals(tokens, SpreadsheetParsePatterns.numberParsePatterns(tokens).value());
     }
 
     @Test
     public void testWithTime() {
         final List<SpreadsheetFormatTimeParserToken> tokens = Lists.of(this.hhmm(), this.hhmmss());
-        assertEquals(tokens, SpreadsheetParsePatterns.timeParsePatterns(tokens).value());
+        this.checkEquals(tokens, SpreadsheetParsePatterns.timeParsePatterns(tokens).value());
     }
 
     @Test
@@ -95,7 +93,7 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     private void parseAndCheck(final String text,
                                final Function<String, SpreadsheetParsePatterns<?>> parse,
                                final SpreadsheetFormatParserToken... tokens) {
-        assertEquals(Lists.of(tokens),
+        this.checkEquals(Lists.of(tokens),
                 parse.apply(text).value(),
                 () -> "parse " + CharSequences.quoteAndEscape(text));
     }

@@ -30,7 +30,6 @@ import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import java.math.BigInteger;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetParentParserTokenTestCase<T extends SpreadsheetParentParserToken> extends SpreadsheetParserTokenTestCase<T> {
@@ -67,8 +66,8 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         final String text = this.text();
         final T token = this.createToken(text, tokens);
         this.textAndCheck(token, text);
-        assertEquals(tokens, token.value(), "tokens");
-        assertEquals(tokens, token.value(), "tokens not copied");
+        this.checkEquals(tokens, token.value(), "tokens");
+        this.checkEquals(tokens, token.value(), "tokens not copied");
     }
 
     abstract T createToken(final String text, final List<ParserToken> tokens);
@@ -88,7 +87,7 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
     }
 
     final void checkValue(final SpreadsheetParentParserToken token, final List<ParserToken> value) {
-        assertEquals(value, token.value(), "value");
+        this.checkEquals(value, token.value(), "value");
     }
 
     final SpreadsheetApostropheSymbolParserToken apostropheSymbol() {

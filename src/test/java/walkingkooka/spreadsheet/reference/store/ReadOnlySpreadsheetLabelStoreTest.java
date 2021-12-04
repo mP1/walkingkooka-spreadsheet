@@ -28,7 +28,6 @@ import walkingkooka.store.ReadOnlyStoreTesting;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -125,13 +124,14 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LabelZ99");
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
 
-        this.labelsAndCheck(ReadOnlySpreadsheetLabelStore.with(new FakeSpreadsheetLabelStore() {
-                    @Override
-                    public Set<SpreadsheetLabelName> labels(SpreadsheetCellReference c) {
-                        assertEquals(reference, c);
-                        return Sets.of(label);
-                    }
-                }),
+        this.labelsAndCheck(ReadOnlySpreadsheetLabelStore.with(
+                        new FakeSpreadsheetLabelStore() {
+                            @Override
+                            public Set<SpreadsheetLabelName> labels(SpreadsheetCellReference c) {
+                                checkEquals(reference, c);
+                                return Sets.of(label);
+                            }
+                        }),
                 reference,
                 label);
     }

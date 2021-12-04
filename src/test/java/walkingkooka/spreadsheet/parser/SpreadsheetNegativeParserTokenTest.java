@@ -27,7 +27,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryParserTokenTestCase<SpreadsheetNegativeParserToken> {
@@ -103,11 +102,11 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
                 visited.add(t);
             }
         }.accept(unary);
-        assertEquals("81381728815628428", b.toString());
-        assertEquals(Lists.of(unary, unary, unary,
-                symbol, symbol, symbol, symbol, symbol,
-                parameter, parameter, parameter, parameter, parameter, parameter,
-                unary, unary, unary),
+        this.checkEquals("81381728815628428", b.toString());
+        this.checkEquals(Lists.of(unary, unary, unary,
+                        symbol, symbol, symbol, symbol, symbol,
+                        parameter, parameter, parameter, parameter, parameter, parameter,
+                        unary, unary, unary),
                 visited,
                 "visited");
     }

@@ -22,8 +22,6 @@ import walkingkooka.text.CharSequences;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 /**
  * Mixin interface with default methods to assist testing of a given {@link SpreadsheetFormatter}.
  */
@@ -33,7 +31,7 @@ public interface SpreadsheetFormatterTesting extends Testing {
                                    final Object value,
                                    final SpreadsheetFormatterContext context,
                                    final boolean expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 formatter.canFormat(value, context),
                 () -> formatter + " canFormat " + CharSequences.quoteIfChars(value));
     }
@@ -76,7 +74,7 @@ public interface SpreadsheetFormatterTesting extends Testing {
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
                                 final Optional<SpreadsheetText> text) {
-        assertEquals(text,
+        this.checkEquals(text,
                 formatter.format(value, context),
                 () -> formatter + " " + CharSequences.quoteIfChars(value));
     }

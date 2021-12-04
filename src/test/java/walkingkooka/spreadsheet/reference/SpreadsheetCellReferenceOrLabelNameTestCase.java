@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<S extends SpreadsheetCellReferenceOrLabelName & Comparable<S>> extends SpreadsheetExpressionReferenceTestCase<S>
         implements ComparableTesting2<S> {
 
@@ -42,10 +40,10 @@ public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<S extends Spre
 
         final SpreadsheetViewport viewport = selection.viewport(xOffset, yOffset, width, height);
 
-        assertEquals(selection.toRelative(), viewport.cellOrLabel(), "cellOrLabel");
-        assertEquals(xOffset, viewport.xOffset(), "xOffset");
-        assertEquals(yOffset, viewport.yOffset(), "yOffset");
-        assertEquals(width, viewport.width(), "width");
-        assertEquals(height, viewport.height(), "height");
+        this.checkEquals(selection.toRelative(), viewport.cellOrLabel(), "cellOrLabel");
+        this.checkEquals(xOffset, viewport.xOffset(), "xOffset");
+        this.checkEquals(yOffset, viewport.yOffset(), "yOffset");
+        this.checkEquals(width, viewport.width(), "width");
+        this.checkEquals(height, viewport.height(), "height");
     }
 }

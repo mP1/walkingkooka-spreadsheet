@@ -22,7 +22,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetReferenceKindTest implements ClassTesting2<SpreadsheetReferenceKind>,
@@ -75,10 +74,10 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
                              final SpreadsheetReferenceKind kind,
                              final boolean first,
                              final boolean last) {
-        assertEquals(value, column.value(), "value");
+        this.checkEquals(value, column.value(), "value");
         assertSame(kind, column.referenceKind(), "referenceKind");
-        assertEquals(first, column.isFirst(), "first");
-        assertEquals(last, column.isLast(), "last");
+        this.checkEquals(first, column.isFirst(), "first");
+        this.checkEquals(last, column.isLast(), "last");
     }
 
     @Test
@@ -128,10 +127,10 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
                           final SpreadsheetReferenceKind kind,
                           final boolean first,
                           final boolean last) {
-        assertEquals(value, row.value(), "value");
+        this.checkEquals(value, row.value(), "value");
         assertSame(kind, row.referenceKind(), "referenceKind");
-        assertEquals(first, row.isFirst(), "first");
-        assertEquals(last, row.isLast(), "last");
+        this.checkEquals(first, row.isFirst(), "first");
+        this.checkEquals(last, row.isLast(), "last");
     }
 
     @Test

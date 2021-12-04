@@ -26,7 +26,6 @@ import walkingkooka.text.CharSequences;
 
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetSelectionTest implements ClassTesting2<SpreadsheetSelection>,
@@ -140,7 +139,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     private void isCellReferenceTextAndCheck(final String text, final boolean expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 SpreadsheetExpressionReference.isCellReferenceText(text),
                 () -> "isCellReferenceText " + CharSequences.quoteAndEscape(text));
         if (expected) {
@@ -152,7 +151,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseCell() {
-        assertEquals(SpreadsheetSelection.parseCell("A1"),
+        this.checkEquals(SpreadsheetSelection.parseCell("A1"),
                 SpreadsheetExpressionReference.cell(SpreadsheetSelection.parseColumn("A"),
                         SpreadsheetSelection.parseRow("1")));
     }
@@ -166,7 +165,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseColumn() {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetSelection.parseColumn("B"),
                 SpreadsheetReferenceKind.RELATIVE.column(1)
         );
@@ -176,7 +175,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseColumnReference() {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetSelection.parseColumn("B")
                         .spreadsheetColumnRange(SpreadsheetSelection.parseColumn("D")),
                 SpreadsheetSelection.parseColumnRange("B:D")
@@ -185,7 +184,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseColumnReferenceSingleton() {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetSelection.parseColumn("B")
                         .toSpreadsheetColumnReferenceRange(),
                 SpreadsheetSelection.parseColumnRange("B")
@@ -307,7 +306,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     private void parseCellOrLabelAndCheck(final String text,
                                           final SpreadsheetCellReferenceOrLabelName expected) {
         final SpreadsheetCellReferenceOrLabelName parsed = SpreadsheetSelection.parseCellOrLabel(text);
-        assertEquals(
+        this.checkEquals(
                 expected,
                 parsed,
                 () -> "Parsing of " + CharSequences.quoteAndEscape(text) + " failed"
@@ -385,7 +384,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         this.parseCellOrLabelResolvingLabelsAndCheck(
                 text,
                 (l) -> {
-                    assertEquals(label, l, "label");
+                    this.checkEquals(label, l, "label");
                     return cellReference;
                 },
                 cellReference
@@ -399,7 +398,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 text,
                 labelToCell
         );
-        assertEquals(
+        this.checkEquals(
                 expected,
                 parsed,
                 () -> "Parsing of " + CharSequences.quoteAndEscape(text) + " failed"
@@ -415,7 +414,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseRow() {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetReferenceKind.RELATIVE.row(2 - 1),
                 SpreadsheetSelection.parseRow("2")
         );
@@ -423,7 +422,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseRow2() {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetReferenceKind.RELATIVE.row(23 - 1),
                 SpreadsheetSelection.parseRow("23")
         );

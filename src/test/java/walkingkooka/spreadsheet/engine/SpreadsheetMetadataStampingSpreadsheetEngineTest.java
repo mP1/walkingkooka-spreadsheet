@@ -54,7 +54,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -119,8 +118,8 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                 context
         );
         final SpreadsheetCell loaded = delta.cells().iterator().next();
-        assertEquals(Optional.of(TextNode.text(FORMULA_VALUE)), loaded.formatted(), "formatted");
-        assertEquals(Optional.of(FORMULA_VALUE), loaded.formula().value());
+        this.checkEquals(Optional.of(TextNode.text(FORMULA_VALUE)), loaded.formatted(), "formatted");
+        this.checkEquals(Optional.of(FORMULA_VALUE), loaded.formula().value());
 
         this.checkMetadataUpdated(context);
     }
@@ -306,7 +305,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     private void checkMetadata(final SpreadsheetEngineContext context, final SpreadsheetMetadata metadata) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetMetadataStore store = repository.metadatas();
-        assertEquals(metadata, store.loadOrFail(ID));
+        this.checkEquals(metadata, store.loadOrFail(ID));
     }
 
     @Test
@@ -399,7 +398,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
             @Override
             public SpreadsheetParserToken parseFormula(final String formula) {
-                assertEquals(FORMULA_TEXT, formula, "formula text");
+                checkEquals(FORMULA_TEXT, formula, "formula text");
                 return SpreadsheetParserToken.text(
                         Lists.of(
                                 SpreadsheetParserToken.apostropheSymbol("'", "'"),
@@ -417,7 +416,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             @Override
             public Optional<SpreadsheetText> format(final Object value,
                                                     final SpreadsheetFormatter formatter) {
-                assertEquals(FORMULA_VALUE, value, "formatValue");
+                checkEquals(FORMULA_VALUE, value, "formatValue");
                 return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, FORMULA_VALUE));
             }
         };

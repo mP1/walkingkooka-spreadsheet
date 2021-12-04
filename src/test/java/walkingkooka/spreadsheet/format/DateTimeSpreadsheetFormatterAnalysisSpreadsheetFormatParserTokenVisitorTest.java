@@ -24,8 +24,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitorTest extends
         SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase<DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor> {
 
@@ -78,8 +76,8 @@ public final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTo
                 .parse(TextCursors.charSequence(pattern),
                         SpreadsheetFormatParserContexts.basic())
                 .get());
-        assertEquals(ampm, visitor.twelveHour, "twelveHour");
-        assertEquals(millisecondDecimals, visitor.millisecondDecimals, "millisecondDecimals");
+        this.checkEquals(ampm, visitor.twelveHour, "twelveHour");
+        this.checkEquals(millisecondDecimals, visitor.millisecondDecimals, "millisecondDecimals");
     }
 
     @Test

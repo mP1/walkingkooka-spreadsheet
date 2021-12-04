@@ -36,8 +36,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern, SpreadsheetNumberFormatPattern> {
 
     @Test
@@ -60,7 +58,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern
         final String formatted = pattern.formatter()
                 .format(number, spreadsheetFormatterContext()).get().text();
 
-        assertEquals(expected, formatted, () -> pattern.toString());
+        this.checkEquals(expected, formatted, () -> pattern.toString());
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {

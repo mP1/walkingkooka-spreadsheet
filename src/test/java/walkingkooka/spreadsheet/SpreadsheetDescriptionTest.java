@@ -24,7 +24,6 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDescriptionTest implements ClassTesting2<SpreadsheetDescription>,
@@ -80,7 +79,7 @@ public final class SpreadsheetDescriptionTest implements ClassTesting2<Spreadshe
     }
 
     private void checkValue(final SpreadsheetDescription description, final String value) {
-        assertEquals(value, description.value(), "value");
+        this.checkEquals(value, description.value(), "value");
     }
 
     @Override

@@ -105,9 +105,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -207,9 +205,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("K99");
-        assertEquals(Optional.empty(), context.storeRepository().cells().load(reference));
+        this.checkEquals(Optional.empty(), context.storeRepository().cells().load(reference));
 
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
                         .setLabels(SpreadsheetDelta.NO_LABELS),
@@ -222,13 +220,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        assertEquals(Optional.empty(), context.storeRepository().cells().load(LABEL_CELL));
+        this.checkEquals(Optional.empty(), context.storeRepository().cells().load(LABEL_CELL));
 
         context.storeRepository()
                 .labels()
                 .save(LABEL.mapping(LABEL_CELL));
 
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
                         .setLabels(Sets.of(LABEL.mapping(LABEL_CELL))),
@@ -351,7 +349,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellReference,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context);
-        assertNotEquals(SpreadsheetFormula.NO_ERROR, first.formula().error(), () -> "Expected error absent=" + first);
+        this.checkNotEquals(SpreadsheetFormula.NO_ERROR, first.formula().error(), () -> "Expected error absent=" + first);
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context);
         assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
@@ -405,7 +403,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, a, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, context);
         assertNotSame(first, second, "different instances of SpreadsheetCell returned not cached");
-        assertEquals(Optional.of(number(999)),
+        this.checkEquals(Optional.of(number(999)),
                 second.formula().value(),
                 "first should have value updated to 999 and not 1 the original value.");
     }
@@ -420,7 +418,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells();
 
         final SpreadsheetCell withError = saved.iterator().next();
-        assertNotEquals(SpreadsheetFormula.NO_ERROR,
+        this.checkNotEquals(SpreadsheetFormula.NO_ERROR,
                 withError.formula().error(),
                 () -> "cell should have error because B2 reference is unknown=" + withError);
 
@@ -658,7 +656,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 FORMATTED_PATTERN_SUFFIX);
 
         // UNDERLINED from conditional formatting rule #2.
-        assertEquals(Optional.of(italics.replace(TextNode.text("7 " + FORMATTED_PATTERN_SUFFIX)).root()),
+        this.checkEquals(Optional.of(italics.replace(TextNode.text("7 " + FORMATTED_PATTERN_SUFFIX)).root()),
                 cell.formatted(),
                 () -> "TextStyle should include underline if correct rule was applied=" + cell);
     }
@@ -5728,7 +5726,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.createContext(new FakeSpreadsheetCellStore() {
                     @Override
                     public double maxColumnWidth(final SpreadsheetColumnReference c) {
-                        assertEquals(column, c);
+                        checkEquals(column, c);
                         return maxColumnWidth;
                     }
                 }),
@@ -5744,13 +5742,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 () -> BasicSpreadsheetEngine.with(SpreadsheetMetadata.EMPTY)
                         .columnWidth(
                                 column,
-                                this.createContext(new FakeSpreadsheetCellStore() {
-                                    @Override
-                                    public double maxColumnWidth(final SpreadsheetColumnReference c) {
-                                        assertEquals(column, c);
-                                        return 0;
-                                    }
-                                })));
+                                this.createContext(
+                                        new FakeSpreadsheetCellStore() {
+                                            @Override
+                                            public double maxColumnWidth(final SpreadsheetColumnReference c) {
+                                                checkEquals(column, c);
+                                                return 0;
+                                            }
+                                        })
+                        )
+        );
     }
 
     // rowHeight........................................................................................................
@@ -5786,13 +5787,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.rowHeightAndCheck(
                 BasicSpreadsheetEngine.with(metadata),
                 row,
-                this.createContext(new FakeSpreadsheetCellStore() {
-                    @Override
-                    public double maxRowHeight(final SpreadsheetRowReference c) {
-                        assertEquals(row, c);
-                        return expected;
-                    }
-                }),
+                this.createContext(
+                        new FakeSpreadsheetCellStore() {
+                            @Override
+                            public double maxRowHeight(final SpreadsheetRowReference c) {
+                                checkEquals(row, c);
+                                return expected;
+                            }
+                        }),
                 expected
         );
     }
@@ -5804,14 +5806,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 () -> BasicSpreadsheetEngine.with(SpreadsheetMetadata.EMPTY)
                         .rowHeight(
                                 row,
-                                this.createContext(new FakeSpreadsheetCellStore() {
+                                this.createContext(
+                                        new FakeSpreadsheetCellStore() {
 
-                                    @Override
-                                    public double maxRowHeight(final SpreadsheetRowReference r) {
-                                        assertEquals(row, r);
-                                        return 0;
-                                    }
-                                })));
+                                            @Override
+                                            public double maxRowHeight(final SpreadsheetRowReference r) {
+                                                checkEquals(row, r);
+                                                return 0;
+                                            }
+                                        })
+                        )
+        );
     }
 
     // widths top left .................................................................................................
@@ -7788,7 +7793,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        assertEquals(
+        this.checkEquals(
                 range,
                 engine.range(viewport, selection, context),
                 () -> "range " + viewport + selection.map(s -> " selection:" + s).orElse("")
@@ -7856,7 +7861,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 if (reference.isCellReference()) {
                     return (SpreadsheetCellReference) reference;
                 }
-                assertEquals(LABEL, reference.toString());
+                checkEquals(LABEL, reference.toString());
                 return LABEL_CELL;
             }
 
@@ -7892,7 +7897,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public Object evaluate(final Expression node) {
                 // throw an exception which is an "error" when the invalidCellReference function appears in a formula and executed
                 final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions = (name) -> {
-                    assertEquals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value(), "InvalidCellReference");
+                    checkEquals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value(), "InvalidCellReference");
                     switch (name.value()) {
                         case "InvalidCellReference":
                             return new FakeExpressionFunction<>() {
@@ -7955,7 +7960,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                assertEquals(Boolean.class, target, "Only support converting to Boolean=" + value);
+                checkEquals(Boolean.class, target, "Only support converting to Boolean=" + value);
                 return Either.left(target.cast(Boolean.parseBoolean(String.valueOf(value))));
             }
 
@@ -8169,14 +8174,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private void loadCellStoreAndCheck(final SpreadsheetCellStore store,
                                        final SpreadsheetCell... cells) {
-        assertEquals(Lists.of(cells),
+        this.checkEquals(Lists.of(cells),
                 store.all(),
                 () -> "all cells in " + store);
     }
 
     private void loadLabelStoreAndCheck(final SpreadsheetLabelStore store,
                                         final SpreadsheetLabelMapping... mappings) {
-        assertEquals(Lists.of(mappings),
+        this.checkEquals(Lists.of(mappings),
                 store.all(),
                 () -> "all mappings in " + store);
     }
@@ -8185,7 +8190,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     void loadReferencesAndCheck(final SpreadsheetExpressionReferenceStore<E> store,
                                 final E cell,
                                 final SpreadsheetCellReference... out) {
-        assertEquals(Optional.ofNullable(out.length == 0 ? null : Sets.of(out)),
+        this.checkEquals(Optional.ofNullable(out.length == 0 ? null : Sets.of(out)),
                 store.load(cell),
                 "references to " + cell);
     }
@@ -8193,7 +8198,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private void loadReferrersAndCheck(final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store,
                                        final SpreadsheetCellReference cell,
                                        final SpreadsheetCellReference... out) {
-        assertEquals(Sets.of(out),
+        this.checkEquals(Sets.of(out),
                 store.loadReferred(cell),
                 "referrers from " + cell);
     }

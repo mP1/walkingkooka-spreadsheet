@@ -31,7 +31,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetValueVisitor> {
@@ -59,7 +58,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
 
         }.accept(value);
 
-        assertEquals("12", b.toString());
+        this.checkEquals("12", b.toString());
     }
 
     @Test
@@ -88,7 +87,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -123,7 +122,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -158,7 +157,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -193,7 +192,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -228,7 +227,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -263,7 +262,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -298,7 +297,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -333,7 +332,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -368,7 +367,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -403,7 +402,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -438,7 +437,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -473,7 +472,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -508,7 +507,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -543,7 +542,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -578,7 +577,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -613,7 +612,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
         }.accept(value);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test

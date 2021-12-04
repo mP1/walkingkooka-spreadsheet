@@ -26,8 +26,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTokenVisitorTestCase<ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor>
         implements ToStringTesting<ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> {
 
@@ -62,8 +60,8 @@ public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorT
                                                  final ColorSpreadsheetFormatterColorSource source,
                                                  final Object nameOrNumber) {
         final ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(color);
-        assertEquals(source, visitor.source, "source");
-        assertEquals(nameOrNumber, visitor.nameOrNumber, "nameOrNumber");
+        this.checkEquals(source, visitor.source, "source");
+        this.checkEquals(nameOrNumber, visitor.nameOrNumber, "nameOrNumber");
     }
 
     @Test

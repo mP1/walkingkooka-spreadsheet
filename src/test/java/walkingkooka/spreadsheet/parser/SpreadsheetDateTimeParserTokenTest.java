@@ -30,8 +30,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetDateTimeParserToken> {
 
     @Test
@@ -324,7 +322,7 @@ public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentP
                 ParserToken.text(tokensList)
         );
 
-        assertEquals(
+        this.checkEquals(
                 expected,
                 dateTimeParserToken.toLocalDateTime(context),
                 () -> "toLocalDateTime() " + dateTimeParserToken

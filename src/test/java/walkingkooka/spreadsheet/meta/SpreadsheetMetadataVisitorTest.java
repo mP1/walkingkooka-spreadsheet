@@ -43,7 +43,6 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataVisitor> {
@@ -290,7 +289,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         new TestSpreadsheetMetadataVisitor() {
             @Override
             protected void visitNamedColor(final SpreadsheetColorName n, final Color c) {
-                assertEquals(name, n, "name");
+                checkEquals(name, n, "name");
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.namedColor(name), this.color());
@@ -303,7 +302,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         new TestSpreadsheetMetadataVisitor() {
             @Override
             protected void visitNumberedColor(final int n, final Color c) {
-                assertEquals(number, n, "number");
+                checkEquals(number, n, "number");
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.numberedColor(number), this.color());
@@ -472,14 +471,14 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         return new TestSpreadsheetMetadataVisitor();
     }
 
-    static class TestSpreadsheetMetadataVisitor extends FakeSpreadsheetMetadataVisitor {
+    class TestSpreadsheetMetadataVisitor extends FakeSpreadsheetMetadataVisitor {
 
         <T> void accept(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {
             this.expected = value;
 
             final SpreadsheetMetadata metadata = metadata(propertyName, value);
             this.accept(metadata);
-            assertEquals(this.expected, this.visited);
+            checkEquals(this.expected, this.visited);
 
             new SpreadsheetMetadataVisitor() {
             }.accept(metadata);

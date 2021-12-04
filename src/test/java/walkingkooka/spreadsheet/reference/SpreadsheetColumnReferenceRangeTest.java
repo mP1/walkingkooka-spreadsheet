@@ -24,7 +24,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -218,7 +217,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     private void testColumnAndCheck2(final String columnRange,
                                      final String column,
                                      final boolean expected) {
-        assertEquals(
+        this.checkEquals(
                 expected,
                 SpreadsheetSelection.parseColumnRange(columnRange)
                         .testColumn(SpreadsheetSelection.parseColumn(column)),
@@ -251,7 +250,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     private void setRowReferenceRangeAndCheck(final String column,
                                               final String row,
                                               final String range) {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetSelection.parseCellRange(range),
                 SpreadsheetSelection.parseColumnRange(column).setRowReferenceRange(SpreadsheetSelection.parseRowRange(row)),
                 () -> column + " setRowReferenceRange " + row
@@ -285,7 +284,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
                 b.append("3");
             }
         }.accept(selection);
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     // TreePrintable....................................................................................................

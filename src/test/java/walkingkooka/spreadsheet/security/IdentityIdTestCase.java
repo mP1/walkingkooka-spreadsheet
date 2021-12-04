@@ -24,8 +24,6 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> implements ClassTesting2<I>,
         ComparableTesting2<I>,
         JsonNodeMarshallingTesting<I>,
@@ -39,7 +37,7 @@ public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> i
     public final void testCreate() {
         final long value = 123L;
         final I id = this.createId(value);
-        assertEquals(value, id.value(), "value");
+        this.checkEquals(value, id.value(), "value");
     }
 
     @Test

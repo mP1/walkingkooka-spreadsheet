@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting2;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -95,19 +94,19 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testIsFirst() {
         final R reference = this.createReference(0);
-        assertEquals(true, reference.isFirst());
+        this.checkEquals(true, reference.isFirst());
     }
 
     @Test
     public final void testIsFirstWhenSecond() {
         final R reference = this.createReference(1);
-        assertEquals(false, reference.isFirst());
+        this.checkEquals(false, reference.isFirst());
     }
 
     @Test
     public final void testIsFirstWhenLast() {
         final R reference = this.createReference(this.maxValue());
-        assertEquals(false, reference.isFirst());
+        this.checkEquals(false, reference.isFirst());
     }
 
     // isLast...........................................................................................................
@@ -115,19 +114,19 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testIsLast() {
         final R reference = this.createReference(this.maxValue());
-        assertEquals(true, reference.isLast());
+        this.checkEquals(true, reference.isLast());
     }
 
     @Test
     public final void testIsLastWhenSecondLast() {
         final R reference = this.createReference(this.maxValue() - 1);
-        assertEquals(false, reference.isLast());
+        this.checkEquals(false, reference.isLast());
     }
 
     @Test
     public final void testIsLastWhenFirst() {
         final R reference = this.createReference(0);
-        assertEquals(false, reference.isLast());
+        this.checkEquals(false, reference.isLast());
     }
 
     // setReferenceKind.................................................................................................
@@ -156,7 +155,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.checkValue(reference, VALUE);
         this.checkKind(reference, REFERENCE_KIND);
 
-        assertEquals(reference, different.setReferenceKind(REFERENCE_KIND));
+        this.checkEquals(reference, different.setReferenceKind(REFERENCE_KIND));
     }
 
     // setValue.........................................................................................................
@@ -236,40 +235,40 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testAddSaturatedUnderflow1() {
         final R reference = this.createReference(0);
-        assertEquals(reference, reference.addSaturated(-1));
+        this.checkEquals(reference, reference.addSaturated(-1));
     }
 
     @Test
     public final void testAddSaturatedUnderflow2() {
         final R reference = this.createReference(1);
-        assertEquals(this.createReference(0), reference.addSaturated(-1));
+        this.checkEquals(this.createReference(0), reference.addSaturated(-1));
     }
 
     @Test
     public final void testAddSaturatedUnderflow3() {
         final R reference = this.createReference(2);
-        assertEquals(this.createReference(0), reference.addSaturated(-3));
+        this.checkEquals(this.createReference(0), reference.addSaturated(-3));
     }
 
     @Test
     public final void testAddSaturatedOverflow1() {
         final int max = this.maxValue();
         final R reference = this.createReference(max);
-        assertEquals(reference, reference.addSaturated(+1));
+        this.checkEquals(reference, reference.addSaturated(+1));
     }
 
     @Test
     public final void testAddSaturatedOverflow2() {
         final int max = this.maxValue();
         final R reference = this.createReference(max);
-        assertEquals(reference, reference.addSaturated(+1));
+        this.checkEquals(reference, reference.addSaturated(+1));
     }
 
     @Test
     public final void testAddSaturatedOverflow3() {
         final int max = this.maxValue();
         final R reference = this.createReference(max);
-        assertEquals(this.createReference(max), reference.addSaturated(+2));
+        this.checkEquals(this.createReference(max), reference.addSaturated(+2));
     }
 
     // equalsIgnoreReferenceKind........................................................................................
@@ -345,12 +344,12 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     private void equalsIgnoreReferenceKindAndCheck(final R reference1,
                                                    final R reference2,
                                                    final boolean expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 reference1.equalsIgnoreReferenceKind0(reference2),
                 () -> reference1 + " equalsIgnoreReferenceKind " + reference2
         );
         if (null != reference2) {
-            assertEquals(expected,
+            this.checkEquals(expected,
                     reference2.equalsIgnoreReferenceKind0(reference1),
                     () -> reference2 + " equalsIgnoreReferenceKind " + reference1);
         }
@@ -369,7 +368,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     abstract R createReference(final int value, final SpreadsheetReferenceKind kind);
 
     private void checkValue(final SpreadsheetColumnOrRowReference reference, final Integer value) {
-        assertEquals(value, reference.value(), "value");
+        this.checkEquals(value, reference.value(), "value");
     }
 
     private void checkKind(final SpreadsheetColumnOrRowReference reference, final SpreadsheetReferenceKind kind) {
@@ -377,11 +376,11 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     }
 
     private void checkType(final SpreadsheetColumnOrRowReference reference) {
-        assertEquals(this.type(), reference.getClass(), "same type");
+        this.checkEquals(this.type(), reference.getClass(), "same type");
     }
 
     final void checkToString(final int value, final SpreadsheetReferenceKind kind, final String toString) {
-        assertEquals(toString, this.createReference(value, kind).toString());
+        this.checkEquals(toString, this.createReference(value, kind).toString());
     }
 
     abstract int maxValue();

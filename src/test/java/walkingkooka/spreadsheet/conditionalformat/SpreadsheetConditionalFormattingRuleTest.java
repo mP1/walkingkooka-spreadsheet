@@ -32,7 +32,6 @@ import walkingkooka.tree.text.TextStyle;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -280,7 +279,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
 
     private void checkDescription(final SpreadsheetConditionalFormattingRule rule,
                                   final SpreadsheetDescription description) {
-        assertEquals(description, rule.description(), "rule");
+        this.checkEquals(description, rule.description(), "rule");
     }
 
     private void checkPriority(final SpreadsheetConditionalFormattingRule rule) {
@@ -289,7 +288,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
 
     private void checkPriority(final SpreadsheetConditionalFormattingRule rule,
                                final int priority) {
-        assertEquals(priority, rule.priority(), "priority");
+        this.checkEquals(priority, rule.priority(), "priority");
     }
 
     private void checkFormula(final SpreadsheetConditionalFormattingRule rule) {
@@ -298,7 +297,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
 
     private void checkFormula(final SpreadsheetConditionalFormattingRule rule,
                               final SpreadsheetFormula formula) {
-        assertEquals(formula, rule.formula(), "formula");
+        this.checkEquals(formula, rule.formula(), "formula");
     }
 
     private void checkTextStyle(final SpreadsheetConditionalFormattingRule rule) {
@@ -307,7 +306,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
 
     private void checkTextStyle(final SpreadsheetConditionalFormattingRule rule,
                                 final Function<SpreadsheetCell, TextStyle> style) {
-        assertEquals(style, rule.style(), "style");
+        this.checkEquals(style, rule.style(), "style");
     }
 
     @Override

@@ -42,8 +42,6 @@ import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetDataValidatorsTest implements ClassTesting2<SpreadsheetDataValidators>,
         PublicStaticHelperTesting<SpreadsheetDataValidators> {
 
@@ -664,7 +662,7 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
     private <TT> void validateAndCheck(final SpreadsheetDataValidator<TT> validator,
                                        final TT value,
                                        final boolean expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 validator.validate(value, this.createContext(value)),
                 () -> validator + " " + CharSequences.quoteIfChars(value));
     }

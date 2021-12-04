@@ -35,14 +35,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase<SpreadsheetDeltaWindowed> {
 
     public SpreadsheetDeltaWindowedTest() {
         super();
-        assertNotEquals(this.window(), this.differentWindow(), "window v differentWindow must NOT be equal");
+        this.checkNotEquals(this.window(), this.differentWindow(), "window v differentWindow must NOT be equal");
     }
 
     @Test

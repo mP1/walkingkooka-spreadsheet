@@ -56,7 +56,6 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetParsePatterns<T>,
@@ -79,8 +78,8 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     SpreadsheetParsePatternsTestCase() {
         super();
-        assertEquals(this.decimalNumberContext().currencySymbol(), currencyDollarSign().text(), "currencySymbol");
-        assertEquals(this.decimalNumberContext().exponentSymbol(), e().text(), "exponentSymbol");
+        this.checkEquals(this.decimalNumberContext().currencySymbol(), currencyDollarSign().text(), "currencySymbol");
+        this.checkEquals(this.decimalNumberContext().exponentSymbol(), e().text(), "exponentSymbol");
     }
 
     @Test
@@ -99,7 +98,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
                 this.parseFormatParserToken("\"text-literal-2\""));
 
         final P patterns = this.createPattern(tokens);
-        assertEquals(patterns.value(), tokens, "value");
+        this.checkEquals(patterns.value(), tokens, "value");
     }
 
     @Test
@@ -141,7 +140,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     public final void testWithEscape() {
         final List<T> tokens = Lists.of(this.createFormatParserToken(Lists.of(SpreadsheetFormatParserToken.escape('\t', "\\t"))));
         final P patterns = this.createPattern(tokens);
-        assertEquals(patterns.value(), tokens, "value");
+        this.checkEquals(patterns.value(), tokens, "value");
     }
 
     @Test
@@ -193,7 +192,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     public final void testWithWhitespace() {
         final List<T> tokens = Lists.of(this.createFormatParserToken(Lists.of(whitespace())));
         final P patterns = this.createPattern(tokens);
-        assertEquals(patterns.value(), tokens, "value");
+        this.checkEquals(patterns.value(), tokens, "value");
     }
 
     final void withInvalidCharacterFails(final ParserToken token) {
@@ -208,7 +207,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         final T parent = this.createFormatParserToken(tokens, patternText2);
 
         final InvalidCharacterException thrown = assertThrows(InvalidCharacterException.class, () -> this.createPattern(Lists.of(parent)));
-        assertEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
+        this.checkEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
     }
 
     // JsonNodeMarshallingTesting.......................................................................................

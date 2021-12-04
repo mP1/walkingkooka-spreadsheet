@@ -36,9 +36,6 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParserToken> implements ClassTesting2<T>,
         IsMethodTesting<T>,
         JsonNodeMarshallingTesting<T>,
@@ -86,7 +83,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                 .filter(m -> m.getReturnType() == type)
                 .filter(m -> JavaVisibility.PUBLIC == JavaVisibility.of(m))
                 .findFirst();
-        assertNotEquals(
+        this.checkNotEquals(
                 Optional.empty(),
                 possibleMethod,
                 () -> "Unable to find a static public method that returns " + type.getName()
@@ -102,7 +99,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                         .toString();
         expected = Character.toLowerCase(expected.charAt(0)) + expected.substring(1);
 
-        assertEquals(expected,
+        this.checkEquals(expected,
                 name,
                 () -> "Token public static factory method name incorrect: " + method.toGenericString());
     }
@@ -116,7 +113,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                 .filter(m -> m.getReturnType() == type)
                 .filter(m -> JavaVisibility.PACKAGE_PRIVATE == JavaVisibility.of(m))
                 .findFirst();
-        assertNotEquals(
+        this.checkNotEquals(
                 Optional.empty(),
                 possibleMethod,
                 () -> "Unable to find a static package private method that returns " + type.getName()
@@ -131,7 +128,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                         type.getSimpleName(), PARENT_NAME.length(), -ParserToken.class.getSimpleName().length()
                 );
 
-        assertEquals(expected,
+        this.checkEquals(expected,
                 name,
                 () -> "Token package private unmarshall method name incorrect: " + method.toGenericString());
     }
@@ -153,7 +150,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
 
     final void toExpressionAndFail(final T token) {
         final Optional<Expression> node = token.toExpression(EXPRESSION_EVALUATION_CONTEXT);
-        assertEquals(Optional.empty(), node, "toExpression");
+        this.checkEquals(Optional.empty(), node, "toExpression");
     }
 
     final void toExpressionAndCheck(final Expression expected) {
@@ -176,7 +173,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                                     final ExpressionEvaluationContext context,
                                     final Expression expected) {
         final Optional<Expression> node = token.toExpression(context);
-        assertEquals(Optional.of(expected), node, "toExpression");
+        this.checkEquals(Optional.of(expected), node, "toExpression");
     }
 
     // IsMethodTesting.................................................................................................

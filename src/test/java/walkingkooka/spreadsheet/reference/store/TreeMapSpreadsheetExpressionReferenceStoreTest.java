@@ -30,9 +30,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetExpressionReferenceStoreTestCase<TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference> {
 
     @Override
@@ -164,8 +161,8 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveReferences(b1, Sets.of(c1));
 
         final SpreadsheetCellReference absoluteB1 = b1.toAbsolute();
-        assertNotEquals(b1, absoluteB1, "expected same cell but relative/absolute");
-        assertEquals(true, absoluteB1.equalsIgnoreReferenceKind(b1), () -> absoluteB1 + " " + b1);
+        this.checkNotEquals(b1, absoluteB1, "expected same cell but relative/absolute");
+        this.checkEquals(true, absoluteB1.equalsIgnoreReferenceKind(b1), () -> absoluteB1 + " " + b1);
 
         this.loadAndCheck(store, a1, b1, c1);
         this.loadAndCheck(store, b1, c1);
@@ -188,8 +185,8 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveReferences(b1, Sets.of(c1));
 
         final SpreadsheetCellReference absoluteB1 = b1.toAbsolute();
-        assertNotEquals(b1, absoluteB1, "expected same cell but relative/absolute");
-        assertEquals(true, absoluteB1.equalsIgnoreReferenceKind(b1), () -> absoluteB1 + " " + b1);
+        this.checkNotEquals(b1, absoluteB1, "expected same cell but relative/absolute");
+        this.checkEquals(true, absoluteB1.equalsIgnoreReferenceKind(b1), () -> absoluteB1 + " " + b1);
 
         this.loadAndCheck(store, a1.toAbsolute(), b1, c1);
         this.loadAndCheck(store, b1.toAbsolute(), c1);
@@ -488,10 +485,10 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
 
         store.saveReferences(a1, Sets.of(c1, d1));
 
-        assertEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, d1)),
+        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, d1)),
                 add,
                 "add");
-        assertEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, b1)),
+        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, b1)),
                 remove,
                 "remove");
 
@@ -516,8 +513,8 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         final SpreadsheetCellReference c1 = this.c1();
         store.saveReferences(a1, Sets.of(c1));
 
-        assertEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, c1)), add, "add");
-        assertEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, b1)), remove, "remove");
+        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, c1)), add, "add");
+        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, b1)), remove, "remove");
 
         this.checkReferenceToTargets(store, Maps.of(c1, Sets.of(a1)));
         this.checkTargetToReferences(store, Maps.of(a1, Sets.of(c1)));
@@ -842,10 +839,10 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.addReference(TargetAndSpreadsheetCellReference.with(c1, a1));
 
         final Set<SpreadsheetCellReference> referred = store.loadReferred(a1);
-        assertEquals(Sets.of(b1, c1), referred, "Incorrect load referred.");
+        this.checkEquals(Sets.of(b1, c1), referred, "Incorrect load referred.");
 
         store.removeReference(TargetAndSpreadsheetCellReference.with(b1, a1));
-        assertEquals(Sets.of(b1, c1), referred, "Past referred snapshot should not have changed.");
+        this.checkEquals(Sets.of(b1, c1), referred, "Past referred snapshot should not have changed.");
     }
 
     // count.................................................................................
@@ -933,12 +930,12 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
 
     private void checkTargetToReferences(final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> map,
                                          final Map<SpreadsheetCellReference, Set<SpreadsheetCellReference>> targetToReferences) {
-        assertEquals(targetToReferences, map.targetToReferences, "targetToReferences");
+        this.checkEquals(targetToReferences, map.targetToReferences, "targetToReferences");
     }
 
     private void checkReferenceToTargets(final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> map,
                                          final Map<SpreadsheetCellReference, Set<SpreadsheetCellReference>> referenceToTargets) {
-        assertEquals(referenceToTargets, map.referenceToTargets, "referenceToTargets");
+        this.checkEquals(referenceToTargets, map.referenceToTargets, "referenceToTargets");
     }
 
     // StoreTesting.................................................................................

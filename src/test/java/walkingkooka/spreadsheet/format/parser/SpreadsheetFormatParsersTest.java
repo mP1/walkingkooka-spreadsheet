@@ -32,8 +32,6 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserTestCase implements PublicStaticHelperTesting<SpreadsheetFormatParsers>,
         ParserTesting2<Parser<SpreadsheetFormatParserContext>, SpreadsheetFormatParserContext> {
 
@@ -71,7 +69,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     private void snakeCaseParserClassSimpleNameAndCheck(final Class<? extends SpreadsheetFormatParserToken> type,
                                                         final String expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 SpreadsheetFormatParsers.snakeCaseParserClassSimpleName(type),
                 () -> "snakeCaseParserClassSimpleName " + type.getSimpleName());
     }
@@ -3963,7 +3961,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         final List<ParserToken> list = Lists.of(tokens);
         final String text = ParserToken.text(list);
 
-        assertEquals(text.toUpperCase(), text, "text should be all upper case");
+        this.checkEquals(text.toUpperCase(), text, "text should be all upper case");
 
         this.parseAndCheck(parser,
                 text,

@@ -27,8 +27,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         ComparableTesting2<SpreadsheetId>,
         JsonNodeMarshallingTesting<SpreadsheetId>,
@@ -40,8 +38,8 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Test
     public void testWith() {
         final SpreadsheetId id = SpreadsheetId.with(VALUE);
-        assertEquals(VALUE, id.value(), "value");
-        assertEquals(VALUE, id.id(), "id");
+        this.checkEquals(VALUE, id.value(), "value");
+        this.checkEquals(VALUE, id.id(), "id");
     }
 
     // ParseString............................................................................................................

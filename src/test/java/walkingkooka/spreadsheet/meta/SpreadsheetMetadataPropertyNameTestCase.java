@@ -32,7 +32,6 @@ import java.math.MathContext;
 import java.util.Locale;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> extends SpreadsheetMetadataTestCase2<N>
@@ -46,7 +45,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     public final void testTextStylePropertyNameClashFree() {
         final String property = this.createName().value();
 
-        assertEquals(
+        this.checkEquals(
                 false,
                 TextStylePropertyName.values()
                         .stream()
@@ -61,7 +60,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
 
         final JsonNode node = JsonNodeMarshallContexts.basic()
                 .marshall(metadata);
-        assertEquals(
+        this.checkEquals(
                 metadata,
                 JsonNodeUnmarshallContexts.basic(
                         ExpressionNumberContexts.basic(ExpressionNumberKind.DOUBLE, MathContext.DECIMAL32)
@@ -112,10 +111,10 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                                                                 final SpreadsheetMetadataPropertyName<?> propertyName,
                                                                 final Object value) {
         if (null != message) {
-            assertEquals(message, thrown.getMessage(), "message");
+            this.checkEquals(message, thrown.getMessage(), "message");
         }
-        assertEquals(propertyName, thrown.name(), "propertyName");
-        assertEquals(value, thrown.value(), "value");
+        this.checkEquals(propertyName, thrown.name(), "propertyName");
+        this.checkEquals(value, thrown.value(), "value");
     }
 
     // extractLocaleValue...............................................................................................
@@ -123,7 +122,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     final void extractLocaleValueAndCheck(final Locale locale,
                                           final V value) {
         final N propertyName = this.createName();
-        assertEquals(Optional.ofNullable(value),
+        this.checkEquals(Optional.ofNullable(value),
                 propertyName.extractLocaleValue(locale),
                 propertyName + " extractLocaleValue " + locale);
     }

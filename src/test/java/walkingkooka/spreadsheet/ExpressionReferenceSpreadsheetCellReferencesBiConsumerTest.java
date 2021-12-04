@@ -36,7 +36,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest implements ClassTesting2<ExpressionReferenceSpreadsheetCellReferencesBiConsumer>,
@@ -93,7 +92,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
                                 final SpreadsheetCellReference... references) {
         final List<SpreadsheetCellReference> actual = Lists.array();
         this.createBiConsumer().accept(reference, actual::add);
-        assertEquals(Lists.of(references), actual);
+        this.checkEquals(Lists.of(references), actual);
     }
 
     @Test

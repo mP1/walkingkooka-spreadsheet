@@ -20,9 +20,6 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 public final class SpreadsheetNumberParsePatternsComponentCurrencyTest extends SpreadsheetNumberParsePatternsComponentTestCase2<SpreadsheetNumberParsePatternsComponentCurrency> {
 
     @Test
@@ -47,7 +44,7 @@ public final class SpreadsheetNumberParsePatternsComponentCurrencyTest extends S
 
     @Test
     public void testToken1() {
-        assertEquals(CURRENCY.toUpperCase(), CURRENCY);
+        this.checkEquals(CURRENCY.toUpperCase(), CURRENCY);
 
         this.parseAndCheck2(
                 CURRENCY,
@@ -57,7 +54,7 @@ public final class SpreadsheetNumberParsePatternsComponentCurrencyTest extends S
 
     @Test
     public void testToken2() {
-        assertEquals(CURRENCY.toUpperCase(), CURRENCY);
+        this.checkEquals(CURRENCY.toUpperCase(), CURRENCY);
 
         this.parseAndCheck2(
                 CURRENCY,
@@ -67,7 +64,7 @@ public final class SpreadsheetNumberParsePatternsComponentCurrencyTest extends S
 
     @Test
     public void testToken3() {
-        assertNotEquals(CURRENCY.toLowerCase(), CURRENCY);
+        this.checkNotEquals(CURRENCY.toLowerCase(), CURRENCY);
 
         this.parseAndCheck2(
                 CURRENCY.toLowerCase(),
@@ -77,7 +74,7 @@ public final class SpreadsheetNumberParsePatternsComponentCurrencyTest extends S
 
     @Test
     public void testToken4() {
-        assertNotEquals(CURRENCY.toLowerCase(), CURRENCY);
+        this.checkNotEquals(CURRENCY.toLowerCase(), CURRENCY);
 
         this.parseAndCheck2(
                 CURRENCY.toLowerCase(),

@@ -29,7 +29,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetCellReferenceParserToken> {
@@ -94,7 +93,7 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
     private void checkCell(final SpreadsheetCellReferenceParserToken cell,
                            final SpreadsheetRowReferenceParserToken row,
                            final SpreadsheetColumnReferenceParserToken column) {
-        assertEquals(SpreadsheetExpressionReference.cell(column.value(), row.value()),
+        this.checkEquals(SpreadsheetExpressionReference.cell(column.value(), row.value()),
                 cell.cell(),
                 "cell");
     }

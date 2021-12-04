@@ -21,18 +21,16 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetFormatter2SpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetFormatter2SpreadsheetValueVisitor> {
 
     @Test
     public void testSpreadsheetType() {
-        assertEquals(true, SpreadsheetFormatter2SpreadsheetValueVisitor.isSpreadsheetValue("hello"));
+        this.checkEquals(true, SpreadsheetFormatter2SpreadsheetValueVisitor.isSpreadsheetValue("hello"));
     }
 
     @Test
     public void testNotSpreadsheetType() {
-        assertEquals(false, SpreadsheetFormatter2SpreadsheetValueVisitor.isSpreadsheetValue(this));
+        this.checkEquals(false, SpreadsheetFormatter2SpreadsheetValueVisitor.isSpreadsheetValue(this));
     }
 
     @Test

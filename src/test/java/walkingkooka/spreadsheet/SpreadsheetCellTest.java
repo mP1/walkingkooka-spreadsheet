@@ -54,7 +54,6 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -1056,7 +1055,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private void checkReference(final SpreadsheetCell cell, final SpreadsheetCellReference reference) {
-        assertEquals(reference, cell.reference(), "reference");
+        this.checkEquals(reference, cell.reference(), "reference");
     }
 
     private SpreadsheetFormula formula() {
@@ -1073,7 +1072,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private void checkFormula(final SpreadsheetCell cell, final SpreadsheetFormula formula) {
-        assertEquals(formula, cell.formula(), "formula");
+        this.checkEquals(formula, cell.formula(), "formula");
     }
 
     private TextStyle boldAndItalics() {
@@ -1085,7 +1084,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private void checkTextStyle(final SpreadsheetCell cell, final TextStyle style) {
-        assertEquals(style, cell.style(), "style");
+        this.checkEquals(style, cell.style(), "style");
     }
 
     private Optional<SpreadsheetCellFormat> format() {
@@ -1101,7 +1100,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private void checkFormat(final SpreadsheetCell cell, final Optional<SpreadsheetCellFormat> format) {
-        assertEquals(format, cell.format(), "format");
+        this.checkEquals(format, cell.format(), "format");
     }
 
     private Optional<TextNode> formatted() {
@@ -1117,7 +1116,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private void checkFormatted(final SpreadsheetCell cell, final Optional<TextNode> formatted) {
-        assertEquals(formatted, cell.formatted(), "formatted");
+        this.checkEquals(formatted, cell.formatted(), "formatted");
     }
 
     @Override

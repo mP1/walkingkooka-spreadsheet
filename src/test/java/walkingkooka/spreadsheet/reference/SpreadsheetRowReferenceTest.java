@@ -22,7 +22,6 @@ import walkingkooka.collect.Range;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowReferenceTestCase<SpreadsheetRowReference> {
@@ -30,15 +29,15 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     @Test
     public void testMin() {
         final SpreadsheetRowReference min = SpreadsheetRowReference.MIN;
-        assertEquals(0, min.value(), "value");
-        assertEquals(SpreadsheetReferenceKind.RELATIVE, min.referenceKind(), "referenceKind");
+        this.checkEquals(0, min.value(), "value");
+        this.checkEquals(SpreadsheetReferenceKind.RELATIVE, min.referenceKind(), "referenceKind");
     }
 
     @Test
     public void testMax() {
         final SpreadsheetRowReference max = SpreadsheetRowReference.MAX;
-        assertEquals(SpreadsheetRowReference.MAX_VALUE, max.value(), "value");
-        assertEquals(SpreadsheetReferenceKind.RELATIVE, max.referenceKind(), "referenceKind");
+        this.checkEquals(SpreadsheetRowReference.MAX_VALUE, max.value(), "value");
+        this.checkEquals(SpreadsheetReferenceKind.RELATIVE, max.referenceKind(), "referenceKind");
     }
 
     @Test
@@ -52,8 +51,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.ABSOLUTE.row(23);
 
         final SpreadsheetCellReference cell = row.setColumn(column);
-        assertEquals(column, cell.column(), "column");
-        assertEquals(row, cell.row(), "row");
+        this.checkEquals(column, cell.column(), "column");
+        this.checkEquals(row, cell.row(), "row");
     }
 
     // Predicate........................................................................................................
@@ -87,7 +86,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         final SpreadsheetRowReference lower = SpreadsheetSelection.parseRow("2");
         final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("4");
 
-        assertEquals(
+        this.checkEquals(
                 Range.greaterThanEquals(lower).and(Range.lessThanEquals(upper)),
                 lower.range(upper)
         );
@@ -100,7 +99,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         final SpreadsheetRowReference lower = SpreadsheetSelection.parseRow("2");
         final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("4");
 
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetSelection.parseRowRange("2:4"),
                 lower.spreadsheetRowRange(upper)
         );
@@ -112,7 +111,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testToSpreadsheetRowRange() {
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("2");
 
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetSelection.parseRowRange("2"),
                 row.toSpreadsheetRowReferenceRange()
         );
@@ -199,7 +198,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testParseRange() {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetRowReferenceRange.with(
                         Range.greaterThanEquals(SpreadsheetSelection.parseRow("2"))
                                 .and(Range.lessThanEquals(SpreadsheetSelection.parseRow("4")))
@@ -209,7 +208,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testParseRange2() {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetRowReferenceRange.with(
                         Range.greaterThanEquals(SpreadsheetSelection.parseRow("$2"))
                                 .and(Range.lessThanEquals(SpreadsheetSelection.parseRow("$5")))
@@ -221,7 +220,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testAdd() {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetRowReference.parseRow("9"),
                 SpreadsheetRowReference.parseRow("7").add(2)
         );
@@ -231,7 +230,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testAddSaturated() {
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetRowReference.parseRow("9"),
                 SpreadsheetRowReference.parseRow("7").addSaturated(2)
         );
@@ -318,7 +317,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     private void maxAndCheck(final SpreadsheetRowReference reference,
                              final SpreadsheetRowReference other,
                              final boolean left) {
-        assertEquals(left ? reference : other,
+        this.checkEquals(left ? reference : other,
                 reference.max(other),
                 () -> "max of " + reference + " and " + other);
     }
@@ -401,7 +400,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     private void minAndCheck(final SpreadsheetRowReference reference,
                              final SpreadsheetRowReference other,
                              final boolean left) {
-        assertEquals(left ? reference : other,
+        this.checkEquals(left ? reference : other,
                 reference.min(other),
                 () -> "min of " + reference + " and " + other);
     }

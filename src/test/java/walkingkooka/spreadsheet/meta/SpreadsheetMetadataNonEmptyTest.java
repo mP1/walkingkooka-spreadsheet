@@ -88,8 +88,6 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -107,7 +105,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testId() {
         final SpreadsheetId id = SpreadsheetId.with(123);
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id));
-        assertEquals(Optional.of(id), metadata.id(), "id");
+        this.checkEquals(Optional.of(id), metadata.id(), "id");
     }
 
     // get..............................................................................................................
@@ -145,7 +143,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final EmailAddress email = EmailAddress.parse("creator123@example.com");
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, email), SpreadsheetMetadata.EMPTY);
-        assertEquals(email,
+        this.checkEquals(email,
                 metadata.getOrFail(propertyName),
                 () -> "getOrFail " + propertyName + " in " + metadata);
     }
@@ -376,7 +374,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 () -> this.createSpreadsheetMetadata(decimalSeparator, dot).set(grouping, dot)
         );
 
-        assertEquals("Cannot set grouping-separator='.' duplicate of decimal-separator", thrown.getMessage(), "thrown message");
+        this.checkEquals("Cannot set grouping-separator='.' duplicate of decimal-separator", thrown.getMessage(), "thrown message");
     }
 
     @Test
@@ -391,7 +389,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 () -> this.createSpreadsheetMetadata(decimalSeparator, dot).set(valueSeparator, dot)
         );
 
-        assertEquals("Cannot set value-separator='.' duplicate of decimal-separator", thrown.getMessage(), "thrown message");
+        this.checkEquals("Cannot set value-separator='.' duplicate of decimal-separator", thrown.getMessage(), "thrown message");
     }
 
     @Test
@@ -531,17 +529,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         //  grouping=plus
         //  positive=dot
 
-        assertEquals(
+        this.checkEquals(
                 this.createSpreadsheetMetadata(
                         decimalSeparator, comma,
                         grouping, plus,
                         positive, dot
                 ),
                 this.createSpreadsheetMetadata(
-                        decimalSeparator, dot,
-                        grouping, comma,
-                        positive,
-                        plus
+                                decimalSeparator, dot,
+                                grouping, comma,
+                                positive,
+                                plus
                 ).set(decimalSeparator, comma)
                         .set(grouping, plus)
         );
@@ -1324,7 +1322,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, GROUPING_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)
                 .decimalNumberContext());
-        assertEquals("Required properties \"locale\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.",
+        this.checkEquals("Required properties \"locale\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
     }
@@ -1336,7 +1334,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
                 .decimalNumberContext());
-        assertEquals("Required properties \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.",
+        this.checkEquals("Required properties \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
     }
@@ -1429,7 +1427,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
                 .expressionNumberContext());
-        assertEquals("Required properties \"rounding-mode\" missing.",
+        this.checkEquals("Required properties \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
     }
@@ -1440,7 +1438,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
                 .expressionNumberContext());
-        assertEquals("Required properties \"precision\" missing.",
+        this.checkEquals("Required properties \"precision\" missing.",
                 thrown.getMessage(),
                 "message");
     }
@@ -1454,8 +1452,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
                 .expressionNumberContext();
-        assertEquals(kind, context.expressionNumberKind(), "expressionNumberKind");
-        assertNotEquals(null, context.mathContext(), "mathContext");
+        this.checkEquals(kind, context.expressionNumberKind(), "expressionNumberKind");
+        this.checkNotEquals(null, context.mathContext(), "mathContext");
     }
 
     // HasFormatter.....................................................................................................
@@ -1585,7 +1583,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
                 .jsonNodeUnmarshallContext());
-        assertEquals("Required properties \"rounding-mode\" missing.",
+        this.checkEquals("Required properties \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
     }
@@ -1596,7 +1594,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
                 .jsonNodeUnmarshallContext());
-        assertEquals("Required properties \"precision\" missing.",
+        this.checkEquals("Required properties \"precision\" missing.",
                 thrown.getMessage(),
                 "message");
     }
@@ -1610,8 +1608,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
                 .jsonNodeUnmarshallContext();
-        assertEquals(kind, context.expressionNumberKind(), "expressionNumberKind");
-        assertNotEquals(null, context.mathContext(), "mathContext");
+        this.checkEquals(kind, context.expressionNumberKind(), "expressionNumberKind");
+        this.checkNotEquals(null, context.mathContext(), "mathContext");
     }
 
     @Test
@@ -1625,12 +1623,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final JsonNodeMarshallContext marshallContext = metadata.jsonNodeMarshallContext();
 
         final BigDecimal bigDecimal = BigDecimal.valueOf(1.5);
-        assertEquals(bigDecimal, context.unmarshallWithType(marshallContext.marshallWithType(bigDecimal)), () -> "roundtrip json " + bigDecimal);
+        this.checkEquals(bigDecimal, context.unmarshallWithType(marshallContext.marshallWithType(bigDecimal)), () -> "roundtrip json " + bigDecimal);
 
         final LocalDateTime localDateTime = LocalDateTime.now();
-        assertEquals(localDateTime, context.unmarshallWithType(marshallContext.marshallWithType(localDateTime)), () -> "roundtrip json " + localDateTime);
+        this.checkEquals(localDateTime, context.unmarshallWithType(marshallContext.marshallWithType(localDateTime)), () -> "roundtrip json " + localDateTime);
 
-        assertEquals(metadata, context.unmarshallWithType(marshallContext.marshallWithType(metadata)), () -> "roundtrip json " + metadata);
+        this.checkEquals(metadata, context.unmarshallWithType(marshallContext.marshallWithType(metadata)), () -> "roundtrip json " + metadata);
     }
 
     // HasMathContext...................................................................................................
@@ -1648,15 +1646,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         Arrays.stream(RoundingMode.values()).forEach(r -> {
             final MathContext mathContext = SpreadsheetMetadataNonEmpty.with(
-                    Maps.of(
-                            SpreadsheetMetadataPropertyName.PRECISION, precision,
-                            SpreadsheetMetadataPropertyName.ROUNDING_MODE, r
-                    ),
-                    SpreadsheetMetadata.EMPTY
-            )
+                            Maps.of(
+                                    SpreadsheetMetadataPropertyName.PRECISION, precision,
+                                    SpreadsheetMetadataPropertyName.ROUNDING_MODE, r
+                            ),
+                            SpreadsheetMetadata.EMPTY
+                    )
                     .mathContext();
-            assertEquals(precision, mathContext.getPrecision(), "precision");
-            assertEquals(r, mathContext.getRoundingMode(), "roundingMode");
+            this.checkEquals(precision, mathContext.getPrecision(), "precision");
+            this.checkEquals(r, mathContext.getRoundingMode(), "roundingMode");
         });
     }
 
@@ -1679,7 +1677,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateParsePatterns("yyyy/mm/dd"));
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> metadata.parser());
-        assertEquals("Required properties \"date-time-parse-patterns\", \"number-parse-patterns\", \"time-parse-patterns\" missing.", thrown.getMessage());
+        this.checkEquals("Required properties \"date-time-parse-patterns\", \"number-parse-patterns\", \"time-parse-patterns\" missing.", thrown.getMessage());
     }
 
     @Test
@@ -1746,7 +1744,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         cursor,
                         this.parserWithParserContext().parserContext()
                 ).orElseThrow(() -> new AssertionError("parser failed"));
-        assertEquals(true, cursor.isEmpty(), () -> cursor + " is not empty");
+        this.checkEquals(true, cursor.isEmpty(), () -> cursor + " is not empty");
 
         final ExpressionEvaluationContext expressionEvaluationContext = new FakeExpressionEvaluationContext() {
             @Override
@@ -1760,7 +1758,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             }
         };
 
-        assertEquals(expected, valueExtractor.apply(token, expressionEvaluationContext), () -> text + "\n" + token);
+        this.checkEquals(expected, valueExtractor.apply(token, expressionEvaluationContext), () -> text + "\n" + token);
     }
 
     // HasParserContext.................................................................................................
@@ -2025,7 +2023,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"two-digit-year\": 31\n" +
                 "}");
         final SpreadsheetMetadata metadata = this.unmarshall(json);
-        assertNotEquals(metadata, SpreadsheetMetadata.EMPTY);
+        this.checkNotEquals(metadata, SpreadsheetMetadata.EMPTY);
     }
 
     @Test
@@ -2087,7 +2085,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         missing.addAll(SpreadsheetMetadataPropertyName.CONSTANTS.values());
         missing.removeAll(properties.keySet());
 
-        assertEquals(Sets.empty(),
+        this.checkEquals(Sets.empty(),
                 missing,
                 () -> "Several properties are missing values in " + properties);
 

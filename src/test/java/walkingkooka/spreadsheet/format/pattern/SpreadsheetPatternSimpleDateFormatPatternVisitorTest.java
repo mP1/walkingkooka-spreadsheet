@@ -27,8 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implements SimpleDateFormatPatternVisitorTesting<SpreadsheetPatternSimpleDateFormatPatternVisitor> {
 
     @Test
@@ -110,7 +108,7 @@ public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implemen
             try {
                 final SimpleDateFormat dateFormat = (SimpleDateFormat) localeToFormatPattern.apply(locale);
                 pattern = dateFormat.toPattern();
-                assertNotEquals("",
+                this.checkNotEquals("",
                         SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
                                 pattern,
                                 SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,

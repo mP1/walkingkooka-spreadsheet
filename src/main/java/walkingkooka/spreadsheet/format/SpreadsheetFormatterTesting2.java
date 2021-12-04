@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -88,7 +87,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         final F formatter = this.createFormatter();
         final SpreadsheetFormatterContext context = this.createContext();
 
-        assertEquals(Lists.empty(),
+        this.checkEquals(Lists.empty(),
                 values.stream()
                         .filter(value -> formatter.canFormat(value, context))
                         .filter((v) -> {
@@ -169,7 +168,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                                    final Object value,
                                    final SpreadsheetFormatterContext context,
                                    final boolean expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 formatter.canFormat(value, context),
                 () -> formatter + " canFormat " + CharSequences.quoteIfChars(value) + " (" + value.getClass() + ")");
     }

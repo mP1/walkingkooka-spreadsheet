@@ -39,8 +39,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern, SpreadsheetTimeFormatPattern> {
 
     @Test
@@ -62,7 +60,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
         final String formatted = pattern.formatter()
                 .format(time, spreadsheetFormatterContext()).get().text();
 
-        assertEquals("12:58:59 PM", formatted, () -> pattern.toString());
+        this.checkEquals("12:58:59 PM", formatted, () -> pattern.toString());
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {

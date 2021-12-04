@@ -39,7 +39,6 @@ import walkingkooka.tree.json.patch.PatchableTesting;
 import java.math.MathContext;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -856,7 +855,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     private void checkText(final SpreadsheetFormula formula,
                            final String text) {
-        assertEquals(text, formula.text(), "text(Expression)");
+        this.checkEquals(text, formula.text(), "text(Expression)");
     }
 
     private Optional<SpreadsheetParserToken> token() {
@@ -883,7 +882,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private void checkToken(final SpreadsheetFormula formula, final Optional<SpreadsheetParserToken> token) {
-        assertEquals(token, formula.token(), "token");
+        this.checkEquals(token, formula.token(), "token");
     }
 
     private Optional<Expression> expression() {
@@ -895,7 +894,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private void checkExpression(final SpreadsheetFormula formula, final Optional<Expression> expression) {
-        assertEquals(expression, formula.expression(), "expression");
+        this.checkEquals(expression, formula.expression(), "expression");
     }
 
     private void checkExpressionAbsent(final SpreadsheetFormula formula) {
@@ -911,7 +910,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private void checkValue(final SpreadsheetFormula formula, final Optional<Object> value) {
-        assertEquals(value, formula.value(), "value");
+        this.checkEquals(value, formula.value(), "value");
     }
 
     private void checkValueAbsent(final SpreadsheetFormula formula) {
@@ -931,7 +930,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private void checkError(final SpreadsheetFormula formula, final Optional<SpreadsheetError> error) {
-        assertEquals(error, formula.error(), "formula");
+        this.checkEquals(error, formula.error(), "formula");
     }
 
     @Override

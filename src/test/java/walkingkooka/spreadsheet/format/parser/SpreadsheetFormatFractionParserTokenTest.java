@@ -26,7 +26,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetFormatFractionParserTokenTest extends SpreadsheetFormatParentParserTokenTestCase<SpreadsheetFormatFractionParserToken> {
@@ -96,12 +95,12 @@ public final class SpreadsheetFormatFractionParserTokenTest extends SpreadsheetF
                 visited.add(t);
             }
         }.accept(token);
-        assertEquals("713715287162871528428", b.toString());
-        assertEquals(Lists.of(token, token, token,
-                digit1, digit1, digit1, digit1, digit1,
-                symbol, symbol, symbol, symbol, symbol,
-                digit2, digit2, digit2, digit2, digit2,
-                token, token, token),
+        this.checkEquals("713715287162871528428", b.toString());
+        this.checkEquals(Lists.of(token, token, token,
+                        digit1, digit1, digit1, digit1, digit1,
+                        symbol, symbol, symbol, symbol, symbol,
+                        digit2, digit2, digit2, digit2, digit2,
+                        token, token, token),
                 visited,
                 "visited");
     }

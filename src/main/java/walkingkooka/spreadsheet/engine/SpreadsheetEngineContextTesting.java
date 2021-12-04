@@ -34,7 +34,6 @@ import walkingkooka.tree.expression.Expression;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
@@ -85,7 +84,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         final RuntimeException thrown = assertThrows(RuntimeException.class, () -> context.resolveCellReference(reference),
                 () -> "resolveCellReference " + reference
         );
-        assertEquals(
+        this.checkEquals(
                 message,
                 thrown.getMessage(),
                 () -> "resolveCellReference " + reference
@@ -104,7 +103,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void resolveCellReferenceAndCheck(final SpreadsheetEngineContext context,
                                               final SpreadsheetExpressionReference reference,
                                               final SpreadsheetCellReference expected) {
-        assertEquals(
+        this.checkEquals(
                 expected,
                 context.resolveCellReference(reference),
                 () -> "resolveCellReference " + reference
@@ -151,7 +150,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void evaluateAndCheck(final SpreadsheetEngineContext context,
                                   final Expression expression,
                                   final Object expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 context.evaluate(expression),
                 () -> "evaluate " + expression + " with context " + context);
     }
@@ -180,7 +179,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                       final SpreadsheetFormatterContext spreadsheetFormatContext,
                                       final Optional<SpreadsheetText> expected) {
         final SpreadsheetFormatter formatter = context.parsePattern(pattern);
-        assertEquals(expected,
+        this.checkEquals(expected,
                 formatter.format(Cast.to(value), spreadsheetFormatContext),
                 () -> "parsePattern " + pattern + " " + formatter + " then format " + CharSequences.quoteIfChars(value));
     }
@@ -205,7 +204,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                 final Object value,
                                 final SpreadsheetFormatter formatter,
                                 final Optional<SpreadsheetText> expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 context.format(value, formatter),
                 () -> "format " + CharSequences.quoteIfChars(value) + " " + formatter);
     }

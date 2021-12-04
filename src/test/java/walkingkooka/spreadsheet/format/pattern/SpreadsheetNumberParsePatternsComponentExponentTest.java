@@ -20,9 +20,6 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 public final class SpreadsheetNumberParsePatternsComponentExponentTest extends SpreadsheetNumberParsePatternsComponentTestCase2<SpreadsheetNumberParsePatternsComponentExponent> {
 
     @Test
@@ -47,7 +44,7 @@ public final class SpreadsheetNumberParsePatternsComponentExponentTest extends S
 
     @Test
     public void testToken1() {
-        assertEquals(EXPONENT.toUpperCase(), EXPONENT);
+        this.checkEquals(EXPONENT.toUpperCase(), EXPONENT);
 
         this.parseAndCheck2(
                 EXPONENT,
@@ -57,7 +54,7 @@ public final class SpreadsheetNumberParsePatternsComponentExponentTest extends S
 
     @Test
     public void testToken2() {
-        assertEquals(EXPONENT.toUpperCase(), EXPONENT);
+        this.checkEquals(EXPONENT.toUpperCase(), EXPONENT);
 
         this.parseAndCheck2(
                 EXPONENT,
@@ -67,7 +64,7 @@ public final class SpreadsheetNumberParsePatternsComponentExponentTest extends S
 
     @Test
     public void testToken3() {
-        assertNotEquals(EXPONENT.toLowerCase(), EXPONENT);
+        this.checkNotEquals(EXPONENT.toLowerCase(), EXPONENT);
 
         this.parseAndCheck2(
                 EXPONENT.toLowerCase(),
@@ -77,7 +74,7 @@ public final class SpreadsheetNumberParsePatternsComponentExponentTest extends S
 
     @Test
     public void testToken4() {
-        assertNotEquals(EXPONENT.toLowerCase(), EXPONENT);
+        this.checkNotEquals(EXPONENT.toLowerCase(), EXPONENT);
 
         this.parseAndCheck2(
                 EXPONENT.toLowerCase(),

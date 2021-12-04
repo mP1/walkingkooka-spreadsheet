@@ -61,8 +61,6 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -367,7 +365,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetLabelMapping label,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta delta) {
-        assertEquals(delta,
+        this.checkEquals(delta,
                 engine.saveLabel(label, context),
                 () -> "saveLabel " + label);
     }
@@ -403,7 +401,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                      final SpreadsheetLabelName label,
                                      final SpreadsheetEngineContext context,
                                      final SpreadsheetDelta delta) {
-        assertEquals(delta,
+        this.checkEquals(delta,
                 engine.removeLabel(label, context),
                 () -> "removeLabel " + label);
     }
@@ -417,7 +415,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetLabelName label,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetLabelMapping mapping) {
-        assertEquals(Optional.of(mapping),
+        this.checkEquals(Optional.of(mapping),
                 engine.loadLabel(label, context),
                 () -> "loadLabel " + label);
     }
@@ -425,7 +423,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void loadLabelAndFailCheck(final SpreadsheetEngine engine,
                                        final SpreadsheetLabelName label,
                                        final SpreadsheetEngineContext context) {
-        assertEquals(Optional.empty(),
+        this.checkEquals(Optional.empty(),
                 engine.loadLabel(label, context),
                 () -> "loadLabel " + label);
     }
@@ -493,7 +491,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetEngineContext context) {
         final SpreadsheetDelta loaded = engine.loadCell(reference, evaluation, context);
 
-        assertEquals(Optional.empty(),
+        this.checkEquals(Optional.empty(),
                 loaded.cells()
                         .stream()
                         .filter(c -> c.reference().equals(reference))
@@ -507,7 +505,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                                                 final SpreadsheetEngineEvaluation evaluation,
                                                                 final SpreadsheetEngineContext context) {
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, evaluation, context);
-        assertEquals(null,
+        this.checkEquals(null,
                 this.valueOrError(cell, null),
                 () -> "values from returned cells=" + cell);
         return cell;
@@ -564,7 +562,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, evaluation, context);
 
         final Optional<SpreadsheetError> error = cell.formula().error();
-        assertNotEquals(SpreadsheetFormula.NO_ERROR,
+        this.checkNotEquals(SpreadsheetFormula.NO_ERROR,
                 error,
                 () -> "Expected error missing=" + cell);
         assertTrue(error.get().value().contains(errorContains),
@@ -590,7 +588,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                   final SpreadsheetEngineEvaluation evaluation,
                                   final SpreadsheetEngineContext context,
                                   final SpreadsheetDelta loaded) {
-        assertEquals(loaded,
+        this.checkEquals(loaded,
                 engine.loadCell(reference, evaluation, context),
                 () -> "loadCell " + reference);
     }
@@ -606,14 +604,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
                                    final SpreadsheetLabelName label,
                                    final SpreadsheetLabelMapping mapping) {
-        assertEquals(Optional.of(mapping),
+        this.checkEquals(Optional.of(mapping),
                 labelStore.load(label),
                 () -> "label " + label + " loaded");
     }
 
     default void loadLabelFailCheck(final SpreadsheetLabelStore labelStore,
                                     final SpreadsheetLabelName label) {
-        assertEquals(Optional.empty(),
+        this.checkEquals(Optional.empty(),
                 labelStore.load(label),
                 "label loaded failed");
     }
@@ -665,7 +663,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void countAndCheck(final Store<?, ?> store, final int count) {
-        assertEquals(count,
+        this.checkEquals(count,
                 store.count(),
                 "record count in " + store);
     }
@@ -863,13 +861,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void checkFormula(final SpreadsheetCell cell, final String formula) {
-        assertEquals(formula,
+        this.checkEquals(formula,
                 cell.formula().text(),
                 () -> "formula.text from returned cell=" + cell);
     }
 
     default void checkValueOrError(final SpreadsheetCell cell, final Object value) {
-        assertEquals(value,
+        this.checkEquals(value,
                 this.valueOrError(cell, "Value and Error absent (" + cell + ")"),
                 () -> "values from returned cell=" + cell);
     }
@@ -884,8 +882,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     default void checkFormattedText(final SpreadsheetCell cell, final String text) {
-        assertNotEquals(Optional.empty(), cell.formatted(), "formatted text absent");
-        assertEquals(text, cell.formatted().get().text(), "formattedText");
+        this.checkNotEquals(Optional.empty(), cell.formatted(), "formatted text absent");
+        this.checkEquals(text, cell.formatted().get().text(), "formattedText");
     }
 
     default void columnWidthAndCheck(final SpreadsheetColumnReference column,
@@ -898,7 +896,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                      final SpreadsheetColumnReference column,
                                      final SpreadsheetEngineContext context,
                                      final double expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 engine.columnWidth(column, context),
                 () -> "columnWidth " + column + " of " + engine);
     }
@@ -913,7 +911,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetRowReference row,
                                    final SpreadsheetEngineContext context,
                                    final double expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 engine.rowHeight(row, context),
                 () -> "rowHeight " + row + " of " + engine);
     }
@@ -958,7 +956,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final Indentation indentation = Indentation.with("  ");
         final LineEnding eol = LineEnding.SYSTEM;
 
-        assertEquals(
+        this.checkEquals(
                 expected.treeToString(indentation, eol),
                 actual.treeToString(indentation, eol),
                 message

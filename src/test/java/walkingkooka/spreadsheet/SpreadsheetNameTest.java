@@ -27,8 +27,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, SpreadsheetName>,
         ComparableTesting2<SpreadsheetName>,
         JsonNodeMarshallingTesting<SpreadsheetName>,
@@ -39,8 +37,8 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
     @Test
     public void testWith() {
         final SpreadsheetName name = SpreadsheetName.with(VALUE);
-        assertEquals(VALUE, name.value(), "value");
-        assertEquals(VALUE, name.id(), "id");
+        this.checkEquals(VALUE, name.value(), "value");
+        this.checkEquals(VALUE, name.id(), "id");
     }
 
     @Test

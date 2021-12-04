@@ -25,7 +25,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -219,7 +218,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testAddColumnSaturationUnderflows() {
         final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B2");
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetCellReference.parseCell("A2"),
                 cell.addColumnSaturated(-3)
         );
@@ -230,7 +229,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("2");
         final SpreadsheetCellReference cell = SpreadsheetReferenceKind.RELATIVE.column(SpreadsheetColumnReference.MAX_VALUE - 2)
                 .setRow(row);
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetReferenceKind.RELATIVE.lastColumn()
                         .setRow(row),
                 cell.addColumnSaturated(+3)
@@ -240,7 +239,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testAddColumnSaturation() {
         final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B2");
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetCellReference.parseCell("D2"),
                 cell.addColumnSaturated(+2)
         );
@@ -269,7 +268,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testAddRowSaturationUnderflows() {
         final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B3");
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetCellReference.parseCell("B1"),
                 cell.addRowSaturated(-3)
         );
@@ -280,7 +279,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final SpreadsheetColumnReference column = SpreadsheetRowReference.parseColumn("B");
         final SpreadsheetCellReference cell = SpreadsheetReferenceKind.RELATIVE.row(SpreadsheetRowReference.MAX_VALUE - 2)
                 .setColumn(column);
-        assertEquals(
+        this.checkEquals(
                 column.setRow(SpreadsheetReferenceKind.RELATIVE.lastRow()),
                 cell.addRowSaturated(+3)
         );
@@ -289,7 +288,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testAddRowSaturation() {
         final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B2");
-        assertEquals(
+        this.checkEquals(
                 SpreadsheetCellReference.parseCell("B4"),
                 cell.addRowSaturated(+2)
         );
@@ -438,12 +437,12 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final Range<SpreadsheetCellReference> expected = Range.greaterThanEquals(this.cell(left, top)).and(Range.lessThanEquals(this.cell(right, bottom)));
 
         final Range<SpreadsheetCellReference> range = cell.range(other);
-        assertEquals(expected,
+        this.checkEquals(expected,
                 range,
                 () -> cell + " range " + other);
 
 
-        assertEquals(SpreadsheetCellRange.with(expected),
+        this.checkEquals(SpreadsheetCellRange.with(expected),
                 cell.spreadsheetCellRange(other),
                 () -> cell + " spreadsheetCellRange " + other);
     }
@@ -470,7 +469,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     private void toSpreadsheetCellRangeAndCheck(final SpreadsheetCellReference reference,
                                                 final SpreadsheetCellRange range) {
-        assertEquals(
+        this.checkEquals(
                 range,
                 reference.toSpreadsheetCellRange(),
                 () -> reference + " toSpreadsheetCellRange()"
@@ -734,7 +733,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                 b.append("3");
             }
         }.accept(selection);
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     // SpreadsheetExpressionReferenceVisitor.............................................................................
@@ -777,7 +776,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                 b.append("5");
             }
         }.accept(reference);
-        assertEquals("13542", b.toString());
+        this.checkEquals("13542", b.toString());
     }
 
     // TreePrintable....................................................................................................
@@ -863,11 +862,11 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     private void checkColumn(final SpreadsheetCellReference cell, final SpreadsheetColumnReference column) {
-        assertEquals(column, cell.column(), "column");
+        this.checkEquals(column, cell.column(), "column");
     }
 
     private void checkRow(final SpreadsheetCellReference cell, final SpreadsheetRowReference row) {
-        assertEquals(row, cell.row(), "row");
+        this.checkEquals(row, cell.row(), "row");
     }
 
     @Override

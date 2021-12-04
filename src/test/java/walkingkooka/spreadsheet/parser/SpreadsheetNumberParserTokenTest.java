@@ -32,7 +32,6 @@ import java.math.MathContext;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetNumberParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetNumberParserToken> {
@@ -377,7 +376,7 @@ public final class SpreadsheetNumberParserTokenTest extends SpreadsheetParentPar
         final ExpressionNumber expressionNumber = kind.create(expected);
         final ExpressionEvaluationContext context = this.expressionEvaluationContext(kind);
 
-        assertEquals(
+        this.checkEquals(
                 expressionNumber,
                 token.toNumber(context),
                 () -> "toNumber() " + token

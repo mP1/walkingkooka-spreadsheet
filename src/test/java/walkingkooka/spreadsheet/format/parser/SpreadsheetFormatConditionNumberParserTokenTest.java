@@ -24,7 +24,6 @@ import walkingkooka.visit.Visiting;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetFormatConditionNumberParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatConditionNumberParserToken, BigDecimal> {
@@ -67,7 +66,7 @@ public final class SpreadsheetFormatConditionNumberParserTokenTest extends Sprea
                 b.append("5");
             }
         }.accept(token);
-        assertEquals("13542", b.toString());
+        this.checkEquals("13542", b.toString());
     }
 
     @Override

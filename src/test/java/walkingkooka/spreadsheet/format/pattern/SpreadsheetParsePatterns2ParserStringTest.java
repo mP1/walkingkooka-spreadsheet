@@ -28,8 +28,6 @@ import walkingkooka.text.CharSequences;
 import java.util.List;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 public final class SpreadsheetParsePatterns2ParserStringTest extends SpreadsheetParsePatterns2ParserTestCase<SpreadsheetParsePatterns2ParserString> {
 
     private final static String PATTERN = "Pattern-123";
@@ -146,7 +144,7 @@ public final class SpreadsheetParsePatterns2ParserStringTest extends Spreadsheet
             }
             i++;
         }
-        assertNotEquals(-1, index, () -> "failed to match a month with " + CharSequences.quote(text));
+        this.checkNotEquals(-1, index, () -> "failed to match a month with " + CharSequences.quote(text));
 
         this.parseAndCheck(
                 text + after,

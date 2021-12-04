@@ -52,7 +52,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.BiFunction;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern<?>>,
@@ -384,17 +383,17 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
         final DateTimeContext dateTimeContext = DateTimeContexts.locale(EN_AU, 1800, 50);
 
-        assertEquals(
+        this.checkEquals(
                 expected,
                 parser.parse(cursor, new FakeSpreadsheetParserContext() {
-                    @Override
-                    public List<String> ampms() {
-                        return dateTimeContext.ampms();
-                    }
+                            @Override
+                            public List<String> ampms() {
+                                return dateTimeContext.ampms();
+                            }
 
-                    @Override
-                    public char decimalSeparator() {
-                        return '.';
+                            @Override
+                            public char decimalSeparator() {
+                                return '.';
                     }
 
                     @Override
@@ -495,17 +494,17 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         final String text = "1d2";
         final TextCursor cursor = TextCursors.charSequence(text);
 
-        assertEquals(
+        this.checkEquals(
                 ExpressionNumberKind.BIG_DECIMAL.create(1.2),
                 parser.parse(cursor, new FakeSpreadsheetParserContext() {
 
-                    @Override
-                    public char decimalSeparator() {
-                        return 'd';
-                    }
+                            @Override
+                            public char decimalSeparator() {
+                                return 'd';
+                            }
 
-                    @Override
-                    public char groupingSeparator() {
+                            @Override
+                            public char groupingSeparator() {
                         return 'g';
                     }
 

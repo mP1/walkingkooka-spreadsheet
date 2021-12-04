@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class NumberSpreadsheetFormatterZeroTest extends NumberSpreadsheetFormatterTestCase<NumberSpreadsheetFormatterZero> {
 
     @Test
@@ -39,7 +37,7 @@ public final class NumberSpreadsheetFormatterZeroTest extends NumberSpreadsheetF
     }
 
     private void checkPattern(final NumberSpreadsheetFormatterZero zero, final String pattern) {
-        assertEquals(pattern, zero.pattern(), zero.toString());
+        this.checkEquals(pattern, zero.pattern(), zero.toString());
     }
 
     @Override

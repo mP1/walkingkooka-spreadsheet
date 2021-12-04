@@ -24,7 +24,6 @@ import walkingkooka.collect.list.Lists;
 import java.util.Objects;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -100,7 +99,7 @@ public final class ChainSpreadsheetFormatterTest extends SpreadsheetFormatterTes
         final SpreadsheetFormatter next = SpreadsheetFormatters.fake();
 
         final ChainSpreadsheetFormatter chain = Cast.to(ChainSpreadsheetFormatter.with(Lists.of(formatter1, formatter2)).then(next));
-        assertEquals(Lists.of(formatter1, formatter2, next), chain.formatters, "formatters");
+        this.checkEquals(Lists.of(formatter1, formatter2, next), chain.formatters, "formatters");
     }
 
     // toString.........................................................................................................

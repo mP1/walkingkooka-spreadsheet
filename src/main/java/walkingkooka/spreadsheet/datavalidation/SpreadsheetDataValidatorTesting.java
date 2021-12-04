@@ -23,7 +23,6 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetDataValidatorTesting<V extends SpreadsheetDataValidator, T> extends ClassTesting<V>,
@@ -31,7 +30,7 @@ public interface SpreadsheetDataValidatorTesting<V extends SpreadsheetDataValida
 
     @Test
     default void testValueType() {
-        assertEquals(this.valueType(), this.createSpreadsheetDataValidator().valueType());
+        this.checkEquals(this.valueType(), this.createSpreadsheetDataValidator().valueType());
     }
 
     @SuppressWarnings("unchecked")
@@ -102,7 +101,7 @@ public interface SpreadsheetDataValidatorTesting<V extends SpreadsheetDataValida
                                        final TT value,
                                        final SpreadsheetDataValidatorContext context,
                                        final boolean expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 validator.validate(value, context),
                 validator + " " + CharSequences.quoteIfChars(value));
     }

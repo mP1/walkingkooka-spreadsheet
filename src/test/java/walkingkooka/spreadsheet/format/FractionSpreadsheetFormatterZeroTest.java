@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class FractionSpreadsheetFormatterZeroTest extends FractionSpreadsheetFormatterTestCase<FractionSpreadsheetFormatterZero> {
 
     @Test
@@ -39,7 +37,7 @@ public final class FractionSpreadsheetFormatterZeroTest extends FractionSpreadsh
     }
 
     private void checkPattern(final FractionSpreadsheetFormatterZero zero, final String pattern) {
-        assertEquals(pattern, zero.pattern(), zero.toString());
+        this.checkEquals(pattern, zero.pattern(), zero.toString());
     }
 
     @Override

@@ -25,8 +25,6 @@ import walkingkooka.spreadsheet.security.UserId;
 import java.util.Optional;
 import java.util.TreeMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserStoreTesting<TreeMapSpreadsheetUserStore> {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -173,7 +171,7 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
     public void testLoadWithEmail() {
         final TreeMapSpreadsheetUserStore store = this.createNotEmptyStore();
 
-        assertEquals(Optional.of(this.user1()), store.loadWithEmail(this.user1().email()));
+        this.checkEquals(Optional.of(this.user1()), store.loadWithEmail(this.user1().email()));
     }
 
     @Test

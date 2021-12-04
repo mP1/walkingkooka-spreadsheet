@@ -27,8 +27,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.time.LocalTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetTimeParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetTimeParserToken> {
 
     @Test
@@ -114,7 +112,7 @@ public final class SpreadsheetTimeParserTokenTest extends SpreadsheetParentParse
                 ParserToken.text(tokensList)
         );
 
-        assertEquals(
+        this.checkEquals(
                 expected,
                 timeParserToken.toLocalTime(),
                 () -> "toLocalTime() " + timeParserToken

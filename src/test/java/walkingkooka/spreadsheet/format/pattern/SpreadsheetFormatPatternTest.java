@@ -30,32 +30,30 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetFormatPatternTest implements ClassTesting2<SpreadsheetFormatPattern<?>> {
 
     @Test
     public void testWithDate() {
         final SpreadsheetFormatDateParserToken token = this.dmyy();
-        assertEquals(token, SpreadsheetFormatPattern.dateFormatPattern(token).value());
+        this.checkEquals(token, SpreadsheetFormatPattern.dateFormatPattern(token).value());
     }
 
     @Test
     public void testWithDateTime() {
         final SpreadsheetFormatDateTimeParserToken token = this.hhmmyyyy();
-        assertEquals(token, SpreadsheetFormatPattern.dateTimeFormatPattern(token).value());
+        this.checkEquals(token, SpreadsheetFormatPattern.dateTimeFormatPattern(token).value());
     }
 
     @Test
     public void testWithNumber() {
         final SpreadsheetFormatNumberParserToken token = this.number();
-        assertEquals(token, SpreadsheetFormatPattern.numberFormatPattern(token).value());
+        this.checkEquals(token, SpreadsheetFormatPattern.numberFormatPattern(token).value());
     }
 
     @Test
     public void testWithTime() {
         final SpreadsheetFormatTimeParserToken token = this.hhmm();
-        assertEquals(token, SpreadsheetFormatPattern.timeFormatPattern(token).value());
+        this.checkEquals(token, SpreadsheetFormatPattern.timeFormatPattern(token).value());
     }
 
     private SpreadsheetFormatDateParserToken dmyy() {
