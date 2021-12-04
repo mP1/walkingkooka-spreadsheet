@@ -32,8 +32,6 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatternsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns, SpreadsheetNumberParsePatterns> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
@@ -83,7 +81,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns
         decimalFormat.setParseBigDecimal(true);
         final Number expected = decimalFormat.parse(text);
 
-        assertEquals(
+        this.checkEquals(
                 kind.create(expected),
                 value,
                 () -> pattern + "\n" + kind + "\nDecimalFormat: " + decimalFormat.toPattern()

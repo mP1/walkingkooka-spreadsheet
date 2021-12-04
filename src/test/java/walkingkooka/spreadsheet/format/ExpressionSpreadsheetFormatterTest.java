@@ -38,8 +38,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<ExpressionSpreadsheetFormatter, SpreadsheetFormatExpressionParserToken> {
 
     private final static String DEFAULT_PREFIX = "DEFAULT: ";
@@ -360,13 +358,13 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
 
             @Override
             public Optional<Color> colorName(final SpreadsheetColorName name) {
-                assertEquals(SpreadsheetColorName.with("RED"), name, "color name");
+                checkEquals(SpreadsheetColorName.with("RED"), name, "color name");
                 return Optional.of(RED);
             }
 
             @Override
             public Optional<Color> colorNumber(final int number) {
-                assertEquals(31, number, "number");
+                checkEquals(31, number, "number");
                 return Optional.of(COLOR31);
             }
 

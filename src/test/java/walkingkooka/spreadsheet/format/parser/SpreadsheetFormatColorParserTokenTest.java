@@ -26,7 +26,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -97,7 +96,7 @@ public final class SpreadsheetFormatColorParserTokenTest extends SpreadsheetForm
 
             @Override
             protected void visit(final SpreadsheetFormatWhitespaceParserToken t) {
-                assertEquals(whitespace, t);
+                checkEquals(whitespace, t);
                 b.append("7");
                 visited.add(t);
             }
@@ -122,15 +121,18 @@ public final class SpreadsheetFormatColorParserTokenTest extends SpreadsheetForm
                 visited.add(t);
             }
         }.accept(token);
-        assertEquals("9139152A9162A9172A9182A42A", b.toString());
-        assertEquals(Lists.of(token, token, token,
-                open, open, open, open, open,
-                name, name, name, name, name,
-                whitespace, whitespace, whitespace, whitespace, whitespace,
-                close, close, close, close, close,
-                token, token, token),
+
+        this.checkEquals("9139152A9162A9172A9182A42A", b.toString());
+        this.checkEquals(
+                Lists.of(token, token, token,
+                        open, open, open, open, open,
+                        name, name, name, name, name,
+                        whitespace, whitespace, whitespace, whitespace, whitespace,
+                        close, close, close, close, close,
+                        token, token, token),
                 visited,
-                "visited");
+                "visited"
+        );
     }
 
     @Override

@@ -22,7 +22,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetWhitespaceParserTokenTest extends SpreadsheetSymbolParserTokenTestCase<SpreadsheetWhitespaceParserToken> {
@@ -71,7 +70,7 @@ public final class SpreadsheetWhitespaceParserTokenTest extends SpreadsheetSymbo
                 b.append("5");
             }
         }.accept(token);
-        assertEquals("13542", b.toString());
+        this.checkEquals("13542", b.toString());
     }
 
     @Override

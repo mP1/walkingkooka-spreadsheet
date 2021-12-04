@@ -25,7 +25,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -42,8 +41,8 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
     public void testWith() {
         final Optional<GroupId> id = this.createId();
         final Group group = Group.with(id, name());
-        assertEquals(id, group.value(), "id");
-        assertEquals(name(), group.name(), "name");
+        this.checkEquals(id, group.value(), "id");
+        this.checkEquals(name(), group.name(), "name");
     }
 
     @Test
@@ -58,8 +57,8 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
         final Optional<GroupId> id = Optional.of(GroupId.with(999));
 
         final Group different = group.setId(id);
-        assertEquals(id, different.id(), "id");
-        assertEquals(name(), different.name(), "name");
+        this.checkEquals(id, different.id(), "id");
+        this.checkEquals(name(), different.name(), "name");
     }
 
     @Test

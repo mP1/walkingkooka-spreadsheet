@@ -26,7 +26,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetFormatGeneralParserTokenTest extends SpreadsheetFormatParentParserTokenTestCase<SpreadsheetFormatGeneralParserToken> {
@@ -73,14 +72,14 @@ public final class SpreadsheetFormatGeneralParserTokenTest extends SpreadsheetFo
 
             @Override
             protected void visit(final SpreadsheetFormatGeneralSymbolParserToken t) {
-                assertEquals(general, t);
+                checkEquals(general, t);
                 b.append("5");
                 visited.add(t);
             }
 
             @Override
             protected void visit(final SpreadsheetFormatWhitespaceParserToken t) {
-                assertEquals(whitespace, t);
+                checkEquals(whitespace, t);
                 b.append("6");
                 visited.add(t);
             }
@@ -98,13 +97,16 @@ public final class SpreadsheetFormatGeneralParserTokenTest extends SpreadsheetFo
                 visited.add(t);
             }
         }.accept(token);
-        assertEquals("7137152871628428", b.toString());
-        assertEquals(Lists.of(token, token, token,
-                general, general, general, general, general,
-                whitespace, whitespace, whitespace, whitespace, whitespace,
-                token, token, token),
+
+        this.checkEquals("7137152871628428", b.toString());
+        this.checkEquals(
+                Lists.of(token, token, token,
+                        general, general, general, general, general,
+                        whitespace, whitespace, whitespace, whitespace, whitespace,
+                        token, token, token),
                 visited,
-                "visited");
+                "visited"
+        );
     }
 
     @Override

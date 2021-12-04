@@ -27,7 +27,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.util.PropertiesPath;
 import walkingkooka.visit.Visiting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -186,7 +185,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
                 b.append("3");
             }
         }.accept(selection);
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     // SpreadsheetExpressionReferenceVisitor.............................................................................
@@ -229,7 +228,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
                 b.append("5");
             }
         }.accept(reference);
-        assertEquals("13542", b.toString());
+        this.checkEquals("13542", b.toString());
     }
 
     // equalsIgnoreReferenceKind.......................................................................................

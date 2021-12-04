@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> extends SpreadsheetSelectionTestCase<R> {
 
     SpreadsheetExpressionReferenceTestCase() {
@@ -57,13 +55,13 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
     final void equalsIgnoreReferenceKindAndCheck(final R reference1,
                                                  final Object other,
                                                  final boolean expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 reference1.equalsIgnoreReferenceKind(other),
                 () -> reference1 + " equalsIgnoreReferenceKind " + other
         );
         if (other instanceof SpreadsheetExpressionReference) {
             final R reference2 = (R) other;
-            assertEquals(expected,
+            this.checkEquals(expected,
                     reference2.equalsIgnoreReferenceKind(reference1),
                     () -> reference2 + " equalsIgnoreReferenceKind " + reference1);
         }

@@ -31,7 +31,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetViewport>,
@@ -350,27 +349,27 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     private void checkReference(final SpreadsheetViewport viewport,
                                 final SpreadsheetCellReferenceOrLabelName reference) {
-        assertEquals(reference, viewport.cellOrLabel(), () -> "viewport width=" + viewport);
+        this.checkEquals(reference, viewport.cellOrLabel(), () -> "viewport width=" + viewport);
     }
 
     private void checkXOffset(final SpreadsheetViewport viewport,
                               final double xOffset) {
-        assertEquals(xOffset, viewport.xOffset(), () -> "viewport xOffset=" + viewport);
+        this.checkEquals(xOffset, viewport.xOffset(), () -> "viewport xOffset=" + viewport);
     }
 
     private void checkYOffset(final SpreadsheetViewport viewport,
                               final double yOffset) {
-        assertEquals(yOffset, viewport.yOffset(), () -> "viewport yOffset=" + viewport);
+        this.checkEquals(yOffset, viewport.yOffset(), () -> "viewport yOffset=" + viewport);
     }
 
     private void checkWidth(final SpreadsheetViewport viewport,
                             final double width) {
-        assertEquals(width, viewport.width(), () -> "viewport width=" + viewport);
+        this.checkEquals(width, viewport.width(), () -> "viewport width=" + viewport);
     }
 
     private void checkHeight(final SpreadsheetViewport viewport,
                              final double height) {
-        assertEquals(height, viewport.height(), () -> "viewport height=" + viewport);
+        this.checkEquals(height, viewport.height(), () -> "viewport height=" + viewport);
     }
 
     // ClassTesting.....................................................................................................

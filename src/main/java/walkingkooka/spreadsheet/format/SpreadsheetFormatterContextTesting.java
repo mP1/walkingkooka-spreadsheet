@@ -23,8 +23,6 @@ import walkingkooka.text.CharSequences;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatterContext> extends ConverterContextTesting<C> {
 
     default C createCanConvert() {
@@ -34,7 +32,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
     default void colorNumberAndCheck(final SpreadsheetFormatterContext context,
                                      final int number,
                                      final Optional<Color> color) {
-        assertEquals(color,
+        this.checkEquals(color,
                 context.colorNumber(number),
                 () -> "colorNumber " + number + " " + context);
     }
@@ -42,7 +40,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
     default void colorNameAndCheck(final SpreadsheetFormatterContext context,
                                    final SpreadsheetColorName name,
                                    final Optional<Color> color) {
-        assertEquals(color,
+        this.checkEquals(color,
                 context.colorName(name),
                 () -> "colorName " + name + " " + context);
     }
@@ -57,7 +55,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
     default void defaultFormatTextAndCheck(final SpreadsheetFormatterContext context,
                                            final Object value,
                                            final Optional<SpreadsheetText> formattedText) {
-        assertEquals(formattedText,
+        this.checkEquals(formattedText,
                 context.defaultFormatText(value),
                 () -> context + " " + CharSequences.quoteIfChars(value));
     }

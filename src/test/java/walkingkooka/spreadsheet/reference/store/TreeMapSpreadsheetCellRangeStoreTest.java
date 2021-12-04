@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadsheetCellRangeStoreTestCase<TreeMapSpreadsheetCellRangeStore<String>>
@@ -461,8 +460,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceRangesBeginRange2() {
-        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
-        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
@@ -475,8 +474,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceRangesBeginRange3() {
-        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
-        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
@@ -489,8 +488,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceRangesBeginRange4() {
-        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
-        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
@@ -503,8 +502,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceRangesEndRange2() {
-        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
-        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
@@ -517,8 +516,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceRangesEndRange3() {
-        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
-        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
@@ -531,8 +530,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceRangesEndRange4() {
-        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
-        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
@@ -620,8 +619,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceValuesBeginRange2() {
-        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
-        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
@@ -634,8 +633,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceValuesBeginRange3() {
-        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
-        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
@@ -648,8 +647,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceValuesBeginRange4() {
-        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
-        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
@@ -662,8 +661,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceValuesEndRange2() {
-        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
-        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
@@ -676,8 +675,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceValuesEndRange3() {
-        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
-        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
@@ -690,8 +689,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
     @Test
     public void testLoadCellReferenceValuesEndRange4() {
-        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
-        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 

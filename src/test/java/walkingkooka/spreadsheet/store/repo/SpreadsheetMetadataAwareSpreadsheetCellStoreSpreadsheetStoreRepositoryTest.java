@@ -39,7 +39,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -149,7 +148,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
 
         final SpreadsheetCell reloaded = repository.cells().loadOrFail(cell.reference());
         final SpreadsheetFormula formula = reloaded.formula();
-        assertEquals("1$5", reloaded.formula().text());
+        this.checkEquals("1$5", reloaded.formula().text());
     }
 
     @Test

@@ -2064,7 +2064,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         }
         final Expression expression = maybeExpression.get();
         final String value = expression.toString(this.expressionEvaluationContext(kind));
-        assertEquals(expectedText, value, () -> "expression " + CharSequences.quoteAndEscape(formulaText) + " as text is");
+        this.checkEquals(expectedText, value, () -> "expression " + CharSequences.quoteAndEscape(formulaText) + " as text is");
     }
 
     private static Parser<SpreadsheetParserContext> expressionParser() {

@@ -25,8 +25,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<SpreadsheetEngineEvaluation>,
         JsonNodeMarshallingTesting<SpreadsheetEngineEvaluation> {
 
@@ -66,7 +64,7 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
 
     private void toLinkRelationAndCheck(final SpreadsheetEngineEvaluation evaluation,
                                         final String linkRelation) {
-        assertEquals(LinkRelation.with(linkRelation),
+        this.checkEquals(LinkRelation.with(linkRelation),
                 evaluation.toLinkRelation(),
                 () -> evaluation + ".toLinkRelation");
     }

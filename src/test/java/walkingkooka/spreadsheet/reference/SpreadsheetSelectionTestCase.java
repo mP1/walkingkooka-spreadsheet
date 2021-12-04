@@ -33,8 +33,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -54,7 +52,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void testCellRangeAndCheck(final S selection,
                                      final SpreadsheetCellRange range,
                                      final boolean expected) {
-        assertEquals(
+        this.checkEquals(
                 expected,
                 selection.testCellRange(range),
                 () -> selection + " testCellRange " + range
@@ -76,7 +74,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                     () -> selection.toString()
             );
         } else {
-            assertEquals(
+            this.checkEquals(
                     expected,
                     selection.toRelative(),
                     () -> selection.toString()
@@ -90,18 +88,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final public void testDefaultAnchor() {
         final S selection = this.createSelection();
         final Optional<SpreadsheetViewportSelectionAnchor> anchor = selection.defaultAnchor();
-        assertNotEquals(null, anchor, "anchor");
+        this.checkNotEquals(null, anchor, "anchor");
     }
 
     @Test
     final public void testDefaultAnchorThenSetAnchor() {
         final S selection = this.createSelection();
         final Optional<SpreadsheetViewportSelectionAnchor> anchor = selection.defaultAnchor();
-        assertNotEquals(null, anchor, "anchor");
+        this.checkNotEquals(null, anchor, "anchor");
 
         final SpreadsheetViewportSelection viewportSelection = selection.setAnchor(anchor);
-        assertEquals(anchor, viewportSelection.anchor(), "anchor");
-        assertEquals(selection, viewportSelection.selection(), "selection");
+        this.checkEquals(anchor, viewportSelection.anchor(), "anchor");
+        this.checkEquals(selection, viewportSelection.selection(), "selection");
     }
 
     // ClassTesting.....................................................................................................

@@ -20,8 +20,6 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C extends SpreadsheetNumberParsePatternsComponentDigit> extends SpreadsheetNumberParsePatternsComponentTestCase<C> {
 
     private final static String TEXT5 = "5";
@@ -736,13 +734,13 @@ public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C ext
                 tokens
         );
 
-        assertEquals(
+        this.checkEquals(
                 "",
                 request.digits.toString(),
                 () -> "digits\nrequest: " + request
         );
 
-        assertEquals(
+        this.checkEquals(
                 expectedMode,
                 request.digitMode,
                 () -> "mode\nrequest: " + request

@@ -20,15 +20,13 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 public final class SpreadsheetParsersValueSeparatorParserTest extends SpreadsheetParserTestCase<SpreadsheetParsersValueSeparatorParser,
         SpreadsheetValueSeparatorSymbolParserToken>
         implements ToStringTesting<SpreadsheetParsersValueSeparatorParser> {
 
     @Test
     public void testIncorrectCharacterFails() {
-        assertNotEquals("@", VALUE_SEPARATOR, "valueSeparator");
+        this.checkNotEquals("@", VALUE_SEPARATOR, "valueSeparator");
 
         this.parseFailAndCheck("@");
     }
@@ -73,7 +71,7 @@ public final class SpreadsheetParsersValueSeparatorParserTest extends Spreadshee
     @Test
     public void testDifferentValueSeparator() {
         final char c = ';';
-        assertNotEquals(c, VALUE_SEPARATOR, "valueSeparator");
+        this.checkNotEquals(c, VALUE_SEPARATOR, "valueSeparator");
         final String text = c + "";
 
         this.parseAndCheck(

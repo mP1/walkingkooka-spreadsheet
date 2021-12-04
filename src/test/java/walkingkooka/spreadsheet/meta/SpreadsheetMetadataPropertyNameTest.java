@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -51,7 +50,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Test
     public void testConstants() {
-        assertEquals(Lists.empty(),
+        this.checkEquals(Lists.empty(),
                 Arrays.stream(SpreadsheetMetadataPropertyName.class.getDeclaredFields())
                         .filter(FieldAttributes.STATIC::is)
                         .filter(f -> f.getType() == SpreadsheetMetadataPropertyName.class)
@@ -87,8 +86,8 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                 .forEach(i -> {
                             final String value = "color-" + i;
                             final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.with(value);
-                            assertEquals(SpreadsheetMetadataPropertyNameNamedColor.class, propertyName.getClass(), "class name");
-                            assertEquals(value, propertyName.value(), "value");
+                            this.checkEquals(SpreadsheetMetadataPropertyNameNamedColor.class, propertyName.getClass(), "class name");
+                            this.checkEquals(value, propertyName.value(), "value");
 
                             propertyName.checkValue(color);
                         }
@@ -103,8 +102,8 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                 .forEach(i -> {
                             final String value = "color-" + i;
                             final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.with(value);
-                            assertEquals(SpreadsheetMetadataPropertyNameNumberedColor.class, propertyName.getClass(), "class name");
-                            assertEquals(value, propertyName.value(), "value");
+                            this.checkEquals(SpreadsheetMetadataPropertyNameNumberedColor.class, propertyName.getClass(), "class name");
+                            this.checkEquals(value, propertyName.value(), "value");
 
                             propertyName.checkValue(color);
                         }

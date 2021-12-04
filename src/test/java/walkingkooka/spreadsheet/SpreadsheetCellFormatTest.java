@@ -31,7 +31,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -118,8 +117,8 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     private void check(final SpreadsheetCellFormat format,
                        final String pattern,
                        final Optional<SpreadsheetFormatter> formatter) {
-        assertEquals(pattern, format.pattern(), "pattern");
-        assertEquals(formatter, format.formatter(), "formatter");
+        this.checkEquals(pattern, format.pattern(), "pattern");
+        this.checkEquals(formatter, format.formatter(), "formatter");
     }
 
     // equals..................................................................................
@@ -173,7 +172,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testToStringWithoutFormatter() {
-        assertEquals(CharSequences.quote(PATTERN).toString(),
+        this.checkEquals(CharSequences.quote(PATTERN).toString(),
                 SpreadsheetCellFormat.with(PATTERN).toString());
     }
 

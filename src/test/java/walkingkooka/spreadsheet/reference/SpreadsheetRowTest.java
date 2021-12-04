@@ -28,7 +28,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -144,8 +143,8 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
     }
 
     private void checkReference(final SpreadsheetRow row, final SpreadsheetRowReference reference) {
-        assertEquals(reference, row.reference(), "reference");
-        assertEquals(Optional.of(reference), row.id(), "id");
+        this.checkEquals(reference, row.reference(), "reference");
+        this.checkEquals(Optional.of(reference), row.id(), "id");
     }
 
     @Override

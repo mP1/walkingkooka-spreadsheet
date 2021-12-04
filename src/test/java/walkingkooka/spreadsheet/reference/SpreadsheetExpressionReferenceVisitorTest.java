@@ -24,7 +24,6 @@ import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
 import walkingkooka.visit.VisitorTesting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -71,7 +70,7 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
             }
         }.accept(cell);
 
-        assertEquals("12", b.toString());
+        this.checkEquals("12", b.toString());
     }
 
     @Test
@@ -107,7 +106,7 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
             }
         }.accept(cell);
 
-        assertEquals("1342", b.toString());
+        this.checkEquals("1342", b.toString());
     }
 
     @Override

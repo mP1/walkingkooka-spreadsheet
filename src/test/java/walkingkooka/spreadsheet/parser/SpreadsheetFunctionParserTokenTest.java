@@ -28,8 +28,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetFunctionParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetFunctionParserToken> {
 
     private final static String FUNCTION = "sum";
@@ -94,11 +92,11 @@ public final class SpreadsheetFunctionParserTokenTest extends SpreadsheetParentP
     }
 
     private void checkFunction(final SpreadsheetFunctionParserToken function, final SpreadsheetFunctionName name) {
-        assertEquals(name, function.functionName(), "functionName");
+        this.checkEquals(name, function.functionName(), "functionName");
     }
 
     private void checkParameters(final SpreadsheetFunctionParserToken function, final SpreadsheetParserToken... parameters) {
-        assertEquals(Lists.of(parameters), function.parameters(), "parameters");
+        this.checkEquals(Lists.of(parameters), function.parameters(), "parameters");
     }
 
     @Override

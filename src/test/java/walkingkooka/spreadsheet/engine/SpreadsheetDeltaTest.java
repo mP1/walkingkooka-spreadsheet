@@ -43,7 +43,6 @@ import java.math.MathContext;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelta>,
@@ -53,16 +52,16 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testEmpty() {
         final SpreadsheetDelta empty = SpreadsheetDelta.EMPTY;
 
-        assertEquals(SpreadsheetDelta.NO_CELLS, empty.cells());
-        assertEquals(SpreadsheetDelta.NO_LABELS, empty.labels());
-        assertEquals(SpreadsheetDelta.NO_DELETED_CELLS, empty.deletedCells());
-        assertEquals(SpreadsheetDelta.NO_COLUMN_WIDTHS, empty.columnWidths());
-        assertEquals(SpreadsheetDelta.NO_ROW_HEIGHTS, empty.rowHeights());
+        this.checkEquals(SpreadsheetDelta.NO_CELLS, empty.cells());
+        this.checkEquals(SpreadsheetDelta.NO_LABELS, empty.labels());
+        this.checkEquals(SpreadsheetDelta.NO_DELETED_CELLS, empty.deletedCells());
+        this.checkEquals(SpreadsheetDelta.NO_COLUMN_WIDTHS, empty.columnWidths());
+        this.checkEquals(SpreadsheetDelta.NO_ROW_HEIGHTS, empty.rowHeights());
     }
 
     @Test
     public void testNoWindowConstant() {
-        assertEquals(Optional.empty(), SpreadsheetDelta.NO_WINDOW);
+        this.checkEquals(Optional.empty(), SpreadsheetDelta.NO_WINDOW);
     }
 
     // cell.............................................................................................................
@@ -105,7 +104,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testCellFoundDifferentKind() {
         final SpreadsheetCell cell = this.cell();
         final SpreadsheetCellReference reference = cell.reference();
-        assertEquals(reference.toRelative(), reference, "reference should be relative");
+        this.checkEquals(reference.toRelative(), reference, "reference should be relative");
 
         this.cellAndCheck(
                 SpreadsheetDelta.EMPTY.setCells(
@@ -127,7 +126,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     private void cellAndCheck(final SpreadsheetDelta delta,
                               final SpreadsheetCellReference reference,
                               final Optional<SpreadsheetCell> cell) {
-        assertEquals(
+        this.checkEquals(
                 cell,
                 delta.cell(reference),
                 () -> delta + " cell " + reference
@@ -267,7 +266,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             .patch(marshall(delta), this.createPatchContext());
                 }
         );
-        assertEquals("Missing patch cell: A1", thrown.getMessage(), "message");
+        this.checkEquals("Missing patch cell: A1", thrown.getMessage(), "message");
     }
 
     @Test
@@ -606,7 +605,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.resolveCellLabelsAndCheck(
                 jsonWithLabel,
                 (l) -> {
-                    assertEquals(label, l.value(), "label");
+                    this.checkEquals(label, l.value(), "label");
                     return z99;
                 },
                 json
@@ -625,7 +624,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     private void resolveCellLabelsAndCheck(final JsonObject json,
                                            final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell,
                                            final JsonObject expected) {
-        assertEquals(
+        this.checkEquals(
                 expected,
                 SpreadsheetDelta.resolveCellLabels(json, labelToCell),
                 () -> "resolveCellLabels " + json

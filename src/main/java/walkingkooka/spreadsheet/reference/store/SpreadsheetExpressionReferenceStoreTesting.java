@@ -31,7 +31,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -71,7 +70,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
         store.delete(id);
 
-        assertEquals(Lists.of(id), fired, "fired values");
+        this.checkEquals(Lists.of(id), fired, "fired values");
     }
 
     // addReference...........................................................................................
@@ -94,7 +93,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final TargetAndSpreadsheetCellReference<T> targeted = TargetAndSpreadsheetCellReference.with(target, reference);
         store.addReference(targeted);
 
-        assertEquals(Lists.of(targeted), fired, "fired add reference events");
+        this.checkEquals(Lists.of(targeted), fired, "fired add reference events");
     }
 
     // removeReference...........................................................................................
@@ -118,7 +117,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         references.forEach(v -> store.addReference(TargetAndSpreadsheetCellReference.with(id, v)));
         references.forEach(v -> store.removeReference(TargetAndSpreadsheetCellReference.with(id, v)));
 
-        assertEquals(Lists.of(id), fired, "fired values");
+        this.checkEquals(Lists.of(id), fired, "fired values");
     }
 
     @Test
@@ -135,7 +134,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         store.addReference(targeted);
         store.removeReference(targeted);
 
-        assertEquals(Lists.of(targeted), fired, "fired add reference events");
+        this.checkEquals(Lists.of(targeted), fired, "fired add reference events");
     }
 
     @Test
@@ -152,7 +151,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
         store.delete(target);
 
-        assertEquals(Lists.of(TargetAndSpreadsheetCellReference.with(target, reference)),
+        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(target, reference)),
                 fired,
                 "fired remove reference events");
     }
@@ -195,7 +194,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         store.addAddReferenceWatcher(fired::add);
         store.saveReferences(id, references);
 
-        assertEquals(references.stream()
+        this.checkEquals(references.stream()
                         .map(r -> TargetAndSpreadsheetCellReference.with(id, r))
                         .collect(Collectors.toList()),
                 fired,
@@ -238,10 +237,10 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final SpreadsheetCellReference z9 = SpreadsheetSelection.parseCell("Z9");
         store.saveReferences(id, Sets.of(z9));
 
-        assertEquals(Lists.of(TargetAndSpreadsheetCellReference.with(id, z9)),
+        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(id, z9)),
                 addFired,
                 "fired add reference");
-        assertEquals(Lists.of(TargetAndSpreadsheetCellReference.with(id, b2)),
+        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(id, b2)),
                 removeFired,
                 "fired remove reference");
     }
@@ -265,10 +264,10 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
         store.saveReferences(id, Sets.of(c3, d4));
 
-        assertEquals(Lists.of(TargetAndSpreadsheetCellReference.with(id, d4)),
+        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(id, d4)),
                 addFired,
                 "fired add reference");
-        assertEquals(Lists.of(TargetAndSpreadsheetCellReference.with(id, b2)),
+        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(id, b2)),
                 removeFired,
                 "fired remove reference");
     }
@@ -313,7 +312,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     }
 
     default void loadReferredAndCheck(final S store, final SpreadsheetCellReference reference, final Set<T> ids) {
-        assertEquals(ids,
+        this.checkEquals(ids,
                 store.loadReferred(reference),
                 "loadReferred " + reference);
 

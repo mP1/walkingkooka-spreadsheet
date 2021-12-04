@@ -22,7 +22,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetFormatAmPmParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatAmPmParserToken, String> {
@@ -65,7 +64,7 @@ public final class SpreadsheetFormatAmPmParserTokenTest extends SpreadsheetForma
                 b.append("5");
             }
         }.accept(token);
-        assertEquals("13542", b.toString());
+        this.checkEquals("13542", b.toString());
     }
 
     @Override

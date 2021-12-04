@@ -20,14 +20,12 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 public final class SpreadsheetNumberParsePatternsComponentPercentTest extends SpreadsheetNumberParsePatternsComponentTestCase2<SpreadsheetNumberParsePatternsComponentPercent> {
 
     @Test
     public void testFails() {
         final String text = "A";
-        assertNotEquals("" + PERCENT, text);
+        this.checkNotEquals("" + PERCENT, text);
 
         this.parseFails(
                 text

@@ -29,7 +29,6 @@ import walkingkooka.reflect.TypeNameTesting;
 import java.util.Arrays;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
@@ -41,7 +40,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
     @Test
     public void testGetOrNullAbsent() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        assertEquals(null, components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR));
+        this.checkEquals(null, components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR));
         this.checkMissing(components, SpreadsheetMetadataPropertyName.CREATOR);
     }
 
@@ -51,7 +50,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         final EmailAddress value = EmailAddress.parse("user@example.com");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY.set(property, value));
-        assertEquals(value, components.getOrNull(property));
+        this.checkEquals(value, components.getOrNull(property));
         this.checkMissing(components);
     }
 
@@ -63,7 +62,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
 
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, components::reportIfMissing);
-        assertEquals("Required properties \"creator\" missing.", thrown.getMessage(), "message");
+        this.checkEquals("Required properties \"creator\" missing.", thrown.getMessage(), "message");
     }
 
     @Test
@@ -73,7 +72,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
 
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, components::reportIfMissing);
-        assertEquals("Required properties \"creator\", \"decimal-separator\" missing.", thrown.getMessage(), "message");
+        this.checkEquals("Required properties \"creator\", \"decimal-separator\" missing.", thrown.getMessage(), "message");
     }
 
     @Test
@@ -85,7 +84,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, components::reportIfMissing);
-        assertEquals("Required properties \"creator\", \"decimal-separator\", \"locale\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
+        this.checkEquals("Required properties \"creator\", \"decimal-separator\", \"locale\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
     }
 
     @Test
@@ -96,7 +95,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
 
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, components::reportIfMissing);
-        assertEquals("Required properties \"creator\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
+        this.checkEquals("Required properties \"creator\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
     }
 
     @Test
@@ -113,7 +112,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
                               final SpreadsheetMetadataPropertyName<?>... missings) {
         final Set<SpreadsheetMetadataPropertyName<?>> set = Sets.sorted();
         set.addAll(Arrays.asList(missings));
-        assertEquals(set, components.missing, "missing");
+        this.checkEquals(set, components.missing, "missing");
     }
 
     // ToString.........................................................................................................

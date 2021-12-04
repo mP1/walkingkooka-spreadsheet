@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.StandardThrowableTesting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetMetadataPropertyValueExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataPropertyValueException> {
 
     @Override
@@ -54,8 +52,8 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
     }
 
     private void checkPropertyNameAndValue(final SpreadsheetMetadataPropertyValueException throwable) {
-        assertEquals(this.name(), throwable.name(), "name");
-        assertEquals(this.value(), throwable.value(), "value");
+        this.checkEquals(this.name(), throwable.name(), "name");
+        this.checkEquals(this.value(), throwable.value(), "value");
     }
 
     @Override
@@ -81,7 +79,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
     @Override
     public void checkMessage(final Throwable throwable,
                              final String message) {
-        assertEquals(message, throwable.getMessage(), "message");
+        this.checkEquals(message, throwable.getMessage(), "message");
     }
 
     @Override

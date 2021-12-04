@@ -37,7 +37,6 @@ import java.time.LocalTime;
 import java.util.Locale;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -277,11 +276,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetCell returned = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(cellStore, metadata)
                 .save(cell);
-        assertEquals(saved,
+        this.checkEquals(saved,
                 this.saved,
                 () -> "saved " + cell + " metadata=" + metadata
         );
-        assertEquals(loaded,
+        this.checkEquals(loaded,
                 returned,
                 () -> "returned saved " + cell + " metadata=" + metadata
         );
@@ -324,7 +323,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         );
 
         final String text2 = "martes 9/2/2021";
-        assertEquals(
+        this.checkEquals(
                 requires.setFormula(
                         formula.setText(text2)
                                 .setToken(
@@ -397,7 +396,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         );
 
         final String text2 = "mar. 9/2/2021";
-        assertEquals(
+        this.checkEquals(
                 requires.setFormula(
                         formula.setText(text2)
                                 .setToken(
@@ -461,7 +460,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         );
 
         final String text2 = "9/marzo/2021";
-        assertEquals(
+        this.checkEquals(
                 requires.setFormula(
                         formula.setText(text2)
                                 .setToken(
@@ -523,7 +522,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         );
 
         final String text2 = "9/mar./2021";
-        assertEquals(
+        this.checkEquals(
                 requires.setFormula(
                         formula.setText(text2)
                                 .setToken(
@@ -575,7 +574,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, decimalSeparator2)
         );
 
-        assertEquals(
+        this.checkEquals(
                 requires.setFormula(
                         formula.setText(text.replace(DECIMAL_SEPARATOR, decimalSeparator2))
                                 .setToken(
@@ -583,9 +582,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                                 this.numberParserToken(decimalSeparator2)
                                         )
                                 ).setExpression(
-                                Optional.of(
-                                        number(3.5)
-                                )
+                                        Optional.of(
+                                                number(3.5)
+                                        )
                         )
                 ),
                 loader.loadOrFail(requires.reference()),
@@ -617,7 +616,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         );
 
         final String text2 = text.replace(PERCENT, percent2);
-        assertEquals(
+        this.checkEquals(
                 requires.setFormula(
                         formula.setText(text2)
                                 .setToken(
@@ -625,9 +624,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                                 this.expressionNumberWithPercentParserToken(percent2)
                                         )
                                 ).setExpression(
-                                Optional.of(
-                                        number(1.5)
-                                )
+                                        Optional.of(
+                                                number(1.5)
+                                        )
                         )
                 ),
                 loader.loadOrFail(requires.reference()),
@@ -678,7 +677,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, decimalSeparator2)
         );
 
-        assertEquals(
+        this.checkEquals(
                 requires.setFormula(
                         formula.setText(text.replace(DECIMAL_SEPARATOR, decimalSeparator2))
                                 .setToken(
@@ -686,9 +685,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                                 this.numberParserToken(decimalSeparator2)
                                         )
                                 ).setExpression(
-                                Optional.of(
-                                        number(3.5)
-                                )
+                                        Optional.of(
+                                                number(3.5)
+                                        )
                         )
                 ),
                 loader.loadOrFail(requires.reference()),
@@ -730,7 +729,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         );
 
         final String text2 = text.replace(DECIMAL_SEPARATOR, decimalSeparator2);
-        assertEquals(
+        this.checkEquals(
                 requires.setFormula(
                         formula.setText(text2)
                                 .setToken(
@@ -802,7 +801,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         );
 
         final String text2 = "9:59 p. m.";
-        assertEquals(
+        this.checkEquals(
                 requires.setFormula(
                         formula.setText(text2)
                                 .setToken(

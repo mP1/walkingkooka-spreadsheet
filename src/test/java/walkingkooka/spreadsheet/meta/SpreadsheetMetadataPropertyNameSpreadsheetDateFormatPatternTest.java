@@ -42,8 +42,6 @@ import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern, SpreadsheetDateFormatPattern> {
 
     @Test
@@ -60,7 +58,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPatternTe
         final SimpleDateFormat simpleDateFormat = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.FULL, locale);
         final String expected = simpleDateFormat.format(Date.from(date.atStartOfDay().toInstant(ZoneOffset.UTC)));
 
-        assertEquals(expected, formatted, () -> pattern + "\nSimpleDateFormat: " + simpleDateFormat.toPattern());
+        this.checkEquals(expected, formatted, () -> pattern + "\nSimpleDateFormat: " + simpleDateFormat.toPattern());
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {

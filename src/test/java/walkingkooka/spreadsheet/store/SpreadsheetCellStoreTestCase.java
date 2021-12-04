@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -71,7 +70,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         final SpreadsheetCellReference reference = this.cellReference(1, 2);
         final SpreadsheetCell cell = this.cell(reference);
-        assertEquals(cell, store.save(cell), "incorrect key returned");
+        this.checkEquals(cell, store.save(cell), "incorrect key returned");
 
         assertSame(cell, store.loadOrFail(reference));
     }
@@ -82,7 +81,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         final SpreadsheetCellReference reference = this.cellReference(1, 2);
         final SpreadsheetCell cell = this.cell(reference);
-        assertEquals(cell, store.save(cell), "incorrect key returned");
+        this.checkEquals(cell, store.save(cell), "incorrect key returned");
 
         assertSame(cell, store.loadOrFail(reference.toAbsolute()));
     }
@@ -174,9 +173,9 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(c);
         store.save(d);
 
-        checkEquals("row 1", store.row(a.reference().row()), a, b);
-        checkEquals("row 2", store.row(c.reference().row()), c, d);
-        checkEquals("row 99", store.row(SpreadsheetSelection.parseRow("99")));
+        checkCells("row 1", store.row(a.reference().row()), a, b);
+        checkCells("row 2", store.row(c.reference().row()), c, d);
+        checkCells("row 99", store.row(SpreadsheetSelection.parseRow("99")));
     }
 
     @Test
@@ -186,11 +185,13 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         final SpreadsheetCell a = this.cell(11, 1);
         store.save(a);
 
-        checkEquals("row 1",
+        checkCells(
+                "row 1",
                 store.row(a.reference()
                         .row()
                         .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)),
-                a);
+                a
+        );
     }
 
     @Test
@@ -212,9 +213,9 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(c);
         store.save(d);
 
-        checkEquals("column 1", store.column(a.reference().column()), a, b);
-        checkEquals("column 2", store.column(c.reference().column()), c, d);
-        checkEquals("column 99", store.column(SpreadsheetSelection.parseColumn("ZZ")));
+        checkCells("column 1", store.column(a.reference().column()), a, b);
+        checkCells("column 2", store.column(c.reference().column()), c, d);
+        checkCells("column 99", store.column(SpreadsheetSelection.parseColumn("ZZ")));
     }
 
     @Test
@@ -224,11 +225,13 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         final SpreadsheetCell a = this.cell(1, 11);
         store.save(a);
 
-        checkEquals("column 1",
+        checkCells(
+                "column 1",
                 store.column(a.reference()
                         .column()
                         .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)),
-                a);
+                a
+        );
     }
 
     @Test
@@ -317,14 +320,16 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         return this.cell(this.id());
     }
 
-    private void checkEquals(final String message, final Collection<SpreadsheetCell> cells, final SpreadsheetCell... expected) {
+    private void checkCells(final String message,
+                            final Collection<SpreadsheetCell> cells,
+                            final SpreadsheetCell... expected) {
         final Set<SpreadsheetCell> actual = Sets.sorted();
         actual.addAll(cells);
 
         final Set<SpreadsheetCell> expectedSets = Sets.sorted();
         expectedSets.addAll(Lists.of(expected));
 
-        assertEquals(expectedSets, actual, message);
+        this.checkEquals(expectedSets, actual, message);
     }
 
     private SpreadsheetCell cell(final int column, final int row) {
@@ -348,11 +353,11 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     final void rowsAndCheck(final SpreadsheetCellStore store, final int row) {
-        assertEquals(row, store.rows(), () -> "rows for store=" + store);
+        this.checkEquals(row, store.rows(), () -> "rows for store=" + store);
     }
 
     final void columnsAndCheck(final SpreadsheetCellStore store, final int column) {
-        assertEquals(column, store.columns(), () -> "columns for store=" + store);
+        this.checkEquals(column, store.columns(), () -> "columns for store=" + store);
     }
 
     private SpreadsheetFormula formula() {

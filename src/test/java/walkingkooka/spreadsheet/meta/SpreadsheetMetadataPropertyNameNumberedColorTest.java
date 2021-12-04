@@ -23,7 +23,6 @@ import walkingkooka.color.Color;
 import java.util.Locale;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -44,7 +43,7 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
                     final String value = "color-" + i;
                     assertSame(propertyName, SpreadsheetMetadataPropertyName.with(value));
 
-                    assertEquals(value, propertyName.value(), "value");
+                    this.checkEquals(value, propertyName.value(), "value");
 
                     propertyName.checkValue(color);
                 });

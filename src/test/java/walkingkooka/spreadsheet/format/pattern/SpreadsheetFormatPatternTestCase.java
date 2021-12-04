@@ -28,7 +28,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern<T>,
@@ -50,14 +49,14 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         final T token = this.parseFormatParserToken(this.patternText());
 
         final P patterns = this.createPattern(token);
-        assertEquals(patterns.value(), token, "value");
+        this.checkEquals(patterns.value(), token, "value");
     }
 
     @Test
     public final void testWithEscape() {
         final T tokens = this.createFormatParserToken(Lists.of(SpreadsheetFormatParserToken.escape('\t', "\\t")));
         final P patterns = this.createPattern(tokens);
-        assertEquals(patterns.value(), tokens, "value");
+        this.checkEquals(patterns.value(), tokens, "value");
     }
 
     final void withInvalidCharacterFails(final ParserToken token) {
@@ -72,14 +71,14 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         final T parent = this.createFormatParserToken(tokens, patternText2);
 
         final InvalidCharacterException thrown = assertThrows(InvalidCharacterException.class, () -> this.createPattern(parent));
-        assertEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
+        this.checkEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
     }
 
     @Test
     public final void testWithWhitespace() {
         final T token = this.createFormatParserToken(Lists.of(whitespace()));
         final P patterns = this.createPattern(token);
-        assertEquals(patterns.value(), token, "value");
+        this.checkEquals(patterns.value(), token, "value");
     }
 
     // helpers..........................................................................................................

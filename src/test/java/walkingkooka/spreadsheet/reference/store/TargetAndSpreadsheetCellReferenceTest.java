@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqualsDefinedTesting2<TargetAndSpreadsheetCellReference<SpreadsheetLabelName>>,
@@ -54,8 +53,8 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetCellReference reference = this.reference();
         final TargetAndSpreadsheetCellReference and = TargetAndSpreadsheetCellReference.with(label, reference);
-        assertEquals(label, and.target(), "target");
-        assertEquals(reference, and.reference(), "reference");
+        this.checkEquals(label, and.target(), "target");
+        this.checkEquals(reference, and.reference(), "reference");
     }
 
     @Test

@@ -27,7 +27,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisitorTesting<SpreadsheetValueTypeVisitor> {
@@ -53,7 +52,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
 
         }.accept(type);
 
-        assertEquals("12", b.toString());
+        this.checkEquals("12", b.toString());
     }
 
     @Test
@@ -81,7 +80,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -115,7 +114,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -149,7 +148,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -183,7 +182,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -217,7 +216,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -251,7 +250,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -285,7 +284,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -319,7 +318,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -353,7 +352,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -387,7 +386,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -421,7 +420,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -455,7 +454,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -489,7 +488,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -523,7 +522,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
@@ -557,7 +556,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
         }.accept(type);
 
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test

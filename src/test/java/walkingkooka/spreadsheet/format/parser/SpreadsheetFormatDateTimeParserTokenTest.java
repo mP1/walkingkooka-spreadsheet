@@ -26,7 +26,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetFormatDateTimeParserTokenTest extends SpreadsheetFormatDateDateTimeExpressionTimeParserTokenTestCase<SpreadsheetFormatDateTimeParserToken> {
@@ -101,11 +100,11 @@ public final class SpreadsheetFormatDateTimeParserTokenTest extends SpreadsheetF
                 visited.add(t);
             }
         }.accept(token);
-        assertEquals("7137152871628428", b.toString());
-        assertEquals(Lists.of(token, token, token,
-                text, text, text, text, text,
-                day, day, day, day, day,
-                token, token, token),
+        this.checkEquals("7137152871628428", b.toString());
+        this.checkEquals(Lists.of(token, token, token,
+                        text, text, text, text, text,
+                        day, day, day, day, day,
+                        token, token, token),
                 visited,
                 "visited");
     }

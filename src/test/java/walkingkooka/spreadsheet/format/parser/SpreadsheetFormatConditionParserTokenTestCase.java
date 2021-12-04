@@ -24,7 +24,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatConditionParserTokenTestCase<T extends SpreadsheetFormatConditionParserToken> extends SpreadsheetFormatParentParserTokenTestCase<T> {
@@ -47,7 +46,7 @@ public abstract class SpreadsheetFormatConditionParserTokenTestCase<T extends Sp
     public final void testRelation() {
         final T token = this.createToken();
         final String symbol = this.operatorSymbol().value();
-        assertEquals(ComparisonRelation.findWithSymbol(symbol),
+        this.checkEquals(ComparisonRelation.findWithSymbol(symbol),
                 token.relation(),
                 () -> "Wrong relation for token " + token);
     }

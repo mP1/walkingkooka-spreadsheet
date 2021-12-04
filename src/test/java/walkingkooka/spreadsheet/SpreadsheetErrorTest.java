@@ -26,7 +26,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetError>,
@@ -105,7 +104,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     }
 
     private void checkValue(final SpreadsheetError error, final String value) {
-        assertEquals(value, error.value(), "error");
+        this.checkEquals(value, error.value(), "error");
     }
 
     @Override

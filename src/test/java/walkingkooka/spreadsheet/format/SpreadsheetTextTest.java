@@ -34,7 +34,6 @@ import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -104,8 +103,8 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     }
 
     private void check(final SpreadsheetText formatted, final Optional<Color> color, final String text) {
-        assertEquals(color, formatted.color(), "color");
-        assertEquals(text, formatted.text(), "text");
+        this.checkEquals(color, formatted.color(), "color");
+        this.checkEquals(text, formatted.text(), "text");
     }
 
     // ToTextNode.... ..................................................................................................

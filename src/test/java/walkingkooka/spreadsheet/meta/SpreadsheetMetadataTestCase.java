@@ -45,8 +45,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -68,7 +66,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testIsEmpty() {
         final SpreadsheetMetadata metadata = this.createObject();
-        assertEquals(metadata.value().isEmpty(),
+        this.checkEquals(metadata.value().isEmpty(),
                 metadata.isEmpty(),
                 () -> "" + metadata);
     }
@@ -104,7 +102,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final <TT> void getAndCheck(final SpreadsheetMetadata metadata,
                                 final SpreadsheetMetadataPropertyName<TT> propertyName,
                                 final TT value) {
-        assertEquals(Optional.ofNullable(value),
+        this.checkEquals(Optional.ofNullable(value),
                 metadata.get(propertyName),
                 () -> metadata + " get " + propertyName);
     }
@@ -118,8 +116,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> this.createObject().getOrFail(propertyName));
 
         this.checkMessage(thrown, "Required property missing, but got null for " + CharSequences.quote(propertyName.value()));
-        assertEquals(propertyName, thrown.name(), "property name");
-        assertEquals(null, thrown.value(), "property value");
+        this.checkEquals(propertyName, thrown.name(), "property name");
+        this.checkEquals(null, thrown.value(), "property value");
     }
 
     // set..............................................................................................................
@@ -147,7 +145,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                                final TT value,
                                                final String expected) {
         final SpreadsheetMetadata set = metadata.set(propertyName, value);
-        assertEquals(
+        this.checkEquals(
                 expected,
                 set.toString(),
                 () -> "set " + propertyName + " = " + CharSequences.quoteIfChars(value) + "\n" + metadata
@@ -172,7 +170,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                              final SpreadsheetMetadataPropertyName<?> propertyName,
                                              final SpreadsheetMetadata expected) {
         final SpreadsheetMetadata removed = metadata.remove(propertyName);
-        assertEquals(expected,
+        this.checkEquals(expected,
                 removed,
                 () -> metadata + " remove " + propertyName);
         return removed;
@@ -210,7 +208,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final <TT> void getEffectiveStylePropertyAndCheck(final SpreadsheetMetadata metadata,
                                                       final TextStylePropertyName<TT> property,
                                                       final TT expected) {
-        assertEquals(
+        this.checkEquals(
                 Optional.ofNullable(expected),
                 metadata.getEffectiveStyleProperty(property),
                 () -> metadata + " getEffectiveStyleProperty " + property
@@ -252,7 +250,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final <TT> void getEffectiveStylePropertyOrFailAndCheck(final SpreadsheetMetadata metadata,
                                                             final TextStylePropertyName<TT> property,
                                                             final TT expected) {
-        assertEquals(
+        this.checkEquals(
                 expected,
                 metadata.getEffectiveStylePropertyOrFail(property),
                 () -> metadata + " getEffectiveStyleOrFailProperty " + property
@@ -270,7 +268,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                    final SpreadsheetColorName name,
                                    final Color color) {
         final Function<SpreadsheetColorName, Optional<Color>> nameToColor = metadata.nameToColor();
-        assertEquals(Optional.ofNullable(color),
+        this.checkEquals(Optional.ofNullable(color),
                 nameToColor.apply(name),
                 () -> name + " to color " + metadata);
     }
@@ -286,7 +284,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                      final int number,
                                      final Color color) {
         final Function<Integer, Optional<Color>> numberToColor = metadata.numberToColor();
-        assertEquals(Optional.ofNullable(color),
+        this.checkEquals(Optional.ofNullable(color),
                 numberToColor.apply(number),
                 () -> number + " to color " + metadata);
     }
@@ -341,7 +339,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testDefaultsNotNull() {
         final SpreadsheetMetadata metadata = this.createObject();
-        assertNotEquals(null, metadata.defaults());
+        this.checkNotEquals(null, metadata.defaults());
     }
 
     @Test
@@ -404,7 +402,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(property, value);
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(defaults));
-        assertEquals("Defaults includes invalid default values: " + property, thrown.getMessage(), () -> "defaults with " + defaults);
+        this.checkEquals("Defaults includes invalid default values: " + property, thrown.getMessage(), () -> "defaults with " + defaults);
     }
 
     @Test
@@ -415,7 +413,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now());
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(defaults));
-        assertEquals("Defaults includes invalid default values: " + SpreadsheetMetadataPropertyName.CREATE_DATE_TIME + ", " + SpreadsheetMetadataPropertyName.CREATOR,
+        this.checkEquals("Defaults includes invalid default values: " + SpreadsheetMetadataPropertyName.CREATE_DATE_TIME + ", " + SpreadsheetMetadataPropertyName.CREATOR,
                 thrown.getMessage(),
                 () -> "defaults with " + defaults);
     }
@@ -440,7 +438,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             assertSame(null, metadata.defaults, "defaults");
         } else {
             assertSame(defaults, metadata.defaults, "defaults");
-            assertEquals(false, metadata.defaults.isEmpty(), () -> "defaults should not be an empty SpreadsheetMetadata, " + metadata.defaults);
+            this.checkEquals(false, metadata.defaults.isEmpty(), () -> "defaults should not be an empty SpreadsheetMetadata, " + metadata.defaults);
         }
     }
 
@@ -464,7 +462,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     final void missingRequiredPropertiesAndCheck(final SpreadsheetMetadata metadata,
                                                  final SpreadsheetMetadataPropertyName<?>... missing) {
-        assertEquals(Sets.of(missing),
+        this.checkEquals(Sets.of(missing),
                 metadata.missingRequiredProperties(),
                 () -> "" + metadata);
     }

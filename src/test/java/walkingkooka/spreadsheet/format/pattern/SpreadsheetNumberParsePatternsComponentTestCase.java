@@ -29,8 +29,6 @@ import walkingkooka.text.cursor.parser.ParserTesting;
 
 import java.util.Iterator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends SpreadsheetNumberParsePatternsComponent> extends SpreadsheetNumberParsePatternsTestCase<C>
         implements ParserTesting,
         ToStringTesting<C> {
@@ -89,7 +87,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
         final TextCursor cursor = TextCursors.charSequence(text);
 
         final SpreadsheetNumberParsePatternsRequest request = this.createRequest(NEXT_SKIPPED);
-        assertEquals(
+        this.checkEquals(
                 false,
                 this.createComponent()
                         .parse(cursor, request),
@@ -99,11 +97,11 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
         final TextCursorSavePoint save = cursor.save();
         cursor.end();
 
-        assertEquals(text,
+        this.checkEquals(text,
                 save.textBetween(),
                 () -> " text left after parsing text " + CharSequences.quoteAndEscape(text));
 
-        assertEquals(
+        this.checkEquals(
                 Lists.empty(),
                 request.tokens,
                 () -> "tokens\nrequest: " + request
@@ -152,7 +150,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
                 next,
                 tokens
         );
-        assertEquals(
+        this.checkEquals(
                 mode,
                 request.digitMode,
                 () -> "request: " + request
@@ -167,7 +165,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
                               final SpreadsheetParserToken... tokens) {
         final TextCursor cursor = TextCursors.charSequence(text + textAfter);
 
-        assertEquals(
+        this.checkEquals(
                 true, // !hasNext
                 component.parse(cursor, request),
                 () -> "parse " + CharSequences.quoteAndEscape(text) + " should have matched"
@@ -176,7 +174,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
         final TextCursorSavePoint save = cursor.save();
         cursor.end();
 
-        assertEquals(
+        this.checkEquals(
                 textAfter,
                 save.textBetween(),
                 () -> " text left after parsing text " + CharSequences.quoteAndEscape(text)
@@ -191,7 +189,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
         );
 
         if (NEXT_CALLED == hasNext) {
-            assertEquals(
+            this.checkEquals(
                     hasNext, // if empty means nothing got consumed and next shouldnt be executed
                     request.next.hasNext(),
                     () -> " next component called after parsing text " + CharSequences.quoteAndEscape(text)

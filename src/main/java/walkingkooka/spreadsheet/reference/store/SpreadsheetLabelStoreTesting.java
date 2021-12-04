@@ -31,7 +31,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> extends StoreTesting<S, SpreadsheetLabelName, SpreadsheetLabelMapping>,
@@ -74,7 +73,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
                                      final String text,
                                      final int count,
                                      final Set<SpreadsheetLabelMapping> mappings) {
-        assertEquals(
+        this.checkEquals(
                 mappings,
                 store.findSimilar(text, count),
                 () -> "findSimilar " + CharSequences.quoteAndEscape(text) + " count=" + count
@@ -144,7 +143,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     default void loadCellReferencesOrRangesAndCheck(final SpreadsheetLabelStore store,
                                                     final SpreadsheetLabelName label,
                                                     final Set<? super ExpressionReference> referencesOrRanges) {
-        assertEquals(referencesOrRanges,
+        this.checkEquals(referencesOrRanges,
                 store.loadCellReferencesOrRanges(label),
                 () -> "loadCellReferencesOrRanges for " + label);
     }
@@ -158,7 +157,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     default void labelsAndCheck(final SpreadsheetLabelStore store,
                                 final SpreadsheetCellReference reference,
                                 final Set<SpreadsheetLabelName> labels) {
-        assertEquals(labels,
+        this.checkEquals(labels,
                 store.labels(reference),
                 () -> "labels for " + reference);
     }
@@ -181,7 +180,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
             }
         }
 
-        assertEquals(true, tested, () -> "Unable to find an unknown label");
+        this.checkEquals(true, tested, () -> "Unable to find an unknown label");
     }
 
     @Override

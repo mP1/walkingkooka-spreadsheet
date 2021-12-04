@@ -32,8 +32,6 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatParserTokenTestCase<T extends SpreadsheetFormatParserToken> implements ClassTesting2<T>,
@@ -62,7 +60,7 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
                 .filter(m -> m.getReturnType() == type)
                 .filter(m -> JavaVisibility.PUBLIC == JavaVisibility.of(m))
                 .findFirst();
-        assertNotEquals(
+        this.checkNotEquals(
                 Optional.empty(),
                 possibleMethod,
                 () -> "Unable to find a static public method that returns " + type.getName()
@@ -78,7 +76,7 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
                         .toString();
         expected = Character.toLowerCase(expected.charAt(0)) + expected.substring(1);
 
-        assertEquals(expected,
+        this.checkEquals(expected,
                 name,
                 () -> "Token public static factory method name incorrect: " + method.toGenericString());
     }
@@ -92,7 +90,7 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
                 .filter(m -> m.getReturnType() == type)
                 .filter(m -> JavaVisibility.PACKAGE_PRIVATE == JavaVisibility.of(m))
                 .findFirst();
-        assertNotEquals(
+        this.checkNotEquals(
                 Optional.empty(),
                 possibleMethod,
                 () -> "Unable to find a static package private method that returns " + type.getName()
@@ -107,7 +105,7 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
                         type.getSimpleName(), PARENT_NAME.length(), -ParserToken.class.getSimpleName().length()
                 );
 
-        assertEquals(expected,
+        this.checkEquals(expected,
                 name,
                 () -> "Token package private unmarshall method name incorrect: " + method.toGenericString());
     }

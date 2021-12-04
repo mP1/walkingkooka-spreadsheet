@@ -27,7 +27,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValueVisitorTesting<SpreadsheetValueVisitor> {
@@ -294,7 +293,7 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
         visitor.accept(value);
 
         assertSame(value, this.start, "start");
-        assertEquals(value, this.visit, "visit");
+        this.checkEquals(value, this.visit, "visit");
         assertSame(value, this.end, "end");
     }
 

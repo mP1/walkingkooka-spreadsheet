@@ -25,7 +25,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends SpreadsheetFormatParentParserToken> extends SpreadsheetFormatParserTokenTestCase<T> {
@@ -58,8 +57,8 @@ public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends Sprea
         final String text = this.text();
         final T token = this.createToken(text, tokens);
         this.textAndCheck(token, text);
-        assertEquals(tokens, token.value(), "tokens");
-        assertEquals(tokens, token.value(), "tokens not copied");
+        this.checkEquals(tokens, token.value(), "tokens");
+        this.checkEquals(tokens, token.value(), "tokens not copied");
     }
 
     abstract T createToken(final String text, final List<ParserToken> tokens);
@@ -77,7 +76,7 @@ public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends Sprea
     abstract List<ParserToken> tokens();
 
     final void checkValue(final SpreadsheetFormatParentParserToken token, final List<ParserToken> value) {
-        assertEquals(value, token.value(), "value");
+        this.checkEquals(value, token.value(), "value");
     }
 
     final SpreadsheetFormatParserToken bracketClose() {

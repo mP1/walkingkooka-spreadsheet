@@ -27,7 +27,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinaryParserTokenTestCase<SpreadsheetCellRangeParserToken> {
@@ -96,12 +95,12 @@ public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinary
                 visited.add(t);
             }
         }.accept(binary);
-        assertEquals("713715287162871528428", b.toString());
-        assertEquals(Lists.of(binary, binary, binary,
-                left, left, left, left, left,
-                symbol, symbol, symbol, symbol, symbol,
-                right, right, right, right, right,
-                binary, binary, binary),
+        this.checkEquals("713715287162871528428", b.toString());
+        this.checkEquals(Lists.of(binary, binary, binary,
+                        left, left, left, left, left,
+                        symbol, symbol, symbol, symbol, symbol,
+                        right, right, right, right, right,
+                        binary, binary, binary),
                 visited,
                 "visited");
     }

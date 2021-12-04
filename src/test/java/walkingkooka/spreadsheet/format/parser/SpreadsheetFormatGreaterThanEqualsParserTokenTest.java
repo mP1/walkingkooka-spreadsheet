@@ -26,7 +26,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetFormatGreaterThanEqualsParserTokenTest extends SpreadsheetFormatConditionParserTokenTestCase<SpreadsheetFormatGreaterThanEqualsParserToken> {
@@ -78,7 +77,7 @@ public final class SpreadsheetFormatGreaterThanEqualsParserTokenTest extends Spr
 
             @Override
             protected void visit(final SpreadsheetFormatGreaterThanEqualsSymbolParserToken t) {
-                assertEquals(symbol, t);
+                checkEquals(symbol, t);
                 b.append("6");
                 visited.add(t);
             }
@@ -96,11 +95,11 @@ public final class SpreadsheetFormatGreaterThanEqualsParserTokenTest extends Spr
                 visited.add(t);
             }
         }.accept(token);
-        assertEquals("7137162871528428", b.toString());
-        assertEquals(Lists.of(token, token, token,
-                symbol, symbol, symbol, symbol, symbol,
-                right, right, right, right, right,
-                token, token, token),
+        this.checkEquals("7137162871528428", b.toString());
+        this.checkEquals(Lists.of(token, token, token,
+                        symbol, symbol, symbol, symbol, symbol,
+                        right, right, right, right, right,
+                        token, token, token),
                 visited,
                 "visited");
     }

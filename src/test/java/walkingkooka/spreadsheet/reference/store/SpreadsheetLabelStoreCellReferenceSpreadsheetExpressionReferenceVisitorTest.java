@@ -28,7 +28,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitorTest implements SpreadsheetExpressionReferenceVisitorTesting<SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor> {
@@ -130,7 +129,7 @@ public final class SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionRefere
     private void referenceAndCheck(final SpreadsheetExpressionReference reference,
                                    final SpreadsheetLabelStore store,
                                    final SpreadsheetCellReference expected) {
-        assertEquals(
+        this.checkEquals(
                 Optional.ofNullable(expected),
                 SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor.reference(reference, store),
                 () -> "reference " + reference + " store=" + store

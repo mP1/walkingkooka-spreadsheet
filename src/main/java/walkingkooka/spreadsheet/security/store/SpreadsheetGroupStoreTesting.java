@@ -27,15 +27,13 @@ import walkingkooka.store.StoreTesting;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public interface SpreadsheetGroupStoreTesting<S extends SpreadsheetGroupStore> extends StoreTesting<S, GroupId, Group>,
         TypeNameTesting<S> {
 
     default void loadUserGroupsAndCheck(final SpreadsheetGroupStore store,
                                         final UserId userId,
                                         final Set<Group> groups) {
-        assertEquals(groups,
+        this.checkEquals(groups,
                 store.loadUserGroups(userId),
                 "store loadUserGroups " + userId + " incorrect result");
     }

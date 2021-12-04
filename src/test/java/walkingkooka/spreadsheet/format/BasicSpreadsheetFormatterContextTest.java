@@ -36,7 +36,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<BasicSpreadsheetFormatterContext> {
@@ -165,7 +164,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
             @Override
             public Optional<Color> apply(final Integer number) {
-                assertEquals(number, 1, "color number");
+                checkEquals(number, 1, "color number");
                 return Optional.of(BasicSpreadsheetFormatterContextTest.this.color());
             }
 
@@ -181,7 +180,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
             @Override
             public Optional<Color> apply(final SpreadsheetColorName name) {
-                assertEquals(name, SpreadsheetColorName.with("bingo"), "color name");
+                checkEquals(name, SpreadsheetColorName.with("bingo"), "color name");
                 return Optional.of(BasicSpreadsheetFormatterContextTest.this.color());
             }
 

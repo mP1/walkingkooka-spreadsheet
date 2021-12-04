@@ -20,13 +20,11 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetNumberParsePatternsComponentDecimalSeparatorTest extends SpreadsheetNumberParsePatternsComponentTestCase2<SpreadsheetNumberParsePatternsComponentDecimalSeparator> {
 
     @Test
     public void testDecimal() {
-        assertEquals(DECIMAL, 'd');
+        this.checkEquals(DECIMAL, 'd');
 
         this.parseAndCheck2(
                 DECIMAL,

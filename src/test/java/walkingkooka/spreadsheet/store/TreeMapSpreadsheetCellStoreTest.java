@@ -30,7 +30,6 @@ import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.TreeMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<TreeMapSpreadsheetCellStore> {
@@ -94,7 +93,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     private void maxColumnWidthAndCheck(final TreeMapSpreadsheetCellStore store,
                                         final SpreadsheetColumnReference column,
                                         final double expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 store.maxColumnWidth(column),
                 () -> "maxColumnWidth of " + column + " store=" + store);
     }
@@ -158,7 +157,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     private void maxRowHeightAndCheck(final TreeMapSpreadsheetCellStore store,
                                       final SpreadsheetRowReference row,
                                       final double expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 store.maxRowHeight(row),
                 () -> "maxRowHeight of " + row + " store=" + store);
     }

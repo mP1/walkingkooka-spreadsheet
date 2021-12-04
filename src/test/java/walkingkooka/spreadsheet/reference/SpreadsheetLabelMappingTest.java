@@ -27,7 +27,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -76,7 +75,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(LABEL, different);
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> mapping.setLabel(different));
-        assertEquals("New label \"different\" must be different from reference \"different\"", thrown.getMessage());
+        this.checkEquals("New label \"different\" must be different from reference \"different\"", thrown.getMessage());
     }
 
     @Test
@@ -109,7 +108,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         assertSame(LABEL, mapping.label());
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> mapping.setReference(LABEL));
-        assertEquals("Reference \"label\" must be different to label \"label\"", thrown.getMessage());
+        this.checkEquals("Reference \"label\" must be different to label \"label\"", thrown.getMessage());
     }
 
     @Test
@@ -204,12 +203,12 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     }
 
     private void checkLabel(final SpreadsheetLabelMapping mapping, final SpreadsheetLabelName label) {
-        assertEquals(label, mapping.label(), "label");
+        this.checkEquals(label, mapping.label(), "label");
     }
 
     private void checkReference(final SpreadsheetLabelMapping mapping,
                                 final SpreadsheetExpressionReference reference) {
-        assertEquals(reference, mapping.reference(), "reference");
+        this.checkEquals(reference, mapping.reference(), "reference");
     }
 
     private static SpreadsheetCellReference cell(final int column) {

@@ -33,7 +33,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.Temporal;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -63,7 +62,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                         public <T> Either<T, String> convert(final Object v,
                                                              final Class<T> type) {
                             assertSame(value, v, "value");
-                            assertEquals(LocalDateTime.class, type, "type");
+                            checkEquals(LocalDateTime.class, type, "type");
                             return Either.right("Failed!");
                         }
                     });
@@ -74,15 +73,20 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
     public void testConvertLocalDateTimeFails() {
         final LocalTime time = LocalTime.now();
 
-        assertThrows(SpreadsheetFormatException.class, () -> this.createFormatter().format0(time, new FakeSpreadsheetFormatterContext() {
-            @Override
-            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                assertSame(time, value, "value");
-                assertEquals(LocalDateTime.class, target, "target");
+        assertThrows(
+                SpreadsheetFormatException.class,
+                () -> this.createFormatter().format0(
+                        time,
+                        new FakeSpreadsheetFormatterContext() {
+                            @Override
+                            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
+                                assertSame(time, value, "value");
+                                checkEquals(LocalDateTime.class, target, "target");
 
-                return this.failConversion(value, target);
-            }
-        }));
+                                return this.failConversion(value, target);
+                            }
+                        })
+        );
     }
 
     @SuppressWarnings("unused")
@@ -181,11 +185,12 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                 new TestSpreadsheetFormatterContext() {
                     @Override
                     public String monthNameAbbreviation(final int m) {
-                        assertEquals(monthNumber, m, "month");
+                        checkEquals(monthNumber, m, "month");
                         return monthName;
                     }
                 },
-                monthName);
+                monthName
+        );
     }
 
     @Test
@@ -204,11 +209,12 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                 new TestSpreadsheetFormatterContext() {
                     @Override
                     public String monthName(final int m) {
-                        assertEquals(monthNumber, m, "month");
+                        checkEquals(monthNumber, m, "month");
                         return monthName;
                     }
                 },
-                monthName);
+                monthName
+        );
     }
 
     // day.............................................................................................
@@ -249,11 +255,12 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                 new TestSpreadsheetFormatterContext() {
                     @Override
                     public String weekDayNameAbbreviation(final int d) {
-                        assertEquals(dayNumber, d, "day");
+                        checkEquals(dayNumber, d, "day");
                         return dayName;
                     }
                 },
-                dayName);
+                dayName
+        );
     }
 
     @Test
@@ -272,11 +279,12 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                 new TestSpreadsheetFormatterContext() {
                     @Override
                     public String weekDayName(final int d) {
-                        assertEquals(dayNumber, d, "day");
+                        checkEquals(dayNumber, d, "day");
                         return dayName;
                     }
                 },
-                dayName);
+                dayName
+        );
     }
 
     // day month year.............................................................................................
@@ -513,16 +521,18 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                                          final int hour,
                                          final String ampm,
                                          final String text) {
-        this.parseFormatAndCheck(pattern,
+        this.parseFormatAndCheck(
+                pattern,
                 dateTime,
                 new TestSpreadsheetFormatterContext() {
                     @Override
                     public String ampm(final int h) {
-                        assertEquals(hour, h, "hour");
+                        checkEquals(hour, h, "hour");
                         return ampm;
                     }
                 },
-                text);
+                text
+        );
     }
     // literals..........................................................................................................
 
@@ -686,11 +696,12 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
                     @Override
                     public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                        assertEquals(LocalDateTime.class, target, "target");
+                        checkEquals(LocalDateTime.class, target, "target");
                         return Converters.localDateLocalDateTime().convert(value, target, ConverterContexts.fake());
                     }
                 },
-                "2000/12/31");
+                "2000/12/31"
+        );
     }
 
     // Time.............................................................................................................
@@ -709,11 +720,12 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
                     @Override
                     public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                        assertEquals(LocalDateTime.class, target, "target");
+                        checkEquals(LocalDateTime.class, target, "target");
                         return Either.left(target.cast(LocalDateTime.of(LocalDate.of(2000, 10, 31), (LocalTime) value)));
                     }
                 },
-                "12/58/59");
+                "12/58/59"
+        );
     }
 
     // helpers..........................................................................................................
@@ -790,7 +802,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
         return new TestSpreadsheetFormatterContext();
     }
 
-    static class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
+    class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
 
         @Override
         public char decimalSeparator() {
@@ -805,7 +817,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
         @Override
         public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-            assertEquals(LocalDateTime.class, target, "target");
+            checkEquals(LocalDateTime.class, target, "target");
             return Either.left(target.cast(value));
         }
     }
