@@ -21,6 +21,8 @@ import walkingkooka.text.cursor.parser.ParserException;
 
 public class SpreadsheetFormatParserException extends ParserException {
 
+    private static final long serialVersionUID = 1L;
+
     protected SpreadsheetFormatParserException() {
         super();
     }

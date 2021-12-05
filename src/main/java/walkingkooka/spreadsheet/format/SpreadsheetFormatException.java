@@ -21,6 +21,8 @@ import walkingkooka.spreadsheet.SpreadsheetException;
 
 public class SpreadsheetFormatException extends SpreadsheetException {
 
+    private static final long serialVersionUID = 1L;
+
     protected SpreadsheetFormatException() {
         super();
     }
