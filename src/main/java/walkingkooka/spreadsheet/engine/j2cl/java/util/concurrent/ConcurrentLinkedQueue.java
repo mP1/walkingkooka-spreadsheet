@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * A very basic {@link java.util.Queue} that is only used by {@link walkingkooka.spreadsheet.engine.BasicSpreadsheetEngineUpdatedCells}.
+ * A very basic {@link java.util.Queue} that is only used by BasicSpreadsheetEngineChanges.
  */
 public class ConcurrentLinkedQueue<E> extends AbstractQueue<E> {
 
