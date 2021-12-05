@@ -67,7 +67,7 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
         return this.createContext(expressionEvaluationContext());
     }
 
-    protected BasicSpreadsheetDataValidatorContext createContext(final ExpressionEvaluationContext context) {
+    private BasicSpreadsheetDataValidatorContext createContext(final ExpressionEvaluationContext context) {
         return BasicSpreadsheetDataValidatorContext.with(cellReference(), value(), context);
     }
 

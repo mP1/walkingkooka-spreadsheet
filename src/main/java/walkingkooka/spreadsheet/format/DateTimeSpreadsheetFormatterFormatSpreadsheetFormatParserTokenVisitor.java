@@ -166,14 +166,14 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
 
     private final boolean twelveHourTime;
 
-    protected void visit12(final int hour, final String pattern) {
+    private void visit12(final int hour, final String pattern) {
         final int h = hour % 12;
         this.append(0 == h ? 12 : h,
                 pattern,
                 1);
     }
 
-    protected void visit24(final int hour, final String pattern) {
+    private void visit24(final int hour, final String pattern) {
         this.append(hour, pattern, 1);
     }
 
