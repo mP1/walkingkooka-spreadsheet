@@ -70,7 +70,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
     }
 
     // this list should match the properties used in the method above.
-    static List<SpreadsheetMetadataPropertyName<?>> REQUIRED = Lists.of(
+    static final List<SpreadsheetMetadataPropertyName<?>> REQUIRED = Lists.of(
             SpreadsheetMetadataPropertyName.LOCALE,
 
             SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL,
