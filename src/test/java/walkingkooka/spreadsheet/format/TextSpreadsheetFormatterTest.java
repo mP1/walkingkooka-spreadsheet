@@ -127,7 +127,7 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
         return new TestSpreadsheetFormatterContext();
     }
 
-    class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
+    static class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
 
         TestSpreadsheetFormatterContext() {
             super();

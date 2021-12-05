@@ -230,7 +230,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
         };
     }
 
-    abstract class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
+    abstract static class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
 
         TestSpreadsheetFormatterContext() {
             super();
