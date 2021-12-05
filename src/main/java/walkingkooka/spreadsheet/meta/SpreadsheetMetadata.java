@@ -108,7 +108,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
      * A {@link SpreadsheetMetadata} with no textStyle.
      */
     @SuppressWarnings("StaticInitializerReferencesSubClass")
-    public static SpreadsheetMetadata EMPTY = SpreadsheetMetadataEmpty.instance();
+    public static final SpreadsheetMetadata EMPTY = SpreadsheetMetadataEmpty.instance();
 
     /**
      * Private ctor to limit sub classes.
@@ -319,7 +319,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     }
 
     // @VisibleForTesting
-    static SpreadsheetMetadataPropertyName<Character>[] SWAPPABLE_PROPERTIES = new SpreadsheetMetadataPropertyName[]{
+    static final SpreadsheetMetadataPropertyName<Character>[] SWAPPABLE_PROPERTIES = new SpreadsheetMetadataPropertyName[]{
             SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
             SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR,
             SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
@@ -388,7 +388,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     /**
      * The maximum number of colors.
      */
-    public static int MAX_NUMBER_COLOR = SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER;
+    public static final int MAX_NUMBER_COLOR = SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER;
 
     /**
      * Returns a {@link Function} that returns a {@link Color} given its number.
@@ -499,7 +499,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         );
     }
 
-    static List<SpreadsheetMetadataPropertyName<?>> DATE_TIME_CONTEXT_REQUIRED = Lists.of(
+    static final List<SpreadsheetMetadataPropertyName<?>> DATE_TIME_CONTEXT_REQUIRED = Lists.of(
             SpreadsheetMetadataPropertyName.LOCALE,
             SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR
     );
@@ -822,7 +822,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
      * This property in the json form will hold the defaults. Note actual property names may not start with underscore.
      */
     // VisibleForTesting
-    static JsonPropertyName DEFAULTS = JsonPropertyName.with("_defaults");
+    static final JsonPropertyName DEFAULTS = JsonPropertyName.with("_defaults");
 
     /**
      * Sub classes must marshall their properties but not the defaults.
@@ -872,7 +872,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     /**
      * A {@link SpreadsheetMetadata} loaded with defaults that are not {@link Locale} aware.
      */
-    public static SpreadsheetMetadata NON_LOCALE_DEFAULTS = nonLocaleDefaults();
+    public static final SpreadsheetMetadata NON_LOCALE_DEFAULTS = nonLocaleDefaults();
 
     private static SpreadsheetMetadata nonLocaleDefaults() {
         EMPTY.id(); // force JsonNodeContext registering of collaborating types.
