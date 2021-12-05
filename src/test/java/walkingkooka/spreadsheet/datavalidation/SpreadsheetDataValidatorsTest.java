@@ -671,11 +671,11 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
         return BasicSpreadsheetDataValidatorContext.with(this.cellReference(), value, this.expressionEvaluationContext());
     }
 
-    final ExpressionReference cellReference() {
+    ExpressionReference cellReference() {
         return SpreadsheetReferenceKind.RELATIVE.column(1).setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
     }
 
-    final ExpressionEvaluationContext expressionEvaluationContext() {
+    ExpressionEvaluationContext expressionEvaluationContext() {
         final Converter<ExpressionNumberConverterContext> all = Converters.collection(
                 Lists.of(Converters.simple(),
                         ExpressionNumber.toConverter(Converters.simple()),

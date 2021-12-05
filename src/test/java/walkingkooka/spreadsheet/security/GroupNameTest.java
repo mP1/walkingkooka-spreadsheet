@@ -160,13 +160,13 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public final GroupName createJsonNodeMarshallingValue() {
+    public GroupName createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 
     @Override
-    public final GroupName unmarshall(final JsonNode from,
-                                      final JsonNodeUnmarshallContext context) {
+    public GroupName unmarshall(final JsonNode from,
+                                final JsonNodeUnmarshallContext context) {
         return GroupName.unmarshall(from, context);
     }
 }

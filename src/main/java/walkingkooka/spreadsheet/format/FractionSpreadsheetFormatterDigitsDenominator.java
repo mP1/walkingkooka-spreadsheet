@@ -39,7 +39,7 @@ final class FractionSpreadsheetFormatterDigitsDenominator extends FractionSpread
     }
 
     @Override
-    final void sign(final FractionSpreadsheetFormatterContext context) {
+    void sign(final FractionSpreadsheetFormatterContext context) {
     }
 
     @Override

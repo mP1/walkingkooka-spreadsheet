@@ -56,8 +56,8 @@ public final class SpreadsheetNumberParsePatternsComponentDecimalSeparatorTest e
         );
     }
 
-    final void parseAndCheck2(final char c,
-                              final String textAfter) {
+    void parseAndCheck2(final char c,
+                        final String textAfter) {
         final String text = "" + c;
         this.parseAndCheck2(
                 text,

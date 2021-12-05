@@ -691,7 +691,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Override
-    final SpreadsheetFormatterContext formatterContext() {
+    SpreadsheetFormatterContext formatterContext() {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override

@@ -39,7 +39,7 @@ final class FractionSpreadsheetFormatterDigitsNumerator extends FractionSpreadsh
     }
 
     @Override
-    final void sign(final FractionSpreadsheetFormatterContext context) {
+    void sign(final FractionSpreadsheetFormatterContext context) {
         context.appendMinusSign();
     }
 

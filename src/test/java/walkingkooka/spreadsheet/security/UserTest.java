@@ -129,8 +129,8 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public final User unmarshall(final JsonNode from,
-                                 final JsonNodeUnmarshallContext context) {
+    public User unmarshall(final JsonNode from,
+                           final JsonNodeUnmarshallContext context) {
         return User.unmarshall(from, context);
     }
 }

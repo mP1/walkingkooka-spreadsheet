@@ -328,7 +328,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Override
-    final SpreadsheetColumnReferenceRange createSelection() {
+    SpreadsheetColumnReferenceRange createSelection() {
         final SpreadsheetColumnReference lower = SpreadsheetColumnReference.parseColumn("B");
         final SpreadsheetColumnReference upper = SpreadsheetColumnReference.parseColumn("D");
 

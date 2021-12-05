@@ -36,12 +36,12 @@ public final class SpreadsheetGreaterThanSymbolParserToken extends SpreadsheetSy
     }
 
     @Override
-    final int operatorPriority() {
+    int operatorPriority() {
         return GREATER_THAN_LESS_THAN_PRIORITY;
     }
 
     @Override
-    final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
+    SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         return greaterThan(tokens, text);
     }
 

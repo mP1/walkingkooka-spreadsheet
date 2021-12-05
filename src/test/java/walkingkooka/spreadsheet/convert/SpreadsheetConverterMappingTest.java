@@ -51,7 +51,7 @@ public final class SpreadsheetConverterMappingTest extends SpreadsheetConverterT
     // TypeNameTesting..................................................................................................
 
     @Override
-    public final String typeNameSuffix() {
+    public String typeNameSuffix() {
         return "";
     }
 }

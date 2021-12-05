@@ -26,12 +26,12 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameViewportCellTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameViewportCell, SpreadsheetCellReference> {
 
     @Test
-    public final void testInvalidSpreadsheetCellReferenceFails() {
+    public void testInvalidSpreadsheetCellReferenceFails() {
         this.checkValueFails("invalid", "Expected SpreadsheetCellReference, but got \"invalid\" for \"" + this.createName().value() + "\"");
     }
 
     @Test
-    public final void testExtractLocaleValue() {
+    public void testExtractLocaleValue() {
         this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
     }
 
@@ -46,12 +46,12 @@ public final class SpreadsheetMetadataPropertyNameViewportCellTest extends Sprea
     }
 
     @Override
-    final SpreadsheetCellReference propertyValue() {
+    SpreadsheetCellReference propertyValue() {
         return SpreadsheetCellReference.parseCell("B99");
     }
 
     @Override
-    final String propertyValueType() {
+    String propertyValueType() {
         return SpreadsheetCellReference.class.getSimpleName();
     }
 

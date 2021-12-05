@@ -66,7 +66,7 @@ final class NumberSpreadsheetFormatterDigitsFraction extends NumberSpreadsheetFo
         // never append sign inside a fraction
     }
 
-    final void thousandsSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
+    void thousandsSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
         // nop
     }
 

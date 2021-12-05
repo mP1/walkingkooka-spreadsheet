@@ -934,7 +934,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // NameToColor......................................................................................................
 
     @Test
-    public final void testNameToColor2() {
+    public void testNameToColor2() {
         final Color color1 = Color.fromRgb(0x111);
         final SpreadsheetColorName name1 = SpreadsheetColorName.with("title");
 
@@ -964,7 +964,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // NumberToColor....................................................................................................
 
     @Test
-    public final void testNumberToColor2() {
+    public void testNumberToColor2() {
         final Color color1 = Color.fromRgb(0x111);
         final int number1 = 1;
 

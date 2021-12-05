@@ -108,7 +108,7 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
     //toString .......................................................................................................
 
     @Test
-    public final void testToString() {
+    public void testToString() {
         this.toStringAndCheck(this.createFormatter(), this.pattern());
     }
 

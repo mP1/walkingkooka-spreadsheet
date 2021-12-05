@@ -40,7 +40,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         this.components = SpreadsheetMetadataComponents.with(metadata);
     }
 
-    final DecimalNumberContext decimalNumberContext() {
+    DecimalNumberContext decimalNumberContext() {
         final SpreadsheetMetadataComponents components = this.components;
 
         final String currencySymbol = components.getOrNull(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL);

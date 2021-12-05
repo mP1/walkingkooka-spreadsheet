@@ -1367,7 +1367,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     //toString .........................................................................................................
 
     @Test
-    public final void testToString() {
+    public void testToString() {
         this.toStringAndCheck(this.createFormatter(), this.pattern());
     }
 

@@ -124,14 +124,14 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public final Set<SpreadsheetCell> row(final SpreadsheetRowReference row) {
+    public Set<SpreadsheetCell> row(final SpreadsheetRowReference row) {
         Objects.requireNonNull(row, "row");
 
         return this.filter(c -> row.compareTo(c.reference().row()) == 0);
     }
 
     @Override
-    public final Set<SpreadsheetCell> column(final SpreadsheetColumnReference column) {
+    public Set<SpreadsheetCell> column(final SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
 
         return this.filter(c -> column.compareTo(c.reference().column()) == 0);

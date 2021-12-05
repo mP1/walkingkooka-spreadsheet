@@ -112,7 +112,7 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
     }
 
     @Test
-    public final void testToExpression() {
+    public void testToExpression() {
         this.toExpressionAndCheck(
                 Expression.negative(
                         expression1()
