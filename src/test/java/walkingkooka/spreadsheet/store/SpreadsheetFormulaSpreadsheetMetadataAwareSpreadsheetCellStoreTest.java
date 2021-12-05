@@ -42,16 +42,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore> {
 
-    private final String CURRENCY_SYMBOL = "$AUD";
-    private final char DECIMAL_SEPARATOR = ',';
+    private final static String CURRENCY_SYMBOL = "$AUD";
+    private final static char DECIMAL_SEPARATOR = ',';
     private final static int DEFAULT_YEAR = 1800;
-    private final String EXPONENT_SYMBOL = "e";
-    private final char GROUPING_SEPARATOR = '.';
-    private final char NEGATIVE_SIGN = '-';
-    private final char PERCENT = '^';
-    private final char POSITIVE_SIGN = '+';
+    private final static String EXPONENT_SYMBOL = "e";
+    private final static char GROUPING_SEPARATOR = '.';
+    private final static char NEGATIVE_SIGN = '-';
+    private final static char PERCENT = '^';
+    private final static char POSITIVE_SIGN = '+';
     private final static int TWO_DIGIT_YEAR = 25;
-    private final char VALUE_SEPARATOR = ';';
+    private final static char VALUE_SEPARATOR = ';';
 
     // with.............................................................................................................
 
