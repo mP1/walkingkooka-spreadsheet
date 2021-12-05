@@ -67,7 +67,7 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
         return this.anchor;
     }
 
-    private Optional<SpreadsheetViewportSelectionAnchor> anchor;
+    private final Optional<SpreadsheetViewportSelectionAnchor> anchor;
 
     // TreePrintable....................................................................................................
 
