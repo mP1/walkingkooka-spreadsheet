@@ -554,7 +554,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptUnknownValueType() {
         final StringBuilder b = new StringBuilder();
-        final Map value = Maps.of("1", "2");
+        final Map<?, ?> value = Maps.of("1", "2");
 
         new FakeSpreadsheetValueVisitor() {
             @Override

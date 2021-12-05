@@ -52,7 +52,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     public void testWith() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetCellReference reference = this.reference();
-        final TargetAndSpreadsheetCellReference and = TargetAndSpreadsheetCellReference.with(label, reference);
+        final TargetAndSpreadsheetCellReference<?> and = TargetAndSpreadsheetCellReference.with(label, reference);
         this.checkEquals(label, and.target(), "target");
         this.checkEquals(reference, and.reference(), "reference");
     }

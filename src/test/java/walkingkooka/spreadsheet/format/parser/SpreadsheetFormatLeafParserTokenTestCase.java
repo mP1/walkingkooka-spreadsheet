@@ -16,7 +16,7 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-public abstract class SpreadsheetFormatLeafParserTokenTestCase<T extends SpreadsheetFormatLeafParserToken, V> extends SpreadsheetFormatParserTokenTestCase<T> {
+public abstract class SpreadsheetFormatLeafParserTokenTestCase<T extends SpreadsheetFormatLeafParserToken<V>, V> extends SpreadsheetFormatParserTokenTestCase<T> {
 
     SpreadsheetFormatLeafParserTokenTestCase() {
         super();

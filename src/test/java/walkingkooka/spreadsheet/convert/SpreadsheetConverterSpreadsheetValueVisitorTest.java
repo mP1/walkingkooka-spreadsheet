@@ -45,7 +45,7 @@ public final class SpreadsheetConverterSpreadsheetValueVisitorTest extends Sprea
 
     @Override
     public SpreadsheetConverterSpreadsheetValueVisitor<ConverterContext> createVisitor() {
-        return new SpreadsheetConverterSpreadsheetValueVisitor(String.class, null);
+        return new SpreadsheetConverterSpreadsheetValueVisitor<>(String.class, null);
     }
 
     // ClassTesting.....................................................................................................

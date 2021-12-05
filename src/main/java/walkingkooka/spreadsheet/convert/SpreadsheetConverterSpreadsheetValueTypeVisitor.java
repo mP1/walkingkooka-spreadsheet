@@ -30,7 +30,7 @@ final class SpreadsheetConverterSpreadsheetValueTypeVisitor<C extends ConverterC
 
     static <C extends ConverterContext> Converter<C> converter(final SpreadsheetConverterMapping<Converter<C>> mapping,
                                                                final Class<?> targetType) {
-        final SpreadsheetConverterSpreadsheetValueTypeVisitor visitor = new SpreadsheetConverterSpreadsheetValueTypeVisitor(mapping);
+        final SpreadsheetConverterSpreadsheetValueTypeVisitor<C> visitor = new SpreadsheetConverterSpreadsheetValueTypeVisitor<>(mapping);
         visitor.accept(targetType);
         return visitor.converter;
     }

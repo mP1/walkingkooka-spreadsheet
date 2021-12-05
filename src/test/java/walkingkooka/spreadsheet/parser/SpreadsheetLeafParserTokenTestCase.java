@@ -16,7 +16,7 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-public abstract class SpreadsheetLeafParserTokenTestCase<T extends SpreadsheetLeafParserToken, V> extends SpreadsheetParserTokenTestCase<T> {
+public abstract class SpreadsheetLeafParserTokenTestCase<T extends SpreadsheetLeafParserToken<V>, V> extends SpreadsheetParserTokenTestCase<T> {
 
     @Override
     public final T createToken(final String text) {

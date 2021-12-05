@@ -41,7 +41,7 @@ public final class SpreadsheetConverterSpreadsheetValueTypeVisitorTest extends S
                 Converters.fake().setToString("Number4"),
                 Converters.fake().setToString("String5"),
                 Converters.fake().setToString("Time6"));
-        this.toStringAndCheck(new SpreadsheetConverterSpreadsheetValueTypeVisitor<ConverterContext>(mapping),
+        this.toStringAndCheck(new SpreadsheetConverterSpreadsheetValueTypeVisitor<>(mapping),
                 "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6");
     }
 

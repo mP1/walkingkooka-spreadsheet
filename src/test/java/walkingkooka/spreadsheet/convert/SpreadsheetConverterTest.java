@@ -482,7 +482,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     private void convertNumberAndCheck(final Number value,
                                        final Object expected) {
-        final Converter numberNumber = Converters.numberNumber();
+        final Converter<ConverterContext> numberNumber = Converters.numberNumber();
         final ConverterContext context = this.createContext();
 
         this.convertAndBackCheck(numberNumber.convertOrFail(value, BigDecimal.class, context), expected);
