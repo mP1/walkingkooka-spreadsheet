@@ -237,7 +237,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     // ids....................................................................................
 
     @Test
-    public final void testIds() {
+    public void testIds() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1); // 0
@@ -250,7 +250,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     }
 
     @Test
-    public final void testIdsAbsoluteRange() {
+    public void testIdsAbsoluteRange() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1AABSOLUTE, VALUE1); // 0
@@ -263,7 +263,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     }
 
     @Test
-    public final void testIdsAbsoluteRange2() {
+    public void testIdsAbsoluteRange2() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1); // 0
@@ -276,7 +276,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     }
 
     @Test
-    public final void testIdsWindow() {
+    public void testIdsWindow() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1); // 0
@@ -293,7 +293,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     // values....................................................................................
 
     @Test
-    public final void testValues() {
+    public void testValues() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1);
@@ -306,7 +306,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     }
 
     @Test
-    public final void testValuesAbsoluteRange() {
+    public void testValuesAbsoluteRange() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1AABSOLUTE, VALUE1);
@@ -319,7 +319,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     }
 
     @Test
-    public final void testValuesAbsoluteRange2() {
+    public void testValuesAbsoluteRange2() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1AABSOLUTE, VALUE1);
@@ -332,7 +332,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     }
 
     @Test
-    public final void testValuesWindow() {
+    public void testValuesWindow() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1); // 0

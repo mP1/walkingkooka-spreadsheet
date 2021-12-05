@@ -23,7 +23,7 @@ import walkingkooka.reflect.JavaVisibility;
 public final class SpreadsheetColumnOrRowReferenceRangeTest implements ClassTesting<SpreadsheetColumnOrRowReferenceRange> {
 
     @Override
-    public final void testAllMethodsVisibility() {
+    public void testAllMethodsVisibility() {
         throw new UnsupportedOperationException();
     }
 

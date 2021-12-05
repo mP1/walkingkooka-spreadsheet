@@ -89,7 +89,7 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public final void testIds() {
+    public void testIds() {
         final TreeMapSpreadsheetUserStore store = this.createStore();
 
         final User a = this.user1();
@@ -108,7 +108,7 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public final void testIdsWindow() {
+    public void testIdsWindow() {
         final TreeMapSpreadsheetUserStore store = this.createStore();
 
         final User a = this.user1();
@@ -129,7 +129,7 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public final void testValues() {
+    public void testValues() {
         final TreeMapSpreadsheetUserStore store = this.createStore();
 
         final User a = this.user1();
@@ -148,7 +148,7 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public final void testValuesWindow() {
+    public void testValuesWindow() {
         final TreeMapSpreadsheetUserStore store = this.createStore();
 
         final User a = this.user1();

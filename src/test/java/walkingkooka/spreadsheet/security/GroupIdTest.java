@@ -54,8 +54,8 @@ public final class GroupIdTest extends IdentityIdTestCase<GroupId> implements Co
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public final GroupId unmarshall(final JsonNode from,
-                                    final JsonNodeUnmarshallContext context) {
+    public GroupId unmarshall(final JsonNode from,
+                              final JsonNodeUnmarshallContext context) {
         return GroupId.unmarshall(from, context);
     }
 }

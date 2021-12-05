@@ -54,8 +54,8 @@ public final class UserIdTest extends IdentityIdTestCase<UserId> implements Comp
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public final UserId unmarshall(final JsonNode from,
-                                   final JsonNodeUnmarshallContext context) {
+    public UserId unmarshall(final JsonNode from,
+                             final JsonNodeUnmarshallContext context) {
         return UserId.unmarshall(from, context);
     }
 }
