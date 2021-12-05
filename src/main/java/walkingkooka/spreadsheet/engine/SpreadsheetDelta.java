@@ -396,7 +396,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                                      final SpreadsheetCellRange window) {
         return Sets.immutable(
                 deletedCells.stream()
-                        .filter(c -> window.test(c))
+                        .filter(window)
                         .map(SpreadsheetCellReference::toRelative)
                         .collect(Collectors.toCollection(Sets::sorted))
         );
