@@ -76,7 +76,6 @@ abstract class FractionSpreadsheetFormatterDigits implements UsesToStringBuilder
                            final int end,
                            final String textDigits,
                            final FractionSpreadsheetFormatterContext context) {
-        int numberDigitPosition = textDigits.length() - start - 1;
         for (int i = start; i <= end; i++) {
             context.appendDigit(textDigits.charAt(i));
         }

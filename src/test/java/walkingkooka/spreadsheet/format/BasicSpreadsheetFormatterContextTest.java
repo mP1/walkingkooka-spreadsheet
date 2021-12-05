@@ -150,8 +150,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     @Override
     public BasicSpreadsheetFormatterContext createContext() {
-        final DecimalNumberContext decimalNumberContext = this.decimalNumberContext();
-
         return BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,

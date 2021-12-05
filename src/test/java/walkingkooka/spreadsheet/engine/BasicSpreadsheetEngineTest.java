@@ -1099,7 +1099,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
         final SpreadsheetLabelStore labelStore = repository.labels();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
@@ -5552,9 +5551,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
@@ -5610,9 +5606,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveLabelWithoutReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
 
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
