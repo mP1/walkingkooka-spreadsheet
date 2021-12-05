@@ -29,7 +29,7 @@ public final class TextStylePropertyNameConstantJavaScriptSourceTool {
 
     public static void main(final String[] args) {
         try (final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.with("  "))) {
-            for (final TextStylePropertyName name : TextStylePropertyName.values()) {
+            for (final TextStylePropertyName<?> name : TextStylePropertyName.values()) {
                 printer.println("static " + name.constantName() + " = \"" + name.value() + "\";");
             }
             printer.flush();

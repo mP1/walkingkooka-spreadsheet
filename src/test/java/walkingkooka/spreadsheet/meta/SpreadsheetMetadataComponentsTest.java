@@ -31,7 +31,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
+public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<SpreadsheetMetadataComponents>,
         ToStringTesting<SpreadsheetMetadataComponents>,
         TypeNameTesting<SpreadsheetMetadataComponents> {
 

@@ -17,13 +17,14 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
+import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
 import java.util.Map;
 
-public final class TreeMapSpreadsheetCellRangeStoreTopLeftEntryTest extends TreeMapSpreadsheetCellRangeStoreTestCase<TreeMapSpreadsheetCellRangeStoreTopLeftEntry>
-        implements ClassTesting2<TreeMapSpreadsheetCellRangeStoreTopLeftEntry> {
+public final class TreeMapSpreadsheetCellRangeStoreTopLeftEntryTest extends TreeMapSpreadsheetCellRangeStoreTestCase<TreeMapSpreadsheetCellRangeStoreTopLeftEntry<?>>
+        implements ClassTesting2<TreeMapSpreadsheetCellRangeStoreTopLeftEntry<?>> {
 
     @Override
     public JavaVisibility typeVisibility() {
@@ -31,8 +32,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTopLeftEntryTest extends Tree
     }
 
     @Override
-    public Class<TreeMapSpreadsheetCellRangeStoreTopLeftEntry> type() {
-        return TreeMapSpreadsheetCellRangeStoreTopLeftEntry.class;
+    public Class<TreeMapSpreadsheetCellRangeStoreTopLeftEntry<?>> type() {
+        return Cast.to(TreeMapSpreadsheetCellRangeStoreTopLeftEntry.class);
     }
 
     @Override

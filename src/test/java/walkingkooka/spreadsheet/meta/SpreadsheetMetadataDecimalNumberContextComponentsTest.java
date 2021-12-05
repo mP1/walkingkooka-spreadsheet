@@ -25,7 +25,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
 
-public final class SpreadsheetMetadataDecimalNumberContextComponentsTest implements ClassTesting2,
+public final class SpreadsheetMetadataDecimalNumberContextComponentsTest implements ClassTesting2<SpreadsheetMetadataDecimalNumberContextComponents>,
         ToStringTesting<SpreadsheetMetadataDecimalNumberContextComponents>,
         TypeNameTesting<SpreadsheetMetadataDecimalNumberContextComponents> {
 

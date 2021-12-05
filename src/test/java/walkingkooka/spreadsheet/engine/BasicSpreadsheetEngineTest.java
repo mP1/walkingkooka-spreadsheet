@@ -142,7 +142,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             return this.converter.convert(value, target, this);
         }
 
-        private final Converter converter = ExpressionNumber.fromConverter(
+        private final Converter<SpreadsheetFormatterContext> converter = ExpressionNumber.fromConverter(
                 Converters.collection(
                         Lists.of(
                                 Converters.simple(),

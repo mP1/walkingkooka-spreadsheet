@@ -249,10 +249,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * Factory that assumes a valid {@link SpreadsheetMetadataPropertyName} or fails.
      */
-    public static SpreadsheetMetadataPropertyName with(final String name) {
+    public static SpreadsheetMetadataPropertyName<?> with(final String name) {
         CharSequences.failIfNullOrEmpty(name, "name");
 
-        SpreadsheetMetadataPropertyName propertyName = CONSTANTS.get(name);
+        SpreadsheetMetadataPropertyName<?> propertyName = CONSTANTS.get(name);
         if (null == propertyName) {
             if (false == name.startsWith(COLOR_PREFIX) || name.length() == COLOR_PREFIX.length()) {
                 throw new IllegalArgumentException("Unknown metadata property name " + CharSequences.quoteAndEscape(name));
@@ -409,7 +409,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
                         this.equals0((SpreadsheetMetadataPropertyName) other);
     }
 
-    private boolean equals0(final SpreadsheetMetadataPropertyName other) {
+    private boolean equals0(final SpreadsheetMetadataPropertyName<?> other) {
         return this.caseSensitivity().equals(this.name, other.name);
     }
 

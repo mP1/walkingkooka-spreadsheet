@@ -647,9 +647,9 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
     /**
      * Parses text using the given parser and transformer.
      */
-    private static <P extends SpreadsheetPattern> P parsePattern(final String text,
-                                                                 final Parser<SpreadsheetFormatParserContext> parser,
-                                                                 final Function<ParserToken, P> transformer) {
+    private static <P extends SpreadsheetPattern<V>, V> P parsePattern(final String text,
+                                                                       final Parser<SpreadsheetFormatParserContext> parser,
+                                                                       final Function<ParserToken, P> transformer) {
         Objects.requireNonNull(text, "text");
 
         try {
@@ -734,7 +734,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
 
     abstract boolean canBeEquals(final Object other);
 
-    private boolean equals0(final SpreadsheetPattern other) {
+    private boolean equals0(final SpreadsheetPattern<?> other) {
         return this.value.equals(other.value);
     }
 

@@ -44,7 +44,7 @@ public final class TextStylePropertyNameToEnumValuesFunctionJavaScriptSourceTool
                 printer.println("switch(property) {");
                 printer.indent();
                 {
-                    for (final TextStylePropertyName name : TextStylePropertyName.values()) {
+                    for (final TextStylePropertyName<?> name : TextStylePropertyName.values()) {
                         final Optional<Class<Enum<?>>> possibleEnumType = name.enumType();
                         if (possibleEnumType.isPresent()) {
                             final String kebabName = name.value();

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.datavalidation;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.Predicates;
 
@@ -25,7 +26,7 @@ import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetDataValidatorTemplateTestCase<PredicateSpreadsheetDataValidator, String> {
+public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetDataValidatorTemplateTestCase<PredicateSpreadsheetDataValidator<String>, String> {
 
     private final static String VALUE = "abc123";
     private final static String TO_STRING = "toString123";
@@ -93,7 +94,7 @@ public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetData
     }
 
     @Override
-    public Class<PredicateSpreadsheetDataValidator> type() {
-        return PredicateSpreadsheetDataValidator.class;
+    public Class<PredicateSpreadsheetDataValidator<String>> type() {
+        return Cast.to(PredicateSpreadsheetDataValidator.class);
     }
 }
