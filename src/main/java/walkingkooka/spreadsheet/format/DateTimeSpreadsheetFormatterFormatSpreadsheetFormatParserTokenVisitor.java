@@ -209,7 +209,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
         }
     }
 
-    private final int LOCALE_DATE_TIME_MONTH_BIAS = 1;
+    private final static int LOCALE_DATE_TIME_MONTH_BIAS = 1;
 
     private void visitMinute(final String pattern) {
         this.append(this.value.getMinute(),
