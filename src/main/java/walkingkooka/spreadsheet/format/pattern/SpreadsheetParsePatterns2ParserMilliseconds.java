@@ -75,7 +75,7 @@ final class SpreadsheetParsePatterns2ParserMilliseconds extends SpreadsheetParse
         return token;
     }
 
-    private final static double FIRST_DIGIT = LocalTime.of(0, 0, 1).toNanoOfDay() / 10;
+    private final static long FIRST_DIGIT = LocalTime.of(0, 0, 1).toNanoOfDay() / 10;
 
     private static SpreadsheetMillisecondParserToken token(final double value,
                                                            final TextCursorSavePoint start) {
