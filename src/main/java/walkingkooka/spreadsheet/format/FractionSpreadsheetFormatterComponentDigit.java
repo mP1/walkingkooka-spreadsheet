@@ -51,7 +51,7 @@ final class FractionSpreadsheetFormatterComponentDigit extends FractionSpreadshe
     private final FractionSpreadsheetFormatterZero zero;
 
     @Override
-    public final String toString() {
+    public String toString() {
         return this.zero.pattern();
     }
 }

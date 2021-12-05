@@ -36,12 +36,12 @@ public final class SpreadsheetDivideSymbolParserToken extends SpreadsheetSymbolP
     }
 
     @Override
-    final int operatorPriority() {
+    int operatorPriority() {
         return MULTIPLY_DIVISION_PRIORITY;
     }
 
     @Override
-    final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
+    SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         return division(tokens, text);
     }
 

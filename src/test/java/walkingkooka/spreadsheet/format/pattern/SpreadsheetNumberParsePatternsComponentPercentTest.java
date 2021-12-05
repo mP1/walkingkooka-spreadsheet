@@ -56,8 +56,8 @@ public final class SpreadsheetNumberParsePatternsComponentPercentTest extends Sp
         );
     }
 
-    final void parseAndCheck2(final char c,
-                              final String textAfter) {
+    void parseAndCheck2(final char c,
+                        final String textAfter) {
         final String textString = "" + c;
         this.parseAndCheck2(
                 textString,

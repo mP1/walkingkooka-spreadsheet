@@ -321,7 +321,7 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
     //toString .......................................................................................................
 
     @Test
-    public final void testToString() {
+    public void testToString() {
         this.toStringAndCheck(this.createFormatter(), this.pattern());
     }
 

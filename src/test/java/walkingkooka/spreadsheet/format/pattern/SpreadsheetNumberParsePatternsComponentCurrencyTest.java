@@ -90,8 +90,8 @@ public final class SpreadsheetNumberParsePatternsComponentCurrencyTest extends S
         );
     }
 
-    final void parseAndCheck2(final String text,
-                              final String textAfter) {
+    void parseAndCheck2(final String text,
+                        final String textAfter) {
         this.parseAndCheck2(
                 text,
                 textAfter,

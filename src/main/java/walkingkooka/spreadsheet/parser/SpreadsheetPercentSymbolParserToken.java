@@ -36,12 +36,12 @@ public final class SpreadsheetPercentSymbolParserToken extends SpreadsheetSymbol
     }
 
     @Override
-    final int operatorPriority() {
+    int operatorPriority() {
         return IGNORED;
     }
 
     @Override
-    final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
+    SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         throw new UnsupportedOperationException();
     }
 

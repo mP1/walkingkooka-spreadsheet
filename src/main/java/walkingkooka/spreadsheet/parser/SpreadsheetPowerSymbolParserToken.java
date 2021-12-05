@@ -36,12 +36,12 @@ public final class SpreadsheetPowerSymbolParserToken extends SpreadsheetSymbolPa
     }
 
     @Override
-    final int operatorPriority() {
+    int operatorPriority() {
         return POWER_PRIORITY;
     }
 
     @Override
-    final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
+    SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         return power(tokens, text);
     }
 

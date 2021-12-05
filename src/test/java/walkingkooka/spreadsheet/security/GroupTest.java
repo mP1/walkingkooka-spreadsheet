@@ -141,8 +141,8 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
     // JsonNodeMarshallingTesting............................................................................................
 
     @Override
-    public final Group unmarshall(final JsonNode from,
-                                  final JsonNodeUnmarshallContext context) {
+    public Group unmarshall(final JsonNode from,
+                            final JsonNodeUnmarshallContext context) {
         return Group.unmarshall(from, context);
     }
 }

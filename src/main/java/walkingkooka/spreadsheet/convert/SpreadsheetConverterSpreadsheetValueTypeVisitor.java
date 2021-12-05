@@ -123,7 +123,7 @@ final class SpreadsheetConverterSpreadsheetValueTypeVisitor<C extends ConverterC
     private Converter<C> converter;
 
     @Override
-    public final String toString() {
+    public String toString() {
         return ToStringBuilder.empty()
                 .separator(", ")
                 .valueSeparator(", ")

@@ -93,7 +93,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public final void testIds() {
+    public void testIds() {
         final TreeMapSpreadsheetGroupStore store = this.createStore();
 
         final Group a = this.group1();
@@ -112,7 +112,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public final void testIdsWindow() {
+    public void testIdsWindow() {
         final TreeMapSpreadsheetGroupStore store = this.createStore();
 
         final Group a = this.group1();
@@ -133,7 +133,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public final void testValues() {
+    public void testValues() {
         final TreeMapSpreadsheetGroupStore store = this.createStore();
 
         final Group a = this.group1();
@@ -152,7 +152,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public final void testValuesWindow() {
+    public void testValuesWindow() {
         final TreeMapSpreadsheetGroupStore store = this.createStore();
 
         final Group a = this.group1();

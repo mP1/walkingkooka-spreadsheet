@@ -60,14 +60,14 @@ public final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitorTest 
     }
 
     @Override
-    public final JavaVisibility typeVisibility() {
+    public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     // TypeNameTesting...................................................................................................
 
     @Override
-    public final String typeNamePrefix() {
+    public String typeNamePrefix() {
         return SpreadsheetMetadata.class.getSimpleName();
     }
 }

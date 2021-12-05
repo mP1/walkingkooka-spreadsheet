@@ -388,7 +388,7 @@ public final class FractionSpreadsheetFormatterTest extends SpreadsheetFormatter
     //toString .......................................................................................................
 
     @Test
-    public final void testToString() {
+    public void testToString() {
         this.toStringAndCheck(this.createFormatter(), this.pattern());
     }
 

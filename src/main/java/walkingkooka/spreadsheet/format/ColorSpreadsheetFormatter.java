@@ -99,7 +99,7 @@ final class ColorSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetF
     private final Object sourceValue;
 
     @Override
-    final String toStringSuffix() {
+    String toStringSuffix() {
         return " " + this.formatter;
     }
 }

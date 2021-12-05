@@ -214,14 +214,14 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Override
-    public final JavaVisibility typeVisibility() {
+    public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
     }
 
     // TypeNameTesting...................................................................................................
 
     @Override
-    public final String typeNamePrefix() {
+    public String typeNamePrefix() {
         return SpreadsheetMetadata.class.getSimpleName();
     }
 }

@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReference;
 
 /**
@@ -42,21 +42,21 @@ final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadshe
     }
 
     @Override
-    final protected void visit(final SpreadsheetCellReference reference) {
+    protected void visit(final SpreadsheetCellReference reference) {
         this.context.storeRepository()
                 .cellReferences()
                 .addReference(TargetAndSpreadsheetCellReference.with(this.target, reference));
     }
 
     @Override
-    final protected void visit(final SpreadsheetLabelName label) {
+    protected void visit(final SpreadsheetLabelName label) {
         this.context.storeRepository()
                 .labelReferences()
                 .addReference(TargetAndSpreadsheetCellReference.with(label, this.target));
     }
 
     @Override
-    final protected void visit(final SpreadsheetCellRange range) {
+    protected void visit(final SpreadsheetCellRange range) {
         this.context.storeRepository()
                 .rangeToCells()
                 .addValue(range, this.target);
@@ -73,7 +73,7 @@ final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadshe
     private final SpreadsheetEngineContext context;
 
     @Override
-    public final String toString() {
+    public String toString() {
         return this.target.toString();
     }
 }

@@ -678,12 +678,12 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     // helpers..........................................................................................................
 
     @Override
-    final Optional<SpreadsheetCellRange> window() {
+    Optional<SpreadsheetCellRange> window() {
         return this.window0("A1:E5");
     }
 
     @Override
-    final SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells) {
+    SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells) {
         return this.createSpreadsheetDelta(cells, this.window());
     }
 

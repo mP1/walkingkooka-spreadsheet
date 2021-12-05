@@ -36,12 +36,12 @@ public final class SpreadsheetBetweenSymbolParserToken extends SpreadsheetSymbol
     }
 
     @Override
-    final int operatorPriority() {
+    int operatorPriority() {
         return RANGE_BETWEEN_PRIORITY;
     }
 
     @Override
-    final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
+    SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         return cellRange(tokens, text);
     }
 

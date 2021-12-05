@@ -51,12 +51,12 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow extends BasicSpre
     }
 
     @Override
-    final int max() {
+    int max() {
         return this.maxRow();
     }
 
     @Override
-    final Collection<SpreadsheetCell> cells(final int row) {
+    Collection<SpreadsheetCell> cells(final int row) {
         return this.rowCells(SpreadsheetReferenceKind.ABSOLUTE.row(row));
     }
 
@@ -93,7 +93,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow extends BasicSpre
     }
 
     @Override
-    final int columnOrRowValue(final SpreadsheetCellReference cell) {
+    int columnOrRowValue(final SpreadsheetCellReference cell) {
         return cell.row().value();
     }
 

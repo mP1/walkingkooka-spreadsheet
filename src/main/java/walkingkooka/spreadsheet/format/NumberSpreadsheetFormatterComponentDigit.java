@@ -51,7 +51,7 @@ final class NumberSpreadsheetFormatterComponentDigit extends NumberSpreadsheetFo
     private final NumberSpreadsheetFormatterZero zero;
 
     @Override
-    public final String toString() {
+    public String toString() {
         return this.zero.pattern();
     }
 }

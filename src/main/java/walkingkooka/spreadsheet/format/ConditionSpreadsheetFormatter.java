@@ -76,7 +76,7 @@ final class ConditionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsh
     final Predicate<BigDecimal> predicate;
 
     @Override
-    final String toStringSuffix() {
+    String toStringSuffix() {
         return " " + this.formatter;
     }
 }

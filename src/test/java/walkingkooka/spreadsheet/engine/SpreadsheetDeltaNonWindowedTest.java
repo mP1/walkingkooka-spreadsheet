@@ -283,7 +283,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    final void unmarshallSelectionAndCheck(final SpreadsheetViewportSelection selection) {
+    void unmarshallSelectionAndCheck(final SpreadsheetViewportSelection selection) {
         this.unmarshallAndCheck(
                 JsonNode.object()
                         .set(
@@ -583,7 +583,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Override
-    final Optional<SpreadsheetCellRange> window() {
+    Optional<SpreadsheetCellRange> window() {
         return SpreadsheetDelta.NO_WINDOW;
     }
 

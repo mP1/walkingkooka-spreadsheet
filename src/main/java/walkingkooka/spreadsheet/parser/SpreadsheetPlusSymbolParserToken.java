@@ -36,12 +36,12 @@ public final class SpreadsheetPlusSymbolParserToken extends SpreadsheetSymbolPar
     }
 
     @Override
-    final int operatorPriority() {
+    int operatorPriority() {
         return ADDITION_SUBTRACTION_PRIORITY;
     }
 
     @Override
-    final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
+    SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         return addition(tokens, text);
     }
 

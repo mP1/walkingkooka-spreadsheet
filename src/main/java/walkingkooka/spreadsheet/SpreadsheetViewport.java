@@ -184,7 +184,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     }
 
     @Override
-    public final boolean equals(final Object other) {
+    public boolean equals(final Object other) {
         return this == other ||
                 other instanceof SpreadsheetViewport &&
                         this.equals0((SpreadsheetViewport) other);
@@ -234,7 +234,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
         );
     }
 
-    public final JsonNode marshall(final JsonNodeMarshallContext context) {
+    public JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonObject.string(this.toString());
     }
 
