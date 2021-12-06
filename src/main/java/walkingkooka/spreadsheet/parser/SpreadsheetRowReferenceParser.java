@@ -25,7 +25,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 /**
  * A {@link Parser} that consumes a {@link SpreadsheetRowReferenceParserToken}
  */
-final class SpreadsheetRowReferenceParser extends SpreadsheetColumnOrRowReferenceParser<SpreadsheetRowReferenceParserToken> {
+final class SpreadsheetRowReferenceParser extends SpreadsheetColumnOrRowReferenceParser {
 
     /**
      * Singleton
