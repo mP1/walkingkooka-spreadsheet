@@ -17,13 +17,14 @@
 
 package walkingkooka.spreadsheet.datavalidation;
 
+import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetDataValidatorTemplateTest implements ClassTesting2<SpreadsheetDataValidatorTemplate> {
+public final class SpreadsheetDataValidatorTemplateTest implements ClassTesting2<SpreadsheetDataValidatorTemplate<?>> {
     @Override
-    public Class<SpreadsheetDataValidatorTemplate> type() {
-        return SpreadsheetDataValidatorTemplate.class;
+    public Class<SpreadsheetDataValidatorTemplate<?>> type() {
+        return Cast.to(SpreadsheetDataValidatorTemplate.class);
     }
 
     @Override

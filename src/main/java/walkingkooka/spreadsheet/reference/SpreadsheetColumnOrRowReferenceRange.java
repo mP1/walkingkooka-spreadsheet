@@ -64,15 +64,15 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
      * Would be setter that accepts a pair of column/row, and returns a range with those values,
      * creating a new instance if necessary.
      */
-    final <R extends SpreadsheetColumnOrRowReferenceRange> R setRange0(final Range<T> range) {
+    final <R extends SpreadsheetColumnOrRowReferenceRange<?>> R setRange0(final Range<T> range) {
         return Cast.to(
                 this.range.equals(range) ?
-                this :
-                this.replace(range)
+                        this :
+                        this.replace(range)
         );
     }
 
-    abstract SpreadsheetColumnOrRowReferenceRange replace(final Range<T> range);
+    abstract SpreadsheetColumnOrRowReferenceRange<?> replace(final Range<T> range);
 
     /**
      * Returns true only if this range covers a single column/row.
@@ -93,7 +93,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
         return this.equals1(Cast.to(other));
     }
 
-    private boolean equals1(final SpreadsheetColumnOrRowReferenceRange other) {
+    private boolean equals1(final SpreadsheetColumnOrRowReferenceRange<?> other) {
         return this.range.equals(other.range);
     }
 

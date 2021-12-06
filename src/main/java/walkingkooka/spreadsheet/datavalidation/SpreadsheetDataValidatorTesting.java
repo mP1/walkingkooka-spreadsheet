@@ -25,7 +25,7 @@ import walkingkooka.text.CharSequences;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetDataValidatorTesting<V extends SpreadsheetDataValidator, T> extends ClassTesting<V>,
+public interface SpreadsheetDataValidatorTesting<V extends SpreadsheetDataValidator<T>, T> extends ClassTesting<V>,
         ToStringTesting<V> {
 
     @Test

@@ -34,7 +34,7 @@ public class ConcurrentLinkedQueue<E> extends AbstractQueue<E> {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         return this.list.iterator();
     }
 

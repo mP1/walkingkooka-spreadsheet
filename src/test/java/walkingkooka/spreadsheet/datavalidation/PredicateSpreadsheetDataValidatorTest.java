@@ -68,10 +68,12 @@ public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetData
     }
 
     @Override
-    public PredicateSpreadsheetDataValidator createSpreadsheetDataValidator() {
-        return PredicateSpreadsheetDataValidator.with(String.class,
+    public PredicateSpreadsheetDataValidator<String> createSpreadsheetDataValidator() {
+        return PredicateSpreadsheetDataValidator.with(
+                String.class,
                 this.predicate(),
-                TO_STRING);
+                TO_STRING
+        );
     }
 
     private Predicate<String> predicate() {

@@ -61,7 +61,7 @@ public final class SpreadsheetConverterSpreadsheetValueTypeVisitorTest extends S
 
     @Override
     public SpreadsheetConverterSpreadsheetValueTypeVisitor<ConverterContext> createVisitor() {
-        return new SpreadsheetConverterSpreadsheetValueTypeVisitor(null);
+        return new SpreadsheetConverterSpreadsheetValueTypeVisitor<>(null);
     }
 
     // ClassTesting.....................................................................................................
