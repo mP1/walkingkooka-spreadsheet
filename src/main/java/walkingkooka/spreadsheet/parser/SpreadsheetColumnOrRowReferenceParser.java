@@ -28,7 +28,7 @@ import java.util.Optional;
 /**
  * Base class for either a column or row reference {@link Parser}.
  */
-abstract class SpreadsheetColumnOrRowReferenceParser<T extends SpreadsheetLeafParserToken> implements Parser<SpreadsheetParserContext> {
+abstract class SpreadsheetColumnOrRowReferenceParser implements Parser<SpreadsheetParserContext> {
 
     /**
      * Package private ctor use singleton
