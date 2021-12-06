@@ -406,7 +406,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public final boolean equals(final Object other) {
         return this == other ||
                 other instanceof SpreadsheetMetadataPropertyName &&
-                        this.equals0((SpreadsheetMetadataPropertyName) other);
+                        this.equals0((SpreadsheetMetadataPropertyName<?>) other);
     }
 
     private boolean equals0(final SpreadsheetMetadataPropertyName<?> other) {

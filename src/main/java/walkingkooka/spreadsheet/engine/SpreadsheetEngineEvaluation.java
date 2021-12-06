@@ -90,11 +90,11 @@ public enum SpreadsheetEngineEvaluation {
 
     // LinkRelation.....................................................................................................
 
-    public LinkRelation toLinkRelation() {
+    public LinkRelation<?> toLinkRelation() {
         return this.linkRelation;
     }
 
-    private final LinkRelation linkRelation;
+    private final LinkRelation<?> linkRelation;
 
     // JsonNodeContext..................................................................................................
 

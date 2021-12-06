@@ -17,10 +17,11 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetColumnOrRowReferenceRangeTest implements ClassTesting<SpreadsheetColumnOrRowReferenceRange> {
+public final class SpreadsheetColumnOrRowReferenceRangeTest implements ClassTesting<SpreadsheetColumnOrRowReferenceRange<?>> {
 
     @Override
     public void testAllMethodsVisibility() {
@@ -28,8 +29,8 @@ public final class SpreadsheetColumnOrRowReferenceRangeTest implements ClassTest
     }
 
     @Override
-    public Class<SpreadsheetColumnOrRowReferenceRange> type() {
-        return SpreadsheetColumnOrRowReferenceRange.class;
+    public Class<SpreadsheetColumnOrRowReferenceRange<?>> type() {
+        return Cast.to(SpreadsheetColumnOrRowReferenceRange.class);
     }
 
     @Override
