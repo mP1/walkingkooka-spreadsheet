@@ -47,8 +47,6 @@ public final class TextStylePropertyNameToEnumValuesFunctionJavaScriptSourceTool
                     for (final TextStylePropertyName<?> name : TextStylePropertyName.values()) {
                         final Optional<Class<Enum<?>>> possibleEnumType = name.enumType();
                         if (possibleEnumType.isPresent()) {
-                            final String kebabName = name.value();
-
                             printer.println("case TextStyle." + name.constantName() + ":");
                             printer.indent();
                             {
