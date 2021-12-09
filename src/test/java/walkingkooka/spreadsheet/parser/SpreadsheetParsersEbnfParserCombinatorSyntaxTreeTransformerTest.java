@@ -24,7 +24,7 @@ import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorSynta
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorSyntaxTreeTransformerTesting;
 
 public final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformerTest implements ClassTesting2<SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer>,
-        EbnfParserCombinatorSyntaxTreeTransformerTesting<SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer>,
+        EbnfParserCombinatorSyntaxTreeTransformerTesting<SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer, SpreadsheetParserContext>,
         TypeNameTesting<SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer> {
 
     // Class............................................................................................................
