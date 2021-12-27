@@ -197,10 +197,11 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                                                                                              final T trueValueResult,
                                                                                              final T falseValueResult) {
         return Converters.booleanTrueFalse(t -> t.getClass() == fromType,
-                Predicates.is(falseValueTest),
                 Predicates.is(targetType),
-                trueValueResult,
-                falseValueResult);
+                Predicates.is(falseValueTest),
+                falseValueResult,
+                trueValueResult
+        );
     }
 
     // booleanTrueFalse(Predicate<Object> source, Predicate<Object> falseValue, Predicate<Class<?>> target, D trueAnswer, D falseAnswer)
