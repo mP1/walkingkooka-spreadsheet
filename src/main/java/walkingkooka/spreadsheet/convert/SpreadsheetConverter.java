@@ -176,26 +176,28 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                                                                                final T trueValue,
                                                                                final T falseValue) {
         return booleanTrueFalseConverter(Boolean.class,
-                Boolean.FALSE,
                 targetType,
-                trueValue,
-                falseValue);
+                Boolean.FALSE,
+                falseValue,
+                trueValue
+        );
     }
 
     private static <T> Converter<ExpressionNumberConverterContext> toBoolean(final Class<T> from,
                                                                              final T falseValue) {
         return booleanTrueFalseConverter(from,
-                falseValue,
                 Boolean.class,
-                Boolean.TRUE,
-                Boolean.FALSE);
+                falseValue,
+                Boolean.FALSE,
+                Boolean.TRUE
+        );
     }
 
     private static <T> Converter<ExpressionNumberConverterContext> booleanTrueFalseConverter(final Class<?> fromType,
-                                                                                             final Object falseValueTest,
                                                                                              final Class<T> targetType,
-                                                                                             final T trueValueResult,
-                                                                                             final T falseValueResult) {
+                                                                                             final Object falseValueTest,
+                                                                                             final T falseValueResult,
+                                                                                             final T trueValueResult) {
         return Converters.booleanTrueFalse(t -> t.getClass() == fromType,
                 Predicates.is(targetType),
                 Predicates.is(falseValueTest),
