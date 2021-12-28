@@ -17,7 +17,60 @@
 
 package walkingkooka.spreadsheet.convert;
 
-public final class SpreadsheetConverterBooleanStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterBooleanString> {
+import org.junit.jupiter.api.Test;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.ConverterTesting2;
+import walkingkooka.convert.Converters;
+import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
+
+public final class SpreadsheetConverterBooleanStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterBooleanString> implements ConverterTesting2<SpreadsheetConverterBooleanString, ExpressionNumberConverterContext> {
+
+    @Test
+    public void testNonBooleanFails() {
+        this.convertFails("true", String.class);
+    }
+
+    @Test
+    public void testTrue() {
+        this.convertAndCheck(true, String.class, "truetrue");
+    }
+
+    @Test
+    public void testFalse() {
+        this.convertAndCheck(false, String.class, "falsefalse");
+    }
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createConverter(), "isBoolean->class java.lang.String->@@");
+    }
+
+    @Override
+    public SpreadsheetConverterBooleanString createConverter() {
+        return SpreadsheetConverterBooleanString.with(
+                Converters.booleanTrueFalse(
+                        Predicates.customToString((v) -> v instanceof Boolean, "isBoolean"),
+                        Predicates.is(String.class),
+                        Predicates.is(Boolean.TRUE),
+                        "true",
+                        "false"
+                ),
+                SpreadsheetTextFormatPattern.parseTextFormatPattern("@@").formatter().converter()
+        );
+    }
+
+    @Override
+    public ExpressionNumberConverterContext createContext() {
+        return ExpressionNumberConverterContexts.basic(
+                Converters.fake(),
+                ConverterContexts.fake(),
+                ExpressionNumberKind.DEFAULT
+        );
+    }
 
     @Override
     public Class<SpreadsheetConverterBooleanString> type() {
