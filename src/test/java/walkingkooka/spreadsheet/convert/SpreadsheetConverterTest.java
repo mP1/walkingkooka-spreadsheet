@@ -320,7 +320,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     @Test
     public void testNullString() {
-        this.convertAndCheck(null, String.class, "");
+        this.convertAndCheck(null, String.class, "falsetext-literal-123");
     }
 
     @Test
