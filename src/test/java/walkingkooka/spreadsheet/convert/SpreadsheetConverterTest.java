@@ -289,6 +289,41 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     // Date.............................................................................................................
 
     @Test
+    public void testNullBoolean() {
+        this.convertAndCheck(null, Boolean.class, null);
+    }
+
+    @Test
+    public void testNullDate() {
+        this.convertAndCheck(null, LocalDate.class, DATE_FALSE);
+    }
+
+    @Test
+    public void testNullDateTime() {
+        this.convertAndCheck(null, LocalDateTime.class, LocalDateTime.of(DATE_FALSE, TIME_FALSE));
+    }
+
+    @Test
+    public void testNullTime() {
+        this.convertAndCheck(null, LocalTime.class, TIME_FALSE);
+    }
+
+    @Test
+    public void testNullExpressionNumber() {
+        this.convertAndCheck(null, ExpressionNumber.class, null);
+    }
+
+    @Test
+    public void testNullNumber() {
+        this.convertAndCheck(null, Number.class, null);
+    }
+
+    @Test
+    public void testNullString() {
+        this.convertAndCheck(null, String.class, "");
+    }
+
+    @Test
     public void testDateTrueBoolean() {
         this.convertAndCheck2(DATE_TRUE, true);
     }
