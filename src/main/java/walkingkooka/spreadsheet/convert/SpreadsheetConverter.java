@@ -112,7 +112,10 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 fromBoolean(LocalDateTime.class, dateTimeTrue, dateTimeFalse),
                 ExpressionNumber.toConverter(Converters.booleanNumber()),
                 SpreadsheetConverterBooleanString.with(fromBoolean(String.class, stringTrue, stringFalse), textFormatter.converter()), // boolean -> String
-                fromBoolean(LocalTime.class, timeTrue, timeFalse)); // Time
+                fromBoolean(LocalTime.class, timeTrue, timeFalse)
+        ); // Time
+
+        this.booleanConverter = booleanConverter;
 
         // LocalDate ->
         final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> date = SpreadsheetConverterMapping.with(
@@ -241,7 +244,34 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> targetType,
                                          final ExpressionNumberConverterContext context) {
-        final Converter<ExpressionNumberConverterContext> converter = SpreadsheetConverterSpreadsheetValueVisitor.converter(value, targetType, this.mapping);
+        return this.canConvert(value, targetType, context) ?
+                null == value ?
+                        this.convertNull(targetType, context) :
+                        this.convertNonNull(value, targetType, context) :
+                this.failConversion(value, targetType);
+    }
+
+    private <T> Either<T, String> convertNull(final Class<T> targetType,
+                                              final ExpressionNumberConverterContext context) {
+        return SpreadsheetConverterSpreadsheetValueTypeVisitor.converter(
+                this.booleanConverter,
+                targetType
+        ).convert(null, targetType, context);
+    }
+
+    /**
+     * Handles converting null to the target type.
+     */
+    private final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> booleanConverter;
+
+    private <T> Either<T, String> convertNonNull(final Object value,
+                                                 final Class<T> targetType,
+                                                 final ExpressionNumberConverterContext context) {
+        final Converter<ExpressionNumberConverterContext> converter = SpreadsheetConverterSpreadsheetValueVisitor.converter(
+                value,
+                targetType,
+                this.mapping
+        );
         return null != converter ?
                 converter.convert(value, targetType, context) :
                 this.failConversion(value, targetType);
