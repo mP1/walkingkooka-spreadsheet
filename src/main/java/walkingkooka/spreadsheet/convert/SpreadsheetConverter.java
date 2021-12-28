@@ -116,7 +116,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
 
         // LocalDate ->
         final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> date = SpreadsheetConverterMapping.with(
-                toBoolean(LocalDate.class, dateFalse),
+                toBoolean(LocalDate.class, dateTrue),
                 Converters.simple(), // date -> date
                 Converters.localDateLocalDateTime(),
                 ExpressionNumber.toConverter(Converters.localDateNumber(dateOffset)),
@@ -125,7 +125,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
 
         // LocalDateTime ->
         final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> dateTime = SpreadsheetConverterMapping.with(
-                toBoolean(LocalDateTime.class, dateTimeFalse),
+                toBoolean(LocalDateTime.class, dateTimeTrue),
                 Converters.localDateTimeLocalDate(),
                 Converters.simple(), // dateTime -> dateTime
                 ExpressionNumber.toConverter(Converters.localDateTimeNumber(dateOffset)),
@@ -143,7 +143,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
 
         // String ->
         final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> string = SpreadsheetConverterMapping.with(
-                toBoolean(String.class, stringFalse), // string -> boolean
+                toBoolean(String.class, stringTrue), // string -> boolean
                 dateParser.converter().cast(ExpressionNumberConverterContext.class),
                 dateTimeParser.converter().cast(ExpressionNumberConverterContext.class),
                 ExpressionNumber.toConverter(numberParser.converter().cast(ExpressionNumberConverterContext.class)),
@@ -153,7 +153,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
 
         // LocalTime ->
         final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> time = SpreadsheetConverterMapping.with(
-                toBoolean(LocalTime.class, timeFalse),
+                toBoolean(LocalTime.class, timeTrue),
                 null, // time -> date invalid
                 Converters.localTimeLocalDateTime(),
                 ExpressionNumber.toConverter(Converters.localTimeNumber()),
@@ -175,21 +175,22 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
     private static <T> Converter<ExpressionNumberConverterContext> fromBoolean(final Class<T> targetType,
                                                                                final T trueValue,
                                                                                final T falseValue) {
-        return booleanTrueFalseConverter(Boolean.class,
+        return booleanTrueFalseConverter(
+                Boolean.class,
                 targetType,
-                Boolean.FALSE,
-                falseValue,
-                trueValue
+                Boolean.TRUE,
+                trueValue,
+                falseValue
         );
     }
 
     private static <T> Converter<ExpressionNumberConverterContext> toBoolean(final Class<T> from,
-                                                                             final T falseValue) {
+                                                                             final T trueValue) {
         return booleanTrueFalseConverter(from,
                 Boolean.class,
-                falseValue,
-                Boolean.FALSE,
-                Boolean.TRUE
+                trueValue,
+                Boolean.TRUE,
+                Boolean.FALSE
         );
     }
 
