@@ -25,6 +25,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -78,6 +79,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -7888,9 +7890,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public Object evaluate(final Expression node, final Optional<SpreadsheetCellReference> cell) {
-                // throw an exception which is an "error" when the invalidCellReference function appears in a formula and executed
-                final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions = (name) -> {
+            public Object evaluate(final Expression node,
+                                   final Optional<SpreadsheetCellReference> cell) {
+                return node.toValue(
+                        ExpressionEvaluationContexts.basic(
+                                this.metadata().expressionNumberKind(),
+                                this.functions(),
+                                SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
+                                        engine,
+                                        storeRepository.labels(),
+                                        this
+                                ),
+                                this.functionContext()
+                        )
+                );
+            }
+
+            private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions() {
+                return (name) -> {
                     checkEquals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value(), "InvalidCellReference");
                     switch (name.value()) {
                         case "InvalidCellReference":
@@ -7938,30 +7955,25 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             throw new UnknownExpressionFunctionException(name);
                     }
                 };
-
-                return node.toValue(
-                        ExpressionEvaluationContexts.basic(
-                                this.metadata().expressionNumberKind(),
-                                functions,
-                                SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
-                                        engine,
-                                        storeRepository.labels(),
-                                        this
-                                ),
-                                this.functionContext(),
-                                converterContext()
-                        )
-                );
             }
 
             private ExpressionFunctionContext functionContext() {
-                return ExpressionFunctionContexts.fake();
+                return ExpressionFunctionContexts.basic(
+                        this.metadata().expressionNumberKind(),
+                        this.functions(),
+                        this.references(),
+                        this.converterContext()
+                );
             }
 
-            @Override
-            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                checkEquals(Boolean.class, target, "Only support converting to Boolean=" + value);
-                return Either.left(target.cast(Boolean.parseBoolean(String.valueOf(value))));
+            private Function<ExpressionReference, Optional<Expression>> references() {
+                return (r -> {
+                    throw new UnsupportedOperationException();
+                });
+            }
+
+            private ConverterContext converterContext() {
+                return this.metadata().converterContext();
             }
 
             @Override

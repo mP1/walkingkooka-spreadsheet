@@ -205,8 +205,7 @@ public class JunitTest {
                                 EXPRESSION_NUMBER_KIND,
                                 functions(),
                                 references(),
-                                this.functionContext(),
-                                metadata.converterContext()
+                                this.functionContext()
                         )
                 );
             }
@@ -226,13 +225,12 @@ public class JunitTest {
             }
 
             private ExpressionFunctionContext functionContext() {
-                return ExpressionFunctionContexts.fake();
-            }
-
-            @Override
-            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                checkEquals(Boolean.class, target, "Only support converting to Boolean=" + value);
-                return Cast.to(Either.left(Boolean.parseBoolean(String.valueOf(value))));
+                return ExpressionFunctionContexts.basic(
+                        EXPRESSION_NUMBER_KIND,
+                        this.functions(),
+                        this.references(),
+                        metadata.converterContext()
+                );
             }
 
             @Override
