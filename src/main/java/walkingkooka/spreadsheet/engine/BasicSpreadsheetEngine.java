@@ -392,16 +392,25 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
                                             final SpreadsheetEngineContext context) {
         return this.formatAndApplyStyle(
-                cell.setFormula(this.parseFormulaAndEvaluate(cell.formula(), context)),
+                cell.setFormula(
+                        this.parseFormulaAndEvaluate(
+                                cell.formula(),
+                                cell.reference(),
+                                context)
+                ),
                 context);
     }
 
     private SpreadsheetFormula parseFormulaAndEvaluate(final SpreadsheetFormula formula,
+                                                       final SpreadsheetCellReference cell,
                                                        final SpreadsheetEngineContext context) {
         return this.evaluateIfPossible(
-                this.parseFormulaIfNecessary(formula,
+                this.parseFormulaIfNecessary(
+                        formula,
                         Function.identity(),
-                        context),
+                        context
+                ),
+                cell,
                 context);
     }
 
@@ -474,13 +483,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * If a value is available try and re-use or if an expression is present evaluate it.
      */
     private SpreadsheetFormula evaluateIfPossible(final SpreadsheetFormula formula,
+                                                  final SpreadsheetCellReference cell,
                                                   final SpreadsheetEngineContext context) {
         return formula.error().isPresent() ?
                 formula : // value present - using cached.
-                this.evaluate(formula, context);
+                this.evaluate(formula, cell, context);
     }
 
     private SpreadsheetFormula evaluate(final SpreadsheetFormula formula,
+                                        final SpreadsheetCellReference cell,
                                         final SpreadsheetEngineContext context) {
         SpreadsheetFormula result;
         try {
@@ -488,7 +499,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             if (expression.isPresent()) {
                 result = formula.setValue(
                         Optional.ofNullable(
-                                context.evaluate(expression.get())
+                                context.evaluate(
+                                        expression.get(),
+                                        Optional.of(cell)
+                                )
                         )
                 );
             } else {
@@ -592,7 +606,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .rangeToConditionalFormattingRules()
                 .loadCellReferenceValues(cell.reference()));
         for (SpreadsheetConditionalFormattingRule rule : rules) {
-            final Object test = context.evaluate(rule.formula().expression().get());
+            final Object test = context.evaluate(
+                    rule.formula()
+                            .expression()
+                            .get(),
+                    Optional.of(
+                            cell.reference()
+                    )
+            );
             final Boolean booleanResult = context.metadata()
                     .converterContext()
                     .convertOrFail(test, Boolean.class);

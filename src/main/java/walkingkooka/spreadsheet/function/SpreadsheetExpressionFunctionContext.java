@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.function;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 
+import java.util.Optional;
+
 /**
  * Enhances {@link ExpressionFunctionContext} adding a few extra methods required by a spreadsheet during
  * function execution.
@@ -29,5 +31,5 @@ public interface SpreadsheetExpressionFunctionContext extends ExpressionFunction
     /**
      * Returns the current cell that owns the expression or formula being executed.
      */
-    SpreadsheetCellReference cell();
+    Optional<SpreadsheetCellReference> cell();
 }

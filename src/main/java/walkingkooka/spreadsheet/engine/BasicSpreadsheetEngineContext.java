@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -43,6 +44,7 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
@@ -155,14 +157,29 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     private final SpreadsheetParserContext parserContext;
 
     @Override
-    public Object evaluate(final Expression node) {
+    public Object evaluate(final Expression node,
+                           final Optional<SpreadsheetCellReference> cell) {
         final SpreadsheetMetadata metadata = this.metadata;
 
-        return node.toValue(ExpressionEvaluationContexts.basic(metadata.expressionNumberKind(),
-                this.functions,
-                this.function,
-                metadata.converterContext()));
+        final ExpressionNumberKind kind = metadata.expressionNumberKind();
+        final ConverterContext converterContext = metadata.converterContext();
+
+        return node.toValue(
+                ExpressionEvaluationContexts.basic(
+                        kind,
+                        this.functions,
+                        this.function,
+                        BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext.with(
+                                cell,
+                                kind,
+                                this.functions,
+                                converterContext
+                        ),
+                        converterContext
+                )
+        );
     }
+
 
     /**
      * Handles dispatching of functions.

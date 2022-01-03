@@ -51,8 +51,10 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public Object evaluate(final Expression node) {
+    public Object evaluate(final Expression node,
+                           final Optional<SpreadsheetCellReference> cell) {
         Objects.requireNonNull(node, "node");
+        Objects.requireNonNull(cell, "cell");
         throw new UnsupportedOperationException();
     }
 

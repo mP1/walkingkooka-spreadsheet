@@ -20,9 +20,11 @@ package walkingkooka.spreadsheet.function;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.tree.expression.function.FakeExpressionFunctionContext;
 
+import java.util.Optional;
+
 public class FakeSpreadsheetExpressionFunctionContext extends FakeExpressionFunctionContext implements SpreadsheetExpressionFunctionContext {
     @Override
-    public SpreadsheetCellReference cell() {
+    public Optional<SpreadsheetCellReference> cell() {
         throw new UnsupportedOperationException();
     }
 }
