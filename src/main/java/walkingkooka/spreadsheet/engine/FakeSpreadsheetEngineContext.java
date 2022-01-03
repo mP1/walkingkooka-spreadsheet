@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.convert.FakeConverterContext;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -52,7 +53,7 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
 
     @Override
     public Object evaluate(final Expression node,
-                           final Optional<SpreadsheetCellReference> cell) {
+                           final Optional<SpreadsheetCell> cell) {
         Objects.requireNonNull(node, "node");
         Objects.requireNonNull(cell, "cell");
         throw new UnsupportedOperationException();

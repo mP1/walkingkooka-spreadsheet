@@ -17,14 +17,14 @@
 
 package walkingkooka.spreadsheet.function;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.tree.expression.function.FakeExpressionFunctionContext;
 
 import java.util.Optional;
 
 public class FakeSpreadsheetExpressionFunctionContext extends FakeExpressionFunctionContext implements SpreadsheetExpressionFunctionContext {
     @Override
-    public Optional<SpreadsheetCellReference> cell() {
+    public Optional<SpreadsheetCell> cell() {
         throw new UnsupportedOperationException();
     }
 }

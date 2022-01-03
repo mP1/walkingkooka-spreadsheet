@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.math.Fraction;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
@@ -158,7 +159,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public Object evaluate(final Expression node,
-                           final Optional<SpreadsheetCellReference> cell) {
+                           final Optional<SpreadsheetCell> cell) {
         final SpreadsheetMetadata metadata = this.metadata;
 
         final ExpressionNumberKind kind = metadata.expressionNumberKind();

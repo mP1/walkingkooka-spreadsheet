@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.ContextTesting;
 import walkingkooka.locale.HasLocaleTesting;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -167,7 +168,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void evaluateAndCheck(final SpreadsheetEngineContext context,
                                   final Expression expression,
-                                  final Optional<SpreadsheetCellReference> cell,
+                                  final Optional<SpreadsheetCell> cell,
                                   final Object expected) {
         this.checkEquals(
                 expected,
