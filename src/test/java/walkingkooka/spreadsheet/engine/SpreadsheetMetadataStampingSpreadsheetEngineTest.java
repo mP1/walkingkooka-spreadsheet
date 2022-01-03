@@ -409,7 +409,8 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             }
 
             @Override
-            public Object evaluate(final Expression node) {
+            public Object evaluate(final Expression node,
+                                   final Optional<SpreadsheetCellReference> cell) {
                 return FORMULA_VALUE;
             }
 

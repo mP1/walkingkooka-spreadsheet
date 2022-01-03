@@ -136,23 +136,44 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     // evaluate.........................................................................................................
 
     @Test
-    default void testEvaluateNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createContext().evaluate(null));
+    default void testEvaluateNullExpressionFails() {
+        assertThrows(NullPointerException.class, () -> this.createContext().evaluate(null, Optional.empty()));
+    }
+
+    @Test
+    default void testEvaluateNullCellFails() {
+        assertThrows(NullPointerException.class, () -> this.createContext().evaluate(Expression.string("required expression"), null));
     }
 
     default void evaluateAndCheck(final Expression expression,
                                   final Object expected) {
-        this.evaluateAndCheck(this.createContext(),
+        this.evaluateAndCheck(
+                this.createContext(),
                 expression,
-                expected);
+                expected
+        );
     }
 
     default void evaluateAndCheck(final SpreadsheetEngineContext context,
                                   final Expression expression,
                                   final Object expected) {
-        this.checkEquals(expected,
-                context.evaluate(expression),
-                () -> "evaluate " + expression + " with context " + context);
+        this.evaluateAndCheck(
+                context,
+                expression,
+                Optional.empty(),
+                expected
+        );
+    }
+
+    default void evaluateAndCheck(final SpreadsheetEngineContext context,
+                                  final Expression expression,
+                                  final Optional<SpreadsheetCellReference> cell,
+                                  final Object expected) {
+        this.checkEquals(
+                expected,
+                context.evaluate(expression, cell),
+                () -> "evaluate " + expression + cell.map(c -> " " + c).orElse("") + " with context " + context
+        );
     }
 
     // parseFormat......................................................................................................

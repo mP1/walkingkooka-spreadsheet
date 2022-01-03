@@ -82,6 +82,7 @@ import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.ExpressionFunctionContexts;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import walkingkooka.tree.text.FontStyle;
@@ -7887,7 +7888,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public Object evaluate(final Expression node) {
+            public Object evaluate(final Expression node, final Optional<SpreadsheetCellReference> cell) {
                 // throw an exception which is an "error" when the invalidCellReference function appears in a formula and executed
                 final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions = (name) -> {
                     checkEquals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value(), "InvalidCellReference");
@@ -7947,8 +7948,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         storeRepository.labels(),
                                         this
                                 ),
-                                converterContext())
+                                this.functionContext(),
+                                converterContext()
+                        )
                 );
+            }
+
+            private ExpressionFunctionContext functionContext() {
+                return ExpressionFunctionContexts.fake();
             }
 
             @Override

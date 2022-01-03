@@ -54,7 +54,7 @@ public interface SpreadsheetEngineContext extends Context {
     /**
      * Evaluates the expression into a value.
      */
-    Object evaluate(final Expression node);
+    Object evaluate(final Expression node, final Optional<SpreadsheetCellReference> cell);
 
     /**
      * Accepts a pattern and returns the equivalent {@link SpreadsheetFormatter}.

@@ -63,6 +63,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.ExpressionFunctionContexts;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -186,11 +187,17 @@ public final class Sample {
             }
 
             @Override
-            public Object evaluate(final Expression node) {
-                return node.toValue(ExpressionEvaluationContexts.basic(EXPRESSION_NUMBER_KIND,
-                        functions(),
-                        references(),
-                        metadata.converterContext()));
+            public Object evaluate(final Expression node,
+                                   final Optional<SpreadsheetCellReference> cell) {
+                return node.toValue(
+                        ExpressionEvaluationContexts.basic(
+                                EXPRESSION_NUMBER_KIND,
+                                functions(),
+                                references(),
+                                this.functionContext(),
+                                metadata.converterContext()
+                        )
+                );
             }
 
             private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions() {
@@ -205,6 +212,10 @@ public final class Sample {
                         this.storeRepository().labels(),
                         this
                 );
+            }
+
+            private ExpressionFunctionContext functionContext() {
+                return ExpressionFunctionContexts.fake();
             }
 
             @Override
