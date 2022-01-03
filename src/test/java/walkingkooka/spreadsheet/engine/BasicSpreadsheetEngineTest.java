@@ -7891,7 +7891,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public Object evaluate(final Expression node,
-                                   final Optional<SpreadsheetCellReference> cell) {
+                                   final Optional<SpreadsheetCell> cell) {
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
                                 this.metadata().expressionNumberKind(),

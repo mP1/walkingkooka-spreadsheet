@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -54,7 +55,7 @@ public interface SpreadsheetEngineContext extends Context {
     /**
      * Evaluates the expression into a value.
      */
-    Object evaluate(final Expression node, final Optional<SpreadsheetCellReference> cell);
+    Object evaluate(final Expression node, final Optional<SpreadsheetCell> cell);
 
     /**
      * Accepts a pattern and returns the equivalent {@link SpreadsheetFormatter}.

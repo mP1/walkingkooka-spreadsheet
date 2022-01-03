@@ -394,23 +394,22 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return this.formatAndApplyStyle(
                 cell.setFormula(
                         this.parseFormulaAndEvaluate(
-                                cell.formula(),
-                                cell.reference(),
+                                cell,
                                 context)
                 ),
                 context);
     }
 
-    private SpreadsheetFormula parseFormulaAndEvaluate(final SpreadsheetFormula formula,
-                                                       final SpreadsheetCellReference cell,
+    private SpreadsheetFormula parseFormulaAndEvaluate(final SpreadsheetCell cell,
                                                        final SpreadsheetEngineContext context) {
         return this.evaluateIfPossible(
-                this.parseFormulaIfNecessary(
-                        formula,
-                        Function.identity(),
-                        context
+                cell.setFormula(
+                        this.parseFormulaIfNecessary(
+                                cell,
+                                Function.identity(),
+                                context
+                        )
                 ),
-                cell,
                 context);
     }
 
@@ -419,15 +418,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Parsers the formula for this cell, and sets its expression or error if parsing fails.
      */
-    SpreadsheetFormula parseFormulaIfNecessary(final SpreadsheetFormula formula,
+    SpreadsheetFormula parseFormulaIfNecessary(final SpreadsheetCell cell,
                                                final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed,
                                                final SpreadsheetEngineContext context) {
-        SpreadsheetFormula result = formula;
+        SpreadsheetFormula formula = cell.formula();
 
         try {
             final String text = formula.text();
             if (text.isEmpty()) {
-                result = formula.setToken(EMPTY_TOKEN)
+                formula = formula.setToken(EMPTY_TOKEN)
                         .setExpression(EMPTY_EXPRESSION); // will evaluate to empty string
             } else {
                 // if a token is NOT present parse the formula text
@@ -438,12 +437,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 }
                 if (null != token) {
                     token = parsed.apply(token);
-                    result = result.setText(token.text())
+                    formula = formula.setText(token.text())
                             .setToken(Optional.of(token));
                 }
                 // if expression is absent, convert token into expression
-                if (null != token && false == result.expression().isPresent()) {
-                    result = result.setExpression(
+                if (null != token && false == formula.expression().isPresent()) {
+                    formula = formula.setExpression(
                             token.toExpression(
                                     BasicSpreadsheetEngineExpressionEvaluationContext.with(context)
                             )
@@ -453,10 +452,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         } catch (final Exception failed) {
             // parsing or token to expression failed set the error message
-            result = this.setError(result, failed);
+            formula = this.setError(formula, failed);
         }
 
-        return result;
+        return formula;
     }
 
     /**
@@ -482,22 +481,23 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * If a value is available try and re-use or if an expression is present evaluate it.
      */
-    private SpreadsheetFormula evaluateIfPossible(final SpreadsheetFormula formula,
-                                                  final SpreadsheetCellReference cell,
+    private SpreadsheetFormula evaluateIfPossible(final SpreadsheetCell cell,
                                                   final SpreadsheetEngineContext context) {
+        final SpreadsheetFormula formula = cell.formula();
+
         return formula.error().isPresent() ?
                 formula : // value present - using cached.
-                this.evaluate(formula, cell, context);
+                this.evaluate(cell, context);
     }
 
-    private SpreadsheetFormula evaluate(final SpreadsheetFormula formula,
-                                        final SpreadsheetCellReference cell,
+    private SpreadsheetFormula evaluate(final SpreadsheetCell cell,
                                         final SpreadsheetEngineContext context) {
-        SpreadsheetFormula result;
+        SpreadsheetFormula formula = cell.formula();
+
         try {
             final Optional<Expression> expression = formula.expression();
             if (expression.isPresent()) {
-                result = formula.setValue(
+                formula = formula.setValue(
                         Optional.ofNullable(
                                 context.evaluate(
                                         expression.get(),
@@ -505,14 +505,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 )
                         )
                 );
-            } else {
-                result = formula;
             }
 
         } catch (final ExpressionEvaluationException cause) {
-            result = this.setError(formula, cause);
+            formula = this.setError(formula, cause);
         }
-        return result;
+        return formula;
     }
 
     // ERROR HANDLING..............................................................................................
@@ -611,7 +609,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             .expression()
                             .get(),
                     Optional.of(
-                            cell.reference()
+                            cell
                     )
             );
             final Boolean booleanResult = context.metadata()

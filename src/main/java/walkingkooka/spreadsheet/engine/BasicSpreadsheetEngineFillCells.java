@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
@@ -128,17 +127,19 @@ final class BasicSpreadsheetEngineFillCells {
                           final int xOffset,
                           final int yOffset) {
         final SpreadsheetCell updatedReference = cell.setReference(cell.reference().add(xOffset, yOffset));
-        final SpreadsheetFormula formula = updatedReference.formula();
 
         final BasicSpreadsheetEngine engine = this.engine;
         final SpreadsheetEngineContext context = this.context;
 
         // possibly fix references, and then parse the formula and evaluate etc.
-        final SpreadsheetCell save = updatedReference.setFormula(engine.parseFormulaIfNecessary(formula,
-                token -> BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token,
+        final SpreadsheetCell save = updatedReference.setFormula(engine.parseFormulaIfNecessary(
+                updatedReference,
+                token -> BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(
+                        token,
                         xOffset,
                         yOffset),
-                context));
+                context)
+        );
         this.engine.maybeParseAndEvaluateAndFormat(save,
                 SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,
                 context);

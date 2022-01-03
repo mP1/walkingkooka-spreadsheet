@@ -133,7 +133,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
                                          final SpreadsheetEngineContext context) {
         final SpreadsheetCell fixed = cell.setFormula(
                 this.engine.parseFormulaIfNecessary(
-                        cell.formula(),
+                        cell,
                         this::fixCellReferencesWithinExpression,
                         context));
         if (!cell.equals(fixed)) {
