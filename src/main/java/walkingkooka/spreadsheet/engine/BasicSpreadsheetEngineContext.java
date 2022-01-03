@@ -174,8 +174,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                 kind,
                                 this.functions,
                                 converterContext
-                        ),
-                        converterContext
+                        )
                 )
         );
     }
