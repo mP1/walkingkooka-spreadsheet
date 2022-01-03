@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Either;
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -32,9 +33,11 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
- * A {@link ExpressionEvaluationContext} used exclusively by {@link BasicSpreadsheetEngine}
+ * A {@link ExpressionEvaluationContext} used exclusively by {@link BasicSpreadsheetEngine#parseFormulaIfNecessary(SpreadsheetFormula, Function, SpreadsheetEngineContext)}
+ * which uses this to convert a {@link walkingkooka.spreadsheet.parser.SpreadsheetParserToken#toExpression(ExpressionEvaluationContext)}.
  */
 final class BasicSpreadsheetEngineExpressionEvaluationContext implements ExpressionEvaluationContext {
 
