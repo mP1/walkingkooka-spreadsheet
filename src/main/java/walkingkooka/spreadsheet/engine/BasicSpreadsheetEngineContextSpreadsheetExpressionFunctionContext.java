@@ -21,6 +21,8 @@ import walkingkooka.Either;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -36,6 +38,7 @@ import java.util.function.Function;
 final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext implements SpreadsheetExpressionFunctionContext {
 
     static BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext with(final Optional<SpreadsheetCell> cell,
+                                                                                  final SpreadsheetCellStore cellStore,
                                                                                   final ExpressionNumberKind expressionNumberKind,
                                                                                   final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                                                                   final ConverterContext converterContext) {
@@ -43,6 +46,7 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
 
         return new BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext(
                 cell,
+                cellStore,
                 expressionNumberKind,
                 functions,
                 converterContext
@@ -50,15 +54,35 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
     }
 
     private BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext(final Optional<SpreadsheetCell> cell,
+                                                                              final SpreadsheetCellStore cellStore,
                                                                               final ExpressionNumberKind expressionNumberKind,
                                                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                                                               final ConverterContext converterContext) {
         super();
         this.cell = cell;
+        this.cellStore = cellStore;
         this.functions = functions;
         this.expressionNumberKind = expressionNumberKind;
         this.converterContext = converterContext;
     }
+
+    // SpreadsheetExpressionFunctionContext............................................................................
+
+    @Override
+    public Optional<SpreadsheetCell> cell() {
+        return this.cell;
+    }
+
+    private final Optional<SpreadsheetCell> cell;
+
+    @Override
+    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+        return this.cellStore.load(cell);
+    }
+
+    private final SpreadsheetCellStore cellStore;
+
+    // ExpressionFunctionContext........................................................................................
 
     @Override
     public ExpressionFunction<?, ExpressionFunctionContext> function(final FunctionExpressionName name) {
@@ -73,13 +97,6 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
         return this.function(name)
                 .apply(parameters, this);
     }
-
-    @Override
-    public Optional<SpreadsheetCell> cell() {
-        return this.cell;
-    }
-
-    private final Optional<SpreadsheetCell> cell;
 
     @Override
     public boolean canConvert(final Object value,

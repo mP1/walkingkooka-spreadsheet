@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
@@ -28,10 +29,13 @@ import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -40,6 +44,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
@@ -324,8 +330,26 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEvaluateWithFunction() {
         this.evaluateAndCheck(Expression.function(FunctionExpressionName.with("xyz"),
-                Lists.of(this.expression(1), this.expression(2), this.expression(3))),
+                        Lists.of(this.expression(1), this.expression(2), this.expression(3))),
                 1L + 2 + 3);
+    }
+
+    private final static SpreadsheetCellReference LOAD_CELL_REFERENCE = SpreadsheetSelection.parseCell("Z99");
+    private final static Object LOAD_CELL_VALUE = "LoadCellTextValue";
+
+    @Test
+    public void testEvaluateWithFunctionContextLoadCell() {
+        this.evaluateAndCheck(
+                Expression.function(
+                        FunctionExpressionName.with(TEST_CONTEXT_LOADCELL),
+                        Lists.of(
+                                Expression.reference(
+                                        LOAD_CELL_REFERENCE
+                                )
+                        )
+                ),
+                LOAD_CELL_VALUE
+        );
     }
 
     @Test
@@ -634,12 +658,30 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
                                                         final SpreadsheetLabelStore labelStore) {
+        final SpreadsheetCellStore cells = SpreadsheetCellStores.treeMap();
+        cells.save(
+                SpreadsheetCell.with(
+                        LOAD_CELL_REFERENCE,
+                        SpreadsheetFormula.EMPTY
+                                .setText("'" + LOAD_CELL_VALUE)
+                                .setValue(
+                                        Optional.of(LOAD_CELL_VALUE)
+                                )
+                )
+        );
+
         return BasicSpreadsheetEngineContext.with(
                 metadata,
                 this.functions(),
                 this.engine(),
                 FRACTIONER,
                 new FakeSpreadsheetStoreRepository() {
+
+                    @Override
+                    public SpreadsheetCellStore cells() {
+                        return cells;
+                    }
+
                     @Override
                     public SpreadsheetLabelStore labels() {
                         return labelStore;
@@ -673,28 +715,62 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return Expression.expressionNumber(this.number(value));
     }
 
+    private final static String TEST_CONTEXT_LOADCELL = "test-context-loadCell";
+
     private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions() {
         return (n) -> {
-            this.checkEquals(functionName(), n, "function name");
-            return new FakeExpressionFunction<>() {
-                @Override
-                public Object apply(final List<Object> parameters,
-                                    final ExpressionFunctionContext context) {
-                    return parameters.stream()
-                            .mapToLong(p -> context.convertOrFail(p, Long.class))
-                            .sum();
-                }
+            switch (n.value()) {
+                case "xyz":
+                    return Cast.to(
+                            new FakeExpressionFunction<Object, SpreadsheetExpressionFunctionContext>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final SpreadsheetExpressionFunctionContext context) {
+                                    return parameters.stream()
+                                            .mapToLong(p -> context.convertOrFail(p, Long.class))
+                                            .sum();
+                                }
 
-                @Override
-                public boolean resolveReferences() {
-                    return true;
-                }
-            };
+                                @Override
+                                public boolean resolveReferences() {
+                                    return true;
+                                }
+
+                                @Override
+                                public String toString() {
+                                    return "xyz";
+                                }
+                            }
+                    );
+                case TEST_CONTEXT_LOADCELL:
+                    return Cast.to(
+                            new FakeExpressionFunction<Object, SpreadsheetExpressionFunctionContext>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final SpreadsheetExpressionFunctionContext context) {
+                                    return context.loadCell(
+                                                    (SpreadsheetCellReference) parameters.get(0)
+                                            ).get()
+                                            .formula()
+                                            .value()
+                                            .get();
+                                }
+
+                                @Override
+                                public boolean resolveReferences() {
+                                    return false; // dont want SpreadsheetCellReference parameter to be resolved
+                                }
+
+                                @Override
+                                public String toString() {
+                                    return TEST_CONTEXT_LOADCELL;
+                                }
+                            }
+                    );
+                default:
+                    throw new UnsupportedOperationException("Unknown function: " + n);
+            }
         };
-    }
-
-    private FunctionExpressionName functionName() {
-        return FunctionExpressionName.with("xyz");
     }
 
     private SpreadsheetEngine engine() {
