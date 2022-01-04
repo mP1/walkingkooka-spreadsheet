@@ -172,6 +172,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                         this.function,
                         BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext.with(
                                 cell,
+                                this.storeRepository.cells(),
                                 kind,
                                 this.functions,
                                 converterContext
