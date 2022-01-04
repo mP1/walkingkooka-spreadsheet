@@ -161,10 +161,18 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
     // SpreadsheetExpressionReference...................................................................................
 
     @Test
-    public void testToCell() {
+    public void testToCellFails() {
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> SpreadsheetLabelName.with("Label123").toCell()
+        );
+    }
+
+    @Test
+    public void testToRangeFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> SpreadsheetLabelName.with("Label123").toRange()
         );
     }
 

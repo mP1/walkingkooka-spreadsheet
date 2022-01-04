@@ -235,7 +235,8 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     /**
      * Returns a {@link SpreadsheetCellRange} holding only this cell.
      */
-    public SpreadsheetCellRange toSpreadsheetCellRange() {
+    @Override
+    public SpreadsheetCellRange toRange() {
         return SpreadsheetCellRange.with(Range.singleton(this));
     }
 

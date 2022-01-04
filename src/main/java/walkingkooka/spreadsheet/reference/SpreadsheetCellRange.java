@@ -273,6 +273,11 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference i
         return this.begin();
     }
 
+    @Override
+    public SpreadsheetCellRange toRange() {
+        return this;
+    }
+
     // SpreadsheetSelection.............................................................................................
 
     @Override

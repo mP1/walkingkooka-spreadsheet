@@ -1000,6 +1000,15 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         );
     }
 
+    @Test
+    public void testToRange() {
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("C3:Z99");
+        assertSame(
+                range.toRange(),
+                range
+        );
+    }
+
     // equalsIgnoreReferenceKind........................................................................................
 
     @Test
