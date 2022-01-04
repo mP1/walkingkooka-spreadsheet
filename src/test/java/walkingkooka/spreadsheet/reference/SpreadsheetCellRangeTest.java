@@ -971,6 +971,35 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         return this.cell("C3", "6");
     }
 
+    // SpreadsheetExpressionReference...................................................................................
+
+    @Test
+    public void testToCellSingleton() {
+        final String text = "B2";
+
+        this.toCellAndCheck(
+                SpreadsheetSelection.parseCellRange(text),
+                SpreadsheetSelection.parseCell(text)
+        );
+    }
+
+    @Test
+    public void testToCell() {
+        this.toCellAndCheck(
+                SpreadsheetSelection.parseCellRange("C3:Z99"),
+                SpreadsheetSelection.parseCell("C3")
+        );
+    }
+
+    private void toCellAndCheck(final SpreadsheetCellRange reference,
+                                final SpreadsheetCellReference expected) {
+        this.checkEquals(
+                expected,
+                reference.toCell(),
+                reference + " toCell"
+        );
+    }
+
     // equalsIgnoreReferenceKind........................................................................................
 
     @Test
