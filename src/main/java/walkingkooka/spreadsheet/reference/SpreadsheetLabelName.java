@@ -101,6 +101,11 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public SpreadsheetCellRange toRange() {
+        throw new UnsupportedOperationException();
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override

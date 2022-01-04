@@ -447,32 +447,32 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                 () -> cell + " spreadsheetCellRange " + other);
     }
 
-    // toSpreadsheetCellRange...........................................................................................
+    // toRange...........................................................................................
 
     @Test
-    public void testToSpreadsheetCellRangeAbsolute() {
-        this.toSpreadsheetCellRangeAndCheck(
+    public void testToRangeAbsolute() {
+        this.toRangeAndCheck(
                 SpreadsheetCellReference.parseCell("$B$2"),
                 SpreadsheetCellRange.parseCellRange("$B$2")
         );
     }
 
     @Test
-    public void testToSpreadsheetCellRangeRelative() {
+    public void testToRangeRelative() {
         final String text = "C3";
 
-        this.toSpreadsheetCellRangeAndCheck(
+        this.toRangeAndCheck(
                 SpreadsheetCellReference.parseCell(text),
                 SpreadsheetCellRange.parseCellRange(text)
         );
     }
 
-    private void toSpreadsheetCellRangeAndCheck(final SpreadsheetCellReference reference,
-                                                final SpreadsheetCellRange range) {
+    private void toRangeAndCheck(final SpreadsheetCellReference reference,
+                                 final SpreadsheetCellRange range) {
         this.checkEquals(
                 range,
-                reference.toSpreadsheetCellRange(),
-                () -> reference + " toSpreadsheetCellRange()"
+                reference.toRange(),
+                () -> reference + " toRange()"
         );
     }
 
