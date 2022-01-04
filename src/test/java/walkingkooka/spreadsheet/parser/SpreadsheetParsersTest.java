@@ -2048,6 +2048,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetParserToken formula = this.parse(parser, formulaText);
         final Optional<Expression> maybeExpression = formula.toExpression(
                 new FakeExpressionEvaluationContext() {
+
                     @Override
                     public ExpressionNumberKind expressionNumberKind() {
                         return expressionNumberKind;
@@ -2145,6 +2146,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         ));
 
         return new FakeExpressionEvaluationContext() {
+
+            @Override
+            public Object evaluate(final FunctionExpressionName name,
+                                   final List<Object> parameters) {
+                return this.function(name).apply(parameters, this);
+            }
 
             @Override
             public ExpressionNumberKind expressionNumberKind() {
