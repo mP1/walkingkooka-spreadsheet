@@ -58,4 +58,12 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
     public final boolean compareAndEqualsMatch() {
         return false;
     }
+
+    final void countAndCheck(final S range, final int expected) {
+        this.checkEquals(
+                expected,
+                range.count(),
+                () -> range + " count"
+        );
+    }
 }
