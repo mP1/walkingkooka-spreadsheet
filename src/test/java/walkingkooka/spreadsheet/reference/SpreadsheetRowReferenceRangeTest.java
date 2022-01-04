@@ -59,7 +59,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     public void testCount() {
         this.countAndCheck(
                 SpreadsheetSelection.parseRowRange("3:5"),
-                2
+                3
         );
     }
 
