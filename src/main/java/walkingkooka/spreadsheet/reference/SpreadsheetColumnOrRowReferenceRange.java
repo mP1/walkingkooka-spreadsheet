@@ -52,6 +52,17 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     }
 
     /**
+     * Returns the number of columns or rows in this range.
+     */
+    public final int count() {
+        return this.end()
+                .value()
+                - this.begin()
+                .value()
+                + 1;
+    }
+
+    /**
      * Returns a {@link SpreadsheetCellReference} that holds the top left column/row reference.
      */
     public final Range<T> range() {

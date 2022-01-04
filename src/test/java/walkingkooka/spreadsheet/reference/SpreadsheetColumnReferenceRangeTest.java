@@ -45,6 +45,26 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         assertSame(upper, selection.end(), "end");
     }
 
+    // count............................................................................................................
+
+    @Test
+    public void testCountSingleton() {
+        this.countAndCheck(
+                SpreadsheetSelection.parseColumnRange("C"),
+                1
+        );
+    }
+
+    @Test
+    public void testCount() {
+        this.countAndCheck(
+                SpreadsheetSelection.parseColumnRange("C:D"),
+                2
+        );
+    }
+
+    // test............................................................................................................
+
     @Test
     public void testTestBefore() {
         this.testFalse(SpreadsheetCellReference.parseCell("A1"));
