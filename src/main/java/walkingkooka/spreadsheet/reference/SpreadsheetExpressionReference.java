@@ -32,6 +32,13 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     }
 
     /**
+     * Converts the cell or range into a single {@link SpreadsheetCellReference}.
+     */
+    public abstract SpreadsheetCellReference toCell();
+
+    // equals...........................................................................................................
+
+    /**
      * Performs equals but ignores any {@link SpreadsheetReferenceKind}.
      */
     public final boolean equalsIgnoreReferenceKind(final Object other) {

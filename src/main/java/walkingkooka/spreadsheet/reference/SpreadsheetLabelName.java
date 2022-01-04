@@ -94,6 +94,13 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         return this.name;
     }
 
+    // SpreadsheetExpressionReference...................................................................................
+
+    @Override
+    public SpreadsheetCellReference toCell() {
+        throw new UnsupportedOperationException();
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override

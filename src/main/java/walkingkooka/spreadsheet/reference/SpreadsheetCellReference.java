@@ -251,6 +251,13 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return Optional.of(this.hateosLinkId());
     }
 
+    // SpreadsheetExpressionReference...................................................................................
+
+    @Override
+    public SpreadsheetCellReference toCell() {
+        return this;
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override
