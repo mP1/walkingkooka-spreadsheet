@@ -397,6 +397,17 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
+    public void testEvaluateWithFunctionContextSpreadsheetMetadata() {
+        this.evaluateAndCheck(
+                Expression.function(
+                        FunctionExpressionName.with(TEST_CONTEXT_SPREADSHEET_METADATA),
+                        Lists.empty()
+                ),
+                this.metadata()
+        );
+    }
+
+    @Test
     public void testParsePattern() {
         // DecimalNumberContext returns 'D' for the decimal point character and 'M' for minus sign
 
@@ -766,6 +777,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private final static String TEST_CONTEXT_SERVER_URL = "test-context-serverUrl";
 
+    private final static String TEST_CONTEXT_SPREADSHEET_METADATA = "test-context-spreadsheet-metadata";
+
     private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions() {
         return (n) -> {
             switch (n.value()) {
@@ -833,6 +846,26 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 @Override
                                 public String toString() {
                                     return TEST_CONTEXT_SERVER_URL;
+                                }
+                            }
+                    );
+                case TEST_CONTEXT_SPREADSHEET_METADATA:
+                    return Cast.to(
+                            new FakeExpressionFunction<Object, SpreadsheetExpressionFunctionContext>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final SpreadsheetExpressionFunctionContext context) {
+                                    return context.spreadsheetMetadata();
+                                }
+
+                                @Override
+                                public boolean resolveReferences() {
+                                    return false;
+                                }
+
+                                @Override
+                                public String toString() {
+                                    return TEST_CONTEXT_SPREADSHEET_METADATA;
                                 }
                             }
                     );
