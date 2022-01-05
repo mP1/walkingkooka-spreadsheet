@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.function;
 
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
@@ -38,4 +39,10 @@ public interface SpreadsheetExpressionFunctionContext extends ExpressionFunction
      * Loads the cell for the given {@link SpreadsheetCellReference}
      */
     Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell);
+
+    /**
+     * Returns the base server url, which can then be used to create links to cells and more.
+     * This is necessary for functions such as hyperlink which creates a link to a cell.
+     */
+    AbsoluteUrl serverUrl();
 }

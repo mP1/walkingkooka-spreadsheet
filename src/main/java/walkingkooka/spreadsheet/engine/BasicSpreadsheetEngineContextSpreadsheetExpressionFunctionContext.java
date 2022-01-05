@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Either;
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -39,6 +40,7 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
 
     static BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext with(final Optional<SpreadsheetCell> cell,
                                                                                   final SpreadsheetCellStore cellStore,
+                                                                                  final AbsoluteUrl serverUrl,
                                                                                   final ExpressionNumberKind expressionNumberKind,
                                                                                   final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                                                                   final ConverterContext converterContext) {
@@ -47,6 +49,7 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
         return new BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext(
                 cell,
                 cellStore,
+                serverUrl,
                 expressionNumberKind,
                 functions,
                 converterContext
@@ -55,12 +58,14 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
 
     private BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext(final Optional<SpreadsheetCell> cell,
                                                                               final SpreadsheetCellStore cellStore,
+                                                                              final AbsoluteUrl serverUrl,
                                                                               final ExpressionNumberKind expressionNumberKind,
                                                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                                                               final ConverterContext converterContext) {
         super();
         this.cell = cell;
         this.cellStore = cellStore;
+        this.serverUrl = serverUrl;
         this.functions = functions;
         this.expressionNumberKind = expressionNumberKind;
         this.converterContext = converterContext;
@@ -81,6 +86,13 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
     }
 
     private final SpreadsheetCellStore cellStore;
+
+    @Override
+    public AbsoluteUrl serverUrl() {
+        return serverUrl;
+    }
+
+    private final AbsoluteUrl serverUrl;
 
     // ExpressionFunctionContext........................................................................................
 

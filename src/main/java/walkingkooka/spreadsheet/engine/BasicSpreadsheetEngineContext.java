@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.math.Fraction;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -68,19 +69,22 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                               final SpreadsheetEngine engine,
                                               final Function<BigDecimal, Fraction> fractioner,
-                                              final SpreadsheetStoreRepository storeRepository) {
+                                              final SpreadsheetStoreRepository storeRepository,
+                                              final AbsoluteUrl serverUrl) {
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(storeRepository, "storeRepository");
+        Objects.requireNonNull(serverUrl, "serverUrl");
 
         return new BasicSpreadsheetEngineContext(
                 metadata,
                 functions,
                 engine,
                 fractioner,
-                storeRepository
+                storeRepository,
+                serverUrl
         );
     }
 
@@ -91,7 +95,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                           final SpreadsheetEngine engine,
                                           final Function<BigDecimal, Fraction> fractioner,
-                                          final SpreadsheetStoreRepository storeRepository) {
+                                          final SpreadsheetStoreRepository storeRepository,
+                                          final AbsoluteUrl serverUrl) {
         super();
 
         this.metadata = metadata;
@@ -121,6 +126,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         this.fractioner = fractioner;
 
         this.storeRepository = storeRepository;
+        this.serverUrl = serverUrl;
     }
 
     // metadata........................................................................................................
@@ -173,6 +179,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                         BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext.with(
                                 cell,
                                 this.storeRepository.cells(),
+                                this.serverUrl,
                                 kind,
                                 this.functions,
                                 converterContext
@@ -181,6 +188,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         );
     }
 
+    private final AbsoluteUrl serverUrl;
 
     /**
      * Handles dispatching of functions.
@@ -233,6 +241,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 .value(this.metadata)
                 .append(LineEnding.SYSTEM)
                 .label("fractioner").value(this.fractioner)
+                .append(LineEnding.SYSTEM)
+                .label("serverUrl").value(this.serverUrl)
                 .build();
     }
 }
