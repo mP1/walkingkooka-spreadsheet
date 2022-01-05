@@ -29,6 +29,8 @@ import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
@@ -74,63 +76,94 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
     private final static char VALUE_SEPARATOR = ',';
     private final static int WIDTH = 1;
+    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://example.com/path123");
 
     @Test
     public void testWithNullMetadataFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                null,
-                this.functions(),
-                this.engine(),
-                FRACTIONER,
-                this.storeRepository()
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        null,
+                        this.functions(),
+                        this.engine(),
+                        FRACTIONER,
+                        this.storeRepository(),
+                        SERVER_URL
                 )
         );
     }
 
     @Test
     public void testWithNullFunctionsFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.metadata(),
-                null,
-                this.engine(),
-                FRACTIONER,
-                this.storeRepository()
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        this.metadata(),
+                        null,
+                        this.engine(),
+                        FRACTIONER,
+                        this.storeRepository(),
+                        SERVER_URL
                 )
         );
     }
 
     @Test
     public void testWithNullEngineFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.metadata(),
-                this.functions(),
-                null,
-                FRACTIONER,
-                this.storeRepository()
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        this.metadata(),
+                        this.functions(),
+                        null,
+                        FRACTIONER,
+                        this.storeRepository(),
+                        SERVER_URL
                 )
         );
     }
 
     @Test
     public void testWithNullFractionFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.metadata(),
-                this.functions(),
-                this.engine(),
-                null,
-                this.storeRepository()
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        this.metadata(),
+                        this.functions(),
+                        this.engine(),
+                        null,
+                        this.storeRepository(),
+                        SERVER_URL
                 )
         );
     }
 
     @Test
     public void testWithNullStoreRepositoryFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.metadata(),
-                this.functions(),
-                this.engine(),
-                FRACTIONER,
-                null
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        this.metadata(),
+                        this.functions(),
+                        this.engine(),
+                        FRACTIONER,
+                        null,
+                        SERVER_URL
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullServerUrlFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        this.metadata(),
+                        this.functions(),
+                        this.engine(),
+                        FRACTIONER,
+                        this.storeRepository(),
+                        null
                 )
         );
     }
@@ -353,6 +386,17 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
+    public void testEvaluateWithFunctionContextServerUrl() {
+        this.evaluateAndCheck(
+                Expression.function(
+                        FunctionExpressionName.with(TEST_CONTEXT_SERVER_URL),
+                        Lists.empty()
+                ),
+                SERVER_URL
+        );
+    }
+
+    @Test
     public void testParsePattern() {
         // DecimalNumberContext returns 'D' for the decimal point character and 'M' for minus sign
 
@@ -505,7 +549,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"value-separator\": \",\",\n" +
                         "  \"viewport-cell\": \"A1\"\n" +
                         "}\n" +
-                        "fractioner=Fractioner123"
+                        "fractioner=Fractioner123\n" +
+                        "serverUrl=" + SERVER_URL
         );
     }
 
@@ -643,7 +688,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"value-separator\": \",\",\n" +
                         "  \"viewport-cell\": \"A1\"\n" +
                         "}\n" +
-                        "fractioner=Fractioner123"
+                        "fractioner=Fractioner123\n" +
+                        "serverUrl=" + SERVER_URL
         );
     }
 
@@ -686,7 +732,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     public SpreadsheetLabelStore labels() {
                         return labelStore;
                     }
-                }
+                },
+                SERVER_URL
         );
     }
 
@@ -716,6 +763,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     private final static String TEST_CONTEXT_LOADCELL = "test-context-loadCell";
+
+    private final static String TEST_CONTEXT_SERVER_URL = "test-context-serverUrl";
 
     private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions() {
         return (n) -> {
@@ -764,6 +813,26 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 @Override
                                 public String toString() {
                                     return TEST_CONTEXT_LOADCELL;
+                                }
+                            }
+                    );
+                case TEST_CONTEXT_SERVER_URL:
+                    return Cast.to(
+                            new FakeExpressionFunction<Object, SpreadsheetExpressionFunctionContext>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final SpreadsheetExpressionFunctionContext context) {
+                                    return context.serverUrl();
+                                }
+
+                                @Override
+                                public boolean resolveReferences() {
+                                    return true;
+                                }
+
+                                @Override
+                                public String toString() {
+                                    return TEST_CONTEXT_SERVER_URL;
                                 }
                             }
                     );
