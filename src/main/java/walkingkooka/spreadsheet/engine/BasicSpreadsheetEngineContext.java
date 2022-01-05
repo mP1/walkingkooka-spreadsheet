@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -46,7 +45,6 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
@@ -168,21 +166,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                            final Optional<SpreadsheetCell> cell) {
         final SpreadsheetMetadata metadata = this.metadata;
 
-        final ExpressionNumberKind kind = metadata.expressionNumberKind();
-        final ConverterContext converterContext = metadata.converterContext();
-
         return node.toValue(
                 ExpressionEvaluationContexts.basic(
-                        kind,
+                        metadata.expressionNumberKind(),
                         this.functions,
                         this.function,
                         BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext.with(
                                 cell,
                                 this.storeRepository.cells(),
                                 this.serverUrl,
-                                kind,
-                                this.functions,
-                                converterContext
+                                metadata,
+                                this.functions
                         )
                 )
         );

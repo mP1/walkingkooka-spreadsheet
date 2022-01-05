@@ -22,6 +22,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -41,34 +42,30 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
     static BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext with(final Optional<SpreadsheetCell> cell,
                                                                                   final SpreadsheetCellStore cellStore,
                                                                                   final AbsoluteUrl serverUrl,
-                                                                                  final ExpressionNumberKind expressionNumberKind,
-                                                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
-                                                                                  final ConverterContext converterContext) {
+                                                                                  final SpreadsheetMetadata spreadsheetMetadata,
+                                                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions) {
         Objects.requireNonNull(cell, "cell");
 
         return new BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext(
                 cell,
                 cellStore,
                 serverUrl,
-                expressionNumberKind,
-                functions,
-                converterContext
+                spreadsheetMetadata,
+                functions
         );
     }
 
     private BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext(final Optional<SpreadsheetCell> cell,
                                                                               final SpreadsheetCellStore cellStore,
                                                                               final AbsoluteUrl serverUrl,
-                                                                              final ExpressionNumberKind expressionNumberKind,
-                                                                              final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
-                                                                              final ConverterContext converterContext) {
+                                                                              final SpreadsheetMetadata spreadsheetMetadata,
+                                                                              final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions) {
         super();
         this.cell = cell;
         this.cellStore = cellStore;
         this.serverUrl = serverUrl;
+        this.spreadsheetMetadata = spreadsheetMetadata;
         this.functions = functions;
-        this.expressionNumberKind = expressionNumberKind;
-        this.converterContext = converterContext;
     }
 
     // SpreadsheetExpressionFunctionContext............................................................................
@@ -86,6 +83,13 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
     }
 
     private final SpreadsheetCellStore cellStore;
+
+    @Override
+    public SpreadsheetMetadata spreadsheetMetadata() {
+        return this.spreadsheetMetadata;
+    }
+
+    private final SpreadsheetMetadata spreadsheetMetadata;
 
     @Override
     public AbsoluteUrl serverUrl() {
@@ -113,43 +117,51 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> target) {
-        return this.converterContext.canConvert(value, target);
+        return this.converterContext()
+                .canConvert(value, target);
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
-        return this.converterContext.convert(value, type);
+        return this.converterContext()
+                .convert(value, type);
     }
 
     @Override
     public int defaultYear() {
-        return this.converterContext.defaultYear();
+        return this.converterContext()
+                .defaultYear();
     }
 
     @Override
     public int twoDigitYear() {
-        return this.converterContext.twoDigitYear();
+        return this.converterContext()
+                .twoDigitYear();
     }
 
     @Override
     public Locale locale() {
-        return this.converterContext.locale();
+        return this.converterContext()
+                .locale();
     }
 
     @Override
     public MathContext mathContext() {
-        return this.converterContext.mathContext();
+        return this.converterContext()
+                .mathContext();
     }
 
-    private final ConverterContext converterContext;
+    private final ConverterContext converterContext() {
+        return this.spreadsheetMetadata()
+                .converterContext();
+    }
 
     @Override
     public ExpressionNumberKind expressionNumberKind() {
-        return this.expressionNumberKind;
+        return this.spreadsheetMetadata()
+                .expressionNumberKind();
     }
-
-    private final ExpressionNumberKind expressionNumberKind;
 
     @Override
     public String toString() {

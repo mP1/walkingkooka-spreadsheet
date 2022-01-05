@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.function;
 
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 
@@ -39,6 +40,11 @@ public interface SpreadsheetExpressionFunctionContext extends ExpressionFunction
      * Loads the cell for the given {@link SpreadsheetCellReference}
      */
     Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell);
+
+    /**
+     * Returns the {@link SpreadsheetMetadata} for the enclosing spreadsheet.
+     */
+    SpreadsheetMetadata spreadsheetMetadata();
 
     /**
      * Returns the base server url, which can then be used to create links to cells and more.
