@@ -343,7 +343,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                         )
                                 ).setExpression(
                                 Optional.of(
-                                        Expression.localDate(
+                                        Expression.value(
                                                 LocalDate.of(2021, 2, 9)
                                         )
                                 )
@@ -416,7 +416,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                         )
                                 ).setExpression(
                                 Optional.of(
-                                        Expression.localDate(
+                                        Expression.value(
                                                 LocalDate.of(2021, 2, 9)
                                         )
                                 )
@@ -478,7 +478,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                         )
                                 ).setExpression(
                                 Optional.of(
-                                        Expression.localDate(
+                                        Expression.value(
                                                 LocalDate.of(2021, 2, 9)
                                         )
                                 )
@@ -540,7 +540,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                         )
                                 ).setExpression(
                                 Optional.of(
-                                        Expression.localDate(
+                                        Expression.value(
                                                 LocalDate.of(2021, 2, 9)
                                         )
                                 )
@@ -765,7 +765,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     }
 
     private Expression number(final Number number) {
-        return Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(number));
+        return Expression.value(
+                EXPRESSION_NUMBER_KIND.create(number)
+        );
     }
 
     @Test
@@ -819,7 +821,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                         )
                                 ).setExpression(
                                 Optional.of(
-                                        Expression.localTime(
+                                        Expression.value(
                                                 LocalTime.of(9 + 12, 59)
                                         )
                                 )

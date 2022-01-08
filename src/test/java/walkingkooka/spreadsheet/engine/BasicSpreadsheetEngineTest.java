@@ -684,7 +684,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 String.valueOf(result)
                         ).setExpression(
                                 Optional.of(
-                                        Expression.booleanExpression(result)
+                                        Expression.value(result)
                                 )
                         ),
                 (c) -> style);

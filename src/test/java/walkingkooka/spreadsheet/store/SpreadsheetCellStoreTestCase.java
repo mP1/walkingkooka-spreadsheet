@@ -387,8 +387,12 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
                 ))
                 .setExpression(Optional.of(
                         Expression.add(
-                                Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(1)),
-                                Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(2))
+                                Expression.value(
+                                        EXPRESSION_NUMBER_KIND.create(1)
+                                ),
+                                Expression.value(
+                                        EXPRESSION_NUMBER_KIND.create(2)
+                                )
                         )
                 ));
     }

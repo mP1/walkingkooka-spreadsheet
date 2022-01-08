@@ -474,7 +474,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * This {@link Expression} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
      */
     // VisibleForTesting
-    final static Optional<Expression> EMPTY_EXPRESSION = Optional.of(Expression.valueOrFail(""));
+    final static Optional<Expression> EMPTY_EXPRESSION = Optional.of(
+            Expression.value("")
+    );
 
     // EVAL .........................................................................................................
 

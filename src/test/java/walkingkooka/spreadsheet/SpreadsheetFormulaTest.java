@@ -214,7 +214,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testSetExpressionDifferent() {
         final SpreadsheetFormula formula = this.createObject()
                 .setToken(this.token());
-        final Optional<Expression> differentExpression = Optional.of(Expression.string("different!"));
+        final Optional<Expression> differentExpression = Optional.of(
+                Expression.value("different!")
+        );
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
 
@@ -248,7 +250,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setExpression(this.expression())
                 .setValue(this.value());
 
-        final Optional<Expression> differentExpression = Optional.of(Expression.string("different!"));
+        final Optional<Expression> differentExpression = Optional.of(
+                Expression.value("different!")
+        );
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
 
@@ -416,7 +420,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "    SpreadsheetText\n" +
                         "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
                         "  expression:\n" +
-                        "    StringExpression \"1+2\"\n"
+                        "    ValueExpression \"1+2\"\n"
         );
     }
 
@@ -433,7 +437,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "    SpreadsheetText\n" +
                         "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
                         "  expression:\n" +
-                        "    StringExpression \"1+2\"\n" +
+                        "    ValueExpression \"1+2\"\n" +
                         "  value: 3.0 (java.lang.Double)\n"
         );
     }
@@ -451,7 +455,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "    SpreadsheetText\n" +
                         "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
                         "  expression:\n" +
-                        "    StringExpression \"1+2\"\n" +
+                        "    ValueExpression \"1+2\"\n" +
                         "  error: \"Message #1\"\n"
         );
     }
@@ -681,7 +685,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 "{\n" +
                         "  \"text\": \"a+2\",\n" +
                         "  \"expression\": {\n" +
-                        "    \"type\": \"string-expression\",\n" +
+                        "    \"type\": \"value-expression\",\n" +
                         "    \"value\": \"1+2\"\n" +
                         "  }\n" +
                         "}");
@@ -708,7 +712,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "    }\n" +
                         "  },\n" +
                         "  \"expression\": {\n" +
-                        "    \"type\": \"string-expression\",\n" +
+                        "    \"type\": \"value-expression\",\n" +
                         "    \"value\": \"1+2\"\n" +
                         "  }\n" +
                         "}");
@@ -890,7 +894,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private Optional<Expression> expression(final String text) {
-        return Optional.of(Expression.string(text));
+        return Optional.of(
+                Expression.value(text)
+        );
     }
 
     private void checkExpression(final SpreadsheetFormula formula, final Optional<Expression> expression) {

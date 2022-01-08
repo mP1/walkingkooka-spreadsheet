@@ -68,7 +68,8 @@ public final class SpreadsheetTextParserTokenTest extends SpreadsheetParentParse
                         ),
                         APOSTROPHE + TEXT
                 ),
-                Expression.string(TEXT));
+                Expression.value(TEXT)
+        );
     }
 
     @Test
@@ -82,7 +83,8 @@ public final class SpreadsheetTextParserTokenTest extends SpreadsheetParentParse
                         ),
                         DOUBLE_QUOTE + TEXT + DOUBLE_QUOTE
                 ),
-                Expression.string(TEXT));
+                Expression.value(TEXT)
+        );
     }
 
     @Override

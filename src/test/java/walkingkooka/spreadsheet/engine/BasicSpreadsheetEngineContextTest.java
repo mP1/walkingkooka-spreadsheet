@@ -53,9 +53,9 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberExpression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ValueExpression;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
@@ -769,8 +769,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return EXPRESSION_NUMBER_KIND.create(value);
     }
 
-    private ExpressionNumberExpression expression(final Number value) {
-        return Expression.expressionNumber(this.number(value));
+    private ValueExpression<?> expression(final Number value) {
+        return Expression.value(
+                this.number(value)
+        );
     }
 
     private final static String TEST_CONTEXT_LOADCELL = "test-context-loadCell";

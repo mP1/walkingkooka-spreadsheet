@@ -48,7 +48,8 @@ public final class CustomFormulaSpreadsheetDataValidatorTest extends Spreadsheet
     private Expression expression() {
         return Expression.greaterThan(
                 Expression.reference(this.cellReference()),
-                Expression.valueOrFail(this.value()));
+                Expression.value(this.value())
+        );
     }
 
     @Override

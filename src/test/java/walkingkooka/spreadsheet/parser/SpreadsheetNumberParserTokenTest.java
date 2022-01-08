@@ -385,7 +385,7 @@ public final class SpreadsheetNumberParserTokenTest extends SpreadsheetParentPar
         this.toExpressionAndCheck(
                 token,
                 context,
-                Expression.expressionNumber(expressionNumber)
+                Expression.value(expressionNumber)
         );
     }
 

@@ -27,7 +27,11 @@ public final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorTe
 
     @Test
     public void testProcessReferences() {
-        BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor.processReferences(Expression.string("abc123"), null, null);
+        BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor.processReferences(
+                Expression.value("abc123"),
+                null,
+                null
+        );
     }
 
     // TypeNameTesting..........................................................................

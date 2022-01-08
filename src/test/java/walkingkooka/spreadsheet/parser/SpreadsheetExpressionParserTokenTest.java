@@ -75,7 +75,11 @@ public final class SpreadsheetExpressionParserTokenTest extends SpreadsheetParen
 
     @Test
     public void testToExpression() {
-        this.toExpressionAndCheck(Expression.expressionNumber(this.expressionNumber(NUMBER1)));
+        this.toExpressionAndCheck(
+                Expression.value(
+                        this.expressionNumber(NUMBER1)
+                )
+        );
     }
 
     @Test
@@ -96,8 +100,12 @@ public final class SpreadsheetExpressionParserTokenTest extends SpreadsheetParen
                         "=1+2"
                 ),
                 Expression.add(
-                        Expression.expressionNumber(this.expressionNumber(NUMBER1)),
-                        Expression.expressionNumber(this.expressionNumber(NUMBER2))
+                        Expression.value(
+                                this.expressionNumber(NUMBER1)
+                        ),
+                        Expression.value(
+                                this.expressionNumber(NUMBER2)
+                        )
                 )
         );
     }
@@ -121,8 +129,12 @@ public final class SpreadsheetExpressionParserTokenTest extends SpreadsheetParen
                         "= 1+2"
                 ),
                 Expression.add(
-                        Expression.expressionNumber(this.expressionNumber(NUMBER1)),
-                        Expression.expressionNumber(this.expressionNumber(NUMBER2))
+                        Expression.value(
+                                this.expressionNumber(NUMBER1)
+                        ),
+                        Expression.value(
+                                this.expressionNumber(NUMBER2)
+                        )
                 )
         );
     }
