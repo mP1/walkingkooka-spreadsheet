@@ -49,7 +49,9 @@ public final class SpreadsheetConditionalFormattingRulePriorityDescendingCompara
                         .setText("1")
                         .setExpression(
                                 Optional.of(
-                                        Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(1))
+                                        Expression.value(
+                                                EXPRESSION_NUMBER_KIND.create(1)
+                                        )
                                 )
                         ),
                 (c) -> null

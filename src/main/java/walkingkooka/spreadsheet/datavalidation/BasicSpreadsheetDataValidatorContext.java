@@ -59,7 +59,9 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
                                                  final ExpressionEvaluationContext context) {
         super();
         this.cellReference = cellReference;
-        this.value = Optional.of(Expression.valueOrFail(value));
+        this.value = Optional.of(
+                Expression.value(value)
+        );
         this.context = context;
     }
 

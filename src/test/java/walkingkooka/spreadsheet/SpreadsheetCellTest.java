@@ -772,8 +772,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ExpressionNumberExpression 1\n" +
-                        "        ExpressionNumberExpression 2\n"
+                        "        ValueExpression 1\n" +
+                        "        ValueExpression 2\n"
         );
     }
 
@@ -801,8 +801,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ExpressionNumberExpression 1\n" +
-                        "        ExpressionNumberExpression 2\n" +
+                        "        ValueExpression 1\n" +
+                        "        ValueExpression 2\n" +
                         "    value: 3 (java.lang.Integer)\n"
         );
     }
@@ -831,8 +831,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ExpressionNumberExpression 1\n" +
-                        "        ExpressionNumberExpression 2\n" +
+                        "        ValueExpression 1\n" +
+                        "        ValueExpression 2\n" +
                         "    error: \"error message 1\"\n"
         );
     }
@@ -860,8 +860,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ExpressionNumberExpression 1\n" +
-                        "        ExpressionNumberExpression 2\n" +
+                        "        ValueExpression 1\n" +
+                        "        ValueExpression 2\n" +
                         "    value: 3 (java.lang.Integer)\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
@@ -893,8 +893,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ExpressionNumberExpression 1\n" +
-                        "        ExpressionNumberExpression 2\n" +
+                        "        ValueExpression 1\n" +
+                        "        ValueExpression 2\n" +
                         "    value: 3 (java.lang.Integer)\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
@@ -928,8 +928,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ExpressionNumberExpression 1\n" +
-                        "        ExpressionNumberExpression 2\n" +
+                        "        ValueExpression 1\n" +
+                        "        ValueExpression 2\n" +
                         "    value: 3 (java.lang.Integer)\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
@@ -974,8 +974,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final ExpressionNumberKind kind = ExpressionNumberKind.DOUBLE;
         return Optional.of(
                 Expression.add(
-                        Expression.expressionNumber(kind.create(1)),
-                        Expression.expressionNumber(kind.create(2))
+                        Expression.value(
+                                kind.create(1)
+                        ),
+                        Expression.value(
+                                kind.create(2)
+                        )
                 )
         );
     }

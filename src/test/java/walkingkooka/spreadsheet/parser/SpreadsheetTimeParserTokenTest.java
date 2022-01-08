@@ -120,7 +120,7 @@ public final class SpreadsheetTimeParserTokenTest extends SpreadsheetParentParse
 
         this.toExpressionAndCheck(
                 timeParserToken,
-                Expression.localTime(expected)
+                Expression.value(expected)
         );
     }
 

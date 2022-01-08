@@ -143,7 +143,14 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     @Test
     default void testEvaluateNullCellFails() {
-        assertThrows(NullPointerException.class, () -> this.createContext().evaluate(Expression.string("required expression"), null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .evaluate(
+                                Expression.value("required expression"),
+                                null
+                        )
+        );
     }
 
     default void evaluateAndCheck(final Expression expression,

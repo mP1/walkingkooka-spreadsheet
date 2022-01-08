@@ -103,7 +103,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     protected void endVisit(final SpreadsheetDateParserToken token) {
         this.exit();
         this.add(
-                Expression.localDate(token.toLocalDate(this.context)),
+                Expression.value(token.toLocalDate(this.context)),
                 token
         );
     }
@@ -118,7 +118,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     protected void endVisit(final SpreadsheetDateTimeParserToken token) {
         this.exit();
         this.add(
-                Expression.localDateTime(token.toLocalDateTime(this.context)),
+                Expression.value(token.toLocalDateTime(this.context)),
                 token
         );
     }
@@ -258,7 +258,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     protected void endVisit(final SpreadsheetNumberParserToken token) {
         this.exit();
         this.add(
-                Expression.expressionNumber(token.toNumber(this.context)),
+                Expression.value(token.toNumber(this.context)),
                 token
         );
     }
@@ -293,7 +293,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     protected void endVisit(final SpreadsheetTextParserToken token) {
         this.exit();
         this.add(
-                Expression.string(this.text.toString()),
+                Expression.value(this.text.toString()),
                 token
         );
         this.text = null;
@@ -314,7 +314,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     protected void endVisit(final SpreadsheetTimeParserToken token) {
         this.exit();
         this.add(
-                Expression.localTime(token.toLocalTime()),
+                Expression.value(token.toLocalTime()),
                 token
         );
     }

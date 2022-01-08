@@ -85,7 +85,9 @@ public final class SpreadsheetFunctionParserTokenTest extends SpreadsheetParentP
                 Expression.function(
                         FunctionExpressionName.with(FUNCTION),
                         Lists.of(
-                                Expression.expressionNumber(this.expressionNumber(NUMBER1))
+                                Expression.value(
+                                        this.expressionNumber(NUMBER1)
+                                )
                         )
                 )
         );

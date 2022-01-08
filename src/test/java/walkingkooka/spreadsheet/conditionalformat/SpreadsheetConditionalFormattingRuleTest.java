@@ -134,7 +134,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
                 .setText("99")
                 .setExpression(
                         Optional.of(
-                                Expression.string("\"99\"")
+                                Expression.value("\"99\"")
                         )
                 );
         final SpreadsheetConditionalFormattingRule different = rule.setFormula(formula);
@@ -195,7 +195,9 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
                                 .setText("999")
                                 .setExpression(
                                         Optional.of(
-                                                Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(99))
+                                                Expression.value(
+                                                        EXPRESSION_NUMBER_KIND.create(99)
+                                                )
                                         )
                                 ),
                         style()
@@ -236,7 +238,9 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
         return this.formulaUncompiled()
                 .setExpression(
                         Optional.of(
-                                Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(123))
+                                Expression.value(
+                                        EXPRESSION_NUMBER_KIND.create(123)
+                                )
                         )
                 );
     }

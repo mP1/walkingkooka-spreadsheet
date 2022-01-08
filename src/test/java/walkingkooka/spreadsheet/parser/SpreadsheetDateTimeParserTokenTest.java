@@ -331,7 +331,7 @@ public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentP
         this.toExpressionAndCheck(
                 dateTimeParserToken,
                 context,
-                Expression.localDateTime(expected)
+                Expression.value(expected)
         );
     }
 

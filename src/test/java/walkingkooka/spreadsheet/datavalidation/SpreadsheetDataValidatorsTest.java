@@ -323,7 +323,8 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
     private Expression expression() {
         return Expression.greaterThan(
                 Expression.reference(this.cellReference()),
-                Expression.valueOrFail(EXPRESSION_NUMBER_BETWEEN));
+                Expression.value(EXPRESSION_NUMBER_BETWEEN)
+        );
     }
 
     // date ...........................................................................................................

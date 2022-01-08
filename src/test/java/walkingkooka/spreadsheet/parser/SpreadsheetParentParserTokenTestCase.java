@@ -23,9 +23,9 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberExpression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.tree.expression.ValueExpression;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -213,16 +213,18 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         return SpreadsheetParserToken.parenthesisCloseSymbol(")", ")");
     }
 
-    final ExpressionNumberExpression expression1() {
+    final ValueExpression<ExpressionNumber> expression1() {
         return this.expression(NUMBER1);
     }
 
-    final ExpressionNumberExpression expression2() {
+    final ValueExpression<ExpressionNumber> expression2() {
         return this.expression(NUMBER2);
     }
 
-    final ExpressionNumberExpression expression(final Number number) {
-        return Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(number));
+    final ValueExpression<ExpressionNumber> expression(final Number number) {
+        return Expression.value(
+                EXPRESSION_NUMBER_KIND.create(number)
+        );
     }
 
     final ExpressionNumber expressionNumber(final Number value) {
