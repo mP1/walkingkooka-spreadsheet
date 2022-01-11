@@ -36,6 +36,11 @@ public interface SpreadsheetExpressionFunctionContext extends ExpressionFunction
      */
     Optional<SpreadsheetCell> cell();
 
+    default SpreadsheetCell cellOrFail() {
+        return this.cell()
+                .orElseThrow(() -> new IllegalStateException("Required cell missing from context"));
+    }
+
     /**
      * Loads the cell for the given {@link SpreadsheetCellReference}
      */
