@@ -2170,6 +2170,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                             }
 
                             @Override
+                            public boolean requiresEvaluatedParameters() {
+                                return true;
+                            }
+
+                            @Override
                             public boolean resolveReferences() {
                                 return true;
                             }
@@ -2183,6 +2188,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                             }
 
                             @Override
+                            public boolean requiresEvaluatedParameters() {
+                                return true;
+                            }
+
+                            @Override
                             public boolean resolveReferences() {
                                 return true;
                             }
@@ -2193,6 +2203,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                             public Object apply(final List<Object> parameters,
                                                 final ExpressionFunctionContext context) {
                                 return convertStringParameter(parameters, LocalTime.class);
+                            }
+
+                            @Override
+                            public boolean requiresEvaluatedParameters() {
+                                return true;
                             }
 
                             @Override
@@ -2216,7 +2231,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             public Optional<Expression> reference(final ExpressionReference reference) {
                 throw new UnsupportedOperationException();//return context.reference(reference);
             }
-
 
             @Override
             public MathContext mathContext() {

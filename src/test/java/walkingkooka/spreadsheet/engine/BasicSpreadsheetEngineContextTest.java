@@ -796,6 +796,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
+                                public boolean requiresEvaluatedParameters() {
+                                    return true;
+                                }
+
+                                @Override
                                 public boolean resolveReferences() {
                                     return true;
                                 }
@@ -821,6 +826,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
+                                public boolean requiresEvaluatedParameters() {
+                                    return true;
+                                }
+
+                                @Override
                                 public boolean resolveReferences() {
                                     return false; // dont want SpreadsheetCellReference parameter to be resolved
                                 }
@@ -841,6 +851,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
+                                public boolean requiresEvaluatedParameters() {
+                                    return false;
+                                }
+
+                                @Override
                                 public boolean resolveReferences() {
                                     return true;
                                 }
@@ -858,6 +873,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 public Object apply(final List<Object> parameters,
                                                     final SpreadsheetExpressionFunctionContext context) {
                                     return context.spreadsheetMetadata();
+                                }
+
+                                @Override
+                                public boolean requiresEvaluatedParameters() {
+                                    return false;
                                 }
 
                                 @Override
