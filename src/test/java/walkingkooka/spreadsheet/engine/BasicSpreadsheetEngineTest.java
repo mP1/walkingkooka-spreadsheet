@@ -7919,6 +7919,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 }
 
                                 @Override
+                                public boolean requiresEvaluatedParameters() {
+                                    return true;
+                                }
+
+                                @Override
                                 public boolean resolveReferences() {
                                     return true;
                                 }
@@ -7934,6 +7939,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 }
 
                                 @Override
+                                public boolean requiresEvaluatedParameters() {
+                                    return true;
+                                }
+
+                                @Override
                                 public boolean resolveReferences() {
                                     return true;
                                 }
@@ -7944,6 +7954,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 public Object apply(final List<Object> parameters,
                                                     final ExpressionFunctionContext context) {
                                     return BasicSpreadsheetEngineTest.this.counter;
+                                }
+
+                                @Override
+                                public boolean requiresEvaluatedParameters() {
+                                    return true;
                                 }
 
                                 @Override
