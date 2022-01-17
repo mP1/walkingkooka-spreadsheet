@@ -24,6 +24,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -35,26 +36,37 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         TreePrintableTesting,
         ToStringTesting<SpreadsheetError> {
 
+    private final static SpreadsheetErrorKind KIND = SpreadsheetErrorKind.NA;
     private final static String MESSAGE = "message #1";
 
     @Test
     public void testWithNullValueFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetError.with(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetError.with(KIND, null)
+        );
     }
 
     @Test
     public void testWithEmptyValueFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetError.with(""));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetError.with(KIND, "")
+        );
     }
 
     @Test
     public void testWithWhitespaceValueFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetError.with(" \t"));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetError.with(KIND, " \t")
+        );
     }
 
     @Test
     public void testWith() {
-        final SpreadsheetError error = SpreadsheetError.with(MESSAGE);
+        final SpreadsheetError error = SpreadsheetError.with(KIND, MESSAGE);
+        this.checkKind(error, KIND);
         this.checkValue(error, MESSAGE);
     }
 
@@ -64,20 +76,40 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     public void testTreePrint() {
         this.treePrintAndCheck(
                 this.createObject(),
-                "ERROR: \"message #1\"\n"
+                "#NA \"message #1\"\n"
         );
     }
 
     // equals..........................................................................................................
 
     @Test
+    public void testEqualsDifferentKind() {
+        this.checkNotEquals(
+                SpreadsheetError.with(
+                        SpreadsheetErrorKind.NAME,
+                        MESSAGE
+                )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentValue() {
-        this.checkNotEquals(SpreadsheetError.with("different"));
+        this.checkNotEquals(
+                SpreadsheetError.with(
+                        KIND,
+                        "different"
+                )
+        );
     }
 
     @Test
     public void testEqualsDifferentCase() {
-        this.checkNotEquals(SpreadsheetError.with(MESSAGE.toUpperCase()));
+        this.checkNotEquals(
+                SpreadsheetError.with(
+                        KIND,
+                        MESSAGE.toUpperCase()
+                )
+        );
     }
 
     // JsonNodeMarshallingTesting.......................................................................................
@@ -89,13 +121,25 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
     @Test
     public void testJsonNodeUnmarshallString() {
-        this.unmarshallAndCheck(JsonNode.string(MESSAGE),
-                SpreadsheetError.with(MESSAGE));
+        this.unmarshallAndCheck(
+                JsonNode.object()
+                        .set(JsonPropertyName.with("kind"), JsonNode.string(KIND.name()))
+                        .set(JsonPropertyName.with("message"), JsonNode.string(MESSAGE)),
+                SpreadsheetError.with(
+                        KIND,
+                        MESSAGE
+                )
+        );
     }
 
     @Test
     public void testJsonNodeMarshall() {
-        this.marshallAndCheck(this.createObject(), JsonNode.string(MESSAGE));
+        this.marshallAndCheck(
+                this.createObject(),
+                JsonNode.object()
+                        .set(SpreadsheetError.KIND_PROPERTY, JsonNode.string(KIND.name()))
+                        .set(SpreadsheetError.MESSAGE_PROPERTY, JsonNode.string(MESSAGE))
+        );
     }
 
     @Test
@@ -107,16 +151,36 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createObject(), MESSAGE);
+        this.toStringAndCheck(
+                this.createObject(),
+                KIND + " \"" + MESSAGE + "\""
+        );
     }
 
     @Override
     public SpreadsheetError createObject() {
-        return SpreadsheetError.with(MESSAGE);
+        return SpreadsheetError.with(
+                KIND,
+                MESSAGE
+        );
     }
 
-    private void checkValue(final SpreadsheetError error, final String value) {
-        this.checkEquals(value, error.value(), "error");
+    private void checkKind(final SpreadsheetError error,
+                           final SpreadsheetErrorKind kind) {
+        this.checkEquals(
+                kind,
+                error.kind(),
+                "kind"
+        );
+    }
+
+    private void checkValue(final SpreadsheetError error,
+                            final String value) {
+        this.checkEquals(
+                value,
+                error.value(),
+                "error"
+        );
     }
 
     @Override

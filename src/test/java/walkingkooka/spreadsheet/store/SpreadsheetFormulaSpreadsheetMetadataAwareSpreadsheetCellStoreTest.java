@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -211,7 +212,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetCell with = requires.setFormula(
                 formula.setValue(
                         Optional.of(
-                                SpreadsheetError.with("Unrecognized character '9' at (1,1) \"99:12:00\" expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE")
+                                SpreadsheetError.with(
+                                        SpreadsheetErrorKind.VALUE,
+                                        "Unrecognized character '9' at (1,1) \"99:12:00\" expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE"
+                                )
                         )
                 )
         );
@@ -251,7 +255,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         )
                 ).setValue(
                         Optional.of(
-                                SpreadsheetError.with("Invalid value for DayOfMonth (valid values 1 - 28/31): 99")
+                                SpreadsheetError.with(
+                                        SpreadsheetErrorKind.VALUE,
+                                        "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
+                                )
                         )
                 )
         );

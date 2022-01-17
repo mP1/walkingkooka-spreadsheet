@@ -385,7 +385,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\"\n" +
-                        "  value: ERROR: \"Message #1\"\n"
+                        "  value: #VALUE! \"Message #1\"\n"
         );
     }
 
@@ -683,7 +683,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 formula(TEXT)
                     .setValue(
                             Optional.of(
-                                    SpreadsheetError.with("error message #1")
+                                    SpreadsheetError.with(
+                                            SpreadsheetErrorKind.VALUE,
+                                            "error message #1"
+                                    )
                             )
                     )
         );
@@ -841,7 +844,12 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private Optional<Object> error(final String error) {
-        return Optional.of(SpreadsheetError.with(error));
+        return Optional.of(
+                SpreadsheetError.with(
+                        SpreadsheetErrorKind.VALUE,
+                        error
+                )
+        );
     }
 
     private void checkErrorAbsent(final SpreadsheetFormula formula) {
