@@ -25,6 +25,8 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
@@ -457,6 +459,38 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "  expression:\n" +
                         "    ValueExpression \"1+2\"\n" +
                         "  error: \"Message #1\"\n"
+        );
+    }
+
+    // https://github.com/mP1/walkingkooka-spreadsheet/issues/1893
+
+    @Test
+    public void testTreePrintTreeValueImplementsTreePrintable() {
+        this.treePrintAndCheck(
+                formula("1+2")
+                        .setToken(this.token())
+                        .setExpression(this.expression())
+                        .setValue(
+                                Optional.of(
+                                        new TreePrintable() {
+                                            @Override
+                                            public void printTree(final IndentingPrinter printer) {
+                                                printer.println("1111");
+                                                printer.println("2222");
+                                                printer.println("3333");
+                                            }
+                                        })
+                        ),
+                "Formula\n" +
+                        "  text: \"1+2\"\n" +
+                        "  token:\n" +
+                        "    SpreadsheetText\n" +
+                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
+                        "  expression:\n" +
+                        "    ValueExpression \"1+2\"\n" +
+                        "  value: 1111\n" +
+                        "    2222\n" +
+                        "    3333\n"
         );
     }
 
