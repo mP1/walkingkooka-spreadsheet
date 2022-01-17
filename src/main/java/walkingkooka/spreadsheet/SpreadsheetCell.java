@@ -410,7 +410,6 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
 
     static {
         SpreadsheetCell.NO_FORMATTED_CELL.hashCode();
-        SpreadsheetFormula.ERROR_PROPERTY.hashCode();
         TextNode.NO_ATTRIBUTES.isEmpty();
         SpreadsheetCellFormat.NO_FORMATTER.isPresent();
 

@@ -122,7 +122,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                     ); // also clears value/error
                 }
             } catch (final Exception failed) {
-                formula = formula.setError(
+                formula = formula.setValue(
                         Optional.of(
                                 SpreadsheetError.with(failed.getMessage())
                         )

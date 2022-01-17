@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -76,9 +77,15 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
                 .findFirst()
                 .orElseThrow(() -> new ExpressionEvaluationException("Unknown cell reference " + reference));
         final SpreadsheetFormula formula = cell.formula();
-        final Optional<SpreadsheetError> error = formula.error();
-        if (error.isPresent()) {
-            throw new ExpressionEvaluationException(error.get().value());
+        final Optional<Object> maybeValue = formula.value();
+
+        // formula might have a value which is an error
+        if (maybeValue.isPresent()) {
+            final Object value = maybeValue.get();
+            if (value instanceof SpreadsheetError) {
+                final SpreadsheetError error = Cast.to(value);
+                throw new ExpressionEvaluationException(error.value());
+            }
         }
 
         return formula.expression();

@@ -209,7 +209,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         );
 
         final SpreadsheetCell with = requires.setFormula(
-                formula.setError(
+                formula.setValue(
                         Optional.of(
                                 SpreadsheetError.with("Unrecognized character '9' at (1,1) \"99:12:00\" expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE")
                         )
@@ -249,8 +249,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                         text
                                 )
                         )
-                ).setError(
-                        Optional.of(SpreadsheetError.with("Invalid value for DayOfMonth (valid values 1 - 28/31): 99"))
+                ).setValue(
+                        Optional.of(
+                                SpreadsheetError.with("Invalid value for DayOfMonth (valid values 1 - 28/31): 99")
+                        )
                 )
         );
 
