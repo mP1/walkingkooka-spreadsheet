@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -31,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetError>,
         HashCodeEqualsDefinedTesting2<SpreadsheetError>,
         JsonNodeMarshallingTesting<SpreadsheetError>,
+        TreePrintableTesting,
         ToStringTesting<SpreadsheetError> {
 
     private final static String MESSAGE = "message #1";
@@ -56,7 +58,17 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.checkValue(error, MESSAGE);
     }
 
-    // equals...............................................................................................
+    // TreePrintable...................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                this.createObject(),
+                "ERROR: \"message #1\"\n"
+        );
+    }
+
+    // equals..........................................................................................................
 
     @Test
     public void testEqualsDifferentValue() {
