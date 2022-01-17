@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
@@ -505,8 +506,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                                                 final SpreadsheetEngineEvaluation evaluation,
                                                                 final SpreadsheetEngineContext context) {
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, evaluation, context);
-        this.checkEquals(null,
-                this.valueOrError(cell, null),
+        this.checkEquals(
+                SpreadsheetFormula.NO_VALUE,
+                cell.formula().value(),
                 () -> "values from returned cells=" + cell);
         return cell;
     }
@@ -529,7 +531,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                                             final String formula,
                                                             final Object value) {
         final SpreadsheetCell cell = this.loadCellAndCheckFormula(engine, reference, evaluation, context, formula);
-        this.checkValueOrError(cell, value);
+        this.checkValue(cell, value);
         return cell;
     }
 
@@ -539,7 +541,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                                   final SpreadsheetEngineContext context,
                                                   final Object value) {
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, evaluation, context);
-        this.checkValueOrError(cell, value);
+        this.checkValue(cell, value);
         return cell;
     }
 
@@ -560,13 +562,21 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                        final SpreadsheetEngineContext context,
                                        final String errorContains) {
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, evaluation, context);
+        final SpreadsheetFormula formula = cell.formula();
+        final Optional<SpreadsheetError> error = formula.error();
 
-        final Optional<SpreadsheetError> error = cell.formula().error();
-        this.checkNotEquals(SpreadsheetFormula.NO_ERROR,
+        this.checkNotEquals(
+                SpreadsheetFormula.NO_ERROR,
                 error,
-                () -> "Expected error missing=" + cell);
-        assertTrue(error.get().value().contains(errorContains),
-                () -> "Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains));
+                () -> "formula missing error=" + formula
+        );
+
+        assertTrue(
+                error.get()
+                        .value()
+                        .contains(errorContains),
+                () -> "Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains)
+        );
     }
 
     default void loadCellAndCheck(final SpreadsheetEngine engine,
@@ -866,18 +876,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "formula.text from returned cell=" + cell);
     }
 
-    default void checkValueOrError(final SpreadsheetCell cell, final Object value) {
-        this.checkEquals(value,
-                this.valueOrError(cell, "Value and Error absent (" + cell + ")"),
+    default void checkValue(final SpreadsheetCell cell, final Object value) {
+        this.checkEquals(
+                value,
+                cell.formula().value().orElse(null),
                 () -> "values from returned cell=" + cell);
-    }
-
-    default Object valueOrError(final SpreadsheetCell cell, final Object bothAbsent) {
-        final SpreadsheetFormula formula = cell.formula();
-        return formula.value()
-                .orElse(formula.error()
-                        .map(e -> (Object) e.value())
-                        .orElse(bothAbsent));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")

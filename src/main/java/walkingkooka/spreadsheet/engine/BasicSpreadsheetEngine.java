@@ -487,7 +487,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                   final SpreadsheetEngineContext context) {
         final SpreadsheetFormula formula = cell.formula();
 
-        return formula.error().isPresent() ?
+        return formula.value()
+                .orElse(null) instanceof SpreadsheetError ?
                 formula : // value present - using cached.
                 this.evaluate(cell, context);
     }
@@ -524,9 +525,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetFormula setError(final SpreadsheetFormula formula,
                                         final Throwable cause) {
         final String message = cause.getMessage();
-        return formula.setError(
+        return formula.setValue(
                 Optional.of(
-                        SpreadsheetError.with(CharSequences.isNullOrEmpty(message) ? cause.getClass().getName() : message)
+                        SpreadsheetError.with(
+                                CharSequences.isNullOrEmpty(message) ? cause.getClass().getName() : message
+                        )
                 )
         );
     }
@@ -554,9 +557,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final SpreadsheetFormula formula = cell.formula();
         final Optional<Object> value = formula.value();
-        final SpreadsheetCell beforeConditionalRules = value.isPresent() ?
-                result.setFormatted(Optional.of(this.formatAndApplyStyle0(value.get(), formatter, result.style(), context))) :
-                this.formatAndApplyStyleValueAbsent(result);
+        final SpreadsheetCell beforeConditionalRules =
+                value.isPresent() && !formula.error().isPresent() ?
+                        result.setFormatted(
+                                Optional.of(
+                                        this.formatAndApplyStyle0(
+                                                value.get(),
+                                                formatter,
+                                                result.style(),
+                                                context
+                                        )
+                                )
+                        ) :
+                        this.formatAndApplyStyleValueAbsent(result);
 
         return this.locateAndApplyConditionalFormattingRule(beforeConditionalRules, context);
     }
@@ -637,14 +650,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * The error becomes the text and no formatting or color is applied.
      */
     private SpreadsheetCell formatAndApplyStyleValueAbsent(final SpreadsheetCell cell) {
-        final Optional<SpreadsheetError> error = cell.formula().error();
+        final Optional<SpreadsheetError> error = cell.formula()
+                .error();
 
         return error.isPresent() ?
                 cell.setFormatted(
                         Optional.of(
                                 cell.style()
                                         .replace(
-                                                TextNode.text(error.get().value())
+                                                TextNode.text(
+                                                        error.get()
+                                                                .value()
+                                                )
                                         )
                         )
                 ) :

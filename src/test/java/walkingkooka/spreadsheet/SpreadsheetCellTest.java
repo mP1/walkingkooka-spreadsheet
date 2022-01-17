@@ -815,7 +815,11 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         formula(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
-                                .setError(Optional.of(SpreadsheetError.with("error message 1")))
+                                .setValue(
+                                        Optional.of(
+                                                SpreadsheetError.with("error message 1")
+                                        )
+                                )
 
                 ),
                 "Cell A1\n" +
@@ -833,7 +837,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "      AddExpression\n" +
                         "        ValueExpression 1\n" +
                         "        ValueExpression 2\n" +
-                        "    error: \"error message 1\"\n"
+                        "    value: ERROR: \"error message 1\"\n"
         );
     }
 

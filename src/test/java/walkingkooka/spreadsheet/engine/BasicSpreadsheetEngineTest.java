@@ -325,7 +325,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .save(this.cell(a, "1/2"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine, a, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, context);
-        this.checkValueOrError(first, LocalDate.of(DEFAULT_YEAR, 2, 1));
+        this.checkValue(first, LocalDate.of(DEFAULT_YEAR, 2, 1));
 
         final int defaultYear = DEFAULT_YEAR + 100;
 
@@ -352,7 +352,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellReference,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context);
-        this.checkNotEquals(SpreadsheetFormula.NO_ERROR, first.formula().error(), () -> "Expected error absent=" + first);
+        this.checkNotEquals(
+                SpreadsheetFormula.NO_VALUE,
+                first.formula()
+                        .error(),
+                () -> "Expected error absent=" + first
+        );
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context);
         assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
@@ -369,7 +374,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .save(this.cell(a, "1/2"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine, a, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, context);
-        this.checkValueOrError(first, LocalDate.of(DEFAULT_YEAR, 2, 1));
+        this.checkValue(first, LocalDate.of(DEFAULT_YEAR, 2, 1));
 
         final int defaultYear = DEFAULT_YEAR + 100;
 
@@ -380,7 +385,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.createContext(defaultYear, engine, context.storeRepository()));
 
         assertNotSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
-        this.checkValueOrError(
+        this.checkValue(
                 second,
                 LocalDate.of(defaultYear, 2, 1)
         );
@@ -421,9 +426,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells();
 
         final SpreadsheetCell withError = saved.iterator().next();
-        this.checkNotEquals(SpreadsheetFormula.NO_ERROR,
+        this.checkNotEquals(
+                SpreadsheetFormula.NO_VALUE,
                 withError.formula().error(),
-                () -> "cell should have error because B2 reference is unknown=" + withError);
+                () -> "cell should have error because B2 reference is unknown=" + withError
+        );
 
         final SpreadsheetCellReference b = this.cellReference("B2");
         context.storeRepository()
@@ -822,7 +829,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellReference,
                 SpreadsheetFormula.EMPTY
                         .setText("=1+2")
-                        .setError(
+                        .setValue(
                                 Optional.of(
                                         SpreadsheetError.with("error!")
                                 )
@@ -2177,12 +2184,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(context.storeRepository().cells(), 1);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
-                "Invalid cell reference: " + b); // reference should have been fixed.
+                SpreadsheetError.with("Invalid cell reference: " + b)
+        ); // reference should have been fixed.
     }
 
     @Test
@@ -2498,12 +2507,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(cellStore, 1); // a
         this.countAndCheck(labelStore, 0);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + LABEL,
-                "Unknown label: " + LABEL);
+                SpreadsheetError.with("Unknown label: " + LABEL)
+        );
     }
 
     @Test
@@ -2973,12 +2984,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(context.storeRepository().cells(), 1);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
-                "Invalid cell reference: " + b); // reference should have been fixed.
+                SpreadsheetError.with("Invalid cell reference: " + b)
+        ); // reference should have been fixed.
     }
 
     @Test
@@ -3287,12 +3300,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(cellStore, 1); // a
         this.countAndCheck(labelStore, 0);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + LABEL,
-                "Unknown label: " + LABEL);
+                SpreadsheetError.with("Unknown label: " + LABEL)
+        );
     }
 
     @Test
@@ -8135,8 +8150,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .replace(TextNode.text(errorMessage))
                 .root());
 
-        return cell.setFormula(this.parseFormula(cell.formula())
-                .setError(Optional.of(SpreadsheetError.with(errorMessage))))
+        return cell.setFormula(
+                        this.parseFormula(cell.formula())
+                                .setValue(
+                                        Optional.of(
+                                                SpreadsheetError.with(errorMessage)
+                                        )
+                                )
+                )
                 .setFormatted(formattedCell);
     }
 
@@ -8190,8 +8211,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
             } catch (final Exception fail) {
-                parsedFormula = parsedFormula.setError(
-                        Optional.of(SpreadsheetError.with(fail.getMessage()))
+                parsedFormula = parsedFormula.setValue(
+                        Optional.of(
+                                SpreadsheetError.with(fail.getMessage())
+                        )
                 );
             }
         }
