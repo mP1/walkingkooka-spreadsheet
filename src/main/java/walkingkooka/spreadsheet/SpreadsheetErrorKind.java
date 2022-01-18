@@ -56,6 +56,10 @@ public enum SpreadsheetErrorKind implements HasText {
 
     private final String text;
 
+    public SpreadsheetError setMessage(final String message) {
+        return SpreadsheetError.with(this, message);
+    }
+
     @Override
     public String toString() {
         return this.text();
