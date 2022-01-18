@@ -25,7 +25,11 @@ package walkingkooka.spreadsheet;
 // #NULL
 // #NUM
 
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
+import walkingkooka.text.cursor.parser.ParserException;
+
+import java.util.Objects;
 
 /**
  * The type of {@link SpreadsheetError}.
@@ -63,5 +67,50 @@ public enum SpreadsheetErrorKind implements HasText {
     @Override
     public String toString() {
         return this.text();
+    }
+
+    /**
+     * Attempts to translate the given @link Throwable} into the a {@link SpreadsheetError}.
+     */
+    public static SpreadsheetError translate(final Throwable cause) {
+        Objects.requireNonNull(cause, "cause");
+
+        SpreadsheetErrorKind kind = null;
+
+        do {
+            // Trying to divide by 0
+            if (cause instanceof ArithmeticException) {
+                kind = DIV0;
+                break;
+            }
+
+            // #VALUE! 	The wrong type of operand or function argument is used
+            if (cause instanceof ClassCastException) {
+                kind = VALUE;
+                break;
+            }
+
+            // #NUM! 	A formula has invalid numeric data for the type of operation
+            if (cause instanceof NullPointerException ||
+                    cause instanceof IllegalArgumentException) {
+                kind = VALUE;
+                break;
+            }
+
+            // #NAME? 	Text in the formula is not recognized
+            if (cause instanceof ParserException) {
+                kind = NAME;
+                break;
+            }
+
+            kind = VALUE;
+        } while (false);
+
+        final String message = cause.getMessage();
+
+        return SpreadsheetError.with(
+                kind,
+                CharSequences.nullToEmpty(message).toString()
+        );
     }
 }
