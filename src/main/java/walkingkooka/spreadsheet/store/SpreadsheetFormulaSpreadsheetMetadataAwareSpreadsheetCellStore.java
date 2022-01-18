@@ -125,10 +125,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
             } catch (final Exception failed) {
                 formula = formula.setValue(
                         Optional.of(
-                                SpreadsheetError.with(
-                                        SpreadsheetErrorKind.VALUE,
-                                        failed.getMessage()
-                                )
+                                SpreadsheetErrorKind.translate(failed)
                         )
                 );
             }

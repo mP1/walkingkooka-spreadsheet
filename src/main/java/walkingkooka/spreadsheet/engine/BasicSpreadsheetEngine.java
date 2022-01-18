@@ -520,18 +520,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // ERROR HANDLING..............................................................................................
 
     /**
-     * Sets the error upon the formula using the {@link Throwable#getMessage()} of {@link Throwable#getClass()} if no
-     * message is present.
+     * Updates the formula value after translating the {@link Throwable}.
      */
     private SpreadsheetFormula setError(final SpreadsheetFormula formula,
                                         final Throwable cause) {
-        final String message = cause.getMessage();
         return formula.setValue(
                 Optional.of(
-                        SpreadsheetError.with(
-                                SpreadsheetErrorKind.VALUE, // TODO map exception types to different SpreadsheetErrorKind
-                                CharSequences.isNullOrEmpty(message) ? cause.getClass().getName() : message
-                        )
+                        SpreadsheetErrorKind.translate(cause)
                 )
         );
     }
