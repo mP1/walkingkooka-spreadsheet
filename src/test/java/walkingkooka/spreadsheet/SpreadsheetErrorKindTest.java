@@ -20,8 +20,106 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.cursor.parser.ParserException;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetErrorKind> {
+
+    // translate.......................................................................................................
+
+    @Test
+    public void testTranslateNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetErrorKind.translate(null)
+        );
+    }
+
+    private final static String MESSAGE = "Hello 123";
+
+    @Test
+    public void testTranslateArithmeticException() {
+        this.translateAndCheck(
+                new ArithmeticException(MESSAGE),
+                SpreadsheetErrorKind.DIV0
+        );
+    }
+
+    @Test
+    public void testTranslateClassCastException() {
+        this.translateAndCheck(
+                new ClassCastException(MESSAGE),
+                SpreadsheetErrorKind.VALUE
+        );
+    }
+
+    @Test
+    public void testTranslateParserException() {
+        this.translateAndCheck(
+                new ParserException(MESSAGE),
+                SpreadsheetErrorKind.NAME
+        );
+    }
+
+    @Test
+    public void testTranslateNullPointerException() {
+        this.translateAndCheck(
+                new NullPointerException(MESSAGE),
+                SpreadsheetErrorKind.VALUE
+        );
+    }
+
+    @Test
+    public void testTranslateIllegalArgumentException() {
+        this.translateAndCheck(
+                new IllegalArgumentException(MESSAGE),
+                SpreadsheetErrorKind.VALUE
+        );
+    }
+
+    @Test
+    public void testTranslateException() {
+        this.translateAndCheck(
+                new Exception(MESSAGE),
+                SpreadsheetErrorKind.VALUE
+        );
+    }
+
+    @Test
+    public void testTranslateExceptionNullMessage() {
+        this.translateAndCheck(
+                new Exception(),
+                SpreadsheetErrorKind.VALUE,
+                ""
+        );
+    }
+
+    @Test
+    public void testTranslateExceptionEmptyMessage() {
+        this.translateAndCheck(
+                new Exception(""),
+                SpreadsheetErrorKind.VALUE,
+                ""
+        );
+    }
+
+    private void translateAndCheck(final Throwable cause,
+                                   final SpreadsheetErrorKind kind) {
+        this.translateAndCheck(cause, kind, MESSAGE);
+    }
+
+    private void translateAndCheck(final Throwable cause,
+                                   final SpreadsheetErrorKind kind,
+                                   final String message) {
+        this.checkEquals(
+                kind.setMessage(message),
+                SpreadsheetErrorKind.translate(cause),
+                () -> "translate " + cause
+        );
+    }
+
+    // setMessage......................................................................................................
 
     @Test
     public void testSetMessage() {
@@ -34,6 +132,8 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
             this.checkEquals(message, error.value(), "message");
         }
     }
+
+    // ClassTesting......................................................................................................
 
     @Override
     public Class<SpreadsheetErrorKind> type() {
