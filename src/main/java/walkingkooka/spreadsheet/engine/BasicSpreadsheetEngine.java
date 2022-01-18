@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -528,6 +529,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return formula.setValue(
                 Optional.of(
                         SpreadsheetError.with(
+                                SpreadsheetErrorKind.VALUE, // TODO map exception types to different SpreadsheetErrorKind
                                 CharSequences.isNullOrEmpty(message) ? cause.getClass().getName() : message
                         )
                 )

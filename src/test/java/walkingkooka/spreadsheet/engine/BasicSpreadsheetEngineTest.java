@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -831,7 +832,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setText("=1+2")
                         .setValue(
                                 Optional.of(
-                                        SpreadsheetError.with("error!")
+                                        SpreadsheetError.with(
+                                                SpreadsheetErrorKind.VALUE,
+                                                "error!"
+                                        )
                                 )
                         )
         );
@@ -2190,7 +2194,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
-                SpreadsheetError.with("Invalid cell reference: " + b)
+                SpreadsheetError.with(
+                        SpreadsheetErrorKind.VALUE,
+                        "Invalid cell reference: " + b
+                )
         ); // reference should have been fixed.
     }
 
@@ -2513,7 +2520,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + LABEL,
-                SpreadsheetError.with("Unknown label: " + LABEL)
+                SpreadsheetError.with(
+                        SpreadsheetErrorKind.VALUE,
+                        "Unknown label: " + LABEL
+                )
         );
     }
 
@@ -2990,7 +3000,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
-                SpreadsheetError.with("Invalid cell reference: " + b)
+                SpreadsheetError.with(
+                        SpreadsheetErrorKind.VALUE,
+                        "Invalid cell reference: " + b
+                )
         ); // reference should have been fixed.
     }
 
@@ -3306,7 +3319,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + LABEL,
-                SpreadsheetError.with("Unknown label: " + LABEL)
+                SpreadsheetError.with(
+                        SpreadsheetErrorKind.VALUE,
+                        "Unknown label: " + LABEL
+                )
         );
     }
 
@@ -8154,7 +8170,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.parseFormula(cell.formula())
                                 .setValue(
                                         Optional.of(
-                                                SpreadsheetError.with(errorMessage)
+                                                SpreadsheetError.with(
+                                                        SpreadsheetErrorKind.VALUE,
+                                                        errorMessage
+                                                )
                                         )
                                 )
                 )
@@ -8213,7 +8232,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             } catch (final Exception fail) {
                 parsedFormula = parsedFormula.setValue(
                         Optional.of(
-                                SpreadsheetError.with(fail.getMessage())
+                                SpreadsheetError.with(
+                                        SpreadsheetErrorKind.VALUE,
+                                        fail.getMessage()
+                                )
                         )
                 );
             }

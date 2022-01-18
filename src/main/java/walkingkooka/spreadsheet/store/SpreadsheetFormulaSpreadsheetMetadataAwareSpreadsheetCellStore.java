@@ -21,6 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -124,7 +125,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
             } catch (final Exception failed) {
                 formula = formula.setValue(
                         Optional.of(
-                                SpreadsheetError.with(failed.getMessage())
+                                SpreadsheetError.with(
+                                        SpreadsheetErrorKind.VALUE,
+                                        failed.getMessage()
+                                )
                         )
                 );
             }

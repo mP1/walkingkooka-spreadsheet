@@ -817,7 +817,10 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                 .setExpression(expression())
                                 .setValue(
                                         Optional.of(
-                                                SpreadsheetError.with("error message 1")
+                                                SpreadsheetError.with(
+                                                        SpreadsheetErrorKind.VALUE,
+                                                        "error message 1"
+                                                )
                                         )
                                 )
 
@@ -837,7 +840,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "      AddExpression\n" +
                         "        ValueExpression 1\n" +
                         "        ValueExpression 2\n" +
-                        "    value: ERROR: \"error message 1\"\n"
+                        "    value: #VALUE! \"error message 1\"\n"
         );
     }
 
