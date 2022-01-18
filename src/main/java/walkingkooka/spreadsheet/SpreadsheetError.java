@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.Whitespace;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -40,7 +39,7 @@ public final class SpreadsheetError implements Value<String>,
     public static SpreadsheetError with(final SpreadsheetErrorKind kind,
                                         final String message) {
         Objects.requireNonNull(kind, "kind");
-        Whitespace.failIfNullOrEmptyOrWhitespace(message, "Message");
+        Objects.requireNonNull(message, "Message");
 
         return new SpreadsheetError(
                 kind,
