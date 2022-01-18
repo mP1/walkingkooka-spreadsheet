@@ -17,10 +17,23 @@
 
 package walkingkooka.spreadsheet;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetErrorKind> {
+
+    @Test
+    public void testSetMessage() {
+        final String message = "123";
+
+        for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
+            final SpreadsheetError error = kind.setMessage(message);
+
+            this.checkEquals(kind, error.kind(), "kind");
+            this.checkEquals(message, error.value(), "message");
+        }
+    }
 
     @Override
     public Class<SpreadsheetErrorKind> type() {
