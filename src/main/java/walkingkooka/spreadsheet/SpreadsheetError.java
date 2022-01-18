@@ -34,7 +34,8 @@ import java.util.Objects;
  * An error for an individual cell or formula which may be a parsing or execution error.
  */
 public final class SpreadsheetError implements Value<String>,
-        TreePrintable {
+        TreePrintable,
+        HasSpreadsheetErrorKind {
 
     public static SpreadsheetError with(final SpreadsheetErrorKind kind,
                                         final String message) {
@@ -68,6 +69,13 @@ public final class SpreadsheetError implements Value<String>,
      * The error message text.
      */
     private final String message;
+
+    // HasSpreadsheetErrorKind ........................................................................................
+
+    @Override
+    public SpreadsheetErrorKind spreadsheetErrorKind() {
+        return this.kind();
+    }
 
     // TreePrintable....................................................................................................
 
