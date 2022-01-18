@@ -48,14 +48,6 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     }
 
     @Test
-    public void testWithEmptyValueFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetError.with(KIND, "")
-        );
-    }
-
-    @Test
     public void testWithWhitespaceValueFails() {
         assertThrows(
                 IllegalArgumentException.class,
@@ -68,6 +60,13 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         final SpreadsheetError error = SpreadsheetError.with(KIND, MESSAGE);
         this.checkKind(error, KIND);
         this.checkValue(error, MESSAGE);
+    }
+
+    @Test
+    public void testWithEmptyMessage() {
+        final SpreadsheetError error = SpreadsheetError.with(KIND, null);
+        this.checkKind(error, KIND);
+        this.checkValue(error, "");
     }
 
     // TreePrintable...................................................................................................
