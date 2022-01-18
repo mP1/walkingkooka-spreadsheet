@@ -171,6 +171,12 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
                 error.kind(),
                 "kind"
         );
+
+        this.checkEquals(
+                kind,
+                error.spreadsheetErrorKind(),
+                "spreadsheetErrorKind"
+        );
     }
 
     private void checkValue(final SpreadsheetError error,
