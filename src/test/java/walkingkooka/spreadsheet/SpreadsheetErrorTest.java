@@ -67,7 +67,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     public void testTreePrint() {
         this.treePrintAndCheck(
                 this.createObject(),
-                "#NA \"message #1\"\n"
+                "#N/A \"message #1\"\n"
         );
     }
 
