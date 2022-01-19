@@ -33,21 +33,28 @@ import java.util.Objects;
 
 /**
  * The type of {@link SpreadsheetError}.
+ * <br>
+ * https://exceljet.net/excel-functions/excel-errortype-function
  */
 public enum SpreadsheetErrorKind implements HasText {
-    NAME("#NAME"),
 
-    DIV0("#DIV/0"),
+    NULL("#NULL!"),
 
-    REF("#REF!"),
+    DIV0("#DIV/0!"),
 
     VALUE("#VALUE!"),
 
-    NA("#NA"),
+    REF("#REF!"),
 
-    NULL("#NULL"),
+    NAME("#NAME?"),
 
-    NUM("#NUM");
+    NUM("#NUM!"),
+
+    NA("#N/A"),
+
+    SPILL("#SPILL!"),
+
+    CALC("#CALC!");
 
     SpreadsheetErrorKind(final String text) {
         this.text = text;
