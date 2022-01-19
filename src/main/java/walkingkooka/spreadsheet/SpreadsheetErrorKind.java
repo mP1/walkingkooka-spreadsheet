@@ -38,26 +38,27 @@ import java.util.Objects;
  */
 public enum SpreadsheetErrorKind implements HasText {
 
-    NULL("#NULL!"),
+    NULL("#NULL!", 1),
 
-    DIV0("#DIV/0!"),
+    DIV0("#DIV/0!", 2),
 
-    VALUE("#VALUE!"),
+    VALUE("#VALUE!", 3),
 
-    REF("#REF!"),
+    REF("#REF!", 4),
 
-    NAME("#NAME?"),
+    NAME("#NAME?", 5),
 
-    NUM("#NUM!"),
+    NUM("#NUM!", 6),
 
-    NA("#N/A"),
+    NA("#N/A", 7),
 
-    SPILL("#SPILL!"),
+    SPILL("#SPILL!" 9),
 
-    CALC("#CALC!");
+    CALC("#CALC!", 14);
 
     SpreadsheetErrorKind(final String text) {
         this.text = text;
+        this.value = value;
     }
 
     @Override
@@ -66,6 +67,15 @@ public enum SpreadsheetErrorKind implements HasText {
     }
 
     private final String text;
+
+    /**
+     * This value is return by ERROR.TYPE function.
+     */
+    public int value() {
+        return this.value;
+    }
+
+    private final int value;
 
     public SpreadsheetError setMessage(final String message) {
         return SpreadsheetError.with(this, message);
