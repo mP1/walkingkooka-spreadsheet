@@ -52,11 +52,12 @@ public enum SpreadsheetErrorKind implements HasText {
 
     NA("#N/A", 7),
 
-    SPILL("#SPILL!" 9),
+    SPILL("#SPILL!", 9),
 
     CALC("#CALC!", 14);
 
-    SpreadsheetErrorKind(final String text) {
+    SpreadsheetErrorKind(final String text,
+                         final int value) {
         this.text = text;
         this.value = value;
     }
