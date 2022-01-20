@@ -1942,6 +1942,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.parseExpressionEvaluateAndCheck("toTime(toTime(\"18:00:00\")-toTime(\"06:00:00\"))", "12:00"); //1/2 a day or 12noon
     }
 
+    @Test
+    public void testExpressionErrorDotType() {
+        this.parseExpressionEvaluateAndCheck("Error.Type()", "Hello");
+    }
+
     // helpers..........................................................................................................
 
     private void parseExpressionThrows(final String text,
@@ -2161,6 +2166,24 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             @Override
             public ExpressionFunction<?, ExpressionFunctionContext> function(final FunctionExpressionName name) {
                 switch (name.value()) {
+                    case "Error.Type":
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final ExpressionFunctionContext context) {
+                                return "Hello";
+                            }
+
+                            @Override
+                            public boolean requiresEvaluatedParameters() {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean resolveReferences() {
+                                return false;
+                            }
+                        };
                     case "toDate":
                         return new FakeExpressionFunction<>() {
                             @Override
