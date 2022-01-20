@@ -1340,6 +1340,21 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
+    public void testFunctionNameWithDotWithoutArguments() {
+        final String text = "Error.Type()";
+        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(
+                Lists.of(
+                        functionName("Error.Type"),
+                        openParenthesis(),
+                        closeParenthesis()
+                ),
+                text
+        );
+
+        this.functionParseAndCheck(text, f, text);
+    }
+
+    @Test
     public void testFunctionWithoutArgumentsWhitespace() {
         final String text = "xyz(  )";
         final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), whitespace(), closeParenthesis()), text);
@@ -1911,7 +1926,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void testExpressionLocalDateSubtraction() {
-        this.parseExpressionEvaluateAndCheck("toDate(\"2000-01-03\")-toDate(\"1999-12-31\")", 3);// days!
+        this.parseExpressionEvaluateAndCheck("test.toDate(\"2000-01-03\")-test.toDate(\"1999-12-31\")", 3);// days!
     }
 
     @Test
@@ -1925,7 +1940,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void testExpressionLocalDateTimeSubtraction() {
-        this.parseExpressionEvaluateAndCheck("toDateTime(\"2000-02-01T12:00:00\")-toDateTime(\"2000-01-31T06:00:00\")", 1.25); //1 1/4days
+        this.parseExpressionEvaluateAndCheck("test.toDateTime(\"2000-02-01T12:00:00\")-test.toDateTime(\"2000-01-31T06:00:00\")", 1.25); //1 1/4days
     }
 
     @Test
@@ -1939,7 +1954,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void testExpressionLocalTimeSubtraction() {
-        this.parseExpressionEvaluateAndCheck("toTime(toTime(\"18:00:00\")-toTime(\"06:00:00\"))", "12:00"); //1/2 a day or 12noon
+        this.parseExpressionEvaluateAndCheck("test.toTime(test.toTime(\"18:00:00\")-test.toTime(\"06:00:00\"))", "12:00"); //1/2 a day or 12noon
     }
 
     @Test
@@ -2167,80 +2182,36 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             public ExpressionFunction<?, ExpressionFunctionContext> function(final FunctionExpressionName name) {
                 switch (name.value()) {
                     case "Error.Type":
-                        return new FakeExpressionFunction<>() {
-                            @Override
-                            public Object apply(final List<Object> parameters,
-                                                final ExpressionFunctionContext context) {
-                                return "Hello";
-                            }
-
-                            @Override
-                            public boolean requiresEvaluatedParameters() {
-                                return false;
-                            }
-
-                            @Override
-                            public boolean resolveReferences() {
-                                return false;
-                            }
-                        };
-                    case "toDate":
-                        return new FakeExpressionFunction<>() {
-                            @Override
-                            public Object apply(final List<Object> parameters,
-                                                final ExpressionFunctionContext context) {
-                                return convertStringParameter(parameters, LocalDate.class);
-                            }
-
-                            @Override
-                            public boolean requiresEvaluatedParameters() {
-                                return true;
-                            }
-
-                            @Override
-                            public boolean resolveReferences() {
-                                return true;
-                            }
-                        };
-                    case "toDateTime":
-                        return new FakeExpressionFunction<>() {
-                            @Override
-                            public Object apply(final List<Object> parameters,
-                                                final ExpressionFunctionContext context) {
-                                return convertStringParameter(parameters, LocalDateTime.class);
-                            }
-
-                            @Override
-                            public boolean requiresEvaluatedParameters() {
-                                return true;
-                            }
-
-                            @Override
-                            public boolean resolveReferences() {
-                                return true;
-                            }
-                        };
-                    case "toTime":
-                        return new FakeExpressionFunction<>() {
-                            @Override
-                            public Object apply(final List<Object> parameters,
-                                                final ExpressionFunctionContext context) {
-                                return convertStringParameter(parameters, LocalTime.class);
-                            }
-
-                            @Override
-                            public boolean requiresEvaluatedParameters() {
-                                return true;
-                            }
-
-                            @Override
-                            public boolean resolveReferences() {
-                                return true;
-                            }
-                        };
+                        return function((p, c) -> "Hello");
+                    case "test.toDate":
+                        return function((p, c) -> convertStringParameter(p, LocalDate.class));
+                    case "test.toDateTime":
+                        return function((p, c) -> convertStringParameter(p, LocalDateTime.class));
+                    case "test.toTime":
+                        return function((p, c) -> convertStringParameter(p, LocalTime.class));
                     default:
                         throw new UnknownExpressionFunctionException(name);
                 }
+            }
+
+            private FakeExpressionFunction<Object, ExpressionFunctionContext> function(final BiFunction<List<Object>, ExpressionFunctionContext, Object> apply) {
+                return new FakeExpressionFunction<>() {
+                    @Override
+                    public Object apply(final List<Object> parameters,
+                                        final ExpressionFunctionContext context) {
+                        return apply.apply(parameters, context);
+                    }
+
+                    @Override
+                    public boolean requiresEvaluatedParameters() {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean resolveReferences() {
+                        return true;
+                    }
+                };
             }
 
             private <T> T convertStringParameter(final List<Object> parameters, final Class<T> targetType) {
