@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Either;
 import walkingkooka.convert.ConverterContext;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -36,8 +36,10 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * A {@link ExpressionEvaluationContext} used exclusively by {@link BasicSpreadsheetEngine#parseFormulaIfNecessary(SpreadsheetFormula, Function, SpreadsheetEngineContext)}
+ * A {@link ExpressionEvaluationContext} used exclusively by {@link BasicSpreadsheetEngine#parseFormulaIfNecessary(SpreadsheetCell, Function, SpreadsheetEngineContext)}
  * which uses this to convert a {@link walkingkooka.spreadsheet.parser.SpreadsheetParserToken#toExpression(ExpressionEvaluationContext)}.
+ * <br>
+ * None of the function or evaluation type methods should be called and all throw {@link UnsupportedOperationException}.
  */
 final class BasicSpreadsheetEngineExpressionEvaluationContext implements ExpressionEvaluationContext {
 
