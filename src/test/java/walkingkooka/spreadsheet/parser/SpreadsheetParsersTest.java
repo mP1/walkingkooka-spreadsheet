@@ -2170,7 +2170,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             @Override
             public Object evaluate(final FunctionExpressionName name,
                                    final List<Object> parameters) {
-                return this.function(name).apply(parameters, this);
+                final ExpressionFunction<?, ExpressionFunctionContext> function = this.function(name);
+
+                return function.apply(
+                        this.prepareParameters(function, parameters),
+                        this
+                );
             }
 
             @Override
