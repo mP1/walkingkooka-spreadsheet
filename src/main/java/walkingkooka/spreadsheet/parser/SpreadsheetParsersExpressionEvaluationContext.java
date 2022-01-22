@@ -48,7 +48,7 @@ final class SpreadsheetParsersExpressionEvaluationContext implements ExpressionE
     }
 
     @Override
-    public Optional<Expression> reference(final ExpressionReference reference) {
+    public Optional<Object> reference(final ExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 

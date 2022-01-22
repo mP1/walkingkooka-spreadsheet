@@ -543,7 +543,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "Unknown cell reference");
+                "Unable to find ");
     }
 
     @Test
@@ -800,7 +800,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
 
         final SpreadsheetCell a1 = this.cell("a1", "=$B$2+99");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Unknown cell reference $B$2");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Unable to find $B$2");
         this.saveCellAndCheck(engine,
                 a1,
                 context,
@@ -902,7 +902,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName unknown = SpreadsheetExpressionReference.labelName("LABELXYZ");
 
         final SpreadsheetCell a1 = this.cell("a1", "=1+" + unknown);
-        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Unknown label: " + unknown);
+        final SpreadsheetCell a1Formatted = this.formattedCellWithError(
+                a1,
+                "Unknown label \"" + unknown + "\""
+        );
         this.saveCellAndCheck(engine,
                 a1,
                 context,
@@ -1299,7 +1302,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.deleteCellAndCheck(engine,
                 b2.reference(),
                 context,
-                this.formattedCellWithError(a1, "Unknown cell reference " + b2Reference));
+                this.formattedCellWithError(a1, "Unable to find " + b2Reference));
 
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
                 .cellReferences();
@@ -1365,7 +1368,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.deleteCellAndCheck(engine,
                 b2.reference(),
                 context,
-                this.formattedCellWithError(a1, "Unknown cell reference " + labelB2));
+                this.formattedCellWithError(a1, "Unable to find " + labelB2));
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
@@ -2504,7 +2507,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        formattedCellWithError(a, "=1+0+" + LABEL, "Unknown label: " + LABEL)
+                                        formattedCellWithError(
+                                                a,
+                                                "=1+0+" + LABEL,
+                                                "Unknown label \"" + LABEL + "\""
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -2522,7 +2529,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "=1+0+" + LABEL,
                 SpreadsheetError.with(
                         SpreadsheetErrorKind.VALUE,
-                        "Unknown label: " + LABEL
+                        "Unknown label \"" + LABEL + "\""
                 )
         );
     }
@@ -3303,7 +3310,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError("$A$1", "=1+0+" + LABEL, "Unknown label: " + LABEL)
+                                        this.formattedCellWithError(
+                                                "$A$1",
+                                                "=1+0+" + LABEL,
+                                                "Unknown label \"" + LABEL + "\"")
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -3321,7 +3331,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "=1+0+" + LABEL,
                 SpreadsheetError.with(
                         SpreadsheetErrorKind.VALUE,
-                        "Unknown label: " + LABEL
+                        "Unknown label \"" + LABEL + "\""
                 )
         );
     }
@@ -5707,7 +5717,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.removeLabelAndCheck(engine,
                 label,
                 context,
-                this.formattedCellWithError("A1", "=" + label + "+1", "Unknown label: " + label));
+                this.formattedCellWithError(
+                        "A1",
+                        "=" + label + "+1",
+                        "Unknown label \"" + label + "\""
+                )
+        );
 
         this.loadLabelFailCheck(context.storeRepository().labels(), label);
     }
@@ -7888,8 +7903,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 if (reference.isCellReference()) {
                     return (SpreadsheetCellReference) reference;
                 }
-                checkEquals(LABEL, reference.toString());
-                return LABEL_CELL;
+                if (reference.isLabelName()) {
+                    return this.storeRepository()
+                            .labels()
+                            .cellReferenceOrFail(reference);
+                }
+                throw new ExpressionEvaluationException("Unable to find " + reference);
             }
 
             public SpreadsheetMetadata metadata() {
@@ -7927,11 +7946,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ExpressionEvaluationContexts.basic(
                                 this.metadata().expressionNumberKind(),
                                 this.functions(),
-                                SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
-                                        engine,
-                                        storeRepository.labels(),
-                                        this
-                                ),
                                 this.functionContext()
                         )
                 );
@@ -8012,9 +8026,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 );
             }
 
-            private Function<ExpressionReference, Optional<Expression>> references() {
+            private Function<ExpressionReference, Optional<Object>> references() {
                 return (r -> {
-                    throw new UnsupportedOperationException();
+                    if (r instanceof SpreadsheetExpressionReference) {
+                        final SpreadsheetCellReference cell = this.resolveCellReference((SpreadsheetExpressionReference) r);
+                        final SpreadsheetDelta delta = engine.loadCell(
+                                cell,
+                                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                                this
+                        );
+                        return delta.cell(cell)
+                                .flatMap(c -> c.formula().value());
+                    }
+                    return Optional.empty();
                 });
             }
 

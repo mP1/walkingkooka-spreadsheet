@@ -40,10 +40,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -511,7 +509,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
             }
 
-        } catch (final ExpressionEvaluationException cause) {
+        } catch (final Exception cause) {
             formula = this.setError(formula, cause);
         }
         return formula;

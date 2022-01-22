@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
@@ -43,7 +44,8 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
                                                                                   final SpreadsheetCellStore cellStore,
                                                                                   final AbsoluteUrl serverUrl,
                                                                                   final SpreadsheetMetadata spreadsheetMetadata,
-                                                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions) {
+                                                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
+                                                                                  final Function<ExpressionReference, Optional<Object>> references) {
         Objects.requireNonNull(cell, "cell");
 
         return new BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext(
@@ -51,7 +53,8 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
                 cellStore,
                 serverUrl,
                 spreadsheetMetadata,
-                functions
+                functions,
+                references
         );
     }
 
@@ -59,13 +62,15 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
                                                                               final SpreadsheetCellStore cellStore,
                                                                               final AbsoluteUrl serverUrl,
                                                                               final SpreadsheetMetadata spreadsheetMetadata,
-                                                                              final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions) {
+                                                                              final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
+                                                                              final Function<ExpressionReference, Optional<Object>> references) {
         super();
         this.cell = cell;
         this.cellStore = cellStore;
         this.serverUrl = serverUrl;
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.functions = functions;
+        this.references = references;
     }
 
     // SpreadsheetExpressionFunctionContext............................................................................
@@ -113,6 +118,13 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
         return this.function(name)
                 .apply(parameters, this);
     }
+
+    @Override
+    public Optional<Object> reference(final ExpressionReference reference) {
+        return this.references.apply(reference);
+    }
+
+    private final Function<ExpressionReference, Optional<Object>> references;
 
     @Override
     public boolean canConvert(final Object value,

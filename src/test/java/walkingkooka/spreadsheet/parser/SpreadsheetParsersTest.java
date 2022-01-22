@@ -2227,8 +2227,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             }
 
             @Override
-            public Optional<Expression> reference(final ExpressionReference reference) {
-                throw new UnsupportedOperationException();//return context.reference(reference);
+            public Optional<Object> reference(final ExpressionReference reference) {
+                throw new UnsupportedOperationException();
             }
 
             @Override

@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.util.FunctionTesting;
 
@@ -29,7 +28,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionTest
-        implements FunctionTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction, ExpressionReference, Optional<Expression>> {
+        implements FunctionTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction, ExpressionReference, Optional<Object>> {
 
     @Test
     public void testWithNullEngineFails() {
