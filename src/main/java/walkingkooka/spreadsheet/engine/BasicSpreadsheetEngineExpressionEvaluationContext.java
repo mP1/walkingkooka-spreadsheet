@@ -63,7 +63,7 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     @Override
-    public Optional<Expression> reference(ExpressionReference expressionReference) {
+    public Optional<Object> reference(ExpressionReference expressionReference) {
         throw new UnsupportedOperationException();
     }
 

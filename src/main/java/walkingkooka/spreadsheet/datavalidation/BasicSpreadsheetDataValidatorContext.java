@@ -59,9 +59,7 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
                                                  final ExpressionEvaluationContext context) {
         super();
         this.cellReference = cellReference;
-        this.value = Optional.of(
-                Expression.value(value)
-        );
+        this.value = Optional.of(value);
         this.context = context;
     }
 
@@ -98,13 +96,13 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public Optional<Expression> reference(final ExpressionReference reference) {
+    public Optional<Object> reference(final ExpressionReference reference) {
         return this.cellReference().equals(reference) ?
                 this.value :
                 this.context.reference(reference);
     }
 
-    private final Optional<Expression> value;
+    private final Optional<Object> value;
 
     @Override
     public Locale locale() {

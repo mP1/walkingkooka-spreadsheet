@@ -170,13 +170,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 ExpressionEvaluationContexts.basic(
                         metadata.expressionNumberKind(),
                         this.functions,
-                        this.function,
                         BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext.with(
                                 cell,
                                 this.storeRepository.cells(),
                                 this.serverUrl,
                                 metadata,
-                                this.functions
+                                this.functions,
+                                this.function
                         )
                 )
         );

@@ -192,7 +192,6 @@ public final class Sample {
                         ExpressionEvaluationContexts.basic(
                                 EXPRESSION_NUMBER_KIND,
                                 functions(),
-                                references(),
                                 this.functionContext()
                         )
                 );
@@ -204,20 +203,20 @@ public final class Sample {
                 };
             }
 
-            private Function<ExpressionReference, Optional<Expression>> references() {
-                return SpreadsheetEngines.expressionEvaluationContextExpressionReferenceExpressionFunction(
-                        engine,
-                        this.storeRepository().labels(),
-                        this
-                );
-            }
-
             private ExpressionFunctionContext functionContext() {
                 return ExpressionFunctionContexts.basic(
                         EXPRESSION_NUMBER_KIND,
                         this.functions(),
                         this.references(),
                         metadata.converterContext()
+                );
+            }
+
+            private Function<ExpressionReference, Optional<Object>> references() {
+                return SpreadsheetEngines.expressionEvaluationContextExpressionReferenceExpressionFunction(
+                        engine,
+                        this.storeRepository().labels(),
+                        this
                 );
             }
 
