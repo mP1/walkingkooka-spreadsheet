@@ -21,7 +21,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 
@@ -50,9 +49,10 @@ final class BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVis
 
     @Override
     protected void visit(final SpreadsheetLabelName label) {
-        final SpreadsheetLabelMapping mapping = this.store.load(label)
-                .orElseThrow(() -> new IllegalArgumentException("Unknown Label " + label));
-        this.accept(mapping.reference());
+        this.accept(
+                this.store.loadOrFail(label)
+                        .reference()
+        );
     }
 
     private final SpreadsheetLabelStore store;
