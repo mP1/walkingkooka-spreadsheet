@@ -428,6 +428,73 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    // textLabel.......................................................................................................
+
+    @Test
+    public void testTextLabelCell() {
+        this.textLabelAndCheck(
+                SpreadsheetSelection.parseCell("B2"),
+                "Cell"
+        );
+    }
+
+    @Test
+    public void testTextLabelCellRange() {
+        this.textLabelAndCheck(
+                SpreadsheetSelection.parseCellRange("C3:D4"),
+                "Cell Range"
+        );
+    }
+
+    @Test
+    public void testTextLabelColumn() {
+        this.textLabelAndCheck(
+                SpreadsheetSelection.parseColumn("C"),
+                "Column"
+        );
+    }
+
+    @Test
+    public void testTextLabelColumnRange() {
+        this.textLabelAndCheck(
+                SpreadsheetSelection.parseColumnRange("C:D"),
+                "Column Range"
+        );
+    }
+
+    @Test
+    public void testTextLabelSpreadsheetLabelName() {
+        this.textLabelAndCheck(
+                SpreadsheetSelection.labelName("Label123"),
+                "Label"
+        );
+    }
+
+    @Test
+    public void testTextLabelRow() {
+        this.textLabelAndCheck(
+                SpreadsheetSelection.parseRow("2"),
+                "Row"
+        );
+    }
+
+    @Test
+    public void testTextLabelRowRange() {
+        this.textLabelAndCheck(
+                SpreadsheetSelection.parseRowRange("3:4"),
+                "Row Range"
+        );
+    }
+
+    private void textLabelAndCheck(final SpreadsheetSelection selection,
+                                   final String textLabel) {
+        this.checkEquals(
+                textLabel,
+                selection.textLabel(),
+                () -> "textLabel of " + selection
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
