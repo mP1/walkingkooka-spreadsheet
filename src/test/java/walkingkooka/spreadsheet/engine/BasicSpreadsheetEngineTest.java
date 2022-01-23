@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -543,7 +544,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "Reference not found");
+                "Unknown Cell");
     }
 
     @Test
@@ -802,7 +803,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1 = this.cell("a1", "=$B$2+99");
         final SpreadsheetCell a1Formatted = this.formattedCellWithError(
                 a1,
-                "Reference not found: $B$2"
+                "Unknown Cell $B$2"
         );
 
         this.saveCellAndCheck(engine,
@@ -1309,7 +1310,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithError(
                         a1,
-                        "Reference not found: $B$2"
+                        "Unknown Cell $B$2"
                 )
         );
 
@@ -1380,7 +1381,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithError(
                         a1,
-                        "Reference not found: " + labelB2
+                        "Unknown Label " + labelB2
                 )
         );
 
@@ -8036,7 +8037,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.metadata().expressionNumberKind(),
                         this.functions(),
                         this.references(),
-                        ExpressionFunctionContexts.referenceNotFound(),
+                        SpreadsheetExpressionFunctionContexts.referenceNotFound(),
                         this.converterContext()
                 );
             }
