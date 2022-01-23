@@ -561,7 +561,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "Unknown label");
+                "Unknown Label");
     }
 
     @Test

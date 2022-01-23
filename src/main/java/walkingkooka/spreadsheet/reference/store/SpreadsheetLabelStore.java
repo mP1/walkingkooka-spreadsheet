@@ -64,7 +64,7 @@ public interface SpreadsheetLabelStore extends Store<SpreadsheetLabelName, Sprea
     default SpreadsheetCellReference cellReferenceOrFail(final SpreadsheetExpressionReference reference) {
         return this.cellReference(reference)
                 .orElseThrow(() -> new IllegalArgumentException(
-                                "Unknown Label " +
+                                "Unknown Label: " +
                                         CharSequences.quote(reference.toString())
                         )
                 );

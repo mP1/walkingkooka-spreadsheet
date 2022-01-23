@@ -495,6 +495,16 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    // notFound.........................................................................................................
+
+    @Test
+    public void testNotFound() {
+        this.checkEquals(
+                "Unknown Cell: Z99",
+                SpreadsheetSelection.parseCell("Z99").notFound()
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
