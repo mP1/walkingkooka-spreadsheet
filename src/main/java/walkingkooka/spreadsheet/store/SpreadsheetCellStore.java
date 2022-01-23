@@ -21,6 +21,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 import walkingkooka.store.Store;
 
 import java.util.Set;
@@ -30,7 +31,7 @@ import java.util.Set;
  * Parameters of type {@link SpreadsheetCellReference}, {@link SpreadsheetColumnReference} or {@link SpreadsheetRowReference}
  * ignore their {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind}, either form should return the same results.
  */
-public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, SpreadsheetCell> {
+public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellReference, SpreadsheetCell> {
 
     /**
      * The highest row number

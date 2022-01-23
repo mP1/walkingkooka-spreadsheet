@@ -21,8 +21,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.store.Store;
-import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
@@ -31,7 +29,7 @@ import java.util.Set;
 /**
  * A store that holds all label to cell references for a spreadsheet. No additional actions are supported.
  */
-public interface SpreadsheetLabelStore extends Store<SpreadsheetLabelName, SpreadsheetLabelMapping> {
+public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabelName, SpreadsheetLabelMapping> {
 
     /**
      * Finds all {@link SpreadsheetLabelName} for the given text.
@@ -63,10 +61,6 @@ public interface SpreadsheetLabelStore extends Store<SpreadsheetLabelName, Sprea
      */
     default SpreadsheetCellReference cellReferenceOrFail(final SpreadsheetExpressionReference reference) {
         return this.cellReference(reference)
-                .orElseThrow(() -> new IllegalArgumentException(
-                                "Unknown Label: " +
-                                        CharSequences.quote(reference.toString())
-                        )
-                );
+                .orElseThrow(() -> this.notFound(reference));
     }
 }

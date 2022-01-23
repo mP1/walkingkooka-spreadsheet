@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.store.Store;
 
 import java.util.List;
@@ -32,7 +32,7 @@ import java.util.function.Consumer;
  * is ignored passing either variant must return the same results.
  * All returned {@link SpreadsheetCellReference} including those within a {@link SpreadsheetCellRange} will be relative and never absolute.
  */
-public interface SpreadsheetCellRangeStore<V> extends Store<SpreadsheetCellRange, List<V>> {
+public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<SpreadsheetCellRange, List<V>> {
 
     /**
      * Values dont include the actual range, therefore this {@link Store} method is invalid and throws {@link UnsupportedOperationException}.

@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.store.LoadStoreException;
 import walkingkooka.store.StoreTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -171,9 +172,9 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
             final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label" + i);
             if (!store.load(label).isPresent()) {
                 assertThrows(
-                        IllegalArgumentException.class,
+                        LoadStoreException.class,
                         () -> store.cellReferenceOrFail(label),
-                        () -> "Unknown label: " + label + " should have failed"
+                        () -> "Unknown Label: " + label + " should have failed"
                 );
                 tested = true;
                 break;

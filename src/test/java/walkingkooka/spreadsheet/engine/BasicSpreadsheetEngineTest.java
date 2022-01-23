@@ -909,7 +909,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1 = this.cell("a1", "=1+" + unknown);
         final SpreadsheetCell a1Formatted = this.formattedCellWithError(
                 a1,
-                "Unknown Label: \"" + unknown + "\""
+                "Unknown Label: " + unknown
         );
         this.saveCellAndCheck(engine,
                 a1,
@@ -2525,7 +2525,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         formattedCellWithError(
                                                 a,
                                                 "=1+0+" + LABEL,
-                                                "Unknown Label: \"" + LABEL + "\""
+                                                "Unknown Label: " + LABEL
                                         )
                                 )
                         ).setDeletedCells(
@@ -2544,7 +2544,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "=1+0+" + LABEL,
                 SpreadsheetError.with(
                         SpreadsheetErrorKind.VALUE,
-                        "Unknown Label: \"" + LABEL + "\""
+                        "Unknown Label: " + LABEL
                 )
         );
     }
@@ -3328,7 +3328,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCellWithError(
                                                 "$A$1",
                                                 "=1+0+" + LABEL,
-                                                "Unknown Label: \"" + LABEL + "\"")
+                                                "Unknown Label: " + LABEL)
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -3346,7 +3346,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "=1+0+" + LABEL,
                 SpreadsheetError.with(
                         SpreadsheetErrorKind.VALUE,
-                        "Unknown Label: \"" + LABEL + "\""
+                        "Unknown Label: " + LABEL
                 )
         );
     }
@@ -5735,7 +5735,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithError(
                         "A1",
                         "=" + label + "+1",
-                        "Unknown Label: \"" + label + "\""
+                        "Unknown Label: " + label
                 )
         );
 
