@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.LoadStoreException;
 import walkingkooka.store.Store;
 
@@ -30,7 +29,7 @@ public interface SpreadsheetStore<K, V> extends Store<K, V> {
     @Override
     default LoadStoreException notFound(final Object reference) {
         return reference instanceof SpreadsheetExpressionReference ?
-                this.notFound((SpreadsheetSelection) reference) :
+                this.notFound((SpreadsheetExpressionReference) reference) :
                 Store.super.notFound(reference);
     }
 
