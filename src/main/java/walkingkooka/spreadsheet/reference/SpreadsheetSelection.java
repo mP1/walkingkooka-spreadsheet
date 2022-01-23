@@ -458,6 +458,16 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                 .replace("Range", " Range");
     }
 
+    // notFound.........................................................................................................
+
+    /**
+     * Constructs a human pretty message that a {@link SpreadsheetSelection} could not be found.
+     * This can then be used to report load failures etc.
+     */
+    public final String notFound() {
+        return "Unknown " + this.textLabel() + ": " + this;
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     abstract void accept(final SpreadsheetSelectionVisitor visitor);
