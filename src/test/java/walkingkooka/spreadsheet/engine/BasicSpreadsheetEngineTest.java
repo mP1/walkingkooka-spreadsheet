@@ -8022,6 +8022,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.metadata().expressionNumberKind(),
                         this.functions(),
                         this.references(),
+                        ExpressionFunctionContexts.referenceNotFound(),
                         this.converterContext()
                 );
             }
