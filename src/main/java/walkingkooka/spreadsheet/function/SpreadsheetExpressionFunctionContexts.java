@@ -19,6 +19,12 @@
 package walkingkooka.spreadsheet.function;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.expression.ExpressionEvaluationException;
+import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
+import walkingkooka.tree.expression.ExpressionReference;
+
+import java.util.function.Function;
 
 public final class SpreadsheetExpressionFunctionContexts implements PublicStaticHelper {
 
@@ -27,6 +33,26 @@ public final class SpreadsheetExpressionFunctionContexts implements PublicStatic
      */
     public static FakeSpreadsheetExpressionFunctionContext fake() {
         return new FakeSpreadsheetExpressionFunctionContext();
+    }
+
+    /**
+     * A function that creates a {@link ExpressionEvaluationReferenceException}.
+     */
+    public static Function<ExpressionReference, ExpressionEvaluationException> referenceNotFound() {
+        return (r) -> {
+            final String text;
+            if (r instanceof SpreadsheetSelection) {
+                final SpreadsheetSelection selection = (SpreadsheetSelection) r;
+                text = "Unknown " + selection.textLabel() + " " + selection;
+            } else {
+                text = "Unknown " + r.toString();
+            }
+
+            return new SpreadsheetExpressionEvaluationReferenceException(
+                    text,
+                    r
+            );
+        };
     }
 
     /**
