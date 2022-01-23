@@ -22,9 +22,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.expression.ExpressionReference;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetExpressionFunctionContextsTest implements ClassTesting2<SpreadsheetExpressionFunctionContexts>,
         PublicStaticHelperTesting<SpreadsheetExpressionFunctionContexts> {
@@ -33,6 +38,66 @@ public final class SpreadsheetExpressionFunctionContextsTest implements ClassTes
     public void testPublicStaticMethodsWithoutMathContextParameter() {
         this.publicStaticMethodParametersTypeCheck(MathContext.class);
     }
+
+    // referenceNotFound................................................................................................
+
+    @Test
+    public void testReferenceNotFoundExpressionReference() {
+        final ExpressionReference reference = new ExpressionReference() {
+
+            @Override
+            public String toString() {
+                return "TestReference!";
+            }
+        };
+
+        this.referenceNotFoundAndCheck(
+                reference,
+                "Unknown " + reference);
+    }
+
+    @Test
+    public void testReferenceNotFoundCell() {
+        this.referenceNotFoundAndCheck(
+                SpreadsheetSelection.parseCell("B2"),
+                "Unknown Cell B2");
+    }
+
+    @Test
+    public void testReferenceNotFoundCellRange() {
+        this.referenceNotFoundAndCheck(
+                SpreadsheetSelection.parseCellRange("B2:C3"),
+                "Unknown Cell Range B2:C3");
+    }
+
+
+    @Test
+    public void testReferenceNotFoundLabel() {
+        this.referenceNotFoundAndCheck(
+                SpreadsheetSelection.labelName("Label123"),
+                "Unknown Label Label123");
+    }
+
+    private void referenceNotFoundAndCheck(final ExpressionReference reference,
+                                           final String expected) {
+        final SpreadsheetExpressionEvaluationReferenceException created = (SpreadsheetExpressionEvaluationReferenceException)
+                SpreadsheetExpressionFunctionContexts.referenceNotFound()
+                        .apply(reference);
+
+        this.checkEquals(
+                expected,
+                created.getMessage(),
+                () -> created.getMessage()
+        );
+
+        assertSame(
+                SpreadsheetErrorKind.REF,
+                created.spreadsheetErrorKind(),
+                () -> created.getMessage()
+        );
+    }
+
+    // ClassTesting2....................................................................................................
 
     @Override
     public Class<SpreadsheetExpressionFunctionContexts> type() {
