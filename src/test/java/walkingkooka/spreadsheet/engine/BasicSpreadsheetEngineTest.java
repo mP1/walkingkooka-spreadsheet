@@ -543,7 +543,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "Unable to find ");
+                "Reference not found");
     }
 
     @Test
@@ -800,7 +800,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
 
         final SpreadsheetCell a1 = this.cell("a1", "=$B$2+99");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Unable to find $B$2");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Reference not found");
         this.saveCellAndCheck(engine,
                 a1,
                 context,
@@ -1302,7 +1302,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.deleteCellAndCheck(engine,
                 b2.reference(),
                 context,
-                this.formattedCellWithError(a1, "Unable to find " + b2Reference));
+                this.formattedCellWithError(a1, "Reference not found"));
 
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
                 .cellReferences();
@@ -1368,7 +1368,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.deleteCellAndCheck(engine,
                 b2.reference(),
                 context,
-                this.formattedCellWithError(a1, "Unable to find " + labelB2));
+                this.formattedCellWithError(a1, "Reference not found"));
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
