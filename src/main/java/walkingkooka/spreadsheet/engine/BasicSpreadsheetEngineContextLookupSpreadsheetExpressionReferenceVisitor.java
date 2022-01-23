@@ -51,7 +51,7 @@ final class BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVis
     @Override
     protected void visit(final SpreadsheetLabelName label) {
         final SpreadsheetLabelMapping mapping = this.store.load(label)
-                .orElseThrow(() -> new IllegalArgumentException("Unknown label " + label));
+                .orElseThrow(() -> new IllegalArgumentException("Unknown Label " + label));
         this.accept(mapping.reference());
     }
 

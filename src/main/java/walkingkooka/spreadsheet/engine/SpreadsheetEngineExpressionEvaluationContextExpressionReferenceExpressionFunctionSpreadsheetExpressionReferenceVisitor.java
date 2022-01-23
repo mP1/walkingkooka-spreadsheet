@@ -55,7 +55,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
         try {
             this.accept(this.store.loadOrFail(label).reference());
         } catch (final LoadStoreException cause) {
-            throw new ExpressionEvaluationException("Unknown label: " + label);
+            throw new ExpressionEvaluationException("Unknown Label: " + label);
         }
     }
 
