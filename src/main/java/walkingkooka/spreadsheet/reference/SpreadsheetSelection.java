@@ -443,6 +443,21 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      */
     public abstract Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor();
 
+    // textLabel........................................................................................................
+
+    /**
+     * Returns a human friendly name or label for this {@link SpreadsheetSelection} which can be useful when
+     * producing error messages etc.
+     */
+    public final String textLabel() {
+        return this.getClass()
+                .getSimpleName()
+                .replace("Spreadsheet", "")
+                .replace("Reference", "")
+                .replace("Name", "")
+                .replace("Range", " Range");
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     abstract void accept(final SpreadsheetSelectionVisitor visitor);
