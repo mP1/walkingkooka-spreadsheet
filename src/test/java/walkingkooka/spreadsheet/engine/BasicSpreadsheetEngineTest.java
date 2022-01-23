@@ -800,7 +800,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
 
         final SpreadsheetCell a1 = this.cell("a1", "=$B$2+99");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Reference not found");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithError(
+                a1,
+                "Reference not found: $B$2"
+        );
+
         this.saveCellAndCheck(engine,
                 a1,
                 context,
@@ -1299,10 +1303,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell b2 = this.cell("$B$2", "=20");
         engine.saveCell(b2, context);
 
-        this.deleteCellAndCheck(engine,
+        this.deleteCellAndCheck(
+                engine,
                 b2.reference(),
                 context,
-                this.formattedCellWithError(a1, "Reference not found"));
+                this.formattedCellWithError(
+                        a1,
+                        "Reference not found: $B$2"
+                )
+        );
 
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
                 .cellReferences();
@@ -1365,10 +1374,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCell(b2, context);
 
-        this.deleteCellAndCheck(engine,
+        this.deleteCellAndCheck(
+                engine,
                 b2.reference(),
                 context,
-                this.formattedCellWithError(a1, "Reference not found"));
+                this.formattedCellWithError(
+                        a1,
+                        "Reference not found: " + labelB2
+                )
+        );
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
