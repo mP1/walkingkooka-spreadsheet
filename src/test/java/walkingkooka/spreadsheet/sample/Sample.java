@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -208,7 +209,7 @@ public final class Sample {
                         EXPRESSION_NUMBER_KIND,
                         this.functions(),
                         this.references(),
-                        ExpressionFunctionContexts.referenceNotFound(),
+                        SpreadsheetExpressionFunctionContexts.referenceNotFound(),
                         metadata.converterContext()
                 );
             }
