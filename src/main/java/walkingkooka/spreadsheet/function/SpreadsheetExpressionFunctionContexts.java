@@ -43,9 +43,9 @@ public final class SpreadsheetExpressionFunctionContexts implements PublicStatic
             final String text;
             if (r instanceof SpreadsheetSelection) {
                 final SpreadsheetSelection selection = (SpreadsheetSelection) r;
-                text = "Unknown " + selection.textLabel() + " " + selection;
+                text = "Unknown " + selection.textLabel() + ": " + selection;
             } else {
-                text = "Unknown " + r.toString();
+                text = "Unknown reference: " + r.toString();
             }
 
             return new SpreadsheetExpressionEvaluationReferenceException(

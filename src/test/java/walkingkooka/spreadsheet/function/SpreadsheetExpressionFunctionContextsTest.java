@@ -53,21 +53,21 @@ public final class SpreadsheetExpressionFunctionContextsTest implements ClassTes
 
         this.referenceNotFoundAndCheck(
                 reference,
-                "Unknown " + reference);
+                "Unknown reference: " + reference);
     }
 
     @Test
     public void testReferenceNotFoundCell() {
         this.referenceNotFoundAndCheck(
                 SpreadsheetSelection.parseCell("B2"),
-                "Unknown Cell B2");
+                "Unknown Cell: B2");
     }
 
     @Test
     public void testReferenceNotFoundCellRange() {
         this.referenceNotFoundAndCheck(
                 SpreadsheetSelection.parseCellRange("B2:C3"),
-                "Unknown Cell Range B2:C3");
+                "Unknown Cell Range: B2:C3");
     }
 
 
@@ -75,7 +75,7 @@ public final class SpreadsheetExpressionFunctionContextsTest implements ClassTes
     public void testReferenceNotFoundLabel() {
         this.referenceNotFoundAndCheck(
                 SpreadsheetSelection.labelName("Label123"),
-                "Unknown Label Label123");
+                "Unknown Label: Label123");
     }
 
     private void referenceNotFoundAndCheck(final ExpressionReference reference,
