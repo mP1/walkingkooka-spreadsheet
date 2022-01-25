@@ -42,6 +42,37 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
     private final static String MESSAGE = "Hello 123";
 
     @Test
+    public void testTranslateHasSpreadsheetErrorKindException() {
+        for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
+            this.translateAndCheck(
+                    new TestHasSpreadsheetErrorKindException(
+                            MESSAGE,
+                            kind
+                    ),
+                    kind
+            );
+        }
+    }
+
+    static class TestHasSpreadsheetErrorKindException extends Exception implements HasSpreadsheetErrorKind {
+
+        private static final long serialVersionUID = 1L;
+
+        TestHasSpreadsheetErrorKindException(final String message,
+                                             final SpreadsheetErrorKind errorKind) {
+            super(message);
+            this.errorKind = errorKind;
+        }
+
+        @Override
+        public SpreadsheetErrorKind spreadsheetErrorKind() {
+            return this.errorKind;
+        }
+
+        private final SpreadsheetErrorKind errorKind;
+    }
+
+    @Test
     public void testTranslateHasExpressionReferenceException() {
         this.translateAndCheck(
                 new ExpressionEvaluationReferenceException(

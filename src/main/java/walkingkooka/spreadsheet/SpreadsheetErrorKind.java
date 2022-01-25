@@ -97,6 +97,12 @@ public enum SpreadsheetErrorKind implements HasText {
         SpreadsheetErrorKind kind = null;
 
         do {
+            if (cause instanceof HasSpreadsheetErrorKind) {
+                final HasSpreadsheetErrorKind has = (HasSpreadsheetErrorKind) cause;
+                kind = has.spreadsheetErrorKind();
+                break;
+            }
+
             // REF!
             if (cause instanceof HasExpressionReference) {
                 kind = REF;
