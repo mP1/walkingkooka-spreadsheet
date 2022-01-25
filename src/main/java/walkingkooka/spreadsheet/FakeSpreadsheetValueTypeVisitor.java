@@ -51,6 +51,11 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
     }
 
     @Override
+    protected void visitCharacter() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitDouble() {
         throw new UnsupportedOperationException();
     }

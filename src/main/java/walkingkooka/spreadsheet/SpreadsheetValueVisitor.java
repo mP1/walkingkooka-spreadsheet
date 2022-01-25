@@ -55,6 +55,10 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
                     this.visit((Boolean) value);
                     break;
                 }
+                if (value instanceof Character) {
+                    this.visit((Character) value);
+                    break;
+                }
                 if (value instanceof LocalDate) {
                     this.visit((LocalDate) value);
                     break;
@@ -94,6 +98,10 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
     }
 
     protected void visit(final Byte value) {
+        // nop
+    }
+
+    protected void visit(final Character value) {
         // nop
     }
 

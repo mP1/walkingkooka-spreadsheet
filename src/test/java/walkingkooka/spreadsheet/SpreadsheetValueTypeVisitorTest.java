@@ -192,6 +192,40 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
+    public void testAcceptCharacter() {
+        final StringBuilder b = new StringBuilder();
+        final Class<Character> type = Character.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2");
+            }
+
+            @Override
+            protected void visitCharacter() {
+                b.append("3");
+            }
+        }.accept(type);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptCharacter2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(Character.class);
+    }
+
+    @Test
     public void testAcceptDouble() {
         final StringBuilder b = new StringBuilder();
         final Class<Double> type = Double.class;

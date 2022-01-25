@@ -51,6 +51,9 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                 case "java.lang.Byte":
                     this.visitByte();
                     break;
+                case "java.lang.Character":
+                    this.visitCharacter();
+                    break;
                 case "java.lang.Double":
                     this.visitDouble();
                     break;
@@ -110,6 +113,10 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
     }
 
     protected void visitByte() {
+
+    }
+
+    protected void visitCharacter() {
 
     }
 
