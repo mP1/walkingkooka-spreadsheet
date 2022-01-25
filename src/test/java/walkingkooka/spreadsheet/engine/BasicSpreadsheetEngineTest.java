@@ -79,6 +79,7 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
+import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -727,6 +728,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveCellInvalidDate() {
         this.saveCellWithErrorAndCheck(
                 "1999/99/31",
+                SpreadsheetErrorKind.VALUE,
                 "Invalid value for MonthOfYear (valid values 1 - 12): 99"
         );
     }
@@ -735,6 +737,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveCellInvalidDateTime() {
         this.saveCellWithErrorAndCheck(
                 "1999/99/31 12:58",
+                SpreadsheetErrorKind.VALUE,
                 "Invalid value for MonthOfYear (valid values 1 - 12): 99"
         );
     }
@@ -743,16 +746,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveCellInvalidTime() {
         this.saveCellWithErrorAndCheck(
                 "12:99",
+                SpreadsheetErrorKind.VALUE,
                 "Invalid value for MinuteOfHour (valid values 0 - 59): 99"
         );
     }
 
-    private void saveCellWithErrorAndCheck(final String formula, final String errorMessage) {
+    private void saveCellWithErrorAndCheck(final String formula,
+                                           final SpreadsheetErrorKind errorKind,
+                                           final String errorMessage) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", formula);
-        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, errorMessage);
+        final SpreadsheetCell a1Formatted = this.formattedCellWithError(
+                a1,
+                errorKind,
+                errorMessage
+        );
+
         this.saveCellAndCheck(engine,
                 a1,
                 context,
@@ -803,6 +814,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1 = this.cell("a1", "=$B$2+99");
         final SpreadsheetCell a1Formatted = this.formattedCellWithError(
                 a1,
+                SpreadsheetErrorKind.REF,
                 "Unknown Cell: $B$2"
         );
 
@@ -909,6 +921,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1 = this.cell("a1", "=1+" + unknown);
         final SpreadsheetCell a1Formatted = this.formattedCellWithError(
                 a1,
+                SpreadsheetErrorKind.REF,
                 "Unknown Label: " + unknown
         );
         this.saveCellAndCheck(engine,
@@ -1310,6 +1323,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithError(
                         a1,
+                        SpreadsheetErrorKind.REF,
                         "Unknown Cell: $B$2"
                 )
         );
@@ -1381,6 +1395,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithError(
                         a1,
+                        SpreadsheetErrorKind.REF,
                         "Unknown Label: " + labelB2
                 )
         );
@@ -1868,7 +1883,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: " + b)
+                                        this.formattedCellWithError(
+                                                a,
+                                                "=1+InvalidCellReference(\"" + b + "\")",
+                                                SpreadsheetErrorKind.REF,
+                                                "Invalid cell reference: " + b
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -2197,7 +2217,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $A$6")
+                                        this.formattedCellWithError(
+                                                a,
+                                                "=1+InvalidCellReference(\"" + b + "\")",
+                                                SpreadsheetErrorKind.REF,
+                                                "Invalid cell reference: $A$6"
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -2213,7 +2238,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
                 SpreadsheetError.with(
-                        SpreadsheetErrorKind.VALUE,
+                        SpreadsheetErrorKind.REF,
                         "Invalid cell reference: " + b
                 )
         ); // reference should have been fixed.
@@ -2525,6 +2550,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         formattedCellWithError(
                                                 a,
                                                 "=1+0+" + LABEL,
+                                                SpreadsheetErrorKind.REF,
                                                 "Unknown Label: " + LABEL
                                         )
                                 )
@@ -2543,7 +2569,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 "=1+0+" + LABEL,
                 SpreadsheetError.with(
-                        SpreadsheetErrorKind.VALUE,
+                        SpreadsheetErrorKind.REF,
                         "Unknown Label: " + LABEL
                 )
         );
@@ -3007,7 +3033,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $E$1")
+                                        this.formattedCellWithError(
+                                                a,
+                                                "=1+InvalidCellReference(\"" + b + "\")",
+                                                SpreadsheetErrorKind.REF,
+                                                "Invalid cell reference: $E$1"
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -3023,7 +3054,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
                 SpreadsheetError.with(
-                        SpreadsheetErrorKind.VALUE,
+                        SpreadsheetErrorKind.REF,
                         "Invalid cell reference: " + b
                 )
         ); // reference should have been fixed.
@@ -3328,7 +3359,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCellWithError(
                                                 "$A$1",
                                                 "=1+0+" + LABEL,
-                                                "Unknown Label: " + LABEL)
+                                                SpreadsheetErrorKind.REF,
+                                                "Unknown Label: " + LABEL
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -3345,7 +3378,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 "=1+0+" + LABEL,
                 SpreadsheetError.with(
-                        SpreadsheetErrorKind.VALUE,
+                        SpreadsheetErrorKind.REF,
                         "Unknown Label: " + LABEL
                 )
         );
@@ -4709,7 +4742,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "z9",
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                this.formattedCellWithError(z9, "Division by zero")
+                this.formattedCellWithError(
+                        z9,
+                        SpreadsheetErrorKind.VALUE, // TODO should be DIV0.
+                        "Division by zero"
+                )
         );
     }
 
@@ -5735,6 +5772,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithError(
                         "A1",
                         "=" + label + "+1",
+                        SpreadsheetErrorKind.REF,
                         "Unknown Label: " + label
                 )
         );
@@ -7975,7 +8013,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 @Override
                                 public Object apply(final List<Object> parameters,
                                                     final ExpressionFunctionContext context) {
-                                    throw new ExpressionEvaluationException("Invalid cell reference: " + parameters.get(0).toString());
+                                    final String reference = Cast.to(parameters.get(0));
+
+                                    throw new ExpressionEvaluationReferenceException(
+                                            "Invalid cell reference: " + reference,
+                                            SpreadsheetSelection.parseCell(reference)
+                                    );
                                 }
 
                                 @Override
@@ -7985,7 +8028,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                                 @Override
                                 public boolean resolveReferences() {
-                                    return true;
+                                    return false;
                                 }
                             };
                         case "BasicSpreadsheetEngineTestSum":
@@ -8184,23 +8227,35 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private SpreadsheetCell formattedCellWithError(final String reference,
                                                    final String formulaText,
+                                                   final SpreadsheetErrorKind errorKind,
                                                    final String message) {
-        return this.formattedCellWithError(SpreadsheetSelection.parseCell(reference),
+        return this.formattedCellWithError(
+                SpreadsheetSelection.parseCell(reference),
                 formulaText,
-                message);
+                errorKind,
+                message
+        );
     }
 
     private SpreadsheetCell formattedCellWithError(final SpreadsheetCellReference reference,
                                                    final String formulaText,
+                                                   final SpreadsheetErrorKind errorKind,
                                                    final String message) {
-        return this.formattedCellWithError(this.cell(reference, formulaText),
-                message);
+        return this.formattedCellWithError(
+                this.cell(
+                        reference,
+                        formulaText
+                ),
+                errorKind,
+                message
+        );
     }
 
     /**
      * Makes a {@link SpreadsheetCell} updating the formula expression and setting the error and formatted cell and style.
      */
     private SpreadsheetCell formattedCellWithError(final SpreadsheetCell cell,
+                                                   final SpreadsheetErrorKind errorKind,
                                                    final String errorMessage) {
         final Optional<TextNode> formattedCell = Optional.of(this.style()
                 .replace(TextNode.text(errorMessage))
@@ -8210,8 +8265,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.parseFormula(cell.formula())
                                 .setValue(
                                         Optional.of(
-                                                SpreadsheetError.with(
-                                                        SpreadsheetErrorKind.VALUE,
+                                                errorKind.setMessage(
                                                         errorMessage
                                                 )
                                         )
