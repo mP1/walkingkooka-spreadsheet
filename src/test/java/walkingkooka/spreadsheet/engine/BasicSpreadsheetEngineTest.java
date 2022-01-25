@@ -4727,7 +4727,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithExpressionError() {
+    public void testLoadCellsWithDivideByZero() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -4744,7 +4744,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithError(
                         z9,
-                        SpreadsheetErrorKind.VALUE, // TODO should be DIV0.
+                        SpreadsheetErrorKind.DIV0,
                         "Division by zero"
                 )
         );
