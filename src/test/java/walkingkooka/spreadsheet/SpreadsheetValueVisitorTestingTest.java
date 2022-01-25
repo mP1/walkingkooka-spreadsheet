@@ -108,6 +108,19 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     }
 
     @Test
+    public void testVisitCharacter() {
+        this.acceptAndCheck(
+                new TestSpreadsheetValueVisitor() {
+                    @Override
+                    protected void visit(final Character value) {
+                        visit = value;
+                    }
+                },
+                'A'
+        );
+    }
+
+    @Test
     public void testVisitDouble() {
         this.acceptAndCheck(new TestSpreadsheetValueVisitor() {
                                 @Override
