@@ -28,6 +28,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.ParserException;
+import walkingkooka.tree.expression.HasExpressionReference;
 
 import java.util.Objects;
 
@@ -96,6 +97,12 @@ public enum SpreadsheetErrorKind implements HasText {
         SpreadsheetErrorKind kind = null;
 
         do {
+            // REF!
+            if (cause instanceof HasExpressionReference) {
+                kind = REF;
+                break;
+            }
+
             // Trying to divide by 0
             if (cause instanceof ArithmeticException) {
                 kind = DIV0;

@@ -20,7 +20,10 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceLoadStoreException;
 import walkingkooka.text.cursor.parser.ParserException;
+import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -37,6 +40,28 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
     }
 
     private final static String MESSAGE = "Hello 123";
+
+    @Test
+    public void testTranslateHasExpressionReferenceException() {
+        this.translateAndCheck(
+                new ExpressionEvaluationReferenceException(
+                        MESSAGE,
+                        SpreadsheetSelection.parseCell("A1")
+                ),
+                SpreadsheetErrorKind.REF
+        );
+    }
+
+    @Test
+    public void testTranslateHasExpressionReferenceException2() {
+        this.translateAndCheck(
+                new SpreadsheetExpressionReferenceLoadStoreException(
+                        MESSAGE,
+                        SpreadsheetSelection.parseCell("B2")
+                ),
+                SpreadsheetErrorKind.REF
+        );
+    }
 
     @Test
     public void testTranslateArithmeticException() {
