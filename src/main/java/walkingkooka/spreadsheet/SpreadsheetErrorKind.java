@@ -28,6 +28,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.ParserException;
+import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.HasExpressionReference;
 
 import java.util.Objects;
@@ -94,7 +95,20 @@ public enum SpreadsheetErrorKind implements HasText {
     public static SpreadsheetError translate(final Throwable cause) {
         Objects.requireNonNull(cause, "cause");
 
-        SpreadsheetErrorKind kind = null;
+        Throwable translate = cause;
+
+        if (cause instanceof ExpressionEvaluationException) {
+            translate = cause.getCause();
+            if (null == translate) {
+                translate = cause;
+            }
+        }
+
+        return translate0(translate);
+    }
+
+    private static SpreadsheetError translate0(final Throwable cause) {
+        final SpreadsheetErrorKind kind;
 
         do {
             if (cause instanceof HasSpreadsheetErrorKind) {

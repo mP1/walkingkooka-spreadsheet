@@ -23,6 +23,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceLoadStoreException;
 import walkingkooka.text.cursor.parser.ParserException;
+import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -40,6 +41,25 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
     }
 
     private final static String MESSAGE = "Hello 123";
+
+    @Test
+    public void testTranslateExpressionEvaluateExceptionWithoutCause() {
+        this.translateAndCheck(
+                new ExpressionEvaluationException(MESSAGE),
+                SpreadsheetErrorKind.VALUE
+        );
+    }
+
+    @Test
+    public void testTranslateExpressionEvaluateExceptionWithArithmeticExceptionCause() {
+        this.translateAndCheck(
+                new ExpressionEvaluationException(
+                        "ignored!",
+                        new ArithmeticException(MESSAGE)
+                ),
+                SpreadsheetErrorKind.DIV0
+        );
+    }
 
     @Test
     public void testTranslateHasSpreadsheetErrorKindException() {
