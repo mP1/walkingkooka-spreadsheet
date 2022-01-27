@@ -7997,7 +7997,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                    final Optional<SpreadsheetCell> cell) {
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
-                                this.metadata().expressionNumberKind(),
                                 this.functions(),
                                 this.functionContext()
                         )

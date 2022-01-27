@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.Either;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.tree.expression.Expression;
@@ -94,6 +95,45 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     @Override
     public int twoDigitYear() {
         return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
+    }
+
+    @Override
+    public String currencySymbol() {
+        return this.decimalNumberContext().currencySymbol();
+    }
+
+    @Override
+    public char decimalSeparator() {
+        return this.decimalNumberContext().decimalSeparator();
+    }
+
+    @Override
+    public String exponentSymbol() {
+        return this.decimalNumberContext().exponentSymbol();
+    }
+
+    @Override
+    public char groupingSeparator() {
+        return this.decimalNumberContext().groupingSeparator();
+    }
+
+    @Override
+    public char percentageSymbol() {
+        return this.decimalNumberContext().percentageSymbol();
+    }
+
+    @Override
+    public char negativeSign() {
+        return this.decimalNumberContext().negativeSign();
+    }
+
+    @Override
+    public char positiveSign() {
+        return this.decimalNumberContext().positiveSign();
+    }
+
+    private DecimalNumberContext decimalNumberContext() {
+        return this.metadata.decimalNumberContext();
     }
 
     @Override

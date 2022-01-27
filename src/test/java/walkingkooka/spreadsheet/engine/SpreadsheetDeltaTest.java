@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
@@ -493,10 +492,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
         return JsonNodeUnmarshallContexts.basic(
-                ExpressionNumberContexts.basic(
-                        ExpressionNumberKind.BIG_DECIMAL,
-                        MathContext.UNLIMITED
-                )
+                ExpressionNumberKind.BIG_DECIMAL,
+                MathContext.UNLIMITED
         );
     }
 

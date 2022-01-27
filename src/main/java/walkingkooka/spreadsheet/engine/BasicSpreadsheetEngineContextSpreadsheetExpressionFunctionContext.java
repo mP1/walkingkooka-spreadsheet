@@ -153,6 +153,48 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
     }
 
     @Override
+    public String currencySymbol() {
+        return this.converterContext()
+                .currencySymbol();
+    }
+
+    @Override
+    public char decimalSeparator() {
+        return this.converterContext()
+                .decimalSeparator();
+    }
+
+    @Override
+    public String exponentSymbol() {
+        return this.converterContext()
+                .exponentSymbol();
+    }
+
+    @Override
+    public char groupingSeparator() {
+        return this.converterContext()
+                .groupingSeparator();
+    }
+
+    @Override
+    public char percentageSymbol() {
+        return this.converterContext()
+                .percentageSymbol();
+    }
+
+    @Override
+    public char negativeSign() {
+        return this.converterContext()
+                .negativeSign();
+    }
+
+    @Override
+    public char positiveSign() {
+        return this.converterContext()
+                .positiveSign();
+    }
+
+    @Override
     public Locale locale() {
         return this.converterContext()
                 .locale();
