@@ -982,7 +982,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         return Optional.of(
                 Expression.add(
                         Expression.value(
-                                kind.create(1)
+                                kind.one()
                         ),
                         Expression.value(
                                 kind.create(2)

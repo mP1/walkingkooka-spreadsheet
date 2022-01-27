@@ -388,7 +388,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
                 .setExpression(Optional.of(
                         Expression.add(
                                 Expression.value(
-                                        EXPRESSION_NUMBER_KIND.create(1)
+                                        EXPRESSION_NUMBER_KIND.one()
                                 ),
                                 Expression.value(
                                         EXPRESSION_NUMBER_KIND.create(2)

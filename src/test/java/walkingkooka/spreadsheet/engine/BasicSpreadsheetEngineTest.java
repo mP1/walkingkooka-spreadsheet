@@ -4822,7 +4822,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithValue(a1, this.expressionNumberKind().create(1 + 10 + 100)),
                 this.formattedCellWithValue(b2, this.expressionNumberKind().create(1 + 10)),
-                this.formattedCellWithValue(c3, this.expressionNumberKind().create(1))
+                this.formattedCellWithValue(c3, this.expressionNumberKind().one())
         );
     }
 
@@ -4856,7 +4856,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(Sets.of(
-                                this.formattedCellWithValue(c3, this.expressionNumberKind().create(1)),
+                                this.formattedCellWithValue(c3, this.expressionNumberKind().one()),
                                 this.formattedCellWithValue(d4, this.expressionNumberKind().create(2))
                         ))
                         .setWindow(Optional.of(range))
@@ -4895,7 +4895,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(Sets.of(
-                                this.formattedCellWithValue(c3, this.expressionNumberKind().create(1))
+                                this.formattedCellWithValue(c3, this.expressionNumberKind().one())
                         ))
                         .setWindow(Optional.of(range))
                         .setLabels(
@@ -8038,7 +8038,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                     final ExpressionFunctionContext context) {
                                     return parameters.stream()
                                             .map(ExpressionNumber.class::cast)
-                                            .reduce(context.expressionNumberKind().create(0), (l, r) -> l.add(r, context));
+                                            .reduce(context.expressionNumberKind().zero(), (l, r) -> l.add(r, context));
                                 }
 
                                 @Override
