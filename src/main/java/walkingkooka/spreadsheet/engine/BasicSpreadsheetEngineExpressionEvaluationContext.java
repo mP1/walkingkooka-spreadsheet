@@ -20,9 +20,11 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Either;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -112,19 +114,70 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     @Override
+    public String currencySymbol() {
+        return this.expressionNumberContext()
+                .currencySymbol();
+    }
+
+    @Override
+    public char decimalSeparator() {
+        return this.expressionNumberContext()
+                .decimalSeparator();
+    }
+
+    @Override
+    public String exponentSymbol() {
+        return this.expressionNumberContext()
+                .exponentSymbol();
+    }
+
+    @Override
+    public char groupingSeparator() {
+        return this.expressionNumberContext()
+                .groupingSeparator();
+    }
+
+    @Override
+    public char percentageSymbol() {
+        return this.expressionNumberContext()
+                .percentageSymbol();
+    }
+
+    @Override
+    public char negativeSign() {
+        return this.expressionNumberContext()
+                .negativeSign();
+    }
+
+    @Override
+    public char positiveSign() {
+        return this.expressionNumberContext()
+                .positiveSign();
+    }
+
+    private ExpressionNumberContext expressionNumberContext() {
+        return this.metadata()
+                .expressionNumberContext();
+    }
+
+    @Override
     public Locale locale() {
-        return this.context.metadata()
+        return this.metadata()
                 .getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
     }
 
     @Override
     public MathContext mathContext() {
-        return this.context.metadata().mathContext();
+        return this.metadata().mathContext();
     }
 
     @Override
     public ExpressionNumberKind expressionNumberKind() {
-        return this.context.metadata().expressionNumberKind();
+        return this.metadata().expressionNumberKind();
+    }
+
+    private SpreadsheetMetadata metadata() {
+        return this.context.metadata();
     }
 
     private final SpreadsheetEngineContext context;

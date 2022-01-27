@@ -1448,8 +1448,16 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final ExpressionNumberKind kind = ExpressionNumberKind.DOUBLE;
 
         final ExpressionNumberContext context = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
+                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
+                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, kind)
-                .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
+                .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, GROUPING_SEPARATOR)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)
+                .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENT)
+                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 16)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
                 .expressionNumberContext();
         this.checkEquals(kind, context.expressionNumberKind(), "expressionNumberKind");

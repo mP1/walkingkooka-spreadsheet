@@ -552,7 +552,10 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
 
         components.reportIfMissing();
 
-        return ExpressionNumberContexts.basic(this.expressionNumberKind(), this.mathContext());
+        return ExpressionNumberContexts.basic(
+                this.expressionNumberKind(),
+                this.decimalNumberContext()
+        );
     }
 
     // HasJsonNodeMarshallContext.......................................................................................
@@ -569,7 +572,22 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     public abstract JsonNodeUnmarshallContext jsonNodeUnmarshallContext();
 
     final JsonNodeUnmarshallContext jsonNodeUnmarshallContext0() {
-        return JsonNodeUnmarshallContexts.basic(this.expressionNumberContext());
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final ExpressionNumberKind expressionNumberKind = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+
+        final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
+        final RoundingMode roundingMode = components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+
+        components.reportIfMissing();
+
+        return JsonNodeUnmarshallContexts.basic(
+                expressionNumberKind,
+                new MathContext(
+                        precision,
+                        roundingMode
+                )
+        );
     }
 
     // HasMathContext....................................................................................................
@@ -878,8 +896,17 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         EMPTY.id(); // force JsonNodeContext registering of collaborating types.
         SpreadsheetSelection.parseCellRange("A1");
         TextStyle.EMPTY.isEmpty();
-        return JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake())
-                .unmarshall(JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text()), SpreadsheetMetadata.class);
+
+        return JsonNodeUnmarshallContexts.basic(
+                ExpressionNumberKind.DEFAULT,
+                MathContext.DECIMAL32
+        ).unmarshall(
+                JsonNode.parse(
+                        new SpreadsheetMetadataDefaultTextResourceProvider()
+                                .text()
+                ),
+                SpreadsheetMetadata.class
+        );
     }
 
     // Patchable.....................................................................................................

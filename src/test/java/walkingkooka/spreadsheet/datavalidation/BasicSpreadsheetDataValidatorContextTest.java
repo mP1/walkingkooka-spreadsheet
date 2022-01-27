@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.datavalidation;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -108,10 +110,103 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
             }
 
             @Override
+            public String currencySymbol() {
+                return decimalNumberContext()
+                        .currencySymbol();
+            }
+
+            @Override
+            public char decimalSeparator() {
+                return decimalNumberContext()
+                        .decimalSeparator();
+            }
+
+            @Override
+            public String exponentSymbol() {
+                return decimalNumberContext()
+                        .exponentSymbol();
+            }
+
+            @Override
+            public char groupingSeparator() {
+                return decimalNumberContext()
+                        .groupingSeparator();
+            }
+
+            @Override
             public MathContext mathContext() {
-                return MathContext.DECIMAL32;
+                return decimalNumberContext().mathContext();
+            }
+
+            @Override
+            public char negativeSign() {
+                return decimalNumberContext()
+                        .negativeSign();
+            }
+
+            @Override
+            public char percentageSymbol() {
+                return decimalNumberContext()
+                        .percentageSymbol();
+            }
+
+            @Override
+            public char positiveSign() {
+                return decimalNumberContext()
+                        .positiveSign();
             }
         };
+    }
+
+    @Override
+    public String currencySymbol() {
+        return this.decimalNumberContext()
+                .currencySymbol();
+    }
+
+    @Override
+    public char decimalSeparator() {
+        return this.decimalNumberContext()
+                .decimalSeparator();
+    }
+
+    @Override
+    public String exponentSymbol() {
+        return this.decimalNumberContext()
+                .exponentSymbol();
+    }
+
+    @Override
+    public char groupingSeparator() {
+        return this.decimalNumberContext()
+                .groupingSeparator();
+    }
+
+    @Override
+    public MathContext mathContext() {
+        return MathContext.DECIMAL32;
+    }
+
+    @Override
+    public char negativeSign() {
+        return this.decimalNumberContext()
+                .negativeSign();
+    }
+
+    @Override
+    public char percentageSymbol() {
+        return this.decimalNumberContext()
+                .percentageSymbol();
+    }
+
+    @Override
+    public char positiveSign() {
+        return this.decimalNumberContext()
+                .positiveSign();
+    }
+
+    private DecimalNumberContext decimalNumberContext() {
+        return DecimalNumberContexts.american(this.mathContext());
     }
 
     @Override

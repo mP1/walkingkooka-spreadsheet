@@ -96,6 +96,41 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
     }
 
     @Override
+    public String currencySymbol() {
+        return this.context.currencySymbol();
+    }
+
+    @Override
+    public char decimalSeparator() {
+        return this.context.decimalSeparator();
+    }
+
+    @Override
+    public String exponentSymbol() {
+        return this.context.exponentSymbol();
+    }
+
+    @Override
+    public char groupingSeparator() {
+        return this.context.groupingSeparator();
+    }
+
+    @Override
+    public char percentageSymbol() {
+        return this.context.percentageSymbol();
+    }
+
+    @Override
+    public char negativeSign() {
+        return this.context.negativeSign();
+    }
+
+    @Override
+    public char positiveSign() {
+        return this.context.positiveSign();
+    }
+
+    @Override
     public Locale locale() {
         return this.context.locale();
     }
@@ -107,7 +142,7 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
 
     @Override
     public ExpressionNumberKind expressionNumberKind() {
-        return null;
+        return this.context.expressionNumberKind();
     }
 
     private final ExpressionNumberConverterContext context;

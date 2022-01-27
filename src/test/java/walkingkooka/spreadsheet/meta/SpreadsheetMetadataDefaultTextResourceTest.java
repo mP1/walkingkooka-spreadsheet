@@ -21,10 +21,12 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converters;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+
+import java.math.MathContext;
 
 public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTesting<SpreadsheetMetadataDefaultTextResource> {
 
@@ -34,7 +36,10 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTe
 
         final JsonObject resource = JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text())
                 .objectOrFail();
-        final SpreadsheetMetadata metadata = JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake())
+        final SpreadsheetMetadata metadata = JsonNodeUnmarshallContexts.basic(
+                        ExpressionNumberKind.DEFAULT,
+                        MathContext.DECIMAL32
+                )
                 .unmarshall(resource, SpreadsheetMetadata.class);
         this.checkEquals(Converters.EXCEL_1900_DATE_SYSTEM_OFFSET, metadata.getOrFail(SpreadsheetMetadataPropertyName.DATETIME_OFFSET), () -> resource.toString());
     }

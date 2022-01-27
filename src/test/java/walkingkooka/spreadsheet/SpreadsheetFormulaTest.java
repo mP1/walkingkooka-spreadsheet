@@ -29,7 +29,6 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -747,7 +746,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
         return JsonNodeUnmarshallContexts.basic(
-                ExpressionNumberContexts.basic(ExpressionNumberKind.BIG_DECIMAL, MathContext.UNLIMITED)
+                ExpressionNumberKind.BIG_DECIMAL,
+                MathContext.UNLIMITED
         );
     }
 
