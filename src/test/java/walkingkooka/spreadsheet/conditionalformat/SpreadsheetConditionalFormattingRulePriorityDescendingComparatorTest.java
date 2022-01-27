@@ -50,7 +50,7 @@ public final class SpreadsheetConditionalFormattingRulePriorityDescendingCompara
                         .setExpression(
                                 Optional.of(
                                         Expression.value(
-                                                EXPRESSION_NUMBER_KIND.create(1)
+                                                EXPRESSION_NUMBER_KIND.one()
                                         )
                                 )
                         ),
