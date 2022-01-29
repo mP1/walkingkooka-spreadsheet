@@ -106,7 +106,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         // wrap all number from/to converters to also handle ExpressionNumber
 
         // boolean ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> booleanConverter = SpreadsheetConverterMapping.with(
+        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> booleanConverter = mapping(
                 Converters.simple(), // boolean -> boolean
                 fromBoolean(LocalDate.class, dateTrue, dateFalse),
                 fromBoolean(LocalDateTime.class, dateTimeTrue, dateTimeFalse),
@@ -118,25 +118,27 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         this.booleanConverter = booleanConverter;
 
         // LocalDate ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> date = SpreadsheetConverterMapping.with(
+        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> date = mapping(
                 toBoolean(LocalDate.class, dateTrue),
                 Converters.simple(), // date -> date
                 Converters.localDateLocalDateTime(),
                 ExpressionNumber.toConverter(Converters.localDateNumber(dateOffset)),
                 dateFormatter.converter(),
-                null); // date -> time INVALID
+                null // date -> time INVALID
+        );
 
         // LocalDateTime ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> dateTime = SpreadsheetConverterMapping.with(
+        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> dateTime = mapping(
                 toBoolean(LocalDateTime.class, dateTimeTrue),
                 Converters.localDateTimeLocalDate(),
                 Converters.simple(), // dateTime -> dateTime
                 ExpressionNumber.toConverter(Converters.localDateTimeNumber(dateOffset)),
                 dateTimeFormatter.converter(),
-                Converters.localDateTimeLocalTime());
+                Converters.localDateTimeLocalTime()
+        );
 
         // Number ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> number = SpreadsheetConverterMapping.with(
+        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> number = mapping(
                 ExpressionNumber.fromConverter(Converters.truthyNumberBoolean()),
                 ExpressionNumber.fromConverter(Converters.numberLocalDate(dateOffset)),
                 ExpressionNumber.fromConverter(Converters.numberLocalDateTime(dateOffset)),
@@ -144,18 +146,33 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 ExpressionNumber.fromConverter(numberFormatter.converter()),
                 ExpressionNumber.fromConverter(Converters.numberLocalTime()));
 
-        // String ->
+        // most attempts to support conversions such as Date -> Character are pointless but keep for the error failures.
+        // String|Character ->
         final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> string = SpreadsheetConverterMapping.with(
-                toBoolean(String.class, stringTrue), // string -> boolean
-                dateParser.converter().cast(ExpressionNumberConverterContext.class),
-                dateTimeParser.converter().cast(ExpressionNumberConverterContext.class),
-                ExpressionNumber.toConverter(numberParser.converter().cast(ExpressionNumberConverterContext.class)),
-                Converters.simple(), // String -> String
-                timeParser.converter().cast(ExpressionNumberConverterContext.class)
+                fromCharacterOrString(
+                        toBoolean(String.class, stringTrue)
+                ), // string -> boolean
+                fromCharacterOrString(
+                        dateParser.converter().cast(ExpressionNumberConverterContext.class)
+                ),
+                fromCharacterOrString(
+                        dateTimeParser.converter().cast(ExpressionNumberConverterContext.class)
+                ),
+                fromCharacterOrString(
+                        ExpressionNumber.toConverter(numberParser.converter().cast(ExpressionNumberConverterContext.class))
+                ),
+                fromCharacterOrString(
+                        toCharacterOrString(
+                                Converters.simple() // String -> String
+                        )
+                ),
+                fromCharacterOrString(
+                        timeParser.converter().cast(ExpressionNumberConverterContext.class)
+                )
         );
 
         // LocalTime ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> time = SpreadsheetConverterMapping.with(
+        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> time = mapping(
                 toBoolean(LocalTime.class, timeTrue),
                 null, // time -> date invalid
                 Converters.localTimeLocalDateTime(),
@@ -164,12 +181,14 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 Converters.simple()
         ); // time -> time
 
-        this.mapping = SpreadsheetConverterMapping.with(booleanConverter,
+        this.mapping = SpreadsheetConverterMapping.with(
+                booleanConverter,
                 date,
                 dateTime,
                 number,
                 string,
-                time);
+                time
+        );
     }
 
     /**
@@ -210,10 +229,43 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         );
     }
 
-    // booleanTrueFalse(Predicate<Object> source, Predicate<Object> falseValue, Predicate<Class<?>> target, D trueAnswer, D falseAnswer)
+    /**
+     * Adds support for Character or String to Character or String.
+     */
+    private static Converter<ExpressionNumberConverterContext> fromCharacterOrString(final Converter<ExpressionNumberConverterContext> converter) {
+        return Converters.characterStringConverter(
+                converter
+        );
+    }
+
+    /**
+     * Adds support for converting to String and then maybe Character.
+     */
+    private static Converter<ExpressionNumberConverterContext> toCharacterOrString(final Converter<ExpressionNumberConverterContext> converter) {
+        return Converters.converterStringCharacter(
+                converter
+        );
+    }
 
     private static LocalDateTime dateTime(final LocalDate date) {
         return LocalDateTime.of(date, LocalTime.MIDNIGHT);
+    }
+
+    private static SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> mapping(
+            final Converter<ExpressionNumberConverterContext> booleanValue,
+            final Converter<ExpressionNumberConverterContext> date,
+            final Converter<ExpressionNumberConverterContext> dateTime,
+            final Converter<ExpressionNumberConverterContext> number,
+            final Converter<ExpressionNumberConverterContext> string,
+            final Converter<ExpressionNumberConverterContext> time) {
+        return SpreadsheetConverterMapping.with(
+                booleanValue,
+                date,
+                dateTime,
+                number,
+                toCharacterOrString(string),
+                time
+        );
     }
 
     // Converter........................................................................................................
@@ -232,6 +284,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
 
     private static boolean isSupportedType(final Class<?> type) {
         return Boolean.class == type ||
+                Character.class == type ||
                 LocalDate.class == type ||
                 LocalDateTime.class == type ||
                 LocalTime.class == type ||

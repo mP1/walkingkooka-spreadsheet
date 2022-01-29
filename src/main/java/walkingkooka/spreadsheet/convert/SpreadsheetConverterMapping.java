@@ -58,7 +58,12 @@ final class SpreadsheetConverterMapping<T> {
     final T date;
     final T dateTime;
     final T number;
+
+    /**
+     * String also includes character.
+     */
     final T string;
+
     final T time;
 
     @Override
