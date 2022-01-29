@@ -222,6 +222,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     private final static LocalDateTime DATE_TIME_FALSE = LocalDateTime.of(DATE_FALSE, LocalTime.MIDNIGHT);
     private final static LocalDateTime DATE_TIME = LocalDateTime.of(DATE, TIME);
 
+    private final static String STRING_FALSE = "false";
     private final static String STRING_TRUE = "true";
 
     // boolean..........................................................................................................
@@ -533,9 +534,59 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     // String.............................................................................................................
 
     @Test
+    public void testStringBooleanFalse() {
+        this.convertAndCheck2(
+                STRING_FALSE,
+                false
+        );
+    }
+
+    @Test
+    public void testStringBooleanTrue() {
+        this.convertAndCheck2(
+                STRING_TRUE,
+                true
+        );
+    }
+
+    @Test
+    public void testStringDate() {
+        this.convertAndCheck2(
+                "D 2000-12-31",
+                DATE
+        );
+    }
+
+    // "\"DT\" dd mm yyyy hh mm ss"
+
+    @Test
+    public void testStringDateTime() {
+        this.convertAndCheck2(
+                "DT 31 12 2000 12 58 59",
+                DATE_TIME
+        );
+    }
+
+    @Test
+    public void testStringNumber() {
+        this.convertAndCheck2(
+                "123",
+                EXPRESSION_NUMBER_KIND.create(123)
+        );
+    }
+
+    @Test
     public void testStringString() {
         final String text = "abc123";
         this.convertAndCheck2(text, text);
+    }
+
+    @Test
+    public void testStringTime() {
+        this.convertAndCheck2(
+                "T 12 58 59",
+                TIME
+        );
     }
 
     // Time.............................................................................................................
@@ -574,11 +625,6 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     public void testTimeNumber() {
         final int value = 123;
         this.convertNumberAndCheck(LocalTime.ofSecondOfDay(value), value);
-    }
-
-    @Test
-    public void testTimeTrueString() {
-        this.convertAndCheck2(DATE, "D 2000-12-31");
     }
 
     @Test
