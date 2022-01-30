@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
@@ -192,7 +193,8 @@ public final class Sample {
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
                                 functions(),
-                                this.functionContext()
+                                this.functionContext(),
+                                CaseSensitivity.INSENSITIVE
                         )
                 );
             }

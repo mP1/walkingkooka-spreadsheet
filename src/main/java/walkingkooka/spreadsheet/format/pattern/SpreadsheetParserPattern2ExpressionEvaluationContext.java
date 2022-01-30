@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Either;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -146,6 +147,11 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
     }
 
     private final ExpressionNumberConverterContext context;
+
+    @Override
+    public CaseSensitivity stringEqualityCaseSensitivity() {
+        return CaseSensitivity.INSENSITIVE;
+    }
 
     public String toString() {
         return this.context.toString();

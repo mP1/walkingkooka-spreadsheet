@@ -142,7 +142,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
 
     @Override
     protected void endVisit(final SpreadsheetEqualsParserToken token) {
-        this.exitBinary(Expression::equalsExpression, token);
+        this.exitBinary(Expression::equalsExpression, token); // TODO replace with spreadsheet-equals
     }
 
     @Override
