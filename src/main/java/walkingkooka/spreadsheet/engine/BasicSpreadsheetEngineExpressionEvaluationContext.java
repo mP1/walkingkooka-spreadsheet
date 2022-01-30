@@ -22,6 +22,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberContext;
@@ -178,6 +179,11 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
 
     private SpreadsheetMetadata metadata() {
         return this.context.metadata();
+    }
+
+    @Override
+    public CaseSensitivity stringEqualityCaseSensitivity() {
+        return CaseSensitivity.INSENSITIVE;
     }
 
     private final SpreadsheetEngineContext context;

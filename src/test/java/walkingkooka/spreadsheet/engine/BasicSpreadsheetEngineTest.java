@@ -73,6 +73,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -7998,7 +7999,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
                                 this.functions(),
-                                this.functionContext()
+                                this.functionContext(),
+                                CaseSensitivity.INSENSITIVE
                         )
                 );
             }

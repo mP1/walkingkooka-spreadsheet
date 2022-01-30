@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.datavalidation;
 
 import walkingkooka.Either;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -174,6 +175,11 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
         return this.context.convert(value, type);
+    }
+
+    @Override
+    public CaseSensitivity stringEqualityCaseSensitivity() {
+        return this.context.stringEqualityCaseSensitivity();
     }
 
     private final ExpressionEvaluationContext context;

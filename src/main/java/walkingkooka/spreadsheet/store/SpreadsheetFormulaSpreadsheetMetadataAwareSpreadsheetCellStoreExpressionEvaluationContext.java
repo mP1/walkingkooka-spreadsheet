@@ -21,6 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -152,6 +153,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     private final SpreadsheetMetadata metadata;
+
+    @Override
+    public CaseSensitivity stringEqualityCaseSensitivity() {
+        return CaseSensitivity.INSENSITIVE;
+    }
 
     @Override
     public String toString() {
