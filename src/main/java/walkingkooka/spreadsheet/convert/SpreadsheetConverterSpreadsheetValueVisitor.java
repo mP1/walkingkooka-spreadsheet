@@ -78,6 +78,11 @@ final class SpreadsheetConverterSpreadsheetValueVisitor<C extends ConverterConte
     }
 
     @Override
+    protected void visit(final Character value) {
+        this.converter(this.mapping.string);
+    }
+
+    @Override
     protected void visit(final Double value) {
         this.converter(this.mapping.number);
     }

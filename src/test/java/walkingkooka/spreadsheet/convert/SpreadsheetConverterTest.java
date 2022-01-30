@@ -496,6 +496,32 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Test
+    public void testNumberCharacter() {
+        this.convertAndCheck(
+                SpreadsheetConverter.with(
+                        dateFormatter(),
+                        dateParser(),
+                        dateTimeFormatter(),
+                        dateTimeParser(),
+                        formatter(
+                                "#",
+                                SpreadsheetFormatParsers.number(),
+                                SpreadsheetFormatNumberParserToken.class,
+                                SpreadsheetFormatters::number
+                        ),
+                        numberParser(),
+                        textFormatter(),
+                        timeFormatter(),
+                        timeParser(),
+                        DATE_OFFSET
+                ),
+                ExpressionNumberKind.DEFAULT.create(1),
+                Character.class,
+                '1'
+        );
+    }
+
+    @Test
     public void testNumberTrueString() {
         this.convertAndCheck2(12.5, "N 12D5");
     }
@@ -534,6 +560,14 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     // String.............................................................................................................
 
     @Test
+    public void testCharacterString() {
+        this.convertAndCheck2(
+                'A',
+                "A"
+        );
+    }
+
+    @Test
     public void testStringBooleanFalse() {
         this.convertAndCheck2(
                 STRING_FALSE,
@@ -546,6 +580,14 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         this.convertAndCheck2(
                 STRING_TRUE,
                 true
+        );
+    }
+
+    @Test
+    public void testStringCharacter() {
+        this.convertAndCheck2(
+                "A",
+                'A'
         );
     }
 
@@ -628,6 +670,11 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Test
+    public void testTimeTrueString() {
+        this.convertAndCheck2(DATE, "D 2000-12-31");
+    }
+
+    @Test
     public void testTimeTime() {
         this.convertAndCheck(TIME);
     }
@@ -643,7 +690,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     @Override
     public SpreadsheetConverter createConverter() {
-        return SpreadsheetConverter.with(dateFormatter(),
+        return SpreadsheetConverter.with(
+                dateFormatter(),
                 dateParser(),
                 dateTimeFormatter(),
                 dateTimeParser(),
@@ -652,11 +700,15 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 textFormatter(),
                 timeFormatter(),
                 timeParser(),
-                DATE_OFFSET);
+                DATE_OFFSET
+        );
     }
 
     private SpreadsheetFormatter dateFormatter() {
-        return dateTimeFormatter("\\D yyyy-mm-dd");
+        return dateTimeFormatter(
+                "\\D yyyy-mm-dd",
+                LocalDate.class
+        );
     }
 
     private SpreadsheetDateParsePatterns dateParser() {
@@ -664,7 +716,10 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     private SpreadsheetFormatter dateTimeFormatter() {
-        return dateTimeFormatter("\"DT\" yyyy-mm-dd hh-mm"); // dateTimeFormatter
+        return dateTimeFormatter(
+                "\"DT\" yyyy-mm-dd hh-mm",
+                LocalDateTime.class
+        ); // dateTimeFormatter
     }
 
     private SpreadsheetDateTimeParsePatterns dateTimeParser() {
@@ -692,18 +747,24 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     private final static String TEXT_SUFFIX = "text-literal-123";
 
     private SpreadsheetFormatter timeFormatter() {
-        return dateTimeFormatter("\\T hh-mm");
+        return dateTimeFormatter(
+                "\\T hh-mm",
+                LocalTime.class
+        );
     }
 
     private SpreadsheetTimeParsePatterns timeParser() {
         return SpreadsheetParsePatterns.parseTimeParsePatterns("\\T hh mm ss");
     }
 
-    private SpreadsheetFormatter dateTimeFormatter(final String pattern) {
-        return formatter(pattern,
+    private SpreadsheetFormatter dateTimeFormatter(final String pattern,
+                                                   final Class<?> type) {
+        return formatter(
+                pattern,
                 SpreadsheetFormatParsers.dateTime(),
                 SpreadsheetFormatDateTimeParserToken.class,
-                (t) -> SpreadsheetFormatters.dateTime(t, v -> v instanceof LocalDateTime));
+                (t) -> SpreadsheetFormatters.dateTime(t, type::isInstance)
+        );
     }
 
     private <T extends SpreadsheetFormatParserToken> SpreadsheetFormatter formatter(final String pattern,
