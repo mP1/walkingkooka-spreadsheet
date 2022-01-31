@@ -47,9 +47,8 @@ an example of the API usage.
 
 ## Functions
 
-- About 30-40 functions are completed, into numerous projects, much work remains outstanding.
-- Dozens of basic number type functions: [numbers](https://github.com/mP1/walkingkooka-tree-expression-function-number)
-- Dozens of basic string type functions: [string](https://github.com/mP1/walkingkooka-tree-expression-function-string)
+- Many functions (just under 100) have been implemented but main
+  remain. [tree/functions](https://github.com/mP1/walkingkooka-tree#expressionfunction) for more info.
 - Work remains to create projects to host other categories of functions such as: banking/finance etc.
 - Ideas include the support of user/3rd party/open source functions which would execute within a sandbox.
 
