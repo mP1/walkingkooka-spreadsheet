@@ -114,7 +114,7 @@ public final class SpreadsheetFormatNotEqualsParserTokenTest extends Spreadsheet
 
     @Override
     SpreadsheetFormatSymbolParserToken operatorSymbol() {
-        return SpreadsheetFormatParserToken.notEqualsSymbol("!=", "!=");
+        return SpreadsheetFormatParserToken.notEqualsSymbol("<>", "<>");
     }
 
     @Override

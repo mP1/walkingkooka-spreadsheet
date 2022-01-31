@@ -176,17 +176,17 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
 
     @Test
     public void testConditionalNotEqualsNumberFormatPositiveNumberLess() {
-        this.parseFormatAndCheck("[!=100]\"positive\"0", 99L, "positive99");
+        this.parseFormatAndCheck("[<>100]\"positive\"0", 99L, "positive99");
     }
 
     @Test
     public void testConditionalNotEqualsNumberFormatPositiveNumberEqual() {
-        this.parseFormatAndCheck("[!=100]\"positive\"0", 100L, "DEFAULT: 100");
+        this.parseFormatAndCheck("[<>100]\"positive\"0", 100L, "DEFAULT: 100");
     }
 
     @Test
     public void testConditionalNotEqualsNumberFormatPositiveNumberGreater() {
-        this.parseFormatAndCheck("[!=100]\"positive\"0", 101L, "positive101");
+        this.parseFormatAndCheck("[<>100]\"positive\"0", 101L, "positive101");
     }
 
     @Test

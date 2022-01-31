@@ -69,7 +69,7 @@ public final class SpreadsheetFormatNotEqualsSymbolParserTokenTest extends Sprea
 
     @Override
     public String text() {
-        return "!=";
+        return "<>";
     }
 
     @Override

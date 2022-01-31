@@ -194,12 +194,12 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     private static final Parser<SpreadsheetParserContext> EQUALS_SYMBOL = symbol(
-            "==",
+            '=',
             SpreadsheetParserToken::equalsSymbol,
             SpreadsheetEqualsSymbolParserToken.class
     );
     private static final Parser<SpreadsheetParserContext> NOT_EQUALS_SYMBOL = symbol(
-            "!=",
+            "<>",
             SpreadsheetParserToken::notEqualsSymbol,
             SpreadsheetNotEqualsSymbolParserToken.class
     );

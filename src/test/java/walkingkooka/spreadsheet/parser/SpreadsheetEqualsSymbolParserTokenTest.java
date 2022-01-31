@@ -69,7 +69,7 @@ public final class SpreadsheetEqualsSymbolParserTokenTest extends SpreadsheetSym
 
     @Override
     public String text() {
-        return "==";
+        return "=";
     }
 
     @Override

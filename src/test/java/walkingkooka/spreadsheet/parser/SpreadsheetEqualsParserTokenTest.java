@@ -120,7 +120,7 @@ public final class SpreadsheetEqualsParserTokenTest extends SpreadsheetBinaryPar
 
     @Override
     SpreadsheetParserToken operatorSymbol() {
-        return SpreadsheetParserToken.equalsSymbol("==", "==");
+        return SpreadsheetParserToken.equalsSymbol("=", "=");
     }
 
     @Override

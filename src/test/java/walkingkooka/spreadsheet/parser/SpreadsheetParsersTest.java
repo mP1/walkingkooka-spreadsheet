@@ -1055,7 +1055,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private void testExpressionEquals() {
         final SpreadsheetParserToken left = number(123);
         final SpreadsheetParserToken right = number(456);
-        final String text = "123==456";
+        final String text = "123=456";
         final SpreadsheetEqualsParserToken equals = SpreadsheetParserToken.equalsParserToken(Lists.of(left, equals(), right), text);
 
         this.parseExpressionAndCheck(text, equals, text);
@@ -1078,7 +1078,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(middle, plus(), right), addText);
 
         final SpreadsheetParserToken left = number(123);
-        final String text = "123==" + addText;
+        final String text = "123=" + addText;
         final SpreadsheetEqualsParserToken equals = SpreadsheetParserToken.equalsParserToken(Lists.of(left, equals(), add), text);
 
         this.parseExpressionAndCheck(text, equals, text);
@@ -1097,7 +1097,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private void testExpressionNotEquals() {
         final SpreadsheetParserToken left = number(123);
         final SpreadsheetParserToken right = number(456);
-        final String text = "123!=456";
+        final String text = "123<>456";
         final SpreadsheetNotEqualsParserToken ne = SpreadsheetParserToken.notEquals(Lists.of(left, notEquals(), right), text);
 
         this.parseExpressionAndCheck(text, ne, text);
@@ -1120,7 +1120,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(middle, plus(), right), addText);
 
         final SpreadsheetParserToken left = number(123);
-        final String text = "123!=" + addText;
+        final String text = "123<>" + addText;
         final SpreadsheetNotEqualsParserToken ne = SpreadsheetParserToken.notEquals(Lists.of(left, notEquals(), add), text);
 
         this.parseExpressionAndCheck(text, ne, text);
@@ -2399,7 +2399,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetParserToken equals() {
-        return SpreadsheetParserToken.equalsSymbol("==", "==");
+        return SpreadsheetParserToken.equalsSymbol("=", "=");
     }
 
     private SpreadsheetParserToken greaterThan() {
@@ -2427,7 +2427,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetParserToken notEquals() {
-        return SpreadsheetParserToken.notEqualsSymbol("!=", "!=");
+        return SpreadsheetParserToken.notEqualsSymbol("<>", "<>");
     }
 
     private SpreadsheetParserToken percent() {

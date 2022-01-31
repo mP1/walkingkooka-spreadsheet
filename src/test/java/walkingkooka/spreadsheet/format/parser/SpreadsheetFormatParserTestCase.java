@@ -206,7 +206,7 @@ public abstract class SpreadsheetFormatParserTestCase {
     }
 
     static SpreadsheetFormatParserToken notEquals() {
-        return SpreadsheetFormatParserToken.notEqualsSymbol("!=", "!=");
+        return SpreadsheetFormatParserToken.notEqualsSymbol("<>", "<>");
     }
 
     static SpreadsheetFormatParserToken bracketOpenSymbol() {

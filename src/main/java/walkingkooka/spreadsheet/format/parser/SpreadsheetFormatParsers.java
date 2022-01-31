@@ -168,7 +168,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             SpreadsheetFormatEqualsSymbolParserToken.class);
     private static final EbnfIdentifierName EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("EQUALS");
 
-    private static final Parser<SpreadsheetFormatParserContext> NOT_EQUALS_SYMBOL = symbol("!=",
+    private static final Parser<SpreadsheetFormatParserContext> NOT_EQUALS_SYMBOL = symbol("<>",
             SpreadsheetFormatParserToken::notEqualsSymbol,
             SpreadsheetFormatNotEqualsSymbolParserToken.class);
     private static final EbnfIdentifierName NOT_EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("NOT_EQUALS");

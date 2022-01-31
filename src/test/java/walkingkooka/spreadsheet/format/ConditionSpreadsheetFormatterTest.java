@@ -134,12 +134,12 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
 
     @Test
     public void testFormattedNE() {
-        this.formatAndCheck2("[!=50]", "99"); // == pass
+        this.formatAndCheck2("[<>50]", "99"); // == pass
     }
 
     @Test
     public void testFormattedNE2() {
-        this.formatFailAndCheck2("[!=50]", "50"); // == fail
+        this.formatFailAndCheck2("[<>50]", "50"); // == fail
     }
 
     // helpers.........................................................................

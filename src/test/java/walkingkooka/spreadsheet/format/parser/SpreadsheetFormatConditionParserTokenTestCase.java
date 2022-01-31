@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.compare.ComparisonRelation;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -40,15 +39,6 @@ public abstract class SpreadsheetFormatConditionParserTokenTestCase<T extends Sp
     @Test
     public final void testWithMissingNumberTokenFails2() {
         assertThrows(IllegalArgumentException.class, () -> this.createToken("", this.whitespace(), this.whitespace()));
-    }
-
-    @Test
-    public final void testRelation() {
-        final T token = this.createToken();
-        final String symbol = this.operatorSymbol().value();
-        this.checkEquals(ComparisonRelation.findWithSymbol(symbol),
-                token.relation(),
-                () -> "Wrong relation for token " + token);
     }
 
     abstract T createToken(final String text, final List<ParserToken> tokens);
