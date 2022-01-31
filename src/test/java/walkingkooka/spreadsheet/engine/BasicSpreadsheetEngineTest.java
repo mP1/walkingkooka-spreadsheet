@@ -1220,15 +1220,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaNumber() {
-        this.saveCellAndLoadAndFormattedCheck(
-                "123",
-                this.expressionNumberKind().create(123)
-        );
-    }
-
-    @Test
-    public void testSaveCellFormulaDate() {
+    public void testSaveCellFormulaDateLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "1999/12/31",
                 LocalDate.of(1999, 12, 31)
@@ -1236,7 +1228,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaDateTime() {
+    public void testSaveCellFormulaDateTimeLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "1999/12/31 12:34",
                 LocalDateTime.of(
@@ -1247,7 +1239,96 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaTime() {
+    public void testSaveCellFormulaNumberLiteral() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "123",
+                this.expressionNumberKind().create(123)
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaNumber() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "=123",
+                this.expressionNumberKind().create(123)
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaNumberMath() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "=123+456.75",
+                this.expressionNumberKind()
+                        .create(123 + 456.75)
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaNumberGreaterThan() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "=123>45",
+                true
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaNumberLessThanEquals() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "=123<=45",
+                false
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaStringEqualsSameCase() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "=\"hello\"=\"hello\"",
+                true
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaStringEqualsDifferentCase() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "=\"hello\"=\"HELLO\"",
+                true
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaStringEqualsDifferent() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "=\"hello\"=\"different\"",
+                false
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaStringNotEqualsSameCase() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "=\"hello\"<>\"hello\"",
+                false
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaStringNotEqualsDifferentCase() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "=\"hello\"<>\"HELLO\"",
+                false
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaStringNotEqualsDifferent() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "=\"hello\"<>\"different\"",
+                true
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaTimeLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "12:34",
                 LocalTime.of(12, 34)
@@ -1511,12 +1592,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedEqualsTrue() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8==8", true);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8=8", true);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedEqualsFalse() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8==7", false);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8=7", false);
     }
 
     @Test
@@ -1581,12 +1662,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedNotEqualsTrue() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8!=7", true);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8<>7", true);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedNotEqualsFalse() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8!=8", false);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8<>8", false);
     }
 
     @Test
@@ -5256,12 +5337,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsEqualsTrue() {
-        this.fillCellsAndCheck("=10==10", true);
+        this.fillCellsAndCheck("=10=10", true);
     }
 
     @Test
     public void testFillCellsEqualsFalse() {
-        this.fillCellsAndCheck("=10==9", false);
+        this.fillCellsAndCheck("=10=9", false);
     }
 
     @Test
@@ -5326,12 +5407,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsNotEqualsTrue() {
-        this.fillCellsAndCheck("=10!=9", true);
+        this.fillCellsAndCheck("=10<>9", true);
     }
 
     @Test
     public void testFillCellsNotEqualsFalse() {
-        this.fillCellsAndCheck("=10!=10", false);
+        this.fillCellsAndCheck("=10<>10", false);
     }
 
     @Test
