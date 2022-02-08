@@ -18,12 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.ToStringTesting;
-import walkingkooka.compare.ComparableTesting2;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
@@ -32,10 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
-        ComparableTesting2<SpreadsheetRow>,
-        JsonNodeMarshallingTesting<SpreadsheetRow>,
-        ToStringTesting<SpreadsheetRow> {
+public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<SpreadsheetRow, SpreadsheetRowReference> {
 
     private final static int ROW = 20;
     private final static SpreadsheetRowReference REFERENCE = reference(ROW);
@@ -97,17 +89,16 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
                 row1, row2, row3, row4);
     }
 
-    // JsonNodeMarshallingTesting............................................................................................
-
-    @Test
-    public void testJsonNodeUnmarshallStringFails() {
-        this.unmarshallFails(JsonNode.string("fails"));
-    }
+    // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
     public void testJsonNode() {
         final SpreadsheetRowReference reference = reference(ROW);
-        this.marshallAndCheck(reference, reference.marshall(this.marshallContext()));
+
+        this.marshallAndCheck(
+                reference,
+                reference.marshall(this.marshallContext())
+        );
     }
 
     // toString.........................................................................................................
@@ -142,7 +133,8 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
         this.checkReference(row, REFERENCE);
     }
 
-    private void checkReference(final SpreadsheetRow row, final SpreadsheetRowReference reference) {
+    private void checkReference(final SpreadsheetRow row,
+                                final SpreadsheetRowReference reference) {
         this.checkEquals(reference, row.reference(), "reference");
         this.checkEquals(Optional.of(reference), row.id(), "id");
     }
@@ -152,22 +144,7 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
         return SpreadsheetRow.class;
     }
 
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    @Override
-    public boolean compareAndEqualsMatch() {
-        return true;
-    }
-
-    // JsonNodeMarshallingTesting...........................................................................................
-
-    @Override
-    public SpreadsheetRow createJsonNodeMarshallingValue() {
-        return this.createObject();
-    }
+    // JsonNodeMarshallingTesting......................................................................................
 
     @Override
     public SpreadsheetRow unmarshall(final JsonNode jsonNode,
