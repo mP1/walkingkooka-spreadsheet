@@ -26,6 +26,8 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
+import java.util.Optional;
+
 public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumnOrRow<R> & Comparable<T>, R extends SpreadsheetColumnOrRowReference>
         implements ClassTesting2<T>,
         ComparableTesting2<T>,
@@ -34,6 +36,21 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
 
     SpreadsheetColumnOrRowTestCase() {
         super();
+    }
+
+    static boolean differentHidden() {
+        return true;
+    }
+
+    final void checkReference(final T columnOrRow,
+                              final R reference) {
+        this.checkEquals(reference, columnOrRow.reference(), "reference");
+        this.checkEquals(Optional.of(reference), columnOrRow.id(), "id");
+    }
+
+    final void checkHidden(final T columnOrRow,
+                           final boolean hidden) {
+        this.checkEquals(hidden, columnOrRow.hidden(), "hidden");
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
@@ -51,7 +68,7 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
 
     @Override
     public final boolean compareAndEqualsMatch() {
-        return true;
+        return false; // hidden is not used by compare
     }
 
     // JsonNodeMarshallingTesting.......................................................................................

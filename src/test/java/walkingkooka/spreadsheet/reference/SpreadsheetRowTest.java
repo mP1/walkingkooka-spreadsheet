@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,6 +40,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         final SpreadsheetRow row = this.createRow();
 
         this.checkReference(row);
+        this.checkHidden(row);
     }
 
     // SetReference.....................................................................................................
@@ -69,11 +68,42 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         this.checkReference(row);
     }
 
+    // SetHidden........................................................................................................
+
+    @Test
+    public void testSetHiddenSame() {
+        final SpreadsheetRow row = this.createRow();
+
+        this.checkEquals(row, row.setHidden(row.hidden()));
+    }
+
+    @Test
+    public void testSetHiddenDifferent() {
+        final SpreadsheetRow row = this.createRow();
+        final boolean differentHidden = differentHidden();
+        final SpreadsheetRow different = row.setHidden(differentHidden);
+        assertNotSame(row, different);
+
+        this.checkHidden(different, differentHidden);
+
+        this.checkHidden(row);
+    }
+
     // equals .............................................................................................
 
     @Test
     public void testCompareDifferentRow() {
-        this.compareToAndCheckLess(this.createComparable(ROW + 999));
+        this.compareToAndCheckLess(
+                this.createComparable(ROW + 999)
+        );
+    }
+
+    @Test
+    public void testCompareDifferentHidden() {
+        this.compareToAndCheckEquals(
+                this.createComparable()
+                        .setHidden(differentHidden())
+        );
     }
 
     // compareTo0..........................................................................................................
@@ -92,12 +122,25 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testJsonNode() {
-        final SpreadsheetRowReference reference = reference(ROW);
-
+    public void testMarshall() {
         this.marshallAndCheck(
-                reference,
-                reference.marshall(this.marshallContext())
+                this.createRow(),
+                "{\n" +
+                        "  \"reference\": \"$21\",\n" +
+                        "  \"hidden\": false\n" +
+                        "}"
+        );
+    }
+
+    @Test
+    public void testMarshallHidden() {
+        this.marshallAndCheck(
+                this.createRow()
+                        .setHidden(true),
+                "{\n" +
+                        "  \"reference\": \"$21\",\n" +
+                        "  \"hidden\": true\n" +
+                        "}"
         );
     }
 
@@ -133,11 +176,11 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         this.checkReference(row, REFERENCE);
     }
 
-    private void checkReference(final SpreadsheetRow row,
-                                final SpreadsheetRowReference reference) {
-        this.checkEquals(reference, row.reference(), "reference");
-        this.checkEquals(Optional.of(reference), row.id(), "id");
+    private void checkHidden(final SpreadsheetRow row) {
+        this.checkHidden(row, false);
     }
+
+    // ClassTesting.....................................................................................................
 
     @Override
     public Class<SpreadsheetRow> type() {

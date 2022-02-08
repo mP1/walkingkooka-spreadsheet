@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
@@ -34,11 +34,12 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
     public static SpreadsheetColumn with(final SpreadsheetColumnReference reference) {
         checkReference(reference);
 
-        return new SpreadsheetColumn(reference);
+        return new SpreadsheetColumn(reference, false);
     }
 
-    private SpreadsheetColumn(final SpreadsheetColumnReference reference) {
-        super(reference);
+    private SpreadsheetColumn(final SpreadsheetColumnReference reference,
+                              final boolean hidden) {
+        super(reference, hidden);
     }
 
     // reference .......................................................................................................
@@ -51,21 +52,59 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
                 this.replace(reference);
     }
 
-    // replace .............................................................................................
-
     private SpreadsheetColumn replace(final SpreadsheetColumnReference reference) {
-        return new SpreadsheetColumn(reference);
+        return new SpreadsheetColumn(
+                reference,
+                this.hidden
+        );
     }
 
-    // JsonNodeContext..................................................................................................
+    // hidden .......................................................................................................
+
+    public SpreadsheetColumn setHidden(final boolean hidden) {
+
+        return this.hidden == hidden ?
+                this :
+                this.replace(hidden);
+    }
+
+    private SpreadsheetColumn replace(final boolean hidden) {
+        return new SpreadsheetColumn(
+                this.reference,
+                hidden
+        );
+    }
+
+    // Json.............................................................................................................
 
     static SpreadsheetColumn unmarshall(final JsonNode node,
                                         final JsonNodeUnmarshallContext context) {
-        return with(context.unmarshall(node, SpreadsheetColumnReference.class));
-    }
+        Boolean hidden = null;
+        SpreadsheetColumnReference reference = null;
 
-    private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return context.marshall(this.reference);
+        for (final JsonNode child : node.objectOrFail().children()) {
+            final JsonPropertyName name = child.name();
+            switch (name.value()) {
+                case REFERENCE_PROPERTY_STRING:
+                    reference = context.unmarshall(child, SpreadsheetColumnReference.class);
+                    break;
+                case HIDDEN_PROPERTY_STRING:
+                    hidden = child.booleanOrFail();
+                    break;
+                default:
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
+            }
+        }
+
+        if (null == hidden) {
+            JsonNodeUnmarshallContext.requiredPropertyMissing(HIDDEN_PROPERTY, node);
+        }
+        if (null == reference) {
+            JsonNodeUnmarshallContext.requiredPropertyMissing(REFERENCE_PROPERTY, node);
+        }
+
+        return new SpreadsheetColumn(reference, hidden);
     }
 
     static {
