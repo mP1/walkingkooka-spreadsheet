@@ -17,21 +17,16 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.Cast;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Objects;
-import java.util.Optional;
-
 /**
  * Represents a single column within a spreadsheet.
  */
-public final class SpreadsheetColumn implements Comparable<SpreadsheetColumn>,
-        HateosResource<SpreadsheetColumnReference> {
+public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetColumnReference>
+        implements Comparable<SpreadsheetColumn> {
 
     /**
      * Factory that creates a new {@link SpreadsheetColumn}
@@ -42,32 +37,11 @@ public final class SpreadsheetColumn implements Comparable<SpreadsheetColumn>,
         return new SpreadsheetColumn(reference);
     }
 
-    private static void checkReference(final SpreadsheetColumnReference reference) {
-        Objects.requireNonNull(reference, "reference");
-    }
-
     private SpreadsheetColumn(final SpreadsheetColumnReference reference) {
-        super();
-        this.reference = reference;
-    }
-
-    // HateosResource...................................................................................................
-
-    @Override
-    public Optional<SpreadsheetColumnReference> id() {
-        return Optional.of(this.reference());
-    }
-
-    @Override
-    public String hateosLinkId() {
-        return this.id().toString();
+        super(reference);
     }
 
     // reference .......................................................................................................
-
-    public SpreadsheetColumnReference reference() {
-        return this.reference;
-    }
 
     public SpreadsheetColumn setReference(final SpreadsheetColumnReference reference) {
         checkReference(reference);
@@ -76,11 +50,6 @@ public final class SpreadsheetColumn implements Comparable<SpreadsheetColumn>,
                 this :
                 this.replace(reference);
     }
-
-    /**
-     * The reference that identifies this cell.
-     */
-    private final SpreadsheetColumnReference reference;
 
     // replace .............................................................................................
 
@@ -106,29 +75,6 @@ public final class SpreadsheetColumn implements Comparable<SpreadsheetColumn>,
                 SpreadsheetColumn::marshall,
                 SpreadsheetColumn.class
         );
-    }
-
-    // HashCodeEqualsDefined..........................................................................................
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.reference);
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                other instanceof SpreadsheetColumn &&
-                        this.equals0(Cast.to(other));
-    }
-
-    private boolean equals0(final SpreadsheetColumn other) {
-        return this.reference.equals(other.reference());
-    }
-
-    @Override
-    public String toString() {
-        return this.reference.toString();
     }
 
     // Comparable..........................................................................................
