@@ -146,6 +146,8 @@ public class JunitTest {
                     .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1900)
                     .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
+                    .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, 1)
+                    .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, 2)
                     .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, ',')
                     .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))

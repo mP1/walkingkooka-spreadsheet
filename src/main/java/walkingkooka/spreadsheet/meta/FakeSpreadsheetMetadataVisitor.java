@@ -133,6 +133,16 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitFrozenColumns(final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitFrozenRows(final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitGroupingSeparator(final Character groupingSeparator) {
         throw new UnsupportedOperationException();
     }
