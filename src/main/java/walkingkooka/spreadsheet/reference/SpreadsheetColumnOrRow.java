@@ -20,6 +20,9 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -33,9 +36,11 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetColumnOrRowRef
         Objects.requireNonNull(reference, "reference");
     }
 
-    SpreadsheetColumnOrRow(final R reference) {
+    SpreadsheetColumnOrRow(final R reference,
+                           final boolean hidden) {
         super();
         this.reference = reference;
+        this.hidden = hidden;
     }
 
     // HateosResource...................................................................................................
@@ -61,6 +66,17 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetColumnOrRowRef
      */
     final R reference;
 
+    // hidden .......................................................................................................
+
+    public final boolean hidden() {
+        return this.hidden;
+    }
+
+    /**
+     * true indicates the column or row is hidden.
+     */
+    final boolean hidden;
+
     // HashCodeEqualsDefined............................................................................................
 
     @Override
@@ -75,12 +91,27 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetColumnOrRowRef
                         this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final SpreadsheetColumnOrRow other) {
-        return this.reference.equals(other.reference());
+    private boolean equals0(final SpreadsheetColumnOrRow<?> other) {
+        return this.reference.equals(other.reference()) &&
+                this.hidden == other.hidden;
     }
 
     @Override
     public final String toString() {
         return this.reference.toString();
+    }
+
+    // json.............................................................................................................
+
+    final static String REFERENCE_PROPERTY_STRING = "reference";
+    final static String HIDDEN_PROPERTY_STRING = "hidden";
+
+    final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
+    final static JsonPropertyName HIDDEN_PROPERTY = JsonPropertyName.with(HIDDEN_PROPERTY_STRING);
+
+    final JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.object()
+                .set(REFERENCE_PROPERTY, context.marshall(this.reference))
+                .set(HIDDEN_PROPERTY, JsonNode.booleanNode(this.hidden));
     }
 }

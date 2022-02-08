@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,6 +40,7 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         final SpreadsheetColumn column = this.createColumn();
 
         this.checkReference(column);
+        this.checkHidden(column);
     }
 
     // SetReference.....................................................................................................
@@ -69,11 +68,42 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         this.checkReference(column);
     }
 
+    // SetHidden........................................................................................................
+
+    @Test
+    public void testSetHiddenSame() {
+        final SpreadsheetColumn column = this.createColumn();
+
+        this.checkEquals(column, column.setHidden(column.hidden()));
+    }
+
+    @Test
+    public void testSetHiddenDifferent() {
+        final SpreadsheetColumn column = this.createColumn();
+        final boolean differentHidden = differentHidden();
+        final SpreadsheetColumn different = column.setHidden(differentHidden);
+        assertNotSame(column, different);
+
+        this.checkHidden(different, differentHidden);
+
+        this.checkHidden(column);
+    }
+
     // equals .............................................................................................
 
     @Test
     public void testCompareDifferentColumn() {
-        this.compareToAndCheckLess(this.createComparable(COLUMN + 999));
+        this.compareToAndCheckLess(
+                this.createComparable(COLUMN + 999)
+        );
+    }
+
+    @Test
+    public void testCompareDifferentHidden() {
+        this.compareToAndCheckEquals(
+                this.createComparable()
+                        .setHidden(differentHidden())
+        );
     }
 
     @Test
@@ -87,15 +117,28 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
                 column1, column2, column3, column4);
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testJsonNode() {
-        final SpreadsheetColumnReference reference = reference(COLUMN);
-
+    public void testMarshall() {
         this.marshallAndCheck(
-                reference,
-                reference.marshall(this.marshallContext())
+                this.createColumn(),
+                "{" +
+                        "  \"reference\": \"$U\",\n" +
+                        "  \"hidden\": false\n" +
+                        "}"
+        );
+    }
+
+    @Test
+    public void testMarshallHidden() {
+        this.marshallAndCheck(
+                this.createColumn()
+                        .setHidden(true),
+                "{\n" +
+                        "  \"reference\": \"$U\",\n" +
+                        "  \"hidden\": true\n" +
+                        "}"
         );
     }
 
@@ -131,11 +174,11 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         this.checkReference(column, REFERENCE);
     }
 
-    private void checkReference(final SpreadsheetColumn column,
-                                final SpreadsheetColumnReference reference) {
-        this.checkEquals(reference, column.reference(), "reference");
-        this.checkEquals(Optional.of(reference), column.id(), "id");
+    private void checkHidden(final SpreadsheetColumn column) {
+        this.checkHidden(column, false);
     }
+
+    // ClassTesting.....................................................................................................
 
     @Override
     public Class<SpreadsheetColumn> type() {
