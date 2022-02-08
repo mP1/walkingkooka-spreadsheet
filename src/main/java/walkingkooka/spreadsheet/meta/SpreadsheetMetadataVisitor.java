@@ -97,7 +97,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
 
     // properties..........................................................................................................
 
-    protected void visitCellCharacterWidth(final Integer value) {
+    protected void visitCellCharacterWidth(final int value) {
         // nop
     }
 
@@ -125,7 +125,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateTimeOffset(final Long offset) {
+    protected void visitDateTimeOffset(final long offset) {
         // nop
     }
 
@@ -133,7 +133,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDecimalSeparator(final Character decimalSeparator) {
+    protected void visitDecimalSeparator(final char decimalSeparator) {
         // nop
     }
 
@@ -157,7 +157,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitGroupingSeparator(final Character groupingSeparator) {
+    protected void visitGroupingSeparator(final char groupingSeparator) {
         // nop
     }
 
@@ -173,7 +173,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitNegativeSign(final Character negativeSign) {
+    protected void visitNegativeSign(final char negativeSign) {
         // nop
     }
 
@@ -193,15 +193,15 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitPercentageSymbol(final Character percentageSymbol) {
+    protected void visitPercentageSymbol(final char percentageSymbol) {
         // nop
     }
 
-    protected void visitPositiveSign(final Character positiveSign) {
+    protected void visitPositiveSign(final char positiveSign) {
         // nop
     }
 
-    protected void visitPrecision(final Integer precision) {
+    protected void visitPrecision(final int precision) {
         // nop
     }
 
@@ -237,11 +237,11 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitTwoDigitYear(final Integer value) {
+    protected void visitTwoDigitYear(final int value) {
         // nop
     }
 
-    protected void visitValueSeparator(final Character valueSeparator) {
+    protected void visitValueSeparator(final char valueSeparator) {
         // nop
     }
 

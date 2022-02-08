@@ -68,7 +68,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitCellCharacterWidth(final Integer value) {
+    protected void visitCellCharacterWidth(final int value) {
         throw new UnsupportedOperationException();
     }
 
@@ -103,7 +103,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDateTimeOffset(final Long offset) {
+    protected void visitDateTimeOffset(final long offset) {
         throw new UnsupportedOperationException();
     }
 
@@ -113,7 +113,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDecimalSeparator(final Character decimalSeparator) {
+    protected void visitDecimalSeparator(final char decimalSeparator) {
         throw new UnsupportedOperationException();
     }
 
@@ -143,7 +143,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitGroupingSeparator(final Character groupingSeparator) {
+    protected void visitGroupingSeparator(final char groupingSeparator) {
         throw new UnsupportedOperationException();
     }
 
@@ -163,7 +163,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitNegativeSign(final Character negativeSign) {
+    protected void visitNegativeSign(final char negativeSign) {
         throw new UnsupportedOperationException();
     }
 
@@ -188,17 +188,17 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitPercentageSymbol(final Character percentageSymbol) {
+    protected void visitPercentageSymbol(final char percentageSymbol) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visitPositiveSign(final Character positiveSign) {
+    protected void visitPositiveSign(final char positiveSign) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visitPrecision(final Integer precision) {
+    protected void visitPrecision(final int precision) {
         throw new UnsupportedOperationException();
     }
 
@@ -243,12 +243,12 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitTwoDigitYear(final Integer value) {
+    protected void visitTwoDigitYear(final int value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visitValueSeparator(final Character valueSeparator) {
+    protected void visitValueSeparator(final char valueSeparator) {
         throw new UnsupportedOperationException();
     }
 
