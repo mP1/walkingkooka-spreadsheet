@@ -116,7 +116,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitCellCharacterWidth() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitCellCharacterWidth(final Integer i) {
+            protected void visitCellCharacterWidth(final int i) {
                 this.visited = i;
             }
         }.accept(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 0);
@@ -186,7 +186,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitDateTimeOffset() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDateTimeOffset(final Long offset) {
+            protected void visitDateTimeOffset(final long offset) {
                 this.visited = offset;
             }
         }.accept(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET);
@@ -206,7 +206,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitDecimalSeparator() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDecimalSeparator(final Character c) {
+            protected void visitDecimalSeparator(final char c) {
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.');
@@ -256,7 +256,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitGroupingSeparator() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitGroupingSeparator(final Character c) {
+            protected void visitGroupingSeparator(final char c) {
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, ',');
@@ -296,7 +296,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitNegativeSign() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitNegativeSign(final Character c) {
+            protected void visitNegativeSign(final char c) {
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-');
@@ -352,7 +352,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitPercentageSymbol() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitPercentageSymbol(final Character c) {
+            protected void visitPercentageSymbol(final char c) {
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '.');
@@ -362,7 +362,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitPositiveSign() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitPositiveSign(final Character c) {
+            protected void visitPositiveSign(final char c) {
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+');
@@ -372,7 +372,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitPrecision() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitPrecision(final Integer i) {
+            protected void visitPrecision(final int i) {
                 this.visited = i;
             }
         }.accept(SpreadsheetMetadataPropertyName.PRECISION, 123);
@@ -456,7 +456,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitTwoDigitYear() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitTwoDigitYear(final Integer i) {
+            protected void visitTwoDigitYear(final int i) {
                 this.visited = i;
             }
         }.accept(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 32);
@@ -466,7 +466,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitValueSeparator() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitValueSeparator(final Character c) {
+            protected void visitValueSeparator(final char c) {
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, '.');
