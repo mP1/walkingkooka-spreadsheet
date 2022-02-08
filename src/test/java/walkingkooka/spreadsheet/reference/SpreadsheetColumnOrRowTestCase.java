@@ -23,6 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
@@ -32,7 +33,8 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
         implements ClassTesting2<T>,
         ComparableTesting2<T>,
         JsonNodeMarshallingTesting<T>,
-        ToStringTesting<T> {
+        ToStringTesting<T>,
+        TreePrintableTesting {
 
     SpreadsheetColumnOrRowTestCase() {
         super();
