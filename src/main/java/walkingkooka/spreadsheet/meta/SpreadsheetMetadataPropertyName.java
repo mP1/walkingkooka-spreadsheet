@@ -142,6 +142,16 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link int}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Integer> FROZEN_COLUMNS = registerConstant(SpreadsheetMetadataPropertyNameFrozenColumns.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-rows {@link int}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Integer> FROZEN_ROWS = registerConstant(SpreadsheetMetadataPropertyNameFrozenRows.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>grouping-separator {@link Character}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Character> GROUPING_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameGroupingSymbol.instance());

@@ -233,6 +233,26 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitFrozenColumns() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFrozenColumns(final int i) {
+                this.visited = i;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, 123);
+    }
+
+    @Test
+    public void testVisitFrozenRows() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFrozenRows(final int i) {
+                this.visited = i;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.FROZEN_ROWS, 123);
+    }
+
+    @Test
     public void testVisitGroupingSeparator() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
