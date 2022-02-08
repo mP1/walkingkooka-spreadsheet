@@ -53,6 +53,7 @@ public final class SpreadsheetRow implements Comparable<SpreadsheetRow>,
 
     // HateosResource ..................................................................................................
 
+    @Override
     public Optional<SpreadsheetRowReference> id() {
         return Optional.of(this.reference());
     }
@@ -132,6 +133,7 @@ public final class SpreadsheetRow implements Comparable<SpreadsheetRow>,
 
     // Comparable..........................................................................................
 
+    @Override
     public int compareTo(final SpreadsheetRow other) {
         return this.reference.compareTo(other.reference);
     }
