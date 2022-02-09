@@ -2058,6 +2058,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL);
+        properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, 1);
+        properties.put(SpreadsheetMetadataPropertyName.FROZEN_ROWS, 2);
         properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, GROUPING_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
