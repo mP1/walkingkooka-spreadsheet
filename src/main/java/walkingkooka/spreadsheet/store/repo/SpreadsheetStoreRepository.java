@@ -27,6 +27,8 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.store.Store;
 
 /**
@@ -43,6 +45,11 @@ public interface SpreadsheetStoreRepository {
      * A {@link SpreadsheetExpressionReferenceStore} holding cell references.
      */
     SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences();
+
+    /**
+     * A {@link SpreadsheetColumnStore} holding columns.
+     */
+    SpreadsheetColumnStore columns();
 
     /**
      * A {@link SpreadsheetGroupStore} holding groups.
@@ -73,6 +80,11 @@ public interface SpreadsheetStoreRepository {
      * A {@link SpreadsheetCellRangeStore} that maps ranges to {@link SpreadsheetConditionalFormattingRule}
      */
     SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules();
+
+    /**
+     * A {@link SpreadsheetRowStore} holding rows.
+     */
+    SpreadsheetRowStore rows();
 
     /**
      * A {@link SpreadsheetUserStore} holding users.
