@@ -42,7 +42,7 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     Integer checkValue0(final Object value) {
         final Integer integerValue = this.checkValueTypeInteger(value);
         if (integerValue < 0) {
-            throw new SpreadsheetMetadataPropertyValueException("Expected int >= 0", this, integerValue);
+            throw new SpreadsheetMetadataPropertyValueException("Expected value >= 0", this, integerValue);
         }
         return integerValue;
     }
