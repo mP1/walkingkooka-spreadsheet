@@ -23,13 +23,15 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.Objects;
 
@@ -93,6 +95,11 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
     }
 
     @Override
+    public SpreadsheetColumnStore columns() {
+        return this.repository.columns();
+    }
+
+    @Override
     public SpreadsheetGroupStore groups() {
         return this.repository.groups();
     }
@@ -120,6 +127,11 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
     @Override
     public SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
         return this.repository.rangeToConditionalFormattingRules();
+    }
+
+    @Override
+    public SpreadsheetRowStore rows() {
+        return this.repository.rows();
     }
 
     @Override

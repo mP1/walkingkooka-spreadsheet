@@ -70,6 +70,8 @@ import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
@@ -8017,12 +8019,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetStoreRepositories.basic(
                         SpreadsheetCellStores.treeMap(),
                         SpreadsheetExpressionReferenceStores.treeMap(),
+                        SpreadsheetColumnStores.treeMap(),
                         SpreadsheetGroupStores.fake(),
                         SpreadsheetLabelStores.treeMap(),
                         SpreadsheetExpressionReferenceStores.treeMap(),
                         SpreadsheetMetadataStores.fake(),
                         SpreadsheetCellRangeStores.treeMap(),
                         SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetRowStores.treeMap(),
                         SpreadsheetUserStores.fake()
                 )
         );

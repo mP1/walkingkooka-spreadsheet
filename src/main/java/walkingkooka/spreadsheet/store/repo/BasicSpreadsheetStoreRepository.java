@@ -27,6 +27,8 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.store.Store;
 
 import java.util.Objects;
@@ -38,51 +40,63 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
 
     static BasicSpreadsheetStoreRepository with(final SpreadsheetCellStore cells,
                                                 final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences,
+                                                final SpreadsheetColumnStore columns,
                                                 final SpreadsheetGroupStore groups,
                                                 final SpreadsheetLabelStore labels,
                                                 final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
                                                 final SpreadsheetMetadataStore metadatas,
                                                 final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                                 final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
+                                                final SpreadsheetRowStore rows,
                                                 final SpreadsheetUserStore users) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(cellReferences, "cellReferences");
+        Objects.requireNonNull(columns, "columns");
         Objects.requireNonNull(groups, "groups");
         Objects.requireNonNull(labels, "labels");
         Objects.requireNonNull(labelReferences, "labelReferences");
         Objects.requireNonNull(metadatas, "metadatas");
         Objects.requireNonNull(rangeToCells, "rangeToCells");
         Objects.requireNonNull(rangeToConditionalFormattingRules, "rangeToConditionalFormattingRules");
+        Objects.requireNonNull(rows, "rows");
         Objects.requireNonNull(users, "users");
 
-        return new BasicSpreadsheetStoreRepository(cells,
+        return new BasicSpreadsheetStoreRepository(
+                cells,
                 cellReferences,
+                columns,
                 groups,
                 labels,
                 labelReferences,
                 metadatas,
                 rangeToCells,
                 rangeToConditionalFormattingRules,
-                users);
+                rows,
+                users
+        );
     }
 
     private BasicSpreadsheetStoreRepository(final SpreadsheetCellStore cells,
                                             final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences,
+                                            final SpreadsheetColumnStore columns,
                                             final SpreadsheetGroupStore groups,
                                             final SpreadsheetLabelStore labels,
                                             final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
                                             final SpreadsheetMetadataStore metadatas,
                                             final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                             final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
+                                            final SpreadsheetRowStore rows,
                                             final SpreadsheetUserStore users) {
         this.cells = cells;
         this.cellReferences = cellReferences;
+        this.columns = columns;
         this.groups = groups;
         this.labels = labels;
         this.labelReferences = labelReferences;
         this.metadatas = metadatas;
         this.rangeToCells = rangeToCells;
         this.rangeToConditionalFormattingRules = rangeToConditionalFormattingRules;
+        this.rows = rows;
         this.users = users;
     }
 
@@ -99,6 +113,13 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     }
 
     private final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences;
+
+    @Override
+    public SpreadsheetColumnStore columns() {
+        return this.columns;
+    }
+
+    private final SpreadsheetColumnStore columns;
 
     @Override
     public SpreadsheetGroupStore groups() {
@@ -143,6 +164,13 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules;
 
     @Override
+    public SpreadsheetRowStore rows() {
+        return this.rows;
+    }
+
+    private final SpreadsheetRowStore rows;
+
+    @Override
     public SpreadsheetUserStore users() {
         return this.users;
     }
@@ -153,12 +181,14 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     public String toString() {
         return this.cells + " " +
                 this.cellReferences + " " +
+                this.columns + " " +
                 this.groups + " " +
                 this.labels + " " +
                 this.labelReferences + " " +
                 this.metadatas + " " +
                 this.rangeToCells + " " +
                 this.rangeToConditionalFormattingRules + " " +
+                this.rows + " " +
                 this.users;
     }
 }

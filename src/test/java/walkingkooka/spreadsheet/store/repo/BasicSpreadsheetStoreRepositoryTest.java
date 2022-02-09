@@ -35,6 +35,10 @@ import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -42,20 +46,42 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
 
     @Test
     public void testWithNullCellsFails() {
-        this.withFails(null,
+        this.withFails(
+                null,
                 this.cellReferences(),
+                this.columns(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
                 this.metadatas(),
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
-                this.users());
+                this.rows(),
+                this.users()
+        );
     }
 
     @Test
     public void testWithNullCellReferencesFails() {
-        this.withFails(this.cells(),
+        this.withFails(
+                this.cells(),
+                null,
+                this.columns(),
+                this.groups(),
+                this.labels(),
+                this.labelReferences(),
+                this.metadatas(),
+                this.rangeToCells(),
+                this.rangeToConditionalFormattingRules(),
+                this.rows(),
+                this.users());
+    }
+
+    @Test
+    public void testWithNullColumnsFails() {
+        this.withFails(
+                this.cells(),
+                this.cellReferences(),
                 null,
                 this.groups(),
                 this.labels(),
@@ -63,155 +89,220 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.metadatas(),
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
+                this.rows(),
                 this.users());
     }
 
     @Test
     public void testWithNullGroupsFails() {
-        this.withFails(this.cells(),
+        this.withFails(
+                this.cells(),
                 this.cellReferences(),
+                this.columns(),
                 null,
                 this.labels(),
                 this.labelReferences(),
                 this.metadatas(),
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
+                this.rows(),
                 this.users());
     }
 
     @Test
     public void testWithNullLabelsFails() {
-        this.withFails(this.cells(),
+        this.withFails(
+                this.cells(),
                 this.cellReferences(),
+                this.columns(),
                 this.groups(),
                 null,
                 this.labelReferences(),
                 this.metadatas(),
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
-                this.users());
+                this.rows(),
+                this.users()
+        );
     }
 
     @Test
     public void testWithNullLabelReferencesFails() {
-        this.withFails(this.cells(),
+        this.withFails(
+                this.cells(),
                 this.cellReferences(),
+                this.columns(),
                 this.groups(),
                 this.labels(),
                 null,
                 this.metadatas(),
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
-                this.users());
+                this.rows(),
+                this.users()
+        );
     }
 
     @Test
     public void testWithNullMetadatasFails() {
-        this.withFails(this.cells(),
+        this.withFails(
+                this.cells(),
                 this.cellReferences(),
+                this.columns(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
                 null,
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
-                this.users());
+                this.rows(),
+                this.users()
+        );
     }
 
     @Test
     public void testWithNullRangeToCellsFails() {
-        this.withFails(this.cells(),
+        this.withFails(
+                this.cells(),
                 this.cellReferences(),
+                this.columns(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
                 this.metadatas(),
                 null,
                 this.rangeToConditionalFormattingRules(),
-                this.users());
+                this.rows(),
+                this.users()
+        );
     }
 
     @Test
     public void testWithNullRangeToConditionalFormattingRulesFails() {
-        this.withFails(this.cells(),
+        this.withFails(
+                this.cells(),
                 this.cellReferences(),
+                this.columns(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
                 this.metadatas(),
                 this.rangeToCells(),
                 null,
-                this.users());
+                this.rows(),
+                this.users()
+        );
     }
 
     @Test
-    public void testWithNullUserFails() {
-        this.withFails(this.cells(),
+    public void testWithNullRowsFails() {
+        this.withFails(
+                this.cells(),
                 this.cellReferences(),
+                this.columns(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
                 this.metadatas(),
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
-                null);
+                null,
+                this.users()
+        );
+    }
+
+    @Test
+    public void testWithNullUserFails() {
+        this.withFails(
+                this.cells(),
+                this.cellReferences(),
+                this.columns(),
+                this.groups(),
+                this.labels(),
+                this.labelReferences(),
+                this.metadatas(),
+                this.rangeToCells(),
+                this.rangeToConditionalFormattingRules(),
+                this.rows(),
+                null
+        );
     }
 
     private void withFails(final SpreadsheetCellStore cells,
                            final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences,
+                           final SpreadsheetColumnStore columns,
                            final SpreadsheetGroupStore groups,
                            final SpreadsheetLabelStore labels,
                            final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
                            final SpreadsheetMetadataStore metadatas,
                            final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                            final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
+                           final SpreadsheetRowStore rows,
                            final SpreadsheetUserStore users) {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetStoreRepository.with(cells,
-                cellReferences,
-                groups,
-                labels,
-                labelReferences,
-                metadatas,
-                rangeToCells,
-                rangeToConditionalFormattingRules,
-                users));
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetStoreRepository.with(
+                        cells,
+                        cellReferences,
+                        columns,
+                        groups,
+                        labels,
+                        labelReferences,
+                        metadatas,
+                        rangeToCells,
+                        rangeToConditionalFormattingRules,
+                        rows,
+                        users
+                )
+        );
     }
 
     @Test
     public void testToString() {
         final SpreadsheetCellStore cells = this.cells();
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences = this.cellReferences();
+        final SpreadsheetColumnStore columns = this.columns();
         final SpreadsheetGroupStore groups = this.groups();
         final SpreadsheetLabelStore labels = this.labels();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences = this.labelReferences();
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = this.rangeToCells();
         final SpreadsheetMetadataStore metadatas = this.metadatas();
         final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = this.rangeToConditionalFormattingRules();
+        final SpreadsheetRowStore rows = this.rows();
         final SpreadsheetUserStore users = this.users();
 
-        this.toStringAndCheck(BasicSpreadsheetStoreRepository.with(cells,
-                cellReferences,
-                groups,
-                labels,
-                labelReferences,
-                metadatas,
-                rangeToCells,
-                rangeToConditionalFormattingRules,
-                users),
-                cells + " " + cellReferences + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rangeToConditionalFormattingRules + " " + users);
+        this.toStringAndCheck(
+                BasicSpreadsheetStoreRepository.with(
+                        cells,
+                        cellReferences,
+                        columns,
+                        groups,
+                        labels,
+                        labelReferences,
+                        metadatas,
+                        rangeToCells,
+                        rangeToConditionalFormattingRules,
+                        rows,
+                        users
+                ),
+                cells + " " + cellReferences + " " + columns + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rangeToConditionalFormattingRules + " " + rows + " " + users);
     }
 
     @Override
     public BasicSpreadsheetStoreRepository createStoreRepository() {
-        return BasicSpreadsheetStoreRepository.with(this.cells(),
+        return BasicSpreadsheetStoreRepository.with(
+                this.cells(),
                 this.cellReferences(),
+                this.columns(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
                 this.metadatas(),
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
-                this.users());
+                this.rows(),
+                this.users()
+        );
     }
 
     private SpreadsheetCellStore cells() {
@@ -220,6 +311,10 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
 
     private SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences() {
         return SpreadsheetExpressionReferenceStores.fake();
+    }
+
+    private SpreadsheetColumnStore columns() {
+        return SpreadsheetColumnStores.fake();
     }
 
     private SpreadsheetGroupStore groups() {
@@ -244,6 +339,10 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
 
     private SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
         return SpreadsheetCellRangeStores.fake();
+    }
+
+    private SpreadsheetRowStore rows() {
+        return SpreadsheetRowStores.fake();
     }
 
     private SpreadsheetUserStore users() {
