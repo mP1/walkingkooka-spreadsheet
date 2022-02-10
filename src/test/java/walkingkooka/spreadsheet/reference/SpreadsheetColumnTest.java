@@ -20,12 +20,15 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+import walkingkooka.tree.json.patch.PatchableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<SpreadsheetColumn, SpreadsheetColumnReference> {
+public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<SpreadsheetColumn, SpreadsheetColumnReference>
+        implements PatchableTesting<SpreadsheetColumn> {
 
     private final static int COLUMN = 20;
     private final static SpreadsheetColumnReference REFERENCE = reference(COLUMN);
@@ -158,6 +161,38 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         );
     }
 
+    // Patchable........................................................................................................
+
+    @Test
+    public void testPatchHiddenTrue() {
+        final SpreadsheetColumn column = SpreadsheetColumn.with(
+                SpreadsheetSelection.parseColumn("A")
+        );
+
+        this.patchAndCheck(
+                column,
+                "{\n" +
+                        "  \"hidden\": true\n" +
+                        "}",
+                column.setHidden(true)
+        );
+    }
+
+    @Test
+    public void testPatchHiddenFalse() {
+        final SpreadsheetColumn column = SpreadsheetColumn.with(
+                SpreadsheetSelection.parseColumn("B")
+        );
+
+        this.patchAndCheck(
+                column.setHidden(true),
+                "{\n" +
+                        "  \"hidden\": false\n" +
+                        "}",
+                column.setHidden(false)
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test
@@ -221,5 +256,22 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     public SpreadsheetColumn unmarshall(final JsonNode jsonNode,
                                         final JsonNodeUnmarshallContext context) {
         return SpreadsheetColumn.unmarshall(jsonNode, context);
+    }
+
+    // PatchableTesting.................................................................................................
+
+    @Override
+    public SpreadsheetColumn createPatchable() {
+        return this.createColumn();
+    }
+
+    @Override
+    public JsonNode createPatch() {
+        return JsonNode.object();
+    }
+
+    @Override
+    public JsonNodeUnmarshallContext createPatchContext() {
+        return JsonNodeUnmarshallContexts.fake();
     }
 }

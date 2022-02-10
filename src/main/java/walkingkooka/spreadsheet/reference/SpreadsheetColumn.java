@@ -22,6 +22,7 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
+import walkingkooka.tree.json.patch.Patchable;
 
 import java.util.Objects;
 
@@ -29,7 +30,8 @@ import java.util.Objects;
  * Represents a single column within a spreadsheet.
  */
 public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetColumnReference>
-        implements Comparable<SpreadsheetColumn> {
+        implements Comparable<SpreadsheetColumn>,
+        Patchable<SpreadsheetColumn> {
 
     /**
      * Factory that creates a new {@link SpreadsheetColumn}
@@ -145,5 +147,35 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
     @Override
     public int compareTo(final SpreadsheetColumn other) {
         return this.reference.compareTo(other.reference);
+    }
+
+    // Patchable........................................................................................................
+
+    /**
+     * Patches this {@link SpreadsheetColumn} with the provided delta.
+     */
+    @Override
+    public SpreadsheetColumn patch(final JsonNode json,
+                                   final JsonNodeUnmarshallContext context) {
+        Objects.requireNonNull(json, "json");
+        Objects.requireNonNull(context, "context");
+
+        SpreadsheetColumn patched = this;
+
+        for (final JsonNode child : json.objectOrFail().children()) {
+            final JsonPropertyName name = child.name();
+            switch (name.value()) {
+                case HIDDEN_PROPERTY_STRING:
+                    patched = patched.setHidden(
+                            child.booleanOrFail()
+                    );
+                    break;
+                default:
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, json);
+                    break;
+            }
+        }
+
+        return patched;
     }
 }
