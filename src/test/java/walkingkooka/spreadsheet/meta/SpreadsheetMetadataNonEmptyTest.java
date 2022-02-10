@@ -2102,6 +2102,23 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.marshallRoundTripTwiceAndCheck(SpreadsheetMetadataNonEmpty.with(properties, SpreadsheetMetadata.EMPTY));
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(1234))
+                        .set(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Untitled"))
+                        .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, 1)
+                        .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, 23),
+                "spreadsheet-id: 4d2\n" +
+                        "frozen-columns: 1\n" +
+                        "frozen-rows: 23\n" +
+                        "spreadsheet-name: Untitled\n"
+        );
+    }
+
     // helpers...........................................................................................................
 
     @Override
