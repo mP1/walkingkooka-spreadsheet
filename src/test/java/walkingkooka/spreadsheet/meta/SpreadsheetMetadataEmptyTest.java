@@ -180,6 +180,16 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 context.marshall(SpreadsheetMetadata.EMPTY.setDefaults(defaultNotEmpty)));
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetMetadata.EMPTY,
+                ""
+        );
+    }
+
     // helper...........................................................................................................
 
     @Override

@@ -61,6 +61,8 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -102,6 +104,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         HasSpreadsheetFormatterContext,
         HateosResource<SpreadsheetId>,
         Patchable<SpreadsheetMetadata>,
+        TreePrintable,
         Value<Map<SpreadsheetMetadataPropertyName<?>, Object>> {
 
     /**
@@ -950,5 +953,17 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         }
 
         return result;
+    }
+
+    // TreePrintable...................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        for (final Map.Entry<SpreadsheetMetadataPropertyName<?>, Object> nameAndValue : this.value().entrySet()) {
+            printer.print(nameAndValue.getKey().value());
+            printer.print(": ");
+            TreePrintable.printTreeOrToString(nameAndValue.getValue(), printer);
+            printer.println();
+        }
     }
 }

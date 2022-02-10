@@ -32,6 +32,7 @@ import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -55,7 +56,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         JsonNodeMarshallingTesting<SpreadsheetMetadata>,
         HateosResourceTesting<SpreadsheetMetadata>,
         ThrowableTesting,
-        ToStringTesting<SpreadsheetMetadata> {
+        ToStringTesting<SpreadsheetMetadata>,
+        TreePrintableTesting {
 
     SpreadsheetMetadataTestCase() {
         super();
