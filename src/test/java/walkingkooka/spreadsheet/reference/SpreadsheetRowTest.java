@@ -144,6 +144,20 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintableHidden() {
+        final SpreadsheetRow row = this.createObject()
+                .setHidden(true);
+
+        this.treePrintAndCheck(
+                row,
+                "" + REFERENCE + EOL +
+                        "  hidden" + EOL
+        );
+    }
+
     // toString.........................................................................................................
 
     @Test

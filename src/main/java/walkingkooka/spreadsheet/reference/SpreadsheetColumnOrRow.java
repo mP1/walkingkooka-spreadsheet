@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -30,7 +32,8 @@ import java.util.Optional;
 /**
  * Base class for both column and row.
  */
-public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetColumnOrRowReference> implements HateosResource<R> {
+public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetColumnOrRowReference> implements HateosResource<R>,
+        TreePrintable {
 
     static void checkReference(final SpreadsheetColumnOrRowReference reference) {
         Objects.requireNonNull(reference, "reference");
@@ -113,5 +116,19 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetColumnOrRowRef
         return JsonNode.object()
                 .set(REFERENCE_PROPERTY, context.marshall(this.reference))
                 .set(HIDDEN_PROPERTY, JsonNode.booleanNode(this.hidden));
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.reference().toString());
+        printer.indent();
+
+        if (this.hidden()) {
+            printer.println(HIDDEN_PROPERTY_STRING);
+        }
+
+        printer.outdent();
     }
 }

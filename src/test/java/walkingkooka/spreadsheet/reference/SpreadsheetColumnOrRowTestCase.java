@@ -62,6 +62,18 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
         this.unmarshallFails(JsonNode.string("fails"));
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public final void testTreePrintable() {
+        final T columnOrRow = this.createObject();
+
+        this.treePrintAndCheck(
+                columnOrRow,
+                columnOrRow.reference().toString() + EOL
+        );
+    }
+
     // ClassTesting.....................................................................................................
     @Override
     public final JavaVisibility typeVisibility() {
