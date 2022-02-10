@@ -21,6 +21,9 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
+
+import java.util.Objects;
 
 /**
  * Represents a single column within a spreadsheet.
@@ -79,15 +82,39 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
 
     static SpreadsheetColumn unmarshall(final JsonNode node,
                                         final JsonNodeUnmarshallContext context) {
-        Boolean hidden = null;
+        Objects.requireNonNull(node, "node");
+
+        SpreadsheetColumn column = null;
         SpreadsheetColumnReference reference = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
+            if (null != reference) {
+                JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+            }
+
+            column = unmarshall0(
+                    SpreadsheetSelection.parseColumn(name.value()),
+                    child,
+                    context
+            );
+        }
+
+        if (null == column) {
+            throw new JsonNodeUnmarshallException("Missing column reference", node);
+        }
+
+        return column;
+    }
+
+    private static SpreadsheetColumn unmarshall0(final SpreadsheetColumnReference reference,
+                                                 final JsonNode node,
+                                                 final JsonNodeUnmarshallContext context) {
+        Boolean hidden = null;
+
+        for (final JsonNode child : node.objectOrFail().children()) {
+            final JsonPropertyName name = child.name();
             switch (name.value()) {
-                case REFERENCE_PROPERTY_STRING:
-                    reference = context.unmarshall(child, SpreadsheetColumnReference.class);
-                    break;
                 case HIDDEN_PROPERTY_STRING:
                     hidden = child.booleanOrFail();
                     break;
@@ -99,9 +126,6 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
 
         if (null == hidden) {
             JsonNodeUnmarshallContext.requiredPropertyMissing(HIDDEN_PROPERTY, node);
-        }
-        if (null == reference) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(REFERENCE_PROPERTY, node);
         }
 
         return new SpreadsheetColumn(reference, hidden); // lgtm [java/dereferenced-value-may-be-null]

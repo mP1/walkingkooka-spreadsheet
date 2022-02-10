@@ -106,16 +106,17 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetColumnOrRowRef
 
     // json.............................................................................................................
 
-    final static String REFERENCE_PROPERTY_STRING = "reference";
     final static String HIDDEN_PROPERTY_STRING = "hidden";
 
-    final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
     final static JsonPropertyName HIDDEN_PROPERTY = JsonPropertyName.with(HIDDEN_PROPERTY_STRING);
 
     final JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(REFERENCE_PROPERTY, context.marshall(this.reference))
-                .set(HIDDEN_PROPERTY, JsonNode.booleanNode(this.hidden));
+                .set(
+                        JsonPropertyName.with(this.reference.toString()),
+                        JsonNode.object()
+                                .set(HIDDEN_PROPERTY, JsonNode.booleanNode(this.hidden))
+                );
     }
 
     // TreePrintable....................................................................................................

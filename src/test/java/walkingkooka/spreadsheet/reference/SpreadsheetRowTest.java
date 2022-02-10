@@ -124,22 +124,38 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createRow(),
+                SpreadsheetRow.with(
+                        SpreadsheetSelection.parseRow("123")
+                ),
                 "{\n" +
-                        "  \"reference\": \"$21\",\n" +
-                        "  \"hidden\": false\n" +
+                        "  \"123\": {\n" +
+                        "    \"hidden\": false\n" +
+                        "  }\n" +
                         "}"
         );
     }
 
     @Test
-    public void testMarshallHidden() {
+    public void testMarshallAbsolute() {
+        this.marshallAndCheck(
+                this.createRow(),
+                "{\n" +
+                        "  \"$21\": {\n" +
+                        "    \"hidden\": false\n" +
+                        "  }\n" +
+                        "}"
+        );
+    }
+
+    @Test
+    public void testMarshallAbsoluteHidden() {
         this.marshallAndCheck(
                 this.createRow()
                         .setHidden(true),
                 "{\n" +
-                        "  \"reference\": \"$21\",\n" +
-                        "  \"hidden\": true\n" +
+                        "  \"$21\": {\n" +
+                        "    \"hidden\": true\n" +
+                        "  }\n" +
                         "}"
         );
     }
