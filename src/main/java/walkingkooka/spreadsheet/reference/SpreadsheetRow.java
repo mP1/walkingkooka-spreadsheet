@@ -22,6 +22,7 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
+import walkingkooka.tree.json.patch.Patchable;
 
 import java.util.Objects;
 
@@ -29,7 +30,8 @@ import java.util.Objects;
  * Represents a single row within a spreadsheet.
  */
 public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowReference>
-        implements Comparable<SpreadsheetRow> {
+        implements Comparable<SpreadsheetRow>,
+        Patchable<SpreadsheetRow> {
 
     /**
      * Factory that creates a new {@link SpreadsheetRow}
@@ -145,5 +147,35 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
     @Override
     public int compareTo(final SpreadsheetRow other) {
         return this.reference.compareTo(other.reference);
+    }
+
+    // Patchable........................................................................................................
+
+    /**
+     * Patches this {@link SpreadsheetRow} with the provided delta.
+     */
+    @Override
+    public SpreadsheetRow patch(final JsonNode json,
+                                final JsonNodeUnmarshallContext context) {
+        Objects.requireNonNull(json, "json");
+        Objects.requireNonNull(context, "context");
+
+        SpreadsheetRow patched = this;
+
+        for (final JsonNode child : json.objectOrFail().children()) {
+            final JsonPropertyName name = child.name();
+            switch (name.value()) {
+                case HIDDEN_PROPERTY_STRING:
+                    patched = patched.setHidden(
+                            child.booleanOrFail()
+                    );
+                    break;
+                default:
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, json);
+                    break;
+            }
+        }
+
+        return patched;
     }
 }
