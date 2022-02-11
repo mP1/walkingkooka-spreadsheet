@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.Fake;
@@ -64,6 +65,12 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference column,
                                           final int count,
                                           final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetDelta saveRow(final SpreadsheetRow row,
+                                    final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 

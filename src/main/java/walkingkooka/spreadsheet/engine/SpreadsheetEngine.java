@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -69,6 +70,12 @@ public interface SpreadsheetEngine {
     SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference column,
                                    final int count,
                                    final SpreadsheetEngineContext context);
+
+    /**
+     * Saves the {@link SpreadsheetRow}, and updates all affected (referenced cells).
+     */
+    SpreadsheetDelta saveRow(final SpreadsheetRow row,
+                             final SpreadsheetEngineContext context);
 
     /**
      * Deletes the identified rows, updates all absolute references as necessary in both formulas and label mappings.

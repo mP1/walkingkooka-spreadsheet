@@ -161,6 +161,30 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
+    default void testSaveRowNullRowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveRow(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testSaveRowNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveRow(
+                                ROW.row(),
+                                null
+                        )
+        );
+    }
+
+    @Test
     default void testDeleteRowsNullRowFails() {
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteRows(null, 1, this.createContext()));
     }

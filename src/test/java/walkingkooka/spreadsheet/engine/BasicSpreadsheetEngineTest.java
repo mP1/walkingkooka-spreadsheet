@@ -2081,6 +2081,66 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(context.storeRepository().cells(), 4);
     }
 
+    // saveRow......................................................................................................
+
+    @Test
+    public void testSaveRowWithoutCells() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
+
+        final SpreadsheetRowReference reference = SpreadsheetSelection.parseRow("2");
+
+        engine.saveRow(
+                reference.row(),
+                context
+        );
+
+        this.countAndCheck(
+                context.storeRepository()
+                        .rows(),
+                1
+        );
+    }
+
+    @Test
+    public void testSaveRowWithCells() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetRowReference reference = SpreadsheetSelection.parseRow("2");
+
+        final SpreadsheetCell cell = this.cell(
+                reference.setColumn(SpreadsheetSelection.parseColumn("B")),
+                "=1+2"
+        );
+
+        context.storeRepository()
+                .cells()
+                .save(cell);
+
+        engine.saveRow(
+                reference.row(),
+                context
+        );
+
+        this.countAndCheck(
+                context.storeRepository()
+                        .rows(),
+                1
+        );
+
+        this.loadCellAndCheckFormatted(
+                engine,
+                cell.reference(),
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                context,
+                this.expressionNumberKind().create(3),
+                "3 " + FORMATTED_PATTERN_SUFFIX
+        );
+    }
+
     // deleteRow....................................................................................................
 
     @Test
