@@ -71,7 +71,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     SpreadsheetColumnReference COLUMN = SpreadsheetReferenceKind.ABSOLUTE.column(1);
     SpreadsheetRowReference ROW = SpreadsheetReferenceKind.ABSOLUTE.row(2);
-    SpreadsheetCellReference REFERENCE = COLUMN.setRow(ROW);
+    SpreadsheetCellReference CELL_REFERENCE = COLUMN.setRow(ROW);
     SpreadsheetLabelName LABEL = SpreadsheetExpressionReference.labelName("LABEL123");
 
     @Test
@@ -81,14 +81,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testLoadCellNullEvaluationFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().loadCell(REFERENCE,
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().loadCell(CELL_REFERENCE,
                 null,
                 this.createContext()));
     }
 
     @Test
     default void testLoadCellNullContextFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().loadCell(REFERENCE,
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().loadCell(CELL_REFERENCE,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 null));
     }
@@ -104,7 +104,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .saveCell(SpreadsheetCell.with(REFERENCE, SpreadsheetFormula.EMPTY.setText("1")),
+                        .saveCell(SpreadsheetCell.with(CELL_REFERENCE, SpreadsheetFormula.EMPTY.setText("1")),
                                 null));
     }
 
@@ -116,7 +116,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testDeleteCellNullContextFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteCell(REFERENCE,
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteCell(CELL_REFERENCE,
                 null));
     }
 
