@@ -1493,6 +1493,66 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadReferencesAndCheck(labelReferencesStore, labelB2, a1.reference());
     }
 
+    // saveColumn......................................................................................................
+
+    @Test
+    public void testSaveColumnWithoutCells() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
+
+        final SpreadsheetColumnReference reference = SpreadsheetSelection.parseColumn("B");
+
+        engine.saveColumn(
+                reference.column(),
+                context
+        );
+
+        this.countAndCheck(
+                context.storeRepository()
+                        .columns(),
+                1
+        );
+    }
+
+    @Test
+    public void testSaveColumnWithCells() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetColumnReference reference = SpreadsheetSelection.parseColumn("B");
+
+        final SpreadsheetCell cell = this.cell(
+                reference.setRow(SpreadsheetSelection.parseRow("2")),
+                "=1+2"
+        );
+
+        context.storeRepository()
+                .cells()
+                .save(cell);
+
+        engine.saveColumn(
+                reference.column(),
+                context
+        );
+
+        this.countAndCheck(
+                context.storeRepository()
+                        .columns(),
+                1
+        );
+
+        this.loadCellAndCheckFormatted(
+                engine,
+                cell.reference(),
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                context,
+                this.expressionNumberKind().create(3),
+                "3 " + FORMATTED_PATTERN_SUFFIX
+        );
+    }
+
     // deleteColumn....................................................................................................
 
     @Test

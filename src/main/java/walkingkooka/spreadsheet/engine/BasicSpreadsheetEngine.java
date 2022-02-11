@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -40,6 +41,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.Length;
@@ -154,6 +156,37 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context.storeRepository()
                     .cells()
                     .delete(reference);
+            changes.refreshUpdated();
+            return this.prepareDelta(changes, context);
+        }
+    }
+
+    // SAVE COLUMN.....................................................................................................
+
+    /**
+     * Saves the {@link SpreadsheetColumn} and then loads and saves all the cells in that column.
+     */
+    @Override
+    public SpreadsheetDelta saveColumn(final SpreadsheetColumn column,
+                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(column, "column");
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
+            final SpreadsheetStoreRepository repo = context.storeRepository();
+            repo.columns()
+                    .save(column);
+
+            // load cells in column and save them again, this will re-evaluate as necessary.
+            final SpreadsheetCellStore cells = repo.cells();
+            for (final SpreadsheetCell cell : cells.column(column.reference())) {
+                this.maybeParseAndEvaluateAndFormat(
+                        cell,
+                        SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                        context
+                );
+            }
+
             changes.refreshUpdated();
             return this.prepareDelta(changes, context);
         }

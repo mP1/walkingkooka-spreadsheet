@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -94,6 +95,15 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                        final SpreadsheetEngineContext context) {
         return this.stamp(
                 () -> this.engine.deleteCell(cell, context),
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetDelta saveColumn(final SpreadsheetColumn column,
+                                       final SpreadsheetEngineContext context) {
+        return this.stamp(
+                () -> this.engine.saveColumn(column, context),
                 context
         );
     }
