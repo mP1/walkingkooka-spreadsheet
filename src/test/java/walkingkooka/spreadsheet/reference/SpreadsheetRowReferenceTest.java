@@ -55,6 +55,16 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.checkEquals(row, cell.row(), "row");
     }
 
+    @Test
+    public void testRow() {
+        final SpreadsheetRowReference reference = SpreadsheetReferenceKind.ABSOLUTE.row(123);
+
+        this.checkEquals(
+                SpreadsheetRow.with(reference),
+                reference.row()
+        );
+    }
+
     // Predicate........................................................................................................
 
     @Test

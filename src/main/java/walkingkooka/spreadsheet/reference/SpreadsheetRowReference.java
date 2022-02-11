@@ -124,6 +124,16 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return column.setRow(this);
     }
 
+    // SpreadsheetRow................................................................................................
+
+    /**
+     * Factory that returns a {@link SpreadsheetRow} with this {@link SpreadsheetRowReference}
+     */
+    public SpreadsheetRow row() {
+        return SpreadsheetRow.with(this);
+    }
+
+
     public String hateosLinkId() {
         return String.valueOf(this.value + 1);
     }

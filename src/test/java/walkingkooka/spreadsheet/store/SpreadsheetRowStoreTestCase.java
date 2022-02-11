@@ -46,7 +46,7 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
     public final void testSaveAndLoad() {
         final S store = this.createStore();
 
-        final SpreadsheetRow row = SpreadsheetRow.with(REFERENCE);
+        final SpreadsheetRow row = REFERENCE.row();
         this.checkEquals(row, store.save(row), "incorrect key returned");
 
         assertSame(row, store.loadOrFail(REFERENCE));
@@ -57,7 +57,7 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
         final S store = this.createStore();
 
         final SpreadsheetRowReference reference = REFERENCE.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE);
-        final SpreadsheetRow row = SpreadsheetRow.with(reference);
+        final SpreadsheetRow row = REFERENCE.row();
         this.checkEquals(
                 row,
                 store.save(row),
@@ -77,7 +77,7 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
         final S store = this.createStore();
 
         final SpreadsheetRowReference reference = REFERENCE;
-        final SpreadsheetRow row = SpreadsheetRow.with(REFERENCE);
+        final SpreadsheetRow row = REFERENCE.row();
         store.save(row);
         store.delete(reference);
 
@@ -201,7 +201,7 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
     }
 
     private SpreadsheetRow row(final SpreadsheetRowReference reference) {
-        return SpreadsheetRow.with(reference);
+        return REFERENCE.row();
     }
 
     // TypeNameTesting..................................................................
