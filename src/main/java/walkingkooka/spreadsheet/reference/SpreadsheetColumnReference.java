@@ -189,6 +189,15 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return this.setReferenceKind(SpreadsheetReferenceKind.RELATIVE);
     }
 
+    // SpreadsheetColumn................................................................................................
+
+    /**
+     * Factory that returns a {@link SpreadsheetColumn} with this {@link SpreadsheetColumnReference}
+     */
+    public SpreadsheetColumn column() {
+        return SpreadsheetColumn.with(this);
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override

@@ -19,7 +19,6 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.TreeMap;
@@ -32,9 +31,8 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
     public void testToString() {
         final TreeMapSpreadsheetColumnStore store = this.createStore();
         store.save(
-                SpreadsheetColumn.with(
-                        SpreadsheetSelection.parseColumn("B")
-                )
+                SpreadsheetSelection.parseColumn("B")
+                        .column()
         );
 
         this.toStringAndCheck(store, "[B]");
