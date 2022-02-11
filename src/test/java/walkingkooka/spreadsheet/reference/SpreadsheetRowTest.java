@@ -113,10 +113,10 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
 
     @Test
     public void testArraySort() {
-        final SpreadsheetRow row1 = SpreadsheetRow.with(SpreadsheetSelection.parseRow("1"));
-        final SpreadsheetRow row2 = SpreadsheetRow.with(SpreadsheetSelection.parseRow("2"));
-        final SpreadsheetRow row3 = SpreadsheetRow.with(SpreadsheetSelection.parseRow("3"));
-        final SpreadsheetRow row4 = SpreadsheetRow.with(SpreadsheetSelection.parseRow("$4"));
+        final SpreadsheetRow row1 = SpreadsheetSelection.parseRow("1").row();
+        final SpreadsheetRow row2 = SpreadsheetSelection.parseRow("2").row();
+        final SpreadsheetRow row3 = SpreadsheetSelection.parseRow("3").row();
+        final SpreadsheetRow row4 = SpreadsheetSelection.parseRow("$4").row();
 
         this.compareToArraySortAndCheck(row3, row1, row4, row2,
                 row1, row2, row3, row4);
@@ -127,9 +127,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                SpreadsheetRow.with(
-                        SpreadsheetSelection.parseRow("123")
-                ),
+                SpreadsheetSelection.parseRow("123").row(),
                 "{\n" +
                         "  \"123\": {\n" +
                         "    \"hidden\": false\n" +
@@ -167,9 +165,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
 
     @Test
     public void testPatchHiddenTrue() {
-        final SpreadsheetRow row = SpreadsheetRow.with(
-                SpreadsheetSelection.parseRow("A")
-        );
+        final SpreadsheetRow row = SpreadsheetSelection.parseRow("A").row();
 
         this.patchAndCheck(
                 row,
@@ -182,9 +178,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
 
     @Test
     public void testPatchHiddenFalse() {
-        final SpreadsheetRow row = SpreadsheetRow.with(
-                SpreadsheetSelection.parseRow("B")
-        );
+        final SpreadsheetRow row = SpreadsheetSelection.parseRow("B").row();
 
         this.patchAndCheck(
                 row.setHidden(true),
@@ -213,7 +207,10 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetRow.with(REFERENCE), "$21");
+        this.toStringAndCheck(
+                REFERENCE.row(),
+                "$21"
+        );
     }
 
     private SpreadsheetRow createRow() {
@@ -226,7 +223,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     }
 
     private SpreadsheetRow createComparable(final int row) {
-        return SpreadsheetRow.with(reference(row));
+        return reference(row).row();
     }
 
     private static SpreadsheetRowReference differentReference() {

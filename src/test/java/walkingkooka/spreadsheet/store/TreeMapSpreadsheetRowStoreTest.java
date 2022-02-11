@@ -20,7 +20,6 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.reference.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.TreeMap;
@@ -33,9 +32,7 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
     public void testToString() {
         final TreeMapSpreadsheetRowStore store = this.createStore();
         store.save(
-                SpreadsheetRow.with(
-                        SpreadsheetSelection.parseRow("2")
-                )
+                SpreadsheetSelection.parseRow("2").row()
         );
 
         this.toStringAndCheck(store, "[2]");
