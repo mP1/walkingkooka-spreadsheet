@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -180,6 +181,37 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // load cells in column and save them again, this will re-evaluate as necessary.
             final SpreadsheetCellStore cells = repo.cells();
             for (final SpreadsheetCell cell : cells.column(column.reference())) {
+                this.maybeParseAndEvaluateAndFormat(
+                        cell,
+                        SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                        context
+                );
+            }
+
+            changes.refreshUpdated();
+            return this.prepareDelta(changes, context);
+        }
+    }
+
+    // SAVE ROW.....................................................................................................
+
+    /**
+     * Saves the {@link SpreadsheetRow} and then loads and saves all the cells in that row.
+     */
+    @Override
+    public SpreadsheetDelta saveRow(final SpreadsheetRow row,
+                                    final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(row, "row");
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
+            final SpreadsheetStoreRepository repo = context.storeRepository();
+            repo.rows()
+                    .save(row);
+
+            // load cells in row and save them again, this will re-evaluate as necessary.
+            final SpreadsheetCellStore cells = repo.cells();
+            for (final SpreadsheetCell cell : cells.row(row.reference())) {
                 this.maybeParseAndEvaluateAndFormat(
                         cell,
                         SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
