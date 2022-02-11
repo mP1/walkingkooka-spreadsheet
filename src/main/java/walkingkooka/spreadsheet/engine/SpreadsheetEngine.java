@@ -21,6 +21,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -54,6 +55,12 @@ public interface SpreadsheetEngine {
      * Deletes the cell, removing references and updates and returns all affected (referenced cells).
      */
     SpreadsheetDelta deleteCell(final SpreadsheetCellReference cell,
+                                final SpreadsheetEngineContext context);
+
+    /**
+     * Saves the {@link SpreadsheetColumn}, and updates all affected (referenced cells).
+     */
+    SpreadsheetDelta saveColumn(final SpreadsheetColumn column,
                                 final SpreadsheetEngineContext context);
 
     /**

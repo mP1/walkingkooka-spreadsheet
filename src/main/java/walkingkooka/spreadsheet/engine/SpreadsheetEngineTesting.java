@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -118,6 +119,30 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void testDeleteCellNullContextFails() {
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteCell(CELL_REFERENCE,
                 null));
+    }
+
+    @Test
+    default void testSaveColumnNullColumnFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveColumn(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testSaveColumnNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveColumn(
+                                SpreadsheetColumn.with(COLUMN),
+                                null
+                        )
+        );
     }
 
     @Test
