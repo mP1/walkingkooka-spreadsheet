@@ -46,7 +46,7 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
     public final void testSaveAndLoad() {
         final S store = this.createStore();
 
-        final SpreadsheetColumn column = SpreadsheetColumn.with(REFERENCE);
+        final SpreadsheetColumn column = REFERENCE.column();
         this.checkEquals(column, store.save(column), "incorrect key returned");
 
         assertSame(column, store.loadOrFail(REFERENCE));
@@ -57,7 +57,7 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
         final S store = this.createStore();
 
         final SpreadsheetColumnReference reference = SpreadsheetSelection.parseColumn("$B");
-        final SpreadsheetColumn column = SpreadsheetColumn.with(reference);
+        final SpreadsheetColumn column = reference.column();
         this.checkEquals(column, store.save(column), "incorrect key returned");
 
         assertSame(
@@ -73,7 +73,7 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
         final S store = this.createStore();
 
         final SpreadsheetColumnReference reference = REFERENCE;
-        final SpreadsheetColumn column = SpreadsheetColumn.with(REFERENCE);
+        final SpreadsheetColumn column = REFERENCE.column();
         store.save(column);
         store.delete(reference);
 
@@ -195,7 +195,7 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
     }
 
     private SpreadsheetColumn column(final SpreadsheetColumnReference reference) {
-        return SpreadsheetColumn.with(reference);
+        return reference.column();
     }
 
     // TypeNameTesting..................................................................
