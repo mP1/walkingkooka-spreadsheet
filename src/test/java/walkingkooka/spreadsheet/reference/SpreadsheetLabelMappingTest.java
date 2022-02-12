@@ -23,6 +23,7 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -35,9 +36,10 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         ComparableTesting2<SpreadsheetLabelMapping>,
         JsonNodeMarshallingTesting<SpreadsheetLabelMapping>,
         HateosResourceTesting<SpreadsheetLabelMapping>,
+        TreePrintableTesting,
         ToStringTesting<SpreadsheetLabelMapping> {
 
-    private final static SpreadsheetLabelName LABEL = SpreadsheetExpressionReference.labelName("label");
+    private final static SpreadsheetLabelName LABEL = SpreadsheetExpressionReference.labelName("label123");
     private final static SpreadsheetExpressionReference REFERENCE = cell(1);
 
     @Test
@@ -108,7 +110,10 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         assertSame(LABEL, mapping.label());
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> mapping.setReference(LABEL));
-        this.checkEquals("Reference \"label\" must be different to label \"label\"", thrown.getMessage());
+        this.checkEquals(
+                "Reference \"label123\" must be different to label \"label123\"",
+                thrown.getMessage()
+        );
     }
 
     @Test
@@ -140,7 +145,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         this.marshallAndCheck(
                 this.createObject(),
                 "{\n" +
-                        "  \"label\": \"label\",\n" +
+                        "  \"label\": \"label123\",\n" +
                         "  \"reference\": \"$B3\"\n" +
                         "}"
         );
@@ -163,7 +168,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     private void marshallRoundTrip2(final SpreadsheetExpressionReference reference) {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetLabelName.with("Label123").mapping(reference)
+                SpreadsheetLabelName.with("Label234").mapping(reference)
         );
     }
 
@@ -174,6 +179,16 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         final String text = "ABC12345678";
         this.hateosLinkIdAndCheck(SpreadsheetLabelMapping.with(SpreadsheetLabelName.with(text), SpreadsheetSelection.parseCell("A1")),
                 text);
+    }
+
+    // TreePrintableTesting.............................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                this.createComparable(),
+                "label123: $B3" + EOL
+        );
     }
 
     // equals...........................................................................................................
