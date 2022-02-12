@@ -38,9 +38,13 @@ import java.util.Optional;
 public interface SpreadsheetEngine {
 
     /**
-     * Loads which includes parsing the formula as necessary and evaluating the value of the requested cells.
-     * Invalid cell requests will be ignored and absent fromt he result. If parsing or evaluation fails the cell will have an error.
-     * If the cell is absent but has a label mapping the {@link SpreadsheetDelta#labels()} will contain this mapping.
+     * Loads the requested {@link SpreadsheetColumnReference} which may include parsing the formula as necessary and then
+     * evaluating the value of the requested cells.<br>
+     * <ul>
+     * <li>If the cell is not found it will not be present in the resulting {@link SpreadsheetDelta}.</li>
+     * <li>If parsing or evaluating the cell fails it will be present with an error.</li>
+     * <li>Any additional cells that require recomputing because of the requested cell will also be returned.</li>
+     * </ul>
      */
     SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
                               final SpreadsheetEngineEvaluation evaluation,
