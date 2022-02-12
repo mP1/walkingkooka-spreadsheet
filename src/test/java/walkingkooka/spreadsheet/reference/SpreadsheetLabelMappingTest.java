@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelMappingTest implements ClassTesting2<SpreadsheetLabelMapping>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetLabelMapping>,
+        ComparableTesting2<SpreadsheetLabelMapping>,
         JsonNodeMarshallingTesting<SpreadsheetLabelMapping>,
         HateosResourceTesting<SpreadsheetLabelMapping>,
         ToStringTesting<SpreadsheetLabelMapping> {
@@ -198,7 +198,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     // helpers...............................................................................................
 
     @Override
-    public SpreadsheetLabelMapping createObject() {
+    public SpreadsheetLabelMapping createComparable() {
         return SpreadsheetLabelMapping.with(LABEL, REFERENCE);
     }
 

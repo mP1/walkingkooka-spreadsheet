@@ -165,7 +165,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
 
     @Test
     public void testPatchHiddenTrue() {
-        final SpreadsheetRow row = SpreadsheetSelection.parseRow("A").row();
+        final SpreadsheetRow row = SpreadsheetSelection.parseRow("1").row();
 
         this.patchAndCheck(
                 row,
@@ -178,7 +178,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
 
     @Test
     public void testPatchHiddenFalse() {
-        final SpreadsheetRow row = SpreadsheetSelection.parseRow("B").row();
+        final SpreadsheetRow row = SpreadsheetSelection.parseRow("2").row();
 
         this.patchAndCheck(
                 row.setHidden(true),

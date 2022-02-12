@@ -201,7 +201,7 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
     }
 
     private SpreadsheetRow row(final SpreadsheetRowReference reference) {
-        return REFERENCE.row();
+        return reference.row();
     }
 
     // TypeNameTesting..................................................................
