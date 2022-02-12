@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -32,7 +33,6 @@ import walkingkooka.text.printer.IndentingPrinter;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetDelta} without any window/filtering.
@@ -164,10 +164,10 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
 
     @Override
     Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
-        return Sets.immutable(
-                deletedCells.stream()
-                        .map(SpreadsheetCellReference::toRelative)
-                        .collect(Collectors.toCollection(Sets::sorted))
+        return filter(
+                deletedCells,
+                Predicates.always(),
+                SpreadsheetCellReference::toRelative
         );
     }
 
