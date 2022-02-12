@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -33,7 +35,9 @@ import java.util.Optional;
 /**
  * Holds a {@link SpreadsheetLabelName label} to {@link ExpressionReference} mapping.
  */
-public final class SpreadsheetLabelMapping implements HateosResource<SpreadsheetLabelName>, Comparable<SpreadsheetLabelMapping> {
+public final class SpreadsheetLabelMapping implements HateosResource<SpreadsheetLabelName>,
+        Comparable<SpreadsheetLabelMapping>,
+        TreePrintable {
 
     /**
      * Creates a new {@link SpreadsheetLabelMapping}
@@ -211,5 +215,12 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     @Override
     public int compareTo(final SpreadsheetLabelMapping other) {
         return this.label.compareTo(other.label);
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.label() + ": " + this.reference());
     }
 }
