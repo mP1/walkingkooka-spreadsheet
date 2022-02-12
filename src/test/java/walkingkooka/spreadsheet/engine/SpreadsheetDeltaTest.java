@@ -42,8 +42,6 @@ import java.math.MathContext;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelta>,
         PatchableTesting<SpreadsheetDelta> {
 
@@ -249,23 +247,47 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchUnknownCellFails() {
+    public void testPatchNewCell() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("a1"),
                 SpreadsheetFormula.EMPTY
+                        .setText("=1")
         );
-        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(cell)
-                );
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
-        final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class, () -> {
-                    SpreadsheetDelta.EMPTY
-                            .patch(marshall(delta), this.createPatchContext());
-                }
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        cell
+                )
         );
-        this.checkEquals("Missing patch cell: A1", thrown.getMessage(), "message");
+
+        this.patchAndCheck(
+                before,
+                marshall(after),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchNewCell2() {
+        final SpreadsheetCell cell = SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("a1"),
+                SpreadsheetFormula.EMPTY
+                        .setText("=1")
+        );
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        cell
+                )
+        );
+
+        this.patchAndCheck(
+                before,
+                marshall(after),
+                after
+        );
     }
 
     @Test
