@@ -51,6 +51,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -350,10 +351,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private static Set<SpreadsheetCell> filterCells0(final Set<SpreadsheetCell> cells,
                                                      final SpreadsheetCellRange window) {
-        return Sets.immutable(
-                cells.stream()
-                        .filter(c -> window.test(c.reference()))
-                        .collect(Collectors.toCollection(Sets::sorted))
+        return filter(
+                cells,
+                c -> window.test(c.reference()),
+                Function.identity()
         );
     }
 
@@ -375,13 +376,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     private static Set<SpreadsheetLabelMapping> filterLabels0(final Set<SpreadsheetLabelMapping> labels,
                                                               final SpreadsheetCellRange window) {
-        return Sets.immutable(
-                labels.stream()
-                        .filter(m -> {
-                            final SpreadsheetExpressionReference r = m.reference();
-                            return r.isCellReference() && window.test((SpreadsheetCellReference) m.reference());
-                        })
-                        .collect(Collectors.toCollection(Sets::ordered))
+        return filter(
+                labels,
+                m -> {
+                    final SpreadsheetExpressionReference r = m.reference();
+                    return r.isCellReference() && window.test((SpreadsheetCellReference) m.reference());
+                },
+                Function.identity()
         );
     }
 
@@ -394,10 +395,20 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private static Set<SpreadsheetCellReference> filterDeletedCells0(final Set<SpreadsheetCellReference> deletedCells,
                                                                      final SpreadsheetCellRange window) {
+        return filter(
+                deletedCells,
+                window,
+                SpreadsheetCellReference::toRelative
+        );
+    }
+
+    private static <T> Set<T> filter(final Set<T> values,
+                                     final Predicate<T> keep,
+                                     final Function<T, T> mapper) {
         return Sets.immutable(
-                deletedCells.stream()
-                        .filter(window)
-                        .map(SpreadsheetCellReference::toRelative)
+                values.stream()
+                        .filter(keep)
+                        .map(mapper)
                         .collect(Collectors.toCollection(Sets::sorted))
         );
     }
