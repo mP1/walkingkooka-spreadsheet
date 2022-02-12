@@ -31,9 +31,11 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
@@ -87,7 +89,9 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.checkSelection(after, different);
         this.checkCells(after);
+        this.checkColumns(after);
         this.checkLabels(after, before.labels());
+        this.checkRows(after);
         this.checkDeletedCells(after);
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
@@ -144,6 +148,62 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkEquals(Lists.of(a1, b2), new ArrayList<>(delta.cells()));
     }
 
+    // columns............................................................................................................
+
+    @Test
+    public final void testColumnsReadOnly() {
+        final D delta = this.createSpreadsheetDelta();
+        final Set<SpreadsheetColumn> columns = delta.columns();
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> columns.add(this.a())
+        );
+
+        this.checkColumns(delta, this.columns());
+    }
+
+    @Test
+    public final void testSetColumnsSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(delta, delta.setColumns(this.columns()));
+    }
+
+    @Test
+    public final void testSetColumnsDifferent() {
+        final D before = this.createSpreadsheetDelta();
+
+        final Set<SpreadsheetColumn> different = Sets.of(
+                SpreadsheetSelection.parseColumn("E").column()
+        );
+
+        final SpreadsheetDelta after = before.setColumns(different);
+        assertNotSame(before, after);
+        this.checkColumns(after, different);
+        this.checkLabels(after, before.labels());
+    }
+
+    @Test
+    public final void testSetColumnsSorted() {
+        final SpreadsheetColumn a = a();
+        final SpreadsheetColumn b = b();
+        final SpreadsheetColumn c = c();
+
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
+                .setColumns(
+                        Sets.of(b, c, a));
+
+        this.checkColumns(
+                delta,
+                Sets.of(a, b, c)
+        );
+
+        this.checkEquals(
+                Lists.of(a, b, c),
+                new ArrayList<>(delta.columns())
+        );
+    }
+
     // labels.....................................................................................................
 
     @Test
@@ -176,7 +236,14 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetDelta after = before.setLabels(different);
         assertNotSame(before, after);
         this.checkLabels(after, different);
-        this.checkCells(after, before.cells());
+
+        this.checkCells(after);
+        this.checkColumns(after);
+        this.checkRows(after);
+
+        this.checkDeletedCells(after);
+        this.checkColumnWidths(after);
+        this.checkRowHeights(after);
     }
 
     @Test
@@ -186,7 +253,76 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         final SpreadsheetDelta after = before.setLabels(different);
         assertNotSame(before, after);
+
         this.checkLabels(after, different);
+
+        this.checkCells(after);
+        this.checkColumns(after);
+        this.checkRows(after);
+
+        this.checkDeletedCells(after);
+        this.checkColumnWidths(after);
+        this.checkRowHeights(after);
+    }
+
+    // rows............................................................................................................
+
+    @Test
+    public final void testRowsReadOnly() {
+        final D delta = this.createSpreadsheetDelta();
+        final Set<SpreadsheetRow> rows = delta.rows();
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> rows.add(this.row1())
+        );
+
+        this.checkRows(delta, this.rows());
+    }
+
+    @Test
+    public final void testSetRowsSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(delta, delta.setRows(this.rows()));
+    }
+
+    @Test
+    public final void testSetRowsDifferent() {
+        final D before = this.createSpreadsheetDelta();
+
+        final Set<SpreadsheetRow> different = this.differentRows();
+        final SpreadsheetDelta after = before.setRows(different);
+        assertNotSame(before, after);
+        this.checkRows(after, different);
+
+        this.checkCells(after);
+        this.checkColumns(after);
+        this.checkLabels(after);
+
+        this.checkDeletedCells(after);
+        this.checkColumnWidths(after);
+        this.checkRowHeights(after);
+    }
+
+    @Test
+    public final void testSetRowsSorted() {
+        final SpreadsheetRow a = row1();
+        final SpreadsheetRow b = row2();
+        final SpreadsheetRow c = row3();
+
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
+                .setRows(
+                        Sets.of(b, c, a));
+
+        this.checkRows(
+                delta,
+                Sets.of(a, b, c)
+        );
+
+        this.checkEquals(
+                Lists.of(a, b, c),
+                new ArrayList<>(delta.rows())
+        );
     }
 
     // deletedCells.....................................................................................................
@@ -215,9 +351,16 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         final SpreadsheetDelta after = before.setDeletedCells(different);
         assertNotSame(before, after);
-        this.checkCells(after);
-        this.checkLabels(after, before.labels());
+
         this.checkDeletedCells(after, different);
+
+        this.checkCells(after);
+        this.checkColumns(after);
+        this.checkLabels(after, before.labels());
+        this.checkRows(after);
+
+        this.checkColumnWidths(after);
+        this.checkRowHeights(after);
     }
 
     @Test
@@ -274,30 +417,17 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testSetColumnWidthsDifferent() {
         final D delta = this.createSpreadsheetDelta();
         final Map<SpreadsheetColumnReference, Double> different = this.differentColumnWidths();
-        final SpreadsheetDelta differentDelta = delta.setColumnWidths(
-                Map.of(
-                        SpreadsheetSelection.parseColumn("$B"),
-                        50.0
-                )
-        );
 
-        assertNotSame(delta, differentDelta);
+        final SpreadsheetDelta after = delta.setColumnWidths(different);
+        assertNotSame(delta, after);
+        this.checkColumnWidths(after, different);
 
-        this.checkCells(differentDelta);
-        this.checkLabels(differentDelta);
-        this.checkDeletedCells(differentDelta);
+        this.checkCells(after);
+        this.checkColumns(after);
+        this.checkLabels(after);
+        this.checkRows(after);
 
-
-        this.checkColumnWidths(
-                differentDelta,
-                Map.of(
-                        SpreadsheetSelection.parseColumn("B"),
-                        50.0
-                )
-        );
-
-        this.checkRowHeights(differentDelta);
-        this.checkWindow(differentDelta);
+        this.checkRowHeights(after);
     }
 
     // setRowHeights...............................................................................................
@@ -316,29 +446,19 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     @Test
     public final void testSetRowHeightsDifferent() {
         final D delta = this.createSpreadsheetDelta();
-        final SpreadsheetDelta differentDelta = delta.setRowHeights(
-                Maps.of(
-                        SpreadsheetSelection.parseRow("$1"),
-                        50.0
-                )
-        );
 
-        assertNotSame(delta, differentDelta);
+        final Map<SpreadsheetRowReference, Double> different = this.differentRowHeights();
+        final SpreadsheetDelta after = delta.setRowHeights(different);
+        assertNotSame(delta, after);
+        this.checkRowHeights(after, different);
 
-        this.checkCells(differentDelta);
-        this.checkLabels(differentDelta);
-        this.checkDeletedCells(differentDelta);
-        this.checkColumnWidths(differentDelta);
+        this.checkCells(after);
+        this.checkColumns(after);
+        this.checkLabels(after);
+        this.checkRows(after);
 
-        this.checkRowHeights(
-                differentDelta,
-                Maps.of(
-                        SpreadsheetSelection.parseRow("1"),
-                        50.0
-                )
-        );
-
-        this.checkWindow(differentDelta);
+        this.checkDeletedCells(after);
+        this.checkColumnWidths(after);
     }
 
     // setWindow........................................................................................................
@@ -351,18 +471,21 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     @Test
     public final void testSetDifferentWindow() {
-        final D delta = this.createSpreadsheetDelta();
+        final D before = this.createSpreadsheetDelta();
 
         final Optional<SpreadsheetCellRange> window = this.window0("A1:Z9999");
         this.checkNotEquals(window, this.window());
 
-        final SpreadsheetDelta different = delta.setWindow(window);
+        final SpreadsheetDelta after = before.setWindow(window);
 
-        this.checkCells(different);
-        this.checkWindow(different, window);
+        this.checkCells(after);
+        this.checkColumns(after);
+        this.checkRows(after);
+        this.checkWindow(after, window);
 
-        this.checkCells(delta);
-        this.checkWindow(delta);
+        this.checkCells(before);
+        this.checkColumns(before);
+        this.checkRows(before);
     }
     
     // unmarshall.......................................................................................................
@@ -453,11 +576,41 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
+    public final void testDifferentColumns() {
+        final Set<SpreadsheetColumn> columns = this.differentColumns();
+
+        this.checkNotEquals(
+                this.columns(),
+                columns,
+                "columns() and differentColumns() must be un equal"
+        );
+
+        this.checkNotEquals(
+                this.createSpreadsheetDelta().setColumns(columns)
+        );
+    }
+
+    @Test
     public final void testDifferentLabels() {
         final Set<SpreadsheetLabelMapping> labels = this.differentLabels();
         this.checkNotEquals(this.labels(), labels, "labels() and differentLabels() must be un equal");
 
         this.checkNotEquals(this.createSpreadsheetDelta().setLabels(labels));
+    }
+
+    @Test
+    public final void testDifferentRows() {
+        final Set<SpreadsheetRow> rows = this.differentRows();
+
+        this.checkNotEquals(
+                this.rows(),
+                rows,
+                "rows() and differentRows() must be un equal"
+        );
+
+        this.checkNotEquals(
+                this.createSpreadsheetDelta().setRows(rows)
+        );
     }
 
     @Test
@@ -574,6 +727,55 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 .add(this.cell("ZZ99", "read only")));
     }
 
+    // columns.........................................................................................................
+
+    final Set<SpreadsheetColumn> columns() {
+        return Sets.of(this.a(), this.b(), this.c());
+    }
+
+    final Set<SpreadsheetColumn> differentColumns() {
+        return Sets.of(this.a());
+    }
+
+    final Set<SpreadsheetColumn> columns0(final String... columnReferences) {
+        return Arrays.stream(columnReferences)
+                .map(r -> this.column(r))
+                .collect(Collectors.toSet());
+    }
+
+    final SpreadsheetColumn a() {
+        return this.column("A")
+                .setHidden(true);
+    }
+
+    final SpreadsheetColumn b() {
+        return this.column("B");
+    }
+
+    final SpreadsheetColumn c() {
+        return this.column("C");
+    }
+
+    final SpreadsheetColumn column(final String columnReference) {
+        return SpreadsheetSelection.parseColumn(columnReference)
+                .column();
+    }
+
+    final void checkColumns(final SpreadsheetDelta delta) {
+        this.checkColumns(delta, this.columns());
+    }
+
+    final void checkColumns(final SpreadsheetDelta delta,
+                            final Set<SpreadsheetColumn> columns) {
+        this.checkEquals(columns, delta.columns(), "columns");
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.columns()
+                        .add(this.column("Z"))
+        );
+    }
+
     // labels......................................................................................................
 
     final Set<SpreadsheetLabelMapping> labels() {
@@ -619,6 +821,54 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return SpreadsheetLabelName.labelName("LabelC3");
     }
 
+    // rows.........................................................................................................
+
+    final Set<SpreadsheetRow> rows() {
+        return Sets.of(this.row1(), this.row2(), this.row3());
+    }
+
+    final Set<SpreadsheetRow> differentRows() {
+        return Sets.of(this.row1());
+    }
+
+    final Set<SpreadsheetRow> rows0(final String... rowReferences) {
+        return Arrays.stream(rowReferences)
+                .map(r -> this.row(r))
+                .collect(Collectors.toSet());
+    }
+
+    final SpreadsheetRow row1() {
+        return this.row("1")
+                .setHidden(true);
+    }
+
+    final SpreadsheetRow row2() {
+        return this.row("2");
+    }
+
+    final SpreadsheetRow row3() {
+        return this.row("3");
+    }
+
+    final SpreadsheetRow row(final String rowReference) {
+        return SpreadsheetSelection.parseRow(rowReference)
+                .row();
+    }
+
+    final void checkRows(final SpreadsheetDelta delta) {
+        this.checkRows(delta, this.rows());
+    }
+
+    final void checkRows(final SpreadsheetDelta delta,
+                         final Set<SpreadsheetRow> rows) {
+        this.checkEquals(rows, delta.rows(), "rows");
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.rows()
+                        .add(this.row("999"))
+        );
+    }
     // deletedCells.....................................................................................................
 
     final Set<SpreadsheetCellReference> deletedCells() {
@@ -657,7 +907,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Map<SpreadsheetColumnReference, Double> differentColumnWidths() {
         return Maps.of(
-                SpreadsheetColumnReference.parseColumn("$B"),
+                SpreadsheetColumnReference.parseColumn("B"),
                 999.0
         );
     }
@@ -688,7 +938,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Map<SpreadsheetRowReference, Double> differentRowHeights() {
         return Maps.of(
-                SpreadsheetRowReference.parseRow("$2"),
+                SpreadsheetRowReference.parseRow("2"),
                 999.0
         );
     }
@@ -793,6 +1043,30 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return updated;
     }
 
+    final JsonNode columnsJson() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        JsonObject object = JsonNode.object();
+        object = columnsJson0(this.a(), context, object);
+        object = columnsJson0(this.b(), context, object);
+        object = columnsJson0(this.c(), context, object);
+
+        return object;
+    }
+
+    private static JsonObject columnsJson0(final SpreadsheetColumn column,
+                                           final JsonNodeMarshallContext context,
+                                           final JsonObject object) {
+        JsonObject updated = object;
+        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(column)
+                .objectOrFail()
+                .asMap()
+                .entrySet()) {
+            updated = updated.set(propertyAndValue.getKey(), propertyAndValue.getValue());
+        }
+        return updated;
+    }
+
     final JsonNode labelsJson() {
         return this.marshallContext()
                 .marshallSet(
@@ -803,6 +1077,30 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                                 this.label3().mapping(this.c3().reference())
                         )
                 );
+    }
+
+    final JsonNode rowsJson() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        JsonObject object = JsonNode.object();
+        object = rowsJson0(this.row1(), context, object);
+        object = rowsJson0(this.row2(), context, object);
+        object = rowsJson0(this.row3(), context, object);
+
+        return object;
+    }
+
+    private static JsonObject rowsJson0(final SpreadsheetRow row,
+                                        final JsonNodeMarshallContext context,
+                                        final JsonObject object) {
+        JsonObject updated = object;
+        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(row)
+                .objectOrFail()
+                .asMap()
+                .entrySet()) {
+            updated = updated.set(propertyAndValue.getKey(), propertyAndValue.getValue());
+        }
+        return updated;
     }
 
     final JsonNode deletedCellsJson() {

@@ -21,8 +21,10 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.text.Indentation;
@@ -43,7 +45,9 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
      */
     static SpreadsheetDeltaWindowed withWindowed(final Optional<SpreadsheetViewportSelection> selection,
                                                  final Set<SpreadsheetCell> cells,
+                                                 final Set<SpreadsheetColumn> columns,
                                                  final Set<SpreadsheetLabelMapping> labels,
+                                                 final Set<SpreadsheetRow> rows,
                                                  final Set<SpreadsheetCellReference> deletedCells,
                                                  final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                  final Map<SpreadsheetRowReference, Double> rowHeights,
@@ -51,7 +55,9 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaWindowed(
                 selection,
                 cells,
+                columns,
                 labels,
+                rows,
                 deletedCells,
                 columnWidths,
                 rowHeights,
@@ -61,12 +67,23 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
 
     private SpreadsheetDeltaWindowed(final Optional<SpreadsheetViewportSelection> selection,
                                      final Set<SpreadsheetCell> cells,
+                                     final Set<SpreadsheetColumn> columns,
                                      final Set<SpreadsheetLabelMapping> labels,
+                                     final Set<SpreadsheetRow> rows,
                                      final Set<SpreadsheetCellReference> deletedCells,
                                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                                      final Map<SpreadsheetRowReference, Double> rowHeights,
                                      final Optional<SpreadsheetCellRange> window) {
-        super(selection, cells, labels, deletedCells, columnWidths, rowHeights);
+        super(
+                selection,
+                cells,
+                columns,
+                labels,
+                rows,
+                deletedCells,
+                columnWidths,
+                rowHeights
+        );
         this.window = window;
     }
 
@@ -75,7 +92,9 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaWindowed(
                 selection,
                 this.cells,
+                this.columns,
                 this.labels,
+                this.rows,
                 this.deletedCells,
                 this.columnWidths,
                 this.rowHeights,
@@ -89,7 +108,24 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaWindowed(
                 this.selection,
                 cells,
+                this.columns,
                 this.labels,
+                this.rows,
+                this.deletedCells,
+                this.columnWidths,
+                this.rowHeights,
+                this.window
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns) {
+        return new SpreadsheetDeltaWindowed(
+                this.selection,
+                this.cells,
+                columns,
+                this.labels,
+                this.rows,
                 this.deletedCells,
                 this.columnWidths,
                 this.rowHeights,
@@ -102,7 +138,24 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaWindowed(
                 this.selection,
                 this.cells,
+                this.columns,
                 labels,
+                this.rows,
+                this.deletedCells,
+                this.columnWidths,
+                this.rowHeights,
+                this.window
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceRows(final Set<SpreadsheetRow> rows) {
+        return new SpreadsheetDeltaWindowed(
+                this.selection,
+                this.cells,
+                this.columns,
+                this.labels,
+                rows,
                 this.deletedCells,
                 this.columnWidths,
                 this.rowHeights,
@@ -115,7 +168,9 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaWindowed(
                 this.selection,
                 this.cells,
+                this.columns,
                 this.labels,
+                this.rows,
                 deletedCells,
                 this.columnWidths,
                 this.rowHeights,
@@ -128,7 +183,9 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaWindowed(
                 this.selection,
                 this.cells,
+                this.columns,
                 this.labels,
+                this.rows,
                 this.deletedCells,
                 columnWidths,
                 this.rowHeights,
@@ -141,7 +198,9 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaWindowed(
                 this.selection,
                 this.cells,
+                this.columns,
                 this.labels,
+                this.rows,
                 this.deletedCells,
                 this.columnWidths,
                 rowHeights,
@@ -159,6 +218,16 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     @Override
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
         return filterCells(cells, this.window);
+    }
+
+    @Override
+    Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns) {
+        return filterColumns(columns, this.window);
+    }
+
+    @Override
+    Set<SpreadsheetRow> filterRows(final Set<SpreadsheetRow> rows) {
+        return filterRows(rows, this.window);
     }
 
     @Override
