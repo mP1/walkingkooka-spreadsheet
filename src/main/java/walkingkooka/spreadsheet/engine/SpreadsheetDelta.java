@@ -353,8 +353,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                      final SpreadsheetCellRange window) {
         return filter(
                 cells,
-                c -> window.test(c.reference()),
-                Function.identity()
+                c -> window.test(c.reference())
         );
     }
 
@@ -381,8 +380,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 m -> {
                     final SpreadsheetExpressionReference r = m.reference();
                     return r.isCellReference() && window.test((SpreadsheetCellReference) m.reference());
-                },
-                Function.identity()
+                }
         );
     }
 
@@ -402,9 +400,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private static <T> Set<T> filter(final Set<T> values,
-                                     final Predicate<T> keep,
-                                     final Function<T, T> mapper) {
+    static <T> Set<T> filter(final Set<T> values,
+                             final Predicate<T> keep) {
+        return filter(
+                values,
+                keep,
+                Function.identity()
+        );
+    }
+
+    static <T> Set<T> filter(final Set<T> values,
+                             final Predicate<T> keep,
+                             final Function<T, T> mapper) {
         return Sets.immutable(
                 values.stream()
                         .filter(keep)
