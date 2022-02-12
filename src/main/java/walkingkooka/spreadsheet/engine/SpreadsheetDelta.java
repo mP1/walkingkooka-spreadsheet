@@ -491,20 +491,34 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     /**
      * Takes a json object of reference to cell and patches the existing cells in this {@link SpreadsheetDelta}.
-     * If any of the patch cell is missing an {@link IllegalArgumentException} will be thrown.
+     * If the patch is a new cell it is added, existing cells are patched.
      */
     private Set<SpreadsheetCell> patchCellsFromObject(final JsonNode node,
                                                       final JsonNodeUnmarshallContext context) {
         final Set<SpreadsheetCell> patched = Sets.ordered();
 
-        for (final Map.Entry<JsonPropertyName, JsonNode> child : node.objectOrFail().asMap().entrySet()) {
-            final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell(child.getKey().value());
+        for (final JsonNode child : node.objectOrFail().children()) {
+            final JsonPropertyName propertyName = child.name();
 
-            final SpreadsheetCell cell = this.cell(reference)
-                    .orElseThrow(() -> new IllegalArgumentException("Missing patch cell: " + reference));
-            patched.add(
-                    cell.patch(child.getValue(), context)
+            final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell(
+                    propertyName.value()
             );
+            ;
+            final SpreadsheetCell add;
+
+            final Optional<SpreadsheetCell> old = this.cell(reference);
+            if (old.isPresent()) {
+                add = old.get()
+                        .patch(child, context);
+            } else {
+                add = context.unmarshall(
+                        JsonNode.object()
+                                .set(propertyName, child),
+                        SpreadsheetCell.class
+                );
+            }
+
+            patched.add(add);
         }
 
         return patched;
