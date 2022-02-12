@@ -33,7 +33,7 @@ import java.util.Optional;
 /**
  * Holds a {@link SpreadsheetLabelName label} to {@link ExpressionReference} mapping.
  */
-public final class SpreadsheetLabelMapping implements HateosResource<SpreadsheetLabelName> {
+public final class SpreadsheetLabelMapping implements HateosResource<SpreadsheetLabelName>, Comparable<SpreadsheetLabelMapping> {
 
     /**
      * Creates a new {@link SpreadsheetLabelMapping}
@@ -204,5 +204,12 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     @Override
     public String toString() {
         return this.label + "=" + this.reference;
+    }
+
+    // Comparable.......................................................................................................
+
+    @Override
+    public int compareTo(final SpreadsheetLabelMapping other) {
+        return this.label.compareTo(other.label);
     }
 }
