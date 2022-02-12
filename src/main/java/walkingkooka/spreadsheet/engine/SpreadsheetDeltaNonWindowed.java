@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -173,30 +173,23 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
 
     @Override
     Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
-        final Map<SpreadsheetColumnReference, Double> copy = Maps.sorted();
-
-        for(final Map.Entry<SpreadsheetColumnReference, Double> columnAndWidth : columnWidths.entrySet()) {
-            copy.put(
-                    columnAndWidth.getKey().toRelative(),
-                    columnAndWidth.getValue()
-            );
-        }
-
-        return Maps.immutable(copy);
+        return filterMap(
+                columnWidths
+        );
     }
 
     @Override
     Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
-        final Map<SpreadsheetRowReference, Double> copy = Maps.sorted();
+        return filterMap(
+                rowHeights
+        );
+    }
 
-        for(final Map.Entry<SpreadsheetRowReference, Double> rowAndHeight : rowHeights.entrySet()) {
-            copy.put(
-                    rowAndHeight.getKey().toRelative(),
-                    rowAndHeight.getValue()
-            );
-        }
-
-        return Maps.immutable(copy);
+    private static <R extends SpreadsheetColumnOrRowReference> Map<R, Double> filterMap(final Map<R, Double> source) {
+        return filterMap(
+                source,
+                Predicates.always()
+        );
     }
 
     // TreePrintable.....................................................................................................

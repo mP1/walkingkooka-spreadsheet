@@ -422,26 +422,31 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     static Map<SpreadsheetColumnReference, Double> filterColumnWidths0(final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                                        final SpreadsheetCellRange window) {
-        final Map<SpreadsheetColumnReference, Double> filtered = Maps.ordered();
-
-        for (final Map.Entry<SpreadsheetColumnReference, Double> columnAndWidth : columnWidths.entrySet()) {
-            final SpreadsheetColumnReference column = columnAndWidth.getKey();
-            if (window.columnReferenceRange().testColumn(column)) {
-                filtered.put(column.toRelative(), columnAndWidth.getValue());
-            }
-        }
-
-        return Maps.immutable(filtered);
+        return filterMap(
+                columnWidths,
+                window.columnReferenceRange()::testColumn
+        );
     }
 
     static Map<SpreadsheetRowReference, Double> filterRowHeights0(final Map<SpreadsheetRowReference, Double> rowHeights,
                                                                   final SpreadsheetCellRange window) {
-        final Map<SpreadsheetRowReference, Double> filtered = Maps.ordered();
+        return filterMap(
+                rowHeights,
+                window.rowReferenceRange()::testRow
+        );
+    }
 
-        for (final Map.Entry<SpreadsheetRowReference, Double> rowAndHeight : rowHeights.entrySet()) {
-            final SpreadsheetRowReference row = rowAndHeight.getKey();
-            if (window.rowReferenceRange().testRow(row)) {
-                filtered.put(row.toRelative(), rowAndHeight.getValue());
+    static <R extends SpreadsheetColumnOrRowReference> Map<R, Double> filterMap(final Map<R, Double> source,
+                                                                                final Predicate<R> keep) {
+        final Map<R, Double> filtered = Maps.ordered();
+
+        for (final Map.Entry<R, Double> keyAndValue : source.entrySet()) {
+            final R key = keyAndValue.getKey();
+            if (keep.test(key)) {
+                filtered.put(
+                        (R) key.toRelative(),
+                        keyAndValue.getValue()
+                );
             }
         }
 
