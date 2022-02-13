@@ -23,9 +23,11 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -44,14 +46,18 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
      */
     static SpreadsheetDeltaNonWindowed withNonWindowed(final Optional<SpreadsheetViewportSelection> selection,
                                                        final Set<SpreadsheetCell> cells,
+                                                       final Set<SpreadsheetColumn> columns,
                                                        final Set<SpreadsheetLabelMapping> labels,
+                                                       final Set<SpreadsheetRow> rows,
                                                        final Set<SpreadsheetCellReference> deletedCells,
                                                        final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                        final Map<SpreadsheetRowReference, Double> rowHeights) {
         return new SpreadsheetDeltaNonWindowed(
                 selection,
                 cells,
+                columns,
                 labels,
+                rows,
                 deletedCells,
                 columnWidths,
                 rowHeights
@@ -60,14 +66,18 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
 
     private SpreadsheetDeltaNonWindowed(final Optional<SpreadsheetViewportSelection> selection,
                                         final Set<SpreadsheetCell> cells,
+                                        final Set<SpreadsheetColumn> columns,
                                         final Set<SpreadsheetLabelMapping> labels,
+                                        final Set<SpreadsheetRow> rows,
                                         final Set<SpreadsheetCellReference> deletedCells,
                                         final Map<SpreadsheetColumnReference, Double> columnWidths,
                                         final Map<SpreadsheetRowReference, Double> rowHeights) {
         super(
                 selection,
                 cells,
+                columns,
                 labels,
+                rows,
                 deletedCells,
                 columnWidths,
                 rowHeights
@@ -79,7 +89,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaNonWindowed(
                 selection,
                 this.cells,
+                this.columns,
                 this.labels,
+                this.rows,
                 this.deletedCells,
                 this.columnWidths,
                 this.rowHeights
@@ -92,7 +104,23 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaNonWindowed(
                 this.selection,
                 cells,
+                this.columns,
                 this.labels,
+                this.rows,
+                this.deletedCells,
+                this.columnWidths,
+                this.rowHeights
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns) {
+        return new SpreadsheetDeltaNonWindowed(
+                this.selection,
+                this.cells,
+                columns,
+                this.labels,
+                this.rows,
                 this.deletedCells,
                 this.columnWidths,
                 this.rowHeights
@@ -104,7 +132,23 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaNonWindowed(
                 this.selection,
                 this.cells,
+                this.columns,
                 labels,
+                this.rows,
+                this.deletedCells,
+                this.columnWidths,
+                this.rowHeights
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceRows(final Set<SpreadsheetRow> rows) {
+        return new SpreadsheetDeltaNonWindowed(
+                this.selection,
+                this.cells,
+                this.columns,
+                this.labels,
+                rows,
                 this.deletedCells,
                 this.columnWidths,
                 this.rowHeights
@@ -116,7 +160,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaNonWindowed(
                 this.selection,
                 this.cells,
+                this.columns,
                 this.labels,
+                this.rows,
                 deletedCells,
                 this.columnWidths,
                 this.rowHeights
@@ -128,7 +174,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaNonWindowed(
                 this.selection,
                 this.cells,
+                this.columns,
                 this.labels,
+                this.rows,
                 this.deletedCells,
                 columnWidths,
                 this.rowHeights
@@ -140,7 +188,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         return new SpreadsheetDeltaNonWindowed(
                 this.selection,
                 this.cells,
+                this.columns,
                 this.labels,
+                this.rows,
                 this.deletedCells,
                 this.columnWidths,
                 rowHeights
@@ -157,8 +207,22 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
 
     @Override
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
-        final Set<SpreadsheetCell> copy = Sets.sorted();
-        copy.addAll(cells);
+        return copy(cells);
+    }
+
+    @Override
+    Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns) {
+        return copy(columns);
+    }
+
+    @Override
+    Set<SpreadsheetRow> filterRows(final Set<SpreadsheetRow> rows) {
+        return copy(rows);
+    }
+
+    private <S> Set<S> copy(final Set<S> from) {
+        final Set<S> copy = Sets.sorted();
+        copy.addAll(from);
         return Sets.immutable(copy);
     }
 

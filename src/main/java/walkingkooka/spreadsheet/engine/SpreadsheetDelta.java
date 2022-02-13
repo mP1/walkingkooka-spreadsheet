@@ -27,11 +27,13 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
@@ -45,6 +47,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.patch.Patchable;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -61,8 +64,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         TreePrintable {
 
     public final static Optional<SpreadsheetViewportSelection> NO_SELECTION = Optional.empty();
+
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
+    public final static Set<SpreadsheetColumn> NO_COLUMNS = Sets.empty();
     public final static Set<SpreadsheetLabelMapping> NO_LABELS = Sets.empty();
+    public final static Set<SpreadsheetRow> NO_ROWS = Sets.empty();
+
     public final static Set<SpreadsheetCellReference> NO_DELETED_CELLS = Sets.empty();
     public final static Optional<SpreadsheetCellRange> NO_WINDOW = Optional.empty();
     public final static Map<SpreadsheetColumnReference, Double> NO_COLUMN_WIDTHS = Maps.empty();
@@ -74,7 +81,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final static SpreadsheetDelta EMPTY = SpreadsheetDeltaNonWindowed.withNonWindowed(
             NO_SELECTION,
             NO_CELLS,
+            NO_COLUMNS,
             NO_LABELS,
+            NO_ROWS,
             NO_DELETED_CELLS,
             NO_COLUMN_WIDTHS,
             NO_ROW_HEIGHTS
@@ -85,7 +94,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     SpreadsheetDelta(final Optional<SpreadsheetViewportSelection> selection,
                      final Set<SpreadsheetCell> cells,
+                     final Set<SpreadsheetColumn> columns,
                      final Set<SpreadsheetLabelMapping> labels,
+                     final Set<SpreadsheetRow> rows,
                      final Set<SpreadsheetCellReference> deleteCells,
                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                      final Map<SpreadsheetRowReference, Double> rowHeights) {
@@ -93,7 +104,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         this.selection = selection;
         this.cells = cells;
+        this.columns = columns;
         this.labels = labels;
+        this.rows = rows;
         this.deletedCells = deleteCells;
         this.columnWidths = columnWidths;
         this.rowHeights = rowHeights;
@@ -168,6 +181,38 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .findFirst();
     }
 
+    // columns............................................................................................................
+
+    public final Set<SpreadsheetColumn> columns() {
+        return this.columns;
+    }
+
+    /**
+     * Would be setter that returns a {@link SpreadsheetDelta} holding the given columns after they are possibly filtered
+     * using the {@link #window()}
+     */
+    public final SpreadsheetDelta setColumns(final Set<SpreadsheetColumn> columns) {
+        checkColumns(columns);
+
+        final Set<SpreadsheetColumn> copy = this.filterColumns(columns);
+        return this.columns.equals(copy) ?
+                this :
+                this.replaceColumns(copy);
+    }
+
+    abstract SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns);
+
+    /**
+     * Takes a copy of the columns, possibly filtering out columns if a window is present. Note filtering of {@link #labels} will happen later.
+     */
+    abstract Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns);
+
+    final Set<SpreadsheetColumn> columns;
+
+    private static void checkColumns(final Set<SpreadsheetColumn> columns) {
+        Objects.requireNonNull(columns, "columns");
+    }
+
     // labels............................................................................................................
 
     public final Set<SpreadsheetLabelMapping> labels() {
@@ -196,6 +241,38 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private static void checkLabels(final Set<SpreadsheetLabelMapping> labels) {
         Objects.requireNonNull(labels, "labels");
+    }
+
+    // rows............................................................................................................
+
+    public final Set<SpreadsheetRow> rows() {
+        return this.rows;
+    }
+
+    /**
+     * Would be setter that returns a {@link SpreadsheetDelta} holding the given rows after they are possibly filtered
+     * using the {@link #window()}
+     */
+    public final SpreadsheetDelta setRows(final Set<SpreadsheetRow> rows) {
+        checkRows(rows);
+
+        final Set<SpreadsheetRow> copy = this.filterRows(rows);
+        return this.rows.equals(copy) ?
+                this :
+                this.replaceRows(copy);
+    }
+
+    abstract SpreadsheetDelta replaceRows(final Set<SpreadsheetRow> rows);
+
+    /**
+     * Takes a copy of the rows, possibly filtering out rows if a window is present. Note filtering of {@link #labels} will happen later.
+     */
+    abstract Set<SpreadsheetRow> filterRows(final Set<SpreadsheetRow> rows);
+
+    final Set<SpreadsheetRow> rows;
+
+    private static void checkRows(final Set<SpreadsheetRow> rows) {
+        Objects.requireNonNull(rows, "rows");
     }
 
     // deletedCells............................................................................................................
@@ -310,9 +387,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private SpreadsheetDelta setWindow0(final Optional<SpreadsheetCellRange> window) {
         final Optional<SpreadsheetViewportSelection> selection = this.selection;
+
         final Set<SpreadsheetCell> cells = this.cells;
+        final Set<SpreadsheetColumn> columns = this.columns;
         final Set<SpreadsheetLabelMapping> labels = this.labels;
+        final Set<SpreadsheetRow> rows = this.rows;
+
         final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
+
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         final Map<SpreadsheetRowReference, Double> rowHeights = this.rowHeights;
 
@@ -323,7 +405,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             delta = SpreadsheetDeltaWindowed.withWindowed(
                     selection,
                     filterCells0(cells, filter),
+                    filterColumns0(columns, filter),
                     filterLabels0(labels, filter),
+                    filterRows0(rows, filter),
                     filterDeletedCells0(deletedCells, filter),
                     filterColumnWidths0(columnWidths, filter),
                     filterRowHeights0(rowHeights, filter),
@@ -332,7 +416,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             delta = SpreadsheetDeltaNonWindowed.withNonWindowed(
                     selection,
                     cells,
+                    columns,
                     labels,
+                    rows,
                     deletedCells,
                     columnWidths,
                     rowHeights
@@ -354,6 +440,21 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return filter(
                 cells,
                 c -> window.test(c.reference())
+        );
+    }
+
+    static Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns,
+                                                final Optional<SpreadsheetCellRange> window) {
+        return window.isPresent() ?
+                filterColumns0(columns, window.get()) :
+                columns;
+    }
+
+    private static Set<SpreadsheetColumn> filterColumns0(final Set<SpreadsheetColumn> columns,
+                                                         final SpreadsheetCellRange window) {
+        return filter(
+                columns,
+                c -> window.testColumn(c.reference())
         );
     }
 
@@ -381,6 +482,21 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     final SpreadsheetExpressionReference r = m.reference();
                     return r.isCellReference() && window.test((SpreadsheetCellReference) m.reference());
                 }
+        );
+    }
+
+    static Set<SpreadsheetRow> filterRows(final Set<SpreadsheetRow> rows,
+                                          final Optional<SpreadsheetCellRange> window) {
+        return window.isPresent() ?
+                filterRows0(rows, window.get()) :
+                rows;
+    }
+
+    private static Set<SpreadsheetRow> filterRows0(final Set<SpreadsheetRow> rows,
+                                                   final SpreadsheetCellRange window) {
+        return filter(
+                rows,
+                r -> window.testRow(r.reference())
         );
     }
 
@@ -622,29 +738,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 printer.outdent();
             }
 
-            final Set<SpreadsheetCell> cells = this.cells();
-            if (!cells.isEmpty()) {
-                printer.println("cells:");
-                printer.indent();
-                {
-                    for (final SpreadsheetCell cell : cells) {
-                        cell.printTree(printer);
-                    }
-                }
-                printer.outdent();
-            }
-
-            final Set<SpreadsheetLabelMapping> labels = this.labels();
-            if (!labels.isEmpty()) {
-                printer.println("labels:");
-                printer.indent();
-                {
-                    for (final SpreadsheetLabelMapping mapping : labels) {
-                        printer.println(mapping.label() + ": " + mapping.reference());
-                    }
-                }
-                printer.outdent();
-            }
+            printTreeCollection("cells", this.cells(), printer);
+            printTreeCollection("columns", this.columns(), printer);
+            printTreeCollection("labels", this.labels(), printer);
+            printTreeCollection("rows", this.rows(), printer);
 
             final Set<SpreadsheetCellReference> deletedCells = this.deletedCells();
             if (!deletedCells.isEmpty()) {
@@ -673,6 +770,21 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             this.printWindow(printer);
         }
         printer.outdent();
+    }
+
+    private <T extends TreePrintable> void printTreeCollection(final String label,
+                                                               final Collection<T> collection,
+                                                               final IndentingPrinter printer) {
+        if (!collection.isEmpty()) {
+            printer.println(label + ":");
+            printer.indent();
+            {
+                for (final T element : collection) {
+                    element.printTree(printer);
+                }
+            }
+            printer.outdent();
+        }
     }
 
     private void printTreeMap(final String label,
@@ -713,7 +825,20 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case CELLS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setCells(
-                            unmarshallCells(child, context)
+                            unmarshallCellsOrColumnsOrRows(
+                                    child,
+                                    SpreadsheetCell.class,
+                                    context
+                            )
+                    );
+                    break;
+                case COLUMNS_PROPERTY_STRING:
+                    unmarshalled = unmarshalled.setColumns(
+                            unmarshallCellsOrColumnsOrRows(
+                                    child,
+                                    SpreadsheetColumn.class,
+                                    context
+                            )
                     );
                     break;
                 case LABELS_PROPERTY_STRING:
@@ -721,6 +846,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             context.unmarshallSet(
                                     child,
                                     SpreadsheetLabelMapping.class
+                            )
+                    );
+                    break;
+                case ROWS_PROPERTY_STRING:
+                    unmarshalled = unmarshalled.setRows(
+                            unmarshallCellsOrColumnsOrRows(
+                                    child,
+                                    SpreadsheetRow.class,
+                                    context
                             )
                     );
                     break;
@@ -774,15 +908,23 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private static Set<SpreadsheetCell> unmarshallCells(final JsonNode node,
-                                                        final JsonNodeUnmarshallContext context) {
+    private static <T> Set<T> unmarshallCellsOrColumnsOrRows(final JsonNode node,
+                                                             final Class<T> type,
+                                                             final JsonNodeUnmarshallContext context) {
 
-        final Set<SpreadsheetCell> cells = Sets.ordered();
+        final Set<T> cells = Sets.ordered();
 
-        for (final Map.Entry<JsonPropertyName, JsonNode> child : node.objectOrFail().asMap().entrySet()) {
-            cells.add(context.unmarshall(JsonNode.object()
-                            .set(child.getKey(), child.getValue()),
-                    SpreadsheetCell.class));
+        for (final JsonNode child : node.objectOrFail().children()) {
+            cells.add(
+                    context.unmarshall(
+                            JsonNode.object()
+                                    .set(
+                                            child.name(),
+                                            child
+                                    ),
+                            type
+                    )
+            );
         }
 
         return cells;
@@ -839,7 +981,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         final Set<SpreadsheetCell> cells = this.cells;
         if (!cells.isEmpty()) {
-            children.add(marshallCells(cells, context).setName(CELLS_PROPERTY));
+            children.add(marshallCellOrColumnsOrRow(cells, context).setName(CELLS_PROPERTY));
+        }
+
+        final Set<SpreadsheetColumn> columns = this.columns;
+        if (!columns.isEmpty()) {
+            children.add(marshallCellOrColumnsOrRow(columns, context).setName(COLUMNS_PROPERTY));
         }
 
         final Set<SpreadsheetLabelMapping> labels = this.labels;
@@ -848,6 +995,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     marshallLabels(labels, context)
                             .setName(LABELS_PROPERTY)
             );
+        }
+
+        final Set<SpreadsheetRow> rows = this.rows;
+        if (!rows.isEmpty()) {
+            children.add(marshallCellOrColumnsOrRow(rows, context).setName(ROWS_PROPERTY));
         }
 
         final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
@@ -886,11 +1038,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a JSON object with each cell one of the properties.
      */
-    private static JsonNode marshallCells(final Set<SpreadsheetCell> cells,
-                                          final JsonNodeMarshallContext context) {
+    private static <T> JsonNode marshallCellOrColumnsOrRow(final Set<T> cellsOrColumnsOrRows,
+                                                           final JsonNodeMarshallContext context) {
         final List<JsonNode> children = Lists.array();
 
-        for (final SpreadsheetCell cell : cells) {
+        for (final T cell : cellsOrColumnsOrRows) {
             final JsonObject json = context.marshall(cell)
                     .objectOrFail();
             children.add(json.children().get(0));
@@ -911,7 +1063,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private final static String SELECTION_PROPERTY_STRING = "selection";
     private final static String CELLS_PROPERTY_STRING = "cells";
+    private final static String COLUMNS_PROPERTY_STRING = "columns";
     private final static String LABELS_PROPERTY_STRING = "labels";
+    private final static String ROWS_PROPERTY_STRING = "rows";
     private final static String DELETED_CELLS_PROPERTY_STRING = "deletedCells";
     private final static String COLUMN_WIDTHS_PROPERTY_STRING = "columnWidths";
     private final static String ROW_HEIGHTS_PROPERTY_STRING = "rowHeights";
@@ -922,7 +1076,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // @VisibleForTesting
     final static JsonPropertyName CELLS_PROPERTY = JsonPropertyName.with(CELLS_PROPERTY_STRING);
     // @VisibleForTesting
+    final static JsonPropertyName COLUMNS_PROPERTY = JsonPropertyName.with(COLUMNS_PROPERTY_STRING);
+    // @VisibleForTesting
     final static JsonPropertyName LABELS_PROPERTY = JsonPropertyName.with(LABELS_PROPERTY_STRING);
+    // @VisibleForTesting
+    final static JsonPropertyName ROWS_PROPERTY = JsonPropertyName.with(ROWS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName DELETED_CELLS_PROPERTY = JsonPropertyName.with(DELETED_CELLS_PROPERTY_STRING);
     // @VisibleForTesting
@@ -953,7 +1111,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return Objects.hash(
                 this.selection,
                 this.cells,
+                this.columns,
                 this.labels,
+                this.rows,
                 this.deletedCells,
                 this.window().hashCode(),
                 this.columnWidths,
@@ -972,7 +1132,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private boolean equals0(final SpreadsheetDelta other) {
         return this.selection.equals(other.selection) &&
                 this.cells.equals(other.cells) &&
+                this.columns.equals(other.columns) &&
                 this.labels.equals(other.labels) &&
+                this.rows.equals(other.rows) &&
                 this.deletedCells.equals(other.deletedCells) &&
                 this.columnWidths.equals(other.columnWidths) &&
                 this.rowHeights.equals(other.rowHeights) &&
@@ -993,8 +1155,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .value(this.selection)
                 .label("cells")
                 .value(this.cells)
+                .label("columns")
+                .value(this.columns)
                 .label("labels")
                 .value(this.labels)
+                .label("rows")
+                .value(this.rows)
                 .label("deletedCells")
                 .value(this.deletedCells);
 
