@@ -15,8 +15,10 @@
  *
  */
 
-package walkingkooka.spreadsheet.reference;
+package walkingkooka.spreadsheet;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -27,29 +29,29 @@ import walkingkooka.tree.json.patch.Patchable;
 import java.util.Objects;
 
 /**
- * Represents a single row within a spreadsheet.
+ * Represents a single column within a spreadsheet.
  */
-public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowReference>
-        implements Comparable<SpreadsheetRow>,
-        Patchable<SpreadsheetRow> {
+public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetColumnReference>
+        implements Comparable<SpreadsheetColumn>,
+        Patchable<SpreadsheetColumn> {
 
     /**
-     * Factory that creates a new {@link SpreadsheetRow}
+     * Factory that creates a new {@link SpreadsheetColumn}
      */
-    public static SpreadsheetRow with(final SpreadsheetRowReference reference) {
+    public static SpreadsheetColumn with(final SpreadsheetColumnReference reference) {
         checkReference(reference);
 
-        return new SpreadsheetRow(reference, false);
+        return new SpreadsheetColumn(reference, false);
     }
 
-    private SpreadsheetRow(final SpreadsheetRowReference reference,
-                           final boolean hidden) {
+    private SpreadsheetColumn(final SpreadsheetColumnReference reference,
+                              final boolean hidden) {
         super(reference, hidden);
     }
 
     // reference .......................................................................................................
 
-    public SpreadsheetRow setReference(final SpreadsheetRowReference reference) {
+    public SpreadsheetColumn setReference(final SpreadsheetColumnReference reference) {
         checkReference(reference);
 
         return this.reference.equals(reference) ?
@@ -57,8 +59,8 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
                 this.replace(reference);
     }
 
-    private SpreadsheetRow replace(final SpreadsheetRowReference reference) {
-        return new SpreadsheetRow(
+    private SpreadsheetColumn replace(final SpreadsheetColumnReference reference) {
+        return new SpreadsheetColumn(
                 reference,
                 this.hidden
         );
@@ -66,15 +68,15 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
 
     // hidden .......................................................................................................
 
-    public SpreadsheetRow setHidden(final boolean hidden) {
+    public SpreadsheetColumn setHidden(final boolean hidden) {
 
         return this.hidden == hidden ?
                 this :
                 this.replace(hidden);
     }
 
-    private SpreadsheetRow replace(final boolean hidden) {
-        return new SpreadsheetRow(
+    private SpreadsheetColumn replace(final boolean hidden) {
+        return new SpreadsheetColumn(
                 this.reference,
                 hidden
         );
@@ -82,12 +84,12 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
 
     // Json.............................................................................................................
 
-    static SpreadsheetRow unmarshall(final JsonNode node,
-                                     final JsonNodeUnmarshallContext context) {
+    static SpreadsheetColumn unmarshall(final JsonNode node,
+                                        final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(node, "node");
 
-        SpreadsheetRow row = null;
-        SpreadsheetRowReference reference = null;
+        SpreadsheetColumn column = null;
+        SpreadsheetColumnReference reference = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -95,23 +97,23 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
                 JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
             }
 
-            row = unmarshall0(
-                    SpreadsheetSelection.parseRow(name.value()),
+            column = unmarshall0(
+                    SpreadsheetSelection.parseColumn(name.value()),
                     child,
                     context
             );
         }
 
-        if (null == row) {
-            throw new JsonNodeUnmarshallException("Missing row reference", node);
+        if (null == column) {
+            throw new JsonNodeUnmarshallException("Missing column reference", node);
         }
 
-        return row;
+        return column;
     }
 
-    private static SpreadsheetRow unmarshall0(final SpreadsheetRowReference reference,
-                                              final JsonNode node,
-                                              final JsonNodeUnmarshallContext context) {
+    private static SpreadsheetColumn unmarshall0(final SpreadsheetColumnReference reference,
+                                                 final JsonNode node,
+                                                 final JsonNodeUnmarshallContext context) {
         Boolean hidden = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
@@ -130,37 +132,37 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
             JsonNodeUnmarshallContext.requiredPropertyMissing(HIDDEN_PROPERTY, node);
         }
 
-        return new SpreadsheetRow(reference, hidden); // lgtm [java/dereferenced-value-may-be-null]
+        return new SpreadsheetColumn(reference, hidden); // lgtm [java/dereferenced-value-may-be-null]
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetRow.class),
-                SpreadsheetRow::unmarshall,
-                SpreadsheetRow::marshall,
-                SpreadsheetRow.class
+                JsonNodeContext.computeTypeName(SpreadsheetColumn.class),
+                SpreadsheetColumn::unmarshall,
+                SpreadsheetColumn::marshall,
+                SpreadsheetColumn.class
         );
     }
 
     // Comparable..........................................................................................
 
     @Override
-    public int compareTo(final SpreadsheetRow other) {
+    public int compareTo(final SpreadsheetColumn other) {
         return this.reference.compareTo(other.reference);
     }
 
     // Patchable........................................................................................................
 
     /**
-     * Patches this {@link SpreadsheetRow} with the provided delta.
+     * Patches this {@link SpreadsheetColumn} with the provided delta.
      */
     @Override
-    public SpreadsheetRow patch(final JsonNode json,
-                                final JsonNodeUnmarshallContext context) {
+    public SpreadsheetColumn patch(final JsonNode json,
+                                   final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(json, "json");
         Objects.requireNonNull(context, "context");
 
-        SpreadsheetRow patched = this;
+        SpreadsheetColumn patched = this;
 
         for (final JsonNode child : json.objectOrFail().children()) {
             final JsonPropertyName name = child.name();

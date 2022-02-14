@@ -15,9 +15,12 @@
  *
  */
 
-package walkingkooka.spreadsheet.reference;
+package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -27,77 +30,77 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<SpreadsheetRow, SpreadsheetRowReference>
-        implements PatchableTesting<SpreadsheetRow> {
+public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<SpreadsheetColumn, SpreadsheetColumnReference>
+        implements PatchableTesting<SpreadsheetColumn> {
 
-    private final static int ROW = 20;
-    private final static SpreadsheetRowReference REFERENCE = reference(ROW);
+    private final static int COLUMN = 20;
+    private final static SpreadsheetColumnReference REFERENCE = reference(COLUMN);
 
     @Test
     public void testWithNullReferenceFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetRow.with(null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetColumn.with(null));
     }
 
     @Test
     public void testWith() {
-        final SpreadsheetRow row = this.createRow();
+        final SpreadsheetColumn column = this.createColumn();
 
-        this.checkReference(row);
-        this.checkHidden(row);
+        this.checkReference(column);
+        this.checkHidden(column);
     }
 
     // SetReference.....................................................................................................
 
     @Test
     public void testSetReferenceNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createRow().setReference(null));
+        assertThrows(NullPointerException.class, () -> this.createColumn().setReference(null));
     }
 
     @Test
     public void testSetReferenceSame() {
-        final SpreadsheetRow row = this.createRow();
-        assertSame(row, row.setReference(row.reference()));
+        final SpreadsheetColumn column = this.createColumn();
+        assertSame(column, column.setReference(column.reference()));
     }
 
     @Test
     public void testSetReferenceDifferent() {
-        final SpreadsheetRow row = this.createRow();
-        final SpreadsheetRowReference differentReference = differentReference();
-        final SpreadsheetRow different = row.setReference(differentReference);
-        assertNotSame(row, different);
+        final SpreadsheetColumn column = this.createColumn();
+        final SpreadsheetColumnReference differentReference = differentReference();
+        final SpreadsheetColumn different = column.setReference(differentReference);
+        assertNotSame(column, different);
 
         this.checkReference(different, differentReference);
 
-        this.checkReference(row);
+        this.checkReference(column);
     }
 
     // SetHidden........................................................................................................
 
     @Test
     public void testSetHiddenSame() {
-        final SpreadsheetRow row = this.createRow();
+        final SpreadsheetColumn column = this.createColumn();
 
-        this.checkEquals(row, row.setHidden(row.hidden()));
+        this.checkEquals(column, column.setHidden(column.hidden()));
     }
 
     @Test
     public void testSetHiddenDifferent() {
-        final SpreadsheetRow row = this.createRow();
+        final SpreadsheetColumn column = this.createColumn();
         final boolean differentHidden = differentHidden();
-        final SpreadsheetRow different = row.setHidden(differentHidden);
-        assertNotSame(row, different);
+        final SpreadsheetColumn different = column.setHidden(differentHidden);
+        assertNotSame(column, different);
 
         this.checkHidden(different, differentHidden);
 
-        this.checkHidden(row);
+        this.checkHidden(column);
     }
 
     // equals .............................................................................................
 
     @Test
-    public void testCompareDifferentRow() {
+    public void testCompareDifferentColumn() {
         this.compareToAndCheckLess(
-                this.createComparable(ROW + 999)
+                this.createComparable(COLUMN + 999)
         );
     }
 
@@ -109,17 +112,15 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         );
     }
 
-    // compareTo0..........................................................................................................
-
     @Test
     public void testArraySort() {
-        final SpreadsheetRow row1 = SpreadsheetSelection.parseRow("1").row();
-        final SpreadsheetRow row2 = SpreadsheetSelection.parseRow("2").row();
-        final SpreadsheetRow row3 = SpreadsheetSelection.parseRow("3").row();
-        final SpreadsheetRow row4 = SpreadsheetSelection.parseRow("$4").row();
+        final SpreadsheetColumn column1 = SpreadsheetSelection.parseColumn("A").column();
+        final SpreadsheetColumn column2 = SpreadsheetSelection.parseColumn("$B").column();
+        final SpreadsheetColumn column3 = SpreadsheetSelection.parseColumn("C").column();
+        final SpreadsheetColumn column4 = SpreadsheetSelection.parseColumn("$D").column();
 
-        this.compareToArraySortAndCheck(row3, row1, row4, row2,
-                row1, row2, row3, row4);
+        this.compareToArraySortAndCheck(column3, column1, column4, column2,
+                column1, column2, column3, column4);
     }
 
     // JsonNodeMarshallingTesting.......................................................................................
@@ -127,9 +128,10 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                SpreadsheetSelection.parseRow("123").row(),
+                SpreadsheetSelection.parseColumn("ABC")
+                        .column(),
                 "{\n" +
-                        "  \"123\": {\n" +
+                        "  \"ABC\": {\n" +
                         "    \"hidden\": false\n" +
                         "  }\n" +
                         "}"
@@ -139,9 +141,9 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testMarshallAbsolute() {
         this.marshallAndCheck(
-                this.createRow(),
+                this.createColumn(),
                 "{\n" +
-                        "  \"$21\": {\n" +
+                        "  \"$U\": {\n" +
                         "    \"hidden\": false\n" +
                         "  }\n" +
                         "}"
@@ -151,10 +153,10 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testMarshallAbsoluteHidden() {
         this.marshallAndCheck(
-                this.createRow()
+                this.createColumn()
                         .setHidden(true),
                 "{\n" +
-                        "  \"$21\": {\n" +
+                        "  \"$U\": {\n" +
                         "    \"hidden\": true\n" +
                         "  }\n" +
                         "}"
@@ -165,27 +167,29 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
 
     @Test
     public void testPatchHiddenTrue() {
-        final SpreadsheetRow row = SpreadsheetSelection.parseRow("1").row();
+        final SpreadsheetColumn column = SpreadsheetSelection.parseColumn("A")
+                .column();
 
         this.patchAndCheck(
-                row,
+                column,
                 "{\n" +
                         "  \"hidden\": true\n" +
                         "}",
-                row.setHidden(true)
+                column.setHidden(true)
         );
     }
 
     @Test
     public void testPatchHiddenFalse() {
-        final SpreadsheetRow row = SpreadsheetSelection.parseRow("2").row();
+        final SpreadsheetColumn column = SpreadsheetSelection.parseColumn("B")
+                .column();
 
         this.patchAndCheck(
-                row.setHidden(true),
+                column.setHidden(true),
                 "{\n" +
                         "  \"hidden\": false\n" +
                         "}",
-                row.setHidden(false)
+                column.setHidden(false)
         );
     }
 
@@ -193,11 +197,11 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
 
     @Test
     public void testTreePrintableHidden() {
-        final SpreadsheetRow row = this.createObject()
+        final SpreadsheetColumn column = this.createObject()
                 .setHidden(true);
 
         this.treePrintAndCheck(
-                row,
+                column,
                 "" + REFERENCE + EOL +
                         "  hidden" + EOL
         );
@@ -208,60 +212,61 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                REFERENCE.row(),
-                "$21"
+                REFERENCE.column(),
+                "$U"
         );
     }
 
-    private SpreadsheetRow createRow() {
+    private SpreadsheetColumn createColumn() {
         return this.createComparable();
     }
 
     @Override
-    public SpreadsheetRow createComparable() {
-        return this.createComparable(ROW);
+    public SpreadsheetColumn createComparable() {
+        return this.createComparable(COLUMN);
     }
 
-    private SpreadsheetRow createComparable(final int row) {
-        return reference(row).row();
+    private SpreadsheetColumn createComparable(final int column) {
+        return reference(column)
+                .column();
     }
 
-    private static SpreadsheetRowReference differentReference() {
+    private static SpreadsheetColumnReference differentReference() {
         return reference(999);
     }
 
-    private static SpreadsheetRowReference reference(final int row) {
-        return SpreadsheetReferenceKind.ABSOLUTE.row(row);
+    private static SpreadsheetColumnReference reference(final int column) {
+        return SpreadsheetReferenceKind.ABSOLUTE.column(column);
     }
 
-    private void checkReference(final SpreadsheetRow row) {
-        this.checkReference(row, REFERENCE);
+    private void checkReference(final SpreadsheetColumn column) {
+        this.checkReference(column, REFERENCE);
     }
 
-    private void checkHidden(final SpreadsheetRow row) {
-        this.checkHidden(row, false);
+    private void checkHidden(final SpreadsheetColumn column) {
+        this.checkHidden(column, false);
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetRow> type() {
-        return SpreadsheetRow.class;
+    public Class<SpreadsheetColumn> type() {
+        return SpreadsheetColumn.class;
     }
 
-    // JsonNodeMarshallingTesting......................................................................................
+    // JsonNodeMarshallingTesting.......................................................................................
 
     @Override
-    public SpreadsheetRow unmarshall(final JsonNode jsonNode,
-                                     final JsonNodeUnmarshallContext context) {
-        return SpreadsheetRow.unmarshall(jsonNode, context);
+    public SpreadsheetColumn unmarshall(final JsonNode jsonNode,
+                                        final JsonNodeUnmarshallContext context) {
+        return SpreadsheetColumn.unmarshall(jsonNode, context);
     }
 
     // PatchableTesting.................................................................................................
 
     @Override
-    public SpreadsheetRow createPatchable() {
-        return this.createRow();
+    public SpreadsheetColumn createPatchable() {
+        return this.createColumn();
     }
 
     @Override

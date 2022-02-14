@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
 
 import java.util.Objects;
 
