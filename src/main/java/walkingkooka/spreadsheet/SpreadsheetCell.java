@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
@@ -44,6 +45,7 @@ import java.util.Optional;
  * A spreadsheet cell including its formula, and other attributes such as format, text properties(styling) and more.
  */
 public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
+        HasSpreadsheetReference<SpreadsheetCellReference>,
         HateosResource<SpreadsheetCellReference>,
         Patchable<SpreadsheetCell>,
         TreePrintable,
