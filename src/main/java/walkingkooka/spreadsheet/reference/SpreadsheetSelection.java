@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.collect.Range;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;

@@ -17,14 +17,16 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRow;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
+import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 
 import java.util.Optional;
 
 /**
- * A common {@link SpreadsheetStore} for both {@link walkingkooka.spreadsheet.reference.SpreadsheetColumn} or {@link walkingkooka.spreadsheet.reference.SpreadsheetRow}.
+ * A common {@link SpreadsheetStore} for both {@link SpreadsheetColumn} or {@link SpreadsheetRow}.
  */
 public interface SpreadsheetColumnOrRowStore<R extends SpreadsheetColumnOrRowReference, V extends SpreadsheetColumnOrRow<R>> extends SpreadsheetStore<R, V> {
 

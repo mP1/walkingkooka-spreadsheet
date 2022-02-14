@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.reference;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting;
