@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
@@ -31,8 +32,10 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -41,7 +44,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
@@ -51,6 +57,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -367,26 +374,99 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(updatedCells);
 
-        final SpreadsheetLabelStore store = context.storeRepository()
-                .labels();
-        final Set<SpreadsheetLabelMapping> labels = Sets.ordered();
-        final Set<SpreadsheetCellReference> references = Sets.hash();
+        final SpreadsheetStoreRepository repo = context.storeRepository();
 
+        final Map<SpreadsheetColumnReference, SpreadsheetColumn> columns = Maps.sorted();
+        final Map<SpreadsheetRowReference, SpreadsheetRow> rows = Maps.sorted();
+
+        final SpreadsheetColumnStore columnStore = repo.columns();
+        final SpreadsheetRowStore rowStore = repo.rows();
+
+        final Set<SpreadsheetLabelMapping> labels = Sets.sorted();
+        final SpreadsheetLabelStore labelStore = repo.labels();
+
+        // record columns and rows for updated cells...
         for (final SpreadsheetCell cell : updatedCells) {
-            addLabels(cell.reference(), store, labels);
+            final SpreadsheetCellReference cellReference = cell.reference();
+
+            addIfNecessary(
+                    cellReference.column(),
+                    columns,
+                    columnStore
+            );
+
+            addIfNecessary(
+                    cellReference.row(),
+                    rows,
+                    rowStore
+            );
+
+            addLabels(
+                    cell.reference(),
+                    labelStore,
+                    labels
+            );
         }
 
+        // add labels within the range of the given window.
         if (null != window) {
+            final Set<SpreadsheetCellReference> cellReferences = Sets.hash();
+
+            // include all columns and rows within the window.
             window.cellStream()
                     .forEach(c -> {
-                        if (references.add(c)) {
-                            addLabels(c, store, labels);
+                        if (cellReferences.add(c)) {
+                            addIfNecessary(
+                                    c.column(),
+                                    columns,
+                                    columnStore
+                            );
+
+                            addIfNecessary(
+                                    c.row(),
+                                    rows,
+                                    rowStore
+                            );
+
+                            addLabels(c, labelStore, labels);
                         }
                     });
         }
 
-        return delta.setLabels(labels)
-                .setDeletedCells(changes.deletedCells());
+        // load columns and rows for the deleted cells.
+        final Set<SpreadsheetCellReference> deletedCells = changes.deletedCells();
+
+        for (final SpreadsheetCellReference deletedCell : deletedCells) {
+            addIfNecessary(
+                    deletedCell.column(),
+                    columns,
+                    columnStore
+            );
+
+            addIfNecessary(
+                    deletedCell.row(),
+                    rows,
+                    rowStore
+            );
+        }
+
+        return delta
+                .setColumns(sortedSet(columns))
+                .setLabels(labels)
+                .setRows(sortedSet(rows))
+                .setDeletedCells(deletedCells);
+    }
+
+    private <R extends SpreadsheetColumnOrRowReference & Comparable<R>, H extends HasSpreadsheetReference<R>> void addIfNecessary(final R reference,
+                                                                                                                                  final Map<R, H> referenceToHas,
+                                                                                                                                  final SpreadsheetStore<R, H> store) {
+        if (!referenceToHas.containsKey(reference)) {
+            referenceToHas.put(
+                    reference,
+                    store.load(reference)
+                            .orElse(null)
+            );
+        }
     }
 
     private static void addLabels(final SpreadsheetCellReference reference,
@@ -395,6 +475,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         for (final SpreadsheetLabelName label : store.labels(reference)) {
             all.add(label.mapping(reference));
         }
+    }
+
+    private static <T> Set<T> sortedSet(final Map<?, T> columnsOrRows) {
+        final Set<T> set = Sets.sorted();
+
+        for (final T value : columnsOrRows.values()) {
+            // not all columns or rows have a SpreadsheetColumn or SpreadsheetRow with values.
+            if (null != value) {
+                set.add(value);
+            }
+        }
+
+        return set;
     }
 
     @Override
@@ -528,7 +621,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // VisibleForTesting
     final static Optional<SpreadsheetParserToken> EMPTY_TOKEN = Optional.of(
             SpreadsheetParserToken.text(
-                    Lists.<ParserToken>of( // J2clTranspiler: Error:BasicSpreadsheetEngine.java:386: The method of(T...) of type Lists is not applicable as the formal varargs element type T is not accessible here
+                    Lists.<ParserToken>of( // J2clTranspiler: Error:BasicSpreadsheetEngine.java:386: The method of(H...) of type Lists is not applicable as the formal varargs element type H is not accessible here
                             SpreadsheetParserToken.textLiteral("", "")
                     ),
                     "")

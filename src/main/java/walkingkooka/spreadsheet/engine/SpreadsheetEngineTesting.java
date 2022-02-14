@@ -910,14 +910,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 engine.fillCells(cells, from, to, context),
                 () -> "fillCells " + cells + " " + from + " to " + to
         );
-
-        // load and check updated cells again...
-        delta.cells()
-                .forEach(c -> this.loadCellAndCheck(engine,
-                        c.reference(),
-                        SpreadsheetEngineEvaluation.SKIP_EVALUATE,
-                        context,
-                        c));
     }
 
     default void checkFormula(final SpreadsheetCell cell, final String formula) {

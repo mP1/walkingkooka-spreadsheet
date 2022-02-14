@@ -44,6 +44,10 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.Expression;
@@ -337,11 +341,13 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     public SpreadsheetEngineContext createContext() {
         final SpreadsheetCellStore cells = SpreadsheetCellStores.treeMap();
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences = SpreadsheetExpressionReferenceStores.treeMap();
+        final SpreadsheetColumnStore columns = SpreadsheetColumnStores.treeMap();
         final SpreadsheetLabelStore labels = SpreadsheetLabelStores.treeMap();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences = SpreadsheetExpressionReferenceStores.treeMap();
         final SpreadsheetMetadataStore metadatas = SpreadsheetMetadataStores.treeMap();
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = SpreadsheetCellRangeStores.treeMap();
         final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = SpreadsheetCellRangeStores.treeMap();
+        final SpreadsheetRowStore rows = SpreadsheetRowStores.treeMap();
 
         metadatas.save(BEFORE);
 
@@ -362,6 +368,11 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                     @Override
                     public SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences() {
                         return cellReferences;
+                    }
+
+                    @Override
+                    public SpreadsheetColumnStore columns() {
+                        return columns;
                     }
 
                     @Override
@@ -390,8 +401,21 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                     }
 
                     @Override
+                    public SpreadsheetRowStore rows() {
+                        return rows;
+                    }
+
+                    @Override
                     public String toString() {
-                        return "cells: " + this.cells() + " labels: " + this.labels() + " metadatas: " + this.metadatas();
+                        return "cells: " + this.cells() +
+                                " cellReferences: " + cellReferences +
+                                " columns: " + this.columns() +
+                                " labels: " + this.labels() +
+                                " labelReferences: " + this.labelReferences() +
+                                " metadatas: " + this.metadatas() +
+                                " rangeToCells: " + this.rangeToCells() +
+                                " rangeToConditionalFormattingRules: " + this.rangeToConditionalFormattingRules() +
+                                " rows: " + this.rows();
                     }
                 };
             }
