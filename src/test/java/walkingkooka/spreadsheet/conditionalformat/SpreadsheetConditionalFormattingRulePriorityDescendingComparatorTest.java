@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.conditionalformat;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.compare.ComparatorTesting;
+import walkingkooka.compare.ComparatorTesting2;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.tree.expression.Expression;
@@ -26,7 +26,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.util.Optional;
 
-public final class SpreadsheetConditionalFormattingRulePriorityDescendingComparatorTest implements ComparatorTesting<SpreadsheetConditionalFormattingRulePriorityDescendingComparator,
+public final class SpreadsheetConditionalFormattingRulePriorityDescendingComparatorTest implements ComparatorTesting2<SpreadsheetConditionalFormattingRulePriorityDescendingComparator,
         SpreadsheetConditionalFormattingRule> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
