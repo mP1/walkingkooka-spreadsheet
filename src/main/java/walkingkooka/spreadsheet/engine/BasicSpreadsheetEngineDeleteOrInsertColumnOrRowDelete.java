@@ -22,54 +22,60 @@ import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 
 /**
- * Inserts the requested columns or rows.
+ * Deletes the selected columns or rows.
  */
-final class BasicSpreadsheetEngineInsertColumnOrRow extends BasicSpreadsheetEngineDeleteOrInsertColumnOrRow {
+final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete extends BasicSpreadsheetEngineDeleteOrInsertColumnOrRow {
 
-    static void insert(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow,
+    static void delete(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow,
                        final SpreadsheetEngineContext context) {
-        new BasicSpreadsheetEngineInsertColumnOrRow(columnOrRow).insert0(context);
+        new BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete(columnOrRow).delete0(context);
     }
 
-    private BasicSpreadsheetEngineInsertColumnOrRow(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow) {
+    private BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow) {
         super(columnOrRow);
     }
 
     /**
-     * Inserts the requested number of columns or rows.
+     * Delete the selected columns or rows.
      */
-    private void insert0(final SpreadsheetEngineContext context) {
+    private void delete0(final SpreadsheetEngineContext context) {
+        this.columnOrRow.delete(this.columnOrRow.value, this.columnOrRow.count);
         this.move();
         this.columnOrRow.fixAllExpressionReferences(context);
         this.columnOrRow.fixAllLabelMappings();
     }
 
     private void move() {
-        final int offset = this.columnOrRow.value;
+        final int offset = this.columnOrRow.value + this.columnOrRow.count;
         final int moveCount = this.columnOrRow.max() - offset;
 
         for (int i = 0; i <= moveCount; i++) {
-            this.columnOrRow.move(offset + moveCount - i);
+            this.columnOrRow.move(offset + i);
         }
     }
 
     @Override
-    int fixReferenceOffset(final int count) {
-        return +count;
-    }
-
-    @Override
     boolean isDeletedReference(final SpreadsheetColumnReferenceParserToken column) {
-        return false; // no references are ever deleted during an insert.
+        return this.isDeletedReference(column.value().value());
     }
 
     @Override
     boolean isDeletedReference(final SpreadsheetRowReferenceParserToken row) {
-        return false; // no references are ever deleted during an insert.
+        return this.isDeletedReference(row.value().value());
+    }
+
+    private boolean isDeletedReference(final int value) {
+        final int deleted = this.columnOrRow.value;
+        return deleted <= value && value <= deleted + this.columnOrRow.count;
+    }
+
+    @Override
+    int fixReferenceOffset(final int count) {
+        return -count;
     }
 
     @Override
     void fixLabelMapping(final SpreadsheetLabelMapping mapping) {
-        this.columnOrRow.insertFixLabelMapping(mapping);
+        this.columnOrRow.deleteOrFixLabelMapping(mapping);
     }
 }

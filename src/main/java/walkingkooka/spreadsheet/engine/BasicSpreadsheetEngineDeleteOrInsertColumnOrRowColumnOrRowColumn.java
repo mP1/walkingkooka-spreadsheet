@@ -31,22 +31,22 @@ import java.util.Optional;
 /**
  * Performs operations on columns for delete or insertion.
  */
-final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn extends BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
+final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn extends BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
-    static BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn with(final int value,
-                                                                      final int count,
-                                                                      final BasicSpreadsheetEngine engine,
-                                                                      final SpreadsheetEngineContext context) {
-        return new BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn(value, count, engine, context);
+    static BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn with(final int value,
+                                                                                 final int count,
+                                                                                 final BasicSpreadsheetEngine engine,
+                                                                                 final SpreadsheetEngineContext context) {
+        return new BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn(value, count, engine, context);
     }
 
     /**
      * Private ctor use static factory.
      */
-    private BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn(final int value,
-                                                                  final int count,
-                                                                  final BasicSpreadsheetEngine engine,
-                                                                  final SpreadsheetEngineContext context) {
+    private BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn(final int value,
+                                                                             final int count,
+                                                                             final BasicSpreadsheetEngine engine,
+                                                                             final SpreadsheetEngineContext context) {
         super(value, count, engine, context);
     }
 

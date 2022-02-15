@@ -56,13 +56,13 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     final void delete() {
         if (this.count > 0) {
-            BasicSpreadsheetEngineDeleteColumnOrRow.delete(this, this.context);
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete.delete(this, this.context);
         }
     }
 
     final void insert() {
         if (this.count > 0) {
-            BasicSpreadsheetEngineInsertColumnOrRow.insert(this, this.context);
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowInsert.insert(this, this.context);
         }
     }
 
