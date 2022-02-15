@@ -17,16 +17,17 @@
 
 package walkingkooka.spreadsheet.engine;
 
-public final class BasicSpreadsheetEngineDeleteColumnOrRowTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineDeleteColumnOrRow> {
+public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumnTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn> {
+
     @Override
-    public Class<BasicSpreadsheetEngineDeleteColumnOrRow> type() {
-        return BasicSpreadsheetEngineDeleteColumnOrRow.class;
+    public Class<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn> type() {
+        return BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn.class;
     }
 
     // TypeNameTesting..........................................................................
 
     @Override
     public String typeNameSuffix() {
-        return "ColumnOrRow";
+        return "Column";
     }
 }

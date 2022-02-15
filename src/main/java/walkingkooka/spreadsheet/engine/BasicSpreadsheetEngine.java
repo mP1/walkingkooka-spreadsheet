@@ -242,7 +242,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count, this, context)
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn.with(column.value(), count, this, context)
                     .delete();
             changes.refreshUpdated();
             return this.prepareDelta(changes, context);
@@ -258,7 +258,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow.with(row.value(), count, this, context)
                     .delete();
             changes.refreshUpdated();
             return this.prepareDelta(changes, context);
@@ -274,7 +274,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count,
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn.with(column.value(), count,
                             this,
                             context)
                     .insert();
@@ -292,7 +292,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow.with(row.value(), count, this, context)
                     .insert();
             changes.refreshUpdated();
             return this.prepareDelta(changes, context);
