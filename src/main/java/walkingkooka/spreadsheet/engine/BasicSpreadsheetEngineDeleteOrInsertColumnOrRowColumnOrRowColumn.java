@@ -18,12 +18,14 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -61,6 +63,18 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
     }
 
     @Override
+    void deleteColumnOrRow(final int column) {
+        this.deleteColumn(
+                SpreadsheetReferenceKind.RELATIVE.column(column)
+        );
+    }
+
+    private void deleteColumn(final SpreadsheetColumnReference column) {
+        this.columnStore()
+                .delete(column);
+    }
+
+    @Override
     Optional<SpreadsheetColumnReferenceParserToken> fixCellReferencesWithinExpression(final SpreadsheetColumnReferenceParserToken token) {
         return this.deleteOrInsert.isDeletedReference(token) ?
                 Optional.empty() :
@@ -95,6 +109,30 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
     @Override
     int columnOrRowValue(final SpreadsheetCellReference cell) {
         return cell.column().value();
+    }
+
+    @Override
+    void moveColumnOrRows(final int column) {
+        this.moveColumn(
+                SpreadsheetReferenceKind.RELATIVE.column(column)
+        );
+    }
+
+    private void moveColumn(final SpreadsheetColumnReference columnReference) {
+        final SpreadsheetColumnStore store = this.columnStore();
+
+        final Optional<SpreadsheetColumn> maybeColumn = store.load(columnReference);
+        if (maybeColumn.isPresent()) {
+            final SpreadsheetColumn column = maybeColumn.get();
+            store.delete(columnReference);
+
+            final SpreadsheetColumn fixed = column.setReference(
+                    this.fixColumnReference(columnReference)
+            );
+            if (!fixed.equals(column)) {
+                store.save(fixed);
+            }
+        }
     }
 
     @Override

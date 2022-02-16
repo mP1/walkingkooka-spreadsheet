@@ -4396,9 +4396,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCellWithValue("C1", "", "")
                                 )
                         ).setColumns(
-                                Sets.of(b, c)
+                                Sets.of(c)
                         ).setDeletedCells(
                                 Sets.of(b1)
+                        ).setDeletedColumns(
+                                Sets.of(b.reference())
                         )
         );
 
@@ -5092,7 +5094,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetRow row3 = SpreadsheetSelection.parseRow("3")
                 .row();
-        engine.saveRow(row1, context);
+        engine.saveRow(row3, context);
 
         engine.saveCell(
                 this.cell(a1, ""),
@@ -5109,12 +5111,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCellWithValue("A2", "", "")
                                 )
-                        )
-                        .setRows(
-                                Sets.of(row1, row2)
-                        )
-                        .setDeletedCells(
+                        ).setRows(
+                                Sets.of(row2)
+                        ).setDeletedCells(
                                 Sets.of(a1)
+                        ).setDeletedRows(
+                                Sets.of(
+                                        row1.reference()
+                                )
                         )
         );
 

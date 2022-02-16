@@ -18,12 +18,14 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -61,6 +63,18 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
     }
 
     @Override
+    void deleteColumnOrRow(final int row) {
+        this.deleteRow(
+                SpreadsheetReferenceKind.RELATIVE.row(row)
+        );
+    }
+
+    private void deleteRow(final SpreadsheetRowReference row) {
+        this.rowStore()
+                .delete(row);
+    }
+
+    @Override
     Optional<SpreadsheetColumnReferenceParserToken> fixCellReferencesWithinExpression(final SpreadsheetColumnReferenceParserToken token) {
         // only fixing rows refs not cols
         return Optional.of(token);
@@ -95,6 +109,30 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
     @Override
     int columnOrRowValue(final SpreadsheetCellReference cell) {
         return cell.row().value();
+    }
+
+    @Override
+    void moveColumnOrRows(final int row) {
+        this.moveRow(
+                SpreadsheetReferenceKind.RELATIVE.row(row)
+        );
+    }
+
+    private void moveRow(final SpreadsheetRowReference rowReference) {
+        final SpreadsheetRowStore store = this.rowStore();
+
+        final Optional<SpreadsheetRow> maybeRow = store.load(rowReference);
+        if (maybeRow.isPresent()) {
+            final SpreadsheetRow row = maybeRow.get();
+            store.delete(rowReference);
+
+            final SpreadsheetRow fixed = row.setReference(
+                    this.fixRowReference(rowReference)
+            );
+            if (!fixed.equals(row)) {
+                store.save(fixed);
+            }
+        }
     }
 
     @Override

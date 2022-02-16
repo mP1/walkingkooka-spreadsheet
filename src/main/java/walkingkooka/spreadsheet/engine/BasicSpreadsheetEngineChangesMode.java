@@ -18,9 +18,13 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReference;
 
 /**
@@ -51,6 +55,18 @@ enum BasicSpreadsheetEngineChangesMode {
         }
 
         @Override
+        void onColumnSaved(final SpreadsheetColumn column,
+                           final BasicSpreadsheetEngineChanges changes) {
+            changes.onColumnSavedImmediate(column);
+        }
+
+        @Override
+        void onColumnDeleted(final SpreadsheetColumnReference column,
+                             final BasicSpreadsheetEngineChanges changes) {
+            changes.onColumnDeletedImmediate(column);
+        }
+
+        @Override
         void onLabelSaved(final SpreadsheetLabelMapping mapping,
                           final BasicSpreadsheetEngineChanges changes) {
             changes.onLabelSavedImmediate(mapping);
@@ -60,6 +76,18 @@ enum BasicSpreadsheetEngineChangesMode {
         void onLabelDeleted(final SpreadsheetLabelName label,
                             final BasicSpreadsheetEngineChanges changes) {
             changes.onLabelDeletedImmediate(label);
+        }
+
+        @Override
+        void onRowSaved(final SpreadsheetRow row,
+                        final BasicSpreadsheetEngineChanges changes) {
+            changes.onRowSavedImmediate(row);
+        }
+
+        @Override
+        void onRowDeleted(final SpreadsheetRowReference row,
+                          final BasicSpreadsheetEngineChanges changes) {
+            changes.onRowDeletedImmediate(row);
         }
     },
 
@@ -80,6 +108,18 @@ enum BasicSpreadsheetEngineChangesMode {
         }
 
         @Override
+        void onColumnSaved(final SpreadsheetColumn column,
+                           final BasicSpreadsheetEngineChanges changes) {
+            changes.onColumnSavedBatch(column);
+        }
+
+        @Override
+        void onColumnDeleted(final SpreadsheetColumnReference column,
+                             final BasicSpreadsheetEngineChanges changes) {
+            changes.onColumnDeletedBatch(column);
+        }
+
+        @Override
         void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
                                     final BasicSpreadsheetEngineChanges changes) {
             changes.onCellReferenceDeletedBatch(targetAndReference);
@@ -95,6 +135,18 @@ enum BasicSpreadsheetEngineChangesMode {
         void onLabelDeleted(final SpreadsheetLabelName label,
                             final BasicSpreadsheetEngineChanges changes) {
             changes.onLabelDeletedBatch(label);
+        }
+
+        @Override
+        void onRowSaved(final SpreadsheetRow row,
+                        final BasicSpreadsheetEngineChanges changes) {
+            changes.onRowSavedBatch(row);
+        }
+
+        @Override
+        void onRowDeleted(final SpreadsheetRowReference row,
+                          final BasicSpreadsheetEngineChanges changes) {
+            changes.onRowDeletedBatch(row);
         }
     };
 
@@ -115,9 +167,21 @@ enum BasicSpreadsheetEngineChangesMode {
     abstract void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
                                          final BasicSpreadsheetEngineChanges changes);
 
+    abstract void onColumnSaved(final SpreadsheetColumn column,
+                                final BasicSpreadsheetEngineChanges changes);
+
+    abstract void onColumnDeleted(final SpreadsheetColumnReference column,
+                                  final BasicSpreadsheetEngineChanges changes);
+
     abstract void onLabelSaved(final SpreadsheetLabelMapping mapping,
                                final BasicSpreadsheetEngineChanges changes);
 
     abstract void onLabelDeleted(final SpreadsheetLabelName label,
                                  final BasicSpreadsheetEngineChanges changes);
+
+    abstract void onRowSaved(final SpreadsheetRow row,
+                             final BasicSpreadsheetEngineChanges changes);
+
+    abstract void onRowDeleted(final SpreadsheetRowReference row,
+                               final BasicSpreadsheetEngineChanges changes);
 }

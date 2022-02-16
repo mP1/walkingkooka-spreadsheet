@@ -39,7 +39,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete extends BasicS
      * Delete the selected columns or rows.
      */
     private void delete0(final SpreadsheetEngineContext context) {
-        this.columnOrRow.delete(this.columnOrRow.value, this.columnOrRow.count);
+        this.columnOrRow.deleteColumnOrRowRange(this.columnOrRow.value, this.columnOrRow.count);
         this.move();
         this.columnOrRow.fixAllExpressionReferences(context);
         this.columnOrRow.fixAllLabelMappings();

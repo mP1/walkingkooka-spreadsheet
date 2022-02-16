@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -31,6 +32,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -71,7 +74,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     /**
      * Deletes the selected range of row or columns.
      */
-    final void delete(final int start, final int count) {
+    final void deleteColumnOrRowRange(final int start, final int count) {
         for (int i = 0; i < count; i++) {
             this.delete(start + i);
         }
@@ -81,17 +84,29 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Delete all the cells in the selected row/column.
      */
     final void delete(final int columnOrRow) {
+        this.deleteCells(columnOrRow);
+        this.deleteColumnOrRow(columnOrRow);
+    }
+
+    private void deleteCells(final int columnOrRow) {
         this.cells(columnOrRow)
                 .forEach(c -> this.cellStore().delete(c.reference()));
     }
+
+    abstract void deleteColumnOrRow(final int columnOrRow);
 
     // move .............................................................................................................
 
     /**
      * Moves all the cells in the selected row/column.
      */
-    final void move(final int source) {
-        this.cells(source)
+    final void move(final int columnOrRow) {
+        this.moveCells(columnOrRow);
+        this.moveColumnOrRows(columnOrRow);
+    }
+
+    private void moveCells(final int columnOrRow) {
+        this.cells(columnOrRow)
                 .forEach(this::moveCell);
     }
 
@@ -100,6 +115,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     private void moveCell(final SpreadsheetCell cell) {
         final SpreadsheetCellReference reference = cell.reference();
+
         this.deleteCell(reference);
 
         final SpreadsheetCell fixed = cell.setReference(this.fixCellReference(cell.reference()));
@@ -107,6 +123,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             this.saveCell(fixed);
         }
     }
+
+    abstract void moveColumnOrRows(final int columnOrRow);
 
     // fix references in all cells .............................................................................
 
@@ -169,6 +187,24 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Adjusts the reference to match the delete or insert column/row value to it still points to the "same" cell.
      */
     abstract SpreadsheetCellReference fixCellReference(final SpreadsheetCellReference reference);
+
+    /**
+     * Fixes the given {@link SpreadsheetColumnReference}
+     */
+    final SpreadsheetColumnReference fixColumnReference(final SpreadsheetColumnReference reference) {
+        return reference.add(
+                this.deleteOrInsert.fixReferenceOffset(this.count)
+        );
+    }
+
+    /**
+     * Fixes the given {@link SpreadsheetRowReference}
+     */
+    final SpreadsheetRowReference fixRowReference(final SpreadsheetRowReference reference) {
+        return reference.add(
+                this.deleteOrInsert.fixReferenceOffset(this.count)
+        );
+    }
 
 //    // cell reference.................................................................................................
 
@@ -373,9 +409,19 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
         this.cellStore().save(cell);
     }
 
+    final SpreadsheetColumnStore columnStore() {
+        return this.context.storeRepository()
+                .columns();
+    }
+
     final SpreadsheetCellStore cellStore() {
         return this.context.storeRepository()
                 .cells();
+    }
+
+    final SpreadsheetRowStore rowStore() {
+        return this.context.storeRepository()
+                .rows();
     }
 
     final int value;

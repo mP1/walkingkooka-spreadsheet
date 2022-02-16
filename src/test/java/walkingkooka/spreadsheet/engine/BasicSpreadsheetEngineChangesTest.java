@@ -33,6 +33,10 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
@@ -43,7 +47,7 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
     public void testToString() {
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(SpreadsheetMetadata.EMPTY);
 
-        final BasicSpreadsheetEngineChanges cells = BasicSpreadsheetEngineChanges.with(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChanges.with(
                 engine,
                 new FakeSpreadsheetEngineContext() {
                     @Override
@@ -60,6 +64,11 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
                             }
 
                             @Override
+                            public SpreadsheetColumnStore columns() {
+                                return SpreadsheetColumnStores.treeMap();
+                            }
+
+                            @Override
                             public SpreadsheetLabelStore labels() {
                                 return SpreadsheetLabelStores.treeMap();
                             }
@@ -73,20 +82,25 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
                             public SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
                                 return SpreadsheetCellRangeStores.treeMap();
                             }
+
+                            @Override
+                            public SpreadsheetRowStore rows() {
+                                return SpreadsheetRowStores.treeMap();
+                            }
                         };
                     }
                 },
                 BasicSpreadsheetEngineChangesMode.IMMEDIATE
         );
 
-        cells.onCellSavedImmediate(
+        changes.onCellSavedImmediate(
                 SpreadsheetCell.with(
                         SpreadsheetSelection.parseCell("A1"),
                         SpreadsheetFormula.EMPTY
                                 .setText("1+2")
                 )
         );
-        cells.onCellSavedImmediate(
+        changes.onCellSavedImmediate(
                 SpreadsheetCell.with(
                         SpreadsheetSelection.parseCell("B2"),
                         SpreadsheetFormula.EMPTY
@@ -94,7 +108,27 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
                 )
         );
 
-        this.toStringAndCheck(cells, "{A1=A1=1+2, B2=B2=3+4}");
+        changes.onColumnSavedImmediate(
+                SpreadsheetSelection.parseColumn("M")
+                        .column()
+        );
+        changes.onColumnSavedImmediate(
+                SpreadsheetSelection.parseColumn("N")
+                        .column()
+                        .setHidden(true)
+        );
+
+        changes.onRowSavedImmediate(
+                SpreadsheetSelection.parseRow("6")
+                        .row()
+        );
+        changes.onRowSavedImmediate(
+                SpreadsheetSelection.parseRow("7")
+                        .row()
+                        .setHidden(true)
+        );
+
+        this.toStringAndCheck(changes, "{A1=A1=1+2, B2=B2=3+4} {M=M, N=N} {6=6, 7=7}");
     }
 
     @Override
