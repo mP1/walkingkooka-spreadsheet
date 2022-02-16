@@ -34,32 +34,32 @@ enum BasicSpreadsheetEngineChangesMode {
     IMMEDIATE {
         @Override
         void onCellSaved(final SpreadsheetCell cell,
-                         final BasicSpreadsheetEngineChanges cells) {
-            cells.onCellSavedImmediate(cell);
+                         final BasicSpreadsheetEngineChanges changes) {
+            changes.onCellSavedImmediate(cell);
         }
 
         @Override
         void onCellDeleted(final SpreadsheetCellReference cell,
-                           final BasicSpreadsheetEngineChanges cells) {
-            cells.onCellDeletedImmediate(cell);
+                           final BasicSpreadsheetEngineChanges changes) {
+            changes.onCellDeletedImmediate(cell);
         }
 
         @Override
         void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
-                                    final BasicSpreadsheetEngineChanges cells) {
-            cells.onCellReferenceDeletedImmediate(targetAndReference);
+                                    final BasicSpreadsheetEngineChanges changes) {
+            changes.onCellReferenceDeletedImmediate(targetAndReference);
         }
 
         @Override
         void onLabelSaved(final SpreadsheetLabelMapping mapping,
-                          final BasicSpreadsheetEngineChanges cells) {
-            cells.onLabelSavedImmediate(mapping);
+                          final BasicSpreadsheetEngineChanges changes) {
+            changes.onLabelSavedImmediate(mapping);
         }
 
         @Override
         void onLabelDeleted(final SpreadsheetLabelName label,
-                            final BasicSpreadsheetEngineChanges cells) {
-            cells.onLabelDeletedImmediate(label);
+                            final BasicSpreadsheetEngineChanges changes) {
+            changes.onLabelDeletedImmediate(label);
         }
     },
 
@@ -69,32 +69,32 @@ enum BasicSpreadsheetEngineChangesMode {
     BATCH {
         @Override
         void onCellSaved(final SpreadsheetCell cell,
-                         final BasicSpreadsheetEngineChanges cells) {
-            cells.onCellSavedBatch(cell);
+                         final BasicSpreadsheetEngineChanges changes) {
+            changes.onCellSavedBatch(cell);
         }
 
         @Override
         void onCellDeleted(final SpreadsheetCellReference cell,
-                           final BasicSpreadsheetEngineChanges cells) {
-            cells.onCellDeletedBatch(cell);
+                           final BasicSpreadsheetEngineChanges changes) {
+            changes.onCellDeletedBatch(cell);
         }
 
         @Override
         void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
-                                    final BasicSpreadsheetEngineChanges cells) {
-            cells.onCellReferenceDeletedBatch(targetAndReference);
+                                    final BasicSpreadsheetEngineChanges changes) {
+            changes.onCellReferenceDeletedBatch(targetAndReference);
         }
 
         @Override
         void onLabelSaved(final SpreadsheetLabelMapping mapping,
-                          final BasicSpreadsheetEngineChanges cells) {
-            cells.onLabelSavedBatch(mapping);
+                          final BasicSpreadsheetEngineChanges changes) {
+            changes.onLabelSavedBatch(mapping);
         }
 
         @Override
         void onLabelDeleted(final SpreadsheetLabelName label,
-                            final BasicSpreadsheetEngineChanges cells) {
-            cells.onLabelDeletedBatch(label);
+                            final BasicSpreadsheetEngineChanges changes) {
+            changes.onLabelDeletedBatch(label);
         }
     };
 
@@ -107,17 +107,17 @@ enum BasicSpreadsheetEngineChangesMode {
     }
 
     abstract void onCellSaved(final SpreadsheetCell cell,
-                              final BasicSpreadsheetEngineChanges cells);
+                              final BasicSpreadsheetEngineChanges changes);
 
     abstract void onCellDeleted(final SpreadsheetCellReference cell,
-                                final BasicSpreadsheetEngineChanges cells);
+                                final BasicSpreadsheetEngineChanges changes);
 
     abstract void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
-                                         final BasicSpreadsheetEngineChanges cells);
+                                         final BasicSpreadsheetEngineChanges changes);
 
     abstract void onLabelSaved(final SpreadsheetLabelMapping mapping,
-                               final BasicSpreadsheetEngineChanges cells);
+                               final BasicSpreadsheetEngineChanges changes);
 
     abstract void onLabelDeleted(final SpreadsheetLabelName label,
-                                 final BasicSpreadsheetEngineChanges cells);
+                                 final BasicSpreadsheetEngineChanges changes);
 }
