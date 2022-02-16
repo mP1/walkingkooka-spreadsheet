@@ -50,6 +50,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                                        final Set<SpreadsheetLabelMapping> labels,
                                                        final Set<SpreadsheetRow> rows,
                                                        final Set<SpreadsheetCellReference> deletedCells,
+                                                       final Set<SpreadsheetColumnReference> deletedColumns,
+                                                       final Set<SpreadsheetRowReference> deletedRows,
                                                        final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                        final Map<SpreadsheetRowReference, Double> rowHeights) {
         return new SpreadsheetDeltaNonWindowed(
@@ -59,6 +61,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 labels,
                 rows,
                 deletedCells,
+                deletedColumns,
+                deletedRows,
                 columnWidths,
                 rowHeights
         );
@@ -70,6 +74,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                         final Set<SpreadsheetLabelMapping> labels,
                                         final Set<SpreadsheetRow> rows,
                                         final Set<SpreadsheetCellReference> deletedCells,
+                                        final Set<SpreadsheetColumnReference> deletedColumns,
+                                        final Set<SpreadsheetRowReference> deletedRows,
                                         final Map<SpreadsheetColumnReference, Double> columnWidths,
                                         final Map<SpreadsheetRowReference, Double> rowHeights) {
         super(
@@ -79,6 +85,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 labels,
                 rows,
                 deletedCells,
+                deletedColumns,
+                deletedRows,
                 columnWidths,
                 rowHeights
         );
@@ -93,6 +101,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.labels,
                 this.rows,
                 this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
                 this.columnWidths,
                 this.rowHeights
         );
@@ -108,6 +118,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.labels,
                 this.rows,
                 this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
                 this.columnWidths,
                 this.rowHeights
         );
@@ -122,6 +134,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.labels,
                 this.rows,
                 this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
                 this.columnWidths,
                 this.rowHeights
         );
@@ -136,6 +150,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 labels,
                 this.rows,
                 this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
                 this.columnWidths,
                 this.rowHeights
         );
@@ -150,6 +166,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.labels,
                 rows,
                 this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
                 this.columnWidths,
                 this.rowHeights
         );
@@ -164,6 +182,40 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.labels,
                 this.rows,
                 deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
+                this.columnWidths,
+                this.rowHeights
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns) {
+        return new SpreadsheetDeltaNonWindowed(
+                this.selection,
+                this.cells,
+                this.columns,
+                this.labels,
+                this.rows,
+                this.deletedCells,
+                deletedColumns,
+                this.deletedRows,
+                this.columnWidths,
+                this.rowHeights
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
+        return new SpreadsheetDeltaNonWindowed(
+                this.selection,
+                this.cells,
+                this.columns,
+                this.labels,
+                this.rows,
+                this.deletedCells,
+                this.deletedColumns,
+                deletedRows,
                 this.columnWidths,
                 this.rowHeights
         );
@@ -178,6 +230,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.labels,
                 this.rows,
                 this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
                 columnWidths,
                 this.rowHeights
         );
@@ -192,6 +246,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.labels,
                 this.rows,
                 this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
                 this.columnWidths,
                 rowHeights
         );
@@ -232,6 +288,24 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 deletedCells,
                 Predicates.always(),
                 SpreadsheetCellReference::toRelative
+        );
+    }
+
+    @Override
+    Set<SpreadsheetColumnReference> filterDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns) {
+        return filter(
+                deletedColumns,
+                Predicates.always(),
+                SpreadsheetColumnReference::toRelative
+        );
+    }
+
+    @Override
+    Set<SpreadsheetRowReference> filterDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
+        return filter(
+                deletedRows,
+                Predicates.always(),
+                SpreadsheetRowReference::toRelative
         );
     }
 

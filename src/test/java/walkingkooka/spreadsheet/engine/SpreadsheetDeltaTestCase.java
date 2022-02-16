@@ -92,7 +92,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkColumns(after);
         this.checkLabels(after, before.labels());
         this.checkRows(after);
+
         this.checkDeletedCells(after);
+        this.checkDeletedColumns(after);
+        this.checkDeletedRows(after);
+
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
     }
@@ -242,6 +246,9 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkRows(after);
 
         this.checkDeletedCells(after);
+        this.checkDeletedColumns(after);
+        this.checkDeletedRows(after);
+
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
     }
@@ -261,6 +268,9 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkRows(after);
 
         this.checkDeletedCells(after);
+        this.checkDeletedColumns(after);
+        this.checkDeletedRows(after);
+
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
     }
@@ -300,6 +310,9 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkLabels(after);
 
         this.checkDeletedCells(after);
+        this.checkDeletedColumns(after);
+        this.checkDeletedRows(after);
+
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
     }
@@ -359,6 +372,9 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkLabels(after, before.labels());
         this.checkRows(after);
 
+        this.checkDeletedColumns(after);
+        this.checkDeletedRows(after);
+
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
     }
@@ -400,6 +416,174 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkEquals(Lists.of(a1.toRelative(), b2.toRelative(), c3.toRelative(), d4), new ArrayList<>(delta.deletedCells()));
     }
 
+    // deletedColumns.....................................................................................................
+
+    @Test
+    public final void testDeletedColumnsReadOnly() {
+        final D delta = this.createSpreadsheetDelta();
+        final Set<SpreadsheetColumnReference> deletedColumns = delta.deletedColumns();
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> deletedColumns.add(this.a1().reference().column())
+        );
+
+        this.checkDeletedColumns(delta, this.deletedColumns());
+    }
+
+    @Test
+    public final void testSetDeletedColumnsSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(delta, delta.setDeletedColumns(this.deletedColumns()));
+    }
+
+    @Test
+    public final void testSetDeletedColumnsDifferent() {
+        final D before = this.createSpreadsheetDelta();
+
+        final Set<SpreadsheetColumnReference> different = this.differentDeletedColumns();
+
+        final SpreadsheetDelta after = before.setDeletedColumns(different);
+        assertNotSame(before, after);
+
+        this.checkDeletedColumns(after, different);
+
+        this.checkColumns(after);
+        this.checkColumns(after);
+        this.checkLabels(after, before.labels());
+        this.checkRows(after);
+
+        this.checkColumnWidths(after);
+        this.checkRowHeights(after);
+    }
+
+    @Test
+    public final void testSetDeletedColumnsSorted() {
+        final SpreadsheetColumnReference a = SpreadsheetSelection.parseColumn("A");
+        final SpreadsheetColumnReference b = SpreadsheetSelection.parseColumn("B");
+
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
+                .setDeletedColumns(Sets.of(b, a));
+
+        this.checkDeletedColumns(
+                delta,
+                Sets.of(a, b)
+        );
+        this.checkEquals(
+                Lists.of(a, b),
+                new ArrayList<>(delta.deletedColumns())
+        );
+    }
+
+    @Test
+    public final void testSetDeletedColumnsAllRelative() {
+        final SpreadsheetColumnReference a = SpreadsheetSelection.parseColumn("$A");
+        final SpreadsheetColumnReference b = SpreadsheetSelection.parseColumn("B");
+
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
+                .setDeletedColumns(Sets.of(b, a));
+
+        this.checkDeletedColumns(
+                delta,
+                Sets.of(
+                        a.toRelative(),
+                        b
+                )
+        );
+        this.checkEquals(
+                Lists.of(
+                        a.toRelative(),
+                        b
+                ),
+                new ArrayList<>(delta.deletedColumns())
+        );
+    }
+
+    // deletedRows.....................................................................................................
+
+    @Test
+    public final void testDeletedRowsReadOnly() {
+        final D delta = this.createSpreadsheetDelta();
+        final Set<SpreadsheetRowReference> deletedRows = delta.deletedRows();
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> deletedRows.add(this.a1().reference().row())
+        );
+
+        this.checkDeletedRows(delta, this.deletedRows());
+    }
+
+    @Test
+    public final void testSetDeletedRowsSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(delta, delta.setDeletedRows(this.deletedRows()));
+    }
+
+    @Test
+    public final void testSetDeletedRowsDifferent() {
+        final D before = this.createSpreadsheetDelta();
+
+        final Set<SpreadsheetRowReference> different = this.differentDeletedRows();
+
+        final SpreadsheetDelta after = before.setDeletedRows(different);
+        assertNotSame(before, after);
+
+        this.checkDeletedRows(after, different);
+
+        this.checkRows(after);
+        this.checkRows(after);
+        this.checkLabels(after, before.labels());
+        this.checkRows(after);
+
+        this.checkDeletedCells(after);
+        this.checkDeletedColumns(after);
+
+        this.checkColumnWidths(after);
+        this.checkRowHeights(after);
+    }
+
+    @Test
+    public final void testSetDeletedRowsSorted() {
+        final SpreadsheetRowReference a1 = SpreadsheetSelection.parseRow("1");
+        final SpreadsheetRowReference b2 = SpreadsheetSelection.parseRow("2");
+
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
+                .setDeletedRows(Sets.of(b2, a1));
+
+        this.checkDeletedRows(
+                delta,
+                Sets.of(a1, b2)
+        );
+        this.checkEquals(
+                Lists.of(a1, b2),
+                new ArrayList<>(delta.deletedRows())
+        );
+    }
+
+    @Test
+    public final void testSetDeletedRowsAllRelative() {
+        final SpreadsheetRowReference row1 = SpreadsheetSelection.parseRow("$1");
+        final SpreadsheetRowReference row2 = SpreadsheetSelection.parseRow("2");
+
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
+                .setDeletedRows(Sets.of(row1, row2));
+
+        this.checkDeletedRows(
+                delta,
+                Sets.of(
+                        row1.toRelative(),
+                        row2.toRelative()
+                )
+        );
+        this.checkEquals(
+                Lists.of(
+                        row1.toRelative(),
+                        row2
+                ),
+                new ArrayList<>(delta.deletedRows())
+        );
+    }
     // setColumnWidths...............................................................................................
 
     @Test
@@ -894,6 +1078,64 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         assertThrows(UnsupportedOperationException.class, () -> delta.deletedCells().add(null));
     }
 
+    // deletedColumns.....................................................................................................
+
+    final Set<SpreadsheetColumnReference> deletedColumns() {
+        return Sets.of(
+                SpreadsheetSelection.parseColumn("C"),
+                SpreadsheetSelection.parseColumn("D")
+        );
+    }
+
+    final Set<SpreadsheetColumnReference> differentDeletedColumns() {
+        return Set.of(SpreadsheetSelection.parseColumn("E"));
+    }
+
+    final void checkDeletedColumns(final SpreadsheetDelta delta) {
+        this.checkDeletedColumns(delta, this.deletedColumns());
+    }
+
+    final void checkDeletedColumns(final SpreadsheetDelta delta,
+                                   final Set<SpreadsheetColumnReference> columns) {
+        this.checkEquals(columns,
+                delta.deletedColumns(),
+                "deletedColumns");
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.deletedColumns().add(null)
+        );
+    }
+
+    // deletedRows.....................................................................................................
+
+    final Set<SpreadsheetRowReference> deletedRows() {
+        return Sets.of(
+                SpreadsheetSelection.parseRow("3"),
+                SpreadsheetSelection.parseRow("4")
+        );
+    }
+
+    final Set<SpreadsheetRowReference> differentDeletedRows() {
+        return Set.of(
+                SpreadsheetSelection.parseRow("1")
+        );
+    }
+
+    final void checkDeletedRows(final SpreadsheetDelta delta) {
+        this.checkDeletedRows(delta, this.deletedRows());
+    }
+
+    final void checkDeletedRows(final SpreadsheetDelta delta,
+                                final Set<SpreadsheetRowReference> rows) {
+        this.checkEquals(rows,
+                delta.deletedRows(),
+                "deletedRows");
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.deletedRows().add(null)
+        );
+    }
+
     // columnWidths..................................................................................................
 
     final Map<SpreadsheetColumnReference, Double> columnWidths() {
@@ -1107,6 +1349,20 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return this.marshallContext()
                 .marshallSet(
                         this.deletedCells()
+                );
+    }
+
+    final JsonNode deletedColumnsJson() {
+        return this.marshallContext()
+                .marshallSet(
+                        this.deletedColumns()
+                );
+    }
+
+    final JsonNode deletedRowsJson() {
+        return this.marshallContext()
+                .marshallSet(
+                        this.deletedRows()
                 );
     }
 

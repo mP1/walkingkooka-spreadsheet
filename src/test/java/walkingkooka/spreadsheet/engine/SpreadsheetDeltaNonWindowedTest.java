@@ -57,6 +57,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -74,6 +76,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -93,6 +97,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -120,6 +126,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -142,6 +150,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -164,6 +174,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         this.rows(),
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -186,6 +198,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -209,7 +223,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testPrintTreeDeletedCellsJson() {
+    public void testPrintTreeDeletedCells() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         SpreadsheetDelta.NO_SELECTION,
@@ -218,6 +232,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         this.deletedCells(),
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -244,6 +260,50 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
+    public void testPrintTreeDeletedColumns() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        this.deletedColumns(),
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS
+                ),
+                "SpreadsheetDelta\n" +
+                        "  deletedColumns:\n" +
+                        "    C\n" +
+                        "    D\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeDeletedRows() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        this.deletedRows(),
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS
+                ),
+                "SpreadsheetDelta\n" +
+                        "  deletedRows:\n" +
+                        "    3\n" +
+                        "    4\n"
+        );
+    }
+
+    @Test
     public void testPrintTreeColumnWidths() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
@@ -253,6 +313,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         this.columnWidths(),
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -282,6 +344,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         this.rowHeights()
                 ),
@@ -311,6 +375,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         this.deletedCells(),
+                        this.deletedColumns(),
+                        this.deletedRows(),
                         this.columnWidths(),
                         this.rowHeights()
                 ),
@@ -335,6 +401,12 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "  deletedCells:\n" +
                         "    C1\n" +
                         "    C2\n" +
+                        "  deletedColumns:\n" +
+                        "    C\n" +
+                        "    D\n" +
+                        "  deletedRows:\n" +
+                        "    3\n" +
+                        "    4\n" +
                         "  columnWidths:\n" +
                         "    A: 50.0\n" +
                         "  rowHeights:\n" +
@@ -362,6 +434,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         SpreadsheetDelta.NO_WINDOW
@@ -381,6 +455,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS)
         );
@@ -399,6 +475,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS)
         );
@@ -417,6 +495,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         this.deletedCells(),
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS)
         );
@@ -432,6 +512,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS),
                 JsonNode.object()
@@ -448,6 +530,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -466,6 +550,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -484,6 +570,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -502,6 +590,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         this.rows(),
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -520,6 +610,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -539,12 +631,56 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         this.deletedCells(),
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.DELETED_CELLS_PROPERTY, deletedCellsJson())
+        );
+    }
+
+    @Test
+    public void testMarshallCellsDeletedColumns() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        this.deletedColumns(),
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS
+                ),
+                JsonNode.object()
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
+                        .set(SpreadsheetDelta.DELETED_COLUMNS_PROPERTY, deletedColumnsJson())
+        );
+    }
+
+    @Test
+    public void testMarshallCellsDeletedRows() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        this.deletedRows(),
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS
+                ),
+                JsonNode.object()
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
+                        .set(SpreadsheetDelta.DELETED_ROWS_PROPERTY, deletedRowsJson())
         );
     }
 
@@ -558,6 +694,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         this.columnWidths(),
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -577,6 +715,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         this.rowHeights()
                 ),
@@ -596,6 +736,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         this.columnWidths(),
                         this.rowHeights()
                 ),
@@ -618,6 +760,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -634,6 +778,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -650,10 +796,48 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         this.deletedCells(),
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
                 "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 deletedCells: C1, C2");
+    }
+
+    @Test
+    public void testToStringDeletedColumns() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        this.deletedColumns(),
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS
+                ),
+                "deletedColumns: C, D");
+    }
+
+    @Test
+    public void testToStringDeletedRows() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_SELECTION,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        this.deletedRows(),
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS
+                ),
+                "deletedRows: 3, 4");
     }
 
     @Test
@@ -666,6 +850,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         this.columnWidths(),
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
@@ -682,6 +868,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         this.rowHeights()
                 ),
@@ -698,6 +886,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
                         this.columnWidths(),
                         this.rowHeights()
                 ),
@@ -713,6 +903,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 this.labels(),
                 this.rows(),
                 this.deletedCells(),
+                this.deletedColumns(),
+                this.deletedRows(),
                 this.columnWidths(),
                 this.rowHeights()
         );
