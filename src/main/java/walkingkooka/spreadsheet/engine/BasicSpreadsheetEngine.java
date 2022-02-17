@@ -371,16 +371,41 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                           final SpreadsheetCellRange window,
                                           final SpreadsheetEngineContext context) {
         final Set<SpreadsheetCell> updatedCells = changes.updatedCells();
+        final Set<SpreadsheetColumn> updatedColumns = changes.updatedColumns();
+        final Set<SpreadsheetRow> updatedRows = changes.updatedRows();
 
-        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(updatedCells);
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
+                .setCells(updatedCells)
+                .setColumns(updatedColumns)
+                .setRows(updatedRows);
 
         final SpreadsheetStoreRepository repo = context.storeRepository();
 
         final Map<SpreadsheetColumnReference, SpreadsheetColumn> columns = Maps.sorted();
-        final Map<SpreadsheetRowReference, SpreadsheetRow> rows = Maps.sorted();
-
         final SpreadsheetColumnStore columnStore = repo.columns();
+
+        for (final SpreadsheetColumn column : updatedColumns) {
+            final SpreadsheetColumnReference columnReference = column.reference();
+
+            addIfNecessary(
+                    columnReference,
+                    columns,
+                    columnStore
+            );
+        }
+
+        final Map<SpreadsheetRowReference, SpreadsheetRow> rows = Maps.sorted();
         final SpreadsheetRowStore rowStore = repo.rows();
+
+        for (final SpreadsheetRow row : updatedRows) {
+            final SpreadsheetRowReference rowReference = row.reference();
+
+            addIfNecessary(
+                    rowReference,
+                    rows,
+                    rowStore
+            );
+        }
 
         final Set<SpreadsheetLabelMapping> labels = Sets.sorted();
         final SpreadsheetLabelStore labelStore = repo.labels();
@@ -454,7 +479,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .setColumns(sortedSet(columns))
                 .setLabels(labels)
                 .setRows(sortedSet(rows))
-                .setDeletedCells(deletedCells);
+                .setDeletedCells(deletedCells)
+                .setDeletedColumns(changes.deletedColumns())
+                .setDeletedRows(changes.deletedRows());
     }
 
     private <R extends SpreadsheetColumnOrRowReference & Comparable<R>, H extends HasSpreadsheetReference<R>> void addIfNecessary(final R reference,
