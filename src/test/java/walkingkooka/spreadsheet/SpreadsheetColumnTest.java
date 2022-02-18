@@ -217,6 +217,17 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         );
     }
 
+    @Test
+    public void testToStringHiddenTrue() {
+        this.toStringAndCheck(
+                REFERENCE.column()
+                        .setHidden(true),
+                "$U hidden=true"
+        );
+    }
+
+    // helpers.........................................................................................................
+
     private SpreadsheetColumn createColumn() {
         return this.createComparable();
     }
