@@ -216,6 +216,17 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         );
     }
 
+    @Test
+    public void testToStringHiddenTrue() {
+        this.toStringAndCheck(
+                REFERENCE.row()
+                        .setHidden(true),
+                "$21 hidden=true"
+        );
+    }
+
+    // helpers.........................................................................................................
+
     private SpreadsheetRow createRow() {
         return this.createComparable();
     }

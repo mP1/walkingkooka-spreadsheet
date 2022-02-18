@@ -128,7 +128,10 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
                         .setHidden(true)
         );
 
-        this.toStringAndCheck(changes, "{A1=A1=1+2, B2=B2=3+4} {M=M, N=N} {6=6, 7=7}");
+        this.toStringAndCheck(
+                changes,
+                "{A1=A1=1+2, B2=B2=3+4} {M=M, N=N hidden=true} {6=6, 7=7 hidden=true}"
+        );
     }
 
     @Override

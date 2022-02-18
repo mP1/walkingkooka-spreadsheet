@@ -19,6 +19,8 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -34,7 +36,8 @@ import java.util.Optional;
  * Base class for both column and row.
  */
 public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetColumnOrRowReference> implements HateosResource<R>,
-        TreePrintable {
+        TreePrintable,
+        UsesToStringBuilder {
 
     static void checkReference(final SpreadsheetColumnOrRowReference reference) {
         Objects.requireNonNull(reference, "reference");
@@ -102,7 +105,16 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetColumnOrRowRef
 
     @Override
     public final String toString() {
-        return this.reference.toString();
+        return ToStringBuilder.buildFrom(this);
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder builder) {
+        builder.value(this.reference)
+                .label("hidden").value(this.hidden())
+                .toString();
     }
 
     // json.............................................................................................................
