@@ -205,22 +205,6 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
         }
     }
 
-//    void onCellSavedImmediate(final SpreadsheetCell cell) {
-//        final SpreadsheetCellReference reference = cell.reference();
-//
-//        final Map<SpreadsheetCellReference, SpreadsheetCell> updatedAndDeleted = this.updatedAndDeletedCells;
-//        final SpreadsheetCell previous = updatedAndDeleted.get(reference);
-//
-//        // save replaces deletes
-//        if (null == previous) {
-//            updatedAndDeleted.put(reference, cell);
-//
-//            this.removePreviousExpressionReferences(reference);
-//            this.addNewExpressionReferences(reference, cell.formula());
-//            this.batchReferrers(reference);
-//        }
-//    }
-
     void onColumnDeletedImmediate(final SpreadsheetColumnReference column) {
         this.deletedColumnImmediate(column);
     }
