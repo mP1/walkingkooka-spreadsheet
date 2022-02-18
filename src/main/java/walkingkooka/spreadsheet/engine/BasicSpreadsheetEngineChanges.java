@@ -269,11 +269,11 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     }
 
     void onColumnSavedBatch(final SpreadsheetColumn column) {
-        this.batchColumn(column.reference());
+        this.onColumnSavedImmediate(column);
     }
 
     void onColumnDeletedBatch(final SpreadsheetColumnReference column) {
-        this.deletedColumnImmediate(column);
+        this.onColumnDeletedImmediate(column);
     }
 
     void onLabelSavedBatch(final SpreadsheetLabelMapping mapping) {
@@ -285,11 +285,11 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     }
 
     void onRowSavedBatch(final SpreadsheetRow row) {
-        this.batchRow(row.reference());
+        this.onRowSavedImmediate(row);
     }
 
     void onRowDeletedBatch(final SpreadsheetRowReference row) {
-        this.deletedRowImmediate(row);
+        this.onRowDeletedImmediate(row);
     }
 
     // REFRESH UPDATED ................................................................................................
@@ -474,13 +474,6 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
 
     }
 
-    private void batchColumn(final SpreadsheetColumnReference reference) {
-        // saves replace delete, but dont replace a previous save
-        if (null == this.updatedAndDeletedColumns.get(reference)) {
-            this.unsavedColumns.add(reference);
-        }
-    }
-
     private void batchLabel(final SpreadsheetLabelName label) {
         this.repository.labelReferences()
                 .load(label)
@@ -509,13 +502,6 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
                 .forEach(this::batchRange);
     }
 
-    private void batchRow(final SpreadsheetRowReference reference) {
-        // saves replace delete, but dont replace a previous save
-        if (null == this.updatedAndDeletedRows.get(reference)) {
-            this.unsavedRows.add(reference);
-        }
-    }
-
     /**
      * The current mode.
      */
@@ -533,20 +519,10 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     private final Map<SpreadsheetCellReference, SpreadsheetCell> updatedAndDeletedCells = Maps.sorted();
 
     /**
-     * Holds a queue of column references that need to be updated.
-     */
-    private final Queue<SpreadsheetColumnReference> unsavedColumns = new ConcurrentLinkedQueue<>();
-
-    /**
      * Records all updated which includes deleted columns. This can then be returned by the {@link BasicSpreadsheetEngine} method.
      * A null value indicates the column was deleted.
      */
     private final Map<SpreadsheetColumnReference, SpreadsheetColumn> updatedAndDeletedColumns = Maps.sorted();
-
-    /**
-     * Holds a queue of row references that need to be updated.
-     */
-    private final Queue<SpreadsheetRowReference> unsavedRows = new ConcurrentLinkedQueue<>();
 
     /**
      * Records all updated which includes deleted rows. This can then be returned by the {@link BasicSpreadsheetEngine} method.
