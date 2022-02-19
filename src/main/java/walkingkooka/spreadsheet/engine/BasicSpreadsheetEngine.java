@@ -853,26 +853,46 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // max..............................................................................................................
 
     @Override
-    public double columnWidth(final SpreadsheetColumnReference column,
+    public double columnWidth(final SpreadsheetColumnReference columnReference,
                               final SpreadsheetEngineContext context) {
-        double columnWidth = context.storeRepository()
-                .cells()
-                .maxColumnWidth(column);
-        if (0 == columnWidth) {
-            columnWidth = columnWidthOrRowHeight(TextStylePropertyName.WIDTH);
+        double columnWidth = 0;
+
+        final SpreadsheetStoreRepository repo = context.storeRepository();
+        final Optional<SpreadsheetColumn> column = repo.columns()
+                .load(columnReference);
+
+        if (!column.isPresent() || !column.get().hidden()) {
+            columnWidth = context.storeRepository()
+                    .cells()
+                    .maxColumnWidth(columnReference);
+            if (0 == columnWidth) {
+                columnWidth = columnWidthOrRowHeight(TextStylePropertyName.WIDTH);
+            }
+            return columnWidth;
         }
+
         return columnWidth;
     }
 
     @Override
-    public double rowHeight(final SpreadsheetRowReference row,
+    public double rowHeight(final SpreadsheetRowReference rowReference,
                             final SpreadsheetEngineContext context) {
-        double rowHeight = context.storeRepository()
-                .cells()
-                .maxRowHeight(row);
-        if (0 == rowHeight) {
-            rowHeight = columnWidthOrRowHeight(TextStylePropertyName.HEIGHT);
+        double rowHeight = 0;
+
+        final SpreadsheetStoreRepository repo = context.storeRepository();
+        final Optional<SpreadsheetRow> row = repo.rows()
+                .load(rowReference);
+
+        if (!row.isPresent() || !row.get().hidden()) {
+            rowHeight = context.storeRepository()
+                    .cells()
+                    .maxRowHeight(rowReference);
+            if (0 == rowHeight) {
+                rowHeight = columnWidthOrRowHeight(TextStylePropertyName.HEIGHT);
+            }
+            return rowHeight;
         }
+
         return rowHeight;
     }
 
