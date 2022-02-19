@@ -171,9 +171,17 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     abstract SpreadsheetDelta replaceCells(final Set<SpreadsheetCell> cells);
 
     /**
-     * Takes a copy of the cells, possibly filtering out cells if a window is present. Note filtering of {@link #labels} will happen later.
+     * Takes a copy of the cells, possibly filtering cells in hidden columns and rows, and cells if a window is present.
+     * Note filtering of {@link #labels} will happen later.
      */
-    abstract Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells);
+    private Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
+        return filterCells(
+                cells,
+                this.columns,
+                this.rows,
+                this.window()
+        );
+    }
 
     final Set<SpreadsheetCell> cells;
 
@@ -476,13 +484,20 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         final Map<SpreadsheetRowReference, Double> rowHeights = this.rowHeights;
 
+        final Set<SpreadsheetCell> filteredCells = filterCells(
+                cells,
+                columns,
+                rows,
+                window
+        );
+
         final SpreadsheetDelta delta;
         if (window.isPresent()) {
             final SpreadsheetCellRange filter = window.get();
 
             delta = SpreadsheetDeltaWindowed.withWindowed(
                     selection,
-                    filterCells0(cells, filter),
+                    filteredCells,
                     filterColumns0(columns, filter),
                     filterLabels0(labels, filter),
                     filterRows0(rows, filter),
@@ -491,11 +506,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     filterDeletedRows0(deletedRows, filter),
                     filterColumnWidths0(columnWidths, filter),
                     filterRowHeights0(rowHeights, filter),
-                    window);
+                    window
+            );
         } else {
             delta = SpreadsheetDeltaNonWindowed.withNonWindowed(
                     selection,
-                    cells,
+                    filteredCells,
                     columns,
                     labels,
                     rows,
@@ -510,19 +526,72 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return delta;
     }
 
+    /**
+     * Filters the given cells there are several rules that could make this happen. Cells within hidden columns or rows,
+     * or outside the window if present will be removed.
+     */
     static Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                            final Optional<SpreadsheetCellRange> window) {
-        return window.isPresent() ?
-                filterCells0(cells, window.get()) :
-                cells;
+                                            final Set<SpreadsheetColumn> columns,
+                                            final Set<SpreadsheetRow> rows,
+                                            final Optional<SpreadsheetCellRange> maybeWindow) {
+        Predicate<SpreadsheetCell> predicate = null;
+
+        final int columnCount = null != columns ? columns.size() : 0;
+        final int rowCount = null != rows ? rows.size() : 0;
+
+        if (columnCount + rowCount > 0) {
+            // Any columns or rows within this Set are hidden and matches by a cell will be removed.
+            final Set<SpreadsheetColumnOrRowReference> hidden = Sets.sorted(SpreadsheetColumnOrRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+
+            if (columnCount > 0) {
+                for (final SpreadsheetColumn column : columns) {
+                    if (column.hidden()) {
+                        hidden.add(column.reference());
+                    }
+                }
+            }
+
+            if (rowCount > 0) {
+                for (final SpreadsheetRow row : rows) {
+                    if (row.hidden()) {
+                        hidden.add(row.reference());
+                    }
+                }
+            }
+
+            if (!hidden.isEmpty()) {
+                predicate = (c) -> {
+                    final SpreadsheetCellReference cellReference = c.reference();
+                    return !(
+                            hidden.contains(cellReference.column()) ||
+                                    hidden.contains(cellReference.row())
+                    );
+                };
+            }
+        }
+
+
+        if (null != maybeWindow && maybeWindow.isPresent()) {
+            final SpreadsheetCellRange window = maybeWindow.get();
+            final Predicate<SpreadsheetCell> windowPredicate = c -> window.test(c.reference());
+
+            predicate = null != predicate ?
+                    predicate.and(windowPredicate) :
+                    windowPredicate;
+        }
+
+        return null != predicate ?
+                filter(
+                        cells,
+                        predicate
+                ) :
+                copyAndImmutable(cells);
     }
 
-    private static Set<SpreadsheetCell> filterCells0(final Set<SpreadsheetCell> cells,
-                                                     final SpreadsheetCellRange window) {
-        return filter(
-                cells,
-                c -> window.test(c.reference())
-        );
+    static <T> Set<T> copyAndImmutable(final Set<T> cells) {
+        final Set<T> copy = Sets.sorted();
+        copy.addAll(cells);
+        return Sets.immutable(copy);
     }
 
     static Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns,

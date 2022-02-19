@@ -134,7 +134,12 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns) {
         return new SpreadsheetDeltaWindowed(
                 this.selection,
-                this.cells,
+                filterCells(
+                        this.cells,
+                        columns,
+                        null, // cells have already been filtered by hidden rows so SKIP
+                        null // dont need to filter by window again.
+                ),
                 columns,
                 this.labels,
                 this.rows,
@@ -168,7 +173,12 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     SpreadsheetDelta replaceRows(final Set<SpreadsheetRow> rows) {
         return new SpreadsheetDeltaWindowed(
                 this.selection,
-                this.cells,
+                filterCells(
+                        this.cells,
+                        null, // cells have already been filtered by hidden columns so SKIP
+                        rows,
+                        null // dont want to filter cells by window again.
+                ),
                 this.columns,
                 this.labels,
                 rows,
@@ -272,11 +282,6 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     private final Optional<SpreadsheetCellRange> window;
-
-    @Override
-    Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
-        return filterCells(cells, this.window);
-    }
 
     @Override
     Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns) {

@@ -208,6 +208,36 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
+    @Test
+    public final void testSetColumnsWithHiddenFiltersCells() {
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta();
+        this.checkCells(
+                delta,
+                Sets.of(
+                        this.a1(),
+                        this.b2(),
+                        this.c3()
+                )
+        );
+
+        final Set<SpreadsheetColumn> hiddenA = Sets.of(
+                this.a().setHidden(true)
+        );
+
+        final SpreadsheetDelta after = delta.setColumns(hiddenA);
+        this.checkCells(
+                after,
+                Sets.of(
+                        this.b2(),
+                        this.c3()
+                )
+        );
+        this.checkColumns(
+                after,
+                hiddenA
+        );
+    }
+
     // labels.....................................................................................................
 
     @Test
@@ -335,6 +365,36 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkEquals(
                 Lists.of(a, b, c),
                 new ArrayList<>(delta.rows())
+        );
+    }
+
+    @Test
+    public final void testSetRowsWithHiddenFiltersCells() {
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta();
+        this.checkCells(
+                delta,
+                Sets.of(
+                        this.a1(),
+                        this.b2(),
+                        this.c3()
+                )
+        );
+
+        final Set<SpreadsheetRow> hiddenRow1 = Sets.of(
+                this.row1().setHidden(true)
+        );
+
+        final SpreadsheetDelta after = delta.setRows(hiddenRow1);
+        this.checkCells(
+                after,
+                Sets.of(
+                        this.b2(),
+                        this.c3()
+                )
+        );
+        this.checkRows(
+                after,
+                hiddenRow1
         );
     }
 
@@ -871,7 +931,9 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final Set<SpreadsheetCell> differentCells() {
-        return Sets.of(this.a1());
+        return Sets.of(
+                this.cell("E5", "5")
+        );
     }
 
     final Set<SpreadsheetCell> cells0(final String... cellReferences) {
@@ -892,6 +954,14 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return this.cell("C3", "3");
     }
 
+    final SpreadsheetCell d4() {
+        return this.cell("D4", "4"); // matches column
+    }
+
+    final SpreadsheetCell e5() {
+        return this.cell("E5", "5"); // matches row
+    }
+
     final SpreadsheetCell cell(final String cellReference, final String formulaText) {
         return SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell(cellReference),
@@ -907,8 +977,12 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     final void checkCells(final SpreadsheetDelta delta,
                           final Set<SpreadsheetCell> cells) {
         this.checkEquals(cells, delta.cells(), "cells");
-        assertThrows(UnsupportedOperationException.class, () -> delta.cells()
-                .add(this.cell("ZZ99", "read only")));
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.cells()
+                        .add(this.cell("ZZ99", "read only"))
+        );
     }
 
     // columns.........................................................................................................
@@ -928,8 +1002,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final SpreadsheetColumn a() {
-        return this.column("A")
-                .setHidden(true);
+        return this.column("A");
     }
 
     final SpreadsheetColumn b() {
@@ -938,6 +1011,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final SpreadsheetColumn c() {
         return this.column("C");
+    }
+
+    final SpreadsheetColumn hiddenD() {
+        return this.column("d")
+                .setHidden(true);
     }
 
     final SpreadsheetColumn column(final String columnReference) {
@@ -1022,8 +1100,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final SpreadsheetRow row1() {
-        return this.row("1")
-                .setHidden(true);
+        return this.row("1");
     }
 
     final SpreadsheetRow row2() {
@@ -1032,6 +1109,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final SpreadsheetRow row3() {
         return this.row("3");
+    }
+
+    final SpreadsheetRow hiddenRow4() {
+        return this.row("4")
+                .setHidden(true);
     }
 
     final SpreadsheetRow row(final String rowReference) {
@@ -1117,7 +1199,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Set<SpreadsheetRowReference> differentDeletedRows() {
         return Set.of(
-                SpreadsheetSelection.parseRow("1")
+                SpreadsheetSelection.parseRow("5")
         );
     }
 

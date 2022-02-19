@@ -375,7 +375,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final Set<SpreadsheetRow> updatedRows = changes.updatedRows();
 
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setCells(updatedCells)
                 .setColumns(updatedColumns)
                 .setRows(updatedRows);
 
@@ -476,9 +475,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
 
         return delta
-                .setColumns(sortedSet(columns))
-                .setLabels(labels)
+                .setColumns(sortedSet(columns)) // order is important because labels and cells for hidden columns/rows are filtered.
                 .setRows(sortedSet(rows))
+                .setCells(updatedCells)
+                .setLabels(labels)
                 .setDeletedCells(deletedCells)
                 .setDeletedColumns(changes.deletedColumns())
                 .setDeletedRows(changes.deletedRows());
@@ -516,6 +516,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return set;
     }
+
+    // labels............................................................................................................
 
     @Override
     public SpreadsheetDelta saveLabel(final SpreadsheetLabelMapping mapping,

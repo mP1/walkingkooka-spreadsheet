@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
@@ -122,7 +123,10 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         SpreadsheetDelta.NO_SELECTION,
                         SpreadsheetDelta.NO_CELLS,
-                        this.columns(),
+                        Sets.of(
+                                this.a(),
+                                this.hiddenD()
+                        ),
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -134,9 +138,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 "SpreadsheetDelta\n" +
                         "  columns:\n" +
                         "    A\n" +
-                        "      hidden\n" +
-                        "    B\n" +
-                        "    C\n"
+                        "    D\n" +
+                        "      hidden\n"
         );
     }
 
@@ -172,7 +175,10 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
-                        this.rows(),
+                        Sets.of(
+                                this.row1(),
+                                this.hiddenRow4()
+                        ),
                         SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_DELETED_COLUMNS,
                         SpreadsheetDelta.NO_DELETED_ROWS,
@@ -182,9 +188,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 "SpreadsheetDelta\n" +
                         "  rows:\n" +
                         "    1\n" +
-                        "      hidden\n" +
-                        "    2\n" +
-                        "    3\n"
+                        "    4\n" +
+                        "      hidden\n"
         );
     }
 

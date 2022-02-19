@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -129,7 +128,12 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns) {
         return new SpreadsheetDeltaNonWindowed(
                 this.selection,
-                this.cells,
+                filterCells(
+                        this.cells,
+                        columns,
+                        null, // cells have already been filtered by hidden rows so SKIP
+                        NO_WINDOW
+                ),
                 columns,
                 this.labels,
                 this.rows,
@@ -161,7 +165,12 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     SpreadsheetDelta replaceRows(final Set<SpreadsheetRow> rows) {
         return new SpreadsheetDeltaNonWindowed(
                 this.selection,
-                this.cells,
+                filterCells(
+                        this.cells,
+                        null, // cells have already been filtered by hidden columns so SKIP
+                        rows,
+                        NO_WINDOW
+                ),
                 this.columns,
                 this.labels,
                 rows,
@@ -262,24 +271,13 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
-        return copy(cells);
-    }
-
-    @Override
     Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns) {
-        return copy(columns);
+        return copyAndImmutable(columns);
     }
 
     @Override
     Set<SpreadsheetRow> filterRows(final Set<SpreadsheetRow> rows) {
-        return copy(rows);
-    }
-
-    private <S> Set<S> copy(final Set<S> from) {
-        final Set<S> copy = Sets.sorted();
-        copy.addAll(from);
-        return Sets.immutable(copy);
+        return copyAndImmutable(rows);
     }
 
     @Override
