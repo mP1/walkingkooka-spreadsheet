@@ -5430,6 +5430,125 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    @Test
+    public void testLoadCellsFiltersHiddenColumns() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        // this must not appear in the loaded result because column:B is hidden.
+        final SpreadsheetCell b2 = this.cell("b2", "=2");
+        cellStore.save(b2);
+
+        final SpreadsheetCell c3 = this.cell("c3", "=3");
+        cellStore.save(c3);
+
+        final SpreadsheetCell d4 = this.cell("d4", "=4");
+        cellStore.save(d4);
+
+        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("a1:c3");
+
+        final SpreadsheetColumn bHidden = b2.reference()
+                .column()
+                .column()
+                .setHidden(true);
+        engine.saveColumn(
+                bHidden,
+                context
+        );
+
+        final SpreadsheetColumn c = c3.reference()
+                .column()
+                .column()
+                .setHidden(false);
+        engine.saveColumn(
+                c,
+                context
+        );
+
+        this.loadCellsAndCheck(
+                engine,
+                range,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(
+                                                c3,
+                                                this.expressionNumberKind().create(3)
+                                        )
+                                )
+                        ).setColumns(
+                                Sets.of(
+                                        bHidden,
+                                        c
+                                )
+                        ).setWindow(Optional.of(range))
+        );
+    }
+
+    @Test
+    public void testLoadCellsFiltersHiddenRows() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        // this must not appear in the loaded result because row:2 is hidden.
+        final SpreadsheetCell b2 = this.cell("b2", "=2");
+        cellStore.save(b2);
+
+        final SpreadsheetCell c3 = this.cell("c3", "=3");
+        cellStore.save(c3);
+
+        final SpreadsheetCell d4 = this.cell("d4", "=4");
+        cellStore.save(d4);
+
+        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("a1:c3");
+
+        final SpreadsheetRow row2Hidden = b2.reference()
+                .row()
+                .row()
+                .setHidden(true);
+        engine.saveRow(
+                row2Hidden,
+                context
+        );
+
+        final SpreadsheetRow row3 = c3.reference()
+                .row()
+                .row()
+                .setHidden(false);
+        engine.saveRow(
+                row3,
+                context
+        );
+
+        this.loadCellsAndCheck(
+                engine,
+                range,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(Sets.of(
+                                this.formattedCellWithValue(
+                                        c3,
+                                        this.expressionNumberKind().create(3)
+                                )
+                        ))
+                        .setRows(
+                                Sets.of(
+                                        row2Hidden,
+                                        row3
+                                )
+                        ).setWindow(Optional.of(range))
+        );
+    }
+
     // fillCells........................................................................................................
 
     // fill deletes.....................................................................................................

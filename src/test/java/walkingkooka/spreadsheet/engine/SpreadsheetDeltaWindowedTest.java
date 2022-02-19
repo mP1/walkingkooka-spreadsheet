@@ -249,7 +249,10 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetDeltaWindowed.withWindowed(
                         SpreadsheetDelta.NO_SELECTION,
                         SpreadsheetDelta.NO_CELLS,
-                        this.columns(),
+                        Sets.of(
+                                this.a(),
+                                this.hiddenD()
+                        ),
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_DELETED_CELLS,
@@ -262,9 +265,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 "SpreadsheetDelta\n" +
                         "  columns:\n" +
                         "    A\n" +
+                        "    D\n" +
                         "      hidden\n" +
-                        "    B\n" +
-                        "    C\n" +
                         "  window:\n" +
                         "    A1:E5\n"
         );
@@ -305,7 +307,10 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
-                        this.rows(),
+                        Sets.of(
+                                this.row1(),
+                                this.hiddenRow4()
+                        ),
                         SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_DELETED_COLUMNS,
                         SpreadsheetDelta.NO_DELETED_ROWS,
@@ -316,9 +321,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 "SpreadsheetDelta\n" +
                         "  rows:\n" +
                         "    1\n" +
+                        "    4\n" +
                         "      hidden\n" +
-                        "    2\n" +
-                        "    3\n" +
                         "  window:\n" +
                         "    A1:E5\n"
         );

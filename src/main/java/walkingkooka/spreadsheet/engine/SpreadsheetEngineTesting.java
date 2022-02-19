@@ -61,7 +61,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -863,26 +862,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 engine.loadCells(range, evaluation, context),
                 () -> "loadCells " + range + " " + evaluation
         );
-
-        // load and check updated cells again...
-        delta.cells()
-                .forEach(c -> {
-                    final SpreadsheetCellReference r = c.reference();
-
-                    this.loadCellAndCheck(
-                            engine,
-                            r,
-                            SpreadsheetEngineEvaluation.SKIP_EVALUATE,
-                            context,
-                            SpreadsheetDelta.EMPTY.setCells(SpreadsheetDelta.NO_CELLS)
-                                    .setCells(Sets.of(c))
-                                    .setLabels(delta.labels()
-                                            .stream()
-                                            .filter(l -> l.reference().equalsIgnoreReferenceKind(r))
-                                            .collect(Collectors.toSet())
-                                    )
-                    );
-                });
     }
 
     default void fillCellsAndCheck(final SpreadsheetEngine engine,
