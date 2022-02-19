@@ -8752,6 +8752,98 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // range column/row hidden.........................................................................................
+
+    @Test
+    public void testRangeColumnHidden() {
+        final SpreadsheetViewport viewport = SpreadsheetViewport.with(
+                SpreadsheetSelection.parseCell("A1"),
+                0,
+                0,
+                WIDTH * 4,
+                HEIGHT * 2
+        );
+        final Optional<SpreadsheetSelection> selection = Optional.empty();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        this.rangeAndCheck(
+                viewport,
+                selection,
+                engine,
+                context,
+                SpreadsheetSelection.parseCellRange("A1:D2")
+        );
+
+        final SpreadsheetColumnStore columnStore = context.storeRepository()
+                .columns();
+
+        columnStore.save(
+                SpreadsheetSelection.parseColumn("A")
+                        .column()
+                        .setHidden(true)
+        );
+
+        columnStore.save(
+                SpreadsheetSelection.parseColumn("B")
+                        .column()
+                        .setHidden(true)
+        );
+
+        this.rangeAndCheck(
+                viewport,
+                selection,
+                engine,
+                context,
+                SpreadsheetSelection.parseCellRange("A1:F2")
+        );
+    }
+
+    @Test
+    public void testRangeRowHidden() {
+        final SpreadsheetViewport viewport = SpreadsheetViewport.with(
+                SpreadsheetSelection.parseCell("A1"),
+                0,
+                0,
+                WIDTH * 4,
+                HEIGHT * 2
+        );
+        final Optional<SpreadsheetSelection> selection = Optional.empty();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        this.rangeAndCheck(
+                viewport,
+                selection,
+                engine,
+                context,
+                SpreadsheetSelection.parseCellRange("A1:D2")
+        );
+
+        final SpreadsheetRowStore rowStore = context.storeRepository()
+                .rows();
+
+        rowStore.save(
+                SpreadsheetSelection.parseRow("1")
+                        .row()
+                        .setHidden(true)
+        );
+
+        rowStore.save(
+                SpreadsheetSelection.parseRow("2")
+                        .row()
+                        .setHidden(true)
+        );
+
+        this.rangeAndCheck(
+                viewport,
+                selection,
+                engine,
+                context,
+                SpreadsheetSelection.parseCellRange("A1:D4")
+        );
+    }
+
     // range helpers....................................................................................................
 
     private void rangeAndCheck(final String cellOrLabel,
@@ -8812,13 +8904,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private void rangeAndCheck(final SpreadsheetViewport viewport,
                                final Optional<SpreadsheetSelection> selection,
                                final SpreadsheetCellRange range) {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        this.rangeAndCheck(
+                viewport,
+                selection,
+                this.createSpreadsheetEngine(),
+                this.createContext(),
+                range
+        );
+    }
 
+    private void rangeAndCheck(final SpreadsheetViewport viewport,
+                               final Optional<SpreadsheetSelection> selection,
+                               final BasicSpreadsheetEngine engine,
+                               final SpreadsheetEngineContext context,
+                               final SpreadsheetCellRange range) {
         this.checkEquals(
                 range,
                 engine.range(viewport, selection, context),
-                () -> "range " + viewport + selection.map(s -> " selection:" + s).orElse("")
+                () -> "range " + viewport + " " + selection.map(s -> " selection:" + s).orElse("")
         );
     }
 
@@ -8843,6 +8946,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     public SpreadsheetCellStore cells() {
                         return cellStore;
                     }
+
+                    @Override
+                    public SpreadsheetColumnStore columns() {
+                        return this.columnStore;
+                    }
+
+                    private final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
+
+                    @Override
+                    public SpreadsheetRowStore rows() {
+                        return this.rowStore;
+                    }
+
+                    private final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
                 }
         );
     }
