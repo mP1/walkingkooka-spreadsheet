@@ -99,6 +99,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
+
+        this.checkSelection(before);
     }
 
     // cells............................................................................................................
@@ -954,14 +956,6 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return this.cell("C3", "3");
     }
 
-    final SpreadsheetCell d4() {
-        return this.cell("D4", "4"); // matches column
-    }
-
-    final SpreadsheetCell e5() {
-        return this.cell("E5", "5"); // matches row
-    }
-
     final SpreadsheetCell cell(final String cellReference, final String formulaText) {
         return SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell(cellReference),
@@ -993,12 +987,6 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Set<SpreadsheetColumn> differentColumns() {
         return Sets.of(this.a());
-    }
-
-    final Set<SpreadsheetColumn> columns0(final String... columnReferences) {
-        return Arrays.stream(columnReferences)
-                .map(r -> this.column(r))
-                .collect(Collectors.toSet());
     }
 
     final SpreadsheetColumn a() {
@@ -1091,12 +1079,6 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Set<SpreadsheetRow> differentRows() {
         return Sets.of(this.row1());
-    }
-
-    final Set<SpreadsheetRow> rows0(final String... rowReferences) {
-        return Arrays.stream(rowReferences)
-                .map(r -> this.row(r))
-                .collect(Collectors.toSet());
     }
 
     final SpreadsheetRow row1() {
