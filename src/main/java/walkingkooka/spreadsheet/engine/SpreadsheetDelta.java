@@ -782,7 +782,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case CELLS_PROPERTY_STRING:
                     cells = patchCells(propertyAndValue, context);
                     break;
+                case COLUMNS_PROPERTY_STRING:
                 case LABELS_PROPERTY_STRING:
+                case ROWS_PROPERTY_STRING:
                 case DELETED_CELLS_PROPERTY_STRING:
                 case COLUMN_WIDTHS_PROPERTY_STRING:
                 case ROW_HEIGHTS_PROPERTY_STRING:
