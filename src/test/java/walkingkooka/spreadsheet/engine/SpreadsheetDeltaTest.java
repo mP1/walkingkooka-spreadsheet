@@ -208,20 +208,20 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testRowWhenEmpty() {
         this.rowAndCheck(
                 SpreadsheetDelta.EMPTY,
-                SpreadsheetSelection.parseRow("A"),
+                SpreadsheetSelection.parseRow("1"),
                 Optional.empty()
         );
     }
 
     @Test
     public void testRowNotFound() {
+        final SpreadsheetRow row = this.row();
+
         this.rowAndCheck(
                 SpreadsheetDelta.EMPTY.setRows(
-                        Sets.of(
-                                this.row()
-                        )
+                        Sets.of(row)
                 ),
-                SpreadsheetSelection.parseRow("B"),
+                row.reference().add(1),
                 Optional.empty()
         );
     }
@@ -229,6 +229,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testRowFound() {
         final SpreadsheetRow row = this.row();
+
         this.rowAndCheck(
                 SpreadsheetDelta.EMPTY.setRows(
                         Sets.of(row)
@@ -254,7 +255,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     private SpreadsheetRow row() {
-        return SpreadsheetSelection.parseRow("A")
+        return SpreadsheetSelection.parseRow("1")
                 .row()
                 .setHidden(true);
     }
