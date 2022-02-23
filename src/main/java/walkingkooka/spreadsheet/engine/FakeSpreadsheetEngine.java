@@ -56,6 +56,12 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
+                                       final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetDelta saveColumn(final SpreadsheetColumn column,
                                        final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();

@@ -1559,6 +1559,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // loadColumn......................................................................................................
+
+    @Test
+    public void testLoadColumnMissingColumn() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY,
+                engine.loadColumn(
+                        SpreadsheetSelection.parseColumn("Z"),
+                        context
+                )
+        );
+    }
+
+    @Test
+    public void testLoadColumn() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetColumnReference columnReference = SpreadsheetSelection.parseColumn("Z");
+        final SpreadsheetColumn column = columnReference.column()
+                .setHidden(true);
+
+        context.storeRepository()
+                .columns()
+                .save(column);
+
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY
+                        .setColumns(
+                                Sets.of(column)
+                        ),
+                engine.loadColumn(
+                        columnReference,
+                        context
+                )
+        );
+    }
+
     // saveColumn......................................................................................................
 
     @Test
