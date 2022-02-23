@@ -214,6 +214,20 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    // LOAD ROW.....................................................................................................
+    @Override
+    public SpreadsheetDelta loadRow(final SpreadsheetRowReference row,
+                                    final SpreadsheetEngineContext context) {
+        return SpreadsheetDelta.EMPTY
+                .setRows(
+                        toSet(
+                                context.storeRepository()
+                                        .rows()
+                                        .load(row)
+                        )
+                );
+    }
+
     // SAVE ROW.....................................................................................................
 
     /**

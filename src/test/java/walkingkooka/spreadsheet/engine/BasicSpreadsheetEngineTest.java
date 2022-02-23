@@ -2188,6 +2188,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(context.storeRepository().cells(), 4);
     }
 
+    // loadRow......................................................................................................
+
+    @Test
+    public void testLoadRowMissingRow() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY,
+                engine.loadRow(
+                        SpreadsheetSelection.parseRow("999"),
+                        context
+                )
+        );
+    }
+
+    @Test
+    public void testLoadRow() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetRowReference rowReference = SpreadsheetSelection.parseRow("999");
+        final SpreadsheetRow row = rowReference.row()
+                .setHidden(true);
+
+        context.storeRepository()
+                .rows()
+                .save(row);
+
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY
+                        .setRows(
+                                Sets.of(row)
+                        ),
+                engine.loadRow(
+                        rowReference,
+                        context
+                )
+        );
+    }
+
     // saveRow......................................................................................................
 
     @Test
