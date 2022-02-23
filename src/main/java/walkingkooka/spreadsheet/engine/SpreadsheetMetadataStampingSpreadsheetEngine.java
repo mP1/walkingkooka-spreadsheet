@@ -126,6 +126,12 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public SpreadsheetDelta loadRow(final SpreadsheetRowReference row,
+                                    final SpreadsheetEngineContext context) {
+        return this.engine.loadRow(row, context);
+    }
+
+    @Override
     public SpreadsheetDelta saveRow(final SpreadsheetRow row,
                                     final SpreadsheetEngineContext context) {
         return this.stamp(

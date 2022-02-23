@@ -82,6 +82,12 @@ public interface SpreadsheetEngine {
                                    final SpreadsheetEngineContext context);
 
     /**
+     * Loads the given {@link SpreadsheetRow}
+     */
+    SpreadsheetDelta loadRow(final SpreadsheetRowReference row,
+                             final SpreadsheetEngineContext context);
+
+    /**
      * Saves the {@link SpreadsheetRow}, and updates all affected (referenced cells).
      */
     SpreadsheetDelta saveRow(final SpreadsheetRow row,
