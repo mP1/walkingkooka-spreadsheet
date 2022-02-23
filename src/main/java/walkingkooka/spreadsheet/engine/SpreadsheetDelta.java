@@ -233,6 +233,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         Objects.requireNonNull(columns, "columns");
     }
 
+    /**
+     * Finds a {@link SpreadsheetColumn} matching the given {@link SpreadsheetColumnReference}.
+     */
+    public Optional<SpreadsheetColumn> column(final SpreadsheetColumnReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        return this.columns()
+                .stream()
+                .filter(c -> c.reference().equalsIgnoreReferenceKind(reference))
+                .findFirst();
+    }
+
     // labels............................................................................................................
 
     public final Set<SpreadsheetLabelMapping> labels() {

@@ -23,9 +23,11 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
@@ -127,6 +129,73 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 cell,
                 delta.cell(reference),
                 () -> delta + " cell " + reference
+        );
+    }
+
+    // column.............................................................................................................
+
+    @Test
+    public void testColumnWhenEmpty() {
+        this.columnAndCheck(
+                SpreadsheetDelta.EMPTY,
+                SpreadsheetSelection.parseColumn("A"),
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testColumnNotFound() {
+        this.columnAndCheck(
+                SpreadsheetDelta.EMPTY.setColumns(
+                        Sets.of(
+                                this.column()
+                        )
+                ),
+                SpreadsheetSelection.parseColumn("B"),
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testColumnFound() {
+        final SpreadsheetColumn column = this.column();
+        this.columnAndCheck(
+                SpreadsheetDelta.EMPTY.setColumns(
+                        Sets.of(column)
+                ),
+                column.reference(),
+                Optional.of(column)
+        );
+    }
+
+    @Test
+    public void testColumnFoundDifferentKind() {
+        final SpreadsheetColumn column = this.column();
+        final SpreadsheetColumnReference reference = column.reference();
+        this.checkEquals(reference.toRelative(), reference, "reference should be relative");
+
+        this.columnAndCheck(
+                SpreadsheetDelta.EMPTY.setColumns(
+                        Sets.of(column)
+                ),
+                reference.toRelative(),
+                Optional.of(column)
+        );
+    }
+
+    private SpreadsheetColumn column() {
+        return SpreadsheetSelection.parseColumn("A")
+                .column()
+                .setHidden(true);
+    }
+
+    private void columnAndCheck(final SpreadsheetDelta delta,
+                                final SpreadsheetColumnReference reference,
+                                final Optional<SpreadsheetColumn> column) {
+        this.checkEquals(
+                column,
+                delta.column(reference),
+                () -> delta + " column " + reference
         );
     }
 
