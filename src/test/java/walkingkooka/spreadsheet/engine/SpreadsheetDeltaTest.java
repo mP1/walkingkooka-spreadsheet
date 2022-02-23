@@ -25,10 +25,12 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
@@ -196,6 +198,73 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 column,
                 delta.column(reference),
                 () -> delta + " column " + reference
+        );
+    }
+
+    // row.............................................................................................................
+
+    @Test
+    public void testRowWhenEmpty() {
+        this.rowAndCheck(
+                SpreadsheetDelta.EMPTY,
+                SpreadsheetSelection.parseRow("A"),
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testRowNotFound() {
+        this.rowAndCheck(
+                SpreadsheetDelta.EMPTY.setRows(
+                        Sets.of(
+                                this.row()
+                        )
+                ),
+                SpreadsheetSelection.parseRow("B"),
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testRowFound() {
+        final SpreadsheetRow row = this.row();
+        this.rowAndCheck(
+                SpreadsheetDelta.EMPTY.setRows(
+                        Sets.of(row)
+                ),
+                row.reference(),
+                Optional.of(row)
+        );
+    }
+
+    @Test
+    public void testRowFoundDifferentKind() {
+        final SpreadsheetRow row = this.row();
+        final SpreadsheetRowReference reference = row.reference();
+        this.checkEquals(reference.toRelative(), reference, "reference should be relative");
+
+        this.rowAndCheck(
+                SpreadsheetDelta.EMPTY.setRows(
+                        Sets.of(row)
+                ),
+                reference.toRelative(),
+                Optional.of(row)
+        );
+    }
+
+    private SpreadsheetRow row() {
+        return SpreadsheetSelection.parseRow("A")
+                .row()
+                .setHidden(true);
+    }
+
+    private void rowAndCheck(final SpreadsheetDelta delta,
+                             final SpreadsheetRowReference reference,
+                             final Optional<SpreadsheetRow> row) {
+        this.checkEquals(
+                row,
+                delta.row(reference),
+                () -> delta + " row " + reference
         );
     }
 

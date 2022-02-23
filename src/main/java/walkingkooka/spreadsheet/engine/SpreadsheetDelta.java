@@ -307,6 +307,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         Objects.requireNonNull(rows, "rows");
     }
 
+    /**
+     * Finds a {@link SpreadsheetRow} matching the given {@link SpreadsheetRowReference}.
+     */
+    public Optional<SpreadsheetRow> row(final SpreadsheetRowReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        return this.rows()
+                .stream()
+                .filter(c -> c.reference().equalsIgnoreReferenceKind(reference))
+                .findFirst();
+    }
+
     // deletedCells............................................................................................................
 
     public final Set<SpreadsheetCellReference> deletedCells() {
