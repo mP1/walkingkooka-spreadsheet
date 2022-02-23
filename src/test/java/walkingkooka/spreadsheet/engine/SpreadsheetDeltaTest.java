@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -279,26 +280,35 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchColumnsFails() {
+        this.patchInvalidPropertyFails2(
+                SpreadsheetDelta.COLUMNS_PROPERTY,
+                JsonNode.nullNode()
+
+        );
+    }
+
+    @Test
     public void testPatchLabelsFails() {
-        this.patchInvalidPropertyFails(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.LABELS_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
+        this.patchInvalidPropertyFails2(
                 SpreadsheetDelta.LABELS_PROPERTY,
                 JsonNode.nullNode()
+
+        );
+    }
+
+    @Test
+    public void testPatchRowsFails() {
+        this.patchInvalidPropertyFails2(
+                SpreadsheetDelta.ROWS_PROPERTY,
+                JsonNode.nullNode()
+
         );
     }
 
     @Test
     public void testPatchDeletedCellsFails() {
-        this.patchInvalidPropertyFails(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.DELETED_CELLS_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
+        this.patchInvalidPropertyFails2(
                 SpreadsheetDelta.DELETED_CELLS_PROPERTY,
                 JsonNode.nullNode()
         );
@@ -306,12 +316,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchColumnWidthFails() {
-        this.patchInvalidPropertyFails(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
+        this.patchInvalidPropertyFails2(
                 SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
                 JsonNode.nullNode()
         );
@@ -319,13 +324,21 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchRowHeightFails() {
+        this.patchInvalidPropertyFails2(
+                SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
+                JsonNode.nullNode()
+        );
+    }
+
+    private void patchInvalidPropertyFails2(final JsonPropertyName key,
+                                            final JsonNode value) {
         this.patchInvalidPropertyFails(
                 JsonNode.object()
                         .set(
-                                SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
-                                JsonNode.nullNode()
+                                key,
+                                value
                         ),
-                SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
+                key,
                 JsonNode.nullNode()
         );
     }
