@@ -316,6 +316,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchDeletedColumnsFails() {
+        this.patchInvalidPropertyFails2(
+                SpreadsheetDelta.DELETED_COLUMNS_PROPERTY,
+                JsonNode.nullNode()
+        );
+    }
+
+    @Test
+    public void testPatchDeletedRowsFails() {
+        this.patchInvalidPropertyFails2(
+                SpreadsheetDelta.DELETED_ROWS_PROPERTY,
+                JsonNode.nullNode()
+        );
+    }
+
+    @Test
     public void testPatchColumnWidthFails() {
         this.patchInvalidPropertyFails2(
                 SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
