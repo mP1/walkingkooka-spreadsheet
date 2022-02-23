@@ -23,6 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -167,6 +168,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             changes.refreshUpdated();
             return this.prepareDelta(changes, context);
         }
+    }
+
+    @Override
+    public SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
+                                       final SpreadsheetEngineContext context) {
+        return SpreadsheetDelta.EMPTY
+                .setColumns(
+                        toSet(
+                                context.storeRepository()
+                                        .columns()
+                                        .load(column)
+                        )
+                );
     }
 
     // SAVE COLUMN.....................................................................................................
@@ -1175,6 +1189,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private static void checkContext(final SpreadsheetEngineContext context) {
         Objects.requireNonNull(context, "context");
     }
+
+    // j2cl helpers....................................................................................................
+
+    // The J2CL Optional does not support map.
+    static <V extends SpreadsheetColumnOrRow<R>, R extends SpreadsheetColumnOrRowReference> Set<V> toSet(final Optional<V> columnOrRow) {
+        return columnOrRow.isPresent() ?
+                Sets.of(columnOrRow.get()) :
+                Sets.empty();
+    }
+
+    // Object..........................................................................................................
 
     @Override
     public String toString() {

@@ -101,6 +101,12 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
+                                       final SpreadsheetEngineContext context) {
+        return this.engine.loadColumn(column, context);
+    }
+
+    @Override
     public SpreadsheetDelta saveColumn(final SpreadsheetColumn column,
                                        final SpreadsheetEngineContext context) {
         return this.stamp(

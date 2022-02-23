@@ -63,6 +63,12 @@ public interface SpreadsheetEngine {
                                 final SpreadsheetEngineContext context);
 
     /**
+     * Loads the given {@link SpreadsheetColumn}
+     */
+    SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
+                                final SpreadsheetEngineContext context);
+
+    /**
      * Saves the {@link SpreadsheetColumn}, and updates all affected (referenced cells).
      */
     SpreadsheetDelta saveColumn(final SpreadsheetColumn column,
