@@ -786,8 +786,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     @Override
     public SpreadsheetDelta patch(final JsonNode json,
                                   final JsonNodeUnmarshallContext context) {
-        Objects.requireNonNull(json, "json");
-        Objects.requireNonNull(context, "context");
+        checkPatch(json, context);
 
         SpreadsheetDelta patched = this;
 
@@ -836,27 +835,117 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return node.isNull() ?
                 NO_CELLS :
-                this.patchCellsFromObject(node, context);
+                this.patchCellsNonNull(node, context);
     }
 
     /**
      * Takes a json object of reference to cell and patches the existing cells in this {@link SpreadsheetDelta}.
      * If the patch is a new cell it is added, existing cells are patched.
      */
-    private Set<SpreadsheetCell> patchCellsFromObject(final JsonNode node,
-                                                      final JsonNodeUnmarshallContext context) {
-        final Set<SpreadsheetCell> patched = Sets.ordered();
+    private Set<SpreadsheetCell> patchCellsNonNull(final JsonNode node,
+                                                   final JsonNodeUnmarshallContext context) {
+        return patchReferenceToValue(
+                node,
+                SpreadsheetSelection::parseCell,
+                this::cell,
+                SpreadsheetCell.class,
+                context
+        );
+    }
+
+    // PatchColumns.....................................................................................................
+
+    /**
+     * Patches the given {@link SpreadsheetDelta} assuming only columns have been patched.
+     * Note only some properties may be patched (selection, column and window) others will throw an exception as invalid.
+     * Attempts to patch an unknown column will fail with an {@link IllegalArgumentException} being thrown.
+     */
+    public SpreadsheetDelta patchColumns(final JsonNode json,
+                                         final JsonNodeUnmarshallContext context) {
+        checkPatch(json, context);
+
+        SpreadsheetDelta patched = this;
+
+        Set<SpreadsheetColumn> columns = this.columns();
+        Optional<SpreadsheetCellRange> window = this.window();
+
+
+        for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
+            final JsonPropertyName propertyName = propertyAndValue.name();
+            switch (propertyName.value()) {
+                case SELECTION_PROPERTY_STRING:
+                    patched = patched.setSelection(
+                            unmarshallSelection(propertyAndValue, context)
+                    );
+                    break;
+                case COLUMNS_PROPERTY_STRING:
+                    columns = patchColumns0(propertyAndValue, context);
+                    break;
+                case CELLS_PROPERTY_STRING:
+                case LABELS_PROPERTY_STRING:
+                case ROWS_PROPERTY_STRING:
+                case DELETED_CELLS_PROPERTY_STRING:
+                case DELETED_COLUMNS_PROPERTY_STRING:
+                case DELETED_ROWS_PROPERTY_STRING:
+                case COLUMN_WIDTHS_PROPERTY_STRING:
+                case ROW_HEIGHTS_PROPERTY_STRING:
+                    Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
+                    break;
+                case WINDOW_PROPERTY_STRING:
+                    window = unmarshallWindow(propertyAndValue, context);
+                    break;
+                default:
+                    Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
+                    break;
+            }
+        }
+
+        return patched.setColumns(NO_COLUMNS)
+                .setWindow(window)
+                .setColumns(columns)
+                .setWindow(window);
+    }
+
+    private Set<SpreadsheetColumn> patchColumns0(final JsonNode node,
+                                                 final JsonNodeUnmarshallContext context) {
+
+        return node.isNull() ?
+                NO_COLUMNS :
+                this.patchColumnsNonNull(node, context);
+    }
+
+    /**
+     * Takes a json object of reference to column and patches the existing columns in this {@link SpreadsheetDelta}.
+     * If the patch is a new column it is added, existing columns are patched.
+     */
+    private Set<SpreadsheetColumn> patchColumnsNonNull(final JsonNode node,
+                                                       final JsonNodeUnmarshallContext context) {
+        return patchReferenceToValue(
+                node,
+                SpreadsheetSelection::parseColumn,
+                this::column,
+                SpreadsheetColumn.class,
+                context
+        );
+    }
+
+    private <R extends SpreadsheetSelection, V extends Patchable<V>> Set<V> patchReferenceToValue(final JsonNode node,
+                                                                                                  final Function<String, R> referenceParser,
+                                                                                                  final Function<R, Optional<V>> referenceToValue,
+                                                                                                  final Class<V> valueType,
+                                                                                                  final JsonNodeUnmarshallContext context) {
+        final Set<V> patched = Sets.ordered();
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName propertyName = child.name();
 
-            final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell(
+            final R reference = referenceParser.apply(
                     propertyName.value()
             );
-            ;
-            final SpreadsheetCell add;
 
-            final Optional<SpreadsheetCell> old = this.cell(reference);
+            final V add;
+
+            final Optional<V> old = referenceToValue.apply(reference);
             if (old.isPresent()) {
                 add = old.get()
                         .patch(child, context);
@@ -864,7 +953,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 add = context.unmarshall(
                         JsonNode.object()
                                 .set(propertyName, child),
-                        SpreadsheetCell.class
+                        valueType
                 );
             }
 
@@ -872,6 +961,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         return patched;
+    }
+
+    private static void checkPatch(final JsonNode json,
+                                   final JsonNodeUnmarshallContext context) {
+        Objects.requireNonNull(json, "json");
+        Objects.requireNonNull(context, "context");
     }
 
     // labels...........................................................................................................
