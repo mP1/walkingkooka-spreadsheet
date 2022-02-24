@@ -929,6 +929,83 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
+    // PatchRows.......................................................................................................
+
+    /**
+     * Patches the given {@link SpreadsheetDelta} assuming only rows have been patched.
+     * Note only some properties may be patched (selection, row and window) others will throw an exception as invalid.
+     * Attempts to patch an unknown row will fail with an {@link IllegalArgumentException} being thrown.
+     */
+    public SpreadsheetDelta patchRows(final JsonNode json,
+                                      final JsonNodeUnmarshallContext context) {
+        checkPatch(json, context);
+
+        SpreadsheetDelta patched = this;
+
+        Set<SpreadsheetRow> rows = this.rows();
+        Optional<SpreadsheetCellRange> window = this.window();
+
+
+        for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
+            final JsonPropertyName propertyName = propertyAndValue.name();
+
+            switch (propertyName.value()) {
+                case SELECTION_PROPERTY_STRING:
+                    patched = patched.setSelection(
+                            unmarshallSelection(propertyAndValue, context)
+                    );
+                    break;
+                case ROWS_PROPERTY_STRING:
+                    rows = patchRows0(propertyAndValue, context);
+                    break;
+                case CELLS_PROPERTY_STRING:
+                case COLUMNS_PROPERTY_STRING:
+                case LABELS_PROPERTY_STRING:
+                case DELETED_CELLS_PROPERTY_STRING:
+                case DELETED_COLUMNS_PROPERTY_STRING:
+                case DELETED_ROWS_PROPERTY_STRING:
+                case COLUMN_WIDTHS_PROPERTY_STRING:
+                case ROW_HEIGHTS_PROPERTY_STRING:
+                    Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
+                    break;
+                case WINDOW_PROPERTY_STRING:
+                    window = unmarshallWindow(propertyAndValue, context);
+                    break;
+                default:
+                    Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
+                    break;
+            }
+        }
+
+        return patched.setRows(NO_ROWS)
+                .setWindow(window)
+                .setRows(rows)
+                .setWindow(window);
+    }
+
+    private Set<SpreadsheetRow> patchRows0(final JsonNode node,
+                                           final JsonNodeUnmarshallContext context) {
+
+        return node.isNull() ?
+                NO_ROWS :
+                this.patchRowsNonNull(node, context);
+    }
+
+    /**
+     * Takes a json object of reference to row and patches the existing rows in this {@link SpreadsheetDelta}.
+     * If the patch is a new row it is added, existing rows are patched.
+     */
+    private Set<SpreadsheetRow> patchRowsNonNull(final JsonNode node,
+                                                 final JsonNodeUnmarshallContext context) {
+        return patchReferenceToValue(
+                node,
+                SpreadsheetSelection::parseRow,
+                this::row,
+                SpreadsheetRow.class,
+                context
+        );
+    }
+
     private <R extends SpreadsheetSelection, V extends Patchable<V>> Set<V> patchReferenceToValue(final JsonNode node,
                                                                                                   final Function<String, R> referenceParser,
                                                                                                   final Function<R, Optional<V>> referenceToValue,
