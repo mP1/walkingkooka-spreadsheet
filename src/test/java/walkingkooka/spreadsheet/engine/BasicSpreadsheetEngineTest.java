@@ -1660,6 +1660,66 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // https://github.com/mP1/walkingkooka-spreadsheet/issues/2022
+    @Test
+    public void testSaveColumnHiddenTheUnhiddenWithCells() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetColumnReference reference = SpreadsheetSelection.parseColumn("B");
+
+        final SpreadsheetCell cell = this.cell(
+                reference.setRow(SpreadsheetSelection.parseRow("2")),
+                "=1+2"
+        );
+
+        context.storeRepository()
+                .cells()
+                .save(cell);
+
+        final SpreadsheetColumn column = reference.column();
+
+        engine.saveColumn(
+                column.setHidden(true),
+                context
+        );
+
+        this.countAndCheck(
+                context.storeRepository()
+                        .columns(),
+                1
+        );
+
+        // cell B2 in hidden column B should not load.
+        this.loadCellFailCheck(
+                engine,
+                cell.reference(),
+                context
+        );
+
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY
+                        .setColumns(
+                                Sets.of(
+                                        column
+                                )
+                        ),
+                engine.saveColumn(
+                        column.setHidden(false),
+                        context
+                )
+        );
+
+        this.loadCellAndCheckFormatted(
+                engine,
+                cell.reference(),
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                context,
+                this.expressionNumberKind().create(3),
+                "3 " + FORMATTED_PATTERN_SUFFIX
+        );
+    }
+
     // deleteColumn....................................................................................................
 
     @Test
@@ -2277,6 +2337,66 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context.storeRepository()
                         .rows(),
                 1
+        );
+
+        this.loadCellAndCheckFormatted(
+                engine,
+                cell.reference(),
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                context,
+                this.expressionNumberKind().create(3),
+                "3 " + FORMATTED_PATTERN_SUFFIX
+        );
+    }
+
+    // https://github.com/mP1/walkingkooka-spreadsheet/issues/2023
+    @Test
+    public void testSaveRowHiddenTheUnhiddenWithCells() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetRowReference reference = SpreadsheetSelection.parseRow("2");
+
+        final SpreadsheetCell cell = this.cell(
+                reference.setColumn(SpreadsheetSelection.parseColumn("B")),
+                "=1+2"
+        );
+
+        context.storeRepository()
+                .cells()
+                .save(cell);
+
+        final SpreadsheetRow row = reference.row();
+
+        engine.saveRow(
+                row.setHidden(true),
+                context
+        );
+
+        this.countAndCheck(
+                context.storeRepository()
+                        .rows(),
+                1
+        );
+
+        // cell B2 in hidden row B should not load.
+        this.loadCellFailCheck(
+                engine,
+                cell.reference(),
+                context
+        );
+
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY
+                        .setRows(
+                                Sets.of(
+                                        row
+                                )
+                        ),
+                engine.saveRow(
+                        row.setHidden(false),
+                        context
+                )
         );
 
         this.loadCellAndCheckFormatted(
