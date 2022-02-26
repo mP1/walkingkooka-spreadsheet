@@ -803,7 +803,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case CELLS_PROPERTY_STRING:
-                    cells = patchCells(propertyAndValue, context);
+                    cells = patchCells0(propertyAndValue, context);
                     break;
                 case COLUMNS_PROPERTY_STRING:
                 case LABELS_PROPERTY_STRING:
@@ -830,8 +830,58 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .setWindow(window);
     }
 
-    private Set<SpreadsheetCell> patchCells(final JsonNode node,
-                                            final JsonNodeUnmarshallContext context) {
+    /**
+     * Patches the cells of this {@link SpreadsheetDelta}. Any attempt to patch other properties will result in a
+     * {@link IllegalArgumentException}.
+     */
+    public SpreadsheetDelta patchCells(final JsonNode json,
+                                       final JsonNodeUnmarshallContext context) {
+        checkPatch(json, context);
+
+        SpreadsheetDelta patched = this;
+
+        Set<SpreadsheetCell> cells = this.cells();
+        Optional<SpreadsheetCellRange> window = this.window();
+
+
+        for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
+            final JsonPropertyName propertyName = propertyAndValue.name();
+            switch (propertyName.value()) {
+                case SELECTION_PROPERTY_STRING:
+                    patched = patched.setSelection(
+                            unmarshallSelection(propertyAndValue, context)
+                    );
+                    break;
+                case CELLS_PROPERTY_STRING:
+                    cells = patchCells0(propertyAndValue, context);
+                    break;
+                case COLUMNS_PROPERTY_STRING:
+                case LABELS_PROPERTY_STRING:
+                case ROWS_PROPERTY_STRING:
+                case DELETED_CELLS_PROPERTY_STRING:
+                case DELETED_COLUMNS_PROPERTY_STRING:
+                case DELETED_ROWS_PROPERTY_STRING:
+                case COLUMN_WIDTHS_PROPERTY_STRING:
+                case ROW_HEIGHTS_PROPERTY_STRING:
+                    Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
+                    break;
+                case WINDOW_PROPERTY_STRING:
+                    window = unmarshallWindow(propertyAndValue, context);
+                    break;
+                default:
+                    Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
+                    break;
+            }
+        }
+
+        return patched.setCells(NO_CELLS)
+                .setWindow(window)
+                .setCells(cells)
+                .setWindow(window);
+    }
+
+    private Set<SpreadsheetCell> patchCells0(final JsonNode node,
+                                             final JsonNodeUnmarshallContext context) {
 
         return node.isNull() ?
                 NO_CELLS :

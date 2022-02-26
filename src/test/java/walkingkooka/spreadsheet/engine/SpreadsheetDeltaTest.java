@@ -667,6 +667,278 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // PatchCells.....................................................................................................
+
+    @Test
+    public void testPatchCellsColumnsFails() {
+        this.patchCellInvalidPropertyFails2(
+                SpreadsheetDelta.COLUMNS_PROPERTY,
+                JsonNode.nullNode()
+
+        );
+    }
+
+    @Test
+    public void testPatchCellsLabelsFails() {
+        this.patchCellInvalidPropertyFails2(
+                SpreadsheetDelta.LABELS_PROPERTY,
+                JsonNode.nullNode()
+
+        );
+    }
+
+    @Test
+    public void testPatchCellsRowsFails() {
+        this.patchCellInvalidPropertyFails2(
+                SpreadsheetDelta.ROWS_PROPERTY,
+                JsonNode.nullNode()
+
+        );
+    }
+
+    @Test
+    public void testPatchCellsDeletedCellsFails() {
+        this.patchCellInvalidPropertyFails2(
+                SpreadsheetDelta.DELETED_CELLS_PROPERTY,
+                JsonNode.nullNode()
+        );
+    }
+
+    @Test
+    public void testPatchCellsDeletedRowsFails() {
+        this.patchCellInvalidPropertyFails2(
+                SpreadsheetDelta.DELETED_ROWS_PROPERTY,
+                JsonNode.nullNode()
+        );
+    }
+
+    @Test
+    public void testPatchCellsColumnWidthFails() {
+        this.patchCellInvalidPropertyFails2(
+                SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
+                JsonNode.nullNode()
+        );
+    }
+
+    @Test
+    public void testPatchCellsRowHeightFails() {
+        this.patchCellInvalidPropertyFails2(
+                SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
+                JsonNode.nullNode()
+        );
+    }
+
+    private void patchCellInvalidPropertyFails2(final JsonPropertyName key,
+                                                final JsonNode value) {
+        final JsonNode patch = JsonNode.object()
+                .set(
+                        key,
+                        value
+                );
+
+        final InvalidPropertyJsonNodeException thrown = assertThrows(
+                InvalidPropertyJsonNodeException.class,
+                () -> SpreadsheetDelta.EMPTY.patchCells(patch, this.createPatchContext())
+        );
+        this.checkEquals(key, thrown.name(), "name");
+        this.checkEquals(value.removeParent(), thrown.node().removeParent(), "node");
+    }
+
+    @Test
+    public void testPatchCellsColumnsEmptyObject() {
+        this.patchCellsAndCheck(
+                SpreadsheetDelta.EMPTY,
+                JsonNode.object(),
+                SpreadsheetDelta.EMPTY
+        );
+    }
+
+    @Test
+    public void testPatchCellsNoSelection() {
+        this.patchCellSelectionAndCheck(
+                SpreadsheetDelta.NO_SELECTION,
+                SpreadsheetDelta.NO_SELECTION
+        );
+    }
+
+    @Test
+    public void testPatchCellsSelection() {
+        this.patchCellSelectionAndCheck(
+                SpreadsheetDelta.NO_SELECTION,
+                Optional.of(
+                        SpreadsheetSelection.parseColumn("C")
+                                .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
+                )
+        );
+    }
+
+    private void patchCellSelectionAndCheck(final Optional<SpreadsheetViewportSelection> before,
+                                            final Optional<SpreadsheetViewportSelection> after) {
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
+                .setSelection(after);
+
+        this.patchCellsAndCheck(
+                SpreadsheetDelta.EMPTY
+                        .setSelection(before),
+                marshall(delta),
+                delta
+        );
+    }
+
+    @Test
+    public void testPatchCellsSelectionCleared() {
+        this.patchCellsAndCheck(
+                SpreadsheetDelta.EMPTY
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCellRange("A1:B2")
+                                                .setAnchor(
+                                                        Optional.of(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
+                                                )
+                                )
+                        )
+                ,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.SELECTION_PROPERTY,
+                                JsonNode.nullNode()
+                        ),
+                SpreadsheetDelta.EMPTY
+        );
+    }
+
+    @Test
+    public void testPatchCellsNewCell() {
+        final SpreadsheetCell cell = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        cell
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                marshall(after),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchCellsNewCell2() {
+        final SpreadsheetCell cell = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        cell
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                marshall(after),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchCellsReplacesCell() {
+        final SpreadsheetCell cell = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(cell)
+                );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        cell.setFormula(SpreadsheetFormula.EMPTY.setText("=1"))
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                marshall(after),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchCellsCellsRemoved() {
+        final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
+                .setSelection(
+                        Optional.of(
+                                SpreadsheetSelection.parseCellRange("A1:B2")
+                                        .setAnchor(
+                                                Optional.of(
+                                                        SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                                                )
+                                        )
+                        )
+                );
+        this.patchCellsAndCheck(
+                without.setCells(
+                        Sets.of(
+                                SpreadsheetSelection.parseCell("b")
+                                        .setFormula(SpreadsheetFormula.EMPTY)
+                        )
+                )
+                ,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.nullNode()
+                        ),
+                without
+        );
+    }
+
+    @Test
+    public void testPatchCellsCellWithWindow() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
+                .setFormula(SpreadsheetFormula.EMPTY);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, b2)
+                ).setWindow(
+                        Optional.of(
+                                SpreadsheetSelection.parseCellRange("A1:A2")
+                        )
+                );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(a1)
+        ).setWindow(
+                Optional.of(
+                        SpreadsheetSelection.parseCellRange("A1:A2")
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                marshall(after),
+                after
+        );
+    }
+
+    private void patchCellsAndCheck(final SpreadsheetDelta before,
+                                    final JsonNode patch,
+                                    final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                before.patchCells(patch, this.createPatchContext()),
+                () -> "patch cells\n" + patch
+        );
+    }
+
     // PatchColumns.....................................................................................................
 
     @Test
