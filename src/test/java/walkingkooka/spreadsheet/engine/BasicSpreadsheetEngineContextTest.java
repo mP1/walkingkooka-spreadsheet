@@ -31,7 +31,6 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -717,8 +716,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                         final SpreadsheetLabelStore labelStore) {
         final SpreadsheetCellStore cells = SpreadsheetCellStores.treeMap();
         cells.save(
-                SpreadsheetCell.with(
-                        LOAD_CELL_REFERENCE,
+                LOAD_CELL_REFERENCE.setFormula(
                         SpreadsheetFormula.EMPTY
                                 .setText("'" + LOAD_CELL_VALUE)
                                 .setValue(

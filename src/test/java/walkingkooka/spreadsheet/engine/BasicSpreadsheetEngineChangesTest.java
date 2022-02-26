@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -94,18 +93,18 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
         );
 
         changes.onCellSavedImmediate(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("A1"),
-                        SpreadsheetFormula.EMPTY
-                                .setText("1+2")
-                )
+                SpreadsheetSelection.parseCell("A1")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("1+2")
+                        )
         );
         changes.onCellSavedImmediate(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("B2"),
-                        SpreadsheetFormula.EMPTY
-                                .setText("3+4")
-                )
+                SpreadsheetSelection.parseCell("B2")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("3+4")
+                        )
         );
 
         changes.onColumnSavedImmediate(

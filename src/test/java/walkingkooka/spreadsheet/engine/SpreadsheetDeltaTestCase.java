@@ -126,11 +126,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final D before = this.createSpreadsheetDelta();
 
         final Set<SpreadsheetCell> different = Sets.of(
-                SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCell("E1"),
-                        SpreadsheetFormula.EMPTY
-                                .setText("99")
-                )
+                SpreadsheetCellReference.parseCell("E1")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("99")
+                        )
         );
 
         final SpreadsheetDelta after = before.setCells(different);
@@ -956,12 +956,13 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return this.cell("C3", "3");
     }
 
-    final SpreadsheetCell cell(final String cellReference, final String formulaText) {
-        return SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell(cellReference),
-                SpreadsheetFormula.EMPTY
-                        .setText(formulaText)
-        );
+    final SpreadsheetCell cell(final String cellReference,
+                               final String formulaText) {
+        return SpreadsheetSelection.parseCell(cellReference)
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText(formulaText)
+                );
     }
 
     final void checkCells(final SpreadsheetDelta delta) {

@@ -78,11 +78,10 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     private SpreadsheetCell cellWithWidth(final String cellReference,
                                           final double pixels) {
-        SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell(cellReference),
-                SpreadsheetFormula.EMPTY
+        SpreadsheetCell cell = SpreadsheetCellReference.parseCell(cellReference)
+                .setFormula(SpreadsheetFormula.EMPTY
                         .setText("1+2")
-        );
+                );
         if (pixels > 0) {
             cell = cell.setStyle(TextStyle.EMPTY
                     .set(TextStylePropertyName.WIDTH, Length.pixel(pixels)));
@@ -142,11 +141,11 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     private SpreadsheetCell cellWithHeight(final String cellReference,
                                            final double pixels) {
-        SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell(cellReference),
-                SpreadsheetFormula.EMPTY
-                        .setText("1+2")
-        );
+        SpreadsheetCell cell = SpreadsheetCellReference.parseCell(cellReference)
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("1+2")
+                );
         if (pixels > 0) {
             cell = cell.setStyle(TextStyle.EMPTY
                     .set(TextStylePropertyName.HEIGHT, Length.pixel(pixels)));
@@ -168,11 +167,11 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     public void testToString() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("A1"),
-                        SpreadsheetFormula.EMPTY
-                                .setText("1+2")
-                )
+                SpreadsheetSelection.parseCell("A1")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("1+2")
+                        )
         );
 
         this.toStringAndCheck(store, "[A1=1+2]");

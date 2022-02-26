@@ -99,19 +99,19 @@ public class JunitTest {
         final SpreadsheetEngineContext engineContext = engineContext(engine);
 
         engine.saveCell(
-                SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCell("A1"),
-                        SpreadsheetFormula.EMPTY
-                                .setText("12+B2")
-                ),
+                SpreadsheetCellReference.parseCell("A1")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("12+B2")
+                        ),
                 engineContext
         );
 
         final SpreadsheetDelta delta = engine.saveCell(
-                SpreadsheetCell.with(
-                        SpreadsheetCellReference.parseCell("B2"),
-                        SpreadsheetFormula.EMPTY.setText("34")
-                ),
+                SpreadsheetCellReference.parseCell("B2")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("34")
+                        ),
                 engineContext
         );
 

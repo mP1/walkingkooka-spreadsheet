@@ -150,10 +150,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         )
                 );
 
-        final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("B2"),
-                formula
-        );
+        final SpreadsheetCell cell = SpreadsheetCellReference.parseCell("B2")
+                .setFormula(
+                        formula
+                );
 
         this.saveAndCheck(
                 cell,
@@ -169,10 +169,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
                 .setText(text);
 
-        final SpreadsheetCell requires = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("B2"),
-                formula
-        );
+        final SpreadsheetCell requires = SpreadsheetCellReference.parseCell("B2")
+                .setFormula(
+                        formula
+                );
 
         final Optional<Expression> expression = Optional.of(
                 number(2)
@@ -180,9 +180,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
         final SpreadsheetCell with = requires.setFormula(
                 formula.setToken(
-                        Optional.of(
-                                SpreadsheetParserToken.number(
-                                        Lists.of(SpreadsheetParserToken.digits(text, text)),
+                                Optional.of(
+                                        SpreadsheetParserToken.number(
+                                                Lists.of(SpreadsheetParserToken.digits(text, text)),
                                         text
                                 )
                         )
@@ -204,10 +204,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
                 .setText(text);
 
-        final SpreadsheetCell requires = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("B2"),
-                formula
-        );
+        final SpreadsheetCell requires = SpreadsheetCellReference.parseCell("B2")
+                .setFormula(formula);
 
         final SpreadsheetCell with = requires.setFormula(
                 formula.setValue(
@@ -233,10 +231,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
                 .setText(text);
 
-        final SpreadsheetCell requires = SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("B2"),
-                formula
-        );
+        final SpreadsheetCell requires = SpreadsheetCellReference.parseCell("B2")
+                .setFormula(formula);
 
         final SpreadsheetCell with = requires.setFormula(
                 formula.setToken(
@@ -363,10 +359,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     }
 
     private SpreadsheetCell cell(SpreadsheetFormula formula) {
-        return SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("C3"),
-                formula
-        );
+        return SpreadsheetCellReference.parseCell("C3")
+                .setFormula(formula);
     }
 
     @Test

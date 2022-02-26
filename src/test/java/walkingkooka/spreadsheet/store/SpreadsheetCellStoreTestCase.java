@@ -341,7 +341,9 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     private SpreadsheetCell cell(final SpreadsheetCellReference cellReference) {
-        return SpreadsheetCell.with(cellReference, this.formula())
+        return cellReference.setFormula(
+                        this.formula()
+                )
                 .setStyle(this.style())
                 .setFormat(this.format())
                 .setFormatted(this.formatted());

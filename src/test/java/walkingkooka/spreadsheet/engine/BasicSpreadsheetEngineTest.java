@@ -9678,7 +9678,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private SpreadsheetCell cell(final SpreadsheetCellReference reference, final SpreadsheetFormula formula) {
-        return SpreadsheetCell.with(reference, formula)
+        return reference.setFormula(formula)
                 .setStyle(this.style());
     }
 
