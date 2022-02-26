@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -95,6 +97,27 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final SpreadsheetCellReference different = cell.setRow(differentRow);
         this.checkColumn(different, this.column());
         this.checkRow(different, differentRow);
+    }
+
+    // SetFormula.......................................................................................................
+
+    @Test
+    public void testSetFormula() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+
+        final SpreadsheetCell cell = reference.setFormula(formula);
+
+        this.checkEquals(
+                reference,
+                cell.reference(),
+                "reference"
+        );
+        this.checkEquals(
+                formula,
+                cell.formula(),
+                "formula"
+        );
     }
 
     // Predicate........................................................................................................
