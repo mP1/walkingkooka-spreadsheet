@@ -23,6 +23,7 @@ import walkingkooka.ToStringBuilderOption;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
@@ -786,48 +787,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     @Override
     public SpreadsheetDelta patch(final JsonNode json,
                                   final JsonNodeUnmarshallContext context) {
-        checkPatch(json, context);
-
-        SpreadsheetDelta patched = this;
-
-        Set<SpreadsheetCell> cells = this.cells();
-        Optional<SpreadsheetCellRange> window = this.window();
-
-
-        for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
-            final JsonPropertyName propertyName = propertyAndValue.name();
-            switch (propertyName.value()) {
-                case SELECTION_PROPERTY_STRING:
-                    patched = patched.setSelection(
-                            unmarshallSelection(propertyAndValue, context)
-                    );
-                    break;
-                case CELLS_PROPERTY_STRING:
-                    cells = patchCells0(propertyAndValue, context);
-                    break;
-                case COLUMNS_PROPERTY_STRING:
-                case LABELS_PROPERTY_STRING:
-                case ROWS_PROPERTY_STRING:
-                case DELETED_CELLS_PROPERTY_STRING:
-                case DELETED_COLUMNS_PROPERTY_STRING:
-                case DELETED_ROWS_PROPERTY_STRING:
-                case COLUMN_WIDTHS_PROPERTY_STRING:
-                case ROW_HEIGHTS_PROPERTY_STRING:
-                    Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
-                    break;
-                case WINDOW_PROPERTY_STRING:
-                    window = unmarshallWindow(propertyAndValue, context);
-                    break;
-                default:
-                    Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
-                    break;
-            }
-        }
-
-        return patched.setCells(NO_CELLS)
-                .setWindow(window)
-                .setCells(cells)
-                .setWindow(window);
+        return this.patch0(
+                json,
+                Predicates.always(),
+                context
+        );
     }
 
     /**
@@ -836,46 +800,112 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     public SpreadsheetDelta patchCells(final JsonNode json,
                                        final JsonNodeUnmarshallContext context) {
+        return this.patch0(
+                json,
+                Predicates.is(SpreadsheetDelta.CELLS_PROPERTY_STRING),
+                context
+        );
+    }
+
+    // PatchColumns.....................................................................................................
+
+    /**
+     * Patches the given {@link SpreadsheetDelta} assuming only columns have been patched.
+     * Note only some properties may be patched (selection, column and window) others will throw an exception as invalid.
+     * Attempts to patch an unknown column will fail with an {@link IllegalArgumentException} being thrown.
+     */
+    public SpreadsheetDelta patchColumns(final JsonNode json,
+                                         final JsonNodeUnmarshallContext context) {
+        return this.patch0(
+                json,
+                Predicates.is(SpreadsheetDelta.COLUMNS_PROPERTY_STRING),
+                context
+        );
+    }
+
+    // PatchRows.......................................................................................................
+
+    /**
+     * Patches the given {@link SpreadsheetDelta} assuming only rows have been patched.
+     * Note only some properties may be patched (selection, row and window) others will throw an exception as invalid.
+     * Attempts to patch an unknown row will fail with an {@link IllegalArgumentException} being thrown.
+     */
+    public SpreadsheetDelta patchRows(final JsonNode json,
+                                      final JsonNodeUnmarshallContext context) {
+        return this.patch0(
+                json,
+                Predicates.is(SpreadsheetDelta.ROWS_PROPERTY_STRING),
+                context
+        );
+    }
+
+    private SpreadsheetDelta patch0(final JsonNode json,
+                                    final Predicate<String> patchableProperties,
+                                    final JsonNodeUnmarshallContext context) {
         checkPatch(json, context);
 
         SpreadsheetDelta patched = this;
 
         Set<SpreadsheetCell> cells = this.cells();
+        Set<SpreadsheetColumn> columns = this.columns();
+        Set<SpreadsheetRow> rows = this.rows();
         Optional<SpreadsheetCellRange> window = this.window();
 
 
         for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
+
             final JsonPropertyName propertyName = propertyAndValue.name();
-            switch (propertyName.value()) {
+            final String propertyNameString = propertyName.value();
+            boolean valid = patchableProperties.test(propertyNameString);
+
+            switch (propertyNameString) {
                 case SELECTION_PROPERTY_STRING:
                     patched = patched.setSelection(
                             unmarshallSelection(propertyAndValue, context)
                     );
+                    valid = true;
                     break;
                 case CELLS_PROPERTY_STRING:
-                    cells = patchCells0(propertyAndValue, context);
+                    if (valid) {
+                        cells = patchCells0(propertyAndValue, context);
+                    }
                     break;
                 case COLUMNS_PROPERTY_STRING:
-                case LABELS_PROPERTY_STRING:
+                    if (valid) {
+                        columns = patchColumns0(propertyAndValue, context);
+                    }
+                    break;
                 case ROWS_PROPERTY_STRING:
+                    if (valid) {
+                        rows = patchRows0(propertyAndValue, context);
+                    }
+                    break;
+                case LABELS_PROPERTY_STRING:
                 case DELETED_CELLS_PROPERTY_STRING:
                 case DELETED_COLUMNS_PROPERTY_STRING:
                 case DELETED_ROWS_PROPERTY_STRING:
                 case COLUMN_WIDTHS_PROPERTY_STRING:
                 case ROW_HEIGHTS_PROPERTY_STRING:
-                    Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
+                    valid = false;
                     break;
                 case WINDOW_PROPERTY_STRING:
                     window = unmarshallWindow(propertyAndValue, context);
+                    valid = true;
                     break;
                 default:
                     Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
                     break;
             }
+
+            if (!valid) {
+                Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
+            }
         }
 
         return patched.setCells(NO_CELLS)
                 .setWindow(window)
+                .setColumns(columns)
+                .setRows(rows)
                 .setCells(cells)
                 .setWindow(window);
     }
@@ -903,59 +933,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    // PatchColumns.....................................................................................................
-
-    /**
-     * Patches the given {@link SpreadsheetDelta} assuming only columns have been patched.
-     * Note only some properties may be patched (selection, column and window) others will throw an exception as invalid.
-     * Attempts to patch an unknown column will fail with an {@link IllegalArgumentException} being thrown.
-     */
-    public SpreadsheetDelta patchColumns(final JsonNode json,
-                                         final JsonNodeUnmarshallContext context) {
-        checkPatch(json, context);
-
-        SpreadsheetDelta patched = this;
-
-        Set<SpreadsheetColumn> columns = this.columns();
-        Optional<SpreadsheetCellRange> window = this.window();
-
-
-        for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
-            final JsonPropertyName propertyName = propertyAndValue.name();
-            switch (propertyName.value()) {
-                case SELECTION_PROPERTY_STRING:
-                    patched = patched.setSelection(
-                            unmarshallSelection(propertyAndValue, context)
-                    );
-                    break;
-                case COLUMNS_PROPERTY_STRING:
-                    columns = patchColumns0(propertyAndValue, context);
-                    break;
-                case CELLS_PROPERTY_STRING:
-                case LABELS_PROPERTY_STRING:
-                case ROWS_PROPERTY_STRING:
-                case DELETED_CELLS_PROPERTY_STRING:
-                case DELETED_COLUMNS_PROPERTY_STRING:
-                case DELETED_ROWS_PROPERTY_STRING:
-                case COLUMN_WIDTHS_PROPERTY_STRING:
-                case ROW_HEIGHTS_PROPERTY_STRING:
-                    Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
-                    break;
-                case WINDOW_PROPERTY_STRING:
-                    window = unmarshallWindow(propertyAndValue, context);
-                    break;
-                default:
-                    Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
-                    break;
-            }
-        }
-
-        return patched.setColumns(NO_COLUMNS)
-                .setWindow(window)
-                .setColumns(columns)
-                .setWindow(window);
-    }
-
     private Set<SpreadsheetColumn> patchColumns0(final JsonNode node,
                                                  final JsonNodeUnmarshallContext context) {
 
@@ -977,60 +954,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 SpreadsheetColumn.class,
                 context
         );
-    }
-
-    // PatchRows.......................................................................................................
-
-    /**
-     * Patches the given {@link SpreadsheetDelta} assuming only rows have been patched.
-     * Note only some properties may be patched (selection, row and window) others will throw an exception as invalid.
-     * Attempts to patch an unknown row will fail with an {@link IllegalArgumentException} being thrown.
-     */
-    public SpreadsheetDelta patchRows(final JsonNode json,
-                                      final JsonNodeUnmarshallContext context) {
-        checkPatch(json, context);
-
-        SpreadsheetDelta patched = this;
-
-        Set<SpreadsheetRow> rows = this.rows();
-        Optional<SpreadsheetCellRange> window = this.window();
-
-
-        for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
-            final JsonPropertyName propertyName = propertyAndValue.name();
-
-            switch (propertyName.value()) {
-                case SELECTION_PROPERTY_STRING:
-                    patched = patched.setSelection(
-                            unmarshallSelection(propertyAndValue, context)
-                    );
-                    break;
-                case ROWS_PROPERTY_STRING:
-                    rows = patchRows0(propertyAndValue, context);
-                    break;
-                case CELLS_PROPERTY_STRING:
-                case COLUMNS_PROPERTY_STRING:
-                case LABELS_PROPERTY_STRING:
-                case DELETED_CELLS_PROPERTY_STRING:
-                case DELETED_COLUMNS_PROPERTY_STRING:
-                case DELETED_ROWS_PROPERTY_STRING:
-                case COLUMN_WIDTHS_PROPERTY_STRING:
-                case ROW_HEIGHTS_PROPERTY_STRING:
-                    Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
-                    break;
-                case WINDOW_PROPERTY_STRING:
-                    window = unmarshallWindow(propertyAndValue, context);
-                    break;
-                default:
-                    Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
-                    break;
-            }
-        }
-
-        return patched.setRows(NO_ROWS)
-                .setWindow(window)
-                .setRows(rows)
-                .setWindow(window);
     }
 
     private Set<SpreadsheetRow> patchRows0(final JsonNode node,

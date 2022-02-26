@@ -276,7 +276,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     // Patch............................................................................................................
 
     @Test
-    public void testPatchEmptyObject() {
+    public void testPatchAllEmptyObject() {
         this.patchAndCheck(
                 SpreadsheetDelta.EMPTY,
                 JsonNode.object()
@@ -284,16 +284,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchColumnsFails() {
-        this.patchInvalidPropertyFails2(
-                SpreadsheetDelta.COLUMNS_PROPERTY,
-                JsonNode.nullNode()
-
-        );
-    }
-
-    @Test
-    public void testPatchLabelsFails() {
+    public void testPatchAllLabelsFails() {
         this.patchInvalidPropertyFails2(
                 SpreadsheetDelta.LABELS_PROPERTY,
                 JsonNode.nullNode()
@@ -302,16 +293,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchRowsFails() {
-        this.patchInvalidPropertyFails2(
-                SpreadsheetDelta.ROWS_PROPERTY,
-                JsonNode.nullNode()
-
-        );
-    }
-
-    @Test
-    public void testPatchDeletedCellsFails() {
+    public void testPatchAllDeletedCellsFails() {
         this.patchInvalidPropertyFails2(
                 SpreadsheetDelta.DELETED_CELLS_PROPERTY,
                 JsonNode.nullNode()
@@ -319,7 +301,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchDeletedColumnsFails() {
+    public void testPatchAllDeletedColumnsFails() {
         this.patchInvalidPropertyFails2(
                 SpreadsheetDelta.DELETED_COLUMNS_PROPERTY,
                 JsonNode.nullNode()
@@ -327,7 +309,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchDeletedRowsFails() {
+    public void testPatchAllDeletedRowsFails() {
         this.patchInvalidPropertyFails2(
                 SpreadsheetDelta.DELETED_ROWS_PROPERTY,
                 JsonNode.nullNode()
@@ -335,7 +317,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchColumnWidthFails() {
+    public void testPatchAllColumnWidthFails() {
         this.patchInvalidPropertyFails2(
                 SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
                 JsonNode.nullNode()
@@ -343,7 +325,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchRowHeightFails() {
+    public void testPatchAllRowHeightFails() {
         this.patchInvalidPropertyFails2(
                 SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
                 JsonNode.nullNode()
@@ -364,7 +346,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchNoSelection() {
+    public void testPatchAllNoSelection() {
         this.patchSelectionAndCheck(
                 SpreadsheetDelta.NO_SELECTION,
                 SpreadsheetDelta.NO_SELECTION
@@ -372,7 +354,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchSelection() {
+    public void testPatchAllSelection() {
         this.patchSelectionAndCheck(
                 SpreadsheetDelta.NO_SELECTION,
                 Optional.of(
@@ -396,7 +378,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchSelectionCleared() {
+    public void testPatchAllSelectionCleared() {
         this.patchAndCheck(
                 SpreadsheetDelta.EMPTY
                         .setSelection(
@@ -418,7 +400,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchNewCell() {
+    public void testPatchAllNewCell() {
         final SpreadsheetCell cell = SpreadsheetSelection.parseCell("a1")
                 .setFormula(
                         SpreadsheetFormula.EMPTY
@@ -440,29 +422,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchNewCell2() {
-        final SpreadsheetCell cell = SpreadsheetSelection.parseCell("a1")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=1")
-                );
-        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
-
-        final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        cell
-                )
-        );
-
-        this.patchAndCheck(
-                before,
-                marshall(after),
-                after
-        );
-    }
-
-    @Test
-    public void testPatchReplacesCell() {
+    public void testPatchAllReplacesCell() {
         final SpreadsheetCell cell = SpreadsheetSelection.parseCell("a1")
                 .setFormula(
                         SpreadsheetFormula.EMPTY
@@ -490,7 +450,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchCellsRemoved() {
+    public void testPatchAllCellsRemoved() {
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
                 .setSelection(
                         Optional.of(
@@ -523,38 +483,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchCellWithWindow() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("a1")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=1")
-                );
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=99")
-                );
+    public void testPatchAllNewColumn() {
+        final SpreadsheetColumn column = SpreadsheetSelection.parseColumn("Z")
+                .column();
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
-        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, b2)
-                ).setWindow(
-                        Optional.of(
-                                SpreadsheetSelection.parseCellRange("A1:B2")
-                        )
-                );
-
-        final SpreadsheetDelta after = before.setCells(
+        final SpreadsheetDelta after = before.setColumns(
                 Sets.of(
-                        a1.setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("=2")
-                        ),
-                        b2
-                )
-        ).setWindow(
-                Optional.of(
-                        SpreadsheetSelection.parseCellRange("A1")
+                        column
                 )
         );
 
@@ -566,7 +502,26 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchWindow() {
+    public void testPatchAllNewRow() {
+        final SpreadsheetRow row = SpreadsheetSelection.parseRow("1")
+                .row();
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
+
+        final SpreadsheetDelta after = before.setRows(
+                Sets.of(
+                        row
+                )
+        );
+
+        this.patchAndCheck(
+                before,
+                marshall(after),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchAllWindow() {
         final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("a1")
                 .setFormula(
                         SpreadsheetFormula.EMPTY
@@ -600,7 +555,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchWindowReplaced() {
+    public void testPatchAllWindowReplaced() {
         final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("a1")
                 .setFormula(
                         SpreadsheetFormula.EMPTY
@@ -638,7 +593,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchWindowRemoved() {
+    public void testPatchAllWindowRemoved() {
         final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("a1")
                 .setFormula(
                         SpreadsheetFormula.EMPTY
@@ -884,7 +839,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchCellsAndCheck(
                 without.setCells(
                         Sets.of(
-                                SpreadsheetSelection.parseCell("b")
+                                SpreadsheetSelection.parseCell("b2")
                                         .setFormula(SpreadsheetFormula.EMPTY)
                         )
                 )
