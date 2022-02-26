@@ -34,22 +34,24 @@ public final class HasSpreadsheetReferenceTest implements ClassTesting<HasSpread
 
     @Test
     public void testComparatorSpreadsheetCell() {
-        final SortedSet<SpreadsheetCell> sorted = Sets.sorted(HasSpreadsheetReference.hasSpreadsheetReferenceComparator());
-
-        final SpreadsheetCell a1 = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("A1"),
-                SpreadsheetFormula.EMPTY
+        final SortedSet<SpreadsheetCell> sorted = Sets.sorted(
+                HasSpreadsheetReference.hasSpreadsheetReferenceComparator()
         );
 
-        final SpreadsheetCell b2 = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("b2"),
-                SpreadsheetFormula.EMPTY
-        );
+        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                );
 
-        final SpreadsheetCell z99 = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("z99"),
-                SpreadsheetFormula.EMPTY
-        );
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                );
+
+        final SpreadsheetCell z99 = SpreadsheetSelection.parseCell("z99")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                );
 
         sorted.add(z99);
         sorted.add(a1);

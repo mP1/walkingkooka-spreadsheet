@@ -291,11 +291,11 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     }
 
     private SpreadsheetCell cell() {
-        return SpreadsheetCell.with(
-                SpreadsheetCellReference.parseCell("A1"),
-                SpreadsheetFormula.EMPTY
-                        .setText(FORMULA_TEXT)
-        );
+        return SpreadsheetCellReference.parseCell("A1")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText(FORMULA_TEXT)
+                );
     }
 
     private void checkMetadataUpdated(final SpreadsheetEngineContext context) {

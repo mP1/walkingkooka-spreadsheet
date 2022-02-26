@@ -931,12 +931,13 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
                 "consumed");
     }
 
-    private SpreadsheetCell cell(final String reference, final String formula) {
-        return SpreadsheetCell.with(
-                this.cellReference(reference),
-                SpreadsheetFormula.EMPTY
-                        .setText(formula)
-        );
+    private SpreadsheetCell cell(final String reference,
+                                 final String formula) {
+        return this.cellReference(reference)
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText(formula)
+                );
     }
 
     private void cellsPresent(final SpreadsheetCell cell) {

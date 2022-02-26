@@ -104,7 +104,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .saveCell(SpreadsheetCell.with(CELL_REFERENCE, SpreadsheetFormula.EMPTY.setText("1")),
+                        .saveCell(
+                                CELL_REFERENCE.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("1")
+                                ),
                                 null));
     }
 
@@ -242,8 +245,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testFillCellsNullFromFails() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
-        final SpreadsheetCell cell = SpreadsheetCell.with(
-                reference,
+        final SpreadsheetCell cell = reference.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
@@ -258,8 +260,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testFillCellsNullToFails() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
-        final SpreadsheetCell cell = SpreadsheetCell.with(
-                reference,
+        final SpreadsheetCell cell = reference.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
@@ -274,8 +275,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testFillCellsNullContextFails() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
-        final SpreadsheetCell cell = SpreadsheetCell.with(
-                reference,
+        final SpreadsheetCell cell = reference.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
@@ -290,8 +290,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testFillCellsCellOutOfFromRangeFails() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
-        final SpreadsheetCell cell = SpreadsheetCell.with(
-                reference,
+        final SpreadsheetCell cell = reference.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
@@ -307,8 +306,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testFillCellsCellOutOfFromRangeFails2() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
-        final SpreadsheetCell cell = SpreadsheetCell.with(
-                reference,
+        final SpreadsheetCell cell = reference.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
@@ -324,21 +322,21 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsOneCellsOutOfManyOutOfRange() {
-        final SpreadsheetCell b2 = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("B2"),
-                SpreadsheetFormula.EMPTY
-                        .setText("1")
-        );
-        final SpreadsheetCell c3 = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("C3"),
-                SpreadsheetFormula.EMPTY
-                        .setText("2")
-        );
-        final SpreadsheetCell d4 = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("D4"),
-                SpreadsheetFormula.EMPTY
-                        .setText("3")
-        );
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("1")
+                );
+        final SpreadsheetCell c3 = SpreadsheetSelection.parseCell("C3")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("2")
+                );
+        final SpreadsheetCell d4 = SpreadsheetSelection.parseCell("D4")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("3")
+                );
 
         final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("C3:D4");
 
@@ -352,26 +350,26 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsSeveralCellsOutOfFromRangeFails() {
-        final SpreadsheetCell b2 = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("B2"),
-                SpreadsheetFormula.EMPTY
-                        .setText("1")
-        );
-        final SpreadsheetCell c3 = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("C3"),
-                SpreadsheetFormula.EMPTY
-                        .setText("2")
-        );
-        final SpreadsheetCell d4 = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("D4"),
-                SpreadsheetFormula.EMPTY
-                        .setText("3")
-        );
-        final SpreadsheetCell e5 = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("E5"),
-                SpreadsheetFormula.EMPTY
-                        .setText("4")
-        );
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("1")
+                );
+        final SpreadsheetCell c3 = SpreadsheetSelection.parseCell("C3")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("2")
+                );
+        final SpreadsheetCell d4 = SpreadsheetSelection.parseCell("D4")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("3")
+                );
+        final SpreadsheetCell e5 = SpreadsheetSelection.parseCell("E5")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("4")
+                );
 
         final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("C3:D4");
 
