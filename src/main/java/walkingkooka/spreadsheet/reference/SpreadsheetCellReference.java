@@ -20,6 +20,8 @@ import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.Comparators;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -179,6 +181,17 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
 
     private SpreadsheetCellReference replace(final SpreadsheetColumnReference column, final SpreadsheetRowReference row) {
         return new SpreadsheetCellReference(column, row);
+    }
+
+    /**
+     * Factory that creates a {@link SpreadsheetCell} using this {@link SpreadsheetCellReference} and the given
+     * {@link SpreadsheetFormula}.
+     */
+    public SpreadsheetCell setFormula(final SpreadsheetFormula formula) {
+        return SpreadsheetCell.with(
+                this,
+                formula
+        );
     }
 
     // Predicate<SpreadsheetCellReference>..............................................................................
