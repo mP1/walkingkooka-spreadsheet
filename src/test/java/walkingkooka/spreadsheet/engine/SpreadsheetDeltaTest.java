@@ -1078,12 +1078,34 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .column();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
                 .setColumns(
-                        Sets.of(column)
+                        Sets.of(column.setHidden(false))
                 );
 
         final SpreadsheetDelta after = before.setColumns(
                 Sets.of(
-                        column.setHidden(!column.hidden())
+                        column.setHidden(true)
+                )
+        );
+
+        this.patchColumnsAndCheck(
+                before,
+                marshall(after),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchColumnsReplacesColumn2() {
+        final SpreadsheetColumn column = SpreadsheetSelection.parseColumn("Z")
+                .column();
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setColumns(
+                        Sets.of(column.setHidden(true))
+                );
+
+        final SpreadsheetDelta after = before.setColumns(
+                Sets.of(
+                        column.setHidden(false)
                 )
         );
 
@@ -1347,12 +1369,36 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .row();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
                 .setRows(
-                        Sets.of(row)
+                        Sets.of(
+                                row.setHidden(false)
+                        )
                 );
 
         final SpreadsheetDelta after = before.setRows(
                 Sets.of(
-                        row.setHidden(!row.hidden())
+                        row.setHidden(true)
+                )
+        );
+
+        this.patchRowsAndCheck(
+                before,
+                marshall(after),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchRowsReplacesRow2() {
+        final SpreadsheetRow row = SpreadsheetSelection.parseRow("9")
+                .row();
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setRows(
+                        Sets.of(row.setHidden(true))
+                );
+
+        final SpreadsheetDelta after = before.setRows(
+                Sets.of(
+                        row.setHidden(false)
                 )
         );
 
