@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
+import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -38,7 +39,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetCellRange>
-        implements PredicateTesting2<SpreadsheetCellRange, SpreadsheetCellReference> {
+        implements IterableTesting<SpreadsheetCellRange, SpreadsheetCellReference>,
+        PredicateTesting2<SpreadsheetCellRange, SpreadsheetCellReference> {
 
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
@@ -1335,6 +1337,19 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
                         .range(SpreadsheetSelection.parseCell("$C$4"))));
     }
 
+    // IterableTesting..................................................................................................
+
+    @Test
+    public void testIterable() {
+        this.iterateAndCheck(
+                this.createIterable().iterator(),
+                this.b2().reference(),
+                this.c2().reference(),
+                this.b3().reference(),
+                this.c3().reference()
+        );
+    }
+
     // JsonNodeMarshallingTesting...............................................................................................
 
     @Test
@@ -1445,6 +1460,13 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     @Override
     public Class<SpreadsheetCellRange> type() {
         return SpreadsheetCellRange.class;
+    }
+
+    // IterableTesting.................................................................................................
+
+    @Override
+    public SpreadsheetCellRange createIterable() {
+        return SpreadsheetCellRange.parseCellRange("B2:C3");
     }
 
     // JsonNodeMarshallingTesting...........................................................................................

@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -34,7 +35,8 @@ import java.util.stream.Stream;
  * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetCellRange extends SpreadsheetExpressionReference implements SpreadsheetSelectionRange {
+public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
+        implements SpreadsheetSelectionRange<SpreadsheetCellReference> {
 
     /**
      * Computes the range of the given cells.
@@ -290,6 +292,13 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference i
     @Override
     void accept(final SpreadsheetExpressionReferenceVisitor visitor) {
         visitor.visit(this);
+    }
+
+    // SpreadsheetSelectionRange.......................................................................................
+
+    @Override
+    public Iterator<SpreadsheetCellReference> iterator() {
+        return this.cellStream().iterator();
     }
 
     // Predicate........................................................................................................

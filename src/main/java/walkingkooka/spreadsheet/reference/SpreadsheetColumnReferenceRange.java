@@ -110,6 +110,13 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
         visitor.visit(this);
     }
 
+    // SpreadsheetSelectionRange.......................................................................................
+
+    @Override
+    SpreadsheetColumnReference iteratorIntToReference(final int value) {
+        return SpreadsheetReferenceKind.RELATIVE.column(value);
+    }
+
     // TreePrintable....................................................................................................
 
     @Override

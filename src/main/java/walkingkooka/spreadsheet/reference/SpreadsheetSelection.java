@@ -17,6 +17,9 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.ToStringBuilder;
+import walkingkooka.ToStringBuilderOption;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
@@ -49,7 +52,8 @@ import java.util.function.Predicate;
  * Base class for all selection types, including columns, rows, cells, labels and ranges.
  */
 public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellReference>,
-        TreePrintable {
+        TreePrintable,
+        UsesToStringBuilder {
 
     /**
      * Separator by ranges between cells / columns/ rows.
@@ -516,6 +520,16 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     @Override
     abstract public String toString();
+
+    // UsesToStringBuilder..............................................................................................
+
+    // this is necessary otherwise ToStringBuilder will expand SpreadsheetSelectionRange because they implement Iterable
+    // rather than using their compact toString.
+    @Override
+    public final void buildToString(final ToStringBuilder builder) {
+        builder.disable(ToStringBuilderOption.QUOTE);
+        builder.value(this.toString());
+    }
 
     // JsonNodeContext..................................................................................................
 
