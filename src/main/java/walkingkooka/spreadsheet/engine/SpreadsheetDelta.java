@@ -60,6 +60,7 @@ import java.util.stream.Collectors;
 
 /**
  * Captures changes following an operation. A window when non empty is applied to any given cells and label mappings returned as a filter.
+ * Note all {@link Set} are sorted by their {@link SpreadsheetSelection} and ignore all other properties.
  */
 public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         TreePrintable {
@@ -164,7 +165,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         checkCells(cells);
 
         final Set<SpreadsheetCell> copy = this.filterCells(cells);
-        return this.cells.equals(copy) ?
+        return equals(this.cells, copy) ?
                 this :
                 this.replaceCells(copy);
     }
@@ -216,7 +217,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         checkColumns(columns);
 
         final Set<SpreadsheetColumn> copy = this.filterColumns(columns);
-        return this.columns.equals(copy) ?
+        return equals(this.columns, copy) ?
                 this :
                 this.replaceColumns(copy);
     }
@@ -260,7 +261,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         checkLabels(labels);
 
         final Set<SpreadsheetLabelMapping> copy = filterLabels(labels, this.window());
-        return this.labels.equals(copy) ?
+        return equals(this.labels, copy) ?
                 this :
                 this.replaceLabels(copy);
     }
@@ -290,7 +291,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         checkRows(rows);
 
         final Set<SpreadsheetRow> copy = this.filterRows(rows);
-        return this.rows.equals(copy) ?
+        return equals(this.rows, copy) ?
                 this :
                 this.replaceRows(copy);
     }
@@ -318,6 +319,24 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .stream()
                 .filter(c -> c.reference().equalsIgnoreReferenceKind(reference))
                 .findFirst();
+    }
+
+    /**
+     * The {@link Set sets} holding cells, columns, labels and rows are sorted and each class only uses its
+     * {@link SpreadsheetSelection} to determine equality. This means {@link Sets#equals(Object)} will return true for
+     * entries with the same {@link SpreadsheetSelection} but different other properties.
+     */
+    private static <T> boolean equals(final Set<T> left,
+                                      final Set<T> right) {
+        return left.size() == right.size() &&
+                equals0(left, right);
+    }
+
+    private static <T> boolean equals0(final Set<T> left,
+                                       final Set<T> right) {
+        final Set<T> equality = Sets.hash();
+        equality.addAll(left);
+        return equality.equals(right);
     }
 
     // deletedCells............................................................................................................
@@ -1545,10 +1564,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private boolean equals0(final SpreadsheetDelta other) {
         return this.selection.equals(other.selection) &&
-                this.cells.equals(other.cells) &&
-                this.columns.equals(other.columns) &&
-                this.labels.equals(other.labels) &&
-                this.rows.equals(other.rows) &&
+                equals(this.cells, other.cells) &&
+                equals(this.columns, other.columns) &&
+                equals(this.labels, other.labels) &&
+                equals(this.rows, other.rows) &&
                 this.deletedCells.equals(other.deletedCells) &&
                 this.columnWidths.equals(other.columnWidths) &&
                 this.rowHeights.equals(other.rowHeights) &&
