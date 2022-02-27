@@ -922,6 +922,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         return patched.setCells(NO_CELLS)
+                .setColumns(NO_COLUMNS)
+                .setRows(NO_ROWS)
                 .setWindow(window)
                 .setColumns(columns)
                 .setRows(rows)
