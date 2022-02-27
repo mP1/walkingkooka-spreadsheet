@@ -19,11 +19,12 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
+import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.compare.ComparableTesting2;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends SpreadsheetColumnOrRowReferenceRange<?> & Comparable<S>,
+public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends SpreadsheetColumnOrRowReferenceRange<R> & Comparable<S>,
         R extends SpreadsheetColumnOrRowReference & Comparable<R>>
         extends SpreadsheetSelectionTestCase<S>
         implements ComparableTesting2<S> {

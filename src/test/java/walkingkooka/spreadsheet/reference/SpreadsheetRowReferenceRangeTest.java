@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.RangeBound;
+import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -27,7 +28,8 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrRowReferenceRangeTestCase<SpreadsheetRowReferenceRange, SpreadsheetRowReference> {
+public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrRowReferenceRangeTestCase<SpreadsheetRowReferenceRange, SpreadsheetRowReference>
+        implements IterableTesting<SpreadsheetRowReferenceRange, SpreadsheetRowReference> {
 
     @Test
     public void testWith() {
@@ -316,6 +318,18 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.checkEquals("132", b.toString());
     }
 
+    // IterableTesting..................................................................................................
+
+    @Test
+    public void testIterable() {
+        this.iterateUsingHasNextAndCheck(
+                this.createIterable().iterator(),
+                SpreadsheetSelection.parseRow("2"),
+                SpreadsheetSelection.parseRow("3"),
+                SpreadsheetSelection.parseRow("4")
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test
@@ -388,5 +402,12 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     @Override
     public Class<SpreadsheetRowReferenceRange> type() {
         return SpreadsheetRowReferenceRange.class;
+    }
+
+    // IterableTesting..................................................................................................
+
+    @Override
+    public SpreadsheetRowReferenceRange createIterable() {
+        return SpreadsheetSelection.parseRowRange("$2:$4");
     }
 }

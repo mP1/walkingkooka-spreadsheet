@@ -20,12 +20,15 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 
+import java.util.Iterator;
+import java.util.stream.IntStream;
+
 /**
  * Base class for a range that holds a column or row range.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnOrRowReference & Comparable<T>> extends SpreadsheetSelection
-        implements SpreadsheetSelectionRange {
+        implements SpreadsheetSelectionRange<T> {
 
     /**
      * Package private ctor
@@ -91,6 +94,25 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     public final boolean isSingle() {
         return this.begin().equals(this.end());
     }
+
+    // SpreadsheetSelectionRange.......................................................................................
+
+    @Override
+    public final Iterator<T> iterator() {
+        return IntStream.rangeClosed(
+                        this.begin().value(),
+                        this.end().value()
+                )
+                .boxed()
+                .map(this::iteratorIntToReference)
+                .peek((r) -> System.out.println(r.toString()))
+                .iterator();
+    }
+
+    /**
+     * Mapping function that returns a relative {@link SpreadsheetColumnOrRowReference} from the given value.
+     */
+    abstract T iteratorIntToReference(int value);
 
     // HashCodeEqualsDefined.......................................................................................
 

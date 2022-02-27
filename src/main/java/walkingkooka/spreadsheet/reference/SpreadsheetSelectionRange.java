@@ -20,5 +20,5 @@ package walkingkooka.spreadsheet.reference;
 /**
  * Tag interface for any {@link SpreadsheetSelection} that is also a range.
  */
-public interface SpreadsheetSelectionRange {
+public interface SpreadsheetSelectionRange<R extends SpreadsheetSelection> extends Iterable<R> {
 }
