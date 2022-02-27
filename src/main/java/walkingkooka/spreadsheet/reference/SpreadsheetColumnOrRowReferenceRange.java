@@ -105,7 +105,6 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
                 )
                 .boxed()
                 .map(this::iteratorIntToReference)
-                .peek((r) -> System.out.println(r.toString()))
                 .iterator();
     }
 
