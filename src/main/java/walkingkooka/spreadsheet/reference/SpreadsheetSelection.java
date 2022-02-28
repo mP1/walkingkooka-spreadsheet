@@ -21,6 +21,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.Range;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -685,7 +686,10 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                 SpreadsheetCellReferenceOrLabelName.class
         );
 
+        SpreadsheetCell.NO_FORMATTED_CELL.isPresent();
+        SpreadsheetColumnReference.MIN.column();
         SpreadsheetLabelMapping.init();
+        SpreadsheetRowReference.MIN.row();
     }
 
     private static <T extends SpreadsheetSelection> void register(final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
