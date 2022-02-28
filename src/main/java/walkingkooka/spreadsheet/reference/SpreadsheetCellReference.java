@@ -43,15 +43,6 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         HateosResource<String> {
 
     /**
-     * Parsers a range of cell referencs.
-     */
-    static Range<SpreadsheetCellReference> parseCellReferenceRange0(final String text) {
-        return Range.parse(text,
-                SpreadsheetParsers.RANGE_SEPARATOR.character(),
-                SpreadsheetCellReference::parseCell);
-    }
-
-    /**
      * Parsers the text expecting a valid {@link SpreadsheetCellReference} or fails.
      */
     static SpreadsheetCellReference parseCellReference0(final String text) {
