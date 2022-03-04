@@ -42,19 +42,29 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
      */
     public final static Optional<SpreadsheetViewportSelectionAnchor> NO_ANCHOR = Optional.empty();
 
+    public final static Optional<SpreadsheetViewportSelectionNavigation> NO_NAVIGATION = Optional.empty();
+
     static SpreadsheetViewportSelection with(final SpreadsheetSelection selection,
-                                             final Optional<SpreadsheetViewportSelectionAnchor> anchor) {
+                                             final Optional<SpreadsheetViewportSelectionAnchor> anchor,
+                                             final Optional<SpreadsheetViewportSelectionNavigation> navigation) {
         Objects.requireNonNull(anchor, "anchor");
         SpreadsheetViewportSelectionSpreadsheetSelectionVisitor.checkAnchor(selection, anchor.orElse(null));
+        Objects.requireNonNull(navigation, "navigation");
 
-        return new SpreadsheetViewportSelection(selection, anchor);
+        return new SpreadsheetViewportSelection(
+                selection,
+                anchor,
+                navigation
+        );
     }
 
     private SpreadsheetViewportSelection(final SpreadsheetSelection selection,
-                                         final Optional<SpreadsheetViewportSelectionAnchor> anchor) {
+                                         final Optional<SpreadsheetViewportSelectionAnchor> anchor,
+                                         final Optional<SpreadsheetViewportSelectionNavigation> navigation) {
         super();
         this.selection = selection;
         this.anchor = anchor;
+        this.navigation = navigation;
     }
 
     public SpreadsheetSelection selection() {
@@ -69,6 +79,12 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
 
     private final Optional<SpreadsheetViewportSelectionAnchor> anchor;
 
+    public Optional<SpreadsheetViewportSelectionNavigation> navigation() {
+        return this.navigation;
+    }
+
+    private final Optional<SpreadsheetViewportSelectionNavigation> navigation;
+
     // TreePrintable....................................................................................................
 
     @Override
@@ -81,6 +97,12 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
             printer.print(anchor.get().toString());
         }
 
+        final Optional<SpreadsheetViewportSelectionNavigation> navigation = this.navigation();
+        if (navigation.isPresent()) {
+            printer.print(" ");
+            printer.print(navigation.get().toString());
+        }
+
         printer.println();
     }
 
@@ -88,7 +110,11 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.selection, this.anchor);
+        return Objects.hash(
+                this.selection,
+                this.anchor,
+                this.navigation
+        );
     }
 
     @Override
@@ -97,7 +123,9 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
     }
 
     private boolean equals0(final SpreadsheetViewportSelection other) {
-        return this.selection.equals(other.selection) && this.anchor.equals(other.anchor);
+        return this.selection.equals(other.selection) &&
+                this.anchor.equals(other.anchor) &&
+                this.navigation.equals(other.navigation);
     }
 
     @Override
@@ -107,7 +135,9 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
-        builder.value(this.selection).value(this.anchor);
+        builder.value(this.selection)
+                .value(this.anchor)
+                .value(this.navigation);
     }
 
     // Json.............................................................................................................
@@ -128,6 +158,7 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
                                                    final JsonNodeUnmarshallContext context) {
         SpreadsheetSelection selection = null;
         SpreadsheetViewportSelectionAnchor anchor = null;
+        SpreadsheetViewportSelectionNavigation navigation = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -136,7 +167,14 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
                     selection = context.unmarshallWithType(child);
                     break;
                 case ANCHOR_PROPERTY_STRING:
-                    anchor = SpreadsheetViewportSelectionAnchor.valueOf(child.stringOrFail());
+                    anchor = SpreadsheetViewportSelectionAnchor.valueOf(
+                            child.stringOrFail()
+                    );
+                    break;
+                case NAVIGATION_PROPERTY_STRING:
+                    navigation = SpreadsheetViewportSelectionNavigation.valueOf(
+                            child.stringOrFail()
+                    );
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
@@ -146,7 +184,8 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
 
         return new SpreadsheetViewportSelection(
                 selection,
-                Optional.ofNullable(anchor)
+                Optional.ofNullable(anchor),
+                Optional.ofNullable(navigation)
         );
     }
 
@@ -163,14 +202,21 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
             object = object.set(ANCHOR_PROPERTY, JsonNode.string(anchor.get().toString()));
         }
 
+        final Optional<SpreadsheetViewportSelectionNavigation> navigation = this.navigation();
+        if (navigation.isPresent()) {
+            object = object.set(NAVIGATION_PROPERTY, JsonNode.string(navigation.get().toString()));
+        }
+
         return object;
     }
 
     private final static String SELECTION_PROPERTY_STRING = "selection";
     private final static String ANCHOR_PROPERTY_STRING = "anchor";
+    private final static String NAVIGATION_PROPERTY_STRING = "navigation";
 
     // @VisibleForTesting
 
     final static JsonPropertyName SELECTION_PROPERTY = JsonPropertyName.with(SELECTION_PROPERTY_STRING);
     final static JsonPropertyName ANCHOR_PROPERTY = JsonPropertyName.with(ANCHOR_PROPERTY_STRING);
+    final static JsonPropertyName NAVIGATION_PROPERTY = JsonPropertyName.with(NAVIGATION_PROPERTY_STRING);
 }

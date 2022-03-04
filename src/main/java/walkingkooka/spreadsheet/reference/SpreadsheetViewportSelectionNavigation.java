@@ -22,7 +22,7 @@ import walkingkooka.text.CharSequences;
 /**
  * Captures a users input movement relative to a selection, such as a cursor-left from a selection in the viewport.
  */
-public enum SpreadsheetViewportNavigation {
+public enum SpreadsheetViewportSelectionNavigation {
     LEFT,
     UP,
     RIGHT,
@@ -32,10 +32,10 @@ public enum SpreadsheetViewportNavigation {
     EXTEND_RIGHT,
     EXTEND_DOWN;
 
-    public static SpreadsheetViewportNavigation from(final String text) {
+    public static SpreadsheetViewportSelectionNavigation from(final String text) {
         CharSequences.failIfNullOrEmpty(text, "navigation");
 
-        for (final SpreadsheetViewportNavigation navigation : values()) {
+        for (final SpreadsheetViewportSelectionNavigation navigation : values()) {
             if (navigation.name().toLowerCase().replace('_', '-').equals(text)) {
                 return navigation;
             }
