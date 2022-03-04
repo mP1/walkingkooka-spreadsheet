@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import java.util.Optional;
-
 /**
  * Each of the {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection} require an anchor to create a {@link SpreadsheetViewportSelection}.
  * Not all combinations are valid for each of range.
@@ -32,11 +30,4 @@ public enum SpreadsheetViewportSelectionAnchor {
     BOTTOM,
     LEFT,
     RIGHT;
-
-    /**
-     * Factory method that should only be called by a range.
-     */
-    SpreadsheetViewportSelection setSelection(final SpreadsheetSelection selection) {
-        return SpreadsheetViewportSelection.with(selection, Optional.of(this));
-    }
 }

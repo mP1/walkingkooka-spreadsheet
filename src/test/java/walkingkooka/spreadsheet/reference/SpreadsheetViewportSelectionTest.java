@@ -263,7 +263,10 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                            final Optional<SpreadsheetViewportSelectionAnchor> anchor,
                            final String message) {
         if (anchor.isPresent()) {
-            final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> anchor.get().setSelection(selection));
+            final IllegalArgumentException thrown = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> selection.setAnchor(anchor)
+            );
             if (null != message) {
                 this.checkEquals(message, thrown.getMessage(), "message");
             }
@@ -277,7 +280,9 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
 
     private void withAndCheck(final SpreadsheetSelection selection,
                               final SpreadsheetViewportSelectionAnchor anchor) {
-        final SpreadsheetViewportSelection viewportSelection = anchor.setSelection(selection);
+        final SpreadsheetViewportSelection viewportSelection = selection.setAnchor(
+                Optional.of(anchor)
+        );
         assertSame(selection, viewportSelection.selection(), "selection");
         this.checkEquals(Optional.of(anchor), viewportSelection.anchor(), "anchor");
     }
@@ -337,14 +342,18 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     @Test
     public void testJsonMarshallCell() {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetSelection.parseCell("B2").setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
+                SpreadsheetSelection.parseCell("B2")
+                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
         );
     }
 
     @Test
     public void testJsonMarshallCellRange() {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT.setSelection(SpreadsheetSelection.parseCellRange("B2:C3"))
+                SpreadsheetSelection.parseCellRange("B2:C3")
+                        .setAnchor(
+                                Optional.of(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
+                        )
         );
     }
 
@@ -358,7 +367,10 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     @Test
     public void testJsonMarshallColumnRange() {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetViewportSelectionAnchor.LEFT.setSelection(SpreadsheetSelection.parseColumnRange("B:C"))
+                SpreadsheetSelection.parseColumnRange("B:C")
+                        .setAnchor(
+                                Optional.of(SpreadsheetViewportSelectionAnchor.LEFT)
+                        )
         );
     }
 
@@ -372,7 +384,12 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     @Test
     public void testJsonMarshallRowRange() {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP.setSelection(SpreadsheetSelection.parseRowRange("12:34"))
+                SpreadsheetSelection.parseRowRange("12:34")
+                        .setAnchor(
+                                Optional.of(
+                                        SpreadsheetViewportSelectionAnchor.TOP
+                                )
+                        )
         );
     }
 
