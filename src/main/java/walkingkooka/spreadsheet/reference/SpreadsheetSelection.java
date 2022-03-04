@@ -439,7 +439,11 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Factory that creates a {@link SpreadsheetViewportSelection} using this selection and the given anchor.
      */
     public final SpreadsheetViewportSelection setAnchor(final Optional<SpreadsheetViewportSelectionAnchor> anchor) {
-        return SpreadsheetViewportSelection.with(this, anchor);
+        return SpreadsheetViewportSelection.with(
+                this,
+                anchor,
+                SpreadsheetViewportSelection.NO_NAVIGATION
+        );
     }
 
     /**

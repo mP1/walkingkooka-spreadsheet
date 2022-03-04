@@ -24,13 +24,13 @@ import walkingkooka.text.CharSequences;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetViewportNavigationTest implements ClassTesting<SpreadsheetViewportNavigation> {
+public final class SpreadsheetViewportSelectionNavigationTest implements ClassTesting<SpreadsheetViewportSelectionNavigation> {
 
     @Test
     public void testFromNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetViewportNavigation.from(null)
+                () -> SpreadsheetViewportSelectionNavigation.from(null)
         );
     }
 
@@ -38,7 +38,7 @@ public final class SpreadsheetViewportNavigationTest implements ClassTesting<Spr
     public void testFromEmptyFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetViewportNavigation.from("")
+                () -> SpreadsheetViewportSelectionNavigation.from("")
         );
     }
 
@@ -46,7 +46,7 @@ public final class SpreadsheetViewportNavigationTest implements ClassTesting<Spr
     public void testFromUnknownFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetViewportNavigation.from("!invalid")
+                () -> SpreadsheetViewportSelectionNavigation.from("!invalid")
         );
     }
 
@@ -54,7 +54,7 @@ public final class SpreadsheetViewportNavigationTest implements ClassTesting<Spr
     public void testFromUnknownFails2() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetViewportNavigation.from("EXTEND-RIGHT")
+                () -> SpreadsheetViewportSelectionNavigation.from("EXTEND-RIGHT")
         );
     }
 
@@ -62,7 +62,7 @@ public final class SpreadsheetViewportNavigationTest implements ClassTesting<Spr
     public void testLeft() {
         this.fromAndCheck(
                 "left",
-                SpreadsheetViewportNavigation.LEFT
+                SpreadsheetViewportSelectionNavigation.LEFT
         );
     }
 
@@ -70,22 +70,22 @@ public final class SpreadsheetViewportNavigationTest implements ClassTesting<Spr
     public void testExtendRight() {
         this.fromAndCheck(
                 "extend-right",
-                SpreadsheetViewportNavigation.EXTEND_RIGHT
+                SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
         );
     }
 
     private void fromAndCheck(final String text,
-                              final SpreadsheetViewportNavigation expected) {
+                              final SpreadsheetViewportSelectionNavigation expected) {
         this.checkEquals(
                 expected,
-                SpreadsheetViewportNavigation.from(text),
+                SpreadsheetViewportSelectionNavigation.from(text),
                 () -> "from " + CharSequences.quoteAndEscape(text)
         );
     }
 
     @Override
-    public Class<SpreadsheetViewportNavigation> type() {
-        return SpreadsheetViewportNavigation.class;
+    public Class<SpreadsheetViewportSelectionNavigation> type() {
+        return SpreadsheetViewportSelectionNavigation.class;
     }
 
     @Override
