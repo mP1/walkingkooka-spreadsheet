@@ -35,6 +35,11 @@ abstract public class SpreadsheetCellReferenceOrLabelName extends SpreadsheetExp
         super();
     }
 
+    @Override
+    public SpreadsheetSelection simplify() {
+        return this;
+    }
+
     // cell or label have no default anchor.
     @Override
     public final Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor() {

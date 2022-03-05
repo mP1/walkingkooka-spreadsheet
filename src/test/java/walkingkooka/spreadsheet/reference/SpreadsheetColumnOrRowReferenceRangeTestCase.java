@@ -37,6 +37,17 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
         assertThrows(NullPointerException.class, () -> this.createSelection(null));
     }
 
+    // simplify.........................................................................................................
+
+    @Test
+    public final void testSimplify() {
+        this.simplifyAndCheck(
+                this.createSelection()
+        );
+    }
+
+    // compare.........................................................................................................
+
     @Override
     public final void testCompareToNullFails() {
         throw new UnsupportedOperationException();

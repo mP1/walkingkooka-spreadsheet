@@ -433,6 +433,11 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      */
     public abstract SpreadsheetSelection toRelative();
 
+    /**
+     * If this selection has a range and the lower and upper bounds are the same return the bound otherwise return this.
+     */
+    public abstract SpreadsheetSelection simplify();
+
     // SpreadsheetViewportSelection......................................................................................
 
     /**

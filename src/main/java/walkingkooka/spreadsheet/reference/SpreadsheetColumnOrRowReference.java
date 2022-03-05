@@ -131,6 +131,14 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
         return SpreadsheetViewportSelection.NO_ANCHOR;
     }
 
+    /**
+     * A column or row is already simplified.
+     */
+    @Override
+    public final SpreadsheetSelection simplify() {
+        return this;
+    }
+
     // Object...........................................................................................................
 
     @Override

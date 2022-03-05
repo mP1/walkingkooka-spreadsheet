@@ -312,6 +312,38 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         this.checkEquals(rows, different.rowReferenceRange());
     }
 
+    // simplify.........................................................................................................
+
+    @Test
+    public void testSimplifyDifferentBeginAndEnd() {
+        this.simplifyAndCheck(
+                "A1:B2"
+        );
+    }
+
+    @Test
+    public void testSimplifyBeginAndEndDifferentKind() {
+        this.simplifyAndCheck(
+                "A1:$B$2"
+        );
+    }
+
+    @Test
+    public void testSimplifyBeginAndEndSame() {
+        this.simplifyAndCheck(
+                "A1:A1",
+                SpreadsheetSelection.parseCell("A1")
+        );
+    }
+
+    @Test
+    public void testSimplifyBeginAndEndSame2() {
+        this.simplifyAndCheck(
+                "$A$1:A1",
+                SpreadsheetSelection.parseCell("$A$1")
+        );
+    }
+
     // test.............................................................................................................
 
     @Test
