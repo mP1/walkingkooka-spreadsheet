@@ -528,7 +528,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     // UsesToStringBuilder..............................................................................................
 
-    // this is necessary otherwise ToStringBuilder will expand SpreadsheetSelectionRange because they implement Iterable
+    // this is necessary otherwise ToStringBuilder will expand SpreadsheetCellRange etc because they implement Iterable
     // rather than using their compact toString.
     @Override
     public final void buildToString(final ToStringBuilder builder) {

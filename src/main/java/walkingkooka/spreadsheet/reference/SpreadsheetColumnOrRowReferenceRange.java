@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.HasRange;
+import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 
 import java.util.Iterator;
@@ -28,7 +30,9 @@ import java.util.stream.IntStream;
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnOrRowReference & Comparable<T>> extends SpreadsheetSelection
-        implements SpreadsheetSelectionRange<T> {
+        implements HasRange<T>,
+        HasRangeBounds<T>,
+        Iterable<T> {
 
     /**
      * Package private ctor
@@ -95,7 +99,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
         return this.begin().equals(this.end());
     }
 
-    // SpreadsheetSelectionRange.......................................................................................
+    // Iterable.........................................................................................................
 
     @Override
     public final Iterator<T> iterator() {
