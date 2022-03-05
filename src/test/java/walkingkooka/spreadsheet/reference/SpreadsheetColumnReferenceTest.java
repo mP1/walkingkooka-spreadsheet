@@ -161,7 +161,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
-    // spreadsheetColumnRange..............................................................................................
+    // columnRange..............................................................................................
 
     @Test
     public void testSpreadsheetColumnRange() {
@@ -170,7 +170,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
         this.checkEquals(
                 SpreadsheetSelection.parseColumnRange("B:D"),
-                lower.spreadsheetColumnRange(upper)
+                lower.columnRange(upper)
         );
     }
 
@@ -182,7 +182,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
         this.checkEquals(
                 SpreadsheetSelection.parseColumnRange("C"),
-                column.toSpreadsheetColumnReferenceRange()
+                column.columnRange()
         );
     }
 
@@ -386,6 +386,30 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseColumn("AB"),
                 "column AB" + EOL
+        );
+    }
+
+    // columnRange...................................................................................................,,,
+
+    @Test
+    public void testColumnRangeSpreadsheetColumnRange() {
+        final SpreadsheetColumnReference lower = SpreadsheetSelection.parseColumn("A");
+        final SpreadsheetColumnReference upper = SpreadsheetSelection.parseColumn("B");
+
+        this.checkEquals(
+                SpreadsheetColumnReferenceRange.with(Range.greaterThanEquals(upper)),
+                lower.columnRange(upper),
+                () -> lower + " columnRange " + upper
+        );
+    }
+
+    @Test
+    public void testColumnRange() {
+        final SpreadsheetColumnReference column = this.createSelection();
+        this.checkEquals(
+                SpreadsheetColumnReferenceRange.with(Range.singleton(column)),
+                column.columnRange(),
+                () -> column + ".columnRange"
         );
     }
 

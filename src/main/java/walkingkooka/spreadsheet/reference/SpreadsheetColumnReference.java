@@ -213,7 +213,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return "column";
     }
 
-    // range/spreadsheetColumnRange.......................................................................................
+    // range/columnRange.......................................................................................
 
     /**
      * Creates a {@link Range} from the this and the other {@link SpreadsheetColumnReference}.
@@ -228,15 +228,15 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     /**
      * Creates a {@link SpreadsheetColumnReferenceRange} from the this and the other {@link SpreadsheetColumnReference}.
      */
-    public SpreadsheetColumnReferenceRange spreadsheetColumnRange(final SpreadsheetColumnReference other) {
+    public SpreadsheetColumnReferenceRange columnRange(final SpreadsheetColumnReference other) {
         return SpreadsheetColumnReferenceRange.with(this.range(other));
     }
 
     /**
      * Returns a {@link SpreadsheetColumnReferenceRange} holding only this column.
      */
-    public SpreadsheetColumnReferenceRange toSpreadsheetColumnReferenceRange() {
-        return SpreadsheetColumnReferenceRange.with(Range.singleton(this));
+    public SpreadsheetColumnReferenceRange columnRange() {
+        return this.columnRange(this);
     }
     
     // Object...........................................................................................................

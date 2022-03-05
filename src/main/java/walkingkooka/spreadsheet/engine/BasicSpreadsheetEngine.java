@@ -1048,7 +1048,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             rightColumn = rightColumn.addSaturated(+1);
         }
 
-        return leftColumn.spreadsheetColumnRange(rightColumn);
+        return leftColumn.columnRange(rightColumn);
     }
 
     /**

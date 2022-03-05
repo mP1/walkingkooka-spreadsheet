@@ -177,7 +177,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testParseColumnReference() {
         this.checkEquals(
                 SpreadsheetSelection.parseColumn("B")
-                        .spreadsheetColumnRange(SpreadsheetSelection.parseColumn("D")),
+                        .columnRange(SpreadsheetSelection.parseColumn("D")),
                 SpreadsheetSelection.parseColumnRange("B:D")
         );
     }
@@ -186,7 +186,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testParseColumnReferenceSingleton() {
         this.checkEquals(
                 SpreadsheetSelection.parseColumn("B")
-                        .toSpreadsheetColumnReferenceRange(),
+                        .columnRange(),
                 SpreadsheetSelection.parseColumnRange("B")
         );
     }
