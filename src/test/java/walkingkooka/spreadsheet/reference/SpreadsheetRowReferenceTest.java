@@ -103,31 +103,6 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
-    // rowRange..............................................................................................
-
-    @Test
-    public void testSpreadsheetRowRange() {
-        final SpreadsheetRowReference lower = SpreadsheetSelection.parseRow("2");
-        final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("4");
-
-        this.checkEquals(
-                SpreadsheetSelection.parseRowRange("2:4"),
-                lower.rowRange(upper)
-        );
-    }
-
-    // toSpreadsheetRowRange..............................................................................................
-
-    @Test
-    public void testToSpreadsheetRowRange() {
-        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("2");
-
-        this.checkEquals(
-                SpreadsheetSelection.parseRowRange("2"),
-                row.rowRange()
-        );
-    }
-
     // toRelative........................................................................................................
 
     @Test
