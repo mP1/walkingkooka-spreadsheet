@@ -374,6 +374,21 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
         );
     }
 
+    @Test
+    public void testDifferentNavigation() {
+        this.checkNotEquals(
+                SpreadsheetViewportSelection.with(
+                        SELECTION,
+                        Optional.of(
+                                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                        ),
+                        Optional.of(
+                                SpreadsheetViewportSelectionNavigation.RIGHT
+                        )
+                )
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test
@@ -501,6 +516,18 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
         this.toStringAndCheck(
                 CELL_RANGE.setAnchor(Optional.of(SpreadsheetViewportSelectionAnchor.TOP_LEFT)),
                 CELL_RANGE + " " + SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testToStringWithNavigation() {
+        this.toStringAndCheck(
+                SpreadsheetViewportSelection.with(
+                        CELL_RANGE,
+                        ANCHOR,
+                        NAVIGATION
+                ),
+                CELL_RANGE + " " + ANCHOR.get() + " " + NAVIGATION.get()
         );
     }
 
