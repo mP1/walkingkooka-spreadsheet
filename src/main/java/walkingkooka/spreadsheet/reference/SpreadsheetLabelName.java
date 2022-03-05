@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.Cast;
 import walkingkooka.InvalidTextLengthException;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
@@ -165,26 +164,20 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
     }
 
     @Override
-    boolean equals0(final Object other) {
-        return this.equals1(Cast.to(other));
+    boolean equals0(final Object other,
+                    final boolean includeKind) {
+        return this.equals1(
+                (SpreadsheetLabelName) other
+        );
     }
 
     private boolean equals1(final SpreadsheetLabelName other) {
-        return this.compareTo(other) == 0;
+        return this.name.equals(other.name);
     }
 
     @Override
     public String toString() {
         return this.name;
-    }
-
-    /**
-     * Delegates to {@link #equals0(Object)} which is equivalent because {@link SpreadsheetLabelName} has no
-     * {@link SpreadsheetReferenceKind} property.
-     */
-    @Override
-    boolean equalsIgnoreReferenceKind0(final Object other) {
-        return this.equals0(other);
     }
 
     /**

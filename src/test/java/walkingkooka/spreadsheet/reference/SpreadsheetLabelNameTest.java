@@ -286,6 +286,17 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
                 SpreadsheetLabelName.with(value));
     }
 
+    // equalsIgnoringReferenceKind...............................................................................................
+
+    @Test
+    public void testEqualsIgnoringReferenceKindDifferent() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "Label1",
+                "Label2",
+                false
+        );
+    }
+
     @Override
     SpreadsheetLabelName createSelection() {
         return this.createComparable();

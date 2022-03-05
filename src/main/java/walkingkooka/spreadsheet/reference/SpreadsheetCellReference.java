@@ -16,7 +16,6 @@
  */
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.Comparators;
 import walkingkooka.net.http.server.hateos.HateosResource;
@@ -297,13 +296,18 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     }
 
     @Override
-    boolean equals0(final Object other) {
-        return this.equals1(Cast.to(other));
+    boolean equals0(final Object other,
+                    final boolean includeKind) {
+        return this.equals1(
+                (SpreadsheetCellReference) other,
+                includeKind
+        );
     }
 
-    private boolean equals1(final SpreadsheetCellReference other) {
-        return this.column.equals(other.column) &&
-                this.row.equals(other.row);
+    private boolean equals1(final SpreadsheetCellReference other,
+                            final boolean includeKind) {
+        return this.column.equals1(other.column, includeKind) &&
+                this.row.equals1(other.row, includeKind);
     }
 
     @Override
@@ -319,20 +323,5 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return Comparators.EQUAL != result ?
                 result :
                 this.row.value - other.row.value;
-    }
-
-    // equalsIgnoreReferenceKind........................................................................................
-
-    /**
-     * Returns true if the other {@link SpreadsheetCellReference} is equal ignoring {@link SpreadsheetReferenceKind}.
-     */
-    @Override
-    boolean equalsIgnoreReferenceKind0(final Object other) {
-        return this.equalsIgnoreReferenceKind1((SpreadsheetCellReference) other);
-    }
-
-    private boolean equalsIgnoreReferenceKind1(final SpreadsheetCellReference other) {
-        return this.column.equalsIgnoreReferenceKind(other.column) &&
-                this.row.equalsIgnoreReferenceKind(other.row);
     }
 }

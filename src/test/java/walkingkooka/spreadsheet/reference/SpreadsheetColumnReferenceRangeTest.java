@@ -348,6 +348,44 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.checkNotEquals(SpreadsheetSelection.parseColumnRange("Y:Z"));
     }
 
+    // equalsIgnoringReferenceKind......................................................................................
+
+    @Test
+    public void testEqualsIgnoringReferenceKindBeginDifferentKind() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "A:C",
+                "$A:C",
+                true
+        );
+    }
+
+    @Test
+    public void testEqualsIgnoringReferenceKindBeginDifferent() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "A:C",
+                "B:C",
+                false
+        );
+    }
+
+    @Test
+    public void testEqualsIgnoringReferenceKindEndDifferentKind() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "A:C",
+                "A:$C",
+                true
+        );
+    }
+
+    @Test
+    public void testEqualsIgnoringReferenceKindEndDifferent() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "A:C",
+                "B:C",
+                false
+        );
+    }
+
     @Test
     public void testToString() {
         final SpreadsheetColumnReference lower = SpreadsheetColumnReference.parseColumn("B");

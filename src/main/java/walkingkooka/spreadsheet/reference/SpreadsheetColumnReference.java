@@ -246,13 +246,6 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return other instanceof SpreadsheetColumnReference;
     }
 
-    /**
-     * Returns true if the values ignoring the {@link SpreadsheetReferenceKind}.
-     */
-    public boolean equalsIgnoreReferenceKind(final SpreadsheetColumnReference other) {
-        return this.equalsIgnoreReferenceKind0(other);
-    }
-
     @Override
     public String toString() {
         return toString0(this.value, this.referenceKind());
