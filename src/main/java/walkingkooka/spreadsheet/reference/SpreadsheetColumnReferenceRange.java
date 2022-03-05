@@ -93,7 +93,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     public SpreadsheetColumnReferenceRange toRelative() {
         final SpreadsheetColumnReferenceRange relative = this.begin()
                 .toRelative()
-                .spreadsheetColumnRange(this.end()
+                .columnRange(this.end()
                         .toRelative());
         return this.equals(relative) ?
                 this :
