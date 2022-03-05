@@ -1197,6 +1197,44 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         this.checkNotEquals(this.range(COLUMN1, ROW1, COLUMN2, 99));
     }
 
+    // equalsIgnoringReferenceKind......................................................................................
+
+    @Test
+    public void testEqualsIgnoringReferenceKindBeginDifferentKind() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "A1:C3",
+                "$A$1:C3",
+                true
+        );
+    }
+
+    @Test
+    public void testEqualsIgnoringReferenceKindBeginDifferent() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "A1:C3",
+                "B2:C3",
+                false
+        );
+    }
+
+    @Test
+    public void testEqualsIgnoringReferenceKindEndDifferentKind() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "A1:C3",
+                "A1:$C$3",
+                true
+        );
+    }
+
+    @Test
+    public void testEqualsIgnoringReferenceKindEndDifferent() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "A1:C3",
+                "B2:C3",
+                false
+        );
+    }
+
     // toString.........................................................................................................
 
     @Test

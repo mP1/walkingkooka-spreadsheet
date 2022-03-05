@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.HasRange;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
@@ -374,12 +373,18 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     }
 
     @Override
-    boolean equals0(final Object other) {
-        return this.equals1(Cast.to(other));
+    boolean equals0(final Object other,
+                    final boolean includeKind) {
+        return this.equals1(
+                (SpreadsheetCellRange) other,
+                includeKind
+        );
     }
 
-    private boolean equals1(final SpreadsheetCellRange other) {
-        return this.range.equals(other.range);
+    private boolean equals1(final SpreadsheetCellRange other,
+                            final boolean includeKind) {
+        return this.begin().equals0(other.begin(), includeKind) &&
+                this.end().equals0(other.end(), includeKind);
     }
 
     // toString........................................................................................................
@@ -389,18 +394,6 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
         return this.isSingleCell() ?
                 this.begin().toString() :
                 this.begin() + SEPARATOR.string() + this.end();
-    }
-
-    // equalsIgnoreReferenceKind........................................................................................
-
-    @Override
-    boolean equalsIgnoreReferenceKind0(final Object other) {
-        return this.equalsIgnoreReferenceKind1((SpreadsheetCellRange) other);
-    }
-
-    private boolean equalsIgnoreReferenceKind1(final SpreadsheetCellRange other) {
-        return this.begin().equalsIgnoreReferenceKind(other.begin()) &&
-                this.end().equalsIgnoreReferenceKind(other.end());
     }
 
     // toRelative.......................................................................................................

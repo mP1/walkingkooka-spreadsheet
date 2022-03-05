@@ -236,13 +236,6 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return other instanceof SpreadsheetRowReference;
     }
 
-    /**
-     * Returns true if the values ignoring the {@link SpreadsheetReferenceKind}.
-     */
-    public boolean equalsIgnoreReferenceKind(final SpreadsheetRowReference other) {
-        return this.equalsIgnoreReferenceKind0(other);
-    }
-
     @Override
     public String toString() {
         // in text form columns start at 1 but internally are zero based.

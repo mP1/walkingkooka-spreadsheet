@@ -516,12 +516,30 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     public final boolean equals(final Object other) {
         return this == other ||
                 this.canBeEqual(other) &&
-                        this.equals0(other);
+                        this.equals0(
+                                other,
+                                true
+                        );
+    }
+
+    /**
+     * Tests if two {@link SpreadsheetSelection} are equal ignoring the {@link SpreadsheetReferenceKind} if one is present.
+     */
+    public final boolean equalsIgnoreReferenceKind(final Object other) {
+        return this == other ||
+                this.canBeEqual(other) &&
+                        this.equals0(
+                                other,
+                                false
+                        );
     }
 
     abstract boolean canBeEqual(final Object other);
 
-    abstract boolean equals0(final Object other);
+    abstract boolean equals0(final Object other,
+                             final boolean includeKind);
+
+    // Object...........................................................................................................
 
     @Override
     abstract public String toString();

@@ -125,12 +125,18 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     }
 
     @Override
-    final boolean equals0(final Object other) {
-        return this.equals1(Cast.to(other));
+    boolean equals0(final Object other,
+                    final boolean includeKind) {
+        return this.equals1(
+                (SpreadsheetColumnOrRowReferenceRange<?>) other,
+                includeKind
+        );
     }
 
-    private boolean equals1(final SpreadsheetColumnOrRowReferenceRange<?> other) {
-        return this.range.equals(other.range);
+    private boolean equals1(final SpreadsheetColumnOrRowReferenceRange<?> other,
+                            final boolean includeKind) {
+        return this.begin().equals0(other.begin(), includeKind) &&
+                this.end().equals0(other.end(), includeKind);
     }
 
     // toString........................................................................................................

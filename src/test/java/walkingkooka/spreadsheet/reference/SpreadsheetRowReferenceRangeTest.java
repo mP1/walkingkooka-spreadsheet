@@ -357,6 +357,44 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.checkNotEquals(SpreadsheetSelection.parseRowRange("55:66"));
     }
 
+    // equalsIgnoringReferenceKind......................................................................................
+
+    @Test
+    public void testEqualsIgnoringReferenceKindBeginDifferentKind() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "1:3",
+                "$1:3",
+                true
+        );
+    }
+
+    @Test
+    public void testEqualsIgnoringReferenceKindBeginDifferent() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "1:3",
+                "2:3",
+                false
+        );
+    }
+
+    @Test
+    public void testEqualsIgnoringReferenceKindEndDifferentKind() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "1:3",
+                "1:$3",
+                true
+        );
+    }
+
+    @Test
+    public void testEqualsIgnoringReferenceKindEndDifferent() {
+        this.equalsIgnoringReferenceKindAndCheck(
+                "1:3",
+                "2:3",
+                false
+        );
+    }
+
     @Test
     public void testToString() {
         final SpreadsheetRowReference lower = SpreadsheetRowReference.parseRow("2");

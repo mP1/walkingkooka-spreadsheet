@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.Cast;
 import walkingkooka.Value;
 
 import java.util.Comparator;
@@ -140,23 +139,21 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     }
 
     @Override
-    boolean equals0(final Object other) {
-        return this.equals1(Cast.to(other));
+    boolean equals0(final Object other,
+                    final boolean includeKind) {
+        return this.equals1(
+                (SpreadsheetColumnOrRowReference) other,
+                includeKind
+        );
     }
 
-    private boolean equals1(final SpreadsheetColumnOrRowReference other) {
-        return this.equalsValue(other) &&
-                this.referenceKind == other.referenceKind;
+    boolean equals1(final SpreadsheetColumnOrRowReference other,
+                    final boolean includeKind) {
+        return this.value == other.value &&
+                (includeKind ? this.referenceKind == other.referenceKind : true);
     }
 
-    final boolean equalsValue(final SpreadsheetColumnOrRowReference other) {
-        return this.value == other.value;
-    }
-
-    final boolean equalsIgnoreReferenceKind0(final SpreadsheetColumnOrRowReference other) {
-        return this == other ||
-                (null != other && this.equalsValue(Cast.to(other)));
-    }
+    // Comparable.......................................................................................................
 
     static void checkOther(final SpreadsheetColumnOrRowReference other) {
         Objects.requireNonNull(other, "other");
