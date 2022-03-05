@@ -102,32 +102,32 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.checkEquals(selection, viewportSelection.selection(), "selection");
     }
 
-    // equalsIgnoringReferenceKind...............................................................................................
+    // equalsIgnoreReferenceKind.................................................................................................
 
     @Test
-    public void testEqualsIgnoringReferenceKindSame() {
+    public void testEqualsIgnoreReferenceKindSame() {
         final S selection = this.createSelection();
 
-        this.equalsIgnoringReferenceKindAndCheck(
+        this.equalsIgnoreReferenceKindAndCheck(
                 selection,
                 selection,
                 true
         );
     }
 
-    final void equalsIgnoringReferenceKindAndCheck(final String left,
-                                                   final String right,
-                                                   final boolean expected) {
-        this.equalsIgnoringReferenceKindAndCheck(
+    final void equalsIgnoreReferenceKindAndCheck(final String left,
+                                                 final String right,
+                                                 final boolean expected) {
+        this.equalsIgnoreReferenceKindAndCheck(
                 this.parseString(left),
                 this.parseString(right),
                 expected
         );
     }
 
-    final void equalsIgnoringReferenceKindAndCheck(final S left,
-                                                   final S right,
-                                                   final boolean expected) {
+    final void equalsIgnoreReferenceKindAndCheck(final S left,
+                                                 final S right,
+                                                 final boolean expected) {
         this.checkEquals(
                 expected,
                 left.equalsIgnoreReferenceKind(right),

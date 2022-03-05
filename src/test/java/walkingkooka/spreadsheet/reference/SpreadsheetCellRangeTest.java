@@ -1012,7 +1012,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         );
     }
 
-    // equalsIgnoreReferenceKind........................................................................................
+    // equalsIgnoreReferenceKind..........................................................................................
 
     @Test
     public void testEqualsIgnoreReferenceKindDifferentValuesFalse() {
@@ -1061,14 +1061,6 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         this.equalsIgnoreReferenceKindAndCheck("$C3:$D4",
                 "$C4:$D4",
                 false);
-    }
-
-    private void equalsIgnoreReferenceKindAndCheck(final String range1,
-                                                   final String range2,
-                                                   final boolean expected) {
-        this.equalsIgnoreReferenceKindAndCheck(SpreadsheetCellRange.parseCellRange(range1),
-                SpreadsheetCellRange.parseCellRange(range2),
-                expected);
     }
 
     // toRelative.......................................................................................................
@@ -1197,11 +1189,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         this.checkNotEquals(this.range(COLUMN1, ROW1, COLUMN2, 99));
     }
 
-    // equalsIgnoringReferenceKind......................................................................................
+    // equalsIgnoreReferenceKind........................................................................................
 
     @Test
-    public void testEqualsIgnoringReferenceKindBeginDifferentKind() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindBeginDifferentKind() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "A1:C3",
                 "$A$1:C3",
                 true
@@ -1209,8 +1201,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testEqualsIgnoringReferenceKindBeginDifferent() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindBeginDifferent() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "A1:C3",
                 "B2:C3",
                 false
@@ -1218,8 +1210,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testEqualsIgnoringReferenceKindEndDifferentKind() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindEndDifferentKind() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "A1:C3",
                 "A1:$C$3",
                 true
@@ -1227,8 +1219,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testEqualsIgnoringReferenceKindEndDifferent() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindEndDifferent() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "A1:C3",
                 "B2:C3",
                 false

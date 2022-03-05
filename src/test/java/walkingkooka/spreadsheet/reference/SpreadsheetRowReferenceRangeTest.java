@@ -357,11 +357,11 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.checkNotEquals(SpreadsheetSelection.parseRowRange("55:66"));
     }
 
-    // equalsIgnoringReferenceKind......................................................................................
+    // equalsIgnoreReferenceKind........................................................................................
 
     @Test
-    public void testEqualsIgnoringReferenceKindBeginDifferentKind() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindBeginDifferentKind() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "1:3",
                 "$1:3",
                 true
@@ -369,8 +369,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testEqualsIgnoringReferenceKindBeginDifferent() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindBeginDifferent() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "1:3",
                 "2:3",
                 false
@@ -378,8 +378,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testEqualsIgnoringReferenceKindEndDifferentKind() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindEndDifferentKind() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "1:3",
                 "1:$3",
                 true
@@ -387,8 +387,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testEqualsIgnoringReferenceKindEndDifferent() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindEndDifferent() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "1:3",
                 "2:3",
                 false

@@ -515,11 +515,11 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.unmarshallAndCheck(JsonNode.string("2"), SpreadsheetReferenceKind.RELATIVE.row(1));
     }
 
-    // equalsIgnoreReferenceKind........................................................................................
+    // equalsIgnoreReferenceKind..........................................................................................
 
     @Test
-    public void testEqualsIgnoringReferenceKindDifferentKind() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindDifferentKind() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "1",
                 "$1",
                 true
@@ -527,8 +527,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testEqualsIgnoringReferenceKindDifferent() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindDifferent() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "1",
                 "2",
                 false

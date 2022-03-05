@@ -249,7 +249,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
         this.checkEquals("13542", b.toString());
     }
 
-    // equalsIgnoreReferenceKind.......................................................................................
+    // equalsIgnoreReferenceKind.........................................................................................
 
     @Test
     public void testEqualsIgnoreReferenceDifferentName() {
@@ -286,11 +286,11 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
                 SpreadsheetLabelName.with(value));
     }
 
-    // equalsIgnoringReferenceKind...............................................................................................
+    // equalsIgnoreReferenceKind.................................................................................................
 
     @Test
-    public void testEqualsIgnoringReferenceKindDifferent() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindDifferent() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "Label1",
                 "Label2",
                 false
