@@ -83,6 +83,14 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
         return this.navigation;
     }
 
+    public SpreadsheetViewportSelection setNavigation(final Optional<SpreadsheetViewportSelectionNavigation> navigation) {
+        Objects.requireNonNull(navigation, "navigation");
+
+        return this.navigation.equals(navigation) ?
+                this :
+                new SpreadsheetViewportSelection(this.selection, this.anchor, navigation);
+    }
+
     private final Optional<SpreadsheetViewportSelectionNavigation> navigation;
 
     // TreePrintable....................................................................................................
