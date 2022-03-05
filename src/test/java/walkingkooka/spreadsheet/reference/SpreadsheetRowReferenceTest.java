@@ -481,7 +481,12 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("2");
 
         this.checkEquals(
-                SpreadsheetRowReferenceRange.with(Range.greaterThanEquals(upper)),
+                SpreadsheetRowReferenceRange.with(
+                        Range.greaterThanEquals(lower)
+                                .and(
+                                        Range.lessThanEquals(upper)
+                                )
+                ),
                 lower.rowRange(upper),
                 () -> lower + " rowRange " + upper
         );
