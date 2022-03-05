@@ -84,7 +84,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     public SpreadsheetRowReferenceRange toRelative() {
         final SpreadsheetRowReferenceRange relative = this.begin()
                 .toRelative()
-                .spreadsheetRowRange(this.end()
+                .rowRange(this.end()
                         .toRelative());
         return this.equals(relative) ?
                 this :

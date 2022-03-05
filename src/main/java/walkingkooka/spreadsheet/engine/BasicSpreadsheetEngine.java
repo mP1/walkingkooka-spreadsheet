@@ -1127,7 +1127,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             bottomRow = bottomRow.addSaturated(+1);
         }
 
-        return topRow.spreadsheetRowRange(bottomRow);
+        return topRow.rowRange(bottomRow);
     }
 
     double sumColumnWidths(final SpreadsheetColumnReference start,

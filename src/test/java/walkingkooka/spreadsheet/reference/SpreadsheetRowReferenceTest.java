@@ -103,7 +103,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
-    // spreadsheetRowRange..............................................................................................
+    // rowRange..............................................................................................
 
     @Test
     public void testSpreadsheetRowRange() {
@@ -112,7 +112,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
         this.checkEquals(
                 SpreadsheetSelection.parseRowRange("2:4"),
-                lower.spreadsheetRowRange(upper)
+                lower.rowRange(upper)
         );
     }
 
@@ -124,7 +124,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
         this.checkEquals(
                 SpreadsheetSelection.parseRowRange("2"),
-                row.toSpreadsheetRowReferenceRange()
+                row.rowRange()
         );
     }
 
@@ -470,6 +470,31 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 SpreadsheetRowReference.parseRow(row),
                 SpreadsheetCellRange.parseCellRange(range),
                 expected
+        );
+    }
+
+    // rowRange...................................................................................................,,,
+
+    @Test
+    public void testRowRangeSpreadsheetRowRange() {
+        final SpreadsheetRowReference lower = SpreadsheetSelection.parseRow("1");
+        final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("2");
+
+        this.checkEquals(
+                SpreadsheetRowReferenceRange.with(Range.greaterThanEquals(upper)),
+                lower.rowRange(upper),
+                () -> lower + " rowRange " + upper
+        );
+    }
+
+    @Test
+    public void testRowRange() {
+        final SpreadsheetRowReference row = this.createSelection();
+
+        this.checkEquals(
+                SpreadsheetRowReferenceRange.with(Range.singleton(row)),
+                row.rowRange(),
+                () -> row + ".rowRange"
         );
     }
 
