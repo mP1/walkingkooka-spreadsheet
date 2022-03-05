@@ -340,6 +340,32 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // isSingle.........................................................................................................
+
+    @Test
+    public void testIsSingleTrue() {
+        this.isSingleAndCheck(
+                "1:1",
+                true
+        );
+    }
+
+    @Test
+    public void testIsSingleDifferentReferenceKindTrue() {
+        this.isSingleAndCheck(
+                "1:$1",
+                true
+        );
+    }
+
+    @Test
+    public void testIsSingleFalse() {
+        this.isSingleAndCheck(
+                "1:$2",
+                false
+        );
+    }
+
     // json.............................................................................................................
 
     @Test

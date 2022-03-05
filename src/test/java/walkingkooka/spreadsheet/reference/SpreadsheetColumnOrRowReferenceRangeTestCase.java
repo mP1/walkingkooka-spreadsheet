@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
-import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.compare.ComparableTesting2;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -65,6 +64,15 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
                 expected,
                 range.count(),
                 () -> range + " count"
+        );
+    }
+
+    final void isSingleAndCheck(final String range,
+                                final boolean expected) {
+        this.checkEquals(
+                expected,
+                this.parseString(range).isSingle(),
+                () -> range + "  isSingle"
         );
     }
 }

@@ -96,7 +96,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
      * Returns true only if this range covers a single column/row.
      */
     public final boolean isSingle() {
-        return this.begin().equals(this.end());
+        return this.begin().equalsIgnoreReferenceKind(this.end());
     }
 
     // Iterable.........................................................................................................
