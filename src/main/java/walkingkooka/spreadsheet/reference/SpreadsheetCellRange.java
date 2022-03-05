@@ -203,7 +203,8 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
      * Returns true only if this range covers a single cell.
      */
     public boolean isSingleCell() {
-        return this.begin().equals(this.end());
+        return this.begin()
+                .equalsIgnoreReferenceKind(this.end());
     }
 
     /**

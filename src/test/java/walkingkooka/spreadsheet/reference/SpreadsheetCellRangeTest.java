@@ -93,7 +93,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         assertSame(range, spreadsheetCellRange.range(), "range");
         this.checkEquals(begin, spreadsheetCellRange.begin(), "begin");
         this.checkEquals(end, spreadsheetCellRange.end(), "end");
-        this.checkIsSingleCell(spreadsheetCellRange, false);
+        this.isSingleCellAndCheck(spreadsheetCellRange, false);
     }
 
     @Test
@@ -105,7 +105,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
         final SpreadsheetCellRange range = this.range(column1, row1, column2, row2);
         this.check(range, column2, row1, column1, row2, 99 - 3 + 1, 4 - 2 + 1);
-        this.checkIsSingleCell(range, false);
+        this.isSingleCellAndCheck(range, false);
     }
 
     @Test
@@ -117,7 +117,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
         final SpreadsheetCellRange range = this.range(column1, row1, column2, row2);
         this.check(range, column1, row2, column2, row1, 3 - 1 + 1, 99 - 4 + 1);
-        this.checkIsSingleCell(range, false);
+        this.isSingleCellAndCheck(range, false);
     }
 
     @Test
@@ -129,7 +129,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
         final SpreadsheetCellRange range = this.range(column1, row1, column2, row2);
         this.check(range, column2, row2, column1, row1, 88 - 3 + 1, 99 - 4 + 1);
-        this.checkIsSingleCell(range, false);
+        this.isSingleCellAndCheck(range, false);
     }
 
     // isSingleCell...........................................................
@@ -144,7 +144,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
         final SpreadsheetCellRange range = this.range(column1, row1, column2, row2);
         this.check(range, column1, row1, column2, row2, 1, 1);
-        this.checkIsSingleCell(range, true);
+        this.isSingleCellAndCheck(range, true);
     }
 
     @Test
@@ -155,7 +155,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         final int row2 = 99;
 
         final SpreadsheetCellRange range = this.range(column1, row1, column2, row2);
-        this.checkIsSingleCell(range, false);
+        this.isSingleCellAndCheck(range, false);
     }
 
     // setRange.....................................................................................
@@ -1012,6 +1012,57 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         );
     }
 
+    // isSingleCell.....................................................................................................
+
+    @Test
+    public void testIsSingleCellSame() {
+        this.isSingleCellAndCheck(
+                "A1:A1",
+                true
+        );
+    }
+
+    @Test
+    public void testIsSingleCellDifferentReferenceKind() {
+        this.isSingleCellAndCheck(
+                "A1:$A$1",
+                true
+        );
+    }
+
+    @Test
+    public void testIsSingleCellDifferentReferenceKind2() {
+        this.isSingleCellAndCheck(
+                "$A$1:A1",
+                true
+        );
+    }
+
+    @Test
+    public void testIsSingleCellDifferent() {
+        this.isSingleCellAndCheck(
+                "A1:B2",
+                false
+        );
+    }
+
+    private void isSingleCellAndCheck(final String range,
+                                      final boolean expected) {
+        this.isSingleCellAndCheck(
+                this.parseString(range),
+                expected
+        );
+    }
+
+    private void isSingleCellAndCheck(final SpreadsheetCellRange range,
+                                      final boolean expected) {
+        this.checkEquals(
+                expected,
+                range.isSingleCell(),
+                () -> range + "  isSingleCell"
+        );
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test
@@ -1479,10 +1530,6 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     private void checkHeight(final SpreadsheetCellRange range, final int height) {
         this.checkEquals(height, range.height(), () -> "range height=" + range);
-    }
-
-    private void checkIsSingleCell(final SpreadsheetCellRange range, final boolean expected) {
-        this.checkEquals(expected, range.isSingleCell(), () -> "range=" + range + " isSingleCell");
     }
 
     // ClassTesting.....................................................................................................
