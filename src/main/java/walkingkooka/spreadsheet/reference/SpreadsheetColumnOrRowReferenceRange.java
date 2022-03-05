@@ -99,6 +99,13 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
         return this.begin().equalsIgnoreReferenceKind(this.end());
     }
 
+    @Override
+    public SpreadsheetSelection simplify() {
+        return this.isSingle() ?
+                this.begin() :
+                this;
+    }
+
     // Iterable.........................................................................................................
 
     @Override

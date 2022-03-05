@@ -318,6 +318,38 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.checkEquals("132", b.toString());
     }
 
+    // simplify.........................................................................................................
+
+    @Test
+    public void testSimplifyDifferentBeginAndEnd() {
+        this.simplifyAndCheck(
+                "1:2"
+        );
+    }
+
+    @Test
+    public void testSimplifyBeginAndEndDifferentKind() {
+        this.simplifyAndCheck(
+                "1:$2"
+        );
+    }
+
+    @Test
+    public void testSimplifyBeginAndEndSame() {
+        this.simplifyAndCheck(
+                "1:1",
+                SpreadsheetSelection.parseRow("1")
+        );
+    }
+
+    @Test
+    public void testSimplifyBeginAndEndSame2() {
+        this.simplifyAndCheck(
+                "$1:1",
+                SpreadsheetSelection.parseRow("$1")
+        );
+    }
+
     // IterableTesting..................................................................................................
 
     @Test

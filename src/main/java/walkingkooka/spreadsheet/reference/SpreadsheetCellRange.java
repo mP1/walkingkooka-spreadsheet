@@ -272,6 +272,13 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
         return Optional.of(SpreadsheetViewportSelectionAnchor.TOP_LEFT);
     }
 
+    @Override
+    public SpreadsheetSelection simplify() {
+        return this.isSingleCell() ?
+                this.begin() :
+                this;
+    }
+
     // SpreadsheetExpressionReference...................................................................................
 
     @Override

@@ -28,6 +28,15 @@ public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<S extends Spre
         super();
     }
 
+    // simplify.........................................................................................................
+
+    @Test
+    public final void testSimplify() {
+        this.simplifyAndCheck(
+                this.createSelection()
+        );
+    }
+
     // SpreadsheetViewport.........................................................................................
 
     @Test
