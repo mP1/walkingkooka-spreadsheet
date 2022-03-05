@@ -161,31 +161,6 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
-    // columnRange..............................................................................................
-
-    @Test
-    public void testSpreadsheetColumnRange() {
-        final SpreadsheetColumnReference lower = SpreadsheetSelection.parseColumn("B");
-        final SpreadsheetColumnReference upper = SpreadsheetSelection.parseColumn("D");
-
-        this.checkEquals(
-                SpreadsheetSelection.parseColumnRange("B:D"),
-                lower.columnRange(upper)
-        );
-    }
-
-    // toSpreadsheetColumnRange..............................................................................................
-
-    @Test
-    public void testToSpreadsheetColumnRange() {
-        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("C");
-
-        this.checkEquals(
-                SpreadsheetSelection.parseColumnRange("C"),
-                column.columnRange()
-        );
-    }
-
     // toRelative........................................................................................................
 
     @Test
