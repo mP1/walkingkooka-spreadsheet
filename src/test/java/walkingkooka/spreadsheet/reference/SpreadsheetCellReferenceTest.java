@@ -844,11 +844,11 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    // equalsIgnoringReferenceKind......................................................................................
+    // equalsIgnoreReferenceKind........................................................................................
 
     @Test
-    public void testEqualsIgnoringReferenceKindDifferentKind() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindDifferentKind() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "A1",
                 "$A$1",
                 true
@@ -856,8 +856,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testEqualsIgnoringReferenceKindDifferent() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindDifferent() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "A1",
                 "B2",
                 false

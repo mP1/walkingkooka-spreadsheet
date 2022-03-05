@@ -588,11 +588,11 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
                 () -> "min of " + reference + " and " + other);
     }
 
-    // equalsIgnoreReferenceKind........................................................................................
+    // equalsIgnoreReferenceKind..........................................................................................
 
     @Test
-    public void testEqualsIgnoringReferenceKindDifferentKind() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindDifferentKind() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "A",
                 "$A",
                 true
@@ -600,8 +600,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testEqualsIgnoringReferenceKindDifferent() {
-        this.equalsIgnoringReferenceKindAndCheck(
+    public void testEqualsIgnoreReferenceKindDifferent() {
+        this.equalsIgnoreReferenceKindAndCheck(
                 "A",
                 "B",
                 false

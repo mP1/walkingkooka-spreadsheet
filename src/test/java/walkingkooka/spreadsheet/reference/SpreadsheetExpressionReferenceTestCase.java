@@ -25,7 +25,7 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
         super();
     }
 
-    // equalsIgnoreReferenceKind........................................................................................
+    // equalsIgnoreReferenceKind..........................................................................................
 
     @Test
     public final void testEqualsIgnoreReferenceKindNullFalse() {
