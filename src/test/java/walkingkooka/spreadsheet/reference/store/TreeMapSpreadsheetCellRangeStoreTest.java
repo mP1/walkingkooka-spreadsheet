@@ -35,27 +35,27 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     private final static SpreadsheetCellReference TOPLEFT1 = SpreadsheetCellRangeStoreTesting.cell(10, 20);
     private final static SpreadsheetCellReference CENTER1 = TOPLEFT1.add(1, 1);
     private final static SpreadsheetCellReference BOTTOMRIGHT1 = CENTER1.add(1, 1);
-    private final static SpreadsheetCellRange RANGE1A = TOPLEFT1.spreadsheetCellRange(BOTTOMRIGHT1);
-    private final static SpreadsheetCellRange RANGE1B = TOPLEFT1.spreadsheetCellRange(BOTTOMRIGHT1.add(1, 1));
-    private final static SpreadsheetCellRange RANGE1C = CENTER1.spreadsheetCellRange(BOTTOMRIGHT1);
+    private final static SpreadsheetCellRange RANGE1A = TOPLEFT1.cellRange(BOTTOMRIGHT1);
+    private final static SpreadsheetCellRange RANGE1B = TOPLEFT1.cellRange(BOTTOMRIGHT1.add(1, 1));
+    private final static SpreadsheetCellRange RANGE1C = CENTER1.cellRange(BOTTOMRIGHT1);
 
     private final static SpreadsheetCellRange RANGE1AABSOLUTE = TOPLEFT1.toAbsolute()
-            .spreadsheetCellRange(BOTTOMRIGHT1.toAbsolute());
+            .cellRange(BOTTOMRIGHT1.toAbsolute());
 
     private final static SpreadsheetCellReference TOPLEFT2 = SpreadsheetCellRangeStoreTesting.cell(30, 40);
     private final static SpreadsheetCellReference CENTER2 = TOPLEFT2.add(1, 1);
     private final static SpreadsheetCellReference BOTTOMRIGHT2 = CENTER2.add(2, 2);
-    private final static SpreadsheetCellRange RANGE2A = TOPLEFT2.spreadsheetCellRange(BOTTOMRIGHT2);
+    private final static SpreadsheetCellRange RANGE2A = TOPLEFT2.cellRange(BOTTOMRIGHT2);
 
-    private final static SpreadsheetCellRange RANGE2B = CENTER1.spreadsheetCellRange(BOTTOMRIGHT2);
+    private final static SpreadsheetCellRange RANGE2B = CENTER1.cellRange(BOTTOMRIGHT2);
 
     private final static SpreadsheetCellReference TOPLEFT3 = SpreadsheetCellRangeStoreTesting.cell(50, 60);
     private final static SpreadsheetCellReference CENTER3 = TOPLEFT3.add(1, 1);
     private final static SpreadsheetCellReference BOTTOMRIGHT3 = CENTER3.add(2, 2);
-    private final static SpreadsheetCellRange RANGE3 = TOPLEFT3.spreadsheetCellRange(BOTTOMRIGHT3);
+    private final static SpreadsheetCellRange RANGE3 = TOPLEFT3.cellRange(BOTTOMRIGHT3);
 
     private final static SpreadsheetCellRange RANGE4 = SpreadsheetCellRangeStoreTesting.cell(70, 70)
-            .spreadsheetCellRange(SpreadsheetCellRangeStoreTesting.cell(80, 80));
+            .cellRange(SpreadsheetCellRangeStoreTesting.cell(80, 80));
 
     private final static String VALUE1 = "value1";
     private final static String VALUE2 = "value2";

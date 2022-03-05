@@ -87,7 +87,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
             }
         }
 
-        return left.setRow(top).spreadsheetCellRange(right.setRow(bottom));
+        return left.setRow(top).cellRange(right.setRow(bottom));
     }
 
     /**
@@ -276,7 +276,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     }
 
     @Override
-    public SpreadsheetCellRange toRange() {
+    public SpreadsheetCellRange cellRange() {
         return this;
     }
 
@@ -404,7 +404,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     public SpreadsheetCellRange toRelative() {
         final SpreadsheetCellRange relative = this.begin()
                 .toRelative()
-                .spreadsheetCellRange(this.end()
+                .cellRange(this.end()
                         .toRelative());
         return this.equals(relative) ?
                 this :

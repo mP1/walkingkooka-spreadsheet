@@ -134,7 +134,6 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return SpreadsheetRow.with(this);
     }
 
-
     public String hateosLinkId() {
         return String.valueOf(this.value + 1);
     }

@@ -169,10 +169,10 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
     }
 
     @Test
-    public void testToRangeFails() {
+    public void testCellRangeFails() {
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> SpreadsheetLabelName.with("Label123").toRange()
+                () -> SpreadsheetLabelName.with("Label123").cellRange()
         );
     }
 

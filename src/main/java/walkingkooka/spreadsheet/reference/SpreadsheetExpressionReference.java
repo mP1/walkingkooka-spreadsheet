@@ -39,7 +39,7 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     /**
      * Converts this cell or range into a range. Cells will become a range of itself while range returns itself
      */
-    public abstract SpreadsheetCellRange toRange();
+    public abstract SpreadsheetCellRange cellRange();
 
     // equals...........................................................................................................
 

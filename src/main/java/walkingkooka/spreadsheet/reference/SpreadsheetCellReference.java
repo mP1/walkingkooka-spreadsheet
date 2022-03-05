@@ -205,7 +205,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return range.test(this);
     }
 
-    // range/spreadsheetCellRange.......................................................................................
+    // range/cellRange.......................................................................................
 
     /**
      * Creates a {@link Range} from the this and the other {@link SpreadsheetCellReference}.
@@ -232,7 +232,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     /**
      * Creates a {@link SpreadsheetCellRange} from the this and the other {@link SpreadsheetCellReference}.
      */
-    public SpreadsheetCellRange spreadsheetCellRange(final SpreadsheetCellReference other) {
+    public SpreadsheetCellRange cellRange(final SpreadsheetCellReference other) {
         return SpreadsheetCellRange.with(this.range(other));
     }
 
@@ -240,8 +240,8 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
      * Returns a {@link SpreadsheetCellRange} holding only this cell.
      */
     @Override
-    public SpreadsheetCellRange toRange() {
-        return SpreadsheetCellRange.with(Range.singleton(this));
+    public SpreadsheetCellRange cellRange() {
+        return this.cellRange(this);
     }
 
     // HateosResource...................................................................................................

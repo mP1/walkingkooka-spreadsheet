@@ -130,7 +130,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
     }
 
     private SpreadsheetCellRange rangeC1C2() {
-        return this.cellC1().spreadsheetCellRange(this.cellC2());
+        return this.cellC1().cellRange(this.cellC2());
     }
 
     private SpreadsheetCellReference cellC1() {

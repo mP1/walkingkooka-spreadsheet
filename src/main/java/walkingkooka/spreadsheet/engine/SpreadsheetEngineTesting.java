@@ -234,7 +234,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testFillCellsNullCellsFails() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
-        final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
+        final SpreadsheetCellRange range = reference.cellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(null,
                 range,
@@ -249,7 +249,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
+        final SpreadsheetCellRange range = reference.cellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 null,
@@ -264,7 +264,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
+        final SpreadsheetCellRange range = reference.cellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
@@ -279,7 +279,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRange range = reference.spreadsheetCellRange(reference);
+        final SpreadsheetCellRange range = reference.cellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
