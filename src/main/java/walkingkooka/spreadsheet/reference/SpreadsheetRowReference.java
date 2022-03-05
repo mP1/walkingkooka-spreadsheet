@@ -183,7 +183,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
                 this.compareTo(range.end().row()) <= 0;
     }
 
-    // range/spreadsheetRowRange.......................................................................................
+    // range/rowRange.......................................................................................
 
     /**
      * Creates a {@link Range} from the this and the other {@link SpreadsheetRowReference}.
@@ -198,14 +198,14 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     /**
      * Creates a {@link SpreadsheetRowReferenceRange} from the this and the other {@link SpreadsheetRowReference}.
      */
-    public SpreadsheetRowReferenceRange spreadsheetRowRange(final SpreadsheetRowReference other) {
+    public SpreadsheetRowReferenceRange rowRange(final SpreadsheetRowReference other) {
         return SpreadsheetRowReferenceRange.with(this.range(other));
     }
 
     /**
      * Returns a {@link SpreadsheetRowReferenceRange} holding only this row.
      */
-    public SpreadsheetRowReferenceRange toSpreadsheetRowReferenceRange() {
+    public SpreadsheetRowReferenceRange rowRange() {
         return SpreadsheetRowReferenceRange.with(Range.singleton(this));
     }
 

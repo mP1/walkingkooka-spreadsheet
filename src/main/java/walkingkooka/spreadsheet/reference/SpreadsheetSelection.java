@@ -323,7 +323,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         return SpreadsheetSelection.parseRange(
                 text,
                 SpreadsheetSelection::parseRow,
-                SpreadsheetRowReference::spreadsheetRowRange
+                SpreadsheetRowReference::rowRange
         );
     }
 
