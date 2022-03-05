@@ -43,7 +43,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     SpreadsheetCellReference TOPLEFT = cell(10, 20);
     SpreadsheetCellReference CENTER = TOPLEFT.add(1, 1);
     SpreadsheetCellReference BOTTOMRIGHT = CENTER.add(1, 1);
-    SpreadsheetCellRange RANGE = TOPLEFT.spreadsheetCellRange(BOTTOMRIGHT);
+    SpreadsheetCellRange RANGE = TOPLEFT.cellRange(BOTTOMRIGHT);
 
     // tests.......................................................................................................
 

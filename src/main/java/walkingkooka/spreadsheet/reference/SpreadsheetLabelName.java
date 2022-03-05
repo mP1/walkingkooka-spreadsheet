@@ -102,7 +102,7 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
     }
 
     @Override
-    public SpreadsheetCellRange toRange() {
+    public SpreadsheetCellRange cellRange() {
         throw new UnsupportedOperationException();
     }
 

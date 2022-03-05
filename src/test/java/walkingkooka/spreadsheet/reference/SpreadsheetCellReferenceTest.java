@@ -398,104 +398,128 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         return columnKind.column(column).setRow(rowKind.row(row));
     }
 
-    // range.............................................................................................................
+    // cellRange........................................................................................................
 
     @Test
-    public void testRangeNullFails() {
-        assertThrows(NullPointerException.class, () -> this.cell(1, 1).spreadsheetCellRange(null));
+    public void testCellRangeNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.cell(1, 1)
+                        .cellRange((SpreadsheetCellReference) null)
+        );
     }
 
     @Test
-    public void testRangeOne() {
+    public void testCellRangeOne() {
         final SpreadsheetCellReference lower = this.cell(1, 1);
-        final SpreadsheetCellRange range = lower.spreadsheetCellRange(lower);
-        this.checkEquals(Range.singleton(lower), range.range());
+        final SpreadsheetCellRange range = lower.cellRange(lower);
+
+        this.checkEquals(
+                Range.singleton(lower),
+                range.range()
+        );
     }
 
     @Test
-    public void testRangeLeftTopRightBottom() {
+    public void testCellRangeLeftTopRightBottom() {
         final int left = 1;
         final int top = 2;
         final int right = 3;
         final int bottom = 4;
 
-        this.rangeAndCheck(this.cell(left, top),
+        this.cellRangeAndCheck(
+                this.cell(left, top),
                 this.cell(right, bottom),
                 left, top,
-                right, bottom);
+                right, bottom
+        );
     }
 
     @Test
-    public void testRangeLeftBottomRightTop() {
+    public void testCellRangeLeftBottomRightTop() {
         final int left = 1;
         final int top = 2;
         final int right = 3;
         final int bottom = 4;
 
-        this.rangeAndCheck(this.cell(left, bottom),
+        this.cellRangeAndCheck(
+                this.cell(left, bottom),
                 this.cell(right, top),
                 left, top,
-                right, bottom);
+                right, bottom
+        );
     }
 
     @Test
-    public void testRangeRightTopLeftBottom() {
+    public void testCellRangeRightTopLeftBottom() {
         final int left = 1;
         final int top = 2;
         final int right = 3;
         final int bottom = 4;
 
-        this.rangeAndCheck(this.cell(right, top),
+        this.cellRangeAndCheck(
+                this.cell(right, top),
                 this.cell(left, bottom),
                 left, top,
-                right, bottom);
+                right, bottom
+        );
     }
 
-    private void rangeAndCheck(final SpreadsheetCellReference cell,
-                               final SpreadsheetCellReference other,
-                               final int left,
-                               final int top,
-                               final int right,
-                               final int bottom) {
-        final Range<SpreadsheetCellReference> expected = Range.greaterThanEquals(this.cell(left, top)).and(Range.lessThanEquals(this.cell(right, bottom)));
+    private void cellRangeAndCheck(final SpreadsheetCellReference cell,
+                                   final SpreadsheetCellReference other,
+                                   final int left,
+                                   final int top,
+                                   final int right,
+                                   final int bottom) {
+        final Range<SpreadsheetCellReference> expected = Range.greaterThanEquals(
+                this.cell(left, top)
+        ).and(
+                Range.lessThanEquals(
+                        this.cell(right, bottom)
+                )
+        );
 
         final Range<SpreadsheetCellReference> range = cell.range(other);
-        this.checkEquals(expected,
+        this.checkEquals(
+                expected,
                 range,
-                () -> cell + " range " + other);
+                () -> cell + " range " + other
+        );
 
 
-        this.checkEquals(SpreadsheetCellRange.with(expected),
-                cell.spreadsheetCellRange(other),
-                () -> cell + " spreadsheetCellRange " + other);
+        this.checkEquals(
+                SpreadsheetCellRange.with(expected),
+                cell.cellRange(other),
+                () -> cell + " cellRange " + other
+        );
     }
 
-    // toRange...........................................................................................
+    // cellRange.......................................................................................................
 
     @Test
-    public void testToRangeAbsolute() {
-        this.toRangeAndCheck(
+    public void testCellRangeAbsolute() {
+        this.cellRangeAndCheck(
                 SpreadsheetCellReference.parseCell("$B$2"),
                 SpreadsheetCellRange.parseCellRange("$B$2")
         );
     }
 
     @Test
-    public void testToRangeRelative() {
+    public void testCellRangeRelative() {
         final String text = "C3";
 
-        this.toRangeAndCheck(
+        this.cellRangeAndCheck(
                 SpreadsheetCellReference.parseCell(text),
                 SpreadsheetCellRange.parseCellRange(text)
         );
     }
 
-    private void toRangeAndCheck(final SpreadsheetCellReference reference,
-                                 final SpreadsheetCellRange range) {
+    private void cellRangeAndCheck(final SpreadsheetCellReference reference,
+                                   final SpreadsheetCellRange range) {
         this.checkEquals(
                 range,
-                reference.toRange(),
-                () -> reference + " toRange()"
+                reference.cellRange(),
+                () -> reference + " cellRange()"
         );
     }
 

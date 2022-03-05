@@ -168,7 +168,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     @Test
     public void testSetRangeWithSame() {
         final SpreadsheetCellRange range = this.range();
-        assertSame(range, range.setRange(this.begin().spreadsheetCellRange(this.end()).range()));
+        assertSame(range, range.setRange(this.begin().cellRange(this.end()).range()));
     }
 
     @Test
@@ -1004,10 +1004,10 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testToRange() {
+    public void testCellRange() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("C3:Z99");
         assertSame(
-                range.toRange(),
+                range.cellRange(),
                 range
         );
     }

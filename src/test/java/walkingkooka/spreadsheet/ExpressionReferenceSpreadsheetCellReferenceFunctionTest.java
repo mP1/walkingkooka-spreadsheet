@@ -121,7 +121,7 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionTest imple
     }
 
     private SpreadsheetCellRange rangeC1C2() {
-        return this.cellC1().spreadsheetCellRange(this.cellC2());
+        return this.cellC1().cellRange(this.cellC2());
     }
 
     private SpreadsheetCellReference cellC1() {

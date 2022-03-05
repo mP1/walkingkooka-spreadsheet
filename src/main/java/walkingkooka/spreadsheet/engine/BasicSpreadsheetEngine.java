@@ -105,7 +105,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             this.loadCell0(reference, evaluation, changes, context);
             return this.prepareDelta(
                     changes,
-                    reference.toRange(),
+                    reference.cellRange(),
                     context
             );
         }
@@ -144,7 +144,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             changes.refreshUpdated();
             return this.prepareDelta(
                     changes,
-                    cell.reference().toRange(),
+                    cell.reference().cellRange(),
                     context
             );
         }

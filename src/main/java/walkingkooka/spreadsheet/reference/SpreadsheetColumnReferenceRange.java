@@ -66,7 +66,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
         final SpreadsheetRowReference rowEnd = row.end();
 
         return columnBegin.setRow(rowBegin)
-                .spreadsheetCellRange(
+                .cellRange(
                         columnEnd.setRow(rowEnd)
                 );
     }
