@@ -29,6 +29,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -347,6 +348,60 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 SpreadsheetViewportSelection.NO_NAVIGATION,
                 viewportSelection.navigation(),
                 "navigation"
+        );
+    }
+
+    // setNavigation.....................................................................................................
+
+    @Test
+    public void testSetNavigationNullFails() {
+        final SpreadsheetViewportSelection selection = this.createObject();
+        assertThrows(
+                NullPointerException.class,
+                () -> selection.setNavigation(null)
+        );
+    }
+
+    @Test
+    public void testSetNavigationSame() {
+        final SpreadsheetViewportSelection selection = this.createObject();
+        assertSame(
+                selection,
+                selection.setNavigation(selection.navigation())
+        );
+    }
+
+    @Test
+    public void testSetNavigationDifferent() {
+        final SpreadsheetViewportSelection selection = this.createObject();
+        final Optional<SpreadsheetViewportSelectionNavigation> navigation = Optional.of(
+                SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
+        );
+        this.checkNotEquals(
+                NAVIGATION,
+                navigation,
+                "different navigation"
+        );
+
+        final SpreadsheetViewportSelection differentSelection = selection.setNavigation(navigation);
+        assertNotSame(
+                selection,
+                differentSelection
+        );
+        this.checkEquals(
+                selection.selection(),
+                differentSelection.selection(),
+                "selection"
+        );
+        this.checkEquals(
+                selection.anchor(),
+                differentSelection.anchor(),
+                "anchor"
+        );
+        this.checkEquals(
+                navigation,
+                differentSelection.navigation(),
+                "navigation("
         );
     }
 
