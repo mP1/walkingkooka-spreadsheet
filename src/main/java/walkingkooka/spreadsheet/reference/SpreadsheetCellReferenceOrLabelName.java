@@ -46,11 +46,11 @@ abstract public class SpreadsheetCellReferenceOrLabelName extends SpreadsheetExp
         return ANCHORS;
     }
 
-    private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NON_RANGE);
+    private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
 
     @Override
     public final SpreadsheetViewportSelectionAnchor defaultAnchor() {
-        return SpreadsheetViewportSelectionAnchor.NON_RANGE;
+        return SpreadsheetViewportSelectionAnchor.NONE;
     }
 
     // SpreadsheetViewport........................................................................................

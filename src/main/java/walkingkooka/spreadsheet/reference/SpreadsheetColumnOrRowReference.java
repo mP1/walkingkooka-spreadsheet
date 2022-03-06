@@ -131,11 +131,11 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
         return ANCHORS;
     }
 
-    private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NON_RANGE);
+    private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
 
     @Override
     public final SpreadsheetViewportSelectionAnchor defaultAnchor() {
-        return SpreadsheetViewportSelectionAnchor.NON_RANGE;
+        return SpreadsheetViewportSelectionAnchor.NONE;
     }
 
     /**

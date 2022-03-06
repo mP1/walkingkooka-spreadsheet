@@ -399,7 +399,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
                 SpreadsheetMetadataPropertyName.SELECTION,
                 SpreadsheetCellReference.parseCell("A2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 

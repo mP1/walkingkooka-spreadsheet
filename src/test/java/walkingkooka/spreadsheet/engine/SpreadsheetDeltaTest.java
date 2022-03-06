@@ -359,7 +359,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.NO_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseColumn("C")
-                                .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
                 )
         );
     }
@@ -718,7 +718,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.NO_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseColumn("C")
-                                .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
                 )
         );
     }
@@ -984,7 +984,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.NO_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseColumn("C")
-                                .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
                 )
         );
     }
@@ -1269,7 +1269,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.NO_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseRow("3")
-                                .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
                 )
         );
     }

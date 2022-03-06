@@ -25,7 +25,7 @@ public enum SpreadsheetViewportSelectionAnchor {
     /**
      * This anchor is only for non range {@link SpreadsheetSelection}.
      */
-    NON_RANGE,
+    NONE,
     TOP_LEFT,
     TOP_RIGHT,
     BOTTOM_LEFT,

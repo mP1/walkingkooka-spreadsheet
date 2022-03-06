@@ -2074,7 +2074,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
                 SpreadsheetMetadataPropertyName.SELECTION,
                 SpreadsheetSelection.parseCell("A1")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Spreadsheet-name-123"));

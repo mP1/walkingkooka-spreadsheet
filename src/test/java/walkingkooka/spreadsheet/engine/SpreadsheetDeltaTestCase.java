@@ -740,7 +740,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallSelectionCell() {
         this.unmarshallSelectionAndCheck(
                 SpreadsheetSelection.parseCell("B2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
@@ -756,7 +756,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallSelectionColumn() {
         this.unmarshallSelectionAndCheck(
                 SpreadsheetSelection.parseColumn("B")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
@@ -772,7 +772,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallSelectionRow() {
         this.unmarshallSelectionAndCheck(
                 SpreadsheetSelection.parseRow("2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
@@ -904,7 +904,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     final Optional<SpreadsheetViewportSelection> differentSelection() {
         return Optional.of(
                 SpreadsheetSelection.parseCell("C3")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
