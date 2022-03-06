@@ -19,7 +19,8 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 
-import java.util.Optional;
+import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * Base class shared by {@link SpreadsheetCellReference} and {@link SpreadsheetLabelName}.
@@ -40,10 +41,16 @@ abstract public class SpreadsheetCellReferenceOrLabelName extends SpreadsheetExp
         return this;
     }
 
-    // cell or label have no default anchor.
     @Override
-    public final Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor() {
-        return SpreadsheetViewportSelection.NO_ANCHOR;
+    final Set<SpreadsheetViewportSelectionAnchor> anchors() {
+        return ANCHORS;
+    }
+
+    private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NON_RANGE);
+
+    @Override
+    public final SpreadsheetViewportSelectionAnchor defaultAnchor() {
+        return SpreadsheetViewportSelectionAnchor.NON_RANGE;
     }
 
     // SpreadsheetViewport........................................................................................

@@ -469,6 +469,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
         SpreadsheetPattern.parseNumberFormatPattern(" ");
         //noinspection ResultOfMethodCallIgnored
         SpreadsheetId.with(0);
-        SpreadsheetViewportSelection.NO_ANCHOR.isPresent();
+        SpreadsheetViewportSelection.NO_NAVIGATION.isPresent();
     }
 }

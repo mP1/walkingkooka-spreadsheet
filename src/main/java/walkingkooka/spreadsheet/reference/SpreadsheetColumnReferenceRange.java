@@ -19,7 +19,8 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.collect.Range;
 
-import java.util.Optional;
+import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * Holds a column range.
@@ -101,8 +102,18 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
-    public Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor() {
-        return Optional.of(SpreadsheetViewportSelectionAnchor.LEFT);
+    Set<SpreadsheetViewportSelectionAnchor> anchors() {
+        return ANCHORS;
+    }
+
+    private final static Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(
+            SpreadsheetViewportSelectionAnchor.LEFT,
+            SpreadsheetViewportSelectionAnchor.RIGHT
+    );
+
+    @Override
+    public SpreadsheetViewportSelectionAnchor defaultAnchor() {
+        return SpreadsheetViewportSelectionAnchor.LEFT;
     }
 
     @Override

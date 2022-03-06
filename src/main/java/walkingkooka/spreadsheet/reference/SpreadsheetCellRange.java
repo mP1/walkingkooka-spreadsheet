@@ -24,10 +24,11 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -268,8 +269,20 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     }
 
     @Override
-    public Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor() {
-        return Optional.of(SpreadsheetViewportSelectionAnchor.TOP_LEFT);
+    Set<SpreadsheetViewportSelectionAnchor> anchors() {
+        return ANCHORS;
+    }
+
+    private final static EnumSet<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(
+            SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+            SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+            SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+            SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+    );
+
+    @Override
+    public SpreadsheetViewportSelectionAnchor defaultAnchor() {
+        return SpreadsheetViewportSelectionAnchor.TOP_LEFT;
     }
 
     @Override

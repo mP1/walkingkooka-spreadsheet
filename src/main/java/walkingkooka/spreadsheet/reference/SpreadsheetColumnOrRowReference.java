@@ -20,8 +20,9 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Value;
 
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.Set;
 
 /**
  * Captures the common features shared by a row or column.
@@ -125,10 +126,16 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
         return this.toRelative();
     }
 
-    // column or row have no default anchor.
     @Override
-    public final Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor() {
-        return SpreadsheetViewportSelection.NO_ANCHOR;
+    final Set<SpreadsheetViewportSelectionAnchor> anchors() {
+        return ANCHORS;
+    }
+
+    private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NON_RANGE);
+
+    @Override
+    public final SpreadsheetViewportSelectionAnchor defaultAnchor() {
+        return SpreadsheetViewportSelectionAnchor.NON_RANGE;
     }
 
     /**
