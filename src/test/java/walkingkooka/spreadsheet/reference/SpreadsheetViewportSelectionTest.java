@@ -61,7 +61,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 NullPointerException.class,
                 () -> SpreadsheetViewportSelection.with(
                         null,
-                        SpreadsheetViewportSelectionAnchor.NON_RANGE,
+                        SpreadsheetViewportSelectionAnchor.NONE,
                         SpreadsheetViewportSelection.NO_NAVIGATION
                 )
         );
@@ -85,7 +85,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 NullPointerException.class,
                 () -> SpreadsheetViewportSelection.with(
                         CELL,
-                        SpreadsheetViewportSelectionAnchor.NON_RANGE,
+                        SpreadsheetViewportSelectionAnchor.NONE,
                         null
                 )
         );
@@ -125,14 +125,14 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
 
     private void withAnchorNotNonRangeFails(final SpreadsheetSelection selection) {
         for (final SpreadsheetViewportSelectionAnchor anchor : SpreadsheetViewportSelectionAnchor.values()) {
-            if (anchor != SpreadsheetViewportSelectionAnchor.NON_RANGE) {
-                this.withFails(selection, anchor, selection + " contains an invalid anchor " + anchor + ", valid anchors: " + SpreadsheetViewportSelectionAnchor.NON_RANGE);
+            if (anchor != SpreadsheetViewportSelectionAnchor.NONE) {
+                this.withFails(selection, anchor, selection + " contains an invalid anchor " + anchor + ", valid anchors: " + SpreadsheetViewportSelectionAnchor.NONE);
             }
         }
     }
 
     private void withNonRangeAndCheck(final SpreadsheetSelection selection) {
-        final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NON_RANGE;
+        final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NONE;
         final Optional<SpreadsheetViewportSelectionNavigation> navigation = Optional.of(
                 SpreadsheetViewportSelectionNavigation.LEFT
         );
@@ -446,7 +446,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     public void testTreePrint() {
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("A1")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE),
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE),
                 "cell A1" + EOL
         );
     }
@@ -455,7 +455,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     public void testTreePrint2() {
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseRow("12")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE),
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE),
                 "row 12" + EOL
         );
     }
@@ -474,7 +474,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
         this.treePrintAndCheck(
                 SpreadsheetViewportSelection.with(
                         SpreadsheetSelection.parseCell("A1"),
-                        SpreadsheetViewportSelectionAnchor.NON_RANGE,
+                        SpreadsheetViewportSelectionAnchor.NONE,
                         Optional.of(
                                 SpreadsheetViewportSelectionNavigation.LEFT
                         )
@@ -503,7 +503,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     public void testJsonMarshallCell() {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetSelection.parseCell("B2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
@@ -518,7 +518,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     @Test
     public void testJsonMarshallColumn() {
         this.marshallRoundTripTwiceAndCheck(
-                COLUMN.setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                COLUMN.setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
@@ -533,7 +533,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     @Test
     public void testJsonMarshallRow() {
         this.marshallRoundTripTwiceAndCheck(
-                COLUMN.setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                COLUMN.setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
@@ -550,7 +550,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     @Test
     public void testToStringCell() {
         this.toStringAndCheck(
-                CELL.setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE),
+                CELL.setAnchor(SpreadsheetViewportSelectionAnchor.NONE),
                 CELL.toString()
         );
     }

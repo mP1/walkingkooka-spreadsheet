@@ -45,7 +45,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     public void testCheckColumn() {
         this.checkValue(
                 SpreadsheetColumnReference.parseColumn("AB")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
@@ -53,7 +53,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     public void testCheckLabel() {
         this.checkValue(
                 SpreadsheetLabelName.labelName("Label123")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
@@ -61,7 +61,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     public void testCheckRow() {
         this.checkValue(
                 SpreadsheetRowReference.parseRow("1234")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
@@ -88,7 +88,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     @Override
     SpreadsheetViewportSelection propertyValue() {
         return SpreadsheetSelection.parseCell("B99")
-                .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE);
+                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
     }
 
     @Override

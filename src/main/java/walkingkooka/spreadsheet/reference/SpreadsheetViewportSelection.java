@@ -98,7 +98,7 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
         printer.print(this.selection().treeString());
 
         final SpreadsheetViewportSelectionAnchor anchor = this.anchor();
-        if (SpreadsheetViewportSelectionAnchor.NON_RANGE != anchor) {
+        if (SpreadsheetViewportSelectionAnchor.NONE != anchor) {
             printer.print(" ");
             printer.print(anchor.toString());
         }
@@ -144,7 +144,7 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
         final SpreadsheetViewportSelectionAnchor anchor = this.anchor;
 
         builder.value(this.selection)
-                .value(SpreadsheetViewportSelectionAnchor.NON_RANGE == anchor ? null : anchor)
+                .value(SpreadsheetViewportSelectionAnchor.NONE == anchor ? null : anchor)
                 .value(this.navigation);
     }
 
@@ -165,7 +165,7 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
     static SpreadsheetViewportSelection unmarshall(final JsonNode node,
                                                    final JsonNodeUnmarshallContext context) {
         SpreadsheetSelection selection = null;
-        SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NON_RANGE;
+        SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NONE;
         SpreadsheetViewportSelectionNavigation navigation = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
@@ -206,7 +206,7 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
         object = object.set(SELECTION_PROPERTY, context.marshallWithType(this.selection));
 
         final SpreadsheetViewportSelectionAnchor anchor = this.anchor();
-        if (SpreadsheetViewportSelectionAnchor.NON_RANGE != anchor) {
+        if (SpreadsheetViewportSelectionAnchor.NONE != anchor) {
             object = object.set(
                     ANCHOR_PROPERTY,
                     JsonNode.string(anchor.toString())
