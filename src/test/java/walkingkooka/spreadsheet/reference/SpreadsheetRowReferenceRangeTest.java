@@ -47,6 +47,128 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         assertSame(upper, selection.end(), "end");
     }
 
+    // parse............................................................................................................
+
+    @Test
+    public void testParseSingleColumn() {
+        this.parseStringAndCheck(
+                "1",
+                SpreadsheetRowReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseRow("1")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseSingleColumn2() {
+        this.parseStringAndCheck(
+                "23",
+                SpreadsheetRowReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseRow("23")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseSame() {
+        this.parseStringAndCheck(
+                "1:1",
+                SpreadsheetRowReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseRow("1")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseEquivalent() {
+        this.parseStringAndCheck(
+                "1:1",
+                SpreadsheetRowReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseRow("1")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseEquivalent2() {
+        this.parseStringAndCheck(
+                "1:$1",
+                SpreadsheetRowReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseRow("1")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseEquivalent3() {
+        this.parseStringAndCheck(
+                "$23:23",
+                SpreadsheetRowReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseRow("$23")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParse() {
+        this.parseStringAndCheck(
+                "1:23",
+                SpreadsheetRowReferenceRange.with(
+                        Range.greaterThanEquals(
+                                SpreadsheetSelection.parseRow("1")
+                        ).and(
+                                Range.lessThanEquals(
+                                        SpreadsheetSelection.parseRow("23")
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParse2() {
+        this.parseStringAndCheck(
+                "1:$23",
+                SpreadsheetRowReferenceRange.with(
+                        Range.greaterThanEquals(
+                                SpreadsheetSelection.parseRow("1")
+                        ).and(
+                                Range.lessThanEquals(
+                                        SpreadsheetSelection.parseRow("$23")
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseSwap() {
+        this.parseStringAndCheck(
+                "1:23",
+                SpreadsheetRowReferenceRange.with(
+                        Range.greaterThanEquals(
+                                SpreadsheetSelection.parseRow("1")
+                        ).and(
+                                Range.lessThanEquals(
+                                        SpreadsheetSelection.parseRow("23")
+                                )
+                        )
+                )
+        );
+    }
+
     // count............................................................................................................
 
     @Test
@@ -347,6 +469,14 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.simplifyAndCheck(
                 "$1:1",
                 SpreadsheetSelection.parseRow("$1")
+        );
+    }
+
+    @Test
+    public void testSimplifyBeginAndEndSame3() {
+        this.simplifyAndCheck(
+                "1:$1",
+                SpreadsheetSelection.parseRow("1")
         );
     }
 

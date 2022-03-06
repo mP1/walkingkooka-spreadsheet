@@ -190,8 +190,10 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     public Range<SpreadsheetRowReference> range(final SpreadsheetRowReference other) {
         Objects.requireNonNull(other, "other");
 
-        return Range.greaterThanEquals(this)
-                .and(Range.lessThanEquals(other));
+        return createRange(
+                this,
+                other
+        );
     }
 
     /**

@@ -221,15 +221,16 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     public Range<SpreadsheetColumnReference> range(final SpreadsheetColumnReference other) {
         Objects.requireNonNull(other, "other");
 
-        return Range.greaterThanEquals(this)
-                .and(Range.lessThanEquals(other));
+        return createRange(this, other);
     }
 
     /**
      * Creates a {@link SpreadsheetColumnReferenceRange} from the this and the other {@link SpreadsheetColumnReference}.
      */
     public SpreadsheetColumnReferenceRange columnRange(final SpreadsheetColumnReference other) {
-        return SpreadsheetColumnReferenceRange.with(this.range(other));
+        return SpreadsheetColumnReferenceRange.with(
+                this.range(other)
+        );
     }
 
     /**

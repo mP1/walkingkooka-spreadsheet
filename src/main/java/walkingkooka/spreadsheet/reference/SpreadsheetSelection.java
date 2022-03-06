@@ -388,6 +388,19 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         }
     }
 
+    /**
+     * Factory that creates a {@link Range} handling the special case where the left and right are not equal
+     * but are equal ignoring the {@link SpreadsheetReferenceKind}.
+     */
+    static <RR extends SpreadsheetSelection & Comparable<RR>> Range<RR> createRange(final RR left, final RR right) {
+        return left.equalsIgnoreReferenceKind(right) ?
+                Range.singleton(left) :
+                left.compareTo(right) > 0 ?
+                        createRange(right, left) :
+                        Range.greaterThanEquals(left)
+                                .and(Range.lessThanEquals(right));
+    }
+
     // ctor.............................................................................................................
 
     SpreadsheetSelection() {

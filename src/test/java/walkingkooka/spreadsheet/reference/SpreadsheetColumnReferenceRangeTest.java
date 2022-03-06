@@ -47,6 +47,128 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         assertSame(upper, selection.end(), "end");
     }
 
+    // parse............................................................................................................
+
+    @Test
+    public void testParseSingleColumn() {
+        this.parseStringAndCheck(
+                "A",
+                SpreadsheetColumnReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseColumn("A")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseSingleColumn2() {
+        this.parseStringAndCheck(
+                "BC",
+                SpreadsheetColumnReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseColumn("BC")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseSame() {
+        this.parseStringAndCheck(
+                "A:A",
+                SpreadsheetColumnReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseColumn("A")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseEquivalent() {
+        this.parseStringAndCheck(
+                "A:A",
+                SpreadsheetColumnReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseColumn("A")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseEquivalent2() {
+        this.parseStringAndCheck(
+                "A:$A",
+                SpreadsheetColumnReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseColumn("A")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseEquivalent3() {
+        this.parseStringAndCheck(
+                "$BC:BC",
+                SpreadsheetColumnReferenceRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseColumn("$BC")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParse() {
+        this.parseStringAndCheck(
+                "A:BC",
+                SpreadsheetColumnReferenceRange.with(
+                        Range.greaterThanEquals(
+                                SpreadsheetSelection.parseColumn("A")
+                        ).and(
+                                Range.lessThanEquals(
+                                        SpreadsheetSelection.parseColumn("BC")
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParse2() {
+        this.parseStringAndCheck(
+                "A:$BC",
+                SpreadsheetColumnReferenceRange.with(
+                        Range.greaterThanEquals(
+                                SpreadsheetSelection.parseColumn("A")
+                        ).and(
+                                Range.lessThanEquals(
+                                        SpreadsheetSelection.parseColumn("$BC")
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseSwap() {
+        this.parseStringAndCheck(
+                "BC:A",
+                SpreadsheetColumnReferenceRange.with(
+                        Range.greaterThanEquals(
+                                SpreadsheetSelection.parseColumn("A")
+                        ).and(
+                                Range.lessThanEquals(
+                                        SpreadsheetSelection.parseColumn("BC")
+                                )
+                        )
+                )
+        );
+    }
+
     // count............................................................................................................
 
     @Test
