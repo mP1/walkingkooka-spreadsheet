@@ -30,7 +30,6 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -87,14 +86,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Test
     final public void testDefaultAnchor() {
         final S selection = this.createSelection();
-        final Optional<SpreadsheetViewportSelectionAnchor> anchor = selection.defaultAnchor();
+        final SpreadsheetViewportSelectionAnchor anchor = selection.defaultAnchor();
         this.checkNotEquals(null, anchor, "anchor");
     }
 
     @Test
     final public void testDefaultAnchorThenSetAnchor() {
         final S selection = this.createSelection();
-        final Optional<SpreadsheetViewportSelectionAnchor> anchor = selection.defaultAnchor();
+        final SpreadsheetViewportSelectionAnchor anchor = selection.defaultAnchor();
         this.checkNotEquals(null, anchor, "anchor");
 
         final SpreadsheetViewportSelection viewportSelection = selection.setAnchor(anchor);

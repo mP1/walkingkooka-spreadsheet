@@ -40,15 +40,13 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
     /**
      * Constant representing no anchor.
      */
-    public final static Optional<SpreadsheetViewportSelectionAnchor> NO_ANCHOR = Optional.empty();
-
     public final static Optional<SpreadsheetViewportSelectionNavigation> NO_NAVIGATION = Optional.empty();
 
     static SpreadsheetViewportSelection with(final SpreadsheetSelection selection,
-                                             final Optional<SpreadsheetViewportSelectionAnchor> anchor,
+                                             final SpreadsheetViewportSelectionAnchor anchor,
                                              final Optional<SpreadsheetViewportSelectionNavigation> navigation) {
         Objects.requireNonNull(anchor, "anchor");
-        SpreadsheetViewportSelectionSpreadsheetSelectionVisitor.checkAnchor(selection, anchor.orElse(null));
+        selection.checkAnchor(anchor);
         Objects.requireNonNull(navigation, "navigation");
 
         return new SpreadsheetViewportSelection(
@@ -59,7 +57,7 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
     }
 
     private SpreadsheetViewportSelection(final SpreadsheetSelection selection,
-                                         final Optional<SpreadsheetViewportSelectionAnchor> anchor,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
                                          final Optional<SpreadsheetViewportSelectionNavigation> navigation) {
         super();
         this.selection = selection;
@@ -73,11 +71,11 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
 
     private final SpreadsheetSelection selection;
 
-    public Optional<SpreadsheetViewportSelectionAnchor> anchor() {
+    public SpreadsheetViewportSelectionAnchor anchor() {
         return this.anchor;
     }
 
-    private final Optional<SpreadsheetViewportSelectionAnchor> anchor;
+    private final SpreadsheetViewportSelectionAnchor anchor;
 
     public Optional<SpreadsheetViewportSelectionNavigation> navigation() {
         return this.navigation;
@@ -99,10 +97,10 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
     public void printTree(final IndentingPrinter printer) {
         printer.print(this.selection().treeString());
 
-        final Optional<SpreadsheetViewportSelectionAnchor> anchor = this.anchor();
-        if (anchor.isPresent()) {
+        final SpreadsheetViewportSelectionAnchor anchor = this.anchor();
+        if (SpreadsheetViewportSelectionAnchor.NON_RANGE != anchor) {
             printer.print(" ");
-            printer.print(anchor.get().toString());
+            printer.print(anchor.toString());
         }
 
         final Optional<SpreadsheetViewportSelectionNavigation> navigation = this.navigation();
@@ -143,8 +141,10 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
+        final SpreadsheetViewportSelectionAnchor anchor = this.anchor;
+
         builder.value(this.selection)
-                .value(this.anchor)
+                .value(SpreadsheetViewportSelectionAnchor.NON_RANGE == anchor ? null : anchor)
                 .value(this.navigation);
     }
 
@@ -165,7 +165,7 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
     static SpreadsheetViewportSelection unmarshall(final JsonNode node,
                                                    final JsonNodeUnmarshallContext context) {
         SpreadsheetSelection selection = null;
-        SpreadsheetViewportSelectionAnchor anchor = null;
+        SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NON_RANGE;
         SpreadsheetViewportSelectionNavigation navigation = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
@@ -192,7 +192,7 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
 
         return new SpreadsheetViewportSelection(
                 selection,
-                Optional.ofNullable(anchor),
+                anchor,
                 Optional.ofNullable(navigation)
         );
     }
@@ -205,9 +205,12 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
 
         object = object.set(SELECTION_PROPERTY, context.marshallWithType(this.selection));
 
-        final Optional<SpreadsheetViewportSelectionAnchor> anchor = this.anchor();
-        if (anchor.isPresent()) {
-            object = object.set(ANCHOR_PROPERTY, JsonNode.string(anchor.get().toString()));
+        final SpreadsheetViewportSelectionAnchor anchor = this.anchor();
+        if (SpreadsheetViewportSelectionAnchor.NON_RANGE != anchor) {
+            object = object.set(
+                    ANCHOR_PROPERTY,
+                    JsonNode.string(anchor.toString())
+            );
         }
 
         final Optional<SpreadsheetViewportSelectionNavigation> navigation = this.navigation();

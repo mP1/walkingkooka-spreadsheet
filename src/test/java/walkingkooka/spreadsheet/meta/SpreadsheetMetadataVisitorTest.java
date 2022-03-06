@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 
@@ -398,7 +399,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
                 SpreadsheetMetadataPropertyName.SELECTION,
                 SpreadsheetCellReference.parseCell("A2")
-                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
         );
     }
 

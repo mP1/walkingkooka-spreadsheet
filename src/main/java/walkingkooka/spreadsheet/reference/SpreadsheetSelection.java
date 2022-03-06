@@ -44,10 +44,12 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Base class for all selection types, including columns, rows, cells, labels and ranges.
@@ -409,12 +411,38 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      */
     public abstract SpreadsheetSelection simplify();
 
-    // SpreadsheetViewportSelection......................................................................................
+    // SpreadsheetViewportSelection.....................................................................................
+
+    /**
+     * Checks and complains if this {@link SpreadsheetSelection} and then given {@link SpreadsheetViewportSelectionAnchor}
+     * is invalid.
+     */
+    final void checkAnchor(final SpreadsheetViewportSelectionAnchor anchor) {
+        if (!this.isLabelName()) {
+            final Set<SpreadsheetViewportSelectionAnchor> anyOf = this.anchors();
+            if (!anyOf.contains(anchor)) {
+                throw new IllegalArgumentException(
+                        this +
+                                " contains an invalid anchor " +
+                                anchor +
+                                ", valid anchors: " +
+                                anyOf.stream()
+                                        .map(Object::toString)
+                                        .collect(Collectors.joining(", "))
+                );
+            }
+        }
+    }
+
+    /**
+     * Returns the possible or allowed {@link SpreadsheetViewportSelectionAnchor} for each type of {@link SpreadsheetSelection}.
+     */
+    abstract Set<SpreadsheetViewportSelectionAnchor> anchors();
 
     /**
      * Factory that creates a {@link SpreadsheetViewportSelection} using this selection and the given anchor.
      */
-    public final SpreadsheetViewportSelection setAnchor(final Optional<SpreadsheetViewportSelectionAnchor> anchor) {
+    public final SpreadsheetViewportSelection setAnchor(final SpreadsheetViewportSelectionAnchor anchor) {
         return SpreadsheetViewportSelection.with(
                 this,
                 anchor,
@@ -427,7 +455,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Label is a special case and will return {@link Optional#empty()} because it cant guess if its pointing to a
      * cell or cell-range.
      */
-    public abstract Optional<SpreadsheetViewportSelectionAnchor> defaultAnchor();
+    public abstract SpreadsheetViewportSelectionAnchor defaultAnchor();
 
     // textLabel........................................................................................................
 

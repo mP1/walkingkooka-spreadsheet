@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 
 import java.util.Locale;
-import java.util.Optional;
 
 
 public final class SpreadsheetMetadataPropertyNameSelectionTest extends SpreadsheetMetadataPropertyNameTestCase<
@@ -38,9 +37,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     public void testCheckCellRange() {
         this.checkValue(
                 SpreadsheetCellRange.parseCellRange("A1:B2")
-                        .setAnchor(
-                                Optional.of(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
-                        )
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
         );
     }
 
@@ -48,7 +45,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     public void testCheckColumn() {
         this.checkValue(
                 SpreadsheetColumnReference.parseColumn("AB")
-                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
         );
     }
 
@@ -56,7 +53,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     public void testCheckLabel() {
         this.checkValue(
                 SpreadsheetLabelName.labelName("Label123")
-                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
         );
     }
 
@@ -64,7 +61,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     public void testCheckRow() {
         this.checkValue(
                 SpreadsheetRowReference.parseRow("1234")
-                        .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE)
         );
     }
 
@@ -91,7 +88,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     @Override
     SpreadsheetViewportSelection propertyValue() {
         return SpreadsheetSelection.parseCell("B99")
-                .setAnchor(SpreadsheetViewportSelection.NO_ANCHOR);
+                .setAnchor(SpreadsheetViewportSelectionAnchor.NON_RANGE);
     }
 
     @Override
