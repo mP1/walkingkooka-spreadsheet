@@ -224,8 +224,10 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         SpreadsheetRowReference top = row.min(row2);
         SpreadsheetRowReference bottom = row.max(row2);
 
-        return Range.greaterThanEquals(left.setRow(top))
-                .and(Range.lessThanEquals(right.setRow(bottom)));
+        return createRange(
+                left.setRow(top),
+                right.setRow(bottom)
+        );
     }
 
     /**

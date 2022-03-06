@@ -1417,9 +1417,35 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testParse() {
-        this.parseStringAndCheck("A2:C4",
+        this.parseStringAndCheck(
+                "A2:C4",
                 SpreadsheetCellRange.with(SpreadsheetSelection.parseCell("A2")
-                        .range(SpreadsheetSelection.parseCell("C4"))));
+                        .range(SpreadsheetSelection.parseCell("C4")))
+        );
+    }
+
+    @Test
+    public void testParseEquivalent() {
+        this.parseStringAndCheck(
+                "A1:$A$1",
+                SpreadsheetCellRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseCell("A1")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseEquivalent2() {
+        this.parseStringAndCheck(
+                "$A$1:A1",
+                SpreadsheetCellRange.with(
+                        Range.singleton(
+                                SpreadsheetSelection.parseCell("$A$1")
+                        )
+                )
+        );
     }
 
     @Test
@@ -1448,6 +1474,30 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         this.parseStringAndCheck("A2:$C$4",
                 SpreadsheetCellRange.with(SpreadsheetSelection.parseCell("A2")
                         .range(SpreadsheetSelection.parseCell("$C$4"))));
+    }
+
+    @Test
+    public void testParseSwap() {
+        this.parseStringAndCheck(
+                "B2:A1",
+                SpreadsheetCellRange.with(
+                        SpreadsheetSelection.parseCell("A1")
+                                .range(SpreadsheetSelection.parseCell("B2")
+                                )
+                )
+        );
+    }
+
+    @Test
+    public void testParseSwap2() {
+        this.parseStringAndCheck(
+                "B2:$A$1",
+                SpreadsheetCellRange.with(
+                        SpreadsheetSelection.parseCell("$A$1")
+                                .range(SpreadsheetSelection.parseCell("B2")
+                                )
+                )
+        );
     }
 
     // IterableTesting..................................................................................................
