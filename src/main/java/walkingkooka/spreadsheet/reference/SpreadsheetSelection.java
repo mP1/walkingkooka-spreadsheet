@@ -254,10 +254,12 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Parsers the text expecting a valid {@link SpreadsheetCellRange} or fails.
      */
     public static SpreadsheetCellRange parseCellRange(final String text) {
-        return SpreadsheetSelection.parseRange(
-                text,
-                SpreadsheetSelection::parseCell,
-                SpreadsheetCellReference::cellRange
+        return SpreadsheetCellRange.with(
+                Range.parse(
+                        text,
+                        ':',
+                        SpreadsheetSelection::parseCell
+                )
         );
     }
 
@@ -279,10 +281,12 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Parsers a range of columns.
      */
     public static SpreadsheetColumnReferenceRange parseColumnRange(final String text) {
-        return SpreadsheetSelection.parseRange(
-                text,
-                SpreadsheetSelection::parseColumn,
-                SpreadsheetColumnReference::columnRange
+        return SpreadsheetColumnReferenceRange.with(
+                Range.parse(
+                        text,
+                        ':',
+                        SpreadsheetSelection::parseColumn
+                )
         );
     }
 
@@ -320,10 +324,12 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Parsers a range of rows.
      */
     public static SpreadsheetRowReferenceRange parseRowRange(final String text) {
-        return SpreadsheetSelection.parseRange(
-                text,
-                SpreadsheetSelection::parseRow,
-                SpreadsheetRowReference::rowRange
+        return SpreadsheetRowReferenceRange.with(
+                Range.parse(
+                        text,
+                        ':',
+                        SpreadsheetSelection::parseRow
+                )
         );
     }
 
@@ -338,54 +344,6 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         }
 
         return array;
-    }
-
-    // generic parse range helpers......................................................................................
-
-    /**
-     * Factory that parses some text holding a range.
-     */
-    private static <R extends SpreadsheetSelection, C extends SpreadsheetSelection> R parseRange(final String text,
-                                                                                                 final Function<String, C> componentParser,
-                                                                                                 final BiFunction<C, C, R> rangeFactory) {
-        CharSequences.failIfNullOrEmpty(text, "text");
-
-        final C begin;
-        final C end;
-
-        final int separator = text.indexOf(SEPARATOR.character());
-        switch (separator) {
-            case -1:
-                begin = componentParser.apply(text);
-                end = begin;
-                break;
-            case 0:
-                throw new IllegalArgumentException("Missing begin in " + CharSequences.quote(text));
-            default:
-                if (separator + SEPARATOR.length() == text.length()) {
-                    throw new IllegalArgumentException("Missing end in " + CharSequences.quote(text));
-                }
-
-                begin = parseRange0(text.substring(0, separator), componentParser, "begin", text);
-                end = parseRange0(text.substring(separator + 1), componentParser, "end", text);
-                break;
-        }
-
-        return rangeFactory.apply(begin, end);
-    }
-
-    /**
-     * Handles parsing a single component within a range of cells, columns or rows.
-     */
-    private static <C extends SpreadsheetSelection> C parseRange0(final String component,
-                                                                  final Function<String, C> componentParser,
-                                                                  final String label,
-                                                                  final String text) {
-        try {
-            return componentParser.apply(component);
-        } catch (final IllegalArgumentException cause) {
-            throw new IllegalArgumentException("Invalid " + label + " in " + CharSequences.quote(text), cause);
-        }
     }
 
     /**

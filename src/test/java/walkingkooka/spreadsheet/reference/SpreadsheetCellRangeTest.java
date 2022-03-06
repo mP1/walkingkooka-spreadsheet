@@ -1397,22 +1397,34 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testParseMissingBeginFails() {
-        this.parseStringFails(":A2", new IllegalArgumentException("Missing begin in \":A2\""));
+        this.parseStringFails(
+                ":A2",
+                new IllegalArgumentException("Empty lower range in \":A2\"")
+        );
     }
 
     @Test
     public void testParseMissingEndFails() {
-        this.parseStringFails("A2:", new IllegalArgumentException("Missing end in \"A2:\""));
+        this.parseStringFails(
+                "A2:",
+                new IllegalArgumentException("Empty upper range in \"A2:\"")
+        );
     }
 
     @Test
     public void testParseInvalidBeginFails() {
-        this.parseStringFails("##:A2", new IllegalArgumentException("Invalid begin in \"##:A2\""));
+        this.parseStringFails(
+                "##:A2",
+                new IllegalArgumentException("Unrecognized character '#' at (1,1) \"##\" expected (SpreadsheetColumnReference, SpreadsheetRowReference)")
+        );
     }
 
     @Test
     public void testParseInvalidEndFails() {
-        this.parseStringFails("A1:##", new IllegalArgumentException("Invalid end in \"A1:##\""));
+        this.parseStringFails(
+                "A1:##",
+                new IllegalArgumentException("Unrecognized character '#' at (1,1) \"##\" expected (SpreadsheetColumnReference, SpreadsheetRowReference)")
+        );
     }
 
     @Test
