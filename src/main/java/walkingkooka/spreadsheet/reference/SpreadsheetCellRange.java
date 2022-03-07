@@ -286,6 +286,30 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     }
 
     @Override
+    SpreadsheetCellReference left(final SpreadsheetViewportSelectionAnchor anchor) {
+        return anchor.cell(this)
+                .left(anchor);
+    }
+
+    @Override
+    SpreadsheetCellReference up(final SpreadsheetViewportSelectionAnchor anchor) {
+        return anchor.cell(this)
+                .up(anchor);
+    }
+
+    @Override
+    SpreadsheetCellReference right(final SpreadsheetViewportSelectionAnchor anchor) {
+        return anchor.cell(this)
+                .right(anchor);
+    }
+
+    @Override
+    SpreadsheetCellReference down(final SpreadsheetViewportSelectionAnchor anchor) {
+        return anchor.cell(this)
+                .down(anchor);
+    }
+
+    @Override
     public SpreadsheetSelection simplify() {
         return this.isSingleCell() ?
                 this.begin() :

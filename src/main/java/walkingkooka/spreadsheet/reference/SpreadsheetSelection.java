@@ -450,12 +450,28 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         );
     }
 
+    final SpreadsheetViewportSelection setAnchorOrDefault(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.setAnchor(
+                SpreadsheetViewportSelectionAnchor.NONE == anchor ?
+                        this.defaultAnchor() :
+                        anchor
+        );
+    }
+
     /**
      * Getter that returns the default if any anchor for this type of {@link SpreadsheetSelection}.
      * Label is a special case and will return {@link Optional#empty()} because it cant guess if its pointing to a
      * cell or cell-range.
      */
     public abstract SpreadsheetViewportSelectionAnchor defaultAnchor();
+
+    abstract SpreadsheetSelection left(final SpreadsheetViewportSelectionAnchor anchor);
+
+    abstract SpreadsheetSelection up(final SpreadsheetViewportSelectionAnchor anchor);
+
+    abstract SpreadsheetSelection right(final SpreadsheetViewportSelectionAnchor anchor);
+
+    abstract SpreadsheetSelection down(final SpreadsheetViewportSelectionAnchor anchor);
 
     // textLabel........................................................................................................
 

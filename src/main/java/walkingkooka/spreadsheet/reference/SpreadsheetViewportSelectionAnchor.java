@@ -22,9 +22,6 @@ package walkingkooka.spreadsheet.reference;
  * Not all combinations are valid for each of range.
  */
 public enum SpreadsheetViewportSelectionAnchor {
-    /**
-     * This anchor is only for non range {@link SpreadsheetSelection}.
-     */
     NONE,
     TOP_LEFT,
     TOP_RIGHT,
@@ -34,4 +31,110 @@ public enum SpreadsheetViewportSelectionAnchor {
     BOTTOM,
     LEFT,
     RIGHT;
+
+    /**
+     * Uses this anchor to select the cell-range that will be moved.
+     */
+    final SpreadsheetCellReference cell(final SpreadsheetCellRange range) {
+        this.failIfNone();
+
+        return this.column(
+                        range.columnReferenceRange()
+                )
+                .setRow(
+                        this.row(
+                                range.rowReferenceRange()
+                        )
+                );
+    }
+
+    /**
+     * Uses this anchor to select the {@link SpreadsheetCellRange} that will remain fixed.
+     */
+    final SpreadsheetCellReference fixedCell(final SpreadsheetCellRange range) {
+        final SpreadsheetColumnReference column = fixedColumn(range.columnReferenceRange());
+        final SpreadsheetRowReference row = fixedRow(range.rowReferenceRange());
+
+        return column.setRow(row);
+    }
+
+    /**
+     * Uses this anchor to select the {@link SpreadsheetColumnReferenceRange} that will be moved.
+     */
+    final SpreadsheetColumnReference column(final SpreadsheetColumnReferenceRange range) {
+        this.failIfNone();
+
+        return this.isLeft() ?
+                range.end() :
+                range.begin();
+    }
+
+    /**
+     * Uses this anchor to select the {@link SpreadsheetColumnReferenceRange} that will remain fixed.
+     */
+    final SpreadsheetColumnReference fixedColumn(final SpreadsheetColumnReferenceRange range) {
+        return other(
+                range,
+                this.column(range)
+        );
+    }
+
+    /**
+     * Uses this anchor to select the {@link SpreadsheetRowReferenceRange} that will be moved.
+     */
+    final SpreadsheetRowReference row(final SpreadsheetRowReferenceRange range) {
+        this.failIfNone();
+
+        return this.isTop() ?
+                range.end() :
+                range.begin();
+    }
+
+    /**
+     * Uses this anchor to select the {@link SpreadsheetRowReferenceRange} that will remain fixed.
+     */
+    final SpreadsheetRowReference fixedRow(final SpreadsheetRowReferenceRange range) {
+        return other(
+                range,
+                this.row(range)
+        );
+    }
+
+    private boolean isLeft() {
+        return this == LEFT || this == TOP_LEFT || this == BOTTOM_LEFT;
+    }
+
+    private boolean isRight() {
+        return this == RIGHT || this == TOP_RIGHT || this == BOTTOM_RIGHT;
+    }
+
+    private boolean isTop() {
+        return this == TOP || this == TOP_LEFT || this == TOP_RIGHT;
+    }
+
+    private boolean isBottom() {
+        return this == BOTTOM || this == BOTTOM_LEFT || this == BOTTOM_RIGHT;
+    }
+
+    private boolean isCorner() {
+        return (this.isLeft() || this.isRight()) &&
+                (this.isTop() || this.isBottom());
+    }
+
+    private void failIfNone() {
+        if (this == NONE) {
+            throw new IllegalArgumentException("Invalid operation for " + this);
+        }
+    }
+
+    /**
+     * Helper that returns the other / opposite range given the inputs.
+     */
+    private static <RR extends SpreadsheetColumnOrRowReference & Comparable<RR>> RR other(final SpreadsheetColumnOrRowReferenceRange<RR> range,
+                                                                                          final RR bound) {
+        final RR begin = range.begin();
+        return begin != bound ?
+                begin :
+                range.end();
+    }
 }

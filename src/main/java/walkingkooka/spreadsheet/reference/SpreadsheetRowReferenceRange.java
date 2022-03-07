@@ -126,6 +126,30 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
         return "row-range";
     }
 
+    // SpreadsheetViewportSelectionNavigation...........................................................................
+
+    @Override
+    SpreadsheetRowReferenceRange left(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this;
+    }
+
+    @Override
+    SpreadsheetRowReference up(final SpreadsheetViewportSelectionAnchor anchor) {
+        return anchor.row(this)
+                .up(anchor);
+    }
+
+    @Override
+    SpreadsheetRowReferenceRange right(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this;
+    }
+
+    @Override
+    SpreadsheetRowReference down(final SpreadsheetViewportSelectionAnchor anchor) {
+        return anchor.row(this)
+                .down(anchor);
+    }
+
     // Object...........................................................................................................
 
     @Override

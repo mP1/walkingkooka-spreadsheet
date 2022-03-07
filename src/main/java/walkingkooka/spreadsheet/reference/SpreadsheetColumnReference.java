@@ -239,7 +239,29 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     public SpreadsheetColumnReferenceRange columnRange() {
         return this.columnRange(this);
     }
-    
+
+    // SpreadsheetViewportSelectionNavigation...........................................................................
+
+    @Override
+    SpreadsheetColumnReference left(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.addSaturated(-1);
+    }
+
+    @Override
+    SpreadsheetColumnReference up(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this;
+    }
+
+    @Override
+    SpreadsheetColumnReference right(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.addSaturated(1);
+    }
+
+    @Override
+    SpreadsheetColumnReference down(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this;
+    }
+
     // Object...........................................................................................................
 
     @Override
