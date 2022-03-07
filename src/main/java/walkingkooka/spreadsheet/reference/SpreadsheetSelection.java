@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.collect.HasRange;
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -452,9 +453,9 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     final SpreadsheetViewportSelection setAnchorOrDefault(final SpreadsheetViewportSelectionAnchor anchor) {
         return this.setAnchor(
-                SpreadsheetViewportSelectionAnchor.NONE == anchor ?
-                        this.defaultAnchor() :
-                        anchor
+                this instanceof HasRange ?
+                        anchor :
+                        this.defaultAnchor()
         );
     }
 
