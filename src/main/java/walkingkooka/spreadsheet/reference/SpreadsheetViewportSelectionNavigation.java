@@ -23,14 +23,72 @@ import walkingkooka.text.CharSequences;
  * Captures a users input movement relative to a selection, such as a cursor-left from a selection in the viewport.
  */
 public enum SpreadsheetViewportSelectionNavigation {
-    LEFT,
-    UP,
-    RIGHT,
-    DOWN,
-    EXTEND_LEFT,
-    EXTEND_UP,
-    EXTEND_RIGHT,
-    EXTEND_DOWN;
+    LEFT {
+        @Override
+        public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
+                                                    final SpreadsheetViewportSelectionAnchor anchor) {
+            return selection.left(anchor)
+                    .setAnchorOrDefault(anchor);
+        }
+    },
+    UP {
+        @Override
+        public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
+                                                    final SpreadsheetViewportSelectionAnchor anchor) {
+            return selection.up(anchor)
+                    .setAnchorOrDefault(anchor);
+        }
+    },
+    RIGHT {
+        @Override
+        public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
+                                                    final SpreadsheetViewportSelectionAnchor anchor) {
+            return selection.right(anchor)
+                    .setAnchorOrDefault(anchor);
+        }
+    },
+    DOWN {
+        @Override
+        public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
+                                                    final SpreadsheetViewportSelectionAnchor anchor) {
+            return selection.down(anchor)
+                    .setAnchorOrDefault(anchor);
+        }
+    },
+    EXTEND_LEFT {
+        @Override
+        public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
+                                                    final SpreadsheetViewportSelectionAnchor anchor) {
+            throw new UnsupportedOperationException();
+        }
+    },
+    EXTEND_UP {
+        @Override
+        public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
+                                                    final SpreadsheetViewportSelectionAnchor anchor) {
+            throw new UnsupportedOperationException();
+        }
+    },
+    EXTEND_RIGHT {
+        @Override
+        public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
+                                                    final SpreadsheetViewportSelectionAnchor anchor) {
+            throw new UnsupportedOperationException();
+        }
+    },
+    EXTEND_DOWN {
+        @Override
+        public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
+                                                    final SpreadsheetViewportSelectionAnchor anchor) {
+            throw new UnsupportedOperationException();
+        }
+    };
+
+    /**
+     * Executes this navigation on the given selection and anchor returning the updated result.
+     */
+    public abstract SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
+                                                         final SpreadsheetViewportSelectionAnchor anchor);
 
     public static SpreadsheetViewportSelectionNavigation from(final String text) {
         CharSequences.failIfNullOrEmpty(text, "navigation");
