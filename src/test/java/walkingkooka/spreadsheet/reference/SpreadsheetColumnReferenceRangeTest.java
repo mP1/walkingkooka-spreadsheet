@@ -401,6 +401,96 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // navigate.........................................................................................................
+
+    @Test
+    public void testLeftAnchorLeft() {
+        this.leftAndCheck(
+                "B:C",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                "B"
+        );
+    }
+
+    @Test
+    public void testLeftAnchorRight() {
+        this.leftAndCheck(
+                "B:C",
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                "A"
+        );
+    }
+
+    @Test
+    public void testLeftFirstColumnAnchorLeft() {
+        this.leftAndCheck(
+                "A:C",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                "B"
+        );
+    }
+
+    @Test
+    public void testLeftFirstColumnAnchorRight() {
+        this.leftAndCheck(
+                "A:C",
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                "A"
+        );
+    }
+
+    @Test
+    public void testUpAnchorLeft() {
+        this.upAndCheck(
+                "B:C",
+                SpreadsheetViewportSelectionAnchor.LEFT
+        );
+    }
+
+    @Test
+    public void testRightAnchorLeft() {
+        this.rightAndCheck(
+                "B:C",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                "D"
+        );
+    }
+
+    @Test
+    public void testRightAnchorRight() {
+        this.rightAndCheck(
+                "B:C",
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                "C"
+        );
+    }
+
+    @Test
+    public void testRightFirstColumnAnchorLeft() {
+        this.rightAndCheck(
+                "A:C",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                "D"
+        );
+    }
+
+    @Test
+    public void testRightFirstColumnAnchorRight() {
+        this.rightAndCheck(
+                "A:C",
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                "B"
+        );
+    }
+
+    @Test
+    public void testDownAnchorLeft() {
+        this.downAndCheck(
+                "B:C",
+                SpreadsheetViewportSelectionAnchor.LEFT
+        );
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test

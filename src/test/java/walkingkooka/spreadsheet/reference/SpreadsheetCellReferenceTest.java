@@ -761,6 +761,108 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         assertSame(cell, cell.toCell());
     }
 
+    // navigate.........................................................................................................
+
+    @Test
+    public void testLeft() {
+        this.leftAndCheck(
+                "B2",
+                "A2"
+        );
+    }
+
+    @Test
+    public void testLeftFirstColumn() {
+        this.leftAndCheck(
+                "A2"
+        );
+    }
+
+    @Test
+    public void testLeftLastColumn() {
+        final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
+        this.leftAndCheck(
+                column + "1",
+                column.add(-1) + "1"
+        );
+    }
+
+    @Test
+    public void testUp() {
+        this.upAndCheck(
+                "B2",
+                "B1"
+        );
+    }
+
+    @Test
+    public void testUpFirstRow() {
+        this.upAndCheck(
+                "B1"
+        );
+    }
+
+    @Test
+    public void testUpLastRow() {
+        final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.upAndCheck(
+                "B" + row,
+                "B" + row.add(-1)
+        );
+    }
+
+    @Test
+    public void testRight() {
+        this.rightAndCheck(
+                "B2",
+                "C2"
+        );
+    }
+
+    @Test
+    public void testRightFirstColumn() {
+        this.rightAndCheck(
+                "A2",
+                "B2"
+        );
+    }
+
+    @Test
+    public void testRightLastColumn() {
+        final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
+        this.rightAndCheck(
+                column + "1"
+        );
+    }
+
+    @Test
+    public void testDown() {
+        this.downAndCheck(
+                "B2",
+                "B3"
+        );
+    }
+
+    @Test
+    public void testDownFirstRow() {
+        this.downAndCheck(
+                "B1",
+                "B2"
+        );
+    }
+
+    @Test
+    public void testDownLastRow() {
+        final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.downAndCheck(
+                "B" + row
+        );
+    }
+
     // SpreadsheetSelectionVisitor.......................................................................................
 
     @Test

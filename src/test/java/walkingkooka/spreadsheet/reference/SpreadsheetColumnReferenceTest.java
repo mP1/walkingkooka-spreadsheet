@@ -588,6 +588,70 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
                 () -> "min of " + reference + " and " + other);
     }
 
+    // navigate.........................................................................................................
+
+    @Test
+    public void testLeft() {
+        this.leftAndCheck(
+                "B",
+                "A"
+        );
+    }
+
+    @Test
+    public void testLeftFirstColumn() {
+        this.leftAndCheck(
+                "A"
+        );
+    }
+
+    @Test
+    public void testLeftLastColumn() {
+        final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
+        this.leftAndCheck(
+                column,
+                column.add(-1)
+        );
+    }
+
+    @Test
+    public void testUp() {
+        this.upAndCheck(
+                "B"
+        );
+    }
+
+    @Test
+    public void testRight() {
+        this.rightAndCheck(
+                "B",
+                "C"
+        );
+    }
+
+    @Test
+    public void testRightFirstColumn() {
+        this.rightAndCheck(
+                "A",
+                "B"
+        );
+    }
+
+    @Test
+    public void testRightLastColumn() {
+        this.rightAndCheck(
+                SpreadsheetReferenceKind.RELATIVE.lastColumn()
+        );
+    }
+
+    @Test
+    public void testDown() {
+        this.upAndCheck(
+                "B"
+        );
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test

@@ -410,6 +410,127 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // navigate.........................................................................................................
+
+    @Test
+    public void testLeftAnchorTop() {
+        this.leftAndCheck(
+                "2:3",
+                SpreadsheetViewportSelectionAnchor.TOP
+        );
+    }
+
+    @Test
+    public void testUpAnchorTop() {
+        this.upAndCheck(
+                "2:3",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                "2"
+        );
+    }
+
+    @Test
+    public void testUpAnchorBottom() {
+        this.upAndCheck(
+                "2:4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpAnchorBottom2() {
+        this.upAndCheck(
+                "1:3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpFirstRowAnchorTop() {
+        this.upAndCheck(
+                "1:3",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                "2"
+        );
+    }
+
+    @Test
+    public void testUpFirstRowAnchorBottom() {
+        this.upAndCheck(
+                "1:2",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "1:1"
+        );
+    }
+
+    @Test
+    public void testRightAnchorTop() {
+        this.leftAndCheck(
+                "2:3",
+                SpreadsheetViewportSelectionAnchor.TOP
+        );
+    }
+
+    @Test
+    public void testDownAnchorTop() {
+        this.downAndCheck(
+                "2:4",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                "5"
+        );
+    }
+
+    @Test
+    public void testDownAnchorBottom() {
+        this.downAndCheck(
+                "2:4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "3"
+        );
+    }
+
+    @Test
+    public void testDownFirstRowAnchorTop() {
+        this.downAndCheck(
+                "1:3",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                "4"
+        );
+    }
+
+    @Test
+    public void testDownFirstRowAnchorBottom() {
+        this.downAndCheck(
+                "1:3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "2"
+        );
+    }
+
+    @Test
+    public void testDownLastRowAnchorTop() {
+        final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.downAndCheck(
+                "1:" + row,
+                SpreadsheetViewportSelectionAnchor.TOP,
+                row
+        );
+    }
+
+    @Test
+    public void testDownLastRowAnchorBottom() {
+        final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.downAndCheck(
+                "1:" + row,
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "2"
+        );
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test

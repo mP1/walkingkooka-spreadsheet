@@ -1095,6 +1095,91 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         );
     }
 
+    // navigate.........................................................................................................
+
+    // B2 C2 D2
+    // B3 C3 D3
+    // B4 C4 D4
+
+    @Test
+    public void testLeftAnchorTopLeft() {
+        this.leftAndCheck(
+                "B2:D4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "C4"
+        );
+    }
+
+    @Test
+    public void testLeftAnchorTopRight() {
+        this.leftAndCheck(
+                "B2:D4",
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                "A4"
+        );
+    }
+
+    // A1 B1 C1
+    // A2 B2 C2
+    // A3 B3 C3
+    @Test
+    public void testLeftAnchorBottomLeft() {
+        this.leftAndCheck(
+                "A1:C3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "A1"
+        );
+    }
+
+    @Test
+    public void testRightAnchorTopLeft() {
+        this.rightAndCheck(
+                "A1:C3",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "D3"
+        );
+    }
+
+    @Test
+    public void testRightAnchorTopRight() {
+        this.rightAndCheck(
+                "A1:C3",
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                "B3"
+        );
+    }
+
+    @Test
+    public void testRightAnchorBottomRight() {
+        this.rightAndCheck(
+                "A1:C3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "B1"
+        );
+    }
+
+    // B1 C1 D1
+    // B2 C2 D2
+    // B3 C3 D3
+
+    @Test
+    public void testUpAnchorBottomRight() {
+        this.upAndCheck(
+                "B1:D3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                "D1"
+        );
+    }
+
+    @Test
+    public void testDownAnchorBottomRight() {
+        this.downAndCheck(
+                "B1:D3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                "D2"
+        );
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test

@@ -117,6 +117,30 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
+    SpreadsheetColumnReference left(final SpreadsheetViewportSelectionAnchor anchor) {
+        return anchor.column(this)
+                .left(anchor);
+    }
+
+    @Override
+    SpreadsheetColumnReferenceRange up(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this;
+    }
+
+    @Override
+    SpreadsheetColumnReference right(final SpreadsheetViewportSelectionAnchor anchor) {
+        return anchor.column(this)
+                .right(anchor);
+    }
+
+    @Override
+    SpreadsheetColumnReferenceRange down(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this;
+    }
+
+    // SpreadsheetSelectionVisitor......................................................................................
+
+    @Override
     void accept(final SpreadsheetSelectionVisitor visitor) {
         visitor.visit(this);
     }

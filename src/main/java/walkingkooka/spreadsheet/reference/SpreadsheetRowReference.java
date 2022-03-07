@@ -224,6 +224,28 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         visitor.visit(this);
     }
 
+    // SpreadsheetViewportSelectionNavigation...........................................................................
+
+    @Override
+    SpreadsheetRowReference left(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this;
+    }
+
+    @Override
+    SpreadsheetRowReference up(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.addSaturated(-1);
+    }
+
+    @Override
+    SpreadsheetRowReference right(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this;
+    }
+
+    @Override
+    SpreadsheetRowReference down(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.addSaturated(1);
+    }
+
     // TreePrintable....................................................................................................
 
     @Override

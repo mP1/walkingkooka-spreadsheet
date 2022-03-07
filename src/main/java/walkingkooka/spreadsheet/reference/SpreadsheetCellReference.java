@@ -285,6 +285,36 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return "cell";
     }
 
+    // SpreadsheetViewportSelectionNavigation...........................................................................
+
+    @Override
+    SpreadsheetCellReference left(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.column()
+                .left(anchor)
+                .setRow(this.row());
+    }
+
+    @Override
+    SpreadsheetCellReference up(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.row()
+                .up(anchor)
+                .setColumn(this.column());
+    }
+
+    @Override
+    SpreadsheetCellReference right(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.column()
+                .right(anchor)
+                .setRow(this.row());
+    }
+
+    @Override
+    SpreadsheetCellReference down(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.row()
+                .down(anchor)
+                .setColumn(this.column());
+    }
+
     // Object...........................................................................................................
 
     @Override

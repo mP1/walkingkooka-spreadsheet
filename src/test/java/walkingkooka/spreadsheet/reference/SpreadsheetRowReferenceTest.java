@@ -515,6 +515,70 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.unmarshallAndCheck(JsonNode.string("2"), SpreadsheetReferenceKind.RELATIVE.row(1));
     }
 
+    // navigate.........................................................................................................
+
+    @Test
+    public void testLeft() {
+        this.leftAndCheck(
+                "1"
+        );
+    }
+
+    @Test
+    public void testUp() {
+        this.upAndCheck(
+                "2",
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpFirstRow() {
+        this.upAndCheck(
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpLastRow() {
+        final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.upAndCheck(
+                row,
+                row.add(-1)
+        );
+    }
+
+    @Test
+    public void testRight() {
+        this.rightAndCheck(
+                "2"
+        );
+    }
+
+    @Test
+    public void testDown() {
+        this.downAndCheck(
+                "2",
+                "3"
+        );
+    }
+
+    @Test
+    public void testDownFirstRow() {
+        this.downAndCheck(
+                "1",
+                "2"
+        );
+    }
+
+    @Test
+    public void testDownLastRow() {
+        this.downAndCheck(
+                SpreadsheetReferenceKind.RELATIVE.lastRow()
+        );
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test
