@@ -310,6 +310,21 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     }
 
     @Override
+    SpreadsheetSelection extendRange(final SpreadsheetSelection other,
+                                     final SpreadsheetViewportSelectionAnchor anchor) {
+        final SpreadsheetCellReference fixed = anchor.fixedCell(this);
+        final SpreadsheetCellRange range = fixed.cellRange((SpreadsheetCellReference) other);
+
+        System.out.println("this: " + this + " anchor: " + anchor + "\nfixed anchor: " + fixed + "\n moved " + other + "\nout: " + range + "\nexpected: \"B2:D2\"");
+
+        return anchor.fixedCell(this)
+                .cellRange((SpreadsheetCellReference) other)
+                .simplify();
+    }
+
+    // simplify.........................................................................................................
+
+    @Override
     public SpreadsheetSelection simplify() {
         return this.isSingleCell() ?
                 this.begin() :

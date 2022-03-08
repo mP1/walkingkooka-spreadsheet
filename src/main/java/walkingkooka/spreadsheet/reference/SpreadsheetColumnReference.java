@@ -262,6 +262,14 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return this;
     }
 
+    @Override
+    SpreadsheetSelection extendRange(final SpreadsheetSelection other,
+                                     final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.columnRange(
+                (SpreadsheetColumnReference) other
+        ).simplify();
+    }
+
     // Object...........................................................................................................
 
     @Override

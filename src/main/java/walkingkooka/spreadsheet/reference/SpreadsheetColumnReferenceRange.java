@@ -138,6 +138,14 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
         return this;
     }
 
+    @Override
+    SpreadsheetSelection extendRange(final SpreadsheetSelection other,
+                                     final SpreadsheetViewportSelectionAnchor anchor) {
+        return anchor.fixedColumn(this)
+                .columnRange((SpreadsheetColumnReference) other)
+                .simplify();
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override

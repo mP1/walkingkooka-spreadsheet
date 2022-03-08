@@ -150,6 +150,14 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
                 .down(anchor);
     }
 
+    @Override
+    SpreadsheetSelection extendRange(final SpreadsheetSelection other,
+                                     final SpreadsheetViewportSelectionAnchor anchor) {
+        return anchor.fixedRow(this)
+                .rowRange((SpreadsheetRowReference) other)
+                .simplify();
+    }
+
     // Object...........................................................................................................
 
     @Override

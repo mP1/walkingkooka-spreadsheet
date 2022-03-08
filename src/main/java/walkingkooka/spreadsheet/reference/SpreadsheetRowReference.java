@@ -246,6 +246,14 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return this.addSaturated(1);
     }
 
+    @Override
+    SpreadsheetSelection extendRange(final SpreadsheetSelection other,
+                                     final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.rowRange(
+                (SpreadsheetRowReference) other
+        ).simplify();
+    }
+
     // TreePrintable....................................................................................................
 
     @Override

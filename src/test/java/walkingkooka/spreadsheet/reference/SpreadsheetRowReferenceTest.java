@@ -579,6 +579,46 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // extendRange......................................................................................................
+
+    @Test
+    public void testExtendRange() {
+        this.extendRangeAndCheck(
+                "2",
+                "3",
+                "2:3"
+        );
+    }
+
+    @Test
+    public void testExtendRange2() {
+        this.extendRangeAndCheck(
+                "3",
+                "2",
+                "2:3"
+        );
+    }
+
+    @Test
+    public void testExtendRangeFirstRow() {
+        this.extendRangeAndCheck(
+                "1",
+                "1"
+        );
+    }
+
+    @Test
+    public void testExtendRangeSame() {
+        this.extendRangeAndCheck(
+                "123"
+        );
+    }
+
+    @Override
+    SpreadsheetRowReferenceRange parseRange(final String range) {
+        return SpreadsheetSelection.parseRowRange(range);
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test

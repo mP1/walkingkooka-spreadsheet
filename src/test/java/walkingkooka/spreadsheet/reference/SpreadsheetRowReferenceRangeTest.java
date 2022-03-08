@@ -531,6 +531,75 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // extendRange......................................................................................................
+
+    @Test
+    public void testExtendRangeTop() {
+        this.extendRangeAndCheck(
+                "2:3",
+                "4",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                "2:4"
+        );
+    }
+
+    @Test
+    public void testExtendRangeTopLastRow() {
+        final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.extendRangeAndCheck(
+                "999:" + last,
+                "" + last,
+                SpreadsheetViewportSelectionAnchor.TOP,
+                "999:" + last
+        );
+    }
+
+    @Test
+    public void testExtendRangeBottomFirstRow() {
+        this.extendRangeAndCheck(
+                "2:3",
+                "1",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "1:3"
+        );
+    }
+
+    @Test
+    public void testExtendRangeBottom() {
+        this.extendRangeAndCheck(
+                "3:4",
+                "2",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "2:4"
+        );
+    }
+
+    @Test
+    public void testExtendRangeTopSame() {
+        this.extendRangeAndCheck(
+                "1:3",
+                "3",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                "1:3"
+        );
+    }
+
+    @Test
+    public void testExtendRangeBottomSame() {
+        this.extendRangeAndCheck(
+                "1:3",
+                "1",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "1:3"
+        );
+    }
+
+    @Override
+    SpreadsheetRowReferenceRange parseRange(final String range) {
+        return SpreadsheetSelection.parseRowRange(range);
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test
