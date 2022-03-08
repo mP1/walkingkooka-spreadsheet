@@ -685,6 +685,54 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         return SpreadsheetSelection.parseColumnRange(range);
     }
 
+    // extendXXXX.......................................................................................................
+
+    @Test
+    public void testExtendLeft() {
+        this.extendLeftAndCheck(
+                "C",
+                "B:C",
+                SpreadsheetViewportSelectionAnchor.RIGHT
+        );
+    }
+
+    @Test
+    public void testExtendLeftFirstColumn() {
+        this.extendLeftAndCheck(
+                "A"
+        );
+    }
+
+    @Test
+    public void testExtendRight() {
+        this.extendRightAndCheck(
+                "C",
+                "C:D",
+                SpreadsheetViewportSelectionAnchor.LEFT
+        );
+    }
+
+    @Test
+    public void testExtendRightLastColumn() {
+        this.extendRightAndCheck(
+                SpreadsheetReferenceKind.RELATIVE.lastColumn()
+        );
+    }
+
+    @Test
+    public void testExtendUp() {
+        this.extendUpAndCheck(
+                "B"
+        );
+    }
+
+    @Test
+    public void testExtendDown() {
+        this.extendDownAndCheck(
+                "B"
+        );
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test

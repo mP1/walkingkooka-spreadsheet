@@ -904,6 +904,112 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         return SpreadsheetSelection.parseCellRange(range);
     }
 
+    // extendXXXX.......................................................................................................
+
+    @Test
+    public void testExtendLeft() {
+        this.extendLeftAndCheck(
+                "C3",
+                "B3:C3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testExtendLeftFirstColumn() {
+        this.extendLeftAndCheck(
+                "A1"
+        );
+    }
+
+    @Test
+    public void testExtendLeftFirstColumn2() {
+        this.extendLeftAndCheck(
+                "A2"
+        );
+    }
+
+    @Test
+    public void testExtendUp() {
+        this.extendUpAndCheck(
+                "C3",
+                "C2:C3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testExtendUpFirstRow() {
+        this.extendUpAndCheck(
+                "A1"
+        );
+    }
+
+    @Test
+    public void testExtendUpFirstRow2() {
+        this.extendUpAndCheck(
+                "B1"
+        );
+    }
+
+    @Test
+    public void testExtendRight() {
+        this.extendRightAndCheck(
+                "C3",
+                "C3:D3",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testExtendRightLastColumn() {
+        this.extendRightAndCheck(
+                SpreadsheetSelection.parseRow("1")
+                        .setColumn(
+                                SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                        )
+        );
+    }
+
+    @Test
+    public void testExtendRightLastColumn2() {
+        this.extendRightAndCheck(
+                SpreadsheetSelection.parseRow("2")
+                        .setColumn(
+                                SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                        )
+        );
+    }
+
+    @Test
+    public void testExtendDown() {
+        this.extendDownAndCheck(
+                "B2",
+                "B2:B3",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testExtendDownLastRow() {
+        this.extendDownAndCheck(
+                SpreadsheetSelection.parseColumn("A")
+                        .setRow(
+                                SpreadsheetReferenceKind.RELATIVE.lastRow()
+                        )
+        );
+    }
+
+    @Test
+    public void testExtendDownLastRow2() {
+        this.extendDownAndCheck(
+                SpreadsheetSelection.parseColumn("B")
+                        .setRow(
+                                SpreadsheetReferenceKind.RELATIVE.lastRow()
+                        )
+        );
+    }
+
     // SpreadsheetSelectionVisitor.......................................................................................
 
     @Test

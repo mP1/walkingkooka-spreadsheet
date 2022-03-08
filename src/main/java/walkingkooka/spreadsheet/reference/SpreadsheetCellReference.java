@@ -321,6 +321,38 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     }
 
     @Override
+    SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendRange(
+                this.left(anchor),
+                anchor
+        ).setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT);
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendRange(
+                this.up(anchor),
+                anchor
+        ).setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT);
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendRange(
+                this.right(anchor),
+                anchor
+        ).setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.TOP_LEFT);
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendRange(
+                this.down(anchor),
+                anchor
+        ).setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.TOP_LEFT);
+    }
+
+    @Override
     SpreadsheetSelection extendRange(final SpreadsheetSelection other,
                                      final SpreadsheetViewportSelectionAnchor anchor) {
         return this.cellRange(

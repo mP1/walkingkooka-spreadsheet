@@ -21,6 +21,7 @@ import walkingkooka.collect.Range;
 
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.function.UnaryOperator;
 
 /**
  * Holds a column range.
@@ -136,6 +137,40 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     @Override
     SpreadsheetColumnReferenceRange down(final SpreadsheetViewportSelectionAnchor anchor) {
         return this;
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendColumn(
+                anchor,
+                SpreadsheetColumnReference::left
+        );
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendColumn(
+                anchor,
+                SpreadsheetColumnReference::right
+        );
+    }
+
+    private SpreadsheetViewportSelection extendColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                      final UnaryOperator<SpreadsheetColumnReference> move) {
+        return this.extendRange(
+                move.apply(anchor.column(this)),
+                anchor
+        ).setAnchorOrDefault(anchor);
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.setAnchor(anchor);
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.setAnchor(anchor);
     }
 
     @Override
