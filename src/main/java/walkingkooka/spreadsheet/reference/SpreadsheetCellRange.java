@@ -268,6 +268,8 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
                 .forEach(SpreadsheetCellRangeCellsConsumer.with(cells, present, absent));
     }
 
+    // navigation.......................................................................................................
+
     @Override
     Set<SpreadsheetViewportSelectionAnchor> anchors() {
         return ANCHORS;
@@ -282,7 +284,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
 
     @Override
     public SpreadsheetViewportSelectionAnchor defaultAnchor() {
-        return SpreadsheetViewportSelectionAnchor.TOP_LEFT;
+        return SpreadsheetViewportSelectionAnchor.CELL_RANGE;
     }
 
     @Override

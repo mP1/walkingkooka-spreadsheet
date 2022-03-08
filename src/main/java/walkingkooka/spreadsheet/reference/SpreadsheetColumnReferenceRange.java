@@ -113,7 +113,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
 
     @Override
     public SpreadsheetViewportSelectionAnchor defaultAnchor() {
-        return SpreadsheetViewportSelectionAnchor.LEFT;
+        return SpreadsheetViewportSelectionAnchor.COLUMN_RANGE;
     }
 
     @Override

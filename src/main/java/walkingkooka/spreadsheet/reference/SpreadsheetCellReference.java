@@ -288,6 +288,11 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     // SpreadsheetViewportSelectionNavigation...........................................................................
 
     @Override
+    public SpreadsheetViewportSelectionAnchor defaultAnchor() {
+        return SpreadsheetViewportSelectionAnchor.CELL;
+    }
+
+    @Override
     SpreadsheetCellReference left(final SpreadsheetViewportSelectionAnchor anchor) {
         return this.column()
                 .left(anchor)

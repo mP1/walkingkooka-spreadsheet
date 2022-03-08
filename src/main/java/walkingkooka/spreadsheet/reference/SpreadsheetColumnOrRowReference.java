@@ -133,11 +133,6 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
 
     private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
 
-    @Override
-    public final SpreadsheetViewportSelectionAnchor defaultAnchor() {
-        return SpreadsheetViewportSelectionAnchor.NONE;
-    }
-
     /**
      * A column or row is already simplified.
      */
