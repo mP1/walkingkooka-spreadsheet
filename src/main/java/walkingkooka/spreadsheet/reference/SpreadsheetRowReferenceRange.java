@@ -93,21 +93,6 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     }
 
     @Override
-    Set<SpreadsheetViewportSelectionAnchor> anchors() {
-        return ANCHORS;
-    }
-
-    private final static Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(
-            SpreadsheetViewportSelectionAnchor.TOP,
-            SpreadsheetViewportSelectionAnchor.BOTTOM
-    );
-
-    @Override
-    public SpreadsheetViewportSelectionAnchor defaultAnchor() {
-        return SpreadsheetViewportSelectionAnchor.TOP;
-    }
-
-    @Override
     void accept(final SpreadsheetSelectionVisitor visitor) {
         visitor.visit(this);
     }
@@ -127,6 +112,21 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     }
 
     // SpreadsheetViewportSelectionNavigation...........................................................................
+
+    @Override
+    Set<SpreadsheetViewportSelectionAnchor> anchors() {
+        return ANCHORS;
+    }
+
+    private final static Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(
+            SpreadsheetViewportSelectionAnchor.TOP,
+            SpreadsheetViewportSelectionAnchor.BOTTOM
+    );
+
+    @Override
+    public SpreadsheetViewportSelectionAnchor defaultAnchor() {
+        return SpreadsheetViewportSelectionAnchor.ROW_RANGE;
+    }
 
     @Override
     SpreadsheetRowReferenceRange left(final SpreadsheetViewportSelectionAnchor anchor) {

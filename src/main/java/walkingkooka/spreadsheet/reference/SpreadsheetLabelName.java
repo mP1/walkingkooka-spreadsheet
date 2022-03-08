@@ -147,6 +147,11 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
     // SpreadsheetViewportSelectionNavigation...........................................................................
 
     @Override
+    public SpreadsheetViewportSelectionAnchor defaultAnchor() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     SpreadsheetSelection left(final SpreadsheetViewportSelectionAnchor anchor) {
         throw new UnsupportedOperationException();
     }

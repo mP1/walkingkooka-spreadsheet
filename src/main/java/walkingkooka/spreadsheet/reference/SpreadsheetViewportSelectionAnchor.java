@@ -137,4 +137,12 @@ public enum SpreadsheetViewportSelectionAnchor {
                 begin :
                 range.end();
     }
+
+    public final static SpreadsheetViewportSelectionAnchor CELL = NONE;
+    public final static SpreadsheetViewportSelectionAnchor COLUMN = NONE;
+    public final static SpreadsheetViewportSelectionAnchor ROW = NONE;
+
+    public final static SpreadsheetViewportSelectionAnchor CELL_RANGE = TOP_LEFT; // COLUMN_RANGE + ROW_RANGE
+    public final static SpreadsheetViewportSelectionAnchor COLUMN_RANGE = LEFT; // maybe should be right ?
+    public final static SpreadsheetViewportSelectionAnchor ROW_RANGE = TOP;
 }

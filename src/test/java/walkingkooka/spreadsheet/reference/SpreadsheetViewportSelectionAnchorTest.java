@@ -23,6 +23,16 @@ import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetViewportSelectionAnchorTest implements ClassTesting<SpreadsheetViewportSelectionAnchor> {
 
+    @Test
+    public void testCellRangeConstant() {
+        this.checkEquals(
+                SpreadsheetViewportSelectionAnchor.valueOf(
+                        SpreadsheetViewportSelectionAnchor.ROW_RANGE + "_" + SpreadsheetViewportSelectionAnchor.COLUMN_RANGE
+                ),
+                SpreadsheetViewportSelectionAnchor.CELL_RANGE
+        );
+    }
+
     // B2 C2 D2
     // B3 C3 D3
     // B4 C4 D4

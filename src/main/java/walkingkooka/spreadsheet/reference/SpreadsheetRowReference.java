@@ -227,6 +227,11 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     // SpreadsheetViewportSelectionNavigation...........................................................................
 
     @Override
+    public SpreadsheetViewportSelectionAnchor defaultAnchor() {
+        return SpreadsheetViewportSelectionAnchor.ROW;
+    }
+
+    @Override
     SpreadsheetRowReference left(final SpreadsheetViewportSelectionAnchor anchor) {
         return this;
     }
