@@ -295,28 +295,28 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     @Override
     SpreadsheetCellReference left(final SpreadsheetViewportSelectionAnchor anchor) {
         return this.column()
-                .left(anchor)
+                .left()
                 .setRow(this.row());
     }
 
     @Override
     SpreadsheetCellReference up(final SpreadsheetViewportSelectionAnchor anchor) {
         return this.row()
-                .up(anchor)
+                .up()
                 .setColumn(this.column());
     }
 
     @Override
     SpreadsheetCellReference right(final SpreadsheetViewportSelectionAnchor anchor) {
         return this.column()
-                .right(anchor)
+                .right()
                 .setRow(this.row());
     }
 
     @Override
     SpreadsheetCellReference down(final SpreadsheetViewportSelectionAnchor anchor) {
         return this.row()
-                .down(anchor)
+                .down()
                 .setColumn(this.column());
     }
 

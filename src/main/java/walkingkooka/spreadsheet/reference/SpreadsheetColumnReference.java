@@ -247,9 +247,17 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return SpreadsheetViewportSelectionAnchor.COLUMN;
     }
 
+    SpreadsheetColumnReference left() {
+        return this.addSaturated(-1);
+    }
+
+    SpreadsheetColumnReference right() {
+        return this.addSaturated(1);
+    }
+
     @Override
     SpreadsheetColumnReference left(final SpreadsheetViewportSelectionAnchor anchor) {
-        return this.addSaturated(-1);
+        return this.left();
     }
 
     @Override
@@ -259,7 +267,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
     @Override
     SpreadsheetColumnReference right(final SpreadsheetViewportSelectionAnchor anchor) {
-        return this.addSaturated(1);
+        return this.right();
     }
 
     @Override
