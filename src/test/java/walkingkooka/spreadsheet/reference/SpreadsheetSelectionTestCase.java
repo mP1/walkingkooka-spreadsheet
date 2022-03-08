@@ -110,13 +110,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final S selection) {
-        this.leftAndCheck(
-                selection,
-                selection
-        );
-    }
-
     final void leftAndCheck(final String selection,
                             final String expected) {
         final S parsed = this.parseString(selection);
@@ -155,16 +148,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final String selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetSelection expected) {
-        this.leftAndCheck(
-                this.parseString(selection),
-                anchor,
-                expected
-        );
-    }
-
     final void leftAndCheck(final S selection,
                             final SpreadsheetViewportSelectionAnchor anchor,
                             final SpreadsheetSelection expected) {
@@ -178,13 +161,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     // up.............................................................................................................
 
     final void upAndCheck(final String selection) {
-        this.upAndCheck(
-                selection,
-                selection
-        );
-    }
-
-    final void upAndCheck(final S selection) {
         this.upAndCheck(
                 selection,
                 selection
@@ -229,16 +205,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final String selection,
-                          final SpreadsheetViewportSelectionAnchor anchor,
-                          final SpreadsheetSelection expected) {
-        this.upAndCheck(
-                this.parseString(selection),
-                anchor,
-                expected
-        );
-    }
-
     final void upAndCheck(final S selection,
                           final SpreadsheetViewportSelectionAnchor anchor,
                           final SpreadsheetSelection expected) {
@@ -276,19 +242,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void rightAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor) {
-        this.rightAndCheck(
-                selection,
-                anchor,
-                selection
-        );
-    }
-
-    final void rightAndCheck(final String selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
                              final String expected) {
         this.rightAndCheck(
-                this.parseString(selection),
+                selection,
                 anchor,
                 this.parseString(expected)
         );
@@ -451,17 +408,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 this.parseString(moved).simplify(),
                 anchor,
                 this.parseRange(expected)
-        );
-    }
-
-    final void extendRangeAndCheck(final S selection,
-                                   final SpreadsheetSelection moved,
-                                   final SpreadsheetSelection expected) {
-        this.extendRangeAndCheck(
-                selection,
-                moved,
-                SpreadsheetViewportSelectionAnchor.NONE,
-                expected
         );
     }
 
