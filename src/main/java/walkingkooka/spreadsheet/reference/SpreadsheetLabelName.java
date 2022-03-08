@@ -166,6 +166,12 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    SpreadsheetSelection extendRange(final SpreadsheetSelection other,
+                                     final SpreadsheetViewportSelectionAnchor anchor) {
+        throw new UnsupportedOperationException();
+    }
+
     // Comparable........................................................................................................
 
     @Override

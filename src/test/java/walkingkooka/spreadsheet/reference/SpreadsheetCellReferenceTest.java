@@ -863,6 +863,47 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // extendRange......................................................................................................
+
+    @Test
+    public void testExtendRange() {
+        this.extendRangeAndCheck(
+                "B2",
+                "C3",
+                "B2:C3"
+        );
+    }
+
+    @Test
+    public void testExtendRange2() {
+        this.extendRangeAndCheck(
+                "C3",
+                "B2",
+                "B2:C3"
+        );
+    }
+
+    @Test
+    public void testExtendRangeSame() {
+        this.extendRangeAndCheck(
+                "A1",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testExtendRangeSame2() {
+        this.extendRangeAndCheck(
+                "B2",
+                "B2"
+        );
+    }
+
+    @Override
+    SpreadsheetCellRange parseRange(final String range) {
+        return SpreadsheetSelection.parseCellRange(range);
+    }
+
     // SpreadsheetSelectionVisitor.......................................................................................
 
     @Test

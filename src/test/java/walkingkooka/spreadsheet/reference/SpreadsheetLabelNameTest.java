@@ -176,6 +176,13 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
         );
     }
 
+    // extendRange......................................................................................................
+
+    @Override
+    SpreadsheetLabelName parseRange(final String range) {
+        return SpreadsheetSelection.labelName(range);
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test
@@ -204,6 +211,19 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
             }
         }.accept(selection);
         this.checkEquals("132", b.toString());
+    }
+
+    // extendRange......................................................................................................
+
+    @Test
+    public void testExtendRange() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().extendRange(
+                        SpreadsheetSelection.parseCell("A1"),
+                        SpreadsheetViewportSelectionAnchor.NONE
+                )
+        );
     }
 
     // SpreadsheetExpressionReferenceVisitor.............................................................................

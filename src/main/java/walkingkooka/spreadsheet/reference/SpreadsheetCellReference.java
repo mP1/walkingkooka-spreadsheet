@@ -315,6 +315,14 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
                 .setColumn(this.column());
     }
 
+    @Override
+    SpreadsheetSelection extendRange(final SpreadsheetSelection other,
+                                     final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.cellRange(
+                (SpreadsheetCellReference) other
+        ).simplify();
+    }
+
     // Object...........................................................................................................
 
     @Override

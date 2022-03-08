@@ -399,6 +399,90 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // extendRange......................................................................................................
+
+    final void extendRangeAndCheck(final String selection) {
+        this.extendRangeAndCheck(
+                selection,
+                selection
+        );
+    }
+
+
+    final void extendRangeAndCheck(final String selection,
+                                   final String moved) {
+        this.extendRangeAndCheck(
+                selection,
+                moved,
+                SpreadsheetViewportSelectionAnchor.NONE
+        );
+    }
+
+    final void extendRangeAndCheck(final String selection,
+                                   final String moved,
+                                   final SpreadsheetViewportSelectionAnchor anchor) {
+        final S parsed = this.parseString(selection);
+
+        this.extendRangeAndCheck(
+                parsed,
+                this.parseString(moved).simplify(),
+                anchor,
+                parsed
+        );
+    }
+
+    final void extendRangeAndCheck(final String selection,
+                                   final String moved,
+                                   final String expected) {
+        this.extendRangeAndCheck(
+                selection,
+                moved,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                expected
+        );
+    }
+
+    final void extendRangeAndCheck(final String selection,
+                                   final String moved,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final String expected) {
+        this.extendRangeAndCheck(
+                this.parseString(selection),
+                this.parseString(moved).simplify(),
+                anchor,
+                this.parseRange(expected)
+        );
+    }
+
+    final void extendRangeAndCheck(final S selection,
+                                   final SpreadsheetSelection moved,
+                                   final SpreadsheetSelection expected) {
+        this.extendRangeAndCheck(
+                selection,
+                moved,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                expected
+        );
+    }
+
+    final void extendRangeAndCheck(final S selection,
+                                   final SpreadsheetSelection moved,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetSelection expected) {
+        this.checkEquals(
+                true,
+                moved instanceof SpreadsheetCellReference || moved instanceof SpreadsheetColumnReference || moved instanceof SpreadsheetRowReference,
+                () -> moved + " must be either cell/column/row"
+        );
+        this.checkEquals(
+                expected.simplify(),
+                selection.extendRange(moved, anchor),
+                () -> selection + " extendRange " + moved + " " + anchor
+        );
+    }
+
+    abstract SpreadsheetSelection parseRange(final String range);
+
     // simplify.........................................................................................................
 
     final void simplifyAndCheck(final String selection) {

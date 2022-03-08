@@ -1180,6 +1180,80 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         );
     }
 
+    // extendRange......................................................................................................
+
+    @Test
+    public void testExtendRangeTopLeft() {
+        this.extendRangeAndCheck(
+                "B2:C3",
+                "C4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "B2:C4"
+        );
+    }
+
+    @Test
+    public void testExtendRangeTopLeft2() {
+        this.extendRangeAndCheck(
+                "B2:C3",
+                "D4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "B2:D4"
+        );
+    }
+
+    //    B2 C2  <-- anchor
+    // A3 B3 C3
+    @Test
+    public void testExtendRangeTopRight() {
+        this.extendRangeAndCheck(
+                "B2:C3",
+                "A3",
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                "A2:C3"
+        );
+    }
+
+
+    //     B2   C2  D2
+    // --> B3   C3
+    @Test
+    public void testExtendRangeBottomLeft() {
+        this.extendRangeAndCheck(
+                "B2:C3",
+                "D2",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                "B2:D3"
+        );
+    }
+
+    // A2   B2   C2
+    //      B3   C3 <-- anchor
+    @Test
+    public void testExtendRangeBottomRight() {
+        this.extendRangeAndCheck(
+                "B2:C3",
+                "A2",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "A2:C3"
+        );
+    }
+
+    @Test
+    public void testExtendRangeBottomRightSame() {
+        this.extendRangeAndCheck(
+                "A1:B2",
+                "A1",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "A1:B2"
+        );
+    }
+
+    @Override
+    SpreadsheetCellRange parseRange(final String range) {
+        return SpreadsheetSelection.parseCellRange(range);
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test
