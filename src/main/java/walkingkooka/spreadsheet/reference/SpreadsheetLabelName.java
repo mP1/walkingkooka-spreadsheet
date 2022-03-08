@@ -148,7 +148,7 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
 
     @Override
     public SpreadsheetViewportSelectionAnchor defaultAnchor() {
-        throw new UnsupportedOperationException();
+        return SpreadsheetViewportSelectionAnchor.NONE; // should never happen
     }
 
     @Override
