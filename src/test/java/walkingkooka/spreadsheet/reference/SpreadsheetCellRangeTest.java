@@ -1254,6 +1254,202 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         return SpreadsheetSelection.parseCellRange(range);
     }
 
+    // extendLeft.......................................................................................................
+
+    @Test
+    public void testExtendLeftAnchorBottomRight() {
+        this.extendLeftAndCheck(
+                "C3:D4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "B3:D4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    // anchor -> C3 D3
+    //           C4 D4
+
+    @Test
+    public void testExtendLeftAnchorTopLeft() {
+        this.extendLeftAndCheck(
+                "C3:D4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "C3:C4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        ); // C4
+    }
+
+    @Test
+    public void testExtendLeftAnchorTopLeft2() {
+        this.extendLeftAndCheck(
+                "C3:D3",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "C3"
+        );
+    }
+
+    @Test
+    public void testExtendLeftAnchorTopRightFirstColumn() {
+        this.extendLeftAndCheck(
+                "A1:A2",
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT
+        );
+    }
+
+    // extendRight......................................................................................................
+
+    @Test
+    public void testExtendRightAnchorTopLeft() {
+        this.extendRightAndCheck(
+                "C3:D4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "C3:E4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testExtendRightAnchorBottomRight() {
+        this.extendRightAndCheck(
+                "C3:D3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "D3"
+        );
+    }
+
+    // C3 D3
+    // C4 D4 <-- anchor
+
+    @Test
+    public void testExtendRightAnchorBottomRight2() {
+        this.extendRightAndCheck(
+                "C3:D4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "D3:D4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        ); // C4
+    }
+
+    @Test
+    public void testExtendRightAnchorBottomLeftLastColumn() {
+        final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
+        this.extendRightAndCheck(
+                column.add(-1) + "1:" + column + "1",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testExtendRightAnchorTopRightLastColumn2() {
+        final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
+        this.extendRightAndCheck(
+                column.add(-1) + "1:" + column + "1",
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                column + "1"
+        );
+    }
+
+    // extendUp.......................................................................................................
+
+    @Test
+    public void testExtendUpAnchorTopLeft() {
+        this.extendUpAndCheck(
+                "C3:E5",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "C3:E4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testExtendUpAnchorTopLeft2() {
+        this.extendUpAndCheck(
+                "C3:C4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "C3"
+        );
+    }
+
+    // C3 D3 E3
+    // C4 D4 E4
+    // C5 D5 E5
+
+    @Test
+    public void testExtendUpAnchorBottomRight() {
+        this.extendUpAndCheck(
+                "C3:E5",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "C2:E5",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    // anchor -> A1 B1
+    //           A2 B2
+
+    @Test
+    public void testExtendUpAnchorTopLeftFirstRow() {
+        this.extendUpAndCheck(
+                "A1:B2",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "A1:B1"
+        );
+    }
+
+    // extendDown.......................................................................................................
+
+    @Test
+    public void testExtendDownAnchorTopLeft() {
+        this.extendDownAndCheck(
+                "C3:E5",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "C3:E6",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testExtendDownAnchorBottomRight() {
+        this.extendDownAndCheck(
+                "C3:E5",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "C4:E5",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testExtendDownAnchorBottomRight2() {
+        this.extendDownAndCheck(
+                "C3:C4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "C4"
+        );
+    }
+
+    @Test
+    public void testExtendDownAnchorTopLeftLastRow() {
+        final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.extendDownAndCheck(
+                "A" + row + ":B" + row,
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testExtendDownAnchorBottomRightLastRow2() {
+        final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.extendDownAndCheck(
+                "A" + row.add(-1) + ":A" + row,
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "A" + row
+        );
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test

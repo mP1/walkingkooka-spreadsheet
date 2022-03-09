@@ -331,21 +331,20 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     private SpreadsheetViewportSelection extendColumn(final SpreadsheetViewportSelectionAnchor anchor,
                                                       final UnaryOperator<SpreadsheetColumnReference> move) {
         return this.extendRange(
-                move.apply(anchor.column(this.columnReferenceRange())),
+                anchor.row(this.rowReferenceRange())
+                        .setColumn(
+                                move.apply(
+                                        anchor.column(this.columnReferenceRange())
+                                )
+                        ),
                 anchor
         ).setAnchorOrDefault(anchor);
     }
 
-
     @Override
     SpreadsheetSelection extendRange(final SpreadsheetSelection other,
                                      final SpreadsheetViewportSelectionAnchor anchor) {
-        final SpreadsheetCellReference fixed = anchor.fixedCell(this);
-        final SpreadsheetCellRange range = fixed.cellRange((SpreadsheetCellReference) other);
-
-        System.out.println("this: " + this + " anchor: " + anchor + "\nfixed anchor: " + fixed + "\n moved " + other + "\nout: " + range + "\nexpected: \"B2:D2\"");
-
-        return anchor.fixedCell(this)
+       return anchor.fixedCell(this)
                 .cellRange((SpreadsheetCellReference) other)
                 .simplify();
     }
@@ -369,7 +368,12 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     private SpreadsheetViewportSelection extendRow(final SpreadsheetViewportSelectionAnchor anchor,
                                                    final UnaryOperator<SpreadsheetRowReference> move) {
         return this.extendRange(
-                move.apply(anchor.row(this.rowReferenceRange())),
+                anchor.column(this.columnReferenceRange())
+                        .setRow(
+                                move.apply(
+                                        anchor.row(this.rowReferenceRange())
+                                )
+                        ),
                 anchor
         ).setAnchorOrDefault(anchor);
     }
