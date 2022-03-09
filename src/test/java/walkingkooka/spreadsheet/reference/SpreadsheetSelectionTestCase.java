@@ -451,7 +451,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void extendLeftAndCheck(final String selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
                                   final String expected) {
-        final SpreadsheetSelection parsed = this.parseString(expected);
+        final SpreadsheetSelection parsed = this.parseRange(expected)
+                .simplify();
 
         this.extendLeftAndCheck(
                 this.parseString(selection),
@@ -495,7 +496,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendLeftAndCheck(
                 this.parseString(text),
                 anchor,
-                this.parseRange(expected).setAnchor(expectedAnchor)
+                this.parseRange(expected)
+                        .simplify()
+                        .setAnchor(expectedAnchor)
         );
     }
 
@@ -519,7 +522,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    // extendUp.........................................................................................................
+    // extendUp.......................................................................................................
 
     final void extendUpAndCheck(final String selection) {
         final S parsed = this.parseString(selection);
@@ -541,7 +544,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void extendUpAndCheck(final String selection,
                                 final SpreadsheetViewportSelectionAnchor anchor,
                                 final String expected) {
-        final SpreadsheetSelection parsed = this.parseString(expected);
+        final SpreadsheetSelection parsed = this.parseRange(expected)
+                .simplify();
 
         this.extendUpAndCheck(
                 this.parseString(selection),
@@ -585,7 +589,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendUpAndCheck(
                 this.parseString(text),
                 anchor,
-                this.parseRange(expected).setAnchor(expectedAnchor)
+                this.parseRange(expected)
+                        .simplify()
+                        .setAnchor(expectedAnchor)
         );
     }
 
@@ -609,7 +615,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    // extendRight.............................................................................................................
+    // extendRight.......................................................................................................
 
     final void extendRightAndCheck(final String selection) {
         final S parsed = this.parseString(selection);
@@ -631,7 +637,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void extendRightAndCheck(final String selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
                                    final String expected) {
-        final SpreadsheetSelection parsed = this.parseString(expected);
+        final SpreadsheetSelection parsed = this.parseRange(expected)
+                .simplify();
 
         this.extendRightAndCheck(
                 this.parseString(selection),
@@ -675,7 +682,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendRightAndCheck(
                 this.parseString(text),
                 anchor,
-                this.parseRange(expected).setAnchor(expectedAnchor)
+                this.parseRange(expected)
+                        .simplify()
+                        .setAnchor(expectedAnchor)
         );
     }
 
@@ -721,7 +730,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void extendDownAndCheck(final String selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
                                   final String expected) {
-        final SpreadsheetSelection parsed = this.parseString(expected);
+        final SpreadsheetSelection parsed = this.parseRange(expected)
+                .simplify();
 
         this.extendDownAndCheck(
                 this.parseString(selection),
@@ -765,7 +775,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendDownAndCheck(
                 this.parseString(text),
                 anchor,
-                this.parseRange(expected).setAnchor(expectedAnchor)
+                this.parseRange(expected)
+                        .simplify()
+                        .setAnchor(expectedAnchor)
         );
     }
 

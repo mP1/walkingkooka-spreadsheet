@@ -560,6 +560,78 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         return SpreadsheetSelection.parseColumnRange(range);
     }
 
+    // extendXXXX.......................................................................................................
+
+    @Test
+    public void testExtendLeftAnchorRight() {
+        this.extendLeftAndCheck(
+                "C:D",
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                "B:D",
+                SpreadsheetViewportSelectionAnchor.RIGHT
+        );
+    }
+
+    @Test
+    public void testExtendLeftAnchorLeft() {
+        this.extendLeftAndCheck(
+                "C:D",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                "C"
+        );
+    }
+
+    @Test
+    public void testExtendLeftAnchorRightFirstColumn() {
+        this.extendLeftAndCheck(
+                "A:B",
+                SpreadsheetViewportSelectionAnchor.RIGHT
+        );
+    }
+
+    @Test
+    public void testExtendRightAnchorLeft() {
+        this.extendRightAndCheck(
+                "C:D",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                "C:E",
+                SpreadsheetViewportSelectionAnchor.LEFT
+        );
+    }
+
+    @Test
+    public void testExtendRightAnchorRight() {
+        this.extendRightAndCheck(
+                "C:D",
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                "D",
+                SpreadsheetViewportSelectionAnchor.NONE
+        );
+    }
+
+    @Test
+    public void testExtendRightLastColumn() {
+        final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
+        this.extendRightAndCheck(
+                column.add(-1).columnRange(column)
+        );
+    }
+
+    @Test
+    public void testExtendUp() {
+        this.extendUpAndCheck(
+                "B:C"
+        );
+    }
+
+    @Test
+    public void testExtendDown() {
+        this.extendDownAndCheck(
+                "B:C"
+        );
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test
