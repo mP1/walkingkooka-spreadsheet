@@ -619,6 +619,54 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         return SpreadsheetSelection.parseRowRange(range);
     }
 
+    // extendXXXX.......................................................................................................
+
+    @Test
+    public void testExtendUp() {
+        this.extendUpAndCheck(
+                "3",
+                "2:3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM
+        );
+    }
+
+    @Test
+    public void testExtendUpFirstRow() {
+        this.extendUpAndCheck(
+                "1"
+        );
+    }
+
+    @Test
+    public void testExtendDown() {
+        this.extendDownAndCheck(
+                "3",
+                "3:4",
+                SpreadsheetViewportSelectionAnchor.TOP
+        );
+    }
+
+    @Test
+    public void testExtendDownLastRow() {
+        this.extendDownAndCheck(
+                SpreadsheetReferenceKind.RELATIVE.lastRow()
+        );
+    }
+
+    @Test
+    public void testExtendLeft() {
+        this.extendLeftAndCheck(
+                "2"
+        );
+    }
+
+    @Test
+    public void testExtendRight() {
+        this.extendRightAndCheck(
+                "2"
+        );
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test

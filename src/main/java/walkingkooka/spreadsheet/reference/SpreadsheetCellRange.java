@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -312,6 +313,31 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     }
 
     @Override
+    SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendColumn(
+                anchor,
+                SpreadsheetColumnReference::left
+        );
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendColumn(
+                anchor,
+                SpreadsheetColumnReference::right
+        );
+    }
+
+    private SpreadsheetViewportSelection extendColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                      final UnaryOperator<SpreadsheetColumnReference> move) {
+        return this.extendRange(
+                move.apply(anchor.column(this.columnReferenceRange())),
+                anchor
+        ).setAnchorOrDefault(anchor);
+    }
+
+
+    @Override
     SpreadsheetSelection extendRange(final SpreadsheetSelection other,
                                      final SpreadsheetViewportSelectionAnchor anchor) {
         final SpreadsheetCellReference fixed = anchor.fixedCell(this);
@@ -322,6 +348,30 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
         return anchor.fixedCell(this)
                 .cellRange((SpreadsheetCellReference) other)
                 .simplify();
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendRow(
+                anchor,
+                SpreadsheetRowReference::up
+        );
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendRow(
+                anchor,
+                SpreadsheetRowReference::down
+        );
+    }
+
+    private SpreadsheetViewportSelection extendRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                                   final UnaryOperator<SpreadsheetRowReference> move) {
+        return this.extendRange(
+                move.apply(anchor.row(this.rowReferenceRange())),
+                anchor
+        ).setAnchorOrDefault(anchor);
     }
 
     // simplify.........................................................................................................

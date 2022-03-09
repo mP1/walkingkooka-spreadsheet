@@ -429,6 +429,366 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     abstract SpreadsheetSelection parseRange(final String range);
 
+    // extendLeft.......................................................................................................
+
+    final void extendLeftAndCheck(final String selection) {
+        final S parsed = this.parseString(selection);
+
+        this.extendLeftAndCheck(
+                parsed,
+                parsed.defaultAnchor()
+        );
+    }
+
+    final void extendLeftAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor) {
+        this.extendLeftAndCheck(
+                this.parseString(selection),
+                anchor
+        );
+    }
+
+    final void extendLeftAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final String expected) {
+        final SpreadsheetSelection parsed = this.parseString(expected);
+
+        this.extendLeftAndCheck(
+                this.parseString(selection),
+                anchor,
+                parsed.setAnchor(parsed.defaultAnchor())
+        );
+    }
+
+    final void extendLeftAndCheck(final S selection) {
+        this.extendLeftAndCheck(
+                selection,
+                selection.defaultAnchor()
+        );
+    }
+
+    final void extendLeftAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor) {
+        this.extendLeftAndCheck(
+                selection,
+                anchor,
+                selection.setAnchor(anchor)
+        );
+    }
+
+    final void extendLeftAndCheck(final String selection,
+                                  final String expectedSelection,
+                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        final S parsed = this.parseString(selection);
+
+        this.extendLeftAndCheck(
+                parsed,
+                parsed.defaultAnchor(),
+                this.parseRange(expectedSelection).setAnchor(expectedAnchor)
+        );
+    }
+
+    final void extendLeftAndCheck(final String text,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final String expected,
+                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendLeftAndCheck(
+                this.parseString(text),
+                anchor,
+                this.parseRange(expected).setAnchor(expectedAnchor)
+        );
+    }
+
+    final void extendLeftAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetViewportSelection expected) {
+        this.extendLeftAndCheck(
+                this.parseString(selection),
+                anchor,
+                expected
+        );
+    }
+
+    final void extendLeftAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetViewportSelection expected) {
+        this.checkEquals(
+                expected,
+                selection.extendLeft(anchor),
+                () -> selection + " anchor=" + anchor + " navigate extendLeft"
+        );
+    }
+
+    // extendUp.........................................................................................................
+
+    final void extendUpAndCheck(final String selection) {
+        final S parsed = this.parseString(selection);
+
+        this.extendUpAndCheck(
+                parsed,
+                parsed.defaultAnchor()
+        );
+    }
+
+    final void extendUpAndCheck(final String selection,
+                                final SpreadsheetViewportSelectionAnchor anchor) {
+        this.extendUpAndCheck(
+                this.parseString(selection),
+                anchor
+        );
+    }
+
+    final void extendUpAndCheck(final String selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final String expected) {
+        final SpreadsheetSelection parsed = this.parseString(expected);
+
+        this.extendUpAndCheck(
+                this.parseString(selection),
+                anchor,
+                parsed.setAnchor(parsed.defaultAnchor())
+        );
+    }
+
+    final void extendUpAndCheck(final S selection) {
+        this.extendUpAndCheck(
+                selection,
+                selection.defaultAnchor()
+        );
+    }
+
+    final void extendUpAndCheck(final S selection,
+                                final SpreadsheetViewportSelectionAnchor anchor) {
+        this.extendUpAndCheck(
+                selection,
+                anchor,
+                selection.setAnchor(anchor)
+        );
+    }
+
+    final void extendUpAndCheck(final String selection,
+                                final String expectedSelection,
+                                final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        final S parsed = this.parseString(selection);
+
+        this.extendUpAndCheck(
+                parsed,
+                parsed.defaultAnchor(),
+                this.parseRange(expectedSelection).setAnchor(expectedAnchor)
+        );
+    }
+
+    final void extendUpAndCheck(final String text,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final String expected,
+                                final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendUpAndCheck(
+                this.parseString(text),
+                anchor,
+                this.parseRange(expected).setAnchor(expectedAnchor)
+        );
+    }
+
+    final void extendUpAndCheck(final String selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetViewportSelection expected) {
+        this.extendUpAndCheck(
+                this.parseString(selection),
+                anchor,
+                expected
+        );
+    }
+
+    final void extendUpAndCheck(final S selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetViewportSelection expected) {
+        this.checkEquals(
+                expected,
+                selection.extendUp(anchor),
+                () -> selection + " anchor=" + anchor + " navigate extendUp"
+        );
+    }
+
+    // extendRight.............................................................................................................
+
+    final void extendRightAndCheck(final String selection) {
+        final S parsed = this.parseString(selection);
+
+        this.extendRightAndCheck(
+                parsed,
+                parsed.defaultAnchor()
+        );
+    }
+
+    final void extendRightAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor) {
+        this.extendRightAndCheck(
+                this.parseString(selection),
+                anchor
+        );
+    }
+
+    final void extendRightAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final String expected) {
+        final SpreadsheetSelection parsed = this.parseString(expected);
+
+        this.extendRightAndCheck(
+                this.parseString(selection),
+                anchor,
+                parsed.setAnchor(parsed.defaultAnchor())
+        );
+    }
+
+    final void extendRightAndCheck(final S selection) {
+        this.extendRightAndCheck(
+                selection,
+                selection.defaultAnchor()
+        );
+    }
+
+    final void extendRightAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor) {
+        this.extendRightAndCheck(
+                selection,
+                anchor,
+                selection.setAnchor(anchor)
+        );
+    }
+
+    final void extendRightAndCheck(final String selection,
+                                   final String expectedSelection,
+                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        final S parsed = this.parseString(selection);
+
+        this.extendRightAndCheck(
+                parsed,
+                parsed.defaultAnchor(),
+                this.parseRange(expectedSelection).setAnchor(expectedAnchor)
+        );
+    }
+
+    final void extendRightAndCheck(final String text,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final String expected,
+                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendRightAndCheck(
+                this.parseString(text),
+                anchor,
+                this.parseRange(expected).setAnchor(expectedAnchor)
+        );
+    }
+
+    final void extendRightAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetViewportSelection expected) {
+        this.extendRightAndCheck(
+                this.parseString(selection),
+                anchor,
+                expected
+        );
+    }
+
+    final void extendRightAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetViewportSelection expected) {
+        this.checkEquals(
+                expected,
+                selection.extendRight(anchor),
+                () -> selection + " anchor=" + anchor + " navigate extendRight"
+        );
+    }
+
+    // extendDown.......................................................................................................
+
+    final void extendDownAndCheck(final String selection) {
+        final S parsed = this.parseString(selection);
+
+        this.extendDownAndCheck(
+                parsed,
+                parsed.defaultAnchor()
+        );
+    }
+
+    final void extendDownAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor) {
+        this.extendDownAndCheck(
+                this.parseString(selection),
+                anchor
+        );
+    }
+
+    final void extendDownAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final String expected) {
+        final SpreadsheetSelection parsed = this.parseString(expected);
+
+        this.extendDownAndCheck(
+                this.parseString(selection),
+                anchor,
+                parsed.setAnchor(parsed.defaultAnchor())
+        );
+    }
+
+    final void extendDownAndCheck(final S selection) {
+        this.extendDownAndCheck(
+                selection,
+                selection.defaultAnchor()
+        );
+    }
+
+    final void extendDownAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor) {
+        this.extendDownAndCheck(
+                selection,
+                anchor,
+                selection.setAnchor(anchor)
+        );
+    }
+
+    final void extendDownAndCheck(final String selection,
+                                  final String expectedSelection,
+                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        final S parsed = this.parseString(selection);
+
+        this.extendDownAndCheck(
+                parsed,
+                parsed.defaultAnchor(),
+                this.parseRange(expectedSelection).setAnchor(expectedAnchor)
+        );
+    }
+
+    final void extendDownAndCheck(final String text,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final String expected,
+                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendDownAndCheck(
+                this.parseString(text),
+                anchor,
+                this.parseRange(expected).setAnchor(expectedAnchor)
+        );
+    }
+
+    final void extendDownAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetViewportSelection expected) {
+        this.extendDownAndCheck(
+                this.parseString(selection),
+                anchor,
+                expected
+        );
+    }
+
+    final void extendDownAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetViewportSelection expected) {
+        this.checkEquals(
+                expected,
+                selection.extendDown(anchor),
+                () -> selection + " anchor=" + anchor + " navigate extendDown"
+        );
+    }
+
     // simplify.........................................................................................................
 
     final void simplifyAndCheck(final String selection) {

@@ -172,6 +172,26 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
     }
 
     @Override
+    SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     SpreadsheetSelection extendRange(final SpreadsheetSelection other,
                                      final SpreadsheetViewportSelectionAnchor anchor) {
         throw new UnsupportedOperationException();

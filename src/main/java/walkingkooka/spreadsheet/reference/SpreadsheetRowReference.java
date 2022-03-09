@@ -260,6 +260,32 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     @Override
+    SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.setAnchor(anchor);
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendRange(
+                this.up(anchor),
+                anchor
+        ).setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.BOTTOM);
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.setAnchor(anchor);
+    }
+
+    @Override
+    SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor) {
+        return this.extendRange(
+                this.down(anchor),
+                anchor
+        ).setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.TOP);
+    }
+
+    @Override
     SpreadsheetSelection extendRange(final SpreadsheetSelection other,
                                      final SpreadsheetViewportSelectionAnchor anchor) {
         return this.rowRange(

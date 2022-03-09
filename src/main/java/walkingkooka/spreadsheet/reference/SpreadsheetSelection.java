@@ -474,6 +474,14 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     abstract SpreadsheetSelection down(final SpreadsheetViewportSelectionAnchor anchor);
 
+    abstract SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor);
+
+    abstract SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor);
+
+    abstract SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor);
+
+    abstract SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor);
+
     /**
      * Factory that creates or extends a {@link SpreadsheetSelection} into a range. Note the other is either a
      * {@link SpreadsheetCellReference} or {@link SpreadsheetColumnReference} or {@link SpreadsheetRowReference}.
