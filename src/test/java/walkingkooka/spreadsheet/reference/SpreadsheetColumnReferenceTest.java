@@ -647,7 +647,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testDown() {
-        this.upAndCheck(
+        this.downAndCheck(
                 "B"
         );
     }
