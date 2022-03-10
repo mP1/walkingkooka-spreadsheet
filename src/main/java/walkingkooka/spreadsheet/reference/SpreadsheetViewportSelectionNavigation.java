@@ -90,6 +90,12 @@ public enum SpreadsheetViewportSelectionNavigation {
     public abstract SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
                                                          final SpreadsheetViewportSelectionAnchor anchor);
 
+    /**
+     * Accepts text that has a more pretty form of any {@link SpreadsheetViewportSelectionNavigation enum value}.
+     * The text is identical to the enum name but in lower case and underscore replaced with dash.
+     * <br>
+     * {@link #EXTEND_LEFT} = <pre>extend-left</pre>.
+     */
     public static SpreadsheetViewportSelectionNavigation from(final String text) {
         CharSequences.failIfNullOrEmpty(text, "navigation");
 
