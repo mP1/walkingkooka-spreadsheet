@@ -168,6 +168,11 @@ public interface SpreadsheetEngine {
                      final SpreadsheetEngineContext context);
 
     /**
+     * An absent {@link SpreadsheetSelection}.
+     */
+    Optional<SpreadsheetSelection> NO_SELECTION = Optional.empty();
+
+    /**
      * Translates the {@link SpreadsheetViewport} into the actual {@link SpreadsheetCellRange} of cells that occupy that space.
      * The combination of parameters make it possible to load the range of cells that occupy the selected range and
      * automatically pan across as necessary to include the provided {@link SpreadsheetSelection}.

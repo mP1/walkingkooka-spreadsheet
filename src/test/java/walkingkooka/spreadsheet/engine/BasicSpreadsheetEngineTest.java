@@ -8965,13 +8965,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 WIDTH * 4,
                 HEIGHT * 2
         );
-        final Optional<SpreadsheetSelection> selection = Optional.empty();
+
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         this.rangeAndCheck(
                 viewport,
-                selection,
+                SpreadsheetEngine.NO_SELECTION,
                 engine,
                 context,
                 SpreadsheetSelection.parseCellRange("A1:D2")
@@ -8994,7 +8994,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.rangeAndCheck(
                 viewport,
-                selection,
+                SpreadsheetEngine.NO_SELECTION,
                 engine,
                 context,
                 SpreadsheetSelection.parseCellRange("A1:F2")
@@ -9060,7 +9060,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 yOffset,
                 width,
                 height,
-                Optional.empty(),
+                SpreadsheetEngine.NO_SELECTION,
                 range
         );
     }
