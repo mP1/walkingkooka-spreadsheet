@@ -163,6 +163,42 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
         );
     }
 
+    @Test
+    public void testPerformColumnExtendLeft() {
+        this.performAndCheck(
+                SpreadsheetViewportSelectionNavigation.EXTEND_LEFT,
+                SpreadsheetSelection.parseColumn("C"),
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                SpreadsheetSelection.parseColumnRange("B:C").setAnchor(SpreadsheetViewportSelectionAnchor.RIGHT)
+        );
+    }
+
+    @Test
+    public void testPerformColumnExtendUp() {
+        this.performAndCheck(
+                SpreadsheetViewportSelectionNavigation.EXTEND_UP,
+                SpreadsheetSelection.parseColumn("C")
+        );
+    }
+
+    @Test
+    public void testPerformRowExtendRight() {
+        this.performAndCheck(
+                SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
+                SpreadsheetSelection.parseRow("3")
+        );
+    }
+
+    @Test
+    public void testPerformRowRangeExtendDown() {
+        this.performAndCheck(
+                SpreadsheetViewportSelectionNavigation.EXTEND_DOWN,
+                SpreadsheetSelection.parseRowRange("3:4"),
+                SpreadsheetViewportSelectionAnchor.TOP,
+                SpreadsheetSelection.parseRowRange("3:5").setAnchor(SpreadsheetViewportSelectionAnchor.TOP)
+        );
+    }
+
     private void performAndCheck(
             final SpreadsheetViewportSelectionNavigation navigation,
             final SpreadsheetSelection selection) {

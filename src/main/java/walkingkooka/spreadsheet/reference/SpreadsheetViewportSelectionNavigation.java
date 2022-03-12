@@ -59,28 +59,28 @@ public enum SpreadsheetViewportSelectionNavigation {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
                                                     final SpreadsheetViewportSelectionAnchor anchor) {
-            throw new UnsupportedOperationException();
+            return selection.extendLeft(anchor);
         }
     },
     EXTEND_UP {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
                                                     final SpreadsheetViewportSelectionAnchor anchor) {
-            throw new UnsupportedOperationException();
+            return selection.extendUp(anchor);
         }
     },
     EXTEND_RIGHT {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
                                                     final SpreadsheetViewportSelectionAnchor anchor) {
-            throw new UnsupportedOperationException();
+            return selection.extendRight(anchor);
         }
     },
     EXTEND_DOWN {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
                                                     final SpreadsheetViewportSelectionAnchor anchor) {
-            throw new UnsupportedOperationException();
+            return selection.extendDown(anchor);
         }
     };
 
