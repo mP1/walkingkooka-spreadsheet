@@ -24,11 +24,10 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.store.StoreTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore> implements StoreTesting<S, SpreadsheetRowReference, SpreadsheetRow>,
+public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore> implements SpreadsheetRowStoreTesting<S>,
         TypeNameTesting<S> {
 
     final static SpreadsheetRowReference REFERENCE = SpreadsheetSelection.parseRow("2");
