@@ -101,7 +101,12 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
     public SpreadsheetColumnReference leftSkipHidden(final SpreadsheetColumnReference reference) {
         SpreadsheetColumnReference left = reference;
 
-        while (!left.isFirst()) {
+        for (; ; ) {
+            if (left.isFirst()) {
+                left = reference;
+                break;
+            }
+
             left = left.addSaturated(-1);
 
             if (!this.isHidden(left)) {
