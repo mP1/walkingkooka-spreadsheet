@@ -21,6 +21,7 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore> extends SpreadsheetColumnOrRowStoreTesting<S, SpreadsheetColumnReference, SpreadsheetColumn> {
@@ -67,6 +68,51 @@ public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore>
                 expected,
                 store.leftSkipHidden(reference),
                 () -> reference + " leftSkipHidden " + store
+        );
+    }
+
+    @Test
+    default void testRightSkipHiddenLastColumn() {
+        this.rightSkipHiddenAndCheck(
+                this.createStore(),
+                SpreadsheetReferenceKind.RELATIVE.lastColumn()
+        );
+    }
+
+    default void rightSkipHiddenAndCheck(final S store,
+                                         final String reference) {
+        this.rightSkipHiddenAndCheck(
+                store,
+                SpreadsheetSelection.parseColumn(reference)
+        );
+    }
+
+    default void rightSkipHiddenAndCheck(final S store,
+                                         final String reference,
+                                         final String expected) {
+        this.rightSkipHiddenAndCheck(
+                store,
+                SpreadsheetSelection.parseColumn(reference),
+                SpreadsheetSelection.parseColumn(expected)
+        );
+    }
+
+    default void rightSkipHiddenAndCheck(final S store,
+                                         final SpreadsheetColumnReference reference) {
+        this.rightSkipHiddenAndCheck(
+                store,
+                reference,
+                reference
+        );
+    }
+
+    default void rightSkipHiddenAndCheck(final S store,
+                                         final SpreadsheetColumnReference reference,
+                                         final SpreadsheetColumnReference expected) {
+        this.checkEquals(
+                expected,
+                store.rightSkipHidden(reference),
+                () -> reference + " rightSkipHidden " + store
         );
     }
 }
