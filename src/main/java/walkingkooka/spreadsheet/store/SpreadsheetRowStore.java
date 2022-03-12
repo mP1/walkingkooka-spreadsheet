@@ -31,4 +31,10 @@ public interface SpreadsheetRowStore extends SpreadsheetColumnOrRowStore<Spreads
      * If all rows to the up are hidden, the original {@link SpreadsheetRowReference} is returned.
      */
     SpreadsheetRowReference upSkipHidden(final SpreadsheetRowReference reference);
+
+    /**
+     * Returns the last row moving down from the given starting point that is not hidden.
+     * If all rows to the down are hidden, the original {@link SpreadsheetRowReference} is returned.
+     */
+    SpreadsheetRowReference downSkipHidden(final SpreadsheetRowReference reference);
 }

@@ -36,4 +36,9 @@ public class FakeSpreadsheetRowStore extends FakeStore<SpreadsheetRowReference, 
     public SpreadsheetRowReference upSkipHidden(final SpreadsheetRowReference reference) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public SpreadsheetRowReference downSkipHidden(final SpreadsheetRowReference reference) {
+        throw new UnsupportedOperationException();
+    }
 }

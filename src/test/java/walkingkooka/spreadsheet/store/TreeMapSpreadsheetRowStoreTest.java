@@ -20,6 +20,8 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.TreeMap;
@@ -84,6 +86,74 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
         this.upSkipHiddenAndCheck(
                 store,
                 "3"
+        );
+    }
+
+    // downSkipHidden...................................................................................................
+
+    @Test
+    public void testDownSkipHidden() {
+        this.downSkipHiddenAndCheck(
+                this.createStore(),
+                "2",
+                "3"
+        );
+    }
+
+    @Test
+    public void testDownSkipHidden2() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
+
+        this.downSkipHiddenAndCheck(
+                store,
+                "2",
+                "4"
+        );
+    }
+
+    @Test
+    public void testDownSkipHiddenSkips() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
+        store.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
+
+        this.downSkipHiddenAndCheck(
+                store,
+                "2",
+                "5"
+        );
+    }
+
+    @Test
+    public void testDownSkipHiddenSkipsLastRow() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+
+        final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        store.save(last.add(-2).row().setHidden(true));
+        store.save(last.add(-1).row().setHidden(true));
+
+        this.downSkipHiddenAndCheck(
+                store,
+                last.add(-3),
+                last
+        );
+    }
+
+    @Test
+    public void testDownSkipHiddenAllDownHidden() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+
+        final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
+        ;
+
+        store.save(last.add(-1).row().setHidden(true));
+        store.save(last.row().setHidden(true));
+
+        this.downSkipHiddenAndCheck(
+                store,
+                last.add(-2)
         );
     }
 
