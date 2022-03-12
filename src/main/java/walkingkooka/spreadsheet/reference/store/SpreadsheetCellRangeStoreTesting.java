@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.store.StoreTesting;
+import walkingkooka.spreadsheet.store.SpreadsheetStoreTesting;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +34,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRangeStore<V>, V> extends StoreTesting<S, SpreadsheetCellRange, List<V>>,
+public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRangeStore<V>, V> extends SpreadsheetStoreTesting<S, SpreadsheetCellRange, List<V>>,
         TypeNameTesting<S> {
 
     /**
