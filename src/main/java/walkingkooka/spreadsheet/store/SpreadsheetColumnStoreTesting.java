@@ -18,12 +18,14 @@
 
 package walkingkooka.spreadsheet.store;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore> extends SpreadsheetColumnOrRowStoreTesting<S, SpreadsheetColumnReference, SpreadsheetColumn> {
 
+    @Test
     default void testLeftSkipHiddenFirstColumn() {
         this.leftSkipHiddenAndCheck(
                 this.createStore(),
