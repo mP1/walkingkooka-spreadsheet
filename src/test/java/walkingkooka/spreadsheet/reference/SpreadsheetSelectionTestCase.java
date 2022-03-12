@@ -25,6 +25,10 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -151,9 +155,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void leftAndCheck(final S selection,
                             final SpreadsheetViewportSelectionAnchor anchor,
                             final SpreadsheetSelection expected) {
+        this.leftAndCheck(
+                selection,
+                anchor,
+                columnStore(),
+                expected
+        );
+    }
+
+    final void leftAndCheck(final S selection,
+                            final SpreadsheetViewportSelectionAnchor anchor,
+                            final SpreadsheetColumnStore columnStore,
+                            final SpreadsheetSelection expected) {
         this.checkEquals(
                 expected.simplify(),
-                selection.left(anchor),
+                selection.left(anchor, columnStore, SpreadsheetRowStores.fake()),
                 () -> selection + " anchor=" + anchor + " navigate left"
         );
     }
@@ -208,12 +224,25 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void upAndCheck(final S selection,
                           final SpreadsheetViewportSelectionAnchor anchor,
                           final SpreadsheetSelection expected) {
+        this.upAndCheck(
+                selection,
+                anchor,
+                rowStore(),
+                expected
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                          final SpreadsheetViewportSelectionAnchor anchor,
+                          final SpreadsheetRowStore rowStore,
+                          final SpreadsheetSelection expected) {
         this.checkEquals(
                 expected.simplify(),
-                selection.up(anchor),
+                selection.up(anchor, SpreadsheetColumnStores.fake(), rowStore),
                 () -> selection + " anchor=" + anchor + " navigate up"
         );
     }
+
     // right.............................................................................................................
 
     final void rightAndCheck(final String selection) {
@@ -273,9 +302,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void rightAndCheck(final S selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
                              final SpreadsheetSelection expected) {
+        this.rightAndCheck(
+                selection,
+                anchor,
+                columnStore(),
+                expected
+        );
+    }
+
+    final void rightAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetSelection expected) {
         this.checkEquals(
                 expected.simplify(),
-                selection.right(anchor),
+                selection.right(anchor, columnStore, SpreadsheetRowStores.fake()),
                 () -> selection + " anchor=" + anchor + " navigate right"
         );
     }
@@ -345,15 +386,34 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-
     final void downAndCheck(final S selection,
                             final SpreadsheetViewportSelectionAnchor anchor,
                             final SpreadsheetSelection expected) {
+        this.downAndCheck(
+                selection,
+                anchor,
+                rowStore(),
+                expected
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                            final SpreadsheetViewportSelectionAnchor anchor,
+                            final SpreadsheetRowStore rowStore,
+                            final SpreadsheetSelection expected) {
         this.checkEquals(
                 expected.simplify(),
-                selection.down(anchor),
+                selection.down(anchor, SpreadsheetColumnStores.fake(), rowStore),
                 () -> selection + " anchor=" + anchor + " navigate down"
         );
+    }
+
+    private SpreadsheetColumnStore columnStore() {
+        return SpreadsheetColumnStores.treeMap();
+    }
+
+    private SpreadsheetRowStore rowStore() {
+        return SpreadsheetRowStores.treeMap();
     }
 
     // extendRange......................................................................................................
@@ -502,9 +562,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void extendLeftAndCheck(final S selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
                                   final SpreadsheetViewportSelection expected) {
+        this.extendLeftAndCheck(
+                selection,
+                anchor,
+                columnStore(),
+                expected
+        );
+    }
+
+    final void extendLeftAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetViewportSelection expected) {
         this.checkEquals(
                 expected,
-                selection.extendLeft(anchor),
+                selection.extendLeft(anchor, columnStore, SpreadsheetRowStores.fake()),
                 () -> selection + " anchor=" + anchor + " navigate extendLeft"
         );
     }
@@ -582,9 +654,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void extendUpAndCheck(final S selection,
                                 final SpreadsheetViewportSelectionAnchor anchor,
                                 final SpreadsheetViewportSelection expected) {
+        this.extendUpAndCheck(
+                selection,
+                anchor,
+                rowStore(),
+                expected
+        );
+    }
+
+    final void extendUpAndCheck(final S selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetRowStore rowStore,
+                                final SpreadsheetViewportSelection expected) {
         this.checkEquals(
                 expected,
-                selection.extendUp(anchor),
+                selection.extendUp(anchor, SpreadsheetColumnStores.fake(), rowStore),
                 () -> selection + " anchor=" + anchor + " navigate extendUp"
         );
     }
@@ -662,9 +746,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void extendRightAndCheck(final S selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
                                    final SpreadsheetViewportSelection expected) {
+        this.extendRightAndCheck(
+                selection,
+                anchor,
+                columnStore(),
+                expected
+        );
+    }
+
+    final void extendRightAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetViewportSelection expected) {
         this.checkEquals(
                 expected,
-                selection.extendRight(anchor),
+                selection.extendRight(anchor, columnStore, SpreadsheetRowStores.fake()),
                 () -> selection + " anchor=" + anchor + " navigate extendRight"
         );
     }
@@ -742,9 +838,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void extendDownAndCheck(final S selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
                                   final SpreadsheetViewportSelection expected) {
+        this.extendDownAndCheck(
+                selection,
+                anchor,
+                rowStore(),
+                expected
+        );
+    }
+
+    final void extendDownAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetRowStore rowStore,
+                                  final SpreadsheetViewportSelection expected) {
         this.checkEquals(
                 expected,
-                selection.extendDown(anchor),
+                selection.extendDown(anchor, SpreadsheetColumnStores.fake(), rowStore),
                 () -> selection + " anchor=" + anchor + " navigate extendDown"
         );
     }

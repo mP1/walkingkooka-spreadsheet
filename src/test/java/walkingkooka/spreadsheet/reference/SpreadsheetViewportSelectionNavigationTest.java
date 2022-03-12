@@ -20,6 +20,10 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.text.CharSequences;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -144,6 +148,21 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
+    public void testPerformColumnRangeAnchorExtendRightNavigateLeftSkipHidden() {
+        final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
+        columnStore.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
+        columnStore.save(SpreadsheetSelection.parseColumn("D").column().setHidden(true));
+
+        this.performAndCheck(
+                SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
+                SpreadsheetSelection.parseColumnRange("B:C"),
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                columnStore,
+                SpreadsheetSelection.parseColumnRange("B:E").setAnchor(SpreadsheetViewportSelectionAnchor.LEFT)
+        );
+    }
+
+    @Test
     public void testPerformColumnRangeAnchorRightNavigateLeft() {
         this.performAndCheck(
                 SpreadsheetViewportSelectionNavigation.LEFT,
@@ -160,6 +179,21 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
                 SpreadsheetSelection.parseColumn("D").setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    @Test
+    public void testPerformColumnRangeAnchorLeftNavigateExtendRightSkipHidden() {
+        final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
+        columnStore.save(SpreadsheetSelection.parseColumn("D").column().setHidden(true));
+        columnStore.save(SpreadsheetSelection.parseColumn("E").column().setHidden(true));
+
+        this.performAndCheck(
+                SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
+                SpreadsheetSelection.parseColumnRange("B:C"),
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                columnStore,
+                SpreadsheetSelection.parseColumnRange("B:F").setAnchor(SpreadsheetViewportSelectionAnchor.LEFT)
         );
     }
 
@@ -182,6 +216,21 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
+    public void testPerformRowRangeExtendUp() {
+        final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
+        rowStore.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
+        rowStore.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
+
+        this.performAndCheck(
+                SpreadsheetViewportSelectionNavigation.EXTEND_UP,
+                SpreadsheetSelection.parseRowRange("5:6"),
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                rowStore,
+                SpreadsheetSelection.parseRowRange("2:6").setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM)
+        );
+    }
+
+    @Test
     public void testPerformRowExtendRight() {
         this.performAndCheck(
                 SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
@@ -196,6 +245,21 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
                 SpreadsheetSelection.parseRowRange("3:4"),
                 SpreadsheetViewportSelectionAnchor.TOP,
                 SpreadsheetSelection.parseRowRange("3:5").setAnchor(SpreadsheetViewportSelectionAnchor.TOP)
+        );
+    }
+
+    @Test
+    public void testPerformRowRangeExtendDownSkipsHiddenRows() {
+        final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
+        rowStore.save(SpreadsheetSelection.parseRow("5").row().setHidden(true));
+        rowStore.save(SpreadsheetSelection.parseRow("6").row().setHidden(true));
+
+        this.performAndCheck(
+                SpreadsheetViewportSelectionNavigation.EXTEND_DOWN,
+                SpreadsheetSelection.parseRowRange("3:4"),
+                SpreadsheetViewportSelectionAnchor.TOP,
+                rowStore,
+                SpreadsheetSelection.parseRowRange("3:7").setAnchor(SpreadsheetViewportSelectionAnchor.TOP)
         );
     }
 
@@ -237,9 +301,58 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
             final SpreadsheetSelection selection,
             final SpreadsheetViewportSelectionAnchor anchor,
             final SpreadsheetViewportSelection expected) {
+        this.performAndCheck(
+                navigation,
+                selection,
+                anchor,
+                SpreadsheetColumnStores.treeMap(),
+                SpreadsheetRowStores.treeMap(),
+                expected
+        );
+    }
+
+    private void performAndCheck(
+            final SpreadsheetViewportSelectionNavigation navigation,
+            final SpreadsheetSelection selection,
+            final SpreadsheetViewportSelectionAnchor anchor,
+            final SpreadsheetColumnStore columnStore,
+            final SpreadsheetViewportSelection expected) {
+        this.performAndCheck(
+                navigation,
+                selection,
+                anchor,
+                columnStore,
+                SpreadsheetRowStores.fake(),
+                expected
+        );
+    }
+
+    private void performAndCheck(
+            final SpreadsheetViewportSelectionNavigation navigation,
+            final SpreadsheetSelection selection,
+            final SpreadsheetViewportSelectionAnchor anchor,
+            final SpreadsheetRowStore rowStore,
+            final SpreadsheetViewportSelection expected) {
+        this.performAndCheck(
+               navigation,
+                selection,
+                anchor,
+                SpreadsheetColumnStores.fake(),
+                rowStore,
+                expected
+        );
+    }
+
+    private void performAndCheck(
+            final SpreadsheetViewportSelectionNavigation navigation,
+            final SpreadsheetSelection selection,
+            final SpreadsheetViewportSelectionAnchor anchor,
+            final SpreadsheetColumnStore columnStore,
+            final SpreadsheetRowStore rowStore,
+            final SpreadsheetViewportSelection expected) {
         this.checkEquals(
                 expected,
-                navigation.perform(selection, anchor),
+                navigation.perform(selection, anchor, columnStore, rowStore),
                 () -> navigation + " perform " + selection + " " + anchor
         );
     }
