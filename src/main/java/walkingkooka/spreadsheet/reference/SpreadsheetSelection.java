@@ -29,6 +29,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursors;
@@ -466,21 +468,37 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      */
     public abstract SpreadsheetViewportSelectionAnchor defaultAnchor();
 
-    abstract SpreadsheetSelection left(final SpreadsheetViewportSelectionAnchor anchor);
+    abstract SpreadsheetSelection left(final SpreadsheetViewportSelectionAnchor anchor,
+                                       final SpreadsheetColumnStore columnStore,
+                                       final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetSelection up(final SpreadsheetViewportSelectionAnchor anchor);
+    abstract SpreadsheetSelection up(final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetColumnStore columnStore,
+                                     final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetSelection right(final SpreadsheetViewportSelectionAnchor anchor);
+    abstract SpreadsheetSelection right(final SpreadsheetViewportSelectionAnchor anchor,
+                                        final SpreadsheetColumnStore columnStore,
+                                        final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetSelection down(final SpreadsheetViewportSelectionAnchor anchor);
+    abstract SpreadsheetSelection down(final SpreadsheetViewportSelectionAnchor anchor,
+                                       final SpreadsheetColumnStore columnStore,
+                                       final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor);
+    abstract SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor,
+                                                     final SpreadsheetColumnStore columnStore,
+                                                     final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor);
+    abstract SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor,
+                                                   final SpreadsheetColumnStore columnStore,
+                                                   final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor);
+    abstract SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor,
+                                                      final SpreadsheetColumnStore columnStore,
+                                                      final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor);
+    abstract SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor,
+                                                     final SpreadsheetColumnStore columnStore,
+                                                     final SpreadsheetRowStore rowStore);
 
     /**
      * Factory that creates or extends a {@link SpreadsheetSelection} into a range. Note the other is either a

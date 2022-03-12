@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.collect.Range;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -130,40 +132,52 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     }
 
     @Override
-    SpreadsheetRowReferenceRange left(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetRowReferenceRange left(final SpreadsheetViewportSelectionAnchor anchor,
+                                      final SpreadsheetColumnStore columnStore,
+                                      final SpreadsheetRowStore rowStore) {
         return this;
     }
 
     @Override
-    SpreadsheetRowReference up(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetRowReference up(final SpreadsheetViewportSelectionAnchor anchor,
+                               final SpreadsheetColumnStore columnStore,
+                               final SpreadsheetRowStore rowStore) {
         return anchor.row(this)
-                .up(anchor);
+                .up(anchor, columnStore, rowStore);
     }
 
     @Override
-    SpreadsheetRowReferenceRange right(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetRowReferenceRange right(final SpreadsheetViewportSelectionAnchor anchor,
+                                       final SpreadsheetColumnStore columnStore,
+                                       final SpreadsheetRowStore rowStore) {
         return this;
     }
 
     @Override
-    SpreadsheetRowReference down(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetRowReference down(final SpreadsheetViewportSelectionAnchor anchor,
+                                 final SpreadsheetColumnStore columnStore,
+                                 final SpreadsheetRowStore rowStore) {
         return anchor.row(this)
-                .down(anchor);
+                .down(anchor, columnStore, rowStore);
     }
 
     @Override
-    SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor,
+                                          final SpreadsheetColumnStore columnStore,
+                                          final SpreadsheetRowStore rowStore) {
         return this.extendRow(
                 anchor,
-                SpreadsheetRowReference::up
+                r -> r.up(rowStore)
         );
     }
 
     @Override
-    SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor,
+                                            final SpreadsheetColumnStore columnStore,
+                                            final SpreadsheetRowStore rowStore) {
         return this.extendRow(
                 anchor,
-                SpreadsheetRowReference::down
+                r -> r.down(rowStore)
         );
     }
 
@@ -176,12 +190,16 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     }
 
     @Override
-    SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor,
+                                            final SpreadsheetColumnStore columnStore,
+                                            final SpreadsheetRowStore rowStore) {
         return this.setAnchor(anchor);
     }
 
     @Override
-    SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor,
+                                             final SpreadsheetColumnStore columnStore,
+                                             final SpreadsheetRowStore rowStore) {
         return this.setAnchor(anchor);
     }
 

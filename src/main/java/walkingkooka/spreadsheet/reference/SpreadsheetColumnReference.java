@@ -20,8 +20,11 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Represents a column reference. The {@link Comparable} method ignores the {@link SpreadsheetReferenceKind} component
@@ -247,57 +250,73 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return SpreadsheetViewportSelectionAnchor.COLUMN;
     }
 
-    SpreadsheetColumnReference left() {
-        return this.addSaturated(-1);
+    SpreadsheetColumnReference left(final SpreadsheetColumnStore columnStore) {
+        return columnStore.leftSkipHidden(this);
     }
 
-    SpreadsheetColumnReference right() {
-        return this.addSaturated(1);
-    }
-
-    @Override
-    SpreadsheetColumnReference left(final SpreadsheetViewportSelectionAnchor anchor) {
-        return this.left();
+    SpreadsheetColumnReference right(final SpreadsheetColumnStore columnStore) {
+        return columnStore.rightSkipHidden(this);
     }
 
     @Override
-    SpreadsheetColumnReference up(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetColumnReference left(final SpreadsheetViewportSelectionAnchor anchor,
+                                    final SpreadsheetColumnStore columnStore,
+                                    final SpreadsheetRowStore rowStore) {
+        return this.left(columnStore);
+    }
+
+    @Override
+    SpreadsheetColumnReference up(final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore) {
         return this;
     }
 
     @Override
-    SpreadsheetColumnReference right(final SpreadsheetViewportSelectionAnchor anchor) {
-        return this.right();
+    SpreadsheetColumnReference right(final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetColumnStore columnStore,
+                                     final SpreadsheetRowStore rowStore) {
+        return this.right(columnStore);
     }
 
     @Override
-    SpreadsheetColumnReference down(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetColumnReference down(final SpreadsheetViewportSelectionAnchor anchor,
+                                    final SpreadsheetColumnStore columnStore,
+                                    final SpreadsheetRowStore rowStore) {
         return this;
     }
 
     @Override
-    SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor,
+                                            final SpreadsheetColumnStore columnStore,
+                                            final SpreadsheetRowStore rowStore) {
         return this.extendRange(
-                this.left(anchor),
+                this.left(anchor, columnStore, rowStore),
                 anchor
         ).setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.RIGHT);
     }
 
     @Override
-    SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor,
+                                          final SpreadsheetColumnStore columnStore,
+                                          final SpreadsheetRowStore rowStore) {
         return this.setAnchor(anchor);
     }
 
     @Override
-    SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor,
+                                             final SpreadsheetColumnStore columnStore,
+                                             final SpreadsheetRowStore rowStore) {
         return this.extendRange(
-                this.right(anchor),
+                this.right(anchor, columnStore, rowStore),
                 anchor
         ).setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.LEFT);
     }
 
     @Override
-    SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor) {
+    SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor,
+                                            final SpreadsheetColumnStore columnStore,
+                                            final SpreadsheetRowStore rowStore) {
         return this.setAnchor(anchor);
     }
 

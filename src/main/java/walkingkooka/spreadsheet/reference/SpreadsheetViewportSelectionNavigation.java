@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.CharSequences;
 
 /**
@@ -26,61 +28,77 @@ public enum SpreadsheetViewportSelectionNavigation {
     LEFT {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
-                                                    final SpreadsheetViewportSelectionAnchor anchor) {
-            return selection.left(anchor)
+                                                    final SpreadsheetViewportSelectionAnchor anchor,
+                                                    final SpreadsheetColumnStore columnStore,
+                                                    final SpreadsheetRowStore rowStore) {
+            return selection.left(anchor, columnStore, rowStore)
                     .setAnchorOrDefault(anchor);
         }
     },
     UP {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
-                                                    final SpreadsheetViewportSelectionAnchor anchor) {
-            return selection.up(anchor)
+                                                    final SpreadsheetViewportSelectionAnchor anchor,
+                                                    final SpreadsheetColumnStore columnStore,
+                                                    final SpreadsheetRowStore rowStore) {
+            return selection.up(anchor, columnStore, rowStore)
                     .setAnchorOrDefault(anchor);
         }
     },
     RIGHT {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
-                                                    final SpreadsheetViewportSelectionAnchor anchor) {
-            return selection.right(anchor)
+                                                    final SpreadsheetViewportSelectionAnchor anchor,
+                                                    final SpreadsheetColumnStore columnStore,
+                                                    final SpreadsheetRowStore rowStore) {
+            return selection.right(anchor, columnStore, rowStore)
                     .setAnchorOrDefault(anchor);
         }
     },
     DOWN {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
-                                                    final SpreadsheetViewportSelectionAnchor anchor) {
-            return selection.down(anchor)
+                                                    final SpreadsheetViewportSelectionAnchor anchor,
+                                                    final SpreadsheetColumnStore columnStore,
+                                                    final SpreadsheetRowStore rowStore) {
+            return selection.down(anchor, columnStore, rowStore)
                     .setAnchorOrDefault(anchor);
         }
     },
     EXTEND_LEFT {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
-                                                    final SpreadsheetViewportSelectionAnchor anchor) {
-            return selection.extendLeft(anchor);
+                                                    final SpreadsheetViewportSelectionAnchor anchor,
+                                                    final SpreadsheetColumnStore columnStore,
+                                                    final SpreadsheetRowStore rowStore) {
+            return selection.extendLeft(anchor, columnStore, rowStore);
         }
     },
     EXTEND_UP {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
-                                                    final SpreadsheetViewportSelectionAnchor anchor) {
-            return selection.extendUp(anchor);
+                                                    final SpreadsheetViewportSelectionAnchor anchor,
+                                                    final SpreadsheetColumnStore columnStore,
+                                                    final SpreadsheetRowStore rowStore) {
+            return selection.extendUp(anchor, columnStore, rowStore);
         }
     },
     EXTEND_RIGHT {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
-                                                    final SpreadsheetViewportSelectionAnchor anchor) {
-            return selection.extendRight(anchor);
+                                                    final SpreadsheetViewportSelectionAnchor anchor,
+                                                    final SpreadsheetColumnStore columnStore,
+                                                    final SpreadsheetRowStore rowStore) {
+            return selection.extendRight(anchor, columnStore, rowStore);
         }
     },
     EXTEND_DOWN {
         @Override
         public SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
-                                                    final SpreadsheetViewportSelectionAnchor anchor) {
-            return selection.extendDown(anchor);
+                                                    final SpreadsheetViewportSelectionAnchor anchor,
+                                                    final SpreadsheetColumnStore columnStore,
+                                                    final SpreadsheetRowStore rowStore) {
+            return selection.extendDown(anchor, columnStore, rowStore);
         }
     };
 
@@ -88,7 +106,9 @@ public enum SpreadsheetViewportSelectionNavigation {
      * Executes this navigation on the given selection and anchor returning the updated result.
      */
     public abstract SpreadsheetViewportSelection perform(final SpreadsheetSelection selection,
-                                                         final SpreadsheetViewportSelectionAnchor anchor);
+                                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                                         final SpreadsheetColumnStore columnStore,
+                                                         final SpreadsheetRowStore rowStore);
 
     /**
      * Accepts text that has a more pretty form of any {@link SpreadsheetViewportSelectionNavigation enum value}.
