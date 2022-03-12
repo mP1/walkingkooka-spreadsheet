@@ -25,4 +25,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
  * A store that contains {@link SpreadsheetRow} including some methods that for frequent queries.
  */
 public interface SpreadsheetRowStore extends SpreadsheetColumnOrRowStore<SpreadsheetRowReference, SpreadsheetRow> {
+
+    /**
+     * Returns the first row moving up from the given starting point that is not hidden.
+     * If all rows to the up are hidden, the original {@link SpreadsheetRowReference} is returned.
+     */
+    SpreadsheetRowReference upSkipHidden(final SpreadsheetRowReference reference);
 }

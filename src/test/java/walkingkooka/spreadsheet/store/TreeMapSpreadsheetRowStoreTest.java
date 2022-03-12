@@ -26,6 +26,67 @@ import java.util.TreeMap;
 
 final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<TreeMapSpreadsheetRowStore> {
 
+    // upSkipHidden...................................................................................................
+
+    @Test
+    public void testUpSkipHidden() {
+        this.upSkipHiddenAndCheck(
+                this.createStore(),
+                "2",
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpSkipHidden2() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+        store.save(SpreadsheetSelection.parseRow("3").row());
+
+        this.upSkipHiddenAndCheck(
+                store,
+                "4",
+                "3"
+        );
+    }
+
+    @Test
+    public void testUpSkipHiddenSkips() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
+        store.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
+
+        this.upSkipHiddenAndCheck(
+                store,
+                "5",
+                "2"
+        );
+    }
+
+    @Test
+    public void testUpSkipHiddenSkipsFirstRow() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+        store.save(SpreadsheetSelection.parseRow("2").row().setHidden(true));
+        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
+
+        this.upSkipHiddenAndCheck(
+                store,
+                "4",
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpSkipHiddenAllUpHidden() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+        store.save(SpreadsheetSelection.parseRow("1").row().setHidden(true));
+        store.save(SpreadsheetSelection.parseRow("2").row().setHidden(true));
+
+        this.upSkipHiddenAndCheck(
+                store,
+                "3"
+        );
+    }
+
     // toString.........................................................................................................
 
     @Test
