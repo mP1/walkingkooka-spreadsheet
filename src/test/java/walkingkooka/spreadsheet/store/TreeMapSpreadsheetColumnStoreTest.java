@@ -25,6 +25,64 @@ import java.util.TreeMap;
 
 final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTestCase<TreeMapSpreadsheetColumnStore> {
 
+    // leftSkipHidden...................................................................................................
+
+    @Test
+    public void testLeftSkipHidden() {
+        this.leftSkipHiddenAndCheck(
+                this.createStore(),
+                "B",
+                "A"
+        );
+    }
+
+    @Test
+    public void testLeftSkipHidden2() {
+        final TreeMapSpreadsheetColumnStore store = this.createStore();
+        store.save(SpreadsheetSelection.parseColumn("C").column());
+
+        this.leftSkipHiddenAndCheck(
+                store,
+                "D",
+                "C"
+        );
+    }
+
+    @Test
+    public void testLeftSkipHiddenFirstColumn() {
+        this.leftSkipHiddenAndCheck(
+                this.createStore(),
+                "A",
+                "A"
+        );
+    }
+
+    @Test
+    public void testLeftSkipHiddenSkips() {
+        final TreeMapSpreadsheetColumnStore store = this.createStore();
+        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
+        store.save(SpreadsheetSelection.parseColumn("D").column().setHidden(true));
+
+        this.leftSkipHiddenAndCheck(
+                store,
+                "E",
+                "B"
+        );
+    }
+
+    @Test
+    public void testLeftSkipHiddenSkipsFirstColumn() {
+        final TreeMapSpreadsheetColumnStore store = this.createStore();
+        store.save(SpreadsheetSelection.parseColumn("B").column().setHidden(true));
+        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
+
+        this.leftSkipHiddenAndCheck(
+                store,
+                "D",
+                "A"
+        );
+    }
+
     // toString.........................................................................................................
 
     @Test

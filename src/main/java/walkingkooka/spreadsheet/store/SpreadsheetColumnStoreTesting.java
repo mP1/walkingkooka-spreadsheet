@@ -20,6 +20,27 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore> extends SpreadsheetColumnOrRowStoreTesting<S, SpreadsheetColumnReference, SpreadsheetColumn> {
+
+    default void leftSkipHiddenAndCheck(final S store,
+                                        final String reference,
+                                        final String expected) {
+        this.leftSkipHiddenAndCheck(
+                store,
+                SpreadsheetSelection.parseColumn(reference),
+                SpreadsheetSelection.parseColumn(expected)
+        );
+    }
+
+    default void leftSkipHiddenAndCheck(final S store,
+                                        final SpreadsheetColumnReference reference,
+                                        final SpreadsheetColumnReference expected) {
+        this.checkEquals(
+                expected,
+                store.leftSkipHidden(reference),
+                () -> reference + " leftSkipHidden " + store
+        );
+    }
 }

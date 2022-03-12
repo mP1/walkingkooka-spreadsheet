@@ -24,4 +24,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
  * A store that contains {@link SpreadsheetColumn} including some methods that for frequent queries.
  */
 public interface SpreadsheetColumnStore extends SpreadsheetColumnOrRowStore<SpreadsheetColumnReference, SpreadsheetColumn> {
+
+    /**
+     * Returns the first column moving left from the given starting point that is not hidden.
+     */
+    SpreadsheetColumnReference leftSkipHidden(final SpreadsheetColumnReference reference);
 }
