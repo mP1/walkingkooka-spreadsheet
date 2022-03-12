@@ -31,4 +31,9 @@ public class FakeSpreadsheetColumnStore extends FakeStore<SpreadsheetColumnRefer
     public boolean isHidden(SpreadsheetColumnReference reference) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public SpreadsheetColumnReference leftSkipHidden(final SpreadsheetColumnReference reference) {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -97,6 +97,21 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
         return this.store.values(from, count);
     }
 
+    @Override
+    public SpreadsheetColumnReference leftSkipHidden(final SpreadsheetColumnReference reference) {
+        SpreadsheetColumnReference left = reference;
+
+        while (!left.isFirst()) {
+            left = left.addSaturated(-1);
+
+            if (!this.isHidden(left)) {
+                break;
+            }
+        }
+
+        return left;
+    }
+
     // VisibleForTesting
     private final Store<SpreadsheetColumnReference, SpreadsheetColumn> store;
 
