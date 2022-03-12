@@ -139,7 +139,6 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         final TreeMapSpreadsheetColumnStore store = this.createStore();
 
         final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
-        ;
 
         store.save(last.add(-2).column().setHidden(true));
         store.save(last.add(-1).column().setHidden(true));
@@ -156,7 +155,6 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         final TreeMapSpreadsheetColumnStore store = this.createStore();
 
         final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
-        ;
 
         store.save(last.add(-1).column().setHidden(true));
         store.save(last.column().setHidden(true));
