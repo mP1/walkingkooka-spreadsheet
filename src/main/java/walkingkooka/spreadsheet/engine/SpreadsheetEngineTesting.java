@@ -44,6 +44,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
@@ -496,6 +498,31 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().rowHeight(SpreadsheetRowReference.parseRow("1"), null));
     }
 
+    @Test
+    default void testNavigateNullSelectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .navigate(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testNavigateNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .navigate(
+                                SpreadsheetSelection.parseColumn("A")
+                                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE),
+                                null
+                        )
+        );
+    }
+
     E createSpreadsheetEngine();
 
     SpreadsheetEngineContext createContext();
@@ -936,6 +963,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(expected,
                 engine.rowHeight(row, context),
                 () -> "rowHeight " + row + " of " + engine);
+    }
+
+    default void navigateAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetViewportSelection selection,
+                                  final SpreadsheetEngineContext context,
+                                  final SpreadsheetViewportSelection expected) {
+        this.checkEquals(
+                expected,
+                engine.navigate(selection, context),
+                () -> "navigate " + selection
+        );
     }
 
     default Converter<ExpressionNumberConverterContext> converter() {

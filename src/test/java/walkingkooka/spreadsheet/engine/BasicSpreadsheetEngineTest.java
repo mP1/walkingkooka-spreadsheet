@@ -61,6 +61,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
@@ -9124,6 +9126,35 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 range,
                 engine.range(viewport, selection, context),
                 () -> "range " + viewport + " " + selection.map(s -> " selection:" + s).orElse("")
+        );
+    }
+
+    //  navigate........................................................................................................
+
+    @Test
+    public void testNavigateSkipsHiddenColumn() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        context.storeRepository()
+                .columns()
+                .save(
+                        SpreadsheetSelection.parseColumn("B")
+                                .column()
+                                .setHidden(true)
+                );
+
+        this.navigateAndCheck(
+                engine,
+                SpreadsheetSelection.parseColumn("A")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setNavigation(
+                                Optional.of(
+                                        SpreadsheetViewportSelectionNavigation.RIGHT
+                                )
+                        ),
+                context,
+                SpreadsheetSelection.parseColumn("C").setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 

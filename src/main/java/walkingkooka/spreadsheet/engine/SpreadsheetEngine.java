@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -180,4 +181,11 @@ public interface SpreadsheetEngine {
     SpreadsheetCellRange range(final SpreadsheetViewport viewport,
                                final Optional<SpreadsheetSelection> selection,
                                final SpreadsheetEngineContext context);
+
+    /**
+     * Performs the given {@link SpreadsheetViewportSelection}, honouring any present {@link SpreadsheetViewportSelection#navigation()},
+     * skipping hidden columns and rows.
+     */
+    SpreadsheetViewportSelection navigate(final SpreadsheetViewportSelection selection,
+                                          final SpreadsheetEngineContext context);
 }

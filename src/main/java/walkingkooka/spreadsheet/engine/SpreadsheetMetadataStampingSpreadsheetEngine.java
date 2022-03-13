@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
@@ -222,6 +223,12 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                       final Optional<SpreadsheetSelection> selection,
                                       final SpreadsheetEngineContext context) {
         return this.engine.range(viewport, selection, context);
+    }
+
+    @Override
+    public SpreadsheetViewportSelection navigate(final SpreadsheetViewportSelection selection,
+                                                 final SpreadsheetEngineContext context) {
+        return this.engine.navigate(selection, context);
     }
 
     private <T> T stamp(final Supplier<T> supplier,
