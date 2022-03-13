@@ -44,6 +44,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -1171,6 +1173,32 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         selection,
                         this,
                         context
+                );
+    }
+
+    @Override
+    public SpreadsheetViewportSelection navigate(final SpreadsheetViewportSelection selection,
+                                                 final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(selection, "selection");
+        checkContext(context);
+
+        final Optional<SpreadsheetViewportSelectionNavigation> maybeNavigation = selection.navigation();
+        return maybeNavigation.isPresent() ?
+                navigate0(selection, context) :
+                selection;
+    }
+
+    private SpreadsheetViewportSelection navigate0(final SpreadsheetViewportSelection selection,
+                                                   final SpreadsheetEngineContext context) {
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+
+        return selection.navigation()
+                .get()
+                .perform(
+                        selection.selection(),
+                        selection.anchor(),
+                        repository.columns(),
+                        repository.rows()
                 );
     }
 

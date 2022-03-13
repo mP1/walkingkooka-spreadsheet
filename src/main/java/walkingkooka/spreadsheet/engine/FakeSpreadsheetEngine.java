@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.test.Fake;
 
 import java.util.Collection;
@@ -156,6 +157,12 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     public SpreadsheetCellRange range(final SpreadsheetViewport viewport,
                                       final Optional<SpreadsheetSelection> selection,
                                       final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetViewportSelection navigate(final SpreadsheetViewportSelection selection,
+                                                 final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 }
