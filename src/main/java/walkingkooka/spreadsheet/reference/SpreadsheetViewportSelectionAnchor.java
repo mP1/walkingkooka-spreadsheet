@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.text.CharSequences;
+
 /**
  * Each of the {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection} require an anchor to create a {@link SpreadsheetViewportSelection}.
  * Not all combinations are valid for each of range.
@@ -31,6 +33,12 @@ public enum SpreadsheetViewportSelectionAnchor {
     BOTTOM,
     LEFT,
     RIGHT;
+
+    SpreadsheetViewportSelectionAnchor() {
+        this.prettyText = this.name().toLowerCase().replace('_', '-');
+    }
+
+    private final String prettyText;
 
     /**
      * Uses this anchor to select the cell-range that will be moved.
@@ -145,4 +153,22 @@ public enum SpreadsheetViewportSelectionAnchor {
     public final static SpreadsheetViewportSelectionAnchor CELL_RANGE = TOP_LEFT; // COLUMN_RANGE + ROW_RANGE
     public final static SpreadsheetViewportSelectionAnchor COLUMN_RANGE = LEFT; // maybe should be right ?
     public final static SpreadsheetViewportSelectionAnchor ROW_RANGE = TOP;
+
+    /**
+     * Accepts text that has a more pretty form of any {@link SpreadsheetViewportSelectionAnchor enum value}.
+     * The text is identical to the enum name but in lower case and underscore replaced with dash.
+     * <br>
+     * {@link #TOP_LEFT} = <pre>top-left</pre>.
+     */
+    public static SpreadsheetViewportSelectionAnchor from(final String text) {
+        CharSequences.failIfNullOrEmpty(text, "anchor");
+
+        for (final SpreadsheetViewportSelectionAnchor navigation : values()) {
+            if (navigation.prettyText.equals(text)) {
+                return navigation;
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid text=" + CharSequences.quoteAndEscape(text));
+    }
 }

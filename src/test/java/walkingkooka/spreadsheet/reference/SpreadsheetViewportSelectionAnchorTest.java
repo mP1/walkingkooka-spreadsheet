@@ -20,6 +20,9 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CharSequences;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportSelectionAnchorTest implements ClassTesting<SpreadsheetViewportSelectionAnchor> {
 
@@ -259,6 +262,65 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
                 fixed,
                 anchor.row(parsed),
                 () -> anchor + " row " + range
+        );
+    }
+
+    // from.............................................................................................................
+
+    @Test
+    public void testFromNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetViewportSelectionAnchor.from(null)
+        );
+    }
+
+    @Test
+    public void testFromEmptyFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetViewportSelectionAnchor.from("")
+        );
+    }
+
+    @Test
+    public void testFromUnknownFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetViewportSelectionAnchor.from("!")
+        );
+    }
+
+    @Test
+    public void testFromDifferentCaseFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetViewportSelectionAnchor.from("TOP-LEFT")
+        );
+    }
+
+    @Test
+    public void testFromLeft() {
+        this.fromAndCheck(
+                "left",
+                SpreadsheetViewportSelectionAnchor.LEFT
+        );
+    }
+
+    @Test
+    public void testFromTopLeft() {
+        this.fromAndCheck(
+                "top-left",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    private void fromAndCheck(final String text,
+                              final SpreadsheetViewportSelectionAnchor expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetViewportSelectionAnchor.from(text),
+                () -> "from " + CharSequences.quoteAndEscape(text)
         );
     }
 
