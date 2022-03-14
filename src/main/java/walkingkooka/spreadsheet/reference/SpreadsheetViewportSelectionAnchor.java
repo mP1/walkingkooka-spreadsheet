@@ -35,10 +35,14 @@ public enum SpreadsheetViewportSelectionAnchor {
     RIGHT;
 
     SpreadsheetViewportSelectionAnchor() {
-        this.prettyText = this.name().toLowerCase().replace('_', '-');
+        this.kebabText = this.name().toLowerCase().replace('_', '-');
     }
 
-    private final String prettyText;
+    public String kebabText() {
+        return this.kebabText;
+    }
+
+    private final String kebabText;
 
     /**
      * Uses this anchor to select the cell-range that will be moved.
@@ -164,7 +168,7 @@ public enum SpreadsheetViewportSelectionAnchor {
         CharSequences.failIfNullOrEmpty(text, "anchor");
 
         for (final SpreadsheetViewportSelectionAnchor navigation : values()) {
-            if (navigation.prettyText.equals(text)) {
+            if (navigation.kebabText.equals(text)) {
                 return navigation;
             }
         }
