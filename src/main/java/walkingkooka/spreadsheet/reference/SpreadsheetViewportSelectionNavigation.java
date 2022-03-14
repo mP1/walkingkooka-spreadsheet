@@ -102,6 +102,14 @@ public enum SpreadsheetViewportSelectionNavigation {
         }
     };
 
+    SpreadsheetViewportSelectionNavigation() {
+        this.prettyText = this.name()
+                .toLowerCase()
+                .replace('_', '-');
+    }
+
+    private final String prettyText;
+
     /**
      * Executes this navigation on the given selection and anchor returning the updated result.
      */
@@ -120,7 +128,7 @@ public enum SpreadsheetViewportSelectionNavigation {
         CharSequences.failIfNullOrEmpty(text, "navigation");
 
         for (final SpreadsheetViewportSelectionNavigation navigation : values()) {
-            if (navigation.name().toLowerCase().replace('_', '-').equals(text)) {
+            if (navigation.prettyText.equals(text)) {
                 return navigation;
             }
         }
