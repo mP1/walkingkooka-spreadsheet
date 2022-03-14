@@ -103,12 +103,16 @@ public enum SpreadsheetViewportSelectionNavigation {
     };
 
     SpreadsheetViewportSelectionNavigation() {
-        this.prettyText = this.name()
+        this.kebabText = this.name()
                 .toLowerCase()
                 .replace('_', '-');
     }
 
-    private final String prettyText;
+    public String kebabText() {
+        return this.kebabText;
+    }
+
+    private final String kebabText;
 
     /**
      * Executes this navigation on the given selection and anchor returning the updated result.
@@ -128,7 +132,7 @@ public enum SpreadsheetViewportSelectionNavigation {
         CharSequences.failIfNullOrEmpty(text, "navigation");
 
         for (final SpreadsheetViewportSelectionNavigation navigation : values()) {
-            if (navigation.prettyText.equals(text)) {
+            if (navigation.kebabText.equals(text)) {
                 return navigation;
             }
         }
