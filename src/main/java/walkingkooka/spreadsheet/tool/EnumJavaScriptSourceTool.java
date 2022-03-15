@@ -170,6 +170,11 @@ public final class EnumJavaScriptSourceTool {
             values(enumClass, printer);
             valueOf(enumClass, label, printer);
             fromJson(enumClass, printer);
+
+            if (SpreadsheetViewportSelectionAnchor.class.equals(enumClass) || SpreadsheetViewportSelectionNavigation.class.equals(enumClass)) {
+                from(enumClass, label, printer);
+            }
+
             if (SpreadsheetReferenceKind.class.equals(enumClass)) {
                 prefix(printer);
             }
@@ -272,6 +277,26 @@ public final class EnumJavaScriptSourceTool {
         printer.println("}");
     }
 
+    /**
+     * <pre>
+     * static from(text) {
+     *     return RoundingMode.from(text, "RoundingMode", RoundingMode.values());
+     * }
+     * </pre>
+     */
+    private static void from(final Class<Enum<?>> enumClass,
+                             final String label,
+                             final IndentingPrinter printer) {
+        printer.println();
+
+        printer.println("static from(text) {");
+        printer.indent();
+        {
+            printer.println("return SystemObject.from(text, " + CharSequences.quoteAndEscape(label) + ", " + enumClass.getSimpleName() + ".value());");
+        }
+        printer.outdent();
+        printer.println("}");
+    }
 
     /**
      * <pre>
