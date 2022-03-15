@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.tool;
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
 import walkingkooka.text.CharSequences;
@@ -50,6 +51,7 @@ public final class EnumJavaScriptSourceTool {
         generateRoundingMode(Paths.get(reactSrc.toString(), "math"));
         generateSpreadsheetEngineEvaluation(Paths.get(reactSrc.toString(), "spreadsheet", "engine"));
         generateSpreadsheetErrorKind(Paths.get(reactSrc.toString(), "spreadsheet"));
+        generateSpreadsheetReferenceKind(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
         generateSpreadsheetViewportSelectionAnchor(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
         generateSpreadsheetViewportSelectionNavigation(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
         generateTextStylePropertyNames(Paths.get(reactSrc.toString(), "text"));
@@ -79,6 +81,13 @@ public final class EnumJavaScriptSourceTool {
     private static void generateSpreadsheetErrorKind(final Path dest) throws Exception {
         generateEnums(
                 SpreadsheetErrorKind.class,
+                dest
+        );
+    }
+
+    private static void generateSpreadsheetReferenceKind(final Path dest) throws Exception {
+        generateEnums(
+                SpreadsheetReferenceKind.class,
                 dest
         );
     }
