@@ -21,6 +21,8 @@ import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -49,6 +51,7 @@ public final class EnumJavaScriptSourceTool {
         generateSpreadsheetEngineEvaluation(Paths.get(reactSrc.toString(), "spreadsheet", "engine"));
         generateSpreadsheetErrorKind(Paths.get(reactSrc.toString(), "spreadsheet"));
         generateSpreadsheetViewportSelectionAnchor(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
+        generateSpreadsheetViewportSelectionNavigation(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
         generateTextStylePropertyNames(Paths.get(reactSrc.toString(), "text"));
     }
 
@@ -83,6 +86,15 @@ public final class EnumJavaScriptSourceTool {
     private static void generateSpreadsheetViewportSelectionAnchor(final Path dest) throws Exception {
         generateEnums(
                 SpreadsheetViewportSelectionAnchor.class,
+                "anchor",
+                dest
+        );
+    }
+
+    private static void generateSpreadsheetViewportSelectionNavigation(final Path dest) throws Exception {
+        generateEnums(
+                SpreadsheetViewportSelectionNavigation.class,
+                "navigation",
                 dest
         );
     }
@@ -91,18 +103,33 @@ public final class EnumJavaScriptSourceTool {
         for (final TextStylePropertyName<?> property : TextStylePropertyName.values()) {
             final Optional<Class<Enum<?>>> maybeEnumType = property.enumType();
             if (maybeEnumType.isPresent()) {
-                generateEnums(maybeEnumType.get(), dest);
+                generateEnums(
+                        maybeEnumType.get(),
+                        "textStyle",
+                        dest
+                );
             }
         }
     }
 
     private static void generateEnums(final Class<? extends Enum<?>> enumType,
                                       final Path dest) throws Exception {
+        generateEnums(
+                enumType,
+                enumType.getSimpleName(),
+                dest
+        );
+    }
+
+    private static void generateEnums(final Class<? extends Enum<?>> enumType,
+                                      final String label,
+                                      final Path dest) throws Exception {
         try (final Writer writer = new FileWriter(sourceFilePath(dest, enumType).toFile())) {
             final IndentingPrinter printer = Printers.writer(writer, LineEnding.SYSTEM)
                     .indenting(Indentation.with("  "));
             generateSource(
                     Cast.to(enumType),
+                    label,
                     printer
             );
             printer.flush();
@@ -115,6 +142,7 @@ public final class EnumJavaScriptSourceTool {
     }
 
     private static void generateSource(final Class<Enum<?>> enumClass,
+                                       final String label,
                                        final IndentingPrinter printer) throws Exception {
         final String enumTypeName = enumClass.getSimpleName();
 
@@ -131,7 +159,7 @@ public final class EnumJavaScriptSourceTool {
         {
             constants(enumClass, printer);
             values(enumClass, printer);
-            valueOf(enumClass, printer);
+            valueOf(enumClass, label, printer);
             fromJson(enumClass, printer);
             typeName(printer);
         }
@@ -213,11 +241,12 @@ public final class EnumJavaScriptSourceTool {
     /**
      * <pre>
      * static valueOf(name) {
-     *     return SystemEnum.valueOf(name, ExpressionNumberKind.values());
+     *     return SystemEnum.valueOf(name, label, ExpressionNumberKind.values());
      * }
      * </pre>
      */
     private static void valueOf(final Class<Enum<?>> enumClass,
+                                final String label,
                                 final IndentingPrinter printer) {
         printer.println();
 
@@ -225,7 +254,7 @@ public final class EnumJavaScriptSourceTool {
 
         printer.indent();
         {
-            printer.println("return SystemEnum.valueOf(name, " + enumClass.getSimpleName() + ".values());");
+            printer.println("return SystemEnum.valueOf(name, " + CharSequences.quoteAndEscape(label) + ", " + enumClass.getSimpleName() + ".values());");
         }
         printer.outdent();
         printer.println("}");
