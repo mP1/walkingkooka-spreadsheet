@@ -170,6 +170,9 @@ public final class EnumJavaScriptSourceTool {
             values(enumClass, printer);
             valueOf(enumClass, label, printer);
             fromJson(enumClass, printer);
+            if (SpreadsheetReferenceKind.class.equals(enumClass)) {
+                prefix(printer);
+            }
             typeName(printer);
         }
         printer.outdent();
@@ -285,6 +288,36 @@ public final class EnumJavaScriptSourceTool {
         printer.indent();
         {
             printer.println("return " + enumClass.getSimpleName() + ".valueOf(name);");
+        }
+        printer.outdent();
+        printer.println("}");
+    }
+
+    /**
+     * <pre>
+     * prefix() {
+     *   return SpreadsheetReferenceKind.ABSOLUTE === this ?
+     *     "$" :
+     *     "";
+     * }
+     * </pre>
+     */
+    private static void prefix(final IndentingPrinter printer) {
+        printer.println();
+
+        printer.println("prefix() {");
+
+        printer.indent();
+        {
+            printer.println("return " + SpreadsheetReferenceKind.class.getSimpleName() + "." + SpreadsheetReferenceKind.ABSOLUTE + " === this ?");
+
+            printer.indent();
+            {
+                printer.println(CharSequences.quoteAndEscape("$") + " :");
+                printer.println(CharSequences.quoteAndEscape("") + " ;");
+            }
+            printer.outdent();
+
         }
         printer.outdent();
         printer.println("}");
