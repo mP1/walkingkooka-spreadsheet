@@ -116,21 +116,8 @@ public enum SpreadsheetViewportSelectionAnchor {
         return this == LEFT || this == TOP_LEFT || this == BOTTOM_LEFT;
     }
 
-    private boolean isRight() {
-        return this == RIGHT || this == TOP_RIGHT || this == BOTTOM_RIGHT;
-    }
-
     private boolean isTop() {
         return this == TOP || this == TOP_LEFT || this == TOP_RIGHT;
-    }
-
-    private boolean isBottom() {
-        return this == BOTTOM || this == BOTTOM_LEFT || this == BOTTOM_RIGHT;
-    }
-
-    private boolean isCorner() {
-        return (this.isLeft() || this.isRight()) &&
-                (this.isTop() || this.isBottom());
     }
 
     private void failIfNone() {
