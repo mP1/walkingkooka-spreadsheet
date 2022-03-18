@@ -1394,7 +1394,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         this.extendUpAndCheck(
                 "A1:B2",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
-                "A1:B1"
+                "A1:B1",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
         );
     }
 

@@ -655,7 +655,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
         this.extendDownAndCheck(
                 row.add(-1)
-                        .rowRange(row)
+                        .rowRange(row),
+                SpreadsheetViewportSelectionAnchor.TOP
         );
     }
 
