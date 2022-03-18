@@ -26,6 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportSelectionAnchorTest implements ClassTesting<SpreadsheetViewportSelectionAnchor> {
 
+    // constants........................................................................................................
+
     @Test
     public void testCellRangeConstant() {
         this.checkEquals(
@@ -36,11 +38,38 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
         );
     }
 
+    // kebabText........................................................................................................
+
+    @Test
+    public void testKebabTextLeft() {
+        this.kebabTextAndCheck(
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                "left"
+        );
+    }
+
+    @Test
+    public void testKebabTextTopRight() {
+        this.kebabTextAndCheck(
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                "top-right"
+        );
+    }
+
+    private void kebabTextAndCheck(final SpreadsheetViewportSelectionAnchor anchor,
+                                   final String expected) {
+        this.checkEquals(
+                expected,
+                anchor.kebabText(),
+                () -> anchor + " kebabText"
+        );
+    }
+
+    // cell...........................................................................................................
+
     // B2 C2 D2
     // B3 C3 D3
     // B4 C4 D4
-
-    // cell...........................................................................................................
 
     @Test
     public void testCellTopLeft() {
