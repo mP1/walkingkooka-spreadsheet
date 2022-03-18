@@ -141,9 +141,10 @@ public enum SpreadsheetViewportSelectionAnchor {
     public final static SpreadsheetViewportSelectionAnchor COLUMN = NONE;
     public final static SpreadsheetViewportSelectionAnchor ROW = NONE;
 
-    public final static SpreadsheetViewportSelectionAnchor CELL_RANGE = TOP_LEFT; // COLUMN_RANGE + ROW_RANGE
-    public final static SpreadsheetViewportSelectionAnchor COLUMN_RANGE = LEFT; // maybe should be right ?
-    public final static SpreadsheetViewportSelectionAnchor ROW_RANGE = TOP;
+    public final static SpreadsheetViewportSelectionAnchor COLUMN_RANGE = RIGHT;
+    public final static SpreadsheetViewportSelectionAnchor ROW_RANGE = BOTTOM;
+
+    public final static SpreadsheetViewportSelectionAnchor CELL_RANGE = valueOf(ROW_RANGE.name() + "_" + COLUMN_RANGE.name());
 
     /**
      * Accepts text that has a more pretty form of any {@link SpreadsheetViewportSelectionAnchor enum value}.

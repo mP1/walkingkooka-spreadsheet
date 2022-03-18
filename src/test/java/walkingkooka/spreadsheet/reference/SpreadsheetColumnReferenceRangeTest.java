@@ -614,7 +614,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.extendRightAndCheck(
-                column.add(-1).columnRange(column)
+                column.add(-1).columnRange(column),
+                SpreadsheetViewportSelectionAnchor.LEFT
         );
     }
 
