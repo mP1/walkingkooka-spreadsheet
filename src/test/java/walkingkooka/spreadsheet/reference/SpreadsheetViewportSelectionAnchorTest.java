@@ -65,6 +65,290 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
         );
     }
 
+    // setLeft........................................................................................................
+
+    @Test
+    public void testSetLeft_None() {
+        this.setLeftAndCheck(
+                SpreadsheetViewportSelectionAnchor.NONE
+        );
+    }
+
+    @Test
+    public void testSetLeft_Left() {
+        this.setLeftAndCheck(
+                SpreadsheetViewportSelectionAnchor.LEFT
+        );
+    }
+
+    @Test
+    public void testSetLeft_Right() {
+        this.setLeftAndCheck(
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                SpreadsheetViewportSelectionAnchor.LEFT
+        );
+    }
+
+    @Test
+    public void testSetLeft_LEFTLeft() {
+        this.setLeftAndCheck(
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testSetLeft_LEFTRight() {
+        this.setLeftAndCheck(
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testSetLeft_BottomLeft() {
+        this.setLeftAndCheck(
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testSetLeft_BottomRight() {
+        this.setLeftAndCheck(
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+        );
+    }
+
+    private void setLeftAndCheck(final SpreadsheetViewportSelectionAnchor anchor) {
+        this.setLeftAndCheck(
+                anchor,
+                anchor
+        );
+    }
+
+    private void setLeftAndCheck(final SpreadsheetViewportSelectionAnchor anchor,
+                                 final SpreadsheetViewportSelectionAnchor expected) {
+        this.checkEquals(
+                expected,
+                anchor.setLeft(),
+                () -> anchor + " setLeft"
+        );
+    }
+
+    // setRight........................................................................................................
+
+    @Test
+    public void testSetRight_None() {
+        this.setRightAndCheck(
+                SpreadsheetViewportSelectionAnchor.NONE
+        );
+    }
+
+    @Test
+    public void testSetRight_Left() {
+        this.setRightAndCheck(
+                SpreadsheetViewportSelectionAnchor.RIGHT
+        );
+    }
+
+    @Test
+    public void testSetRight_Right() {
+        this.setRightAndCheck(
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                SpreadsheetViewportSelectionAnchor.RIGHT
+        );
+    }
+
+    @Test
+    public void testSetRight_LEFTLeft() {
+        this.setRightAndCheck(
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT
+        );
+    }
+
+    @Test
+    public void testSetRight_LEFTRight() {
+        this.setRightAndCheck(
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT
+        );
+    }
+
+    @Test
+    public void testSetRight_BottomLeft() {
+        this.setRightAndCheck(
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testSetRight_BottomRight() {
+        this.setRightAndCheck(
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    private void setRightAndCheck(final SpreadsheetViewportSelectionAnchor anchor) {
+        this.setRightAndCheck(
+                anchor,
+                anchor
+        );
+    }
+
+    private void setRightAndCheck(final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetViewportSelectionAnchor expected) {
+        this.checkEquals(
+                expected,
+                anchor.setRight(),
+                () -> anchor + " setRight"
+        );
+    }
+
+
+    // setTop........................................................................................................
+
+    @Test
+    public void testSetTop_None() {
+        this.setTopAndCheck(
+                SpreadsheetViewportSelectionAnchor.NONE
+        );
+    }
+
+    @Test
+    public void testSetTop_Top() {
+        this.setTopAndCheck(
+                SpreadsheetViewportSelectionAnchor.TOP
+        );
+    }
+
+    @Test
+    public void testSetTop_Bottom() {
+        this.setTopAndCheck(
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                SpreadsheetViewportSelectionAnchor.TOP
+        );
+    }
+
+    @Test
+    public void testSetTop_TopLeft() {
+        this.setTopAndCheck(
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testSetTop_TopRight() {
+        this.setTopAndCheck(
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT
+        );
+    }
+
+    @Test
+    public void testSetTop_BottomLeft() {
+        this.setTopAndCheck(
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testSetTop_BottomRight() {
+        this.setTopAndCheck(
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT
+        );
+    }
+
+    private void setTopAndCheck(final SpreadsheetViewportSelectionAnchor anchor) {
+        this.setTopAndCheck(
+                anchor,
+                anchor
+        );
+    }
+
+    private void setTopAndCheck(final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetViewportSelectionAnchor expected) {
+        this.checkEquals(
+                expected,
+                anchor.setTop(),
+                () -> anchor + " setTop"
+        );
+    }
+
+    // setBottom........................................................................................................
+
+    @Test
+    public void testSetBottom_None() {
+        this.setBottomAndCheck(
+                SpreadsheetViewportSelectionAnchor.NONE
+        );
+    }
+
+    @Test
+    public void testSetBottom_Left() {
+        this.setBottomAndCheck(
+                SpreadsheetViewportSelectionAnchor.BOTTOM
+        );
+    }
+
+    @Test
+    public void testSetBottom_Bottom() {
+        this.setBottomAndCheck(
+                SpreadsheetViewportSelectionAnchor.TOP,
+                SpreadsheetViewportSelectionAnchor.BOTTOM
+        );
+    }
+
+    @Test
+    public void testSetBottom_TopLeft() {
+        this.setBottomAndCheck(
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testSetBottom_TopRight() {
+        this.setBottomAndCheck(
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testSetBottom_BottomLeft() {
+        this.setBottomAndCheck(
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testSetBottom_BottomBottomRight() {
+        this.setBottomAndCheck(
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    private void setBottomAndCheck(final SpreadsheetViewportSelectionAnchor anchor) {
+        this.setBottomAndCheck(
+                anchor,
+                anchor
+        );
+    }
+
+    private void setBottomAndCheck(final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetViewportSelectionAnchor expected) {
+        this.checkEquals(
+                expected,
+                anchor.setBottom(),
+                () -> anchor + " setBottom"
+        );
+    }
+
+
     // cell...........................................................................................................
 
     // B2 C2 D2

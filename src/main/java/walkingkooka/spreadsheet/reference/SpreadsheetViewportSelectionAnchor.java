@@ -44,6 +44,44 @@ public enum SpreadsheetViewportSelectionAnchor {
 
     private final String kebabText;
 
+    SpreadsheetViewportSelectionAnchor setLeft() {
+        return this.replace(
+                RIGHT,
+                LEFT
+        );
+    }
+
+    SpreadsheetViewportSelectionAnchor setTop() {
+        return this.replace(
+                BOTTOM,
+                TOP
+        );
+    }
+
+    SpreadsheetViewportSelectionAnchor setRight() {
+        return this.replace(
+                LEFT,
+                RIGHT
+        );
+    }
+
+    SpreadsheetViewportSelectionAnchor setBottom() {
+        return this.replace(
+                TOP,
+                BOTTOM
+        );
+    }
+
+    private SpreadsheetViewportSelectionAnchor replace(final SpreadsheetViewportSelectionAnchor find,
+                                                       final SpreadsheetViewportSelectionAnchor replace) {
+        return valueOf(
+                this.name()
+                        .replace(
+                                find.name(), replace.name()
+                        )
+        );
+    }
+
     /**
      * Uses this anchor to select the cell-range that will be moved.
      */
