@@ -65,7 +65,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testLeft() {
+    public void testFromLeft() {
         this.fromAndCheck(
                 "left",
                 SpreadsheetViewportSelectionNavigation.LEFT
@@ -73,7 +73,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testExtendRight() {
+    public void testFromExtendRight() {
         this.fromAndCheck(
                 "extend-right",
                 SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
