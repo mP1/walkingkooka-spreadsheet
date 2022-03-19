@@ -620,6 +620,46 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Test
+    public void testExtendLeftColumnSingleLeft() {
+        this.extendLeftAndCheck(
+                "C",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                "B:C",
+                SpreadsheetViewportSelectionAnchor.RIGHT
+        );
+    }
+
+    @Test
+    public void testExtendLeftColumnSingleRight() {
+        this.extendLeftAndCheck(
+                "C",
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                "B:C",
+                SpreadsheetViewportSelectionAnchor.RIGHT
+        );
+    }
+
+    @Test
+    public void testExtendRightColumnSingleLeft() {
+        this.extendRightAndCheck(
+                "C",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                "C:D",
+                SpreadsheetViewportSelectionAnchor.LEFT
+        );
+    }
+
+    @Test
+    public void testExtendRightColumnSingleRight() {
+        this.extendRightAndCheck(
+                "C",
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                "C:D",
+                SpreadsheetViewportSelectionAnchor.LEFT
+        );
+    }
+
+    @Test
     public void testExtendUp() {
         this.extendUpAndCheck(
                 "B:C"

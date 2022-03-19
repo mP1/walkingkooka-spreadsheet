@@ -154,7 +154,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
                                             final SpreadsheetColumnStore columnStore,
                                             final SpreadsheetRowStore rowStore) {
         return this.extendColumn(
-                anchor,
+                this.isSingle() ? SpreadsheetViewportSelectionAnchor.RIGHT : anchor,
                 (c) -> c.left(columnStore)
         );
     }
@@ -164,7 +164,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
                                              final SpreadsheetColumnStore columnStore,
                                              final SpreadsheetRowStore rowStore) {
         return this.extendColumn(
-                anchor,
+                this.isSingle() ? SpreadsheetViewportSelectionAnchor.LEFT : anchor,
                 (c) -> c.right(columnStore)
         );
     }
