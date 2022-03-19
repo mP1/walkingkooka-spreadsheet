@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -328,7 +329,8 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
                                             final SpreadsheetRowStore rowStore) {
         return this.extendColumn(
                 anchor,
-                (r) -> r.left(columnStore)
+                (r) -> r.left(columnStore),
+                anchor::setRight
         );
     }
 
@@ -338,21 +340,31 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
                                              final SpreadsheetRowStore rowStore) {
         return this.extendColumn(
                 anchor,
-                (r) -> r.right(columnStore)
+                (r) -> r.right(columnStore),
+                anchor::setLeft
         );
     }
 
     private SpreadsheetViewportSelection extendColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                                      final UnaryOperator<SpreadsheetColumnReference> move) {
+                                                      final UnaryOperator<SpreadsheetColumnReference> move,
+                                                      final Supplier<SpreadsheetViewportSelectionAnchor> singleColumnAnchor) {
+       final SpreadsheetColumnReferenceRange columnRange = this.columnReferenceRange();
+
         return this.extendRange(
-                anchor.row(this.rowReferenceRange())
+                anchor.row(
+                                this.rowReferenceRange()
+                        )
                         .setColumn(
                                 move.apply(
-                                        anchor.column(this.columnReferenceRange())
+                                        anchor.column(columnRange)
                                 )
                         ),
                 anchor
-        ).setAnchorOrDefault(anchor);
+        ).setAnchorOrDefault(
+                columnRange.isSingle() ?
+                        singleColumnAnchor.get() :
+                anchor
+        );
     }
 
     @Override
@@ -369,7 +381,8 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
                                           final SpreadsheetRowStore rowStore) {
         return this.extendRow(
                 anchor,
-                (r) -> r.up(rowStore)
+                (r) -> r.up(rowStore),
+                anchor::setBottom
         );
     }
 
@@ -379,21 +392,29 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
                                             final SpreadsheetRowStore rowStore) {
         return this.extendRow(
                 anchor,
-                (r) -> r.down(rowStore)
+                (r) -> r.down(rowStore),
+                anchor::setTop
         );
     }
 
     private SpreadsheetViewportSelection extendRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                                   final UnaryOperator<SpreadsheetRowReference> move) {
+                                                   final UnaryOperator<SpreadsheetRowReference> move,
+                                                   final Supplier<SpreadsheetViewportSelectionAnchor> singleRowAnchor) {
+        final SpreadsheetRowReferenceRange rowRange = this.rowReferenceRange();
+
         return this.extendRange(
                 anchor.column(this.columnReferenceRange())
                         .setRow(
                                 move.apply(
-                                        anchor.row(this.rowReferenceRange())
+                                        anchor.row(rowRange)
                                 )
                         ),
                 anchor
-        ).setAnchorOrDefault(anchor);
+        ).setAnchorOrDefault(
+                rowRange.isSingle() ?
+                        singleRowAnchor.get() :
+                        anchor
+        );
     }
 
     // simplify.........................................................................................................
