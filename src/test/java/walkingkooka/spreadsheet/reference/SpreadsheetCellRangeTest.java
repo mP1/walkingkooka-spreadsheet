@@ -1296,6 +1296,32 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         );
     }
 
+    // [C3]         [B3] C3
+    //  C4           B4  C4
+    // bottom-left  bottom-right
+    @Test
+    public void testExtendLeftSingleColumnBottomLeft() {
+        this.extendLeftAndCheck(
+                "C3:C4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                "B3:C4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    // [C3]         [B2] C3
+    //  C4           B4  C4
+    // bottom-right  bottom-right
+    @Test
+    public void testExtendLeftSingleColumnBottomRight() {
+        this.extendLeftAndCheck(
+                "C3:C4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "B3:C4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+        ); // actual=c3:c4
+    }
+
     // extendRight......................................................................................................
 
     @Test
@@ -1351,6 +1377,45 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         );
     }
 
+    // [C3]         C3 [D3]
+    //  C4          C4 D4
+    // bottom-right bottom-left
+    @Test
+    public void testExtendRightAnchorFlipsAnchor() {
+        this.extendRightAndCheck(
+                "C3:C4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "C3:D4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+        );
+    }
+
+    // [C3]         C3 [D3]
+    //  C4          C4  D4
+    // bottom-left  bottom-left
+    @Test
+    public void testExtendRightSingleColumnBottomLeft() {
+        this.extendRightAndCheck(
+                "C3:C4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                "C3:D4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+        );
+    }
+
+    // [C3]         C3 [D3]
+    //  C4          C4  D4
+    // bottom-right bottom-left
+    @Test
+    public void testExtendRightSingleColumnBottomRight() {
+        this.extendRightAndCheck(
+                "C3:C4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "C3:D4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+        );
+    }
+
     // extendUp.......................................................................................................
 
     @Test
@@ -1396,6 +1461,34 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "A1:B1",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    //              [C2] D2
+    // [C3] D3       C3  D3
+    //
+    // bottom-left  bottom-left
+    @Test
+    public void testExtendUpSingleColumnBottomLeft() {
+        this.extendUpAndCheck(
+                "C3:D3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                "C2:D3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+        );
+    }
+
+    //           [C2] D2
+    // [C3] D3   C3  D3
+    //
+    // top-left  bottom-left
+    @Test
+    public void testExtendUpSingleColumnTopLeft() {
+        this.extendUpAndCheck(
+                "C3:D3",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "C2:D3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
         );
     }
 
@@ -1448,6 +1541,34 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
                 "A" + row.add(-1) + ":A" + row,
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "A" + row
+        );
+    }
+
+    // [C3] D3       C3  D3
+    //              [C4] D4
+    //
+    // bottom-left  top-left
+    @Test
+    public void testExtendDownSingleColumnBottomLeft() {
+        this.extendDownAndCheck(
+                "C3:D3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                "C3:D4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    // [C3] D3   C3  D3
+    //           C4  [D4]
+    //
+    // top-left  top-left
+    @Test
+    public void testExtendDownSingleColumnTopLeft() {
+        this.extendDownAndCheck(
+                "C3:D3",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "C3:D4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
         );
     }
 
