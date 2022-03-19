@@ -595,6 +595,46 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    @Test
+    public void testExtendUpColumnSingleLeft() {
+        this.extendUpAndCheck(
+                "3",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                "2:3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM
+        );
+    }
+
+    @Test
+    public void testExtendUpColumnSingleRight() {
+        this.extendUpAndCheck(
+                "3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "2:3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM
+        );
+    }
+
+    @Test
+    public void testExtendDownColumnSingleLeft() {
+        this.extendDownAndCheck(
+                "3",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                "3:4",
+                SpreadsheetViewportSelectionAnchor.TOP
+        );
+    }
+
+    @Test
+    public void testExtendDownColumnSingleRight() {
+        this.extendDownAndCheck(
+                "3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "3:4",
+                SpreadsheetViewportSelectionAnchor.TOP
+        );
+    }
+
     @Override
     SpreadsheetRowReferenceRange parseRange(final String range) {
         return SpreadsheetSelection.parseRowRange(range);
