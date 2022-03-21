@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.Objects;
-import java.util.function.Predicate;
 
 /**
  * Represents a column reference. The {@link Comparable} method ignores the {@link SpreadsheetReferenceKind} component
@@ -251,7 +250,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     SpreadsheetColumnReference left(final SpreadsheetColumnStore columnStore) {
-        return columnStore.leftSkipHidden(this);
+        return columnStore.leftSkipHidden(this).get();
     }
 
     SpreadsheetColumnReference right(final SpreadsheetColumnStore columnStore) {

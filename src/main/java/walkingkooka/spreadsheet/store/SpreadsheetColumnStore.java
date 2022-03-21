@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 
+import java.util.Optional;
+
 /**
  * A store that contains {@link SpreadsheetColumn} including some methods that for frequent queries.
  */
@@ -27,9 +29,10 @@ public interface SpreadsheetColumnStore extends SpreadsheetColumnOrRowStore<Spre
 
     /**
      * Returns the first column moving left from the given starting point that is not hidden.
-     * If all columns to the left are hidden, the original {@link SpreadsheetColumnReference} is returned.
+     * If all columns to the left are hidden, the original {@link SpreadsheetColumnReference}, if this is hidden an
+     * {@link Optional#empty()}.
      */
-    SpreadsheetColumnReference leftSkipHidden(final SpreadsheetColumnReference reference);
+    Optional<SpreadsheetColumnReference> leftSkipHidden(final SpreadsheetColumnReference reference);
 
     /**
      * Returns the first column moving right from the given starting point that is not hidden.
