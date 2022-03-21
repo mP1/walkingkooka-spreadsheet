@@ -24,12 +24,15 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
+import java.util.Optional;
+
 public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore> extends SpreadsheetColumnOrRowStoreTesting<S, SpreadsheetColumnReference, SpreadsheetColumn> {
 
     @Test
     default void testLeftSkipHiddenFirstColumn() {
         this.leftSkipHiddenAndCheck(
                 this.createStore(),
+                "A",
                 "A"
         );
     }
@@ -38,7 +41,8 @@ public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore>
                                         final String reference) {
         this.leftSkipHiddenAndCheck(
                 store,
-                SpreadsheetSelection.parseColumn(reference)
+                SpreadsheetSelection.parseColumn(reference),
+                Optional.empty()
         );
     }
 
@@ -57,13 +61,23 @@ public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore>
         this.leftSkipHiddenAndCheck(
                 store,
                 reference,
-                reference
+                Optional.empty()
         );
     }
 
     default void leftSkipHiddenAndCheck(final S store,
                                         final SpreadsheetColumnReference reference,
                                         final SpreadsheetColumnReference expected) {
+        this.leftSkipHiddenAndCheck(
+                store,
+                reference,
+                Optional.of(expected)
+        );
+    }
+
+    default void leftSkipHiddenAndCheck(final S store,
+                                        final SpreadsheetColumnReference reference,
+                                        final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
                 expected,
                 store.leftSkipHidden(reference),
