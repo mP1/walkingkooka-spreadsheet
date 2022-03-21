@@ -326,7 +326,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
                                   final SpreadsheetColumnStore columnStore,
                                   final SpreadsheetRowStore rowStore) {
         return this.row()
-                .down(rowStore)
+                .down(rowStore).get()
                 .setColumn(this.column());
     }
 

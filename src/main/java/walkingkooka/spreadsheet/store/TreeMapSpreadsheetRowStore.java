@@ -120,12 +120,14 @@ final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
     }
 
     @Override
-    public SpreadsheetRowReference downSkipHidden(final SpreadsheetRowReference reference) {
+    public Optional<SpreadsheetRowReference> downSkipHidden(final SpreadsheetRowReference reference) {
         SpreadsheetRowReference down = reference;
 
         for (; ; ) {
             if (down.isLast()) {
-                down = reference;
+                down = this.isHidden(reference) ?
+                        null :
+                        reference;
                 break;
             }
 
@@ -136,7 +138,7 @@ final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
             }
         }
 
-        return down;
+        return Optional.ofNullable(down);
     }
 
     // VisibleForTesting

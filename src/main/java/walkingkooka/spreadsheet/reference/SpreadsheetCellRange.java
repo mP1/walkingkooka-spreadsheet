@@ -392,7 +392,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
                                             final SpreadsheetRowStore rowStore) {
         return this.extendRow(
                 anchor,
-                (r) -> r.down(rowStore),
+                (r) -> r.down(rowStore).get(),
                 anchor::setTop
         );
     }

@@ -117,6 +117,34 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
     // downSkipHidden...................................................................................................
 
     @Test
+    public void testDownSkipHiddenLastHidden() {
+        final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+        store.save(last.row().setHidden(true));
+
+        this.downSkipHiddenAndCheck(
+                store,
+                last
+        );
+    }
+
+    @Test
+    public void testDownSkipHiddenLastAllHidden() {
+        final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+        store.save(last.row().setHidden(true));
+        store.save(last.add(-1).row().setHidden(true));
+        store.save(last.add(-2).row().setHidden(true));
+
+        this.downSkipHiddenAndCheck(
+                store,
+                last.add(-2)
+        );
+    }
+
+    @Test
     public void testDownSkipHidden() {
         this.downSkipHiddenAndCheck(
                 this.createStore(),
@@ -171,13 +199,14 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
         final TreeMapSpreadsheetRowStore store = this.createStore();
 
         final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
-        ;
 
+        store.save(last.add(-2).row());
         store.save(last.add(-1).row().setHidden(true));
         store.save(last.row().setHidden(true));
 
         this.downSkipHiddenAndCheck(
                 store,
+                last.add(-2),
                 last.add(-2)
         );
     }
