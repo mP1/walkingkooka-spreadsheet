@@ -254,7 +254,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     SpreadsheetColumnReference right(final SpreadsheetColumnStore columnStore) {
-        return columnStore.rightSkipHidden(this);
+        return columnStore.rightSkipHidden(this).get();
     }
 
     @Override

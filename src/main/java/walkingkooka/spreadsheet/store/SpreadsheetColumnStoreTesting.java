@@ -87,9 +87,12 @@ public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore>
 
     @Test
     default void testRightSkipHiddenLastColumn() {
+        final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
         this.rightSkipHiddenAndCheck(
                 this.createStore(),
-                SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                last,
+                last
         );
     }
 
@@ -116,13 +119,23 @@ public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore>
         this.rightSkipHiddenAndCheck(
                 store,
                 reference,
-                reference
+                Optional.empty()
         );
     }
 
     default void rightSkipHiddenAndCheck(final S store,
                                          final SpreadsheetColumnReference reference,
                                          final SpreadsheetColumnReference expected) {
+        this.rightSkipHiddenAndCheck(
+                store,
+                reference,
+                Optional.of(expected)
+        );
+    }
+
+    default void rightSkipHiddenAndCheck(final S store,
+                                         final SpreadsheetColumnReference reference,
+                                         final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
                 expected,
                 store.rightSkipHidden(reference),

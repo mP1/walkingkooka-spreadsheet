@@ -120,12 +120,14 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
     }
 
     @Override
-    public SpreadsheetColumnReference rightSkipHidden(final SpreadsheetColumnReference reference) {
+    public Optional<SpreadsheetColumnReference> rightSkipHidden(final SpreadsheetColumnReference reference) {
         SpreadsheetColumnReference right = reference;
 
         for (; ; ) {
             if (right.isLast()) {
-                right = reference;
+                right = this.isHidden(reference) ?
+                        null :
+                        reference;
                 break;
             }
 
@@ -136,7 +138,7 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
             }
         }
 
-        return right;
+        return Optional.ofNullable(right);
     }
 
     // VisibleForTesting
