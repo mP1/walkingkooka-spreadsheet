@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Represents a row reference. The {@link Comparable} method ignores the {@link SpreadsheetReferenceKind} component
@@ -232,6 +233,12 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     @Override
     public SpreadsheetViewportSelectionAnchor defaultAnchor() {
         return SpreadsheetViewportSelectionAnchor.ROW;
+    }
+
+    @Override
+    boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                     final Predicate<SpreadsheetRowReference> hiddenRowTester) {
+        return hiddenRowTester.test(this);
     }
 
     Optional<SpreadsheetRowReference> up(final SpreadsheetRowStore store) {

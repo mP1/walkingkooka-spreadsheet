@@ -105,6 +105,26 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.checkEquals(selection, viewportSelection.selection(), "selection");
     }
 
+    // isHidden.........................................................................................................
+
+    final void isHiddenAndCheck(final String selection,
+                                final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                                final Predicate<SpreadsheetRowReference> hiddenRowTester,
+                                final boolean expected) {
+
+    }
+
+    final void isHiddenAndCheck(final S selection,
+                                final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                                final Predicate<SpreadsheetRowReference> hiddenRowTester,
+                                final boolean expected) {
+        this.checkEquals(
+                expected,
+                selection.isHidden(hiddenColumnTester, hiddenRowTester),
+                () -> "isHidden " + selection
+        );
+    }
+
     // left.............................................................................................................
 
     final void leftAndCheck(final String selection) {

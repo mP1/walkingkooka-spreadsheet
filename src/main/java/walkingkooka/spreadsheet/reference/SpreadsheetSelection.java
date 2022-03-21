@@ -21,6 +21,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.HasRange;
+import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -467,6 +468,27 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * cell or cell-range.
      */
     public abstract SpreadsheetViewportSelectionAnchor defaultAnchor();
+
+    /**
+     * Tests if this {@link SpreadsheetSelection} is hidden. A range is considered hidden if either its begin or end
+     * are hidden.
+     */
+    abstract boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                              final Predicate<SpreadsheetRowReference> hiddenRowTester);
+
+    /**
+     * Helper used by all three ranges to test if either bound is hidden.
+     */
+    static <SS extends SpreadsheetSelection & Comparable<SS>> boolean isHiddenRange(final HasRangeBounds<SS> range,
+                                                                                    final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                                                                                    final Predicate<SpreadsheetRowReference> hiddenRowTester) {
+        final SS begin = range.begin();
+        final SS end = range.end();
+
+        return begin.isHidden(hiddenColumnTester, hiddenRowTester) &&
+                begin.equalsIgnoreReferenceKind(end) ||
+                end.isHidden(hiddenColumnTester, hiddenRowTester);
+    }
 
     abstract SpreadsheetSelection left(final SpreadsheetViewportSelectionAnchor anchor,
                                        final SpreadsheetColumnStore columnStore,

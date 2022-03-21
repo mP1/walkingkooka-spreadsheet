@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -759,6 +760,38 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testToCell() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
         assertSame(cell, cell.toCell());
+    }
+
+    // isHidden.........................................................................................................
+
+    @Test
+    public void testIsHiddenColumnHidden() {
+        this.isHiddenAndCheck(
+                "A1",
+                Predicates.is(SpreadsheetSelection.parseColumn("A")),
+                Predicates.never(),
+                true
+        );
+    }
+
+    @Test
+    public void testIsHiddenEndHidden() {
+        this.isHiddenAndCheck(
+                "A1",
+                Predicates.never(),
+                Predicates.is(SpreadsheetSelection.parseRow("1")),
+                true
+        );
+    }
+
+    @Test
+    public void testIsHiddenNotHidden() {
+        this.isHiddenAndCheck(
+                "A1",
+                Predicates.never(),
+                Predicates.never(),
+                false
+        );
     }
 
     // navigate.........................................................................................................

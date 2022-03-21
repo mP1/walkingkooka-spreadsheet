@@ -33,6 +33,7 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * A {@link SpreadsheetExpressionReference reference} that includes a defined name or column and row. Note the
@@ -292,6 +293,19 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     @Override
     public SpreadsheetViewportSelectionAnchor defaultAnchor() {
         return SpreadsheetViewportSelectionAnchor.CELL;
+    }
+
+    /**
+     * A {@link SpreadsheetCellReference} is hidden if either its column or row is hidden.
+     *
+     * @param hiddenColumnTester
+     * @param hiddenRowTester
+     */
+    @Override
+    boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                     final Predicate<SpreadsheetRowReference> hiddenRowTester) {
+        return this.column().isHidden(hiddenColumnTester, hiddenRowTester) ||
+                this.row().isHidden(hiddenColumnTester, hiddenRowTester);
     }
 
     @Override

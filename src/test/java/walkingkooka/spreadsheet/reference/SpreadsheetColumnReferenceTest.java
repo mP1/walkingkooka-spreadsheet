@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -586,6 +587,28 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.checkEquals(left ? reference : other,
                 reference.min(other),
                 () -> "min of " + reference + " and " + other);
+    }
+
+    // isHidden.........................................................................................................
+
+    @Test
+    public void testIsHiddenColumnHidden() {
+        this.isHiddenAndCheck(
+                "A",
+                Predicates.is(SpreadsheetSelection.parseColumn("A")),
+                Predicates.fake(),
+                true
+        );
+    }
+
+    @Test
+    public void testIsHiddenNotHidden() {
+        this.isHiddenAndCheck(
+                "A",
+                Predicates.never(),
+                Predicates.fake(),
+                false
+        );
     }
 
     // navigate.........................................................................................................
