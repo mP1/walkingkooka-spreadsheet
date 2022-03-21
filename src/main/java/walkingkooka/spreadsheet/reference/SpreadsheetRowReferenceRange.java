@@ -177,7 +177,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
                                             final SpreadsheetRowStore rowStore) {
         return this.extendRow(
                 this.isSingle() ? SpreadsheetViewportSelectionAnchor.TOP : anchor,
-                r -> r.down(rowStore)
+                r -> r.down(rowStore).get()
         );
     }
 

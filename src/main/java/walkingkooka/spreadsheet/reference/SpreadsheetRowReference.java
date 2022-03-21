@@ -238,7 +238,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return store.upSkipHidden(this);
     }
 
-    SpreadsheetRowReference down(final SpreadsheetRowStore store) {
+    Optional<SpreadsheetRowReference> down(final SpreadsheetRowStore store) {
         return store.downSkipHidden(this);
     }
 
@@ -267,7 +267,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     SpreadsheetRowReference down(final SpreadsheetViewportSelectionAnchor anchor,
                                  final SpreadsheetColumnStore columnStore,
                                  final SpreadsheetRowStore rowStore) {
-        return this.down(rowStore);
+        return this.down(rowStore).get();
     }
 
     @Override

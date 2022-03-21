@@ -40,7 +40,7 @@ public class FakeSpreadsheetRowStore extends FakeStore<SpreadsheetRowReference, 
     }
 
     @Override
-    public SpreadsheetRowReference downSkipHidden(final SpreadsheetRowReference reference) {
+    public Optional<SpreadsheetRowReference> downSkipHidden(final SpreadsheetRowReference reference) {
         throw new UnsupportedOperationException();
     }
 }
