@@ -31,6 +31,30 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
     // upSkipHidden...................................................................................................
 
     @Test
+    public void testUpTopHidden() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+        store.save(SpreadsheetSelection.parseRow("1").row());
+
+        this.upSkipHiddenAndCheck(
+                store,
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpTopAllHidden() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+        store.save(SpreadsheetSelection.parseRow("1").row());
+        store.save(SpreadsheetSelection.parseRow("2").row());
+        store.save(SpreadsheetSelection.parseRow("3").row());
+
+        this.upSkipHiddenAndCheck(
+                store,
+                "3"
+        );
+    }
+
+    @Test
     public void testUpSkipHidden() {
         this.upSkipHiddenAndCheck(
                 this.createStore(),
@@ -85,6 +109,7 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
 
         this.upSkipHiddenAndCheck(
                 store,
+                "3",
                 "3"
         );
     }

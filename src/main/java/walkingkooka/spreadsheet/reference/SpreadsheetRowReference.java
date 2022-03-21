@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Represents a row reference. The {@link Comparable} method ignores the {@link SpreadsheetReferenceKind} component
@@ -233,7 +234,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return SpreadsheetViewportSelectionAnchor.ROW;
     }
 
-    SpreadsheetRowReference up(final SpreadsheetRowStore store) {
+    Optional<SpreadsheetRowReference> up(final SpreadsheetRowStore store) {
         return store.upSkipHidden(this);
     }
 
@@ -252,7 +253,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     SpreadsheetRowReference up(final SpreadsheetViewportSelectionAnchor anchor,
                                final SpreadsheetColumnStore columnStore,
                                final SpreadsheetRowStore rowStore) {
-        return this.up(rowStore);
+        return this.up(rowStore).get();
     }
 
     @Override

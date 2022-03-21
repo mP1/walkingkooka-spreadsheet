@@ -21,6 +21,8 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.store.FakeStore;
 
+import java.util.Optional;
+
 public class FakeSpreadsheetRowStore extends FakeStore<SpreadsheetRowReference, SpreadsheetRow> implements SpreadsheetRowStore {
 
     public FakeSpreadsheetRowStore() {
@@ -33,7 +35,7 @@ public class FakeSpreadsheetRowStore extends FakeStore<SpreadsheetRowReference, 
     }
 
     @Override
-    public SpreadsheetRowReference upSkipHidden(final SpreadsheetRowReference reference) {
+    public Optional<SpreadsheetRowReference> upSkipHidden(final SpreadsheetRowReference reference) {
         throw new UnsupportedOperationException();
     }
 

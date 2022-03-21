@@ -24,13 +24,18 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
+import java.util.Optional;
+
 public interface SpreadsheetRowStoreTesting<S extends SpreadsheetRowStore> extends SpreadsheetColumnOrRowStoreTesting<S, SpreadsheetRowReference, SpreadsheetRow> {
 
     @Test
     default void testUpSkipHiddenFirstRow() {
+        final SpreadsheetRowReference first = SpreadsheetReferenceKind.RELATIVE.firstRow();
+
         this.upSkipHiddenAndCheck(
                 this.createStore(),
-                SpreadsheetReferenceKind.RELATIVE.firstRow()
+                first,
+                first
         );
     }
 
@@ -57,13 +62,23 @@ public interface SpreadsheetRowStoreTesting<S extends SpreadsheetRowStore> exten
         this.upSkipHiddenAndCheck(
                 store,
                 reference,
-                reference
+                Optional.empty()
         );
     }
 
     default void upSkipHiddenAndCheck(final S store,
                                       final SpreadsheetRowReference reference,
                                       final SpreadsheetRowReference expected) {
+        this.upSkipHiddenAndCheck(
+                store,
+                reference,
+                Optional.of(expected)
+        );
+    }
+
+    default void upSkipHiddenAndCheck(final S store,
+                                      final SpreadsheetRowReference reference,
+                                      final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
                 expected,
                 store.upSkipHidden(reference),

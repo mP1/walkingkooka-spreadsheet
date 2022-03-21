@@ -21,6 +21,8 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
+import java.util.Optional;
+
 /**
  * A store that contains {@link SpreadsheetRow} including some methods that for frequent queries.
  */
@@ -29,8 +31,10 @@ public interface SpreadsheetRowStore extends SpreadsheetColumnOrRowStore<Spreads
     /**
      * Returns the first row moving up from the given starting point that is not hidden.
      * If all rows to the up are hidden, the original {@link SpreadsheetRowReference} is returned.
+     * <br>
+     * If the return row is hidden an {@link Optional#empty()} will be returned instead.
      */
-    SpreadsheetRowReference upSkipHidden(final SpreadsheetRowReference reference);
+    Optional<SpreadsheetRowReference> upSkipHidden(final SpreadsheetRowReference reference);
 
     /**
      * Returns the last row moving down from the given starting point that is not hidden.
