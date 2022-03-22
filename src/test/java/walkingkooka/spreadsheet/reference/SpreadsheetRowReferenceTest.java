@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -513,6 +514,28 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     @Test
     public void testJsonNodeUnmarshallStringRelative2() {
         this.unmarshallAndCheck(JsonNode.string("2"), SpreadsheetReferenceKind.RELATIVE.row(1));
+    }
+
+    // isHidden.........................................................................................................
+
+    @Test
+    public void testIsHiddenColumnHidden() {
+        this.isHiddenAndCheck(
+                "1",
+                Predicates.fake(),
+                Predicates.is(SpreadsheetSelection.parseRow("1")),
+                true
+        );
+    }
+
+    @Test
+    public void testIsHiddenNotHidden() {
+        this.isHiddenAndCheck(
+                "1",
+                Predicates.fake(),
+                Predicates.never(),
+                false
+        );
     }
 
     // navigate.........................................................................................................

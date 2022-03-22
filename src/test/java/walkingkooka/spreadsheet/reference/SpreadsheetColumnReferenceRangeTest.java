@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.RangeBound;
 import walkingkooka.collect.iterable.IterableTesting;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -398,6 +399,38 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
                 SpreadsheetSelection.parseCellRange(range),
                 SpreadsheetSelection.parseColumnRange(column).setRowReferenceRange(SpreadsheetSelection.parseRowRange(row)),
                 () -> column + " setRowReferenceRange " + row
+        );
+    }
+
+    // isHidden.........................................................................................................
+
+    @Test
+    public void testIsHiddenBeginHidden() {
+        this.isHiddenAndCheck(
+                "A:B",
+                Predicates.is(SpreadsheetSelection.parseColumn("A")),
+                Predicates.fake(),
+                true
+        );
+    }
+
+    @Test
+    public void testIsHiddenEndHidden() {
+        this.isHiddenAndCheck(
+                "A:B",
+                Predicates.is(SpreadsheetSelection.parseColumn("B")),
+                Predicates.fake(),
+                true
+        );
+    }
+
+    @Test
+    public void testIsHiddenNotHidden() {
+        this.isHiddenAndCheck(
+                "A:B",
+                Predicates.never(),
+                Predicates.fake(),
+                false
         );
     }
 

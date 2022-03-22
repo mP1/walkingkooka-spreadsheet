@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
+import java.util.function.Predicate;
+
 /**
  * A label or {@link Name} is a name to a cell reference, range and so on.
  * <pre>
@@ -151,6 +153,12 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
     @Override
     public SpreadsheetViewportSelectionAnchor defaultAnchor() {
         return SpreadsheetViewportSelectionAnchor.NONE; // should never happen
+    }
+
+    @Override
+    boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                     final Predicate<SpreadsheetRowReference> hiddenRowTester) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

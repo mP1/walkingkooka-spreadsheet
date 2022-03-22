@@ -22,6 +22,7 @@ import walkingkooka.collect.Range;
 import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.PredicateTesting2;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -1092,6 +1093,38 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
                 expected,
                 range.isSingleCell(),
                 () -> range + "  isSingleCell"
+        );
+    }
+
+    // isHidden.........................................................................................................
+
+    @Test
+    public void testIsHiddenBeginHidden() {
+        this.isHiddenAndCheck(
+                "A1:B2",
+                Predicates.is(SpreadsheetSelection.parseColumn("A")),
+                Predicates.is(SpreadsheetSelection.parseRow("1")),
+                true
+        );
+    }
+
+    @Test
+    public void testIsHiddenEndHidden() {
+        this.isHiddenAndCheck(
+                "A1:B2",
+                Predicates.is(SpreadsheetSelection.parseColumn("B")),
+                Predicates.is(SpreadsheetSelection.parseRow("2")),
+                true
+        );
+    }
+
+    @Test
+    public void testIsHiddenNotHidden() {
+        this.isHiddenAndCheck(
+                "A1:B2",
+                Predicates.never(),
+                Predicates.never(),
+                false
         );
     }
 

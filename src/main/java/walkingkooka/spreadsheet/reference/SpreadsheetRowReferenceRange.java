@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 /**
@@ -129,6 +130,22 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     @Override
     public SpreadsheetViewportSelectionAnchor defaultAnchor() {
         return SpreadsheetViewportSelectionAnchor.ROW_RANGE;
+    }
+
+    /**
+     * A {@link SpreadsheetCellReference} is hidden if either begin or end is hidden.
+     *
+     * @param hiddenColumnTester
+     * @param hiddenRowTester
+     */
+    @Override
+    boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                     final Predicate<SpreadsheetRowReference> hiddenRowTester) {
+        return isHiddenRange(
+                this,
+                hiddenColumnTester,
+                hiddenRowTester
+        );
     }
 
     @Override

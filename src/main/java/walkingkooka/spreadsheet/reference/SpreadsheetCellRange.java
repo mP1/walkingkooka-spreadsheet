@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import java.util.stream.IntStream;
@@ -289,6 +290,16 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     @Override
     public SpreadsheetViewportSelectionAnchor defaultAnchor() {
         return SpreadsheetViewportSelectionAnchor.CELL_RANGE;
+    }
+
+    @Override
+    boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                     final Predicate<SpreadsheetRowReference> hiddenRowTester) {
+        return isHiddenRange(
+                this,
+                hiddenColumnTester,
+                hiddenRowTester
+        );
     }
 
     @Override
