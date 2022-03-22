@@ -161,8 +161,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetViewportSelection navigate(final SpreadsheetViewportSelection selection,
-                                                 final SpreadsheetEngineContext context) {
+    public Optional<SpreadsheetViewportSelection> navigate(final SpreadsheetViewportSelection selection,
+                                                           final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 }

@@ -226,8 +226,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetViewportSelection navigate(final SpreadsheetViewportSelection selection,
-                                                 final SpreadsheetEngineContext context) {
+    public Optional<SpreadsheetViewportSelection> navigate(final SpreadsheetViewportSelection selection,
+                                                           final SpreadsheetEngineContext context) {
         return this.engine.navigate(selection, context);
     }
 

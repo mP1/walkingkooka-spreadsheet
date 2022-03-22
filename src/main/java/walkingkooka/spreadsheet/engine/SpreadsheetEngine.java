@@ -186,6 +186,6 @@ public interface SpreadsheetEngine {
      * Performs the given {@link SpreadsheetViewportSelection}, honouring any present {@link SpreadsheetViewportSelection#navigation()},
      * skipping hidden columns and rows.
      */
-    SpreadsheetViewportSelection navigate(final SpreadsheetViewportSelection selection,
-                                          final SpreadsheetEngineContext context);
+    Optional<SpreadsheetViewportSelection> navigate(final SpreadsheetViewportSelection selection,
+                                                    final SpreadsheetEngineContext context);
 }
