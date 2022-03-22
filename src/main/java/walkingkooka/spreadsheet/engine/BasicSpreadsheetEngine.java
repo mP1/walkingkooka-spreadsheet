@@ -1177,15 +1177,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetViewportSelection navigate(final SpreadsheetViewportSelection selection,
-                                                 final SpreadsheetEngineContext context) {
+    public Optional<SpreadsheetViewportSelection> navigate(final SpreadsheetViewportSelection selection,
+                                                           final SpreadsheetEngineContext context) {
         Objects.requireNonNull(selection, "selection");
         checkContext(context);
 
         final Optional<SpreadsheetViewportSelectionNavigation> maybeNavigation = selection.navigation();
-        return maybeNavigation.isPresent() ?
-                navigate0(selection, context) :
-                selection;
+        return Optional.of(
+                maybeNavigation.isPresent() ?
+                        navigate0(selection, context) :
+                        selection
+        );
     }
 
     private SpreadsheetViewportSelection navigate0(final SpreadsheetViewportSelection selection,
