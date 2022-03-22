@@ -156,8 +156,8 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
     }
 
     @Override
-    boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
-                     final Predicate<SpreadsheetRowReference> hiddenRowTester) {
+    public boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                            final Predicate<SpreadsheetRowReference> hiddenRowTester) {
         throw new UnsupportedOperationException();
     }
 

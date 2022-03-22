@@ -134,13 +134,10 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
 
     /**
      * A {@link SpreadsheetCellReference} is hidden if either begin or end is hidden.
-     *
-     * @param hiddenColumnTester
-     * @param hiddenRowTester
      */
     @Override
-    boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
-                     final Predicate<SpreadsheetRowReference> hiddenRowTester) {
+    public boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                            final Predicate<SpreadsheetRowReference> hiddenRowTester) {
         return isHiddenRange(
                 this,
                 hiddenColumnTester,

@@ -297,13 +297,10 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
 
     /**
      * A {@link SpreadsheetCellReference} is hidden if either its column or row is hidden.
-     *
-     * @param hiddenColumnTester
-     * @param hiddenRowTester
      */
     @Override
-    boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
-                     final Predicate<SpreadsheetRowReference> hiddenRowTester) {
+    public boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                            final Predicate<SpreadsheetRowReference> hiddenRowTester) {
         return this.column().isHidden(hiddenColumnTester, hiddenRowTester) ||
                 this.row().isHidden(hiddenColumnTester, hiddenRowTester);
     }

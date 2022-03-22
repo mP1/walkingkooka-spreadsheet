@@ -473,8 +473,8 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Tests if this {@link SpreadsheetSelection} is hidden. A range is considered hidden if either its begin or end
      * are hidden.
      */
-    abstract boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
-                              final Predicate<SpreadsheetRowReference> hiddenRowTester);
+    public abstract boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                                     final Predicate<SpreadsheetRowReference> hiddenRowTester);
 
     /**
      * Helper used by all three ranges to test if either bound is hidden.
