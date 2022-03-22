@@ -251,8 +251,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     @Override
-    boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
-                     final Predicate<SpreadsheetRowReference> hiddenRowTester) {
+    public boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                            final Predicate<SpreadsheetRowReference> hiddenRowTester) {
         return hiddenColumnTester.test(this);
     }
 

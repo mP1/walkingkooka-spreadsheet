@@ -293,8 +293,8 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     }
 
     @Override
-    boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
-                     final Predicate<SpreadsheetRowReference> hiddenRowTester) {
+    public boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
+                            final Predicate<SpreadsheetRowReference> hiddenRowTester) {
         return isHiddenRange(
                 this,
                 hiddenColumnTester,
