@@ -985,7 +985,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
-        return Predicates.never();
+        return Predicates.is("isHidden");
     }
 
     // JsonNodeTesting..................................................................................................
