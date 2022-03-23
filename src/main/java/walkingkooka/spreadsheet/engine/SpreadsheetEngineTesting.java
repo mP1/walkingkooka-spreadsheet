@@ -969,6 +969,18 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                   final SpreadsheetViewportSelection selection,
                                   final SpreadsheetEngineContext context,
                                   final SpreadsheetViewportSelection expected) {
+        this.navigateAndCheck(
+                engine,
+                selection,
+                context,
+                Optional.of(expected)
+        );
+    }
+
+    default void navigateAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetViewportSelection selection,
+                                  final SpreadsheetEngineContext context,
+                                  final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
                 engine.navigate(selection, context),
