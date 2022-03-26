@@ -111,7 +111,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
                                 final Predicate<SpreadsheetRowReference> hiddenRowTester,
                                 final boolean expected) {
-
+        this.isHiddenAndCheck(
+                this.parseString(selection),
+                hiddenColumnTester,
+                hiddenRowTester,
+                expected
+        );
     }
 
     final void isHiddenAndCheck(final S selection,

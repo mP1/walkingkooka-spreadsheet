@@ -775,7 +775,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testIsHiddenEndHidden() {
+    public void testIsHiddenRowHidden() {
         this.isHiddenAndCheck(
                 "A1",
                 Predicates.never(),
@@ -785,7 +785,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testIsHiddenNotHidden() {
+    public void testIsHiddenNeitherColumnOrRowNotHidden() {
         this.isHiddenAndCheck(
                 "A1",
                 Predicates.never(),

@@ -434,6 +434,26 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    @Test
+    public void testIsHiddenHidden2() {
+        this.isHiddenAndCheck(
+                "A:$A",
+                Predicates.always(),
+                Predicates.fake(),
+                true
+        );
+    }
+
+    @Test
+    public void testIsHiddenNotHidden2() {
+        this.isHiddenAndCheck(
+                "A:$A",
+                Predicates.never(),
+                Predicates.fake(),
+                false
+        );
+    }
+
     // navigate.........................................................................................................
 
     @Test

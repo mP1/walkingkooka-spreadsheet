@@ -1128,6 +1128,46 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         );
     }
 
+    @Test
+    public void testIsHiddenSingleColumnHidden() {
+        this.isHiddenAndCheck(
+                "A1:A1",
+                Predicates.is(SpreadsheetSelection.parseColumn("A")),
+                Predicates.never(),
+                true
+        );
+    }
+
+    @Test
+    public void testIsHiddenSingleRowHidden() {
+        this.isHiddenAndCheck(
+                "A1:A1",
+                Predicates.never(),
+                Predicates.is(SpreadsheetSelection.parseRow("1")),
+                true
+        );
+    }
+
+    @Test
+    public void testIsHiddenSingleNeitherHidden() {
+        this.isHiddenAndCheck(
+                "A1:A1",
+                Predicates.never(),
+                Predicates.never(),
+                false
+        );
+    }
+
+    @Test
+    public void testIsHiddenSingleNeitherHidden2() {
+        this.isHiddenAndCheck(
+                "A1:$A$1",
+                Predicates.never(),
+                Predicates.never(),
+                false
+        );
+    }
+
     // navigate.........................................................................................................
 
     // B2 C2 D2

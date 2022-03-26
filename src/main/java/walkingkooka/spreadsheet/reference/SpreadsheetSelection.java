@@ -485,9 +485,9 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         final SS begin = range.begin();
         final SS end = range.end();
 
-        return begin.isHidden(hiddenColumnTester, hiddenRowTester) &&
-                begin.equalsIgnoreReferenceKind(end) ||
-                end.isHidden(hiddenColumnTester, hiddenRowTester);
+        return begin.isHidden(hiddenColumnTester, hiddenRowTester) ||
+                (!begin.equalsIgnoreReferenceKind(end) &&
+                        end.isHidden(hiddenColumnTester, hiddenRowTester));
     }
 
     abstract SpreadsheetSelection left(final SpreadsheetViewportSelectionAnchor anchor,
