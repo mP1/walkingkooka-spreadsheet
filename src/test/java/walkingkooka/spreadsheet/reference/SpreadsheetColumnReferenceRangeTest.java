@@ -22,6 +22,8 @@ import walkingkooka.collect.Range;
 import walkingkooka.collect.RangeBound;
 import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -493,10 +495,37 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Test
+    public void testLeftSkipsHidden() {
+        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
+        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
+
+        this.leftAndCheck(
+                "D:E",
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                store,
+                "B"
+        );
+    }
+
+    @Test
     public void testUpAnchorLeft() {
+        final String range = "B:C";
+
         this.upAndCheck(
-                "B:C",
-                SpreadsheetViewportSelectionAnchor.LEFT
+                range,
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                range
+        );
+    }
+
+    @Test
+    public void testUpHiddenColumn() {
+        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
+        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
+
+        this.upAndCheck(
+                "C:D",
+                store
         );
     }
 
@@ -537,10 +566,37 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Test
+    public void testRightSkipsHidden() {
+        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
+        store.save(SpreadsheetSelection.parseColumn("E").column().setHidden(true));
+
+        this.rightAndCheck(
+                "C:D",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                store,
+                "F"
+        );
+    }
+
+    @Test
     public void testDownAnchorLeft() {
+        final String range = "B:C";
+
         this.downAndCheck(
-                "B:C",
-                SpreadsheetViewportSelectionAnchor.LEFT
+                range,
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                range
+        );
+    }
+
+    @Test
+    public void testDownHiddenColumn() {
+        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
+        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
+
+        this.downAndCheck(
+                "C:D",
+                store
         );
     }
 
@@ -630,14 +686,19 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendLeftAndCheck(
                 "C:D",
                 SpreadsheetViewportSelectionAnchor.LEFT,
-                "C"
+                "C",
+                SpreadsheetViewportSelectionAnchor.NONE
         );
     }
 
     @Test
     public void testExtendLeftAnchorRightFirstColumn() {
+        final String range = "A:B";
+
         this.extendLeftAndCheck(
-                "A:B",
+                range,
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                range,
                 SpreadsheetViewportSelectionAnchor.RIGHT
         );
     }
@@ -668,7 +729,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
         this.extendRightAndCheck(
                 column.add(-1).columnRange(column),
-                SpreadsheetViewportSelectionAnchor.LEFT
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                column.setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
@@ -714,15 +776,25 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testExtendUp() {
+        final String row = "B:C";
+
         this.extendUpAndCheck(
-                "B:C"
+                row,
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                row,
+                SpreadsheetViewportSelectionAnchor.RIGHT
         );
     }
 
     @Test
     public void testExtendDown() {
+        final String row = "B:C";
+
         this.extendDownAndCheck(
-                "B:C"
+                row,
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                row,
+                SpreadsheetViewportSelectionAnchor.RIGHT
         );
     }
 

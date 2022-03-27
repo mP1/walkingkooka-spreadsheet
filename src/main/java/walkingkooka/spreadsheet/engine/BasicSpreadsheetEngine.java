@@ -1183,15 +1183,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         final Optional<SpreadsheetViewportSelectionNavigation> maybeNavigation = selection.navigation();
-        return Optional.of(
-                maybeNavigation.isPresent() ?
+        return maybeNavigation.isPresent() ?
                         navigate0(selection, context) :
-                        selection
-        );
+               Optional.empty();
     }
 
-    private SpreadsheetViewportSelection navigate0(final SpreadsheetViewportSelection selection,
-                                                   final SpreadsheetEngineContext context) {
+    private Optional<SpreadsheetViewportSelection> navigate0(final SpreadsheetViewportSelection selection,
+                                                             final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
         return selection.navigation()

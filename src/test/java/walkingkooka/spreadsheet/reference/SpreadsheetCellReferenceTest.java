@@ -23,6 +23,10 @@ import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -807,6 +811,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testLeftFirstColumn() {
         this.leftAndCheck(
+                "A2",
                 "A2"
         );
     }
@@ -822,6 +827,29 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
+    public void testLeftSkipsHidden() {
+        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
+        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
+
+        this.leftAndCheck(
+                "D1",
+                store,
+                "B1"
+        );
+    }
+
+    @Test
+    public void testLeftHiddenRow() {
+        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
+        store.save(SpreadsheetSelection.parseRow("1").row().setHidden(true));
+
+        this.leftAndCheck(
+                "D1",
+                store
+        );
+    }
+    
+    @Test
     public void testUp() {
         this.upAndCheck(
                 "B2",
@@ -832,6 +860,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testUpFirstRow() {
         this.upAndCheck(
+                "B1",
                 "B1"
         );
     }
@@ -846,6 +875,29 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    @Test
+    public void testUpSkipsHidden() {
+        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
+        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
+
+        this.upAndCheck(
+                "B4",
+                store,
+                "B2"
+        );
+    }
+
+    @Test
+    public void testUpHiddenColumn() {
+        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
+        store.save(SpreadsheetSelection.parseColumn("B").column().setHidden(true));
+
+        this.upAndCheck(
+                "B2",
+                store
+        );
+    }
+    
     @Test
     public void testRight() {
         this.rightAndCheck(
@@ -867,7 +919,31 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.rightAndCheck(
+                column + "1",
                 column + "1"
+        );
+    }
+
+    @Test
+    public void testRightSkipsHidden() {
+        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
+        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
+
+        this.rightAndCheck(
+                "B1",
+                store,
+                "D1"
+        );
+    }
+
+    @Test
+    public void testRightHiddenRow() {
+        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
+        store.save(SpreadsheetSelection.parseRow("1").row().setHidden(true));
+
+        this.rightAndCheck(
+                "D1",
+                store
         );
     }
 
@@ -892,7 +968,31 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.downAndCheck(
+                "B" + row,
                 "B" + row
+        );
+    }
+
+    @Test
+    public void testDownSkipsHidden() {
+        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
+        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
+
+        this.downAndCheck(
+                "B2",
+                store,
+                "B4"
+        );
+    }
+
+    @Test
+    public void testDownHiddenColumn() {
+        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
+        store.save(SpreadsheetSelection.parseColumn("B").column().setHidden(true));
+
+        this.downAndCheck(
+                "B2",
+                store
         );
     }
 
@@ -943,6 +1043,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testExtendLeft() {
         this.extendLeftAndCheck(
                 "C3",
+                SpreadsheetViewportSelectionAnchor.NONE,
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
         );
@@ -950,15 +1051,21 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testExtendLeftFirstColumn() {
+        final String cell = "A1";
+
         this.extendLeftAndCheck(
-                "A1"
+                cell,
+                cell
         );
     }
 
     @Test
     public void testExtendLeftFirstColumn2() {
+        final String cell =  "A2";
+
         this.extendLeftAndCheck(
-                "A2"
+               cell,
+                cell
         );
     }
 
@@ -966,6 +1073,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testExtendUp() {
         this.extendUpAndCheck(
                 "C3",
+                SpreadsheetViewportSelectionAnchor.NONE,
                 "C2:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
         );
@@ -973,15 +1081,21 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testExtendUpFirstRow() {
+        final String cell =  "A1";
+
         this.extendUpAndCheck(
-                "A1"
+               cell,
+                cell
         );
     }
 
     @Test
     public void testExtendUpFirstRow2() {
+        final String cell = "B1";
+
         this.extendUpAndCheck(
-                "B1"
+                cell,
+                cell
         );
     }
 
@@ -989,6 +1103,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testExtendRight() {
         this.extendRightAndCheck(
                 "C3",
+                SpreadsheetViewportSelectionAnchor.NONE,
                 "C3:D3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT
         );
@@ -996,21 +1111,27 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testExtendRightLastColumn() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseRow("1")
+                .setColumn(
+                        SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                );
+
         this.extendRightAndCheck(
-                SpreadsheetSelection.parseRow("1")
-                        .setColumn(
-                                SpreadsheetReferenceKind.RELATIVE.lastColumn()
-                        )
+                cell,
+                cell
         );
     }
 
     @Test
     public void testExtendRightLastColumn2() {
+        final SpreadsheetCellReference cell =  SpreadsheetSelection.parseRow("2")
+                .setColumn(
+                        SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                );
+
         this.extendRightAndCheck(
-                SpreadsheetSelection.parseRow("2")
-                        .setColumn(
-                                SpreadsheetReferenceKind.RELATIVE.lastColumn()
-                        )
+               cell,
+                cell
         );
     }
 
@@ -1018,6 +1139,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testExtendDown() {
         this.extendDownAndCheck(
                 "B2",
+                SpreadsheetViewportSelectionAnchor.NONE,
                 "B2:B3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT
         );
@@ -1025,21 +1147,27 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testExtendDownLastRow() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseColumn("A")
+                .setRow(
+                        SpreadsheetReferenceKind.RELATIVE.lastRow()
+                );
+
         this.extendDownAndCheck(
-                SpreadsheetSelection.parseColumn("A")
-                        .setRow(
-                                SpreadsheetReferenceKind.RELATIVE.lastRow()
-                        )
+                cell,
+                cell
         );
     }
 
     @Test
     public void testExtendDownLastRow2() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseColumn("B")
+                .setRow(
+                        SpreadsheetReferenceKind.RELATIVE.lastRow()
+                );
+
         this.extendDownAndCheck(
-                SpreadsheetSelection.parseColumn("B")
-                        .setRow(
-                                SpreadsheetReferenceKind.RELATIVE.lastRow()
-                        )
+                cell,
+                cell
         );
     }
 
