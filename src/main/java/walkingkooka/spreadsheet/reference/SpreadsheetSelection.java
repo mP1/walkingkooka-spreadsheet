@@ -476,6 +476,14 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     public abstract boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
                                      final Predicate<SpreadsheetRowReference> hiddenRowTester);
 
+    final boolean isHidden(final SpreadsheetColumnStore columnStore,
+                           final SpreadsheetRowStore rowStore) {
+        return this.isHidden(
+                columnStore::isHidden,
+                rowStore::isHidden
+        );
+    }
+
     /**
      * Helper used by all three ranges to test if either bound is hidden.
      */
@@ -490,37 +498,37 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                         end.isHidden(hiddenColumnTester, hiddenRowTester));
     }
 
-    abstract SpreadsheetSelection left(final SpreadsheetViewportSelectionAnchor anchor,
-                                       final SpreadsheetColumnStore columnStore,
-                                       final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetSelection> left(final SpreadsheetViewportSelectionAnchor anchor,
+                                                 final SpreadsheetColumnStore columnStore,
+                                                 final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetSelection up(final SpreadsheetViewportSelectionAnchor anchor,
-                                     final SpreadsheetColumnStore columnStore,
-                                     final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetSelection> up(final SpreadsheetViewportSelectionAnchor anchor,
+                                               final SpreadsheetColumnStore columnStore,
+                                               final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetSelection right(final SpreadsheetViewportSelectionAnchor anchor,
-                                        final SpreadsheetColumnStore columnStore,
-                                        final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetSelection> right(final SpreadsheetViewportSelectionAnchor anchor,
+                                                  final SpreadsheetColumnStore columnStore,
+                                                  final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetSelection down(final SpreadsheetViewportSelectionAnchor anchor,
-                                       final SpreadsheetColumnStore columnStore,
-                                       final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetSelection> down(final SpreadsheetViewportSelectionAnchor anchor,
+                                                 final SpreadsheetColumnStore columnStore,
+                                                 final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetViewportSelection extendLeft(final SpreadsheetViewportSelectionAnchor anchor,
-                                                     final SpreadsheetColumnStore columnStore,
-                                                     final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetViewportSelection> extendLeft(final SpreadsheetViewportSelectionAnchor anchor,
+                                                               final SpreadsheetColumnStore columnStore,
+                                                               final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetViewportSelection extendUp(final SpreadsheetViewportSelectionAnchor anchor,
-                                                   final SpreadsheetColumnStore columnStore,
-                                                   final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetViewportSelection> extendUp(final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetColumnStore columnStore,
+                                                             final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetViewportSelection extendRight(final SpreadsheetViewportSelectionAnchor anchor,
-                                                      final SpreadsheetColumnStore columnStore,
-                                                      final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetViewportSelection> extendRight(final SpreadsheetViewportSelectionAnchor anchor,
+                                                                final SpreadsheetColumnStore columnStore,
+                                                                final SpreadsheetRowStore rowStore);
 
-    abstract SpreadsheetViewportSelection extendDown(final SpreadsheetViewportSelectionAnchor anchor,
-                                                     final SpreadsheetColumnStore columnStore,
-                                                     final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetViewportSelection> extendDown(final SpreadsheetViewportSelectionAnchor anchor,
+                                                               final SpreadsheetColumnStore columnStore,
+                                                               final SpreadsheetRowStore rowStore);
 
     /**
      * Factory that creates or extends a {@link SpreadsheetSelection} into a range. Note the other is either a
@@ -528,8 +536,26 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * <br>
      * This method is intended for use by functions such as SpreadsheetSelection#extendLeft and other directions.,
      */
-    abstract SpreadsheetSelection extendRange(final SpreadsheetSelection other,
-                                              final SpreadsheetViewportSelectionAnchor anchor);
+    abstract Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
+                                                        final SpreadsheetViewportSelectionAnchor anchor);
+
+    final Optional<SpreadsheetSelection> emptyIfHidden(final SpreadsheetColumnStore columnStore,
+                                                       final SpreadsheetRowStore rowStore) {
+        return this.isHidden(
+                columnStore,
+                rowStore
+        ) ?
+                Optional.empty() :
+                Optional.of(this);
+    }
+
+    final Optional<SpreadsheetViewportSelection> setAnchorEmptyIfHidden(final SpreadsheetViewportSelectionAnchor anchor,
+                                                                        final SpreadsheetColumnStore columnStore,
+                                                                        final SpreadsheetRowStore rowStore) {
+        return this.isHidden(columnStore, rowStore) ?
+                Optional.empty() :
+                Optional.of(this.setAnchor(anchor));
+    }
 
     // textLabel........................................................................................................
 

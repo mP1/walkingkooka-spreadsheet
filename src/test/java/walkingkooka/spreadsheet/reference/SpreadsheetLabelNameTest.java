@@ -27,6 +27,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.util.PropertiesPath;
 import walkingkooka.visit.Visiting;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -219,10 +221,11 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
     public void testExtendRange() {
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> this.createSelection().extendRange(
-                        SpreadsheetSelection.parseCell("A1"),
-                        SpreadsheetViewportSelectionAnchor.NONE
-                )
+                () -> this.createSelection()
+                        .extendRange(
+                                Optional.empty(),
+                                SpreadsheetViewportSelectionAnchor.NONE
+                        )
         );
     }
 

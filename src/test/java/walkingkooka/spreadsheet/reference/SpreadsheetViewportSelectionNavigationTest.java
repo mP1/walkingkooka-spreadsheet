@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.text.CharSequences;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportSelectionNavigationTest implements ClassTesting<SpreadsheetViewportSelectionNavigation> {
@@ -350,6 +352,23 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
             final SpreadsheetColumnStore columnStore,
             final SpreadsheetRowStore rowStore,
             final SpreadsheetViewportSelection expected) {
+        this.performAndCheck(
+                navigation,
+                selection,
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.of(expected)
+        );
+    }
+
+    private void performAndCheck(
+            final SpreadsheetViewportSelectionNavigation navigation,
+            final SpreadsheetSelection selection,
+            final SpreadsheetViewportSelectionAnchor anchor,
+            final SpreadsheetColumnStore columnStore,
+            final SpreadsheetRowStore rowStore,
+            final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
                 navigation.perform(selection, anchor, columnStore, rowStore),

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.predicate.PredicateTesting2;
@@ -34,6 +35,7 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -132,54 +134,151 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // left.............................................................................................................
 
-    final void leftAndCheck(final String selection) {
+    final void leftAndCheck(final String selection,
+                             final SpreadsheetColumnStore columnStore) {
         this.leftAndCheck(
                 selection,
-                selection
+                columnStore,
+                this.rowStore()
         );
     }
 
     final void leftAndCheck(final String selection,
-                            final String expected) {
-        final S parsed = this.parseString(selection);
+                             final SpreadsheetRowStore rowStore) {
         this.leftAndCheck(
-                parsed,
-                parsed.defaultAnchor(),
-                this.parseString(expected)
+                selection,
+                this.columnStore(),
+                rowStore
         );
     }
 
     final void leftAndCheck(final String selection,
-                            final SpreadsheetViewportSelectionAnchor anchor) {
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore) {
         this.leftAndCheck(
-                selection,
-                anchor,
-                selection
-        );
-    }
-
-    final void leftAndCheck(final String text,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final String expected) {
-        this.leftAndCheck(
-                this.parseString(text),
-                anchor,
-                this.parseString(expected)
+                this.parseString(selection),
+                columnStore,
+                rowStore
         );
     }
 
     final void leftAndCheck(final S selection,
-                            final SpreadsheetSelection expected) {
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore) {
         this.leftAndCheck(
                 selection,
-                selection.defaultAnchor(),
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void leftAndCheck(final String selection,
+                             final String expected) {
+        this.leftAndCheck(
+                this.parseString(selection),
+                SpreadsheetViewportSelectionAnchor.NONE,
+                this.parseString(expected)
+        );
+    }
+
+    final void leftAndCheck(final String selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final String expected) {
+        this.leftAndCheck(
+                this.parseString(selection),
+                anchor,
+                this.parseString(expected)
+        );
+    }
+
+    final void leftAndCheck(final String selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final String expected) {
+        this.leftAndCheck(
+                selection,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void leftAndCheck(final String selection,
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
+        this.leftAndCheck(
+                selection,
+                this.columnStore(),
+                rowStore,
+                expected
+        );
+    }
+
+    final void leftAndCheck(final String selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
+        this.leftAndCheck(
+                this.parseString(selection),
+                columnStore,
+                rowStore,
+                this.parseRange(expected)
+        );
+    }
+
+    final void leftAndCheck(final String selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final String expected) {
+        this.leftAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void leftAndCheck(final String selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
+        this.leftAndCheck(
+                selection,
+                anchor,
+                this.columnStore(),
+                rowStore,
+                expected
+        );
+    }
+
+    final void leftAndCheck(final String selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
+        this.leftAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                this.parseRange(expected)
+        );
+    }
+
+    final void leftAndCheck(final S selection,
+                             final SpreadsheetSelection expected) {
+        this.leftAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
                 expected
         );
     }
 
     final void leftAndCheck(final S selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetSelection expected) {
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetSelection expected) {
         this.leftAndCheck(
                 selection,
                 anchor,
@@ -189,47 +288,163 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void leftAndCheck(final S selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetColumnStore columnStore,
-                            final SpreadsheetSelection expected) {
+                             final SpreadsheetColumnStore columnStore) {
+        this.leftAndCheck(
+                selection,
+                columnStore,
+                Optional.empty()
+        );
+    }
+
+    final void leftAndCheck(final S selection,
+                             final SpreadsheetRowStore rowStore) {
+        this.leftAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                this.columnStore(),
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void leftAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetSelection expected) {
+        this.leftAndCheck(
+                selection,
+                columnStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void leftAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final SpreadsheetSelection expected) {
+        this.leftAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                expected
+        );
+    }
+
+    final void leftAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final SpreadsheetSelection expected) {
+        this.leftAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void leftAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final Optional<SpreadsheetSelection> expected) {
+        this.leftAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                expected
+        );
+    }
+
+    final void leftAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetSelection expected) {
+        this.leftAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void leftAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final Optional<SpreadsheetSelection> expected) {
+        this.leftAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void leftAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.simplify(),
-                selection.left(anchor, columnStore, SpreadsheetRowStores.fake()),
+                expected.map(s -> s.simplify()),
+                selection.left(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate left"
         );
     }
 
     // up.............................................................................................................
-
-    final void upAndCheck(final String selection) {
+    final void upAndCheck(final String selection,
+                             final SpreadsheetColumnStore columnStore) {
         this.upAndCheck(
                 selection,
-                selection
+                columnStore,
+                this.rowStore()
         );
     }
 
     final void upAndCheck(final String selection,
-                          final String expected) {
-        final S parsed = this.parseString(selection);
+                             final SpreadsheetRowStore rowStore) {
         this.upAndCheck(
-                parsed,
-                parsed.defaultAnchor(),
+                selection,
+                this.columnStore(),
+                rowStore
+        );
+    }
+
+    final void upAndCheck(final String selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore) {
+        this.upAndCheck(
+                this.parseString(selection),
+                columnStore,
+                rowStore
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore) {
+        this.upAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void upAndCheck(final String selection,
+                             final String expected) {
+        this.upAndCheck(
+                this.parseString(selection),
+                SpreadsheetViewportSelectionAnchor.NONE,
                 this.parseString(expected)
         );
     }
 
     final void upAndCheck(final String selection,
-                          final SpreadsheetViewportSelectionAnchor anchor) {
-        this.upAndCheck(
-                selection,
-                anchor,
-                selection
-        );
-    }
-
-    final void upAndCheck(final String selection,
-                          final SpreadsheetViewportSelectionAnchor anchor,
-                          final String expected) {
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final String expected) {
         this.upAndCheck(
                 this.parseString(selection),
                 anchor,
@@ -237,96 +452,351 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final S selection,
-                          final SpreadsheetSelection expected) {
+    final void upAndCheck(final String selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final String expected) {
         this.upAndCheck(
                 selection,
-                selection.defaultAnchor(),
+                columnStore,
+                this.rowStore(),
                 expected
         );
     }
 
-    final void upAndCheck(final S selection,
-                          final SpreadsheetViewportSelectionAnchor anchor,
-                          final SpreadsheetSelection expected) {
+    final void upAndCheck(final String selection,
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
+        this.upAndCheck(
+                selection,
+                this.columnStore(),
+                rowStore,
+                expected
+        );
+    }
+
+    final void upAndCheck(final String selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
+        this.upAndCheck(
+                this.parseString(selection),
+                columnStore,
+                rowStore,
+                this.parseRange(expected)
+        );
+    }
+
+    final void upAndCheck(final String selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final String expected) {
         this.upAndCheck(
                 selection,
                 anchor,
-                rowStore(),
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void upAndCheck(final String selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
+        this.upAndCheck(
+                selection,
+                anchor,
+                this.columnStore(),
+                rowStore,
+                expected
+        );
+    }
+
+    final void upAndCheck(final String selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
+        this.upAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                this.parseRange(expected)
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                             final SpreadsheetSelection expected) {
+        this.upAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
                 expected
         );
     }
 
     final void upAndCheck(final S selection,
-                          final SpreadsheetViewportSelectionAnchor anchor,
-                          final SpreadsheetRowStore rowStore,
-                          final SpreadsheetSelection expected) {
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetSelection expected) {
+        this.upAndCheck(
+                selection,
+                anchor,
+                columnStore(),
+                expected
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore) {
+        this.upAndCheck(
+                selection,
+                columnStore,
+                Optional.empty()
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                             final SpreadsheetRowStore rowStore) {
+        this.upAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                this.columnStore(),
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetSelection expected) {
+        this.upAndCheck(
+                selection,
+                columnStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final SpreadsheetSelection expected) {
+        this.upAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                expected
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final SpreadsheetSelection expected) {
+        this.upAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final Optional<SpreadsheetSelection> expected) {
+        this.upAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                expected
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetSelection expected) {
+        this.upAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final Optional<SpreadsheetSelection> expected) {
+        this.upAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void upAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.simplify(),
-                selection.up(anchor, SpreadsheetColumnStores.fake(), rowStore),
+                expected.map(s -> s.simplify()),
+                selection.up(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate up"
         );
     }
-
     // right.............................................................................................................
 
-    final void rightAndCheck(final String selection) {
+    final void rightAndCheck(final String selection,
+                            final SpreadsheetColumnStore columnStore) {
         this.rightAndCheck(
                 selection,
-                selection
-        );
-    }
-
-    final void rightAndCheck(final S selection) {
-        this.rightAndCheck(
-                selection,
-                selection
+                columnStore,
+                this.rowStore()
         );
     }
 
     final void rightAndCheck(final String selection,
-                             final String expected) {
-        final S parsed = this.parseString(selection);
-
+                            final SpreadsheetRowStore rowStore) {
         this.rightAndCheck(
-                parsed,
-                parsed.defaultAnchor(),
-                this.parseString(expected)
+                selection,
+                this.columnStore(),
+                rowStore
         );
     }
 
     final void rightAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final String expected) {
+                            final SpreadsheetColumnStore columnStore,
+                            final SpreadsheetRowStore rowStore) {
         this.rightAndCheck(
-                selection,
-                anchor,
-                this.parseString(expected)
+                this.parseString(selection),
+                columnStore,
+                rowStore
         );
     }
 
     final void rightAndCheck(final S selection,
-                             final SpreadsheetSelection expected) {
+                            final SpreadsheetColumnStore columnStore,
+                            final SpreadsheetRowStore rowStore) {
         this.rightAndCheck(
                 selection,
-                selection.defaultAnchor(),
-                expected
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                Optional.empty()
         );
     }
 
     final void rightAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetSelection expected) {
+                            final String expected) {
+        this.rightAndCheck(
+                this.parseString(selection),
+                SpreadsheetViewportSelectionAnchor.NONE,
+                this.parseString(expected)
+        );
+    }
+
+    final void rightAndCheck(final String selection,
+                            final SpreadsheetViewportSelectionAnchor anchor,
+                            final String expected) {
         this.rightAndCheck(
                 this.parseString(selection),
                 anchor,
+                this.parseString(expected)
+        );
+    }
+
+    final void rightAndCheck(final String selection,
+                            final SpreadsheetColumnStore columnStore,
+                            final String expected) {
+        this.rightAndCheck(
+                selection,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void rightAndCheck(final String selection,
+                            final SpreadsheetRowStore rowStore,
+                            final String expected) {
+        this.rightAndCheck(
+                selection,
+                this.columnStore(),
+                rowStore,
+                expected
+        );
+    }
+
+    final void rightAndCheck(final String selection,
+                            final SpreadsheetColumnStore columnStore,
+                            final SpreadsheetRowStore rowStore,
+                            final String expected) {
+        this.rightAndCheck(
+                this.parseString(selection),
+                columnStore,
+                rowStore,
+                this.parseRange(expected)
+        );
+    }
+
+    final void rightAndCheck(final String selection,
+                            final SpreadsheetViewportSelectionAnchor anchor,
+                            final SpreadsheetColumnStore columnStore,
+                            final String expected) {
+        this.rightAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void rightAndCheck(final String selection,
+                            final SpreadsheetViewportSelectionAnchor anchor,
+                            final SpreadsheetRowStore rowStore,
+                            final String expected) {
+        this.rightAndCheck(
+                selection,
+                anchor,
+                this.columnStore(),
+                rowStore,
+                expected
+        );
+    }
+
+    final void rightAndCheck(final String selection,
+                            final SpreadsheetViewportSelectionAnchor anchor,
+                            final SpreadsheetColumnStore columnStore,
+                            final SpreadsheetRowStore rowStore,
+                            final String expected) {
+        this.rightAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                this.parseRange(expected)
+        );
+    }
+
+    final void rightAndCheck(final S selection,
+                            final SpreadsheetSelection expected) {
+        this.rightAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
                 expected
         );
     }
 
     final void rightAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetSelection expected) {
+                            final SpreadsheetViewportSelectionAnchor anchor,
+                            final SpreadsheetSelection expected) {
         this.rightAndCheck(
                 selection,
                 anchor,
@@ -336,55 +806,162 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void rightAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetSelection expected) {
+                            final SpreadsheetColumnStore columnStore) {
+        this.rightAndCheck(
+                selection,
+                columnStore,
+                Optional.empty()
+        );
+    }
+
+    final void rightAndCheck(final S selection,
+                            final SpreadsheetRowStore rowStore) {
+        this.rightAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                this.columnStore(),
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void rightAndCheck(final S selection,
+                            final SpreadsheetColumnStore columnStore,
+                            final SpreadsheetSelection expected) {
+        this.rightAndCheck(
+                selection,
+                columnStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void rightAndCheck(final S selection,
+                            final SpreadsheetColumnStore columnStore,
+                            final SpreadsheetRowStore rowStore,
+                            final SpreadsheetSelection expected) {
+        this.rightAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                expected
+        );
+    }
+
+    final void rightAndCheck(final S selection,
+                            final SpreadsheetViewportSelectionAnchor anchor,
+                            final SpreadsheetColumnStore columnStore,
+                            final SpreadsheetRowStore rowStore,
+                            final SpreadsheetSelection expected) {
+        this.rightAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void rightAndCheck(final S selection,
+                            final SpreadsheetColumnStore columnStore,
+                            final Optional<SpreadsheetSelection> expected) {
+        this.rightAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                expected
+        );
+    }
+
+    final void rightAndCheck(final S selection,
+                            final SpreadsheetViewportSelectionAnchor anchor,
+                            final SpreadsheetColumnStore columnStore,
+                            final SpreadsheetSelection expected) {
+        this.rightAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void rightAndCheck(final S selection,
+                            final SpreadsheetViewportSelectionAnchor anchor,
+                            final SpreadsheetColumnStore columnStore,
+                            final Optional<SpreadsheetSelection> expected) {
+        this.rightAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void rightAndCheck(final S selection,
+                            final SpreadsheetViewportSelectionAnchor anchor,
+                            final SpreadsheetColumnStore columnStore,
+                            final SpreadsheetRowStore rowStore,
+                            final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.simplify(),
-                selection.right(anchor, columnStore, SpreadsheetRowStores.fake()),
+                expected.map(s -> s.simplify()),
+                selection.right(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate right"
         );
     }
-
     // down.............................................................................................................
-
-    final void downAndCheck(final String selection) {
+    final void downAndCheck(final String selection,
+                             final SpreadsheetColumnStore columnStore) {
         this.downAndCheck(
                 selection,
-                selection
-        );
-    }
-
-    final void downAndCheck(final S selection) {
-        this.downAndCheck(
-                selection,
-                selection
+                columnStore,
+                this.rowStore()
         );
     }
 
     final void downAndCheck(final String selection,
-                            final String expected) {
-        final S parsed = this.parseString(selection);
-
+                             final SpreadsheetRowStore rowStore) {
         this.downAndCheck(
-                parsed,
-                parsed.defaultAnchor(),
+                selection,
+                this.columnStore(),
+                rowStore
+        );
+    }
+
+    final void downAndCheck(final String selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore) {
+        this.downAndCheck(
+                this.parseString(selection),
+                columnStore,
+                rowStore
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore) {
+        this.downAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void downAndCheck(final String selection,
+                             final String expected) {
+        this.downAndCheck(
+                this.parseString(selection),
+                SpreadsheetViewportSelectionAnchor.NONE,
                 this.parseString(expected)
         );
     }
 
     final void downAndCheck(final String selection,
-                            final SpreadsheetViewportSelectionAnchor anchor) {
-        this.downAndCheck(
-                selection,
-                anchor,
-                selection
-        );
-    }
-
-    final void downAndCheck(final String selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final String expected) {
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final String expected) {
         this.downAndCheck(
                 this.parseString(selection),
                 anchor,
@@ -392,43 +969,201 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final S selection,
-                            final SpreadsheetSelection expected) {
+    final void downAndCheck(final String selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final String expected) {
         this.downAndCheck(
                 selection,
-                selection.defaultAnchor(),
+                columnStore,
+                this.rowStore(),
                 expected
         );
     }
 
     final void downAndCheck(final String selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetSelection expected) {
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
         this.downAndCheck(
-                this.parseString(selection),
-                anchor,
+                selection,
+                this.columnStore(),
+                rowStore,
                 expected
         );
     }
 
-    final void downAndCheck(final S selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetSelection expected) {
+    final void downAndCheck(final String selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
+        this.downAndCheck(
+                this.parseString(selection),
+                columnStore,
+                rowStore,
+                this.parseRange(expected)
+        );
+    }
+
+    final void downAndCheck(final String selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final String expected) {
         this.downAndCheck(
                 selection,
                 anchor,
-                rowStore(),
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void downAndCheck(final String selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
+        this.downAndCheck(
+                selection,
+                anchor,
+                this.columnStore(),
+                rowStore,
+                expected
+        );
+    }
+
+    final void downAndCheck(final String selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final String expected) {
+        this.downAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                this.parseRange(expected)
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                             final SpreadsheetSelection expected) {
+        this.downAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
                 expected
         );
     }
 
     final void downAndCheck(final S selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetRowStore rowStore,
-                            final SpreadsheetSelection expected) {
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetSelection expected) {
+        this.downAndCheck(
+                selection,
+                anchor,
+                columnStore(),
+                expected
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore) {
+        this.downAndCheck(
+                selection,
+                columnStore,
+                Optional.empty()
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                             final SpreadsheetRowStore rowStore) {
+        this.downAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                this.columnStore(),
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetSelection expected) {
+        this.downAndCheck(
+                selection,
+                columnStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final SpreadsheetSelection expected) {
+        this.downAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                expected
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final SpreadsheetSelection expected) {
+        this.downAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                             final SpreadsheetColumnStore columnStore,
+                             final Optional<SpreadsheetSelection> expected) {
+        this.downAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                expected
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetSelection expected) {
+        this.downAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final Optional<SpreadsheetSelection> expected) {
+        this.downAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void downAndCheck(final S selection,
+                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetColumnStore columnStore,
+                             final SpreadsheetRowStore rowStore,
+                             final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.simplify(),
-                selection.down(anchor, SpreadsheetColumnStores.fake(), rowStore),
+                expected.map(s -> s.simplify()),
+                selection.down(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate down"
         );
     }
@@ -442,14 +1177,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     // extendRange......................................................................................................
-
-    final void extendRangeAndCheck(final String selection) {
-        this.extendRangeAndCheck(
-                selection,
-                selection
-        );
-    }
-
 
     final void extendRangeAndCheck(final String selection,
                                    final String moved) {
@@ -500,14 +1227,28 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final SpreadsheetSelection moved,
                                    final SpreadsheetViewportSelectionAnchor anchor,
                                    final SpreadsheetSelection expected) {
-        this.checkEquals(
-                true,
-                moved instanceof SpreadsheetCellReference || moved instanceof SpreadsheetColumnReference || moved instanceof SpreadsheetRowReference,
-                () -> moved + " must be either cell/column/row"
+        this.extendRangeAndCheck(
+                selection,
+                Optional.of(moved),
+                anchor,
+                Optional.of(expected)
         );
+    }
+
+    final void extendRangeAndCheck(final S selection,
+                                   final Optional<SpreadsheetSelection> moved,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final Optional<SpreadsheetSelection> expected) {
+        if(moved.isPresent()) {
+            this.checkEquals(
+                    true,
+                    moved.map(m -> m instanceof SpreadsheetCellReference || m instanceof SpreadsheetColumnReference || m instanceof SpreadsheetRowReference).get(),
+                    () -> moved + " must be either cell/column/row"
+            );
+        }
         this.checkEquals(
-                expected.simplify(),
-                selection.extendRange(moved, anchor),
+                expected.map(s -> s.simplify()),
+                selection.extendRange(Cast.to(moved), anchor),
                 () -> selection + " extendRange " + moved + " " + anchor
         );
     }
@@ -516,161 +1257,229 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // extendLeft.......................................................................................................
 
-    final void extendLeftAndCheck(final String selection) {
-        this.extendLeftAndCheck(
-                this.parseString(selection)
-        );
-    }
-
     final void extendLeftAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor) {
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetRowStore rowStore) {
         this.extendLeftAndCheck(
-                this.parseString(selection),
-                anchor
+                selection,
+                anchor,
+                this.columnStore(),
+                rowStore
         );
     }
 
     final void extendLeftAndCheck(final String selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                  final String expected) {
-        final SpreadsheetSelection parsed = this.parseRange(expected)
-                .simplify();
-
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore) {
         this.extendLeftAndCheck(
                 this.parseString(selection),
                 anchor,
-                parsed.setAnchor(parsed.defaultAnchor())
-        );
-    }
-
-    final void extendLeftAndCheck(final S selection) {
-        this.extendLeftAndCheck(
-                selection,
-                selection.defaultAnchor()
-        );
-    }
-
-    final void extendLeftAndCheck(final S selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor) {
-        this.extendLeftAndCheck(
-                selection,
-                anchor,
-                selection.setAnchor(anchor)
+                columnStore,
+                rowStore,
+                Optional.empty()
         );
     }
 
     final void extendLeftAndCheck(final String selection,
+                                  final String expectedSelection) {
+        this.extendLeftAndCheck(
+                selection,
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection
+        );
+    }
+
+    final void extendLeftAndCheck(final String selection,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
+                                  final String expectedSelection) {
+        this.extendLeftAndCheck(
+                this.parseString(selection),
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                this.parseString(expectedSelection)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    final void extendLeftAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
                                   final String expectedSelection,
                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        final S parsed = this.parseString(selection);
-
-        this.extendLeftAndCheck(
-                parsed,
-                parsed.defaultAnchor(),
-                this.parseRange(expectedSelection).setAnchor(expectedAnchor)
-        );
-    }
-
-    final void extendLeftAndCheck(final String text,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final String expected,
-                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendLeftAndCheck(
-                this.parseString(text),
-                anchor,
-                this.parseRange(expected)
-                        .simplify()
-                        .setAnchor(expectedAnchor)
-        );
-    }
-
-    final void extendLeftAndCheck(final S selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetViewportSelection expected) {
         this.extendLeftAndCheck(
                 selection,
                 anchor,
-                columnStore(),
-                expected
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection,
+                expectedAnchor
+        );
+    }
+
+    final void extendLeftAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final String expectedSelection,
+                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendLeftAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expectedSelection,
+                expectedAnchor
+        );
+    }
+
+    final void extendLeftAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
+                                  final String expectedSelection,
+                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendLeftAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                this.parseRange(expectedSelection)
+                        .simplify()
+                        .setAnchor(expectedAnchor)
         );
     }
 
     final void extendLeftAndCheck(final S selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
                                   final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
                                   final SpreadsheetViewportSelection expected) {
+        this.extendLeftAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void extendLeftAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
+                                  final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                selection.extendLeft(anchor, columnStore, SpreadsheetRowStores.fake()),
+                selection.extendLeft(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate extendLeft"
         );
     }
 
     // extendUp.......................................................................................................
 
-    final void extendUpAndCheck(final String selection) {
-        this.extendUpAndCheck(
-                this.parseString(selection)
-        );
-    }
-
     final void extendUpAndCheck(final String selection,
-                                final SpreadsheetViewportSelectionAnchor anchor) {
+                                final SpreadsheetColumnStore columnStore,
+                                final SpreadsheetRowStore rowStore) {
         this.extendUpAndCheck(
                 this.parseString(selection),
-                anchor
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                Optional.empty()
         );
     }
 
     final void extendUpAndCheck(final String selection,
                                 final SpreadsheetViewportSelectionAnchor anchor,
-                                final String expected) {
-        final SpreadsheetSelection parsed = this.parseRange(expected)
-                .simplify();
-
-        this.extendUpAndCheck(
-                this.parseString(selection),
-                anchor,
-                parsed.setAnchor(parsed.defaultAnchor())
-        );
-    }
-
-    final void extendUpAndCheck(final S selection) {
-        this.extendUpAndCheck(
-                selection,
-                selection.defaultAnchor()
-        );
-    }
-
-    final void extendUpAndCheck(final S selection,
-                                final SpreadsheetViewportSelectionAnchor anchor) {
+                                final SpreadsheetColumnStore columnStore) {
         this.extendUpAndCheck(
                 selection,
                 anchor,
-                selection.setAnchor(anchor)
+                columnStore,
+                this.rowStore()
         );
     }
 
     final void extendUpAndCheck(final String selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetColumnStore columnStore,
+                                final SpreadsheetRowStore rowStore) {
+        this.extendUpAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void extendUpAndCheck(final String selection,
+                                final String expectedSelection) {
+        this.extendUpAndCheck(
+                selection,
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection
+        );
+    }
+
+    final void extendUpAndCheck(final String selection,
+                                final SpreadsheetColumnStore columnStore,
+                                final SpreadsheetRowStore rowStore,
+                                final String expectedSelection) {
+        this.extendUpAndCheck(
+                this.parseString(selection),
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                this.parseString(expectedSelection)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    final void extendUpAndCheck(final String selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
                                 final String expectedSelection,
                                 final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        final S parsed = this.parseString(selection);
-
         this.extendUpAndCheck(
-                parsed,
-                parsed.defaultAnchor(),
-                this.parseRange(expectedSelection).setAnchor(expectedAnchor)
+                selection,
+                anchor,
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection,
+                expectedAnchor
         );
     }
 
-    final void extendUpAndCheck(final String text,
+    final void extendUpAndCheck(final String selection,
                                 final SpreadsheetViewportSelectionAnchor anchor,
-                                final String expected,
+                                final SpreadsheetRowStore rowStore,
+                                final String expectedSelection,
                                 final SpreadsheetViewportSelectionAnchor expectedAnchor) {
         this.extendUpAndCheck(
-                this.parseString(text),
+                selection,
                 anchor,
-                this.parseRange(expected)
+                this.columnStore(),
+                rowStore,
+                expectedSelection,
+                expectedAnchor
+        );
+    }
+
+    final void extendUpAndCheck(final String selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetColumnStore columnStore,
+                                final SpreadsheetRowStore rowStore,
+                                final String expectedSelection,
+                                final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendUpAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                this.parseRange(expectedSelection)
                         .simplify()
                         .setAnchor(expectedAnchor)
         );
@@ -678,93 +1487,147 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendUpAndCheck(final S selection,
                                 final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetColumnStore columnStore,
+                                final SpreadsheetRowStore rowStore,
                                 final SpreadsheetViewportSelection expected) {
         this.extendUpAndCheck(
                 selection,
                 anchor,
-                rowStore(),
-                expected
+                columnStore,
+                rowStore,
+                Optional.of(expected)
         );
     }
 
     final void extendUpAndCheck(final S selection,
                                 final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetColumnStore columnStore,
                                 final SpreadsheetRowStore rowStore,
-                                final SpreadsheetViewportSelection expected) {
+                                final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                selection.extendUp(anchor, SpreadsheetColumnStores.fake(), rowStore),
+                selection.extendUp(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate extendUp"
         );
     }
 
     // extendRight.......................................................................................................
 
-    final void extendRightAndCheck(final String selection) {
-        this.extendRightAndCheck(
-                this.parseString(selection)
-        );
-    }
-
     final void extendRightAndCheck(final String selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor) {
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore) {
         this.extendRightAndCheck(
                 this.parseString(selection),
-                anchor
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                Optional.empty()
         );
     }
 
     final void extendRightAndCheck(final String selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final String expected) {
-        final SpreadsheetSelection parsed = this.parseRange(expected)
-                .simplify();
-
+                                   final SpreadsheetRowStore rowStore) {
         this.extendRightAndCheck(
-                this.parseString(selection),
+                selection,
                 anchor,
-                parsed.setAnchor(parsed.defaultAnchor())
+                this.columnStore(),
+                rowStore
         );
     }
 
-    final void extendRightAndCheck(final S selection) {
+    final void extendRightAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore) {
+        this.extendRightAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void extendRightAndCheck(final String selection,
+                                   final String expectedSelection) {
         this.extendRightAndCheck(
                 selection,
-                selection.defaultAnchor()
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection
+        );
+    }
+
+    final void extendRightAndCheck(final String selection,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final String expectedSelection) {
+        this.extendRightAndCheck(
+                this.parseString(selection),
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                this.parseString(expectedSelection)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    final void extendRightAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final String expectedSelection,
+                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendRightAndCheck(
+                selection,
+                anchor,
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection,
+                expectedAnchor
+        );
+    }
+
+    final void extendRightAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final String expectedSelection,
+                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendRightAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expectedSelection,
+                expectedAnchor
+        );
+    }
+
+    final void extendRightAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final String expectedSelection,
+                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendRightAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                this.parseRange(expectedSelection)
+                        .simplify()
+                        .setAnchor(expectedAnchor)
         );
     }
 
     final void extendRightAndCheck(final S selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor) {
+                                   final SpreadsheetSelection expectedSelection) {
         this.extendRightAndCheck(
                 selection,
-                anchor,
-                selection.setAnchor(anchor)
-        );
-    }
-
-    final void extendRightAndCheck(final String selection,
-                                   final String expectedSelection,
-                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        final S parsed = this.parseString(selection);
-
-        this.extendRightAndCheck(
-                parsed,
-                parsed.defaultAnchor(),
-                this.parseRange(expectedSelection).setAnchor(expectedAnchor)
-        );
-    }
-
-    final void extendRightAndCheck(final String text,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                   final String expected,
-                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendRightAndCheck(
-                this.parseString(text),
-                anchor,
-                this.parseRange(expected)
-                        .simplify()
-                        .setAnchor(expectedAnchor)
+                SpreadsheetViewportSelectionAnchor.NONE,
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection.simplify()
+                        .setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
@@ -783,9 +1646,37 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final SpreadsheetViewportSelectionAnchor anchor,
                                    final SpreadsheetColumnStore columnStore,
                                    final SpreadsheetViewportSelection expected) {
+        this.extendRightAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void extendRightAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final SpreadsheetViewportSelection expected) {
+        this.extendRightAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void extendRightAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                selection.extendRight(anchor, columnStore, SpreadsheetRowStores.fake()),
+                selection.extendRight(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate extendRight"
         );
     }
@@ -794,90 +1685,189 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendDownAndCheck(final String selection) {
         this.extendDownAndCheck(
-                this.parseString(selection)
+                selection,
+                this.columnStore(),
+                this.rowStore()
         );
     }
 
     final void extendDownAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor) {
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore) {
         this.extendDownAndCheck(
                 this.parseString(selection),
-                anchor
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                Optional.empty()
         );
     }
 
     final void extendDownAndCheck(final String selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                  final String expected) {
-        final SpreadsheetSelection parsed = this.parseRange(expected)
-                .simplify();
-
-        this.extendDownAndCheck(
-                this.parseString(selection),
-                anchor,
-                parsed.setAnchor(parsed.defaultAnchor())
-        );
-    }
-
-    final void extendDownAndCheck(final S selection) {
-        this.extendDownAndCheck(
-                selection,
-                selection.defaultAnchor()
-        );
-    }
-
-    final void extendDownAndCheck(final S selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor) {
+                                  final SpreadsheetColumnStore columnStore) {
         this.extendDownAndCheck(
                 selection,
                 anchor,
-                selection.setAnchor(anchor)
+                columnStore,
+                this.rowStore()
         );
     }
 
     final void extendDownAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore) {
+        this.extendDownAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void extendDownAndCheck(final String selection,
+                                  final String expectedSelection) {
+        this.extendDownAndCheck(
+                selection,
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection
+        );
+    }
+
+    final void extendDownAndCheck(final String selection,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
+                                  final String expectedSelection) {
+        this.extendDownAndCheck(
+                this.parseString(selection),
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                this.parseString(expectedSelection)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    final void extendDownAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
                                   final String expectedSelection,
                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        final S parsed = this.parseString(selection);
-
         this.extendDownAndCheck(
-                parsed,
-                parsed.defaultAnchor(),
-                this.parseRange(expectedSelection).setAnchor(expectedAnchor)
+                selection,
+                anchor,
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection,
+                expectedAnchor
         );
     }
 
-    final void extendDownAndCheck(final String text,
+    final void extendDownAndCheck(final String selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                  final String expected,
+                                  final SpreadsheetRowStore rowStore,
+                                  final String expectedSelection,
                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
         this.extendDownAndCheck(
-                this.parseString(text),
+                selection,
                 anchor,
-                this.parseRange(expected)
+                this.columnStore(),
+                rowStore,
+                expectedSelection,
+                expectedAnchor
+        );
+    }
+
+    final void extendDownAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
+                                  final String expectedSelection,
+                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendDownAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                this.parseRange(expectedSelection)
                         .simplify()
                         .setAnchor(expectedAnchor)
         );
     }
 
     final void extendDownAndCheck(final S selection,
+                                  final SpreadsheetSelection expectedSelection) {
+        this.extendDownAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection.simplify()
+                        .setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    final void extendDownAndCheck(final S selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
                                   final SpreadsheetViewportSelection expected) {
         this.extendDownAndCheck(
                 selection,
                 anchor,
-                rowStore(),
+                columnStore(),
                 expected
         );
     }
 
     final void extendDownAndCheck(final S selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetViewportSelection expected) {
+        this.extendDownAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void extendDownAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
                                   final SpreadsheetRowStore rowStore,
                                   final SpreadsheetViewportSelection expected) {
+        this.extendDownAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void extendDownAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final Optional<SpreadsheetViewportSelection> expected) {
+        this.extendDownAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void extendDownAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
+                                  final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                selection.extendDown(anchor, SpreadsheetColumnStores.fake(), rowStore),
+                selection.extendDown(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate extendDown"
         );
     }

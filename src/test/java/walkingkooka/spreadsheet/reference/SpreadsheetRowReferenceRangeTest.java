@@ -469,7 +469,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     public void testLeftAnchorTop() {
         this.leftAndCheck(
                 "2:3",
-                SpreadsheetViewportSelectionAnchor.TOP
+                SpreadsheetViewportSelectionAnchor.TOP,
+                "2:3"
         );
     }
 
@@ -514,15 +515,18 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.upAndCheck(
                 "1:2",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
-                "1:1"
+                "1"
         );
     }
 
     @Test
     public void testRightAnchorTop() {
+        final String row = "2:3";
+
         this.leftAndCheck(
-                "2:3",
-                SpreadsheetViewportSelectionAnchor.TOP
+                row,
+                SpreadsheetViewportSelectionAnchor.TOP,
+                row
         );
     }
 
@@ -567,7 +571,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.downAndCheck(
-                "1:" + row,
+                SpreadsheetSelection.parseRowRange("1:" + row),
                 SpreadsheetViewportSelectionAnchor.TOP,
                 row
         );
@@ -710,15 +714,21 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendUpAndCheck(
                 "3:4",
                 SpreadsheetViewportSelectionAnchor.TOP,
-                "3"
+                "3",
+                SpreadsheetViewportSelectionAnchor.NONE
         );
     }
 
     @Test
     public void testExtendUpAnchorBottomFirstRow() {
+        final String row = "1:2";
+        final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.BOTTOM;
+
         this.extendUpAndCheck(
-                "1:2",
-                SpreadsheetViewportSelectionAnchor.BOTTOM
+                row,
+                anchor,
+                row,
+                anchor
         );
     }
 
@@ -749,21 +759,32 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendDownAndCheck(
                 row.add(-1)
                         .rowRange(row),
-                SpreadsheetViewportSelectionAnchor.TOP
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                row.setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
     @Test
     public void testExtendLeft() {
+        final String range = "2:3";
+
         this.extendLeftAndCheck(
-                "2:3"
+                range,
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                range,
+                SpreadsheetViewportSelectionAnchor.BOTTOM
         );
     }
 
     @Test
     public void testExtendRight() {
+        final String range = "2:3";
+
         this.extendRightAndCheck(
-                "2:3"
+                range,
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                range,
+                SpreadsheetViewportSelectionAnchor.BOTTOM
         );
     }
 

@@ -9132,6 +9132,40 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     //  navigate........................................................................................................
 
     @Test
+    public void testNavigateHidden() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetColumnStore store = context.storeRepository()
+                .columns();
+
+        store.save(
+                SpreadsheetSelection.parseColumn("A")
+                        .column()
+                        .setHidden(true)
+        );
+
+        store.save(
+                SpreadsheetSelection.parseColumn("B")
+                        .column()
+                        .setHidden(true)
+        );
+
+        this.navigateAndCheck(
+                engine,
+                SpreadsheetSelection.parseColumn("B")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setNavigation(
+                                Optional.of(
+                                        SpreadsheetViewportSelectionNavigation.LEFT
+                                )
+                        ),
+                context,
+                SpreadsheetEngine.NO_VIEWPORT_SELECTION
+        );
+    }
+
+    @Test
     public void testNavigateSkipsHiddenColumn() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
@@ -9155,6 +9189,33 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                 context,
                 SpreadsheetSelection.parseColumn("C").setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    @Test
+    public void testNavigateSkipsHiddenRow() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        context.storeRepository()
+                .rows()
+                .save(
+                        SpreadsheetSelection.parseRow("3")
+                                .row()
+                                .setHidden(true)
+                );
+
+        this.navigateAndCheck(
+                engine,
+                SpreadsheetSelection.parseRow("2")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setNavigation(
+                                Optional.of(
+                                        SpreadsheetViewportSelectionNavigation.DOWN
+                                )
+                        ),
+                context,
+                SpreadsheetSelection.parseRow("4").setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
