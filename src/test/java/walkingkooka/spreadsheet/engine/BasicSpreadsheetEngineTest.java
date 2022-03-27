@@ -61,6 +61,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
@@ -9130,6 +9131,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     //  navigate........................................................................................................
+
+    @Test
+    public void testNavigateSelectionMissingNavigation() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetViewportSelection viewportSelection = SpreadsheetSelection.parseColumn("B")
+                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
+
+        this.navigateAndCheck(
+                engine,
+                viewportSelection,
+                context,
+                Optional.of(viewportSelection)
+        );
+    }
 
     @Test
     public void testNavigateHidden() {

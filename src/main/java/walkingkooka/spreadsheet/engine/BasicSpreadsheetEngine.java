@@ -1184,8 +1184,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final Optional<SpreadsheetViewportSelectionNavigation> maybeNavigation = selection.navigation();
         return maybeNavigation.isPresent() ?
-                        navigate0(selection, context) :
-               Optional.empty();
+                navigate0(selection, context) :
+                Optional.of(selection);
     }
 
     private Optional<SpreadsheetViewportSelection> navigate0(final SpreadsheetViewportSelection selection,
