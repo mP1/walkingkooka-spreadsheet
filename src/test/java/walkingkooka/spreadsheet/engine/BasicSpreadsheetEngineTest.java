@@ -9133,6 +9133,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     //  navigate........................................................................................................
 
     @Test
+    public void testNavigateSelectionHiddenAndMissingNavigation() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
+
+        final SpreadsheetColumnStore store = context.storeRepository()
+                .columns();
+
+        store.save(
+                column.column()
+                        .setHidden(true)
+        );
+
+        final SpreadsheetViewportSelection viewportSelection = column.setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
+
+        this.navigateAndCheck(
+                engine,
+                viewportSelection,
+                context,
+                SpreadsheetEngine.NO_VIEWPORT_SELECTION
+        );
+    }
+
+    @Test
     public void testNavigateSelectionMissingNavigation() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
