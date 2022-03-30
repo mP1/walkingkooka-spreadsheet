@@ -52,12 +52,28 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
 
     @Test
     public void testCellReferenceFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetLabelName.with("A1"));
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetLabelName.with("A1")
+        );
+
+        this.checkEquals(
+                "Label cannot be a valid cell reference=\"A1\"",
+                thrown.getMessage()
+        );
     }
 
     @Test
     public void testCellReferenceFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetLabelName.with("AB12"));
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetLabelName.with("AB12")
+        );
+
+        this.checkEquals(
+                "Label cannot be a valid cell reference=\"AB12\"",
+                thrown.getMessage()
+        );
     }
 
     @Test//(expected = IllegalArgumentException.class)

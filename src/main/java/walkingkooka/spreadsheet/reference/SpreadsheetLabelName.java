@@ -66,7 +66,7 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         }
 
         if (isCellReferenceText(name)) {
-            throw new IllegalArgumentException("Label is a valid cell reference=" + CharSequences.quote(name));
+            throw new IllegalArgumentException("Label cannot be a valid cell reference=" + CharSequences.quote(name));
         }
 
         return new SpreadsheetLabelName(name);
