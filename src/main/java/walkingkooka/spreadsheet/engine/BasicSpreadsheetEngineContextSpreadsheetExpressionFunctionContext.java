@@ -83,8 +83,26 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
     private final Optional<SpreadsheetCell> cell;
 
     @Override
-    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-        return this.cellStore.load(cell);
+    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cellReference) {
+        Objects.requireNonNull(cellReference, "cellReference");
+
+        Optional<SpreadsheetCell> loaded;
+
+        for (; ; ) {
+            Optional<SpreadsheetCell> maybeCell = this.cell();
+            if (maybeCell.isPresent()) {
+                final SpreadsheetCell cell = maybeCell.get();
+                if (cell.reference().equalsIgnoreReferenceKind(cellReference)) {
+                    loaded = maybeCell;
+                    break;
+                }
+            }
+
+            loaded = this.cellStore.load(cellReference);
+            break;
+        }
+
+        return loaded;
     }
 
     private final SpreadsheetCellStore cellStore;
