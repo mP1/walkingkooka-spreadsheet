@@ -1399,7 +1399,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final JsonNode labelsJson() {
         return this.marshallContext()
-                .marshallSet(
+                .marshallCollection(
                         Sets.of(
                                 this.label1a().mapping(this.a1().reference()),
                                 this.label1b().mapping(this.a1().reference()),
@@ -1436,21 +1436,21 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final JsonNode deletedCellsJson() {
         return this.marshallContext()
-                .marshallSet(
+                .marshallCollection(
                         this.deletedCells()
                 );
     }
 
     final JsonNode deletedColumnsJson() {
         return this.marshallContext()
-                .marshallSet(
+                .marshallCollection(
                         this.deletedColumns()
                 );
     }
 
     final JsonNode deletedRowsJson() {
         return this.marshallContext()
-                .marshallSet(
+                .marshallCollection(
                         this.deletedRows()
                 );
     }

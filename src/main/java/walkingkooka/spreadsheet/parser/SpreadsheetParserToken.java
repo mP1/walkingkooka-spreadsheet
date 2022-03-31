@@ -2138,7 +2138,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     private JsonNode marshallParentParserToken(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(VALUE_PROPERTY, context.marshallWithTypeList(Cast.to(this.value()))) // unnecessary to include type.
+                .set(VALUE_PROPERTY, context.marshallWithTypeCollection(Cast.to(this.value()))) // unnecessary to include type.
                 .set(TEXT_PROPERTY, JsonNode.string(this.text()));
     }
 
