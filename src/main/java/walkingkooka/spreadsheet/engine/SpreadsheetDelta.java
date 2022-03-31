@@ -1419,19 +1419,19 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
         if (!deletedCells.isEmpty()) {
-            children.add(context.marshallSet(deletedCells)
+            children.add(context.marshallCollection(deletedCells)
                     .setName(DELETED_CELLS_PROPERTY));
         }
 
         final Set<SpreadsheetColumnReference> deletedColumns = this.deletedColumns;
         if (!deletedColumns.isEmpty()) {
-            children.add(context.marshallSet(deletedColumns)
+            children.add(context.marshallCollection(deletedColumns)
                     .setName(DELETED_COLUMNS_PROPERTY));
         }
 
         final Set<SpreadsheetRowReference> deletedRows = this.deletedRows;
         if (!deletedRows.isEmpty()) {
-            children.add(context.marshallSet(deletedRows)
+            children.add(context.marshallCollection(deletedRows)
                     .setName(DELETED_ROWS_PROPERTY));
         }
 
@@ -1484,7 +1484,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     private static JsonNode marshallLabels(final Set<SpreadsheetLabelMapping> labels,
                                            final JsonNodeMarshallContext context) {
-        return context.marshallSet(labels);
+        return context.marshallCollection(labels);
     }
 
 
