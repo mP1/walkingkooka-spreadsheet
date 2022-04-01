@@ -224,7 +224,7 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
                 .mathContext();
     }
 
-    private final ConverterContext converterContext() {
+    private ConverterContext converterContext() {
         return this.spreadsheetMetadata()
                 .converterContext();
     }
