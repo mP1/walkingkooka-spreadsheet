@@ -1435,24 +1435,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final JsonNode deletedCellsJson() {
-        return this.marshallContext()
-                .marshallCollection(
-                        this.deletedCells()
-                );
+        return JsonNode.string("C1,C2");
     }
 
     final JsonNode deletedColumnsJson() {
-        return this.marshallContext()
-                .marshallCollection(
-                        this.deletedColumns()
-                );
+        return JsonNode.string("C,D");
     }
 
     final JsonNode deletedRowsJson() {
-        return this.marshallContext()
-                .marshallCollection(
-                        this.deletedRows()
-                );
+        return JsonNode.string("3,4");
     }
 
     @Override

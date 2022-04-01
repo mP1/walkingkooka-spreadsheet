@@ -43,11 +43,13 @@ import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.patch.Patchable;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -1258,25 +1260,25 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case DELETED_CELLS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setDeletedCells(
-                            context.unmarshallSet(
+                            unmarshallSelectionCsv(
                                     child,
-                                    SpreadsheetCellReference.class
+                                    SpreadsheetSelection::parseCell
                             )
                     );
                     break;
                 case DELETED_COLUMNS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setDeletedColumns(
-                            context.unmarshallSet(
+                            unmarshallSelectionCsv(
                                     child,
-                                    SpreadsheetColumnReference.class
+                                    SpreadsheetSelection::parseColumn
                             )
                     );
                     break;
                 case DELETED_ROWS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setDeletedRows(
-                            context.unmarshallSet(
+                            unmarshallSelectionCsv(
                                     child,
-                                    SpreadsheetRowReference.class
+                                    SpreadsheetSelection::parseRow
                             )
                     );
                     break;
@@ -1321,6 +1323,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return Optional.ofNullable(
                 context.unmarshall(node, SpreadsheetViewportSelection.class)
         );
+    }
+
+    private static <S extends SpreadsheetSelection> Set<S> unmarshallSelectionCsv(final JsonNode csv,
+                                                                                  final Function<String, S> parser) {
+        return Arrays.stream(
+                        csv.stringOrFail()
+                                .split(CSV_COMMA)
+                ).map(parser)
+                .collect(Collectors.toCollection(Sets::ordered));
     }
 
     private static <T> Set<T> unmarshallCellsOrColumnsOrRows(final JsonNode node,
@@ -1419,20 +1430,23 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
         if (!deletedCells.isEmpty()) {
-            children.add(context.marshallCollection(deletedCells)
-                    .setName(DELETED_CELLS_PROPERTY));
+            children.add(
+                    marshallSelection(deletedCells, DELETED_CELLS_PROPERTY)
+            );
         }
 
         final Set<SpreadsheetColumnReference> deletedColumns = this.deletedColumns;
         if (!deletedColumns.isEmpty()) {
-            children.add(context.marshallCollection(deletedColumns)
-                    .setName(DELETED_COLUMNS_PROPERTY));
+            children.add(
+                    marshallSelection(deletedColumns, DELETED_COLUMNS_PROPERTY)
+            );
         }
 
         final Set<SpreadsheetRowReference> deletedRows = this.deletedRows;
         if (!deletedRows.isEmpty()) {
-            children.add(context.marshallCollection(deletedRows)
-                    .setName(DELETED_ROWS_PROPERTY));
+            children.add(
+                    marshallSelection(deletedRows, DELETED_ROWS_PROPERTY)
+            );
         }
 
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
@@ -1460,6 +1474,21 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         return JsonNode.object().setChildren(children);
+    }
+
+    private final static String CSV_COMMA = ",";
+
+    /**
+     * Accepts a {@link Collection} of any {@link SpreadsheetSelection} and returns a {@link JsonString} with the selections
+     * as a CSV.
+     */
+    private static <S extends SpreadsheetSelection> JsonString marshallSelection(final Collection<S> selections,
+                                                                                 final JsonPropertyName name) {
+        return JsonNode.string(
+                selections.stream()
+                        .map(SpreadsheetSelection::toString)
+                        .collect(Collectors.joining(CSV_COMMA))
+        ).setName(name);
     }
 
     /**
