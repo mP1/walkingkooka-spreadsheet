@@ -112,7 +112,7 @@ final class SpreadsheetParsersExpressionEvaluationContext implements ExpressionE
 
     @Override
     public char percentageSymbol() {
-        return this.percentageSymbol();
+        return this.context.percentageSymbol();
     }
 
     @Override
