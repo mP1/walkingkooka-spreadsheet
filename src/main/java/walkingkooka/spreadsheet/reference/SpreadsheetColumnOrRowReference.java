@@ -122,10 +122,6 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
      */
     abstract SpreadsheetColumnOrRowReference replaceReferenceKind(final SpreadsheetReferenceKind referenceKind);
 
-    public SpreadsheetColumnOrRowReference toRelative() {
-        return this.toRelative();
-    }
-
     @Override
     final Set<SpreadsheetViewportSelectionAnchor> anchors() {
         return ANCHORS;
