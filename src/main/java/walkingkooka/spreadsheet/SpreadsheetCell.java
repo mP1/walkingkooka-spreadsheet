@@ -318,11 +318,10 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         Objects.requireNonNull(node, "node");
 
         SpreadsheetCell cell = null;
-        SpreadsheetCellReference reference = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
-            if (null != reference) {
+            if (null != cell) {
                 JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
             }
 
