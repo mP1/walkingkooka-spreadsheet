@@ -91,11 +91,10 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
         Objects.requireNonNull(node, "node");
 
         SpreadsheetColumn column = null;
-        SpreadsheetColumnReference reference = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
-            if (null != reference) {
+            if (null != column) {
                 JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
             }
 
