@@ -41,10 +41,14 @@ import java.util.stream.Stream;
 
 /**
  * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
+ * <br>
+ * When {@link #compareTo(SpreadsheetCellRange)} the {@link SpreadsheetReferenceKind} is ignored, which is also true
+ * of other {@link SpreadsheetSelection}.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
-        implements HasRange<SpreadsheetCellReference>,
+        implements Comparable<SpreadsheetCellRange>,
+        HasRange<SpreadsheetCellReference>,
         HasRangeBounds<SpreadsheetCellReference>,
         Iterable<SpreadsheetCellReference> {
 
@@ -590,5 +594,18 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
         return this.equals(relative) ?
                 this :
                 relative;
+    }
+
+    // Comparable......................................................................................................
+
+    /**
+     * Compares two {@link SpreadsheetCellRange} where the {@link SpreadsheetReferenceKind} is irrelevant.
+     */
+    @Override
+    public int compareTo(final SpreadsheetCellRange other) {
+        final int compare = this.begin().compareTo(other.begin());
+        return 0 == compare ?
+                this.end().compareTo(other.end()) :
+                compare;
     }
 }

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -44,7 +45,9 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetCellRange>
-        implements IterableTesting<SpreadsheetCellRange, SpreadsheetCellReference>,
+        implements
+        ComparableTesting2<SpreadsheetCellRange>,
+        IterableTesting<SpreadsheetCellRange, SpreadsheetCellReference>,
         PredicateTesting2<SpreadsheetCellRange, SpreadsheetCellReference> {
 
     private final static int COLUMN1 = 10;
@@ -2250,6 +2253,56 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
         );
     }
 
+    // ComparableTesting................................................................................................
+
+    @Test
+    public void testCompareEqualDifferentSpreadsheetReferenceKind() {
+        this.compareToAndCheckEquals(
+                SpreadsheetCellRange.parseCellRange("$A$1:$B$2"),
+                SpreadsheetCellRange.parseCellRange("A1:B2")
+        );
+    }
+
+    @Test
+    public void testCompareEqualLess() {
+        this.compareToAndCheckLess(
+                SpreadsheetCellRange.parseCellRange("$A$1:$B$2"),
+                SpreadsheetCellRange.parseCellRange("B2:C3")
+        );
+    }
+
+    @Test
+    public void testCompareSort() {
+        final SpreadsheetCellRange a1b2 = SpreadsheetSelection.parseCellRange("A1:B2");
+        final SpreadsheetCellRange b2c3 = SpreadsheetSelection.parseCellRange("B2:C3");
+        final SpreadsheetCellRange c3d4 = SpreadsheetSelection.parseCellRange("C3:D4");
+
+        this.compareToArraySortAndCheck(
+                c3d4,
+                a1b2,
+                b2c3,
+                a1b2,
+                b2c3,
+                c3d4
+        );
+    }
+
+    @Test
+    public void testCompareSort2() {
+        final SpreadsheetCellRange a1b2 = SpreadsheetSelection.parseCellRange("A1:B2");
+        final SpreadsheetCellRange b2c3 = SpreadsheetSelection.parseCellRange("B2:C3");
+        final SpreadsheetCellRange b2d4 = SpreadsheetSelection.parseCellRange("B2:D4");
+
+        this.compareToArraySortAndCheck(
+                b2d4,
+                a1b2,
+                b2c3,
+                a1b2,
+                b2c3,
+                b2d4
+        );
+    }
+
     // JsonNodeMarshallingTesting...............................................................................................
 
     @Test
@@ -2356,6 +2409,13 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     @Override
     public Class<SpreadsheetCellRange> type() {
         return SpreadsheetCellRange.class;
+    }
+
+    // ComparableTesting.................................................................................................
+
+    @Override
+    public SpreadsheetCellRange createComparable() {
+        return this.createSelection();
     }
 
     // IterableTesting.................................................................................................
