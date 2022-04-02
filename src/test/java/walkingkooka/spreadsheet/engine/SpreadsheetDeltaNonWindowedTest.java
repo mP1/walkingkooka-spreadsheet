@@ -910,7 +910,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Override
-    Optional<SpreadsheetCellRange> window() {
+    Set<SpreadsheetCellRange> window() {
         return SpreadsheetDelta.NO_WINDOW;
     }
 

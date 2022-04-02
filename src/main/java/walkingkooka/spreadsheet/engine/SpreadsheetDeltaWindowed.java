@@ -53,7 +53,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                                  final Set<SpreadsheetRowReference> deletedRows,
                                                  final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                  final Map<SpreadsheetRowReference, Double> rowHeights,
-                                                 final Optional<SpreadsheetCellRange> window) {
+                                                 final Set<SpreadsheetCellRange> window) {
         return new SpreadsheetDeltaWindowed(
                 selection,
                 cells,
@@ -79,7 +79,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                      final Set<SpreadsheetRowReference> deletedRows,
                                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                                      final Map<SpreadsheetRowReference, Double> rowHeights,
-                                     final Optional<SpreadsheetCellRange> window) {
+                                     final Set<SpreadsheetCellRange> window) {
         super(
                 selection,
                 cells,
@@ -277,11 +277,11 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    public Optional<SpreadsheetCellRange> window() {
+    public Set<SpreadsheetCellRange> window() {
         return this.window;
     }
 
-    private final Optional<SpreadsheetCellRange> window;
+    private final Set<SpreadsheetCellRange> window;
 
     @Override
     Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns) {
@@ -310,12 +310,12 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
 
     @Override
     Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
-        return filterColumnWidths0(columnWidths, this.window.get());
+        return filterColumnWidths0(columnWidths, this.window);
     }
 
     @Override
     Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
-        return filterRowHeights0(rowHeights, this.window.get());
+        return filterRowHeights0(rowHeights, this.window);
     }
 
     // TreePrintable.....................................................................................................
@@ -325,9 +325,9 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         printer.println("window:");
         printer.indent();
         {
-            final Optional<SpreadsheetCellRange> window = this.window();
-            if (window.isPresent()) {
-                printer.println(window.get().toString());
+            final Set<SpreadsheetCellRange> window = this.window();
+            if (!window.isEmpty()) {
+                printer.println(csv(window));
             }
         }
 

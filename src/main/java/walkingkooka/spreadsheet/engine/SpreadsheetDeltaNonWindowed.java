@@ -263,10 +263,10 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     /**
-     * There is no window.
+     * There are no window.
      */
     @Override
-    public Optional<SpreadsheetCellRange> window() {
+    public Set<SpreadsheetCellRange> window() {
         return NO_WINDOW;
     }
 

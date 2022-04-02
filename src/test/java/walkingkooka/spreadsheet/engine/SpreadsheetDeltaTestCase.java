@@ -719,7 +719,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testSetDifferentWindow() {
         final D before = this.createSpreadsheetDelta();
 
-        final Optional<SpreadsheetCellRange> window = this.window0("A1:Z9999");
+        final Set<SpreadsheetCellRange> window = this.window0("A1:Z9999");
         this.checkNotEquals(window, this.window());
 
         final SpreadsheetDelta after = before.setWindow(window);
@@ -878,7 +878,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     @Test
     public final void testDifferentWindow() {
-        final Optional<SpreadsheetCellRange> differentWindow = this.differentWindow();
+        final Set<SpreadsheetCellRange> differentWindow = this.differentWindow();
         this.checkNotEquals(this.window(), differentWindow, "window() and differentWindow() must be un equal");
 
         this.checkNotEquals(this.createSpreadsheetDelta().setWindow(differentWindow));
@@ -1286,22 +1286,22 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final void checkWindow(final SpreadsheetDelta delta,
-                           final Optional<SpreadsheetCellRange> window) {
+                           final Set<SpreadsheetCellRange> window) {
         this.checkEquals(window, delta.window(), "window");
     }
 
     // window...........................................................................................................
 
-    abstract Optional<SpreadsheetCellRange> window();
+    abstract Set<SpreadsheetCellRange> window();
 
-    final Optional<SpreadsheetCellRange> differentWindow() {
+    final Set<SpreadsheetCellRange> differentWindow() {
         return window0("A1:Z99");
     }
 
-    final Optional<SpreadsheetCellRange> window0(final String window) {
-        return Optional.of(
-                SpreadsheetSelection.parseCellRange(window)
-        );
+    final Set<SpreadsheetCellRange> window0(final String window) {
+        return Arrays.stream(window.split(","))
+                        .map(SpreadsheetSelection::parseCellRange)
+                                .collect(Collectors.toCollection(Sets::ordered));
     }
 
     final void checkWindow(final SpreadsheetDelta delta) {

@@ -873,7 +873,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 evaluation,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(Sets.of(updated))
-                        .setWindow(Optional.of(range))
+                        .setWindow(Sets.of(range))
         );
     }
 
