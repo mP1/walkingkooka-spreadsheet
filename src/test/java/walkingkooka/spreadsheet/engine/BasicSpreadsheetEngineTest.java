@@ -5379,7 +5379,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setWindow(Optional.of(range))
+                        .setWindow(Sets.of(range))
                         .setColumns(
                                 Sets.of(c)
                         )
@@ -5408,7 +5408,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setWindow(Optional.of(range))
+                        .setWindow(Sets.of(range))
                         .setLabels(
                                 Sets.of(
                                         label.mapping(b2)
@@ -5448,7 +5448,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setWindow(Optional.of(range))
+                        .setWindow(Sets.of(range))
                         .setRows(
                                 Sets.of(c)
                         )
@@ -5588,7 +5588,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.formattedCellWithValue(c3, this.expressionNumberKind().one()),
                                 this.formattedCellWithValue(d4, this.expressionNumberKind().create(2))
                         ))
-                        .setWindow(Optional.of(range))
+                        .setWindow(Sets.of(range))
                         .setLabels(
                                 Sets.of(
                                         label.mapping(d4.reference())
@@ -5626,7 +5626,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(Sets.of(
                                 this.formattedCellWithValue(c3, this.expressionNumberKind().one())
                         ))
-                        .setWindow(Optional.of(range))
+                        .setWindow(Sets.of(range))
                         .setLabels(
                                 Sets.of(
                                         label.mapping(d4)
@@ -5691,7 +5691,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         bHidden,
                                         c
                                 )
-                        ).setWindow(Optional.of(range))
+                        ).setWindow(Sets.of(range))
         );
     }
 
@@ -5750,7 +5750,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         row2Hidden,
                                         row3
                                 )
-                        ).setWindow(Optional.of(range))
+                        ).setWindow(Sets.of(range))
         );
     }
 

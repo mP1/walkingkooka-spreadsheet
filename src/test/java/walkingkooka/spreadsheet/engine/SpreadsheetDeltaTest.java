@@ -46,6 +46,7 @@ import walkingkooka.tree.json.patch.PatchableTesting;
 
 import java.math.MathContext;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -66,7 +67,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testNoWindowConstant() {
-        this.checkEquals(Optional.empty(), SpreadsheetDelta.NO_WINDOW);
+        this.checkEquals(
+                Sets.empty(),
+                SpreadsheetDelta.NO_WINDOW
+        );
     }
 
     // cell.............................................................................................................
@@ -534,7 +538,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Sets.of(a1, b2)
                 );
 
-        final Optional<SpreadsheetCellRange> afterWindow = Optional.of(
+        final Set<SpreadsheetCellRange> afterWindow = Sets.of(
                 SpreadsheetSelection.parseCellRange("A1")
         );
         final SpreadsheetDelta after = before.setWindow(
@@ -567,12 +571,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setCells(
                         Sets.of(a1, b2)
                 ).setWindow(
-                        Optional.of(
+                        Sets.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
                         )
                 );
 
-        final Optional<SpreadsheetCellRange> afterWindow = Optional.of(
+        final Set<SpreadsheetCellRange> afterWindow = Sets.of(
                 SpreadsheetSelection.parseCellRange("A1")
         );
         final SpreadsheetDelta after = before.setWindow(
@@ -605,7 +609,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setCells(
                         Sets.of(a1, b2)
                 ).setWindow(
-                        Optional.of(
+                        Sets.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
                         )
                 );
@@ -854,7 +858,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setCells(
                         Sets.of(a1, b2)
                 ).setWindow(
-                        Optional.of(
+                        Sets.of(
                                 SpreadsheetSelection.parseCellRange("A1:A2")
                         )
                 );
@@ -862,7 +866,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(a1)
         ).setWindow(
-                Optional.of(
+                Sets.of(
                         SpreadsheetSelection.parseCellRange("A1:A2")
                 )
         );
@@ -1141,7 +1145,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setColumns(
                         Sets.of(a, b)
                 ).setWindow(
-                        Optional.of(
+                        Sets.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
                         )
                 );
@@ -1149,7 +1153,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta after = before.setColumns(
                 Sets.of(a)
         ).setWindow(
-                Optional.of(
+                Sets.of(
                         SpreadsheetSelection.parseCellRange("A1")
                 )
         );
@@ -1428,7 +1432,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setRows(
                         Sets.of(row1, row2)
                 ).setWindow(
-                        Optional.of(
+                        Sets.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
                         )
                 );
@@ -1436,7 +1440,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta after = before.setRows(
                 Sets.of(row1)
         ).setWindow(
-                Optional.of(
+                Sets.of(
                         SpreadsheetSelection.parseCellRange("A1")
                 )
         );

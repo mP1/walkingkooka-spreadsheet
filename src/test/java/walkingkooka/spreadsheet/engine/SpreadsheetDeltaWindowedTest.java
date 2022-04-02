@@ -18,8 +18,11 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -161,6 +164,120 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 Map.of(kept, 20.0)
         );
         this.checkCells(after, before.cells());
+    }
+
+    // setWindow........................................................................................................
+
+    @Test
+    public void testSetWindowMultiple() {
+        final Optional<SpreadsheetViewportSelection> selection = this.selection();
+
+        final SpreadsheetCell a1 = this.a1();
+        final SpreadsheetCell b2 = this.b2();
+        final Set<SpreadsheetCell> cells = Sets.of(
+                a1,
+                b2,
+                this.c3()
+        );
+        final SpreadsheetColumn a = this.a();
+        final SpreadsheetColumn b = this.b();
+        final SpreadsheetColumn c = this.c();
+        final Set<SpreadsheetColumn> columns = Sets.of(
+                a,
+                b,
+                c
+        );
+
+        final SpreadsheetLabelMapping labelA1a = this.label1a().mapping(a1.reference());
+        final SpreadsheetLabelMapping label2b = SpreadsheetSelection.labelName("label2b").mapping(b2.reference());
+
+        final Set<SpreadsheetLabelMapping> labels = Sets.of(
+                labelA1a,
+                label2b
+        );
+
+        final SpreadsheetRow row1 = this.row1();
+        final SpreadsheetRow row2 = this.row2();
+        final Set<SpreadsheetRow> rows = Sets.of(
+                row1,
+                row2,
+                this.row3()
+        );
+
+
+        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
+        final SpreadsheetCellReference e5 = SpreadsheetSelection.parseCell("e5");
+        final Set<SpreadsheetCellReference> deletedCells = Sets.of(
+                d4,
+                e5
+        );
+
+        final SpreadsheetColumnReference e = SpreadsheetSelection.parseColumn("f");
+        final Set<SpreadsheetColumnReference> deletedColumns = Sets.of(
+                e
+        );
+
+        final SpreadsheetRowReference row5 = SpreadsheetSelection.parseRow("5");
+        final Set<SpreadsheetRowReference> deletedRows = Sets.of(
+                row5
+        );
+        final Map<SpreadsheetColumnReference, Double> columnWidths = Maps.of(
+                a.reference(), 10.0,
+                b.reference(), 20.0,
+                c.reference(), 30.0,
+                e, 60.0
+        );
+        final Map<SpreadsheetRowReference, Double> rowHeights = Maps.of(
+                this.row1().reference(), 10.0,
+                this.row2().reference(), 20.0,
+                this.row3().reference(), 30.0,
+                row5, 60.0
+        );
+        final Set<SpreadsheetCellRange> window = SpreadsheetDelta.NO_WINDOW;
+
+        final SpreadsheetDeltaWindowed before = SpreadsheetDeltaWindowed.withWindowed(
+                selection,
+                cells,
+                columns,
+                labels,
+                rows,
+                deletedCells,
+                deletedColumns,
+                deletedRows,
+                columnWidths,
+                rowHeights,
+                window
+        );
+
+        this.checkSelection(before, selection);
+
+        this.checkCells(before, cells);
+        this.checkColumns(before, columns);
+        this.checkLabels(before, labels);
+        this.checkRows(before, rows);
+
+        this.checkDeletedCells(before, deletedCells);
+        this.checkDeletedColumns(before, deletedColumns);
+        this.checkDeletedRows(before, deletedRows);
+
+        this.checkWindow(before, window);
+
+        final Set<SpreadsheetCellRange> window2 = Sets.of(
+                SpreadsheetSelection.parseCellRange("a1"),
+                SpreadsheetSelection.parseCellRange("e5:f6")
+        );
+        final SpreadsheetDelta after = before.setWindow(window2);
+
+        this.checkCells(after, Sets.of(a1));
+        this.checkColumns(after, Sets.of(a));
+        this.checkLabels(after, Sets.of(labelA1a));
+        this.checkRows(after, Sets.of(row1));
+
+        this.checkDeletedCells(after, Sets.of(e5));
+        this.checkDeletedColumns(after, Sets.of(e));
+        this.checkDeletedRows(after, Sets.of(row5));
+
+        this.checkWindow(after, window2);
     }
 
     // TreePrintable.....................................................................................................
@@ -962,17 +1079,20 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     // helpers..........................................................................................................
 
     @Override
-    Optional<SpreadsheetCellRange> window() {
+    Set<SpreadsheetCellRange> window() {
         return this.window0("A1:E5");
     }
 
     @Override
     SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells) {
-        return this.createSpreadsheetDelta(cells, this.window());
+        return this.createSpreadsheetDelta(
+                cells,
+                this.window()
+        );
     }
 
     private SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells,
-                                                            final Optional<SpreadsheetCellRange> window) {
+                                                            final Set<SpreadsheetCellRange> window) {
         return SpreadsheetDeltaWindowed.withWindowed(
                 this.selection(),
                 cells,

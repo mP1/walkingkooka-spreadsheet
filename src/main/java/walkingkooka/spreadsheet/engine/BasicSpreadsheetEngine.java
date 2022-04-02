@@ -364,7 +364,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     changes,
                     range,
                     context
-            ).setWindow(Optional.of(range));
+            ).setWindow(Sets.of(range));
         }
     }
 
