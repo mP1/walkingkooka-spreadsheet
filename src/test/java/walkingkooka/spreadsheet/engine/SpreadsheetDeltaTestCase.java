@@ -719,7 +719,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testSetDifferentWindow() {
         final D before = this.createSpreadsheetDelta();
 
-        final Set<SpreadsheetCellRange> window = this.window0("A1:Z9999");
+        final Set<SpreadsheetCellRange> window = SpreadsheetSelection.parseWindow("A1:Z9999");
         this.checkNotEquals(window, this.window());
 
         final SpreadsheetDelta after = before.setWindow(window);
@@ -1295,13 +1295,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     abstract Set<SpreadsheetCellRange> window();
 
     final Set<SpreadsheetCellRange> differentWindow() {
-        return window0("A1:Z99");
-    }
-
-    final Set<SpreadsheetCellRange> window0(final String window) {
-        return Arrays.stream(window.split(","))
-                        .map(SpreadsheetSelection::parseCellRange)
-                                .collect(Collectors.toCollection(Sets::ordered));
+        return SpreadsheetSelection.parseWindow("A1:Z99");
     }
 
     final void checkWindow(final SpreadsheetDelta delta) {

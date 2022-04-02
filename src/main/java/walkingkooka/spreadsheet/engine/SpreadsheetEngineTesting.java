@@ -59,12 +59,10 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -855,13 +853,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
-        final Set<SpreadsheetCellRange> rangeSet = Arrays.stream(range.split(","))
-                .map(SpreadsheetSelection::parseCellRange)
-                .collect(Collectors.toCollection(Sets::ordered));
-
         this.loadCellsAndCheck(
                 engine,
-                rangeSet,
+                SpreadsheetSelection.parseWindow(range),
                 evaluation,
                 context,
                 updated
