@@ -113,8 +113,8 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetColumnOrRowRef
     @Override
     public void buildToString(final ToStringBuilder builder) {
         builder.value(this.reference)
-                .label("hidden").value(this.hidden())
-                .toString();
+                .label("hidden")
+                .value(this.hidden());
     }
 
     // json.............................................................................................................
