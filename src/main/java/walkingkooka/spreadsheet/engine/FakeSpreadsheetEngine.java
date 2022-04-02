@@ -34,6 +34,7 @@ import walkingkooka.test.Fake;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
@@ -109,7 +110,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final SpreadsheetCellRange range,
+    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
