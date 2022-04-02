@@ -56,6 +56,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -1117,10 +1118,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 printer.outdent();
             }
 
-            printTreeCollection("cells", this.cells(), printer);
-            printTreeCollection("columns", this.columns(), printer);
-            printTreeCollection("labels", this.labels(), printer);
-            printTreeCollection("rows", this.rows(), printer);
+            printTreeCollectionTreePrinter("cells", this.cells(), printer);
+            printTreeCollectionTreePrinter("columns", this.columns(), printer);
+            printTreeCollectionTreePrinter("labels", this.labels(), printer);
+            printTreeCollectionTreePrinter("rows", this.rows(), printer);
 
             printTreeCollectionCsv(
                     "deletedCells",
@@ -1157,36 +1158,56 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         printer.outdent();
     }
 
-    private <T extends TreePrintable> void printTreeCollection(final String label,
-                                                               final Collection<T> collection,
-                                                               final IndentingPrinter printer) {
-        if (!collection.isEmpty()) {
-            printer.println(label + ":");
-            printer.indent();
-            {
-                for (final T element : collection) {
-                    element.printTree(printer);
-                }
-            }
-            printer.outdent();
-        }
+    private <T extends TreePrintable> void printTreeCollectionTreePrinter(final String label,
+                                                                          final Collection<T> collection,
+                                                                          final IndentingPrinter printer) {
+        this.printTreeLabelAndCollection(
+                label,
+                collection,
+                this::printTreeCollection,
+                printer
+        );
     }
 
     private <T extends TreePrintable> void printTreeCollectionCsv(final String label,
                                                                   final Collection<T> collection,
                                                                   final IndentingPrinter printer) {
+        this.printTreeLabelAndCollection(
+                label,
+                collection,
+                this::printTreeCollectionCsv,
+                printer
+        );
+    }
+
+    private <T extends TreePrintable> void printTreeLabelAndCollection(final String label,
+                                                                       final Collection<T> collection,
+                                                                       final BiConsumer<Collection<T>, IndentingPrinter> printCollection,
+                                                                       final IndentingPrinter printer) {
         if (!collection.isEmpty()) {
             printer.println(label + ":");
             printer.indent();
             {
-                printer.println(
-                        collection.stream()
-                                .map(Object::toString)
-                                .collect(Collectors.joining(","))
-                );
+                printCollection.accept(collection, printer);
             }
             printer.outdent();
         }
+    }
+
+    private <T extends TreePrintable> void printTreeCollection(final Collection<T> collection,
+                                                               final IndentingPrinter printer) {
+        for (final T element : collection) {
+            element.printTree(printer);
+        }
+    }
+
+    private <T extends TreePrintable> void printTreeCollectionCsv(final Collection<T> collection,
+                                                                  final IndentingPrinter printer) {
+        printer.println(
+                collection.stream()
+                        .map(Object::toString)
+                        .collect(Collectors.joining(","))
+        );
     }
 
     private void printTreeMap(final String label,
