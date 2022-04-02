@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -73,7 +74,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final SpreadsheetCellRange range,
+    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> range,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final SpreadsheetEngineContext context) {
         return this.stamp(

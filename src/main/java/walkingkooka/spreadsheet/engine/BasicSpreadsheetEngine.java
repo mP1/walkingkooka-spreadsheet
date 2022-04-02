@@ -336,10 +336,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final SpreadsheetCellRange range,
+    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(range, "range");
+        Objects.requireNonNull(ranges, "ranges");
         checkEvaluation(evaluation);
         checkContext(context);
 
@@ -347,24 +347,27 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final SpreadsheetCellStore store = context.storeRepository()
                     .cells();
 
-            range.cellStream()
-                    .forEach(reference -> {
-                        if (!changes.isLoaded(reference)) {
-                            final Optional<SpreadsheetCell> loaded = store.load(reference);
-                            if (loaded.isPresent()) {
-                                final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(loaded.get(), evaluation, context);
-                                changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+            for (final SpreadsheetCellRange range : ranges) {
+
+                range.cellStream()
+                        .forEach(reference -> {
+                                    if (!changes.isLoaded(reference)) {
+                                        final Optional<SpreadsheetCell> loaded = store.load(reference);
+                                        if (loaded.isPresent()) {
+                                            final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(loaded.get(), evaluation, context);
+                                            changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+                                        }
                                     }
                                 }
-                            }
-                    );
+                        );
+            }
 
             changes.refreshUpdated();
             return this.prepareDelta(
                     changes,
-                    range,
+                    ranges,
                     context
-            ).setWindow(Sets.of(range));
+            ).setWindow(ranges);
         }
     }
 
@@ -389,7 +392,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                           final SpreadsheetEngineContext context) {
         return this.prepareDelta(
                 changes,
-                null,
+                SpreadsheetDelta.NO_WINDOW,
                 context
         );
     }
@@ -399,6 +402,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
                                           final SpreadsheetCellRange window,
+                                          final SpreadsheetEngineContext context) {
+        return this.prepareDelta(
+                changes,
+                Sets.of(window),
+                context
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
+     */
+    private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
+                                          final Set<SpreadsheetCellRange> window,
                                           final SpreadsheetEngineContext context) {
         final Set<SpreadsheetCell> updatedCells = changes.updatedCells();
         final Set<SpreadsheetColumn> updatedColumns = changes.updatedColumns();
@@ -463,28 +479,31 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
 
         // add labels within the range of the given window.
-        if (null != window) {
+        if (!window.isEmpty()) {
             final Set<SpreadsheetCellReference> cellReferences = Sets.hash();
 
-            // include all columns and rows within the window.
-            window.cellStream()
-                    .forEach(c -> {
-                        if (cellReferences.add(c)) {
-                            addIfNecessary(
-                                    c.column(),
-                                    columns,
-                                    columnStore
-                            );
+            for (final SpreadsheetCellRange range : window) {
 
-                            addIfNecessary(
-                                    c.row(),
-                                    rows,
-                                    rowStore
-                            );
+                // include all columns and rows within the window.
+                range.cellStream()
+                        .forEach(c -> {
+                            if (cellReferences.add(c)) {
+                                addIfNecessary(
+                                        c.column(),
+                                        columns,
+                                        columnStore
+                                );
 
-                            addLabels(c, labelStore, labels);
-                        }
-                    });
+                                addIfNecessary(
+                                        c.row(),
+                                        rows,
+                                        rowStore
+                                );
+
+                                addLabels(c, labelStore, labels);
+                            }
+                        });
+            }
         }
 
         // load columns and rows for the deleted cells.

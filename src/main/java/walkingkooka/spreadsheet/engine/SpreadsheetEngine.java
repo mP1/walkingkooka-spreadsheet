@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * The engine or host for the active spreadsheet.
@@ -118,7 +119,7 @@ public interface SpreadsheetEngine {
     /**
      * Loads a range of cells. Thsi is useful to fill a range that fills the viewport.
      */
-    SpreadsheetDelta loadCells(final SpreadsheetCellRange range,
+    SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
                                final SpreadsheetEngineEvaluation evaluation,
                                final SpreadsheetEngineContext context);
 

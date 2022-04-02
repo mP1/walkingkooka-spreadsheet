@@ -59,10 +59,12 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -853,9 +855,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
+        final Set<SpreadsheetCellRange> rangeSet = Arrays.stream(range.split(","))
+                .map(SpreadsheetSelection::parseCellRange)
+                .collect(Collectors.toCollection(Sets::ordered));
+
         this.loadCellsAndCheck(
                 engine,
-                SpreadsheetCellRange.parseCellRange(range),
+                rangeSet,
                 evaluation,
                 context,
                 updated
@@ -863,7 +869,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetCellRange range,
+                                   final Set<SpreadsheetCellRange> range,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
@@ -873,12 +879,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 evaluation,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(Sets.of(updated))
-                        .setWindow(Sets.of(range))
+                        .setWindow(range)
         );
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetCellRange range,
+                                   final Set<SpreadsheetCellRange> range,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta delta) {
