@@ -23,8 +23,10 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.HasRange;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -46,6 +48,7 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -363,6 +366,26 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                         createRange(right, left) :
                         Range.greaterThanEquals(left)
                                 .and(Range.lessThanEquals(right));
+    }
+
+    /**
+     * A window query parameter and other string representations are {@link SpreadsheetCellReference} separated by a
+     * comma.
+     */
+    public final static CharacterConstant WINDOW_SEPARATOR = CharacterConstant.with(',');
+
+    /**
+     * Parses a window query parameter or other string representation into a {@link Set}.
+     */
+    public static Set<SpreadsheetCellRange> parseWindow(final String window) {
+        Objects.requireNonNull(window, "window");
+
+        return window.length() == 0 ?
+                SpreadsheetDelta.NO_WINDOW :
+                Arrays.stream(
+                                window.split(WINDOW_SEPARATOR.string())
+                        ).map(SpreadsheetSelection::parseCellRange)
+                        .collect(Collectors.toCollection(Sets::ordered));
     }
 
     // ctor.............................................................................................................
