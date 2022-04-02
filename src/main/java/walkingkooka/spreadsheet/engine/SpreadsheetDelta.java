@@ -1122,19 +1122,19 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             printTreeCollection("labels", this.labels(), printer);
             printTreeCollection("rows", this.rows(), printer);
 
-            printTreeCollection2(
+            printTreeCollectionCsv(
                     "deletedCells",
                     this.deletedCells(),
                     printer
             );
 
-            printTreeCollection2(
+            printTreeCollectionCsv(
                     "deletedColumns",
                     this.deletedColumns(),
                     printer
             );
 
-            printTreeCollection2(
+            printTreeCollectionCsv(
                     "deletedRows",
                     this.deletedRows(),
                     printer
@@ -1172,16 +1172,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
     }
 
-    private <T extends TreePrintable> void printTreeCollection2(final String label,
-                                                                final Collection<T> collection,
-                                                                final IndentingPrinter printer) {
+    private <T extends TreePrintable> void printTreeCollectionCsv(final String label,
+                                                                  final Collection<T> collection,
+                                                                  final IndentingPrinter printer) {
         if (!collection.isEmpty()) {
             printer.println(label + ":");
             printer.indent();
             {
-                for (final T element : collection) {
-                    printer.println(element.toString()); // only want reference string not type
-                }
+                printer.println(
+                        collection.stream()
+                                .map(Object::toString)
+                                .collect(Collectors.joining(","))
+                );
             }
             printer.outdent();
         }

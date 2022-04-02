@@ -259,8 +259,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "    LabelB2: B2\n" +
                         "    LabelC3: C3\n" +
                         "  deletedCells:\n" +
-                        "    C1\n" +
-                        "    C2\n"
+                        "    C1,C2\n"
         );
     }
 
@@ -281,8 +280,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 ),
                 "SpreadsheetDelta\n" +
                         "  deletedColumns:\n" +
-                        "    C\n" +
-                        "    D\n"
+                        "    C,D\n"
         );
     }
 
@@ -303,8 +301,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 ),
                 "SpreadsheetDelta\n" +
                         "  deletedRows:\n" +
-                        "    3\n" +
-                        "    4\n"
+                        "    3,4\n"
         );
     }
 
@@ -404,14 +401,11 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "    LabelB2: B2\n" +
                         "    LabelC3: C3\n" +
                         "  deletedCells:\n" +
-                        "    C1\n" +
-                        "    C2\n" +
+                        "    C1,C2\n" +
                         "  deletedColumns:\n" +
-                        "    C\n" +
-                        "    D\n" +
+                        "    C,D\n" +
                         "  deletedRows:\n" +
-                        "    3\n" +
-                        "    4\n" +
+                        "    3,4\n" +
                         "  columnWidths:\n" +
                         "    A: 50.0\n" +
                         "  rowHeights:\n" +
