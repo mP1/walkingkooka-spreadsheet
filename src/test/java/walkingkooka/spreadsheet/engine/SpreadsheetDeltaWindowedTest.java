@@ -262,10 +262,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
         this.checkWindow(before, window);
 
-        final Set<SpreadsheetCellRange> window2 = Sets.of(
-                SpreadsheetSelection.parseCellRange("a1"),
-                SpreadsheetSelection.parseCellRange("e5:f6")
-        );
+        final Set<SpreadsheetCellRange> window2 = SpreadsheetSelection.parseWindow("a1,e5:f6");
+
         final SpreadsheetDelta after = before.setWindow(window2);
 
         this.checkCells(after, Sets.of(a1));
@@ -1080,7 +1078,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
     @Override
     Set<SpreadsheetCellRange> window() {
-        return this.window0("A1:E5");
+        return SpreadsheetSelection.parseWindow("A1:E5");
     }
 
     @Override

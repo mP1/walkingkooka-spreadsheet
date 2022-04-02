@@ -1382,11 +1382,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                               final JsonNodeUnmarshallContext context) {
         return json.isNull() ?
                 NO_WINDOW :
-                Arrays.stream(
-                                json.stringOrFail()
-                                        .split(CSV_COMMA)
-                        ).map(SpreadsheetSelection::parseCellRange)
-                        .collect(Collectors.toCollection(Sets::sorted));
+                SpreadsheetSelection.parseWindow(json.stringOrFail());
     }
 
     static <S extends SpreadsheetSelection> String csv(final Collection<S> selections) {

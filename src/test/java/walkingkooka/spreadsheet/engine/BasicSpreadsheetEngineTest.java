@@ -5404,9 +5404,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .column()
         );
 
-        final Set<SpreadsheetCellRange> range = Sets.of(
-                SpreadsheetCellRange.parseCellRange("B2:C3")
-        );
+        final Set<SpreadsheetCellRange> range = SpreadsheetSelection.parseWindow("B2:C3");
 
         this.loadCellsAndCheck(
                 engine,
@@ -5435,9 +5433,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(label.mapping(b2));
 
-        final Set<SpreadsheetCellRange> range = Sets.of(
-                SpreadsheetCellRange.parseCellRange("B2:C3")
-        );
+        final Set<SpreadsheetCellRange> range = SpreadsheetSelection.parseWindow("B2:C3");
 
         this.loadCellsAndCheck(
                 engine,
@@ -5477,9 +5473,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .row()
         );
 
-        final Set<SpreadsheetCellRange> range = Sets.of(
-                SpreadsheetCellRange.parseCellRange("B2:C3")
-        );
+        final Set<SpreadsheetCellRange> range = SpreadsheetSelection.parseWindow("B2:C3");
 
         this.loadCellsAndCheck(
                 engine,
@@ -5616,9 +5610,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(label.mapping(d4.reference()));
 
-        final Set<SpreadsheetCellRange> range = Sets.of(
-                SpreadsheetCellRange.parseCellRange("c3:d4")
-        );
+        final Set<SpreadsheetCellRange> range = SpreadsheetSelection.parseWindow("c3:d4");
 
         this.loadCellsAndCheck(
                 engine,
@@ -5657,9 +5649,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d4 = SpreadsheetCellReference.parseCell("d4");
         labelStore.save(label.mapping(d4));
 
-        final Set<SpreadsheetCellRange> range = Sets.of(
-                SpreadsheetCellRange.parseCellRange("c3:d4")
-        );
+        final Set<SpreadsheetCellRange> range = SpreadsheetSelection.parseWindow("c3:d4");
 
         this.loadCellsAndCheck(
                 engine,
@@ -5757,9 +5747,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell d4 = this.cell("d4", "=4");
         cellStore.save(d4);
 
-        final Set<SpreadsheetCellRange> range = Sets.of(
-                SpreadsheetCellRange.parseCellRange("a1:c3")
-        );
+        final Set<SpreadsheetCellRange> range = SpreadsheetSelection.parseWindow("a1:c3");
 
         final SpreadsheetRow row2Hidden = b2.reference()
                 .row()
