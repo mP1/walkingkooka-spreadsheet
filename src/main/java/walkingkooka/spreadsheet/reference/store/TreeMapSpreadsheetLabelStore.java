@@ -149,17 +149,15 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         Set<SpreadsheetLabelMapping> results;
 
         do {
-            SpreadsheetLabelName labelName;
             SpreadsheetLabelMapping mapping = null;
             try {
-                labelName = SpreadsheetLabelName.labelName(text);
-                mapping = this.mappings.get(labelName);
+                mapping = this.mappings.get(SpreadsheetLabelName.labelName(text));
                 if (null != mapping && 1 == count) {
                     results = Sets.of(mapping);
                     break;
                 }
             } catch (final Exception notExact) {
-                labelName = null;
+                // ignore
             }
 
             results = Sets.ordered();
