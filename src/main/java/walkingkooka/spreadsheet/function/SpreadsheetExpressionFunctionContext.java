@@ -42,7 +42,7 @@ public interface SpreadsheetExpressionFunctionContext extends ExpressionFunction
     }
 
     /**
-     * Loads the cell for the given {@link SpreadsheetCellReference}
+     * Loads the cell for the given {@link SpreadsheetCellReference}, note that the formula is not evaluated.
      */
     Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell);
 
