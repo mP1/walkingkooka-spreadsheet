@@ -18,10 +18,15 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+
+import java.util.Locale;
+import java.util.Optional;
+
 /**
  * Tracks how many columns are frozen.
  */
-final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMetadataPropertyNameInteger {
+final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMetadataPropertyName<SpreadsheetColumnReferenceRange> {
 
     /**
      * Singleton
@@ -38,17 +43,40 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
     }
 
     @Override
-    Integer checkValue0(final Object value) {
-        final Integer integerValue = this.checkValueTypeInteger(value);
-        if (integerValue < 0) {
-            throw new SpreadsheetMetadataPropertyValueException("Expected value >= 0", this, integerValue);
+    SpreadsheetColumnReferenceRange checkValue0(final Object value) {
+        final SpreadsheetColumnReferenceRange range = this.checkValueType(
+                value,
+                v -> v instanceof SpreadsheetColumnReferenceRange
+        );
+        if (range.begin().value() != 0) {
+            throw new SpreadsheetMetadataPropertyValueException("Range must begin at 'A'", this, range);
         }
-        return integerValue;
+        return range;
     }
 
     @Override
-    void accept(final Integer value,
+    String expected() {
+        return SpreadsheetColumnReferenceRange.class.getSimpleName();
+    }
+
+    @Override
+    Optional<SpreadsheetColumnReferenceRange> extractLocaleValue(final Locale locale) {
+        return Optional.empty();
+    }
+
+    @Override
+    Class<SpreadsheetColumnReferenceRange> type() {
+        return SpreadsheetColumnReferenceRange.class;
+    }
+
+    @Override
+    void accept(final SpreadsheetColumnReferenceRange value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitFrozenColumns(value);
+    }
+
+    @Override
+    String compareToName() {
+        return this.value();
     }
 }

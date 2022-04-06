@@ -35,6 +35,9 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.tree.text.TextStyle;
@@ -237,20 +240,26 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitFrozenColumns() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitFrozenColumns(final int i) {
-                this.visited = i;
+            protected void visitFrozenColumns(final SpreadsheetColumnReferenceRange r) {
+                this.visited = r;
             }
-        }.accept(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, 123);
+        }.accept(
+                SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
+                SpreadsheetSelection.parseColumnRange("A:B")
+        );
     }
 
     @Test
     public void testVisitFrozenRows() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitFrozenRows(final int i) {
-                this.visited = i;
+            protected void visitFrozenRows(final SpreadsheetRowReferenceRange r) {
+                this.visited = r;
             }
-        }.accept(SpreadsheetMetadataPropertyName.FROZEN_ROWS, 123);
+        }.accept(
+                SpreadsheetMetadataPropertyName.FROZEN_ROWS,
+                SpreadsheetSelection.parseRowRange("1:2")
+        );
     }
 
     @Test

@@ -32,6 +32,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextStyle;
@@ -133,12 +135,12 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitFrozenColumns(final int count) {
+    protected void visitFrozenColumns(final SpreadsheetColumnReferenceRange range) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visitFrozenRows(final int count) {
+    protected void visitFrozenRows(final SpreadsheetRowReferenceRange range) {
         throw new UnsupportedOperationException();
     }
 
