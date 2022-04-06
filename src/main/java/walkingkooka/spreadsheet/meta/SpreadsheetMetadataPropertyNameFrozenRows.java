@@ -19,10 +19,15 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+
+import java.util.Locale;
+import java.util.Optional;
+
 /**
  * Tracks how many rows are frozen.
  */
-final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadataPropertyNameInteger {
+final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadataPropertyName<SpreadsheetRowReferenceRange> {
 
     /**
      * Singleton
@@ -39,17 +44,40 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     }
 
     @Override
-    Integer checkValue0(final Object value) {
-        final Integer integerValue = this.checkValueTypeInteger(value);
-        if (integerValue < 0) {
-            throw new SpreadsheetMetadataPropertyValueException("Expected value >= 0", this, integerValue);
+    SpreadsheetRowReferenceRange checkValue0(final Object value) {
+        final SpreadsheetRowReferenceRange range = this.checkValueType(
+                value,
+                v -> v instanceof SpreadsheetRowReferenceRange
+        );
+        if (range.begin().value() != 0) {
+            throw new SpreadsheetMetadataPropertyValueException("Range must begin at '1'", this, range);
         }
-        return integerValue;
+        return range;
     }
 
     @Override
-    void accept(final Integer value,
+    String expected() {
+        return SpreadsheetRowReferenceRange.class.getSimpleName();
+    }
+
+    @Override
+    Optional<SpreadsheetRowReferenceRange> extractLocaleValue(final Locale locale) {
+        return Optional.empty();
+    }
+
+    @Override
+    Class<SpreadsheetRowReferenceRange> type() {
+        return SpreadsheetRowReferenceRange.class;
+    }
+
+    @Override
+    void accept(final SpreadsheetRowReferenceRange value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitFrozenRows(value);
+    }
+
+    @Override
+    String compareToName() {
+        return this.value();
     }
 }

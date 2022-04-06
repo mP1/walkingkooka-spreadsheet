@@ -2058,8 +2058,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL);
-        properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, 1);
-        properties.put(SpreadsheetMetadataPropertyName.FROZEN_ROWS, 2);
+        properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"));
+        properties.put(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"));
         properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, GROUPING_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
@@ -2111,12 +2111,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(1234))
                         .set(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Untitled"))
-                        .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, 1)
-                        .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, 23),
+                        .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:C"))
+                        .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:3"))
+                        .set(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetSelection.parseCell("D4")),
                 "spreadsheet-id: 4d2\n" +
-                        "frozen-columns: 1\n" +
-                        "frozen-rows: 23\n" +
-                        "spreadsheet-name: Untitled\n"
+                        "frozen-columns: A:C\n" +
+                        "frozen-rows: 1:3\n" +
+                        "spreadsheet-name: Untitled\n" +
+                        "viewport-cell: D4\n"
         );
     }
 

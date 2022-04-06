@@ -962,7 +962,14 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         for (final Map.Entry<SpreadsheetMetadataPropertyName<?>, Object> nameAndValue : this.value().entrySet()) {
             printer.print(nameAndValue.getKey().value());
             printer.print(": ");
-            TreePrintable.printTreeOrToString(nameAndValue.getValue(), printer);
+
+            final Object value = nameAndValue.getValue();
+            if (value instanceof SpreadsheetSelection) {
+                printer.print(value.toString());
+            } else {
+                TreePrintable.printTreeOrToString(value, printer);
+            }
+
             printer.println();
         }
     }

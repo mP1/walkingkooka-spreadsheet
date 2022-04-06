@@ -37,6 +37,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -142,14 +144,14 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link int}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link SpreadsheetColumnReferenceRange}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Integer> FROZEN_COLUMNS = registerConstant(SpreadsheetMetadataPropertyNameFrozenColumns.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetColumnReferenceRange> FROZEN_COLUMNS = registerConstant(SpreadsheetMetadataPropertyNameFrozenColumns.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-rows {@link int}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-rows {@link .SpreadsheetRow}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Integer> FROZEN_ROWS = registerConstant(SpreadsheetMetadataPropertyNameFrozenRows.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetRowReferenceRange> FROZEN_ROWS = registerConstant(SpreadsheetMetadataPropertyNameFrozenRows.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>grouping-separator {@link Character}</code>

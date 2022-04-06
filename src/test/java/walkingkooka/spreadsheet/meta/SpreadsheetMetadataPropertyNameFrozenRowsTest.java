@@ -20,25 +20,24 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetMetadataPropertyNameFrozenRowsTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameFrozenRows> {
+import java.util.Locale;
+
+public final class SpreadsheetMetadataPropertyNameFrozenRowsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameFrozenRows, SpreadsheetRowReferenceRange> {
 
     @Test
-    public void testNegativeValueFails() {
+    public void testInvalidSpreadsheetRowReferenceRangeFails() {
         this.checkValueFails(
-                -1,
-                "Expected value >= 0, but got -1 for \"frozen-rows\""
+                SpreadsheetSelection.parseRowRange("2:3"),
+                "Range must begin at '1', but got 2:3 for \"frozen-rows\""
         );
     }
 
     @Test
-    public void testZeroValue() {
-        this.checkValue(0);
-    }
-
-    @Test
-    public void testOneValue() {
-        this.checkValue(1);
+    public void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
     }
 
     @Test
@@ -52,6 +51,16 @@ public final class SpreadsheetMetadataPropertyNameFrozenRowsTest extends Spreads
     @Override
     SpreadsheetMetadataPropertyNameFrozenRows createName() {
         return SpreadsheetMetadataPropertyNameFrozenRows.instance();
+    }
+
+    @Override
+    SpreadsheetRowReferenceRange propertyValue() {
+        return SpreadsheetSelection.parseRowRange("1:2");
+    }
+
+    @Override
+    String propertyValueType() {
+        return SpreadsheetRowReferenceRange.class.getSimpleName();
     }
 
     // ClassTesting.....................................................................................................
