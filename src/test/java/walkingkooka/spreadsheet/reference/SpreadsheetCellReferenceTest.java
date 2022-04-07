@@ -38,6 +38,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReferenceOrLabelNameTestCase<SpreadsheetCellReference>
         implements HateosResourceTesting<SpreadsheetCellReference> {
 
+    @Test
+    public void testA1Constant() {
+        final SpreadsheetCellReference a1 = SpreadsheetCellReference.A1;
+        this.checkColumn(a1, SpreadsheetReferenceKind.RELATIVE.firstColumn());
+        this.checkRow(a1, SpreadsheetReferenceKind.RELATIVE.firstRow());
+    }
+
     private final static int COLUMN = 123;
     private final static int ROW = 456;
 
