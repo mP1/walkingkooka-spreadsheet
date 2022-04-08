@@ -156,14 +156,16 @@ public interface SpreadsheetEngine {
                                                 final SpreadsheetEngineContext context);
 
     /**
-     * Returns the column width for the given {@link SpreadsheetColumnReference}.
+     * Returns the column width for the given {@link SpreadsheetColumnReference}, if none is present,
+     * defaulting to {@link walkingkooka.tree.text.TextStylePropertyName#WIDTH} from the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata}.
      * If the column is hidden this will return 0.
      */
     double columnWidth(final SpreadsheetColumnReference column,
                        final SpreadsheetEngineContext context);
 
     /**
-     * Returns the row height for the given {@link SpreadsheetRowReference}.
+     * Returns the row height for the given {@link SpreadsheetRowReference}, if none is present,
+     * defaulting to {@link walkingkooka.tree.text.TextStylePropertyName#HEIGHT} from the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata}.
      * If the row is hidden this will return 0.
      */
     double rowHeight(final SpreadsheetRowReference row,
