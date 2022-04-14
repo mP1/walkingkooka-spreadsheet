@@ -509,14 +509,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * boundaries.
      */
     public final SpreadsheetDelta setWindow(final Set<SpreadsheetCellRange> window) {
-        Objects.requireNonNull(window, "window");
-
-        return this.window().equals(window) ?
-                this :
-                this.setWindow0(window);
+        return this.setWindow0(
+                SpreadsheetDeltaWindowSet.with(window)
+        );
     }
 
-    private SpreadsheetDelta setWindow0(final Set<SpreadsheetCellRange> window) {
+    private final SpreadsheetDelta setWindow0(final SpreadsheetDeltaWindowSet window) {
+        return this.window().equals(window) ?
+                this :
+                this.setWindow1(window);
+    }
+
+    private SpreadsheetDelta setWindow1(final Set<SpreadsheetCellRange> window) {
         final Optional<SpreadsheetViewportSelection> selection = this.selection;
 
         final Set<SpreadsheetCell> cells = this.cells;
