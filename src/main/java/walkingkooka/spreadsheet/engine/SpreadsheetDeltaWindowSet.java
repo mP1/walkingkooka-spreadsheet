@@ -36,6 +36,7 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRange> 
         Sets.registerImmutableType(SpreadsheetDeltaWindowSet.class);
     }
 
+    @SuppressWarnings("lgtm[java/abstract-to-concrete-cast]")
     static SpreadsheetDeltaWindowSet with(final Set<SpreadsheetCellRange> window) {
         return window instanceof SpreadsheetDeltaWindowSet ?
                 (SpreadsheetDeltaWindowSet)window :
