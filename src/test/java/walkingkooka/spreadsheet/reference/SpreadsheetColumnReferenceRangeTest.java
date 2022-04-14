@@ -404,6 +404,52 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // frozenColumnsCheck...............................................................................................
+
+    @Test
+    public void testFrozenColumnsCheck() {
+        SpreadsheetSelection.parseColumnRange("A")
+                .frozenColumnsCheck();
+    }
+
+    @Test
+    public void testFrozenColumnsCheck2() {
+        SpreadsheetSelection.parseColumnRange("A:B")
+                .frozenColumnsCheck();
+    }
+
+    @Test
+    public void testFrozenColumnsCheck3() {
+        SpreadsheetSelection.parseColumnRange("A:C")
+                .frozenColumnsCheck();
+    }
+
+    @Test
+    public void testFrozenColumnsCheckFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseColumnRange("B").frozenColumnsCheck()
+        );
+
+        this.checkEquals(
+                "Range must begin at 'A' but was \"B\"",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testFrozenColumnsCheckFails2() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseColumnRange("C:E").frozenColumnsCheck()
+        );
+
+        this.checkEquals(
+                "Range must begin at 'A' but was \"C:E\"",
+                thrown.getMessage()
+        );
+    }
+
     // isHidden.........................................................................................................
 
     @Test
