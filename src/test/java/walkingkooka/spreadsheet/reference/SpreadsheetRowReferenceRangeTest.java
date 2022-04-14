@@ -411,6 +411,52 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // frozenRowsCheck...............................................................................................
+
+    @Test
+    public void testFrozenRowsCheck() {
+        SpreadsheetSelection.parseRowRange("1")
+                .frozenRowsCheck();
+    }
+
+    @Test
+    public void testFrozenRowsCheck2() {
+        SpreadsheetSelection.parseRowRange("1:2")
+                .frozenRowsCheck();
+    }
+
+    @Test
+    public void testFrozenRowsCheck3() {
+        SpreadsheetSelection.parseRowRange("1:3")
+                .frozenRowsCheck();
+    }
+
+    @Test
+    public void testFrozenRowsCheckFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseRowRange("2").frozenRowsCheck()
+        );
+
+        this.checkEquals(
+                "Range must begin at '1' but was \"2\"",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testFrozenRowsCheckFails2() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseRowRange("3:4").frozenRowsCheck()
+        );
+
+        this.checkEquals(
+                "Range must begin at '1' but was \"3:4\"",
+                thrown.getMessage()
+        );
+    }
+
     // isHidden.........................................................................................................
 
     @Test

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.text.CharSequences;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -131,6 +132,16 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     @Override
     public SpreadsheetViewportSelectionAnchor defaultAnchor() {
         return SpreadsheetViewportSelectionAnchor.ROW_RANGE;
+    }
+
+    /**
+     * Complains if this row range is not a valid frozen rows range representation.
+     * A frozen row range must begin with row 1
+     */
+    public void frozenRowsCheck() {
+        if (this.begin().value() != 0) {
+            throw new IllegalArgumentException("Range must begin at '1' but was " + CharSequences.quoteAndEscape(this.toString()));
+        }
     }
 
     /**
