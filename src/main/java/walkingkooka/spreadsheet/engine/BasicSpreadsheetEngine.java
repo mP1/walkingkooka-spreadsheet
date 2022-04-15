@@ -968,14 +968,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final SpreadsheetColumnReferenceRange columns = this.columnRange(
                 reference.column(),
-                viewport.xOffset(),
+                0,
                 viewport.width(),
                 context
         );
 
         final SpreadsheetRowReferenceRange rows = this.rowRange(
                 reference.row(),
-                viewport.yOffset(),
+                0,
                 viewport.height(),
                 context
         );

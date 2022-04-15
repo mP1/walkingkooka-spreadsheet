@@ -48,16 +48,14 @@ abstract public class SpreadsheetCellReferenceOrLabelName extends SpreadsheetExp
 
     private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
 
-    // SpreadsheetViewport........................................................................................
+    // SpreadsheetViewport..............................................................................................
 
     /**
      * Creates a {@link SpreadsheetViewport} using this as the top/left.
      */
-    public final SpreadsheetViewport viewport(final double xOffset,
-                                              final double yOffset,
-                                              final double width,
+    public final SpreadsheetViewport viewport(final double width,
                                               final double height) {
-        return SpreadsheetViewport.with(this, xOffset, yOffset, width, height);
+        return SpreadsheetViewport.with(this, width, height);
     }
 
     abstract public SpreadsheetCellReferenceOrLabelName toRelative();

@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -39,81 +40,48 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
         ParseStringTesting<SpreadsheetViewport>,
         ToStringTesting<SpreadsheetViewport> {
 
-    private final static double X_OFFSET = 1;
-    private final static double Y_OFFSET = 2;
     private final static double WIDTH = 50;
     private final static double HEIGHT = 30;
 
     @Test
     public void testWithNullReferenceFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetViewport.with(null, X_OFFSET, Y_OFFSET, WIDTH, HEIGHT));
+        assertThrows(NullPointerException.class, () -> SpreadsheetViewport.with(null, WIDTH, HEIGHT));
     }
 
     @Test
     public void testWithInvalidWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewport.with(reference(), X_OFFSET, Y_OFFSET, -1, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewport.with(reference(), -1, HEIGHT));
     }
 
     @Test
     public void testWithInvalidWidthFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewport.with(reference(), X_OFFSET, Y_OFFSET, -2, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewport.with(reference(), -2, HEIGHT));
     }
 
     @Test
     public void testWithInvalidHeightFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewport.with(reference(), X_OFFSET, Y_OFFSET, WIDTH, -1));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewport.with(reference(), WIDTH, -1));
     }
 
     @Test
     public void testWithInvalidHeightFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewport.with(reference(), X_OFFSET, Y_OFFSET, WIDTH, -2));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewport.with(reference(), WIDTH, -2));
     }
 
     @Test
     public void testWith() {
         this.check(
-                SpreadsheetViewport.with(this.reference(), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT),
+                SpreadsheetViewport.with(this.reference(), WIDTH, HEIGHT),
                 this.reference(),
-                X_OFFSET,
-                Y_OFFSET,
                 WIDTH,
                 HEIGHT
         );
     }
-
-    @Test
-    public void testWithNegativeXOffset() {
-        final double x = -1;
-        this.check(
-                SpreadsheetViewport.with(this.reference(), x, Y_OFFSET, WIDTH, HEIGHT),
-                this.reference(),
-                x,
-                Y_OFFSET,
-                WIDTH,
-                HEIGHT
-        );
-    }
-
-    @Test
-    public void testWithNegativeYOffset() {
-        final double y = -1;
-        this.check(
-                SpreadsheetViewport.with(this.reference(), X_OFFSET, y, WIDTH, HEIGHT),
-                this.reference(),
-                X_OFFSET,
-                y,
-                WIDTH,
-                HEIGHT
-        );
-    }
-
     @Test
     public void testWithAbsoluteSpreadsheetCellReference() {
         this.check(
-                SpreadsheetViewport.with(this.reference().toAbsolute(), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT),
+                SpreadsheetViewport.with(this.reference().toAbsolute(), WIDTH, HEIGHT),
                 this.reference(),
-                X_OFFSET,
-                Y_OFFSET,
                 WIDTH,
                 HEIGHT
         );
@@ -122,10 +90,8 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     @Test
     public void testWithCellReference() {
         this.check(
-                SpreadsheetViewport.with(this.reference(), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT),
+                SpreadsheetViewport.with(this.reference(), WIDTH, HEIGHT),
                 this.reference(),
-                X_OFFSET,
-                Y_OFFSET,
                 WIDTH,
                 HEIGHT
         );
@@ -134,10 +100,8 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     @Test
     public void testWithLabel() {
         this.check(
-                SpreadsheetViewport.with(this.label(), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT),
+                SpreadsheetViewport.with(this.label(), WIDTH, HEIGHT),
                 this.label(),
-                X_OFFSET,
-                Y_OFFSET,
                 WIDTH,
                 HEIGHT
         );
@@ -145,16 +109,14 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     @Test
     public void testWithAbsoluteReference() {
-        this.check(SpreadsheetViewport.with(this.reference().toAbsolute(), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT));
+        this.check(SpreadsheetViewport.with(this.reference().toAbsolute(), WIDTH, HEIGHT));
     }
 
     @Test
     public void testWithZeroWidth() {
         this.check(
-                SpreadsheetViewport.with(this.reference(), X_OFFSET, Y_OFFSET, 0, HEIGHT),
+                SpreadsheetViewport.with(this.reference(), 0, HEIGHT),
                 this.reference(),
-                X_OFFSET,
-                Y_OFFSET,
                 0,
                 HEIGHT
         );
@@ -163,10 +125,8 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     @Test
     public void testWithZeroHeight() {
         this.check(
-                SpreadsheetViewport.with(this.reference(), X_OFFSET, Y_OFFSET, WIDTH, 0),
+                SpreadsheetViewport.with(this.reference(), WIDTH, 0),
                 this.reference(),
-                X_OFFSET,
-                Y_OFFSET,
                 WIDTH,
                 0
         );
@@ -177,83 +137,112 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     @Test
     public void testEqualsWithLabel() {
         this.checkEquals(
-                SpreadsheetViewport.with(this.label(), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT),
-                SpreadsheetViewport.with(this.label(), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT)
+                SpreadsheetViewport.with(this.label(), WIDTH, HEIGHT),
+                SpreadsheetViewport.with(this.label(), WIDTH, HEIGHT)
         );
     }
 
     @Test
     public void testEqualsDifferentCellReference() {
-        this.checkNotEquals(SpreadsheetViewport.with(SpreadsheetCellReference.parseCell("a1"), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetViewport.with(SpreadsheetCellReference.parseCell("a1"), WIDTH, HEIGHT));
     }
 
     @Test
     public void testEqualsDifferentLabel() {
-        this.checkNotEquals(SpreadsheetViewport.with(label(), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT));
-    }
-
-    @Test
-    public void testDifferentXOffsetEquals() {
-        this.checkNotEquals(SpreadsheetViewport.with(reference(), 1000 + X_OFFSET, Y_OFFSET, WIDTH, HEIGHT));
-    }
-
-    @Test
-    public void testDifferentYOffsetEquals() {
-        this.checkNotEquals(SpreadsheetViewport.with(reference(), X_OFFSET, 1000 + Y_OFFSET, WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetViewport.with(label(), WIDTH, HEIGHT));
     }
 
     @Test
     public void testEqualsDifferentWidth() {
-        this.checkNotEquals(SpreadsheetViewport.with(this.reference(), X_OFFSET, Y_OFFSET, 1000 + WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetViewport.with(this.reference(), 1000 + WIDTH, HEIGHT));
     }
 
     @Test
     public void testEqualsDifferentHeight() {
-        this.checkNotEquals(SpreadsheetViewport.with(this.reference(), X_OFFSET, Y_OFFSET, WIDTH, 1000 + HEIGHT));
+        this.checkNotEquals(SpreadsheetViewport.with(this.reference(), WIDTH, 1000 + HEIGHT));
     }
 
     // ParseStringTesting...............................................................................................
 
     @Test
     public void testParseMissingHeightFails() {
-        this.parseStringFails2("B9", "Expected 5 tokens in \"B9\"");
+        this.parseStringFails2(
+                "B9",
+                "Expected 3 tokens in \"B9\""
+        );
     }
 
     private void parseStringFails2(final String text, final String expectedMessage) {
-        this.parseStringFails(text, new IllegalArgumentException(expectedMessage));
+        this.parseStringFails(
+                text,
+                new IllegalArgumentException(expectedMessage)
+        );
     }
 
     @Test
     public void testParseRangeFails() {
-        this.parseStringFails2("A1:B2:100:200:300:400", "Expected 5 tokens in \"A1:B2:100:200:300:400\"");
+        this.parseStringFails2(
+                "A1:B2:300:400",
+                "Expected 3 tokens in \"A1:B2:300:400\""
+        );
     }
 
     @Test
     public void testParseCellReference() {
-        this.parseStringAndCheck("B9:100:200:300:400", SpreadsheetViewport.with(this.reference(), 100, 200, 300, 400));
+        this.parseStringAndCheck(
+                "B9:300:400",
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        300,
+                        400
+                )
+        );
     }
 
     @Test
     public void testParseCellReferenceAbsoluteColumnAbsoluteRow() {
-        this.parseStringAndCheck("$B$9:100:200:300:400", SpreadsheetViewport.with(SpreadsheetCellReference.parseCell("$B$9"), 100, 200, 300, 400));
+        this.parseStringAndCheck(
+                "$B$9:300:400",
+                SpreadsheetViewport.with(
+                        SpreadsheetSelection.parseCell("$B$9"),
+                        300,
+                        400
+                )
+        );
     }
 
     @Test
     public void testParseCellReference2() {
-        this.parseStringAndCheck("B9:100.5:200.5:300.5:400.5", SpreadsheetViewport.with(this.reference(), 100.5, 200.5, 300.5, 400.5));
+        this.parseStringAndCheck(
+                "B9:300.5:400.5",
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        300.5,
+                        400.5
+                )
+        );
     }
 
     @Test
     public void testParseLabel() {
-        this.parseStringAndCheck("Label123:100.5:200.5:300.5:400.5", SpreadsheetViewport.with(this.label(), 100.5, 200.5, 300.5, 400.5));
+        this.parseStringAndCheck(
+                "Label123:300.5:400.5",
+                SpreadsheetViewport.with(
+                        this.label(),
+                        300.5,
+                        400.5
+                )
+        );
     }
 
     // JsonNodeMarshallingTesting...............................................................................................
 
     @Test
     public void testJsonNode() {
-        this.marshallAndCheck(this.createJsonNodeMarshallingValue(),
-                "\"B9:1:2:50:30\"");
+        this.marshallAndCheck(
+                this.createJsonNodeMarshallingValue(),
+                "\"B9:50:30\""
+        );
     }
 
     @Test
@@ -263,54 +252,122 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     @Test
     public void testJsonNodeUnmarshall() {
-        this.unmarshallAndCheck(JsonNode.string("B9:10:20:30:40"), SpreadsheetViewport.with(this.reference(), 10, 20, 30, 40));
+        this.unmarshallAndCheck(
+                JsonNode.string("B9:30:40"),
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        30,
+                        40
+                )
+        );
     }
 
     @Test
     public void testJsonNodeUnmarshall2() {
-        this.unmarshallAndCheck(JsonNode.string("B9:10.5:20.5:30.5:40.5"), SpreadsheetViewport.with(this.reference(), 10.5, 20.5, 30.5, 40.5));
+        this.unmarshallAndCheck(
+                JsonNode.string("B9:30.5:40.5"),
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        30.5,
+                        40.5
+                )
+        );
     }
 
     @Test
     public void testJsonNodeUnmarshall3() {
-        this.unmarshallAndCheck(JsonNode.string("$B$9:10:20:30:40"), SpreadsheetViewport.with(SpreadsheetCellReference.parseCell("$B$9"), 10, 20, 30, 40));
+        this.unmarshallAndCheck(
+                JsonNode.string("$B$9:30:40"),
+                SpreadsheetViewport.with(
+                        SpreadsheetCellReference.parseCell("$B$9"),
+                        30,
+                        40
+                )
+        );
     }
 
     @Test
     public void testJsonNodeMarshall2() {
-        this.marshallAndCheck(SpreadsheetViewport.with(this.reference(), 10, 20, 30, 40), JsonNode.string("B9:10:20:30:40"));
+        this.marshallAndCheck(
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        30,
+                        40
+                ),
+                JsonNode.string("B9:30:40")
+        );
     }
 
     @Test
     public void testJsonNodeMarshall3() {
-        this.marshallAndCheck(SpreadsheetViewport.with(this.reference(), 10.5, 20.5, 30.5, 40.5), JsonNode.string("B9:10.5:20.5:30.5:40.5"));
+        this.marshallAndCheck(
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        30.5,
+                        40.5
+                ),
+                JsonNode.string("B9:30.5:40.5")
+        );
     }
 
     @Test
     public void testJsonNodeMarshallRoundtrip() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetViewport.with(this.reference(), 10.5, 20.5, 30.5, 40.5));
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        30.5,
+                        40.5
+                )
+        );
     }
 
     @Test
     public void testJsonNodeMarshallRoundtripLabel() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetViewport.with(this.label(), 10.5, 20.5, 30.5, 40.5));
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetViewport.with(
+                        this.label(),
+                        30.5,
+                        40.5
+                )
+        );
     }
 
     // toString.........................................................................................................
 
     @Test
     public void testToStringCell() {
-        this.toStringAndCheck(SpreadsheetViewport.with(this.reference(), 10, 20, 30, 40), "B9:10:20:30:40");
+        this.toStringAndCheck(
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        30,
+                        40
+                ),
+                "B9:30:40"
+        );
     }
 
     @Test
     public void testToStringCell2() {
-        this.toStringAndCheck(SpreadsheetViewport.with(this.reference(), 10.5, 20.5, 30.5, 40.5), "B9:10.5:20.5:30.5:40.5");
+        this.toStringAndCheck(
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        30.5,
+                        40.5
+                ),
+                "B9:30.5:40.5"
+        );
     }
 
     @Test
     public void testToStringLabel() {
-        this.toStringAndCheck(SpreadsheetViewport.with(this.label(), 10, 20, 30, 40), "Label123:10:20:30:40");
+        this.toStringAndCheck(
+                SpreadsheetViewport.with(
+                        this.label(),
+                        30,
+                        40
+                ),
+                "Label123:30:40"
+        );
     }
 
     //helper............................................................................................................
@@ -327,8 +384,6 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
         this.check(
                 viewport,
                 this.reference(),
-                X_OFFSET,
-                Y_OFFSET,
                 WIDTH,
                 HEIGHT
         );
@@ -336,13 +391,9 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     private void check(final SpreadsheetViewport viewport,
                        final SpreadsheetCellReferenceOrLabelName reference,
-                       final double xOffset,
-                       final double yOffset,
                        final double width,
                        final double height) {
         this.checkReference(viewport, reference);
-        this.checkXOffset(viewport, xOffset);
-        this.checkYOffset(viewport, yOffset);
         this.checkWidth(viewport, width);
         this.checkHeight(viewport, height);
     }
@@ -350,16 +401,6 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     private void checkReference(final SpreadsheetViewport viewport,
                                 final SpreadsheetCellReferenceOrLabelName reference) {
         this.checkEquals(reference, viewport.cellOrLabel(), () -> "viewport width=" + viewport);
-    }
-
-    private void checkXOffset(final SpreadsheetViewport viewport,
-                              final double xOffset) {
-        this.checkEquals(xOffset, viewport.xOffset(), () -> "viewport xOffset=" + viewport);
-    }
-
-    private void checkYOffset(final SpreadsheetViewport viewport,
-                              final double yOffset) {
-        this.checkEquals(yOffset, viewport.yOffset(), () -> "viewport yOffset=" + viewport);
     }
 
     private void checkWidth(final SpreadsheetViewport viewport,
@@ -386,7 +427,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     @Override
     public SpreadsheetViewport createObject() {
-        return SpreadsheetViewport.with(this.reference(), X_OFFSET, Y_OFFSET, WIDTH, HEIGHT);
+        return SpreadsheetViewport.with(this.reference(), WIDTH, HEIGHT);
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
