@@ -66,35 +66,23 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
             throw new IllegalArgumentException("CellOrLabel must be cell or label got " + cellOrLabel);
         }
 
-        final double xOffset;
-        try {
-            xOffset = Double.parseDouble(tokens[1]);
-        } catch (final NumberFormatException cause) {
-            throw new IllegalArgumentException("Invalid xOffset in " + CharSequences.quoteAndEscape(text));
-        }
+        return with(
+                cellOrLabel,
+                parseDouble(tokens[1], "xOffset", text),
+                parseDouble(tokens[2], "yOffset", text),
+                parseDouble(tokens[3], "width", text),
+                parseDouble(tokens[4], "height", text)
+        );
+    }
 
-        final double yOffset;
+    private static double parseDouble(final String token,
+                                      final String label,
+                                      final String text) {
         try {
-            yOffset = Double.parseDouble(tokens[2]);
+            return Double.parseDouble(token);
         } catch (final NumberFormatException cause) {
-            throw new IllegalArgumentException("Invalid yOffset in " + CharSequences.quoteAndEscape(text));
+            throw new IllegalArgumentException("Invalid " + label + " in " + CharSequences.quoteAndEscape(text));
         }
-
-        final double width;
-        try {
-            width = Double.parseDouble(tokens[3]);
-        } catch (final NumberFormatException cause) {
-            throw new IllegalArgumentException("Invalid width in " + CharSequences.quoteAndEscape(text));
-        }
-
-        final double height;
-        try {
-            height = Double.parseDouble(tokens[4]);
-        } catch (final NumberFormatException cause) {
-            throw new IllegalArgumentException("Invalid height in " + CharSequences.quoteAndEscape(text));
-        }
-
-        return with(cellOrLabel, xOffset, yOffset, width, height);
     }
 
     /**
