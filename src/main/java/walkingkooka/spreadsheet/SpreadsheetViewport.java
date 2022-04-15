@@ -77,7 +77,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
         try {
             yOffset = Double.parseDouble(tokens[2]);
         } catch (final NumberFormatException cause) {
-            throw new IllegalArgumentException("Invalid xOffset in " + CharSequences.quoteAndEscape(text));
+            throw new IllegalArgumentException("Invalid yOffset in " + CharSequences.quoteAndEscape(text));
         }
 
         final double width;
