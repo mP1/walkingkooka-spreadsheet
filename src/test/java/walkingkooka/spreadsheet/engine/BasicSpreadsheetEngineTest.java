@@ -7085,7 +7085,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeLeft() {
         this.rangeAndCheck(
-                "A1", 0, 0, WIDTH, HEIGHT,
+                "A1",
+                WIDTH,
+                HEIGHT,
                 "A1"
         );
     }
@@ -7093,7 +7095,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeLeft2() {
         this.rangeAndCheck(
-                "A1", 0, 0, 3 * WIDTH, HEIGHT,
+                "A1",
+                3 * WIDTH,
+                HEIGHT,
                 "A1:C1"
         );
     }
@@ -7101,7 +7105,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeLeft3() {
         this.rangeAndCheck(
-                "A1", 0, 0, WIDTH - 1, HEIGHT,
+                "A1",
+                WIDTH - 1,
+                HEIGHT,
                 "A1"
         );
     }
@@ -7109,7 +7115,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeLeft4() {
         this.rangeAndCheck(
-                "A1", 0, 0, WIDTH + 1, HEIGHT,
+                "A1",
+                WIDTH + 1,
+                HEIGHT,
                 "A1:B1"
         );
     }
@@ -7117,7 +7125,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeLeft5() {
         this.rangeAndCheck(
-                "A1", 0, 0, WIDTH * 4 - 1, HEIGHT,
+                "A1",
+                WIDTH * 4 - 1,
+                HEIGHT,
                 "A1:D1"
         );
     }
@@ -7125,103 +7135,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeLeft6() {
         this.rangeAndCheck(
-                "A1", 0, 0, WIDTH * 4 + 1, HEIGHT,
-                "A1:E1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftNegativeXOffset() {
-        this.rangeAndCheck(
-                "A1", -1, 0, WIDTH, HEIGHT,
-                "A1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftNegativeXOffset2() {
-        this.rangeAndCheck(
-                "A1", -1, 0, 3 * WIDTH, HEIGHT,
-                "A1:C1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftNegativeXOffset3() {
-        this.rangeAndCheck(
-                "A1", -1, 0, WIDTH - 1, HEIGHT,
-                "A1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftNegativeXOffset4() {
-        this.rangeAndCheck(
-                "A1", -1, 0, WIDTH + 1, HEIGHT,
-                "A1:B1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftNegativeXOffset5() {
-        this.rangeAndCheck(
-                "A1", -1, 0, WIDTH * 4 - 1, HEIGHT,
-                "A1:D1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftNegativeXOffset6() {
-        this.rangeAndCheck(
-                "A1", -1, 0, WIDTH * 4 + 1, HEIGHT,
-                "A1:E1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftPositiveXOffset() {
-        this.rangeAndCheck(
-                "A1", 1, 0, WIDTH, HEIGHT,
-                "A1:B1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftPositiveXOffset2() {
-        this.rangeAndCheck(
-                "A1", 1, 0, 3 * WIDTH, HEIGHT,
-                "A1:D1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftPositiveXOffset3() {
-        this.rangeAndCheck(
-                "A1", 1, 0, WIDTH - 1, HEIGHT,
-                "A1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftPositiveXOffset4() {
-        this.rangeAndCheck(
-                "A1", 1, 0, WIDTH + 1, HEIGHT,
-                "A1:B1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftPositiveXOffset5() {
-        this.rangeAndCheck(
-                "A1", 1, 0, WIDTH * 4 - 1, HEIGHT,
-                "A1:D1"
-        );
-    }
-
-    @Test
-    public void testRangeLeftPositiveXOffset6() {
-        this.rangeAndCheck(
-                "A1", 1, 0, WIDTH * 4 + 1, HEIGHT,
+                "A1",
+                WIDTH * 4 + 1,
+                HEIGHT,
                 "A1:E1"
         );
     }
@@ -7229,7 +7145,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidX() {
         this.rangeAndCheck(
-                "M1", 0, 0, WIDTH, HEIGHT,
+                "M1",
+                WIDTH,
+                HEIGHT,
                 "M1"
         );
     }
@@ -7237,7 +7155,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidX2() {
         this.rangeAndCheck(
-                "M1", 0, 0, 3 * WIDTH, HEIGHT,
+                "M1",
+                3 * WIDTH,
+                HEIGHT,
                 "M1:O1"
         );
     }
@@ -7245,7 +7165,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidX3() {
         this.rangeAndCheck(
-                "M1", 0, 0, WIDTH - 1, HEIGHT,
+                "M1",
+                WIDTH - 1,
+                HEIGHT,
                 "M1"
         );
     }
@@ -7253,7 +7175,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidX4() {
         this.rangeAndCheck(
-                "M1", 0, 0, WIDTH + 1, HEIGHT,
+                "M1",
+                WIDTH + 1,
+                HEIGHT,
                 "M1:N1"
         );
     }
@@ -7261,7 +7185,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidX5() {
         this.rangeAndCheck(
-                "M1", 0, 0, WIDTH * 4 - 1, HEIGHT,
+                "M1",
+                WIDTH * 4 - 1,
+                HEIGHT,
                 "M1:P1"
         );
     }
@@ -7269,103 +7195,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidX6() {
         this.rangeAndCheck(
-                "M1", 0, 0, WIDTH * 4 + 1, HEIGHT,
-                "M1:Q1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXNegativeXOffset() {
-        this.rangeAndCheck(
-                "M1", -1, 0, WIDTH, HEIGHT,
-                "L1:M1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXNegativeXOffset2() {
-        this.rangeAndCheck(
-                "M1", -1, 0, 3 * WIDTH, HEIGHT,
-                "L1:O1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXNegativeXOffset3() {
-        this.rangeAndCheck(
-                "M1", -1, 0, WIDTH - 1, HEIGHT,
-                "L1:M1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXNegativeXOffset4() {
-        this.rangeAndCheck(
-                "M1", -1, 0, WIDTH + 1, HEIGHT,
-                "L1:M1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXNegativeXOffset5() {
-        this.rangeAndCheck(
-                "M1", -1, 0, WIDTH * 4 - 1, HEIGHT,
-                "L1:P1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXNegativeXOffset6() {
-        this.rangeAndCheck(
-                "M1", -1, 0, WIDTH * 4 + 1, HEIGHT,
-                "L1:P1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXPositiveXOffset() {
-        this.rangeAndCheck(
-                "M1", 1, 0, WIDTH, HEIGHT,
-                "M1:N1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXPositiveXOffset2() {
-        this.rangeAndCheck(
-                "M1", 1, 0, 3 * WIDTH, HEIGHT,
-                "M1:P1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXPositiveXOffset3() {
-        this.rangeAndCheck(
-                "M1", 1, 0, WIDTH - 1, HEIGHT,
-                "M1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXPositiveXOffset4() {
-        this.rangeAndCheck(
-                "M1", 1, 0, WIDTH + 1, HEIGHT,
-                "M1:N1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXPositiveXOffset5() {
-        this.rangeAndCheck(
-                "M1", 1, 0, WIDTH * 4 - 1, HEIGHT,
-                "M1:P1"
-        );
-    }
-
-    @Test
-    public void testRangeMidXPositiveXOffset6() {
-        this.rangeAndCheck(
-                "M1", 1, 0, WIDTH * 4 + 1, HEIGHT,
+                "M1",
+                WIDTH * 4 + 1,
+                HEIGHT,
                 "M1:Q1"
         );
     }
@@ -7375,7 +7207,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeRight() {
         this.rangeAndCheck(
-                "XFD1", 0, 0, WIDTH, HEIGHT,
+                "XFD1",
+                WIDTH,
+                HEIGHT,
                 "XFD1"
         );
     }
@@ -7383,7 +7217,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeRight2() {
         this.rangeAndCheck(
-                "XFD1", 0, 0, 3 * WIDTH, HEIGHT,
+                "XFD1",
+                3 * WIDTH,
+                HEIGHT,
                 "XFB1:XFD1"
         );
     }
@@ -7391,7 +7227,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeRight3() {
         this.rangeAndCheck(
-                "XFD1", 0, 0, WIDTH - 1, HEIGHT,
+                "XFD1",
+                WIDTH - 1,
+                HEIGHT,
                 "XFD1"
         );
     }
@@ -7399,7 +7237,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeRight4() {
         this.rangeAndCheck(
-                "XFD1", 0, 0, WIDTH + 1, HEIGHT,
+                "XFD1",
+                WIDTH + 1,
+                HEIGHT,
                 "XFC1:XFD1"
         );
     }
@@ -7407,7 +7247,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeRight5() {
         this.rangeAndCheck(
-                "XFD1", 0, 0, WIDTH * 4 - 1, HEIGHT,
+                "XFD1",
+                WIDTH * 4 - 1,
+                HEIGHT,
                 "XFA1:XFD1"
         );
     }
@@ -7415,295 +7257,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeRight6() {
         this.rangeAndCheck(
-                "XFD1", 0, 0, WIDTH * 4 + 1, HEIGHT,
-                "XEZ1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset() {
-        this.rangeAndCheck(
-                "XFD1", -1, 0, WIDTH, HEIGHT,
-                "XFC1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset2() {
-        this.rangeAndCheck(
-                "XFD1", -1, 0, 3 * WIDTH, HEIGHT,
-                "XFA1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset3() {
-        this.rangeAndCheck(
-                "XFD1", -1, 0, WIDTH - 1, HEIGHT,
-                "XFC1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset4() {
-        this.rangeAndCheck(
-                "XFD1", -1, 0, WIDTH + 1, HEIGHT,
-                "XFC1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset5() {
-        this.rangeAndCheck(
-                "XFD1", -1, 0, WIDTH * 4 - 1, HEIGHT,
-                "XEZ1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset6() {
-        this.rangeAndCheck(
-                "XFD1", -1, 0, WIDTH * 4 + 1, HEIGHT,
-                "XEZ1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset() {
-        this.rangeAndCheck(
-                "XFD1", 1, 0, WIDTH, HEIGHT,
-                "XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset2() {
-        this.rangeAndCheck(
-                "XFD1", 1, 0, 3 * WIDTH, HEIGHT,
-                "XFB1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset3() {
-        this.rangeAndCheck(
-                "XFD1", 1, 0, WIDTH - 1, HEIGHT,
-                "XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset4() {
-        this.rangeAndCheck(
-                "XFD1", 1, 0, WIDTH + 1, HEIGHT,
-                "XFC1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset5() {
-        this.rangeAndCheck(
-                "XFD1", 1, 0, WIDTH * 4 - 1, HEIGHT,
-                "XFA1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset6() {
-        this.rangeAndCheck(
-                "XFD1", 1, 0, WIDTH * 4 + 1, HEIGHT,
-                "XEZ1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset11() {
-        this.rangeAndCheck(
-                "XFD1", -2 * WIDTH, 0, WIDTH, HEIGHT,
-                "XFB1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset12() {
-        this.rangeAndCheck(
-                "XFD1", -2 * WIDTH, 0, 3 * WIDTH, HEIGHT,
-                "XFB1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset13() {
-        this.rangeAndCheck(
-                "XFD1", -2 * WIDTH, 0, WIDTH - 1, HEIGHT,
-                "XFB1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset14() {
-        this.rangeAndCheck(
-                "XFD1", -2 * WIDTH, 0, WIDTH + 1, HEIGHT,
-                "XFB1:XFC1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset15() {
-        this.rangeAndCheck(
-                "XFD1", -2 * WIDTH, 0, WIDTH * 4 - 1, HEIGHT,
-                "XFA1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset16() {
-        this.rangeAndCheck(
-                "XFD1", -2 * WIDTH, 0, WIDTH * 4 + 1, HEIGHT,
-                "XEZ1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset11() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH, 0, WIDTH, HEIGHT,
-                "XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset12() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH, 0, 3 * WIDTH, HEIGHT,
-                "XFB1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset13() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH, 0, WIDTH - 1, HEIGHT,
-                "XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset14() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH, 0, WIDTH + 1, HEIGHT,
-                "XFC1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset15() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH, 0, WIDTH * 4 - 1, HEIGHT,
-                "XFA1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset16() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH, 0, WIDTH * 4 + 1, HEIGHT,
-                "XEZ1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset21() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + -1, 0, WIDTH, HEIGHT,
-                "XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset22() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + -1, 0, 3 * WIDTH, HEIGHT,
-                "XFB1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset23() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + -1, 0, WIDTH - 1, HEIGHT,
-                "XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset24() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + -1, 0, WIDTH + 1, HEIGHT,
-                "XFC1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset25() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + -1, 0, WIDTH * 4 - 1, HEIGHT,
-                "XFA1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightNegativeXOffset26() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + -1, 0, WIDTH * 4 + 1, HEIGHT,
-                "XEZ1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset21() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + 1, 0, WIDTH, HEIGHT,
-                "XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset22() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + 1, 0, 3 * WIDTH, HEIGHT,
-                "XFB1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset23() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + 1, 0, WIDTH - 1, HEIGHT,
-                "XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset24() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + 1, 0, WIDTH + 1, HEIGHT,
-                "XFC1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset25() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + 1, 0, WIDTH * 4 - 1, HEIGHT,
-                "XFA1:XFD1"
-        );
-    }
-
-    @Test
-    public void testRangeRightPositiveXOffset26() {
-        this.rangeAndCheck(
-                "XFD1", 2 * WIDTH + 1, 0, WIDTH * 4 + 1, HEIGHT,
+                "XFD1",
+                WIDTH * 4 + 1,
+                HEIGHT,
                 "XEZ1:XFD1"
         );
     }
@@ -7713,7 +7269,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeTop() {
         this.rangeAndCheck(
-                "A1", 0, 0, WIDTH, HEIGHT,
+                "A1",
+                WIDTH,
+                HEIGHT,
                 "A1"
         );
     }
@@ -7721,7 +7279,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeTop2() {
         this.rangeAndCheck(
-                "A1", 0, 0, WIDTH, 3 * HEIGHT,
+                "A1",
+                WIDTH,
+                3 * HEIGHT,
                 "A1:A3"
         );
     }
@@ -7729,7 +7289,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeTop3() {
         this.rangeAndCheck(
-                "A1", 0, 0, WIDTH, HEIGHT - 1,
+                "A1",
+                WIDTH,
+                HEIGHT - 1,
                 "A1"
         );
     }
@@ -7737,7 +7299,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeTop4() {
         this.rangeAndCheck(
-                "A1", 0, 0, WIDTH, HEIGHT + 1,
+                "A1",
+                WIDTH,
+                HEIGHT + 1,
                 "A1:A2"
         );
     }
@@ -7745,7 +7309,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeTop5() {
         this.rangeAndCheck(
-                "A1", 0, 0, WIDTH, HEIGHT * 4 - 1,
+                "A1",
+                WIDTH,
+                HEIGHT * 4 - 1,
                 "A1:A4"
         );
     }
@@ -7753,103 +7319,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeTop6() {
         this.rangeAndCheck(
-                "A1", 0, 0, WIDTH, HEIGHT * 4 + 1,
-                "A1:A5"
-        );
-    }
-
-    @Test
-    public void testRangeTopNegativeYOffset() {
-        this.rangeAndCheck(
-                "A1", 0, -1, WIDTH, HEIGHT,
-                "A1"
-        );
-    }
-
-    @Test
-    public void testRangeTopNegativeYOffset2() {
-        this.rangeAndCheck(
-                "A1", 0, -1, WIDTH, 3 * HEIGHT,
-                "A1:A3"
-        );
-    }
-
-    @Test
-    public void testRangeTopNegativeYOffset3() {
-        this.rangeAndCheck(
-                "A1", 0, -1, WIDTH, HEIGHT - 1,
-                "A1"
-        );
-    }
-
-    @Test
-    public void testRangeTopNegativeYOffset4() {
-        this.rangeAndCheck(
-                "A1", 0, -1, WIDTH, HEIGHT + 1,
-                "A1:A2"
-        );
-    }
-
-    @Test
-    public void testRangeTopNegativeYOffset5() {
-        this.rangeAndCheck(
-                "A1", 0, -1, WIDTH, HEIGHT * 4 - 1,
-                "A1:A4"
-        );
-    }
-
-    @Test
-    public void testRangeTopNegativeYOffset6() {
-        this.rangeAndCheck(
-                "A1", 0, -1, WIDTH, HEIGHT * 4 + 1,
-                "A1:A5"
-        );
-    }
-
-    @Test
-    public void testRangeTopPositiveYOffset() {
-        this.rangeAndCheck(
-                "A1", 0, 1, WIDTH, HEIGHT,
-                "A1:A2"
-        );
-    }
-
-    @Test
-    public void testRangeTopPositiveYOffset2() {
-        this.rangeAndCheck(
-                "A1", 0, 1, WIDTH, 3 * HEIGHT,
-                "A1:A4"
-        );
-    }
-
-    @Test
-    public void testRangeTopPositiveYOffset3() {
-        this.rangeAndCheck(
-                "A1", 0, 1, WIDTH, HEIGHT - 1,
-                "A1"
-        );
-    }
-
-    @Test
-    public void testRangeTopPositiveYOffset4() {
-        this.rangeAndCheck(
-                "A1", 0, 1, WIDTH, HEIGHT + 1,
-                "A1:A2"
-        );
-    }
-
-    @Test
-    public void testRangeTopPositiveYOffset5() {
-        this.rangeAndCheck(
-                "A1", 0, 1, WIDTH, HEIGHT * 4 - 1,
-                "A1:A4"
-        );
-    }
-
-    @Test
-    public void testRangeTopPositiveYOffset6() {
-        this.rangeAndCheck(
-                "A1", 0, 1, WIDTH, HEIGHT * 4 + 1,
+                "A1",
+                WIDTH,
+                HEIGHT * 4 + 1,
                 "A1:A5"
         );
     }
@@ -7857,7 +7329,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidY() {
         this.rangeAndCheck(
-                "A10", 0, 0, WIDTH, HEIGHT,
+                "A10",
+                WIDTH,
+                HEIGHT,
                 "A10"
         );
     }
@@ -7865,7 +7339,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidY2() {
         this.rangeAndCheck(
-                "A10", 0, 0, WIDTH, 3 * HEIGHT,
+                "A10",
+                WIDTH,
+                3 * HEIGHT,
                 "A10:A12"
         );
     }
@@ -7873,7 +7349,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidY3() {
         this.rangeAndCheck(
-                "A10", 0, 0, WIDTH, HEIGHT - 1,
+                "A10",
+                WIDTH,
+                HEIGHT - 1,
                 "A10"
         );
     }
@@ -7881,7 +7359,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidY4() {
         this.rangeAndCheck(
-                "A10", 0, 0, WIDTH, HEIGHT + 1,
+                "A10",
+                WIDTH,
+                HEIGHT + 1,
                 "A10:A11"
         );
     }
@@ -7889,7 +7369,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidY5() {
         this.rangeAndCheck(
-                "A10", 0, 0, WIDTH, HEIGHT * 4 - 1,
+                "A10",
+                WIDTH,
+                HEIGHT * 4 - 1,
                 "A10:A13"
         );
     }
@@ -7897,103 +7379,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeMidY6() {
         this.rangeAndCheck(
-                "A10", 0, 0, WIDTH, HEIGHT * 4 + 1,
-                "A10:A14"
-        );
-    }
-
-    @Test
-    public void testRangeMidYNegativeYOffset() {
-        this.rangeAndCheck(
-                "A10", 0, -1, WIDTH, HEIGHT,
-                "A9:A10"
-        );
-    }
-
-    @Test
-    public void testRangeMidYNegativeYOffset2() {
-        this.rangeAndCheck(
-                "A10", 0, -1, WIDTH, 3 * HEIGHT,
-                "A9:A12"
-        );
-    }
-
-    @Test
-    public void testRangeMidYNegativeYOffset3() {
-        this.rangeAndCheck(
-                "A10", 0, -1, WIDTH, HEIGHT - 1,
-                "A9:A10"
-        );
-    }
-
-    @Test
-    public void testRangeMidYNegativeYOffset4() {
-        this.rangeAndCheck(
-                "A10", 0, -1, WIDTH, HEIGHT + 1,
-                "A9:A10"
-        );
-    }
-
-    @Test
-    public void testRangeMidYNegativeYOffset5() {
-        this.rangeAndCheck(
-                "A10", 0, -1, WIDTH, HEIGHT * 4 - 1,
-                "A9:A13"
-        );
-    }
-
-    @Test
-    public void testRangeMidYNegativeYOffset6() {
-        this.rangeAndCheck(
-                "A10", 0, -1, WIDTH, HEIGHT * 4 + 1,
-                "A9:A13"
-        );
-    }
-
-    @Test
-    public void testRangeMidYPositiveYOffset() {
-        this.rangeAndCheck(
-                "A10", 0, 1, WIDTH, HEIGHT,
-                "A10:A11"
-        );
-    }
-
-    @Test
-    public void testRangeMidYPositiveYOffset2() {
-        this.rangeAndCheck(
-                "A10", 0, 1, WIDTH, 3 * HEIGHT,
-                "A10:A13"
-        );
-    }
-
-    @Test
-    public void testRangeMidYPositiveYOffset3() {
-        this.rangeAndCheck(
-                "A10", 0, 1, WIDTH, HEIGHT - 1,
-                "A10"
-        );
-    }
-
-    @Test
-    public void testRangeMidYPositiveYOffset4() {
-        this.rangeAndCheck(
-                "A10", 0, 1, WIDTH, HEIGHT + 1,
-                "A10:A11"
-        );
-    }
-
-    @Test
-    public void testRangeMidYPositiveYOffset5() {
-        this.rangeAndCheck(
-                "A10", 0, 1, WIDTH, HEIGHT * 4 - 1,
-                "A10:A13"
-        );
-    }
-
-    @Test
-    public void testRangeMidYPositiveYOffset6() {
-        this.rangeAndCheck(
-                "A10", 0, 1, WIDTH, HEIGHT * 4 + 1,
+                "A10",
+                WIDTH,
+                HEIGHT * 4 + 1,
                 "A10:A14"
         );
     }
@@ -8003,7 +7391,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeBottom() {
         this.rangeAndCheck(
-                "A1048576", 0, 0, WIDTH, HEIGHT,
+                "A1048576",
+                WIDTH,
+                HEIGHT,
                 "A1048576"
         );
     }
@@ -8011,7 +7401,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeBottom2() {
         this.rangeAndCheck(
-                "A1048576", 0, 0, WIDTH, 3 * HEIGHT,
+                "A1048576",
+                WIDTH,
+                3 * HEIGHT,
                 "A1048574:A1048576"
         );
     }
@@ -8019,7 +7411,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeBottom3() {
         this.rangeAndCheck(
-                "A1048576", 0, 0, WIDTH, HEIGHT - 1,
+                "A1048576",
+                WIDTH,
+                HEIGHT - 1,
                 "A1048576"
         );
     }
@@ -8027,7 +7421,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeBottom4() {
         this.rangeAndCheck(
-                "A1048576", 0, 0, WIDTH, HEIGHT + 1,
+                "A1048576",
+                WIDTH,
+                HEIGHT + 1,
                 "A1048575:A1048576"
         );
     }
@@ -8035,7 +7431,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeBottom5() {
         this.rangeAndCheck(
-                "A1048576", 0, 0, WIDTH, HEIGHT * 4 - 1,
+                "A1048576",
+                WIDTH,
+                HEIGHT * 4 - 1,
                 "A1048573:A1048576"
         );
     }
@@ -8043,295 +7441,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeBottom6() {
         this.rangeAndCheck(
-                "A1048576", 0, 0, WIDTH, HEIGHT * 4 + 1,
-                "A1048572:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset() {
-        this.rangeAndCheck(
-                "A1048576", 0, -1, WIDTH, HEIGHT,
-                "A1048575:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset2() {
-        this.rangeAndCheck(
-                "A1048576", 0, -1, WIDTH, 3 * HEIGHT,
-                "A1048573:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset3() {
-        this.rangeAndCheck(
-                "A1048576", 0, -1, WIDTH, HEIGHT - 1,
-                "A1048575:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset4() {
-        this.rangeAndCheck(
-                "A1048576", 0, -1, WIDTH, HEIGHT + 1,
-                "A1048575:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset5() {
-        this.rangeAndCheck(
-                "A1048576", 0, -1, WIDTH, HEIGHT * 4 - 1,
-                "A1048572:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset6() {
-        this.rangeAndCheck(
-                "A1048576", 0, -1, WIDTH, HEIGHT * 4 + 1,
-                "A1048572:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset() {
-        this.rangeAndCheck(
-                "A1048576", 0, 1, WIDTH, HEIGHT,
-                "A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset2() {
-        this.rangeAndCheck(
-                "A1048576", 0, 1, WIDTH, 3 * HEIGHT,
-                "A1048574:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset3() {
-        this.rangeAndCheck(
-                "A1048576", 0, 1, WIDTH, HEIGHT - 1,
-                "A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset4() {
-        this.rangeAndCheck(
-                "A1048576", 0, 1, WIDTH, HEIGHT + 1,
-                "A1048575:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset5() {
-        this.rangeAndCheck(
-                "A1048576", 0, 1, WIDTH, HEIGHT * 4 - 1,
-                "A1048573:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset6() {
-        this.rangeAndCheck(
-                "A1048576", 0, 1, WIDTH, HEIGHT * 4 + 1,
-                "A1048572:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset11() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT, WIDTH, HEIGHT,
-                "A1048574"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset12() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT, WIDTH, 3 * HEIGHT,
-                "A1048574:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset13() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT, WIDTH, HEIGHT - 1,
-                "A1048574"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset14() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT, WIDTH, HEIGHT + 1,
-                "A1048575:A1048574"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset15() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT, WIDTH, HEIGHT * 4 - 1,
-                "A1048573:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset16() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT, WIDTH, HEIGHT * 4 + 1,
-                "A1048572:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset11() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT, WIDTH, HEIGHT,
-                "A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset12() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT, WIDTH, 3 * HEIGHT,
-                "A1048574:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset13() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT, WIDTH, HEIGHT - 1,
-                "A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset14() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT, WIDTH, HEIGHT + 1,
-                "A1048575:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset15() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT, WIDTH, HEIGHT * 4 - 1,
-                "A1048573:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset16() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT, WIDTH, HEIGHT * 4 + 1,
-                "A1048572:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset21() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT + -1, WIDTH, HEIGHT,
-                "A1048573:A1048574"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset22() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT + -1, WIDTH, 3 * HEIGHT,
-                "A1048573:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset23() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT + -1, WIDTH, HEIGHT - 1,
-                "A1048573:A1048574"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset24() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT + -1, WIDTH, HEIGHT + 1,
-                "A1048573:A1048574"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset25() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT + -1, WIDTH, HEIGHT * 4 - 1,
-                "A1048572:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomNegativeYOffset26() {
-        this.rangeAndCheck(
-                "A1048576", 0, -2 * HEIGHT + -1, WIDTH, HEIGHT * 4 + 1,
-                "A1048572:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset21() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT + 1, WIDTH, HEIGHT,
-                "A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset22() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT + 1, WIDTH, 3 * HEIGHT,
-                "A1048574:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset23() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT + 1, WIDTH, HEIGHT - 1,
-                "A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset24() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT + 1, WIDTH, HEIGHT + 1,
-                "A1048575:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset25() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT + 1, WIDTH, HEIGHT * 4 - 1,
-                "A1048573:A1048576"
-        );
-    }
-
-    @Test
-    public void testRangeBottomPositiveYOffset26() {
-        this.rangeAndCheck(
-                "A1048576", 0, 2 * HEIGHT + 1, WIDTH, HEIGHT * 4 + 1,
+                "A1048576",
+                WIDTH,
+                HEIGHT * 4 + 1,
                 "A1048572:A1048576"
         );
     }
@@ -8341,7 +7453,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellWithin() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("B2"),
                 "B2:D4"
         );
@@ -8350,7 +7464,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellWithin2() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("C3"),
                 "B2:D4"
         );
@@ -8359,7 +7475,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellWithin3() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("D4"),
                 "B2:D4"
         );
@@ -8368,7 +7486,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeWithin() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B2:D4"),
                 "B2:D4"
         );
@@ -8377,7 +7497,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeWithin2() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B2:B3"),
                 "B2:D4"
         );
@@ -8386,7 +7508,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeWithin3() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("C3:D4"),
                 "B2:D4"
         );
@@ -8395,7 +7519,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnWithin() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("B"),
                 "B2:D4"
         );
@@ -8404,7 +7530,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnWithin2() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("B:D"),
                 "B2:D4"
         );
@@ -8413,7 +7541,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnWithin3() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("C:D"),
                 "B2:D4"
         );
@@ -8422,7 +7552,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionRowWithin() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("2"),
                 "B2:D4"
         );
@@ -8431,7 +7563,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionRowWithin2() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("2:4"),
                 "B2:D4"
         );
@@ -8440,7 +7574,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionRowWithin3() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("3:4"),
                 "B2:D4"
         );
@@ -8451,7 +7587,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnRangeAll() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("B:D"),
                 "B2:D4"
         );
@@ -8460,7 +7598,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnRangeAllLeft() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("A:D"),
                 "B2:D4"
         );
@@ -8469,7 +7609,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnRangeAllRight() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("B:E"),
                 "B2:D4"
         );
@@ -8478,7 +7620,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnRangeAllLeftAndRight() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("A:E"),
                 "B2:D4"
         );
@@ -8487,7 +7631,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionRowRangeAll() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("2:4"),
                 "B2:D4"
         );
@@ -8496,7 +7642,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionRowRangeAllAbove() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("1:4"),
                 "B2:D4"
         );
@@ -8505,7 +7653,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionRowRangeAllBelow() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("2:5"),
                 "B2:D4"
         );
@@ -8514,7 +7664,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionRowRangeAllAboveAndBelow() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("1:5"),
                 "B2:D4"
         );
@@ -8523,7 +7675,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeAll() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B2:D4"),
                 "B2:D4"
         );
@@ -8532,7 +7686,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeAllAbove() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B1:D4"),
                 "B2:D4"
         );
@@ -8541,7 +7697,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeAllBelow() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B2:D5"),
                 "B2:D4"
         );
@@ -8550,7 +7708,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeAllLeft() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("A2:D4"),
                 "B2:D4"
         );
@@ -8559,7 +7719,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeAllRight() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B2:E4"),
                 "B2:D4"
         );
@@ -8568,7 +7730,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeAll2() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("A1:E5"),
                 "B2:D4"
         );
@@ -8577,7 +7741,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeAll3() {
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("A1:I9"),
                 "C3:E5"
         );
@@ -8588,7 +7754,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellLeft() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("A2"),
                 "A2:C4"
         );
@@ -8597,7 +7765,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellLeft2() {
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("A3"),
                 "A3:C5"
         );
@@ -8607,7 +7777,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionCellRight() {
         // B2:D4 -> 1
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("E2"),
                 "C2:E4"
         );
@@ -8618,7 +7790,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 2
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("F2"),
                 "D2:F4"
         );
@@ -8628,7 +7802,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionCellTop() {
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("B1"),
                 "B1:D3"
         );
@@ -8637,7 +7813,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellTop2() {
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("C1"),
                 "C1:E3"
         );
@@ -8647,7 +7825,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionCellBottom() {
         // B2:D4 -> 1
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("B5"),
                 "B3:D5"
         );
@@ -8658,7 +7838,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 2
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("B6"),
                 "B4:D6"
         );
@@ -8668,7 +7850,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionCellTopLeft() {
         // C3:E5
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("A2"),
                 "A2:C4"
         );
@@ -8678,7 +7862,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionCellBottomRight() {
         // C3:E5
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCell("G6"),
                 "E4:G6"
         );
@@ -8687,7 +7873,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnLeft() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("A"),
                 "A2:C4"
         );
@@ -8696,7 +7884,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnLeft2() {
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("A"),
                 "A3:C5"
         );
@@ -8706,7 +7896,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionColumnRight() {
         // B2:D4 -> 1
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("E"),
                 "C2:E4"
         );
@@ -8717,7 +7909,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 2
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("F"),
                 "D2:F4"
         );
@@ -8727,7 +7921,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionRowTop() {
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRow("1"),
                 "B1:D3"
         );
@@ -8736,7 +7932,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionRowTop2() {
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRow("1"),
                 "C1:E3"
         );
@@ -8746,7 +7944,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionRowBottom() {
         // B2:D4 -> 1
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRow("5"),
                 "B3:D5"
         );
@@ -8757,7 +7957,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 2
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRow("6"),
                 "B4:D6"
         );
@@ -8766,7 +7968,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnReferenceLeft() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("A"),
                 "A2:C4"
         );
@@ -8775,7 +7979,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnReferenceLeft2() {
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("A"),
                 "A3:C5"
         );
@@ -8784,7 +7990,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionColumnReferenceLeft3() {
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("A:B"),
                 "A3:C5"
         );
@@ -8794,7 +8002,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionColumnReferenceReferenceRight() {
         // B2:D4 -> 1
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("E"),
                 "C2:E4"
         );
@@ -8804,7 +8014,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionColumnReferenceReferenceRight2() {
         // B2:D4 -> 1
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("E:F"),
                 "D2:F4"
         );
@@ -8815,7 +8027,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 2
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("F"),
                 "D2:F4"
         );
@@ -8826,7 +8040,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 2
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("F:G"),
                 "E2:G4"
         );
@@ -8836,7 +8052,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionRowRangeTop() {
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("1"),
                 "B1:D3"
         );
@@ -8845,7 +8063,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionRowRangeTop2() {
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("1"),
                 "C1:E3"
         );
@@ -8854,7 +8074,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionRowRangeTop3() {
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("1:2"),
                 "C1:E3"
         );
@@ -8864,7 +8086,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionRowRangeBottom() {
         // B2:D4 -> 1
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("5"),
                 "B3:D5"
         );
@@ -8875,7 +8099,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 2
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("6"),
                 "B4:D6"
         );
@@ -8886,7 +8112,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 2
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseRowRange("6:7"),
                 "B5:D7"
         );
@@ -8895,7 +8123,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeLeft() {
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("A2"),
                 "A2:C4"
         );
@@ -8904,7 +8134,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeLeft2() {
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("A3"),
                 "A3:C5"
         );
@@ -8914,7 +8146,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionCellRangeRight() {
         // B2:D4 -> 1
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("E2"),
                 "C2:E4"
         );
@@ -8925,7 +8159,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 2
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("F2"),
                 "D2:F4"
         );
@@ -8935,7 +8171,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionCellRangeTop() {
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B1"),
                 "B1:D3"
         );
@@ -8944,7 +8182,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeSelectionCellRangeTop2() {
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("C1"),
                 "C1:E3"
         );
@@ -8954,7 +8194,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionCellRangeBottom() {
         // B2:D4 -> 1
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B5"),
                 "B3:D5"
         );
@@ -8965,7 +8207,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 2
         // BCD:234
         this.rangeAndCheck(
-                "B2", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "B2",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B6"),
                 "B4:D6"
         );
@@ -8975,7 +8219,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionCellRangeTopLeft() {
         // C3:E5
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("A2"),
                 "A2:C4"
         );
@@ -8985,7 +8231,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeSelectionCellRangeBottomRight() {
         // C3:E5
         this.rangeAndCheck(
-                "C3", 0, 0, WIDTH * 3, HEIGHT * 3,
+                "C3",
+                WIDTH * 3,
+                HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("G6"),
                 "E4:G6"
         );
@@ -8997,8 +8245,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeColumnHidden() {
         final SpreadsheetViewport viewport = SpreadsheetViewport.with(
                 SpreadsheetSelection.parseCell("A1"),
-                0,
-                0,
                 WIDTH * 4,
                 HEIGHT * 2
         );
@@ -9042,8 +8288,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRangeRowHidden() {
         final SpreadsheetViewport viewport = SpreadsheetViewport.with(
                 SpreadsheetSelection.parseCell("A1"),
-                0,
-                0,
                 WIDTH * 4,
                 HEIGHT * 2
         );
@@ -9086,15 +8330,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // range helpers....................................................................................................
 
     private void rangeAndCheck(final String cellOrLabel,
-                               final double xOffset,
-                               final double yOffset,
                                final double width,
                                final double height,
                                final String range) {
         this.rangeAndCheck(
                 cellOrLabel,
-                xOffset,
-                yOffset,
                 width,
                 height,
                 SpreadsheetEngine.NO_SELECTION,
@@ -9103,16 +8343,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private void rangeAndCheck(final String cellOrLabel,
-                               final double xOffset,
-                               final double yOffset,
                                final double width,
                                final double height,
                                final SpreadsheetSelection selection,
                                final String range) {
         this.rangeAndCheck(
                 cellOrLabel,
-                xOffset,
-                yOffset,
                 width,
                 height,
                 Optional.of(selection),
@@ -9121,8 +8357,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private void rangeAndCheck(final String cellOrLabel,
-                               final double xOffset,
-                               final double yOffset,
                                final double width,
                                final double height,
                                final Optional<SpreadsheetSelection> selection,
@@ -9130,8 +8364,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.rangeAndCheck(
                 SpreadsheetViewport.with(
                         SpreadsheetSelection.parseCellOrLabel(cellOrLabel),
-                        xOffset,
-                        yOffset,
                         width,
                         height
                 ),

@@ -49,10 +49,10 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
         final String[] tokens = text.split(SEPARATOR.string());
         switch (tokens.length) {
-            case 5:
+            case 3:
                 break;
             default:
-                throw new IllegalArgumentException("Expected 5 tokens in " + CharSequences.quoteAndEscape(text));
+                throw new IllegalArgumentException("Expected 3 tokens in " + CharSequences.quoteAndEscape(text));
         }
 
         final SpreadsheetCellReferenceOrLabelName cellOrLabel;
@@ -68,10 +68,8 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
         return with(
                 cellOrLabel,
-                parseDouble(tokens[1], "xOffset", text),
-                parseDouble(tokens[2], "yOffset", text),
-                parseDouble(tokens[3], "width", text),
-                parseDouble(tokens[4], "height", text)
+                parseDouble(tokens[1], "width", text),
+                parseDouble(tokens[2], "height", text)
         );
     }
 
@@ -89,8 +87,6 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
      * Factory that creates a new {@link SpreadsheetViewport}.
      */
     public static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName cellOrLabel,
-                                           final double xOffset,
-                                           final double yOffset,
                                            final double width,
                                            final double height) {
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
@@ -100,18 +96,14 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
         if (height < 0) {
             throw new IllegalArgumentException("Invalid height " + width + " < 0");
         }
-        return new SpreadsheetViewport(cellOrLabel, xOffset, yOffset, width, height);
+        return new SpreadsheetViewport(cellOrLabel, width, height);
     }
 
     private SpreadsheetViewport(final SpreadsheetCellReferenceOrLabelName cellOrLabel,
-                                final double xOffset,
-                                final double yOffset,
                                 final double width,
                                 final double height) {
         super();
         this.cellOrLabel = cellOrLabel.toRelative();
-        this.xOffset = xOffset;
-        this.yOffset = yOffset;
         this.width = width;
         this.height = height;
     }
@@ -134,18 +126,6 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
     private final SpreadsheetCellReferenceOrLabelName cellOrLabel;
 
-    public double xOffset() {
-        return this.xOffset;
-    }
-
-    private final double xOffset;
-
-    public double yOffset() {
-        return this.yOffset;
-    }
-
-    private final double yOffset;
-
     public double width() {
         return this.width;
     }
@@ -164,8 +144,6 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     public int hashCode() {
         return Objects.hash(
                 this.cellOrLabel,
-                this.xOffset,
-                this.yOffset,
                 this.width,
                 this.height
         );
@@ -180,8 +158,6 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
     private boolean equals0(final SpreadsheetViewport other) {
         return this.cellOrLabel.equals(other.cellOrLabel) &&
-                this.xOffset == other.xOffset &&
-                this.yOffset == other.yOffset &&
                 this.width == other.width &&
                 this.height == other.height;
     }
@@ -189,10 +165,6 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     @Override
     public String toString() {
         return this.cellOrLabel.toString() +
-                SEPARATOR +
-                toStringWithoutTrailingZero(this.xOffset) +
-                SEPARATOR +
-                toStringWithoutTrailingZero(this.yOffset) +
                 SEPARATOR +
                 toStringWithoutTrailingZero(this.width) +
                 SEPARATOR +

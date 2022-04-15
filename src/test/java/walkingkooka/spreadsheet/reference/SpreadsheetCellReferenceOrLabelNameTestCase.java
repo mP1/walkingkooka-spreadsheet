@@ -41,17 +41,13 @@ public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<S extends Spre
 
     @Test
     public final void testViewport() {
-        final double xOffset = 10.5;
-        final double yOffset = 20.5;
         final double width = 30.5;
         final double height = 40.5;
         final S selection = this.createSelection();
 
-        final SpreadsheetViewport viewport = selection.viewport(xOffset, yOffset, width, height);
+        final SpreadsheetViewport viewport = selection.viewport(width, height);
 
         this.checkEquals(selection.toRelative(), viewport.cellOrLabel(), "cellOrLabel");
-        this.checkEquals(xOffset, viewport.xOffset(), "xOffset");
-        this.checkEquals(yOffset, viewport.yOffset(), "yOffset");
         this.checkEquals(width, viewport.width(), "width");
         this.checkEquals(height, viewport.height(), "height");
     }
