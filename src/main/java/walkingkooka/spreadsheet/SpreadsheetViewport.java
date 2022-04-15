@@ -182,7 +182,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
     @Override
     public int compareTo(final SpreadsheetViewport other) {
-        throw new UnsupportedOperationException(); // reuired by HateosHandler
+        throw new UnsupportedOperationException(); // required by HateosHandler
     }
 
     static {
