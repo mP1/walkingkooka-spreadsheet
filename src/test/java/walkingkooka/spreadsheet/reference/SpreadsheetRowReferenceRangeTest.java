@@ -487,7 +487,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
                                final boolean expected) {
         this.checkEquals(
                 expected,
-                this.parseString(range),
+                this.parseString(range).isAll(),
                 () -> range + " isAll"
         );
     }
