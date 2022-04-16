@@ -56,6 +56,7 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     /**
      * Only returns true if this is the first column or row.
      */
+    @Override
     public final boolean isFirst() {
         return this.value == 0;
     }
@@ -63,6 +64,7 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     /**
      * Only returns true if this is the last column or row.
      */
+    @Override
     public final boolean isLast() {
         return this.value == this.max();
     }
