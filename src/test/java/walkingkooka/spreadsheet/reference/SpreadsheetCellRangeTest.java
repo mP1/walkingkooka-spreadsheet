@@ -166,6 +166,29 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         this.isSingleCellAndCheck(range, false);
     }
 
+    // isAll..........................................................................................................
+
+    @Test
+    public void testIsAllA1() {
+        this.isAllAndCheck("A1", false);
+    }
+
+    @Test
+    public void testIsAll2() {
+        this.isAllAndCheck(
+                "A1:" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
+                true
+        );
+    }
+
+    @Test
+    public void testIsAll3() {
+        this.isAllAndCheck(
+                "B2:" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
+                false
+        );
+    }
+
     // isFirst..........................................................................................................
 
     @Test

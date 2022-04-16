@@ -439,6 +439,11 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     public abstract SpreadsheetSelection simplify();
 
     /**
+     * Returns true if this selection matches everything. Non range selections will always return false.
+     */
+    public abstract boolean isAll();
+
+    /**
      * Returns true if this selection is the first, eg A1, column A or row 1.
      */
     public abstract boolean isFirst();

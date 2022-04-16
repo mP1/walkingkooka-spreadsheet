@@ -111,6 +111,13 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.checkRow(different, differentRow);
     }
 
+    // isAll..........................................................................................................
+
+    @Test
+    public void testIsAll() {
+        this.isAllAndCheck("A1", false);
+    }
+
     // isFirst..........................................................................................................
 
     @Test

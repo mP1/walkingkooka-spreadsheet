@@ -476,15 +476,6 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
-    private void isAllAndCheck(final String range,
-                               final boolean expected) {
-        this.checkEquals(
-                expected,
-                this.parseString(range).isAll(),
-                () -> range + " isAll"
-        );
-    }
-
     // isHidden.........................................................................................................
 
     @Test
