@@ -111,6 +111,43 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.checkRow(different, differentRow);
     }
 
+    // isFirst..........................................................................................................
+
+    @Test
+    public void testIsFirstA1() {
+        this.isFirstAndCheck("A1", true);
+    }
+
+    @Test
+    public void testIsFirstA1Absolute() {
+        this.isFirstAndCheck("$A$1", true);
+    }
+
+    @Test
+    public void testIsFirstA2() {
+        this.isFirstAndCheck("A2", false);
+    }
+
+    // isLast..........................................................................................................
+
+    @Test
+    public void testIsLastA1() {
+        this.isLastAndCheck("A1", false);
+    }
+
+    @Test
+    public void testIsLastA1Absolute() {
+        this.isLastAndCheck("$A$1", false);
+    }
+
+    @Test
+    public void testIsLast() {
+        this.isLastAndCheck(
+                SpreadsheetReferenceKind.RELATIVE.lastColumn().setRow(SpreadsheetReferenceKind.RELATIVE.lastRow()),
+                true
+        );
+    }
+
     // SetFormula.......................................................................................................
 
     @Test

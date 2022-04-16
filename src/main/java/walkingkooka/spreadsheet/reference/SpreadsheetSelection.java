@@ -438,6 +438,16 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      */
     public abstract SpreadsheetSelection simplify();
 
+    /**
+     * Returns true if this selection is the first, eg A1, column A or row 1.
+     */
+    public abstract boolean isFirst();
+
+    /**
+     * Returns true if this selection is the last.
+     */
+    public abstract boolean isLast();
+
     // SpreadsheetViewportSelection.....................................................................................
 
     /**

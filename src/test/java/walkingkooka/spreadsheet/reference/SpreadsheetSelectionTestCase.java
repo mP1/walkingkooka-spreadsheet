@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
@@ -53,6 +54,46 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     SpreadsheetSelectionTestCase() {
         super();
     }
+
+    // isFirst..........................................................................................................
+
+    final void isFirstAndCheck(final String selection,
+                               final boolean expected) {
+        this.isFirstAndCheck(
+                this.parseString(selection),
+                expected
+        );
+    }
+
+    final void isFirstAndCheck(final S selection,
+                               final boolean expected) {
+        this.checkEquals(
+                expected,
+                selection.isFirst(),
+                () -> selection + ".isFirst"
+        );
+    }
+
+    // isLast...........................................................................................................
+
+    final void isLastAndCheck(final String selection,
+                              final boolean expected) {
+        this.isLastAndCheck(
+                this.parseString(selection),
+                expected
+        );
+    }
+
+    final void isLastAndCheck(final S selection,
+                              final boolean expected) {
+        this.checkEquals(
+                expected,
+                selection.isLast(),
+                () -> selection + ".isLast"
+        );
+    }
+
+    // testCellRangeAndCheck............................................................................................
 
     final void testCellRangeAndCheck(final S selection,
                                      final SpreadsheetCellRange range,
@@ -1980,7 +2021,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
-        return Predicates.is("isHidden");
+        return Predicates.setContains(
+                Sets.of("isFirst", "isLast", "isHidden")
+        );
     }
 
     // JsonNodeTesting..................................................................................................
