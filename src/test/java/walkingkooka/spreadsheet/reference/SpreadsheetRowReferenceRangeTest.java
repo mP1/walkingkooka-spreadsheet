@@ -457,6 +457,41 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // isAll............................................................................................................
+
+    @Test
+    public void testIsAll() {
+        this.isAllAndCheck(
+                "1:1",
+                false
+        );
+    }
+
+    @Test
+    public void testIsAll2() {
+        this.isAllAndCheck(
+                "2:3",
+                false
+        );
+    }
+
+    @Test
+    public void testIsAll3() {
+        this.isAllAndCheck(
+                "1:" + SpreadsheetReferenceKind.RELATIVE.lastRow(),
+                true
+        );
+    }
+
+    private void isAllAndCheck(final String range,
+                               final boolean expected) {
+        this.checkEquals(
+                expected,
+                this.parseString(range),
+                () -> range + " isAll"
+        );
+    }
+
     // isHidden.........................................................................................................
 
     @Test

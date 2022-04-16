@@ -70,6 +70,13 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     }
 
     /**
+     * Returns true only if this range spans the entire column or row.
+     */
+    public final boolean isAll() {
+        return this.begin().isFirst() && this.end().isLast();
+    }
+
+    /**
      * Returns a {@link SpreadsheetCellReference} that holds the top left column/row reference.
      */
     public final Range<T> range() {
