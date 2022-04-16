@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -964,6 +965,66 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 engine.rowHeight(row, context),
                 () -> "rowHeight " + row + " of " + engine);
     }
+
+    // range............................................................................................................
+
+    default void rangeAndCheck(
+            final SpreadsheetEngine engine,
+            final SpreadsheetViewport viewport,
+            final boolean includeFrozenColumnsRows,
+            final Optional<SpreadsheetSelection> selection,
+            final SpreadsheetEngineContext context,
+            final String ranges) {
+        this.rangeAndCheck(
+                engine,
+                viewport,
+                includeFrozenColumnsRows,
+                selection,
+                context,
+                SpreadsheetSelection.parseWindow(ranges)
+        );
+    }
+
+    default void rangeAndCheck(
+            final SpreadsheetEngine engine,
+            final SpreadsheetViewport viewport,
+            final boolean includeFrozenColumnsRows,
+            final Optional<SpreadsheetSelection> selection,
+            final SpreadsheetEngineContext context,
+            final SpreadsheetCellRange... ranges) {
+        this.rangeAndCheck(
+                engine,
+                viewport,
+                includeFrozenColumnsRows,
+                selection,
+                context,
+                Sets.of(ranges)
+        );
+    }
+
+    default void rangeAndCheck(
+            final SpreadsheetEngine engine,
+            final SpreadsheetViewport viewport,
+            final boolean includeFrozenColumnsRows,
+            final Optional<SpreadsheetSelection> selection,
+            final SpreadsheetEngineContext context,
+            final Set<SpreadsheetCellRange> ranges) {
+        this.checkEquals(
+                ranges,
+                engine.range(
+                        viewport,
+                        includeFrozenColumnsRows,
+                        selection,
+                        context
+                ),
+                () -> "range " + viewport +
+                        (includeFrozenColumnsRows ? " includeFrozenColumnsRows" : "") +
+                        selection.orElse(null) +
+                        " " + context
+        );
+    }
+
+    // navigate.........................................................................................................
 
     default void navigateAndCheck(final SpreadsheetEngine engine,
                                   final SpreadsheetViewportSelection selection,

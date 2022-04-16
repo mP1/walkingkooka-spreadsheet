@@ -220,10 +220,16 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetCellRange range(final SpreadsheetViewport viewport,
-                                      final Optional<SpreadsheetSelection> selection,
-                                      final SpreadsheetEngineContext context) {
-        return this.engine.range(viewport, selection, context);
+    public Set<SpreadsheetCellRange> range(final SpreadsheetViewport viewport,
+                                           final boolean includeFrozenColumnsRows,
+                                           final Optional<SpreadsheetSelection> selection,
+                                           final SpreadsheetEngineContext context) {
+        return this.engine.range(
+                viewport,
+                includeFrozenColumnsRows,
+                selection,
+                context
+        );
     }
 
     @Override

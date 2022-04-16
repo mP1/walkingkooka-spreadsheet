@@ -155,9 +155,10 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetCellRange range(final SpreadsheetViewport viewport,
-                                      final Optional<SpreadsheetSelection> selection,
-                                      final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCellRange> range(final SpreadsheetViewport viewport,
+                                           final boolean includeFrozenColumnsRows,
+                                           final Optional<SpreadsheetSelection> selection,
+                                           final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
