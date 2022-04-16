@@ -166,6 +166,56 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         this.isSingleCellAndCheck(range, false);
     }
 
+    // isFirst..........................................................................................................
+
+    @Test
+    public void testIsFirstA1() {
+        this.isFirstAndCheck("A1", true);
+    }
+
+    @Test
+    public void testIsFirstA1Absolute() {
+        this.isFirstAndCheck("$A$1", true);
+    }
+
+    @Test
+    public void testIsFirstA2() {
+        this.isFirstAndCheck("A2", false);
+    }
+
+    @Test
+    public void testIsFirstA1A2() {
+        this.isFirstAndCheck("A1:A2", false);
+    }
+
+    // isLast..........................................................................................................
+
+    @Test
+    public void testIsLastA1() {
+        this.isLastAndCheck("A1", false);
+    }
+
+    @Test
+    public void testIsLastA1Absolute() {
+        this.isLastAndCheck("$A$1", false);
+    }
+
+    @Test
+    public void testIsLastEndsLast() {
+        this.isLastAndCheck(
+                "A1:" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
+                false
+        );
+    }
+
+    @Test
+    public void testIsLast() {
+        this.isLastAndCheck(
+                "" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
+                true
+        );
+    }
+
     // setRange.....................................................................................
 
     @Test

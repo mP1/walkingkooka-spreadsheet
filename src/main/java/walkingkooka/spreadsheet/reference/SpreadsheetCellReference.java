@@ -185,6 +185,18 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return new SpreadsheetCellReference(column, row);
     }
 
+    @Override
+    public boolean isFirst() {
+        return this.column().isFirst() && this.row().isFirst();
+    }
+
+    @Override
+    public boolean isLast() {
+        return this.column().isLast() && this.row().isLast();
+    }
+
+    // setFormula.......................................................................................................
+
     /**
      * Factory that creates a {@link SpreadsheetCell} using this {@link SpreadsheetCellReference} and the given
      * {@link SpreadsheetFormula}.

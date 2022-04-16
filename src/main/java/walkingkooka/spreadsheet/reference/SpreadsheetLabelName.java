@@ -98,6 +98,16 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         return this.name;
     }
 
+    @Override
+    public boolean isFirst() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isLast() {
+        throw new UnsupportedOperationException();
+    }
+
     // SpreadsheetExpressionReference...................................................................................
 
     @Override

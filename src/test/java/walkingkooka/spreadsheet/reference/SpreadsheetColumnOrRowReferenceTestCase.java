@@ -93,40 +93,52 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testIsFirst() {
-        final R reference = this.createReference(0);
-        this.checkEquals(true, reference.isFirst());
+        this.isFirstAndCheck(
+                this.createReference(0),
+                true
+        );
     }
 
     @Test
     public final void testIsFirstWhenSecond() {
-        final R reference = this.createReference(1);
-        this.checkEquals(false, reference.isFirst());
+        this.isFirstAndCheck(
+                this.createReference(1),
+                false
+        );
     }
 
     @Test
     public final void testIsFirstWhenLast() {
-        final R reference = this.createReference(this.maxValue());
-        this.checkEquals(false, reference.isFirst());
+        this.isFirstAndCheck(
+                this.createReference(this.maxValue()),
+                false
+        );
     }
 
     // isLast...........................................................................................................
 
     @Test
     public final void testIsLast() {
-        final R reference = this.createReference(this.maxValue());
-        this.checkEquals(true, reference.isLast());
+        this.isLastAndCheck(
+                this.createReference(0),
+                false
+        );
     }
 
     @Test
     public final void testIsLastWhenSecondLast() {
-        final R reference = this.createReference(this.maxValue() - 1);
-        this.checkEquals(false, reference.isLast());
+        this.isLastAndCheck(
+                this.createReference(this.maxValue() - 1),
+                false
+        );
     }
 
     @Test
-    public final void testIsLastWhenFirst() {
-        final R reference = this.createReference(0);
-        this.checkEquals(false, reference.isLast());
+    public final void testIsLastWhenLast() {
+        this.isLastAndCheck(
+                this.createReference(this.maxValue()),
+                true
+        );
     }
 
     // setReferenceKind.................................................................................................

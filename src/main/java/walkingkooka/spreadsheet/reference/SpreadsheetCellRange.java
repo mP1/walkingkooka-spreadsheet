@@ -137,6 +137,16 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
         return this.range.upperBound().value().get(); // must exist
     }
 
+    @Override
+    public boolean isFirst() {
+        return this.begin().isFirst() && this.isSingleCell();
+    }
+
+    @Override
+    public boolean isLast() {
+        return this.begin().isLast() && this.isSingleCell();
+    }
+
     /**
      * Returns a {@link SpreadsheetCellReference} that holds the top left cell reference.
      */
