@@ -480,7 +480,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
                                final boolean expected) {
         this.checkEquals(
                 expected,
-                this.parseString(range),
+                this.parseString(range).isAll(),
                 () -> range + " isAll"
         );
     }
