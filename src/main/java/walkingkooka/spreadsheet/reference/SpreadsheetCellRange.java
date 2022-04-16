@@ -125,6 +125,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
      * Returns the top left cell reference.
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Override
     public SpreadsheetCellReference begin() {
         return this.range.lowerBound().value().get(); // must exist
     }
@@ -133,6 +134,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
      * Returns the bottom right cell reference.
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Override
     public SpreadsheetCellReference end() {
         return this.range.upperBound().value().get(); // must exist
     }
@@ -155,6 +157,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     /**
      * Returns a {@link SpreadsheetCellReference} that holds the top left cell reference.
      */
+    @Override
     public Range<SpreadsheetCellReference> range() {
         return this.range;
     }

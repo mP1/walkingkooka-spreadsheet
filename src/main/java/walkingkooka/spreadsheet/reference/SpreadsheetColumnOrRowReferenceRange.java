@@ -46,6 +46,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
      * Returns the top left column/row reference.
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Override
     public final T begin() {
         return this.range.lowerBound().value().get(); // must exist
     }
@@ -54,6 +55,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
      * Returns the bottom right column/row reference.
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Override
     public final T end() {
         return this.range.upperBound().value().get(); // must exist
     }
@@ -90,6 +92,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     /**
      * Returns a {@link SpreadsheetCellReference} that holds the top left column/row reference.
      */
+    @Override
     public final Range<T> range() {
         return this.range;
     }
