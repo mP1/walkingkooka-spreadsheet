@@ -48,6 +48,11 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
         this.referenceKind = referenceKind;
     }
 
+    @Override
+    public final boolean isAll() {
+        return false;
+    }
+
     /**
      * Only returns true if this is the first column or row.
      */

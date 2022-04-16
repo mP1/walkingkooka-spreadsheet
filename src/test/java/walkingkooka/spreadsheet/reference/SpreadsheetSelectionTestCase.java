@@ -55,6 +55,25 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         super();
     }
 
+    // isAll............................................................................................................
+
+    final void isAllAndCheck(final String selection,
+                             final boolean expected) {
+        this.isAllAndCheck(
+                this.parseString(selection),
+                expected
+        );
+    }
+
+    final void isAllAndCheck(final S selection,
+                             final boolean expected) {
+        this.checkEquals(
+                expected,
+                selection.isAll(),
+                () -> selection + ".isAll"
+        );
+    }
+
     // isFirst..........................................................................................................
 
     final void isFirstAndCheck(final String selection,
@@ -2022,7 +2041,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
         return Predicates.setContains(
-                Sets.of("isFirst", "isLast", "isHidden")
+                Sets.of("isAll", "isFirst", "isLast", "isHidden")
         );
     }
 
