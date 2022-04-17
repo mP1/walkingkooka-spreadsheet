@@ -8253,11 +8253,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         this.rangeAndCheck(
-                viewport,
-                SpreadsheetEngine.NO_SELECTION,
                 engine,
+                viewport,
+                false, // includeFrozenColumnsRows
+                SpreadsheetEngine.NO_SELECTION,
                 context,
-                SpreadsheetSelection.parseCellRange("A1:D2")
+                "A1:D2"
         );
 
         final SpreadsheetColumnStore columnStore = context.storeRepository()
@@ -8276,11 +8277,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.rangeAndCheck(
-                viewport,
-                SpreadsheetEngine.NO_SELECTION,
                 engine,
+                viewport,
+                false, // includeFrozenColumnsRows
+                SpreadsheetEngine.NO_SELECTION,
                 context,
-                SpreadsheetSelection.parseCellRange("A1:F2")
+                "A1:F2"
         );
     }
 
@@ -8296,11 +8298,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         this.rangeAndCheck(
-                viewport,
-                SpreadsheetEngine.NO_SELECTION,
                 engine,
+                viewport,
+                false, // includeFrozenColumnsRows
+                SpreadsheetEngine.NO_SELECTION,
                 context,
-                SpreadsheetSelection.parseCellRange("A1:D2")
+                "A1:D2"
         );
 
         final SpreadsheetRowStore rowStore = context.storeRepository()
@@ -8319,11 +8322,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.rangeAndCheck(
-                viewport,
-                SpreadsheetEngine.NO_SELECTION,
                 engine,
+                viewport,
+                false, // includeFrozenColumnsRows
+                SpreadsheetEngine.NO_SELECTION,
                 context,
-                SpreadsheetSelection.parseCellRange("A1:D4")
+                "A1:D4"
         );
     }
 
@@ -8362,37 +8366,653 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                final Optional<SpreadsheetSelection> selection,
                                final String range) {
         this.rangeAndCheck(
-                SpreadsheetViewport.with(
-                        SpreadsheetSelection.parseCellOrLabel(cellOrLabel),
+                this.createSpreadsheetEngine(),
+                SpreadsheetSelection.parseCellOrLabel(cellOrLabel).viewport(
                         width,
                         height
                 ),
+                false, // includeFrozenColumnsAndRows
                 selection,
-                SpreadsheetCellRange.parseCellRange(range)
-        );
-    }
-
-    private void rangeAndCheck(final SpreadsheetViewport viewport,
-                               final Optional<SpreadsheetSelection> selection,
-                               final SpreadsheetCellRange range) {
-        this.rangeAndCheck(
-                viewport,
-                selection,
-                this.createSpreadsheetEngine(),
                 this.createContext(),
                 range
         );
     }
 
-    private void rangeAndCheck(final SpreadsheetViewport viewport,
+    // range with frozen columns / rows.................................................................................
+
+    @Test
+    public void testRangeIgnoreFrozenColumnsFrozenRows() {
+        this.rangeAndCheck(
+                "A1",
+                WIDTH * 4,
+                HEIGHT * 3,
+                0, // frozenColumns
+                0, // frozenRows
+                SpreadsheetEngine.NO_SELECTION,
+                "A1:D3"
+        );
+    }
+
+    @Test
+    public void testRangeIgnoreFrozenColumnsFrozenRows2() {
+        this.rangeAndCheck(
+                "B2",
+                WIDTH * 4,
+                HEIGHT * 3,
+                0, // frozenColumns
+                0, // frozenRows
+                SpreadsheetEngine.NO_SELECTION,
+                "B2:E4"
+        );
+    }
+
+    // range with frozen columns / rows.................................................................................
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRows() {
+        this.rangeAndCheck(
+                "Z99",
+                WIDTH * 2,
+                HEIGHT * 2,
+                2, // frozenColumns
+                2, // frozenRows
+                "A1:B2"
+        );
+    }
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRows2() {
+        this.rangeAndCheck(
+                "Z99",
+                WIDTH * 3,
+                HEIGHT * 3,
+                3, // frozenColumns
+                3, // frozenRows
+                "A1:C3"
+        );
+    }
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsOnly() {
+        this.rangeAndCheck(
+                "Z99",
+                WIDTH * 2,
+                HEIGHT * 2,
+                9, // frozenColumns
+                9, // frozenRows
+                "A1:B2"
+        );
+    }
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsOnly2() {
+        this.rangeAndCheck(
+                "Z99",
+                WIDTH * 3,
+                HEIGHT * 3,
+                9, // frozenColumns
+                9, // frozenRows
+                "A1:C3"
+        );
+    }
+
+    // A1
+    // A2
+    // A3
+    @Test
+    public void testRangeFrozenColumnsOnly() {
+        this.rangeAndCheck(
+                "B1",
+                WIDTH * 1,
+                HEIGHT * 3,
+                1, // frozenColumns
+                0, // frozenRows
+                "A1:A3"
+        );
+    }
+
+    // A1 B1
+    // A2 B2
+    // A3 B3
+    @Test
+    public void testRangeFrozenColumnsOnly2() {
+        this.rangeAndCheck(
+                "B1",
+                WIDTH * 2,
+                HEIGHT * 3,
+                2, // frozenColumns
+                0, // frozenRows
+                "A1:B3"
+        );
+    }
+
+    // A1 B1 C1
+    // A2 B2 C2
+    // A3 B3 C3
+    @Test
+    public void testRangeFrozenColumnsOnly3() {
+        this.rangeAndCheck(
+                "B1",
+                WIDTH * 3,
+                HEIGHT * 3,
+                3, // frozenColumns
+                0, // frozenRows
+                "A1:C3"
+        );
+    }
+
+    // A1 B1 C1
+    // A2 B2 C2
+    // A3 B3 C3
+    @Test
+    public void testRangeFrozenColumnsOnly4() {
+        this.rangeAndCheck(
+                "B1",
+                WIDTH * 3,
+                HEIGHT * 3,
+                99, // frozenColumns
+                0, // frozenRows
+                "A1:C3"
+        );
+    }
+
+    // A1  b1 c1 d1
+    // A2  b2 c2 d2
+    // A3  b3 c3 d3
+    @Test
+    public void testRangeFrozenColumns() {
+        this.rangeAndCheck(
+                "B1",
+                WIDTH * 4,
+                HEIGHT * 3,
+                1, // frozenColumns
+                0, // frozenRows
+                "A1:A3,B1:D3"
+        );
+    }
+
+    // A1 B1  c1 d1
+    // A2 B2  c2 d2
+    // A3 B3  c3 d3
+    @Test
+    public void testRangeFrozenColumns2() {
+        this.rangeAndCheck(
+                "c1",
+                WIDTH * 4,
+                HEIGHT * 3,
+                2, // frozenColumns
+                0, // frozenRows
+                "A1:B3,C1:D3"
+        );
+    }
+
+    // A1 B1  f1 g1
+    // A2 B2  f2 g2
+    // A3 B3  f3 g3
+    @Test
+    public void testRangeFrozenColumnsNonFrozenGap() {
+        this.rangeAndCheck(
+                "f1",
+                WIDTH * 4,
+                HEIGHT * 3,
+                2, // frozenColumns
+                0, // frozenRows
+                "A1:B3,F1:G3"
+        );
+    }
+
+    // A1 B1 C1 D1
+    @Test
+    public void testRangeFrozenRowsOnly() {
+        this.rangeAndCheck(
+                "A2",
+                WIDTH * 4,
+                HEIGHT * 1,
+                0, // frozenColumns
+                1, // frozenRows
+                "A1:D1"
+        );
+    }
+
+    // A1 B1 C1 D1
+    // A2 B2 C2 D2
+    @Test
+    public void testRangeFrozenRowsOnly2() {
+        this.rangeAndCheck(
+                "A2",
+                WIDTH * 4,
+                HEIGHT * 2,
+                0, // frozenColumns
+                2, // frozenRows
+                "A1:D2"
+        );
+    }
+
+    // A1 B1 C1 D1
+    // A2 B2 C2 D2
+    @Test
+    public void testRangeFrozenRowsOnly3() {
+        this.rangeAndCheck(
+                "A2",
+                WIDTH * 4,
+                HEIGHT * 2,
+                0, // frozenColumns
+                99, // frozenRows
+                "A1:D2"
+        );
+    }
+
+    // A1 B1 C1 D1
+    //
+    // a2 b2 c2 d2
+    // a3 b3 c3 d3
+    @Test
+    public void testRangeFrozenRows() {
+        this.rangeAndCheck(
+                "A2",
+                WIDTH * 4,
+                HEIGHT * 3,
+                0, // frozenColumns
+                1, // frozenRows
+                "A1:D1,A2:D3"
+        );
+    }
+
+
+    // A1 B1 C1 D1
+    // A2 B2 C2 D2
+    //
+    // a3 b3 c3 d3
+    @Test
+    public void testRangeFrozenRows2() {
+        this.rangeAndCheck(
+                "a3",
+                WIDTH * 4,
+                HEIGHT * 3,
+                0, // frozenColumns
+                2, // frozenRows
+                "A1:D2,A3:D3"
+        );
+    }
+
+
+    // A1 B1 C1 D1
+    // A2 B2 C2 D2
+    //
+    // a3 b3 c3 d3
+    // a4 b4 c4 d4
+    // a5 b5 c5 d5
+    @Test
+    public void testRangeFrozenRowsNonFrozenGap() {
+        this.rangeAndCheck(
+                "a3",
+                WIDTH * 4,
+                HEIGHT * 5,
+                0, // frozenColumns
+                2, // frozenRows
+                "A1:D2,A3:D5"
+        );
+    }
+
+    // A1 B1 C1 D1
+    // A2 B2 C2 D2
+    //
+    // a6 b6 c6 d6
+    // a7 b7 c7 d7
+    // a8 b8 c8 d8
+    @Test
+    public void testRangeFrozenRowsNonFrozenGap2() {
+        this.rangeAndCheck(
+                "a6",
+                WIDTH * 4,
+                HEIGHT * 5,
+                0, // frozenColumns
+                2, // frozenRows
+                "A1:D2,A6:D8"
+        );
+    }
+
+    // A1 B1 C1 D1
+    // A2 B2 C2 D2
+    //
+    // a3 b3 c3 d3
+    // a4 b4 c4 d4
+    // a5 b5 c5 d5
+    @Test
+    public void testRangeOnlyFrozenRowsInvalidHome() {
+        this.rangeAndCheck(
+                "A1",
+                WIDTH * 4,
+                HEIGHT * 5,
+                0, // frozenColumns
+                2, // frozenRows
+                "A1:D2,A3:D5"
+        );
+    }
+
+    // A1   B1 C1 D1
+    //
+    // A2   b2 c2 d2
+    // A3   b3 c3 d3
+    // A4   b4 c4 d4
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozen() {
+        this.rangeAndCheck(
+                "b2",
+                WIDTH * 4,
+                HEIGHT * 4,
+                1, // frozenColumns
+                1, // frozenRows
+                "A1,B1:D1,A2:A4,B2:D4"
+        );
+    }
+
+    // A1   B1 C1 D1
+    // A2   B2 C2 D2
+    //
+    // A3   b3 c3 d3
+    // A4   b4 c4 d4
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozen2() {
+        this.rangeAndCheck(
+                "b3",
+                WIDTH * 4,
+                HEIGHT * 4,
+                1, // frozenColumns
+                2, // frozenRows
+                "A1:A2,B1:D2,A3:A4,B3:D4"
+        );
+    }
+
+    // A1 B1   C1 D1
+    //
+    // A2 B2   c2 d2
+    // A3 B3   c3 d3
+    // A4 B4   c4 d4
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozen3() {
+        this.rangeAndCheck(
+                "c2",
+                WIDTH * 4,
+                HEIGHT * 4,
+                2, // frozenColumns
+                1, // frozenRows
+                "A1:B1,C1:D1,A2:B4,C2:D4"
+        );
+    }
+
+    // A1 B1   C1 D1
+    // A2 B2   c2 d2
+    //
+    // A3 B3   c3 d3
+    // A4 B4   c4 d4
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozen4() {
+        this.rangeAndCheck(
+                "c3",
+                WIDTH * 4,
+                HEIGHT * 4,
+                2, // frozenColumns
+                2, // frozenRows
+                "A1:B2,C1:D2,A3:B4,C3:D4"
+        );
+    }
+
+    // A1 B1   C1 D1
+    // A2 B2   c2 d2
+    //
+    // A3 B3   c3 d3
+    // A4 B4   c4 d4
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenInvalidHome() {
+        this.rangeAndCheck(
+                "A1",
+                WIDTH * 4,
+                HEIGHT * 4,
+                2, // frozenColumns
+                2, // frozenRows
+                "A1:B2,C1:D2,A3:B4,C3:D4"
+        );
+    }
+
+    // A1 B1   C1 D1
+    // A2 B2   C2 D2
+    // A3 B3   C3 D3
+    //
+    // A8 B8   c8 d8
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenGap() {
+        this.rangeAndCheck(
+                "c8",
+                WIDTH * 4,
+                HEIGHT * 4,
+                2, // frozenColumns
+                3, // frozenRows
+                "A1:B3,C1:D3,A8:B8,C8:D8"
+        );
+    }
+
+    // A1 B1   C1 D1
+    // A2 B2   C2 D2
+    // A3 B3   C3 D3
+    //
+    // A8 B8   c8 d8
+    // A9 B9   c9 d9
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenGap2() {
+        this.rangeAndCheck(
+                "c8",
+                WIDTH * 4,
+                HEIGHT * 5,
+                2, // frozenColumns
+                3, // frozenRows
+                "A1:B3,C1:D3,A8:B9,C8:D9"
+        );
+    }
+
+
+    private void rangeAndCheck(final String cellOrLabel,
+                               final double width,
+                               final double height,
+                               final int frozenColumns,
+                               final int frozenRows,
+                               final String range) {
+        this.rangeAndCheck(
+                cellOrLabel,
+                width,
+                height,
+                frozenColumns,
+                frozenRows,
+                SpreadsheetEngine.NO_SELECTION,
+                range
+        );
+    }
+
+    // range selection .................................................................................................
+
+    // A1 B1 C1   D1 E1
+    // A2 B2 C2   D2 E2
+    // A3 B3 C3   D3 E3
+    //
+    // A4 B4 C4   D4 E4
+    // A5 B5 C5   D5 E5
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenFrozenColumn() {
+        this.rangeAndCheck(
+                "c8",
+                WIDTH * 5,
+                HEIGHT * 5,
+                3, // frozenColumns
+                3, // frozenRows
+                SpreadsheetSelection.parseColumn("A"),
+                "A1:C3,D1:E3,A4:C5,D4:E5"
+        );
+    }
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenColumn() {
+        this.rangeAndCheck(
+                "c8",
+                WIDTH * 5,
+                HEIGHT * 5,
+                3, // frozenColumns
+                3, // frozenRows
+                SpreadsheetSelection.parseColumn("D"),
+                "A1:C3,D1:E3,A4:C5,D4:E5"
+        );
+    }
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenFrozenRow() {
+        this.rangeAndCheck(
+                "c8",
+                WIDTH * 5,
+                HEIGHT * 5,
+                3, // frozenColumns
+                3, // frozenRows
+                SpreadsheetSelection.parseRow("1"),
+                "A1:C3,D1:E3,A4:C5,D4:E5"
+        );
+    }
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenRow() {
+        this.rangeAndCheck(
+                "c8",
+                WIDTH * 5,
+                HEIGHT * 5,
+                3, // frozenColumns
+                3, // frozenRows
+                SpreadsheetSelection.parseRow("4"),
+                "A1:C3,D1:E3,A4:C5,D4:E5"
+        );
+    }
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenFrozenCell() {
+        this.rangeAndCheck(
+                "c8",
+                WIDTH * 5,
+                HEIGHT * 5,
+                3, // frozenColumns
+                3, // frozenRows
+                SpreadsheetSelection.parseCell("A1"),
+                "A1:C3,D1:E3,A4:C5,D4:E5"
+        );
+    }
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenCell() {
+        this.rangeAndCheck(
+                "c8",
+                WIDTH * 5,
+                HEIGHT * 5,
+                3, // frozenColumns
+                3, // frozenRows
+                SpreadsheetSelection.parseCell("D4"),
+                "A1:C3,D1:E3,A4:C5,D4:E5"
+        );
+    }
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenCell2() {
+        this.rangeAndCheck(
+                "c8",
+                WIDTH * 5,
+                HEIGHT * 5,
+                3, // frozenColumns
+                3, // frozenRows
+                SpreadsheetSelection.parseCell("E5"),
+                "A1:C3,D1:E3,A4:C5,D4:E5"
+        );
+    }
+
+    // range selection pan.............................................................................................
+
+    // A1 B1 C1   D1 E1
+    // A2 B2 C2   D2 E2
+    // A3 B3 C3   D3 E3
+    //
+    // A4 B4 C4   D4 E4 F4
+    // A5 B5 C5   D5 E5
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell() {
+        this.rangeAndCheck(
+                "D4",
+                WIDTH * 5,
+                HEIGHT * 5,
+                3, // frozenColumns
+                3, // frozenRows
+                SpreadsheetSelection.parseCell("F4"),
+                "A1:C3,D1:E3,A4:C5,E4:F5"
+        );
+    }
+
+    @Test
+    public void testRangeFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell2() {
+        this.rangeAndCheck(
+                "D4",
+                WIDTH * 5,
+                HEIGHT * 5,
+                3, // frozenColumns
+                3, // frozenRows
+                SpreadsheetSelection.parseCell("G4"),
+                "A1:C3,D1:E3,A4:C5,F4:G5"
+        );
+    }
+
+    private void rangeAndCheck(final String cellOrLabel,
+                               final double width,
+                               final double height,
+                               final int frozenColumns,
+                               final int frozenRows,
+                               final SpreadsheetSelection selection,
+                               final String range) {
+        this.rangeAndCheck(
+                cellOrLabel,
+                width,
+                height,
+                frozenColumns,
+                frozenRows,
+                Optional.of(selection),
+                range
+        );
+    }
+
+    private void rangeAndCheck(final String cellOrLabel,
+                               final double width,
+                               final double height,
+                               final int frozenColumns,
+                               final int frozenRows,
                                final Optional<SpreadsheetSelection> selection,
-                               final BasicSpreadsheetEngine engine,
-                               final SpreadsheetEngineContext context,
-                               final SpreadsheetCellRange range) {
-        this.checkEquals(
-                range,
-                engine.range(viewport, selection, context),
-                () -> "range " + viewport + " " + selection.map(s -> " selection:" + s).orElse("")
+                               final String range) {
+        final SpreadsheetMetadata metadata = this.metadata()
+                .setOrRemove(
+                        SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
+                        frozenColumns > 0 ?
+                                SpreadsheetReferenceKind.RELATIVE.firstColumn().columnRange(SpreadsheetReferenceKind.RELATIVE.column(frozenColumns - 1)) :
+                                null
+                ).setOrRemove(
+                        SpreadsheetMetadataPropertyName.FROZEN_ROWS,
+                        frozenRows > 0 ?
+                                SpreadsheetReferenceKind.RELATIVE.firstRow().rowRange(SpreadsheetReferenceKind.RELATIVE.row(frozenRows - 1)) :
+                                null
+                );
+
+        this.rangeAndCheck(
+                BasicSpreadsheetEngine.with(metadata),
+                SpreadsheetSelection.parseCellOrLabel(cellOrLabel)
+                        .viewport(
+                                width,
+                                height
+                        ),
+                true, // includeFrozenColumnsAndRows
+                selection,
+                this.createContext(metadata),
+                range
         );
     }
 
@@ -8543,27 +9163,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return this.createContext(
                 DEFAULT_YEAR,
                 SpreadsheetEngines.fake(),
-                new FakeSpreadsheetStoreRepository() {
-                    @Override
-                    public SpreadsheetCellStore cells() {
-                        return cellStore;
-                    }
-
-                    @Override
-                    public SpreadsheetColumnStore columns() {
-                        return this.columnStore;
-                    }
-
-                    private final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
-
-                    @Override
-                    public SpreadsheetRowStore rows() {
-                        return this.rowStore;
-                    }
-
-                    private final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
-                }
+                this.createSpreadsheetStoreRepository(cellStore)
         );
+    }
+
+    private SpreadsheetStoreRepository createSpreadsheetStoreRepository(final SpreadsheetCellStore cellStore) {
+        return new FakeSpreadsheetStoreRepository() {
+            @Override
+            public SpreadsheetCellStore cells() {
+                return cellStore;
+            }
+
+            @Override
+            public SpreadsheetColumnStore columns() {
+                return this.columnStore;
+            }
+
+            private final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
+
+            @Override
+            public SpreadsheetRowStore rows() {
+                return this.rowStore;
+            }
+
+            private final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
+        };
     }
 
     private SpreadsheetEngineContext createContext(final SpreadsheetEngine engine) {
@@ -8597,6 +9221,27 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetEngineContext createContext(final int defaultYear,
                                                    final SpreadsheetEngine engine,
                                                    final SpreadsheetStoreRepository storeRepository) {
+        return this.createContext(
+                defaultYear,
+                engine,
+                this.metadata(),
+                storeRepository
+        );
+    }
+
+    private SpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
+        return this.createContext(
+            20,
+            SpreadsheetEngines.fake(),
+            metadata,
+            this.createSpreadsheetStoreRepository(SpreadsheetCellStores.treeMap())
+        );
+    }
+
+    private SpreadsheetEngineContext createContext(final int defaultYear,
+                                                   final SpreadsheetEngine engine,
+                                                   final SpreadsheetMetadata metadata, // required by ranges tests with frozen columns/rows.
+                                                   final SpreadsheetStoreRepository storeRepository) {
         return new FakeSpreadsheetEngineContext() {
 
             @Override
@@ -8613,8 +9258,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             public SpreadsheetMetadata metadata() {
-                return BasicSpreadsheetEngineTest.this.metadata()
-                        .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, defaultYear);
+                return metadata.set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, defaultYear);
             }
 
             @Override

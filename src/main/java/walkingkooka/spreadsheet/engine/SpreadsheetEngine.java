@@ -181,9 +181,10 @@ public interface SpreadsheetEngine {
      * The combination of parameters make it possible to load the range of cells that occupy the selected range and
      * automatically pan across as necessary to include the provided {@link SpreadsheetSelection}.
      */
-    SpreadsheetCellRange range(final SpreadsheetViewport viewport,
-                               final Optional<SpreadsheetSelection> selection,
-                               final SpreadsheetEngineContext context);
+    Set<SpreadsheetCellRange> range(final SpreadsheetViewport viewport,
+                                    final boolean includeFrozenColumnsRows,
+                                    final Optional<SpreadsheetSelection> selection,
+                                    final SpreadsheetEngineContext context);
 
     /**
      * An absent {@link SpreadsheetViewportSelection}.

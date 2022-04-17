@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
@@ -41,6 +42,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -957,40 +959,171 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // RANGE............................................................................................................
 
     @Override
-    public SpreadsheetCellRange range(final SpreadsheetViewport viewport,
-                                      final Optional<SpreadsheetSelection> selection,
-                                      final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCellRange> range(final SpreadsheetViewport viewport,
+                                           final boolean includeFrozenColumnsRows,
+                                           final Optional<SpreadsheetSelection> selection,
+                                           final SpreadsheetEngineContext context) {
         Objects.requireNonNull(viewport, "viewport");
         Objects.requireNonNull(selection, "selection");
         checkContext(context);
 
-        final SpreadsheetCellReference reference = context.resolveCellReference(viewport.cellOrLabel());
+        double width = viewport.width();
+        double height = viewport.height();
 
-        final SpreadsheetColumnReferenceRange columns = this.columnRange(
-                reference.column(),
-                0,
-                viewport.width(),
-                context
-        );
+        SpreadsheetColumnReferenceRange frozenColumns = null;
+        SpreadsheetRowReferenceRange frozenRows = null;
 
-        final SpreadsheetRowReferenceRange rows = this.rowRange(
-                reference.row(),
-                0,
-                viewport.height(),
-                context
-        );
+        if (includeFrozenColumnsRows) {
+            final SpreadsheetMetadata metadata = context.metadata();
 
-        SpreadsheetCellRange cells = columns.setRowReferenceRange(rows);
+            // compute actual frozenColumns, metadata.FROZEN_COLUMNS might be higher than requested width...............
 
-        if (selection.isPresent()) {
-            cells = this.range1(
-                    selection.get(),
-                    cells,
-                    viewport,
-                    context
-            );
+            final Optional<SpreadsheetColumnReferenceRange> maybeFrozenColumns = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS);
+            if (maybeFrozenColumns.isPresent()) {
+                final SpreadsheetColumnReference lastFrozenColumn = maybeFrozenColumns.get()
+                        .end();
+
+                SpreadsheetColumnReference leftColumn = SpreadsheetReferenceKind.RELATIVE.firstColumn();
+                SpreadsheetColumnReference rightColumn = leftColumn;
+
+                do {
+                    final double columnWidth = this.columnWidth(rightColumn, context);
+                    width = width - columnWidth;
+                    if (width <= 0) {
+                        break;
+                    }
+                    if (rightColumn.equalsIgnoreReferenceKind(lastFrozenColumn)) {
+                        break;
+                    }
+                    rightColumn = rightColumn.addSaturated(1);
+                } while (!rightColumn.isLast());
+
+                frozenColumns = leftColumn.columnRange(rightColumn);
+            }
+
+            // compute actual frozenRows, metadata.FROZEN_ROWS might be higher than requested height....................
+            final Optional<SpreadsheetRowReferenceRange> maybeFrozenRows = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_ROWS);
+
+            if (maybeFrozenRows.isPresent()) {
+
+                final SpreadsheetRowReference lastFrozenRow = maybeFrozenRows.get()
+                        .end();
+
+                SpreadsheetRowReference topRow = SpreadsheetReferenceKind.RELATIVE.firstRow();
+                SpreadsheetRowReference bottomRow = topRow;
+
+                do {
+                    final double rowHeight = this.rowHeight(bottomRow, context);
+                    height = height - rowHeight;
+                    if (height <= 0) {
+                        break;
+                    }
+                    if (bottomRow.equalsIgnoreReferenceKind(lastFrozenRow)) {
+                        break;
+                    }
+                    bottomRow = bottomRow.addSaturated(1);
+                } while (!bottomRow.isLast());
+
+                frozenRows = topRow.rowRange(bottomRow);
+            }
         }
-        return cells;
+
+        // non frozen viewport
+        SpreadsheetCellReference nonFrozenHome = context.resolveCellReference(viewport.cellOrLabel());
+        if (null != frozenColumns) {
+            final SpreadsheetColumnReference right = frozenColumns.end();
+            if (right.compareTo(nonFrozenHome.column()) > 0) {
+                nonFrozenHome = nonFrozenHome.setColumn(right.addSaturated(+1));
+            }
+        }
+        if (null != frozenRows) {
+            final SpreadsheetRowReference right = frozenRows.end();
+            if (right.compareTo(nonFrozenHome.row()) > 0) {
+                nonFrozenHome = nonFrozenHome.setRow(right.addSaturated(+1));
+            }
+        }
+
+        final SpreadsheetColumnReferenceRange nonFrozenColumns = width > 0 ?
+                this.columnRange(
+                        nonFrozenHome.column(),
+                        0,
+                        width,
+                        context
+                ) : null;
+
+        final SpreadsheetRowReferenceRange nonFrozenRows = height > 0 ?
+                this.rowRange(
+                        nonFrozenHome.row(),
+                        0,
+                        height,
+                        context
+                ) : null;
+
+        final Set<SpreadsheetCellRange> window = Sets.ordered();
+
+        SpreadsheetCellRange nonFrozenCells = null;
+        if (null != nonFrozenColumns && null != nonFrozenRows) {
+            nonFrozenCells = nonFrozenColumns.setRowReferenceRange(nonFrozenRows);
+        }
+
+        // compute other ranges from frozenColumns/frozenRows .........................................................
+
+        boolean skipPan = false;
+
+        if (null != frozenColumns && null != frozenRows) {
+            // FCR fr fr fr
+            // fc  n  n  n
+            // fc  n  n  n
+            final SpreadsheetCellRange frozenColumnsRowsCells = frozenColumns.setRowReferenceRange(frozenRows);
+
+            window.add(frozenColumnsRowsCells);
+
+            skipPan = null != frozenColumnsRowsCells &&
+                    selection.map(s -> s.testCellRange(frozenColumnsRowsCells)).orElse(false);
+        }
+
+        if (null != frozenRows && null != nonFrozenColumns) {
+            // fcr FR FR FR
+            // fc  n  n  n
+            // fc  n  n  n
+            final SpreadsheetCellRange frozenRowsCells = frozenRows.setColumnReferenceRange(nonFrozenColumns);
+
+            window.add(frozenRowsCells);
+
+            skipPan = skipPan ||
+                    selection.map(s -> s.testCellRange(frozenRowsCells)).orElse(false);
+        }
+
+        if (null != frozenColumns && null != nonFrozenRows) {
+            // fcr fr fr fr
+            // FC  n  n  n
+            // FC  n  n  n
+            final SpreadsheetCellRange frozenColumnCells = frozenColumns.setRowReferenceRange(nonFrozenRows);
+            window.add(frozenColumnCells);
+
+            skipPan = skipPan ||
+                    selection.map(s -> s.testCellRange(frozenColumnCells)).orElse(false);
+        }
+
+        if (null != nonFrozenCells) {
+            // selection is not in any of the frozen ranges therefore nonFrozenCells may need panning.
+            if (selection.isPresent() && !skipPan) {
+                final SpreadsheetSelection spreadsheetSelection = selection.get();
+
+                if (!spreadsheetSelection.testCellRange(nonFrozenCells)) {
+                    nonFrozenCells = BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor.pan(
+                            nonFrozenCells,
+                            viewport,
+                            spreadsheetSelection,
+                            this,
+                            context
+                    );
+                }
+            }
+            window.add(nonFrozenCells);
+        }
+
+        return Sets.immutable(window);
     }
 
     /**
@@ -1179,21 +1312,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return sum;
     }
 
-    private SpreadsheetCellRange range1(final SpreadsheetSelection selection,
-                                        final SpreadsheetCellRange range,
-                                        final SpreadsheetViewport viewport,
-                                        final SpreadsheetEngineContext context) {
-        // if selection is outside range, need to adjust the range.
-        return selection.testCellRange(range) ?
-                range :
-                BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor.pan(
-                        range,
-                        viewport,
-                        selection,
-                        this,
-                        context
-                );
-    }
+    // navigate.........................................................................................................
 
     @Override
     public Optional<SpreadsheetViewportSelection> navigate(final SpreadsheetViewportSelection selection,
