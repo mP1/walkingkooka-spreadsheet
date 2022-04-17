@@ -8841,7 +8841,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeFrozenColumnsFrozenRowsNonFrozenFrozenColumn() {
         this.rangeAndCheck(
-                "c8",
+                "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
                 3, // frozenColumns
@@ -8854,7 +8854,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenColumn() {
         this.rangeAndCheck(
-                "c8",
+                "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
                 3, // frozenColumns
@@ -8867,7 +8867,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeFrozenColumnsFrozenRowsNonFrozenFrozenRow() {
         this.rangeAndCheck(
-                "c8",
+                "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
                 3, // frozenColumns
@@ -8880,7 +8880,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenRow() {
         this.rangeAndCheck(
-                "c8",
+                "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
                 3, // frozenColumns
@@ -8893,7 +8893,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeFrozenColumnsFrozenRowsNonFrozenFrozenCell() {
         this.rangeAndCheck(
-                "c8",
+                "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
                 3, // frozenColumns
@@ -8906,7 +8906,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenCell() {
         this.rangeAndCheck(
-                "c8",
+                "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
                 3, // frozenColumns
@@ -8919,7 +8919,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenCell2() {
         this.rangeAndCheck(
-                "c8",
+                "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
                 3, // frozenColumns

@@ -1113,7 +1113,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 if (!spreadsheetSelection.testCellRange(nonFrozenCells)) {
                     nonFrozenCells = BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor.pan(
                             nonFrozenCells,
-                            viewport,
+                            nonFrozenHome.viewport(width, height),
                             spreadsheetSelection,
                             this,
                             context
