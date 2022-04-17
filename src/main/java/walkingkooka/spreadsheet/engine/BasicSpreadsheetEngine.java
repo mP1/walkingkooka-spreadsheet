@@ -1123,7 +1123,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             window.add(nonFrozenCells);
         }
 
-        return Sets.immutable(window);
+        return SpreadsheetDelta.createWindowSet(window);
     }
 
     /**
