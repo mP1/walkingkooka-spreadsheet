@@ -101,6 +101,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     );
 
     /**
+     * {@see SpreadsheetDeltaWindowSet}
+     */
+    public static Set<SpreadsheetCellRange> createWindowSet(final Set<SpreadsheetCellRange> window) {
+        return SpreadsheetDeltaWindowSet.with(window);
+    }
+
+    /**
      * Package private to limit sub classing.
      */
     SpreadsheetDelta(final Optional<SpreadsheetViewportSelection> selection,
