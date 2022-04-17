@@ -956,13 +956,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     private final SpreadsheetMetadata metadata;
 
-    // RANGE............................................................................................................
+    // WINDOW...........................................................................................................
 
     @Override
-    public Set<SpreadsheetCellRange> range(final SpreadsheetViewport viewport,
-                                           final boolean includeFrozenColumnsRows,
-                                           final Optional<SpreadsheetSelection> selection,
-                                           final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCellRange> window(final SpreadsheetViewport viewport,
+                                            final boolean includeFrozenColumnsRows,
+                                            final Optional<SpreadsheetSelection> selection,
+                                            final SpreadsheetEngineContext context) {
         Objects.requireNonNull(viewport, "viewport");
         Objects.requireNonNull(selection, "selection");
         checkContext(context);
