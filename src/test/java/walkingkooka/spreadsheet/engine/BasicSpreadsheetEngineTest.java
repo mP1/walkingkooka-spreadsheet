@@ -7083,8 +7083,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // widths top left .................................................................................................
 
     @Test
-    public void testRangeLeft() {
-        this.rangeAndCheck(
+    public void testWindowLeft() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH,
                 HEIGHT,
@@ -7093,8 +7093,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeLeft2() {
-        this.rangeAndCheck(
+    public void testWindowLeft2() {
+        this.windowAndCheck(
                 "A1",
                 3 * WIDTH,
                 HEIGHT,
@@ -7103,8 +7103,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeLeft3() {
-        this.rangeAndCheck(
+    public void testWindowLeft3() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH - 1,
                 HEIGHT,
@@ -7113,8 +7113,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeLeft4() {
-        this.rangeAndCheck(
+    public void testWindowLeft4() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH + 1,
                 HEIGHT,
@@ -7123,8 +7123,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeLeft5() {
-        this.rangeAndCheck(
+    public void testWindowLeft5() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH * 4 - 1,
                 HEIGHT,
@@ -7133,8 +7133,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeLeft6() {
-        this.rangeAndCheck(
+    public void testWindowLeft6() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH * 4 + 1,
                 HEIGHT,
@@ -7143,8 +7143,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidX() {
-        this.rangeAndCheck(
+    public void testWindowMidX() {
+        this.windowAndCheck(
                 "M1",
                 WIDTH,
                 HEIGHT,
@@ -7153,8 +7153,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidX2() {
-        this.rangeAndCheck(
+    public void testWindowMidX2() {
+        this.windowAndCheck(
                 "M1",
                 3 * WIDTH,
                 HEIGHT,
@@ -7163,8 +7163,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidX3() {
-        this.rangeAndCheck(
+    public void testWindowMidX3() {
+        this.windowAndCheck(
                 "M1",
                 WIDTH - 1,
                 HEIGHT,
@@ -7173,8 +7173,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidX4() {
-        this.rangeAndCheck(
+    public void testWindowMidX4() {
+        this.windowAndCheck(
                 "M1",
                 WIDTH + 1,
                 HEIGHT,
@@ -7183,8 +7183,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidX5() {
-        this.rangeAndCheck(
+    public void testWindowMidX5() {
+        this.windowAndCheck(
                 "M1",
                 WIDTH * 4 - 1,
                 HEIGHT,
@@ -7193,8 +7193,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidX6() {
-        this.rangeAndCheck(
+    public void testWindowMidX6() {
+        this.windowAndCheck(
                 "M1",
                 WIDTH * 4 + 1,
                 HEIGHT,
@@ -7205,8 +7205,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // widths top right .................................................................................................
 
     @Test
-    public void testRangeRight() {
-        this.rangeAndCheck(
+    public void testWindowRight() {
+        this.windowAndCheck(
                 "XFD1",
                 WIDTH,
                 HEIGHT,
@@ -7215,8 +7215,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeRight2() {
-        this.rangeAndCheck(
+    public void testWindowRight2() {
+        this.windowAndCheck(
                 "XFD1",
                 3 * WIDTH,
                 HEIGHT,
@@ -7225,8 +7225,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeRight3() {
-        this.rangeAndCheck(
+    public void testWindowRight3() {
+        this.windowAndCheck(
                 "XFD1",
                 WIDTH - 1,
                 HEIGHT,
@@ -7235,8 +7235,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeRight4() {
-        this.rangeAndCheck(
+    public void testWindowRight4() {
+        this.windowAndCheck(
                 "XFD1",
                 WIDTH + 1,
                 HEIGHT,
@@ -7245,8 +7245,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeRight5() {
-        this.rangeAndCheck(
+    public void testWindowRight5() {
+        this.windowAndCheck(
                 "XFD1",
                 WIDTH * 4 - 1,
                 HEIGHT,
@@ -7255,8 +7255,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeRight6() {
-        this.rangeAndCheck(
+    public void testWindowRight6() {
+        this.windowAndCheck(
                 "XFD1",
                 WIDTH * 4 + 1,
                 HEIGHT,
@@ -7267,8 +7267,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // heights top left .................................................................................................
 
     @Test
-    public void testRangeTop() {
-        this.rangeAndCheck(
+    public void testWindowTop() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH,
                 HEIGHT,
@@ -7277,8 +7277,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeTop2() {
-        this.rangeAndCheck(
+    public void testWindowTop2() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH,
                 3 * HEIGHT,
@@ -7287,8 +7287,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeTop3() {
-        this.rangeAndCheck(
+    public void testWindowTop3() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH,
                 HEIGHT - 1,
@@ -7297,8 +7297,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeTop4() {
-        this.rangeAndCheck(
+    public void testWindowTop4() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH,
                 HEIGHT + 1,
@@ -7307,8 +7307,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeTop5() {
-        this.rangeAndCheck(
+    public void testWindowTop5() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH,
                 HEIGHT * 4 - 1,
@@ -7317,8 +7317,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeTop6() {
-        this.rangeAndCheck(
+    public void testWindowTop6() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH,
                 HEIGHT * 4 + 1,
@@ -7327,8 +7327,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidY() {
-        this.rangeAndCheck(
+    public void testWindowMidY() {
+        this.windowAndCheck(
                 "A10",
                 WIDTH,
                 HEIGHT,
@@ -7337,8 +7337,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidY2() {
-        this.rangeAndCheck(
+    public void testWindowMidY2() {
+        this.windowAndCheck(
                 "A10",
                 WIDTH,
                 3 * HEIGHT,
@@ -7347,8 +7347,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidY3() {
-        this.rangeAndCheck(
+    public void testWindowMidY3() {
+        this.windowAndCheck(
                 "A10",
                 WIDTH,
                 HEIGHT - 1,
@@ -7357,8 +7357,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidY4() {
-        this.rangeAndCheck(
+    public void testWindowMidY4() {
+        this.windowAndCheck(
                 "A10",
                 WIDTH,
                 HEIGHT + 1,
@@ -7367,8 +7367,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidY5() {
-        this.rangeAndCheck(
+    public void testWindowMidY5() {
+        this.windowAndCheck(
                 "A10",
                 WIDTH,
                 HEIGHT * 4 - 1,
@@ -7377,8 +7377,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeMidY6() {
-        this.rangeAndCheck(
+    public void testWindowMidY6() {
+        this.windowAndCheck(
                 "A10",
                 WIDTH,
                 HEIGHT * 4 + 1,
@@ -7389,8 +7389,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // heights top right .................................................................................................
 
     @Test
-    public void testRangeBottom() {
-        this.rangeAndCheck(
+    public void testWindowBottom() {
+        this.windowAndCheck(
                 "A1048576",
                 WIDTH,
                 HEIGHT,
@@ -7399,8 +7399,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeBottom2() {
-        this.rangeAndCheck(
+    public void testWindowBottom2() {
+        this.windowAndCheck(
                 "A1048576",
                 WIDTH,
                 3 * HEIGHT,
@@ -7409,8 +7409,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeBottom3() {
-        this.rangeAndCheck(
+    public void testWindowBottom3() {
+        this.windowAndCheck(
                 "A1048576",
                 WIDTH,
                 HEIGHT - 1,
@@ -7419,8 +7419,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeBottom4() {
-        this.rangeAndCheck(
+    public void testWindowBottom4() {
+        this.windowAndCheck(
                 "A1048576",
                 WIDTH,
                 HEIGHT + 1,
@@ -7429,8 +7429,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeBottom5() {
-        this.rangeAndCheck(
+    public void testWindowBottom5() {
+        this.windowAndCheck(
                 "A1048576",
                 WIDTH,
                 HEIGHT * 4 - 1,
@@ -7439,8 +7439,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeBottom6() {
-        this.rangeAndCheck(
+    public void testWindowBottom6() {
+        this.windowAndCheck(
                 "A1048576",
                 WIDTH,
                 HEIGHT * 4 + 1,
@@ -7448,11 +7448,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // range with selection within......................................................................................
+    // window with selection within.....................................................................................
 
     @Test
-    public void testRangeSelectionCellWithin() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellWithin() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7462,8 +7462,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellWithin2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellWithin2() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7473,8 +7473,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellWithin3() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellWithin3() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7484,8 +7484,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeWithin() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeWithin() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7495,8 +7495,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeWithin2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeWithin2() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7506,8 +7506,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeWithin3() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeWithin3() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7517,8 +7517,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnWithin() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnWithin() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7528,8 +7528,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnWithin2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnWithin2() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7539,8 +7539,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnWithin3() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnWithin3() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7550,8 +7550,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowWithin() {
-        this.rangeAndCheck(
+    public void testWindowSelectionRowWithin() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7561,8 +7561,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowWithin2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionRowWithin2() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7572,8 +7572,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowWithin3() {
-        this.rangeAndCheck(
+    public void testWindowSelectionRowWithin3() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7582,11 +7582,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // range Selection Outside..........................................................................................
+    // window Selection Outside..........................................................................................
 
     @Test
-    public void testRangeSelectionColumnRangeAll() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnRangeAll() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7596,8 +7596,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnRangeAllLeft() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnRangeAllLeft() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7607,8 +7607,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnRangeAllRight() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnRangeAllRight() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7618,8 +7618,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnRangeAllLeftAndRight() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnRangeAllLeftAndRight() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7629,8 +7629,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowRangeAll() {
-        this.rangeAndCheck(
+    public void testWindowSelectionRowRangeAll() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7640,8 +7640,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowRangeAllAbove() {
-        this.rangeAndCheck(
+    public void testWindowSelectionRowRangeAllAbove() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7651,8 +7651,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowRangeAllBelow() {
-        this.rangeAndCheck(
+    public void testWindowSelectionRowRangeAllBelow() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7662,8 +7662,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowRangeAllAboveAndBelow() {
-        this.rangeAndCheck(
+    public void testWindowSelectionRowRangeAllAboveAndBelow() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7673,8 +7673,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeAll() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeAll() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7684,8 +7684,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeAllAbove() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeAllAbove() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7695,8 +7695,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeAllBelow() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeAllBelow() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7706,8 +7706,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeAllLeft() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeAllLeft() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7717,8 +7717,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeAllRight() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeAllRight() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7728,8 +7728,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeAll2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeAll2() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7739,8 +7739,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeAll3() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeAll3() {
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7749,11 +7749,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // range Selection Outside..........................................................................................
+    // window Selection Outside..........................................................................................
 
     @Test
-    public void testRangeSelectionCellLeft() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellLeft() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7763,8 +7763,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellLeft2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellLeft2() {
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7774,9 +7774,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRight() {
+    public void testWindowSelectionCellRight() {
         // B2:D4 -> 1
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7786,10 +7786,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRight2() {
+    public void testWindowSelectionCellRight2() {
         // B2:D4 -> 2
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7799,9 +7799,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellTop() {
+    public void testWindowSelectionCellTop() {
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7811,8 +7811,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellTop2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellTop2() {
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7822,9 +7822,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellBottom() {
+    public void testWindowSelectionCellBottom() {
         // B2:D4 -> 1
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7834,10 +7834,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellBottom2() {
+    public void testWindowSelectionCellBottom2() {
         // B2:D4 -> 2
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7847,9 +7847,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellTopLeft() {
+    public void testWindowSelectionCellTopLeft() {
         // C3:E5
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7859,9 +7859,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellBottomRight() {
+    public void testWindowSelectionCellBottomRight() {
         // C3:E5
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7871,8 +7871,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnLeft() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnLeft() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7882,8 +7882,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnLeft2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnLeft2() {
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7893,9 +7893,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnRight() {
+    public void testWindowSelectionColumnRight() {
         // B2:D4 -> 1
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7905,10 +7905,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnRight2() {
+    public void testWindowSelectionColumnRight2() {
         // B2:D4 -> 2
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7918,9 +7918,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowTop() {
+    public void testWindowSelectionRowTop() {
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7930,8 +7930,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowTop2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionRowTop2() {
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7941,9 +7941,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowBottom() {
+    public void testWindowSelectionRowBottom() {
         // B2:D4 -> 1
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7953,10 +7953,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowBottom2() {
+    public void testWindowSelectionRowBottom2() {
         // B2:D4 -> 2
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7966,8 +7966,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnReferenceLeft() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnReferenceLeft() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7977,8 +7977,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnReferenceLeft2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnReferenceLeft2() {
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7988,8 +7988,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnReferenceLeft3() {
-        this.rangeAndCheck(
+    public void testWindowSelectionColumnReferenceLeft3() {
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -7999,9 +7999,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnReferenceReferenceRight() {
+    public void testWindowSelectionColumnReferenceReferenceRight() {
         // B2:D4 -> 1
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8011,9 +8011,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnReferenceReferenceRight2() {
+    public void testWindowSelectionColumnReferenceReferenceRight2() {
         // B2:D4 -> 1
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8023,10 +8023,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnReferenceReferenceRight3() {
+    public void testWindowSelectionColumnReferenceReferenceRight3() {
         // B2:D4 -> 2
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8036,10 +8036,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionColumnReferenceReferenceRight4() {
+    public void testWindowSelectionColumnReferenceReferenceRight4() {
         // B2:D4 -> 2
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8049,9 +8049,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowRangeTop() {
+    public void testWindowSelectionRowRangeTop() {
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8061,8 +8061,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowRangeTop2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionRowRangeTop2() {
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8072,8 +8072,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowRangeTop3() {
-        this.rangeAndCheck(
+    public void testWindowSelectionRowRangeTop3() {
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8083,9 +8083,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowRangeBottom() {
+    public void testWindowSelectionRowRangeBottom() {
         // B2:D4 -> 1
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8095,10 +8095,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowRangeBottom2() {
+    public void testWindowSelectionRowRangeBottom2() {
         // B2:D4 -> 2
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8108,10 +8108,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionRowRangeBottom3() {
+    public void testWindowSelectionRowRangeBottom3() {
         // B2:D4 -> 2
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8121,8 +8121,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeLeft() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeLeft() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8132,8 +8132,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeLeft2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeLeft2() {
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8143,9 +8143,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeRight() {
+    public void testWindowSelectionCellRangeRight() {
         // B2:D4 -> 1
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8155,10 +8155,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeRight2() {
+    public void testWindowSelectionCellRangeRight2() {
         // B2:D4 -> 2
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8168,9 +8168,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeTop() {
+    public void testWindowSelectionCellRangeTop() {
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8180,8 +8180,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeTop2() {
-        this.rangeAndCheck(
+    public void testWindowSelectionCellRangeTop2() {
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8191,9 +8191,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeBottom() {
+    public void testWindowSelectionCellRangeBottom() {
         // B2:D4 -> 1
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8203,10 +8203,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeBottom2() {
+    public void testWindowSelectionCellRangeBottom2() {
         // B2:D4 -> 2
         // BCD:234
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8216,9 +8216,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeTopLeft() {
+    public void testWindowSelectionCellRangeTopLeft() {
         // C3:E5
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8228,9 +8228,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeSelectionCellRangeBottomRight() {
+    public void testWindowSelectionCellRangeBottomRight() {
         // C3:E5
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8239,10 +8239,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // range column/row hidden.........................................................................................
+    // window column/row hidden.........................................................................................
 
     @Test
-    public void testRangeColumnHidden() {
+    public void testWindowColumnHidden() {
         final SpreadsheetViewport viewport = SpreadsheetViewport.with(
                 SpreadsheetSelection.parseCell("A1"),
                 WIDTH * 4,
@@ -8252,7 +8252,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 engine,
                 viewport,
                 false, // includeFrozenColumnsRows
@@ -8276,7 +8276,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setHidden(true)
         );
 
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 engine,
                 viewport,
                 false, // includeFrozenColumnsRows
@@ -8287,7 +8287,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeRowHidden() {
+    public void testWindowRowHidden() {
         final SpreadsheetViewport viewport = SpreadsheetViewport.with(
                 SpreadsheetSelection.parseCell("A1"),
                 WIDTH * 4,
@@ -8297,7 +8297,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 engine,
                 viewport,
                 false, // includeFrozenColumnsRows
@@ -8321,7 +8321,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setHidden(true)
         );
 
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 engine,
                 viewport,
                 false, // includeFrozenColumnsRows
@@ -8331,13 +8331,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // range helpers....................................................................................................
+    // window helpers....................................................................................................
 
-    private void rangeAndCheck(final String cellOrLabel,
-                               final double width,
-                               final double height,
-                               final String range) {
-        this.rangeAndCheck(
+    private void windowAndCheck(final String cellOrLabel,
+                                final double width,
+                                final double height,
+                                final String range) {
+        this.windowAndCheck(
                 cellOrLabel,
                 width,
                 height,
@@ -8346,12 +8346,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void rangeAndCheck(final String cellOrLabel,
-                               final double width,
-                               final double height,
-                               final SpreadsheetSelection selection,
-                               final String range) {
-        this.rangeAndCheck(
+    private void windowAndCheck(final String cellOrLabel,
+                                final double width,
+                                final double height,
+                                final SpreadsheetSelection selection,
+                                final String range) {
+        this.windowAndCheck(
                 cellOrLabel,
                 width,
                 height,
@@ -8360,12 +8360,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void rangeAndCheck(final String cellOrLabel,
-                               final double width,
-                               final double height,
-                               final Optional<SpreadsheetSelection> selection,
-                               final String range) {
-        this.rangeAndCheck(
+    private void windowAndCheck(final String cellOrLabel,
+                                final double width,
+                                final double height,
+                                final Optional<SpreadsheetSelection> selection,
+                                final String range) {
+        this.windowAndCheck(
                 this.createSpreadsheetEngine(),
                 SpreadsheetSelection.parseCellOrLabel(cellOrLabel).viewport(
                         width,
@@ -8378,11 +8378,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // range with frozen columns / rows.................................................................................
+    // window with frozen columns / rows.................................................................................
 
     @Test
-    public void testRangeIgnoreFrozenColumnsFrozenRows() {
-        this.rangeAndCheck(
+    public void testWindowIgnoreFrozenColumnsFrozenRows() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH * 4,
                 HEIGHT * 3,
@@ -8394,8 +8394,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeIgnoreFrozenColumnsFrozenRows2() {
-        this.rangeAndCheck(
+    public void testWindowIgnoreFrozenColumnsFrozenRows2() {
+        this.windowAndCheck(
                 "B2",
                 WIDTH * 4,
                 HEIGHT * 3,
@@ -8406,11 +8406,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // range with frozen columns / rows.................................................................................
+    // window with frozen columns / rows.................................................................................
 
     @Test
-    public void testRangeFrozenColumnsFrozenRows() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRows() {
+        this.windowAndCheck(
                 "Z99",
                 WIDTH * 2,
                 HEIGHT * 2,
@@ -8421,8 +8421,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeFrozenColumnsFrozenRows2() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRows2() {
+        this.windowAndCheck(
                 "Z99",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8433,8 +8433,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsOnly() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsOnly() {
+        this.windowAndCheck(
                 "Z99",
                 WIDTH * 2,
                 HEIGHT * 2,
@@ -8445,8 +8445,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsOnly2() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsOnly2() {
+        this.windowAndCheck(
                 "Z99",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8460,8 +8460,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2
     // A3
     @Test
-    public void testRangeFrozenColumnsOnly() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsOnly() {
+        this.windowAndCheck(
                 "B1",
                 WIDTH * 1,
                 HEIGHT * 3,
@@ -8475,8 +8475,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2 B2
     // A3 B3
     @Test
-    public void testRangeFrozenColumnsOnly2() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsOnly2() {
+        this.windowAndCheck(
                 "B1",
                 WIDTH * 2,
                 HEIGHT * 3,
@@ -8490,8 +8490,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2 B2 C2
     // A3 B3 C3
     @Test
-    public void testRangeFrozenColumnsOnly3() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsOnly3() {
+        this.windowAndCheck(
                 "B1",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8505,8 +8505,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2 B2 C2
     // A3 B3 C3
     @Test
-    public void testRangeFrozenColumnsOnly4() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsOnly4() {
+        this.windowAndCheck(
                 "B1",
                 WIDTH * 3,
                 HEIGHT * 3,
@@ -8520,8 +8520,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2  b2 c2 d2
     // A3  b3 c3 d3
     @Test
-    public void testRangeFrozenColumns() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumns() {
+        this.windowAndCheck(
                 "B1",
                 WIDTH * 4,
                 HEIGHT * 3,
@@ -8535,8 +8535,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2 B2  c2 d2
     // A3 B3  c3 d3
     @Test
-    public void testRangeFrozenColumns2() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumns2() {
+        this.windowAndCheck(
                 "c1",
                 WIDTH * 4,
                 HEIGHT * 3,
@@ -8550,8 +8550,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2 B2  f2 g2
     // A3 B3  f3 g3
     @Test
-    public void testRangeFrozenColumnsNonFrozenGap() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsNonFrozenGap() {
+        this.windowAndCheck(
                 "f1",
                 WIDTH * 4,
                 HEIGHT * 3,
@@ -8563,8 +8563,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     // A1 B1 C1 D1
     @Test
-    public void testRangeFrozenRowsOnly() {
-        this.rangeAndCheck(
+    public void testWindowFrozenRowsOnly() {
+        this.windowAndCheck(
                 "A2",
                 WIDTH * 4,
                 HEIGHT * 1,
@@ -8577,8 +8577,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A1 B1 C1 D1
     // A2 B2 C2 D2
     @Test
-    public void testRangeFrozenRowsOnly2() {
-        this.rangeAndCheck(
+    public void testWindowFrozenRowsOnly2() {
+        this.windowAndCheck(
                 "A2",
                 WIDTH * 4,
                 HEIGHT * 2,
@@ -8591,8 +8591,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A1 B1 C1 D1
     // A2 B2 C2 D2
     @Test
-    public void testRangeFrozenRowsOnly3() {
-        this.rangeAndCheck(
+    public void testWindowFrozenRowsOnly3() {
+        this.windowAndCheck(
                 "A2",
                 WIDTH * 4,
                 HEIGHT * 2,
@@ -8607,8 +8607,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // a2 b2 c2 d2
     // a3 b3 c3 d3
     @Test
-    public void testRangeFrozenRows() {
-        this.rangeAndCheck(
+    public void testWindowFrozenRows() {
+        this.windowAndCheck(
                 "A2",
                 WIDTH * 4,
                 HEIGHT * 3,
@@ -8624,8 +8624,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     //
     // a3 b3 c3 d3
     @Test
-    public void testRangeFrozenRows2() {
-        this.rangeAndCheck(
+    public void testWindowFrozenRows2() {
+        this.windowAndCheck(
                 "a3",
                 WIDTH * 4,
                 HEIGHT * 3,
@@ -8643,8 +8643,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // a4 b4 c4 d4
     // a5 b5 c5 d5
     @Test
-    public void testRangeFrozenRowsNonFrozenGap() {
-        this.rangeAndCheck(
+    public void testWindowFrozenRowsNonFrozenGap() {
+        this.windowAndCheck(
                 "a3",
                 WIDTH * 4,
                 HEIGHT * 5,
@@ -8661,8 +8661,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // a7 b7 c7 d7
     // a8 b8 c8 d8
     @Test
-    public void testRangeFrozenRowsNonFrozenGap2() {
-        this.rangeAndCheck(
+    public void testWindowFrozenRowsNonFrozenGap2() {
+        this.windowAndCheck(
                 "a6",
                 WIDTH * 4,
                 HEIGHT * 5,
@@ -8679,8 +8679,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // a4 b4 c4 d4
     // a5 b5 c5 d5
     @Test
-    public void testRangeOnlyFrozenRowsInvalidHome() {
-        this.rangeAndCheck(
+    public void testWindowOnlyFrozenRowsInvalidHome() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH * 4,
                 HEIGHT * 5,
@@ -8696,8 +8696,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A3   b3 c3 d3
     // A4   b4 c4 d4
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozen() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozen() {
+        this.windowAndCheck(
                 "b2",
                 WIDTH * 4,
                 HEIGHT * 4,
@@ -8713,8 +8713,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A3   b3 c3 d3
     // A4   b4 c4 d4
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozen2() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozen2() {
+        this.windowAndCheck(
                 "b3",
                 WIDTH * 4,
                 HEIGHT * 4,
@@ -8730,8 +8730,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A3 B3   c3 d3
     // A4 B4   c4 d4
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozen3() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozen3() {
+        this.windowAndCheck(
                 "c2",
                 WIDTH * 4,
                 HEIGHT * 4,
@@ -8747,8 +8747,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A3 B3   c3 d3
     // A4 B4   c4 d4
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozen4() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozen4() {
+        this.windowAndCheck(
                 "c3",
                 WIDTH * 4,
                 HEIGHT * 4,
@@ -8764,8 +8764,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A3 B3   c3 d3
     // A4 B4   c4 d4
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenInvalidHome() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenInvalidHome() {
+        this.windowAndCheck(
                 "A1",
                 WIDTH * 4,
                 HEIGHT * 4,
@@ -8782,8 +8782,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A8 B8   c8 d8
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenGap() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenGap() {
+        this.windowAndCheck(
                 "c8",
                 WIDTH * 4,
                 HEIGHT * 4,
@@ -8801,8 +8801,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A9 B9   c9 d9
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenGap2() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenGap2() {
+        this.windowAndCheck(
                 "c8",
                 WIDTH * 4,
                 HEIGHT * 5,
@@ -8813,13 +8813,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
 
-    private void rangeAndCheck(final String cellOrLabel,
-                               final double width,
-                               final double height,
-                               final int frozenColumns,
-                               final int frozenRows,
-                               final String range) {
-        this.rangeAndCheck(
+    private void windowAndCheck(final String cellOrLabel,
+                                final double width,
+                                final double height,
+                                final int frozenColumns,
+                                final int frozenRows,
+                                final String range) {
+        this.windowAndCheck(
                 cellOrLabel,
                 width,
                 height,
@@ -8830,7 +8830,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // range selection .................................................................................................
+    // window selection .................................................................................................
 
     // A1 B1 C1   D1 E1
     // A2 B2 C2   D2 E2
@@ -8839,8 +8839,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A4 B4 C4   D4 E4
     // A5 B5 C5   D5 E5
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenFrozenColumn() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenFrozenColumn() {
+        this.windowAndCheck(
                 "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
@@ -8852,8 +8852,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenColumn() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenColumn() {
+        this.windowAndCheck(
                 "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
@@ -8865,8 +8865,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenFrozenRow() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenFrozenRow() {
+        this.windowAndCheck(
                 "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
@@ -8878,8 +8878,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenRow() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenRow() {
+        this.windowAndCheck(
                 "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
@@ -8891,8 +8891,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenFrozenCell() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenFrozenCell() {
+        this.windowAndCheck(
                 "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
@@ -8904,8 +8904,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenCell() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenCell() {
+        this.windowAndCheck(
                 "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
@@ -8917,8 +8917,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenNonFrozenCell2() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenCell2() {
+        this.windowAndCheck(
                 "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
@@ -8929,7 +8929,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // range selection pan.............................................................................................
+    // window selection pan.............................................................................................
 
     // A1 B1 C1   D1 E1
     // A2 B2 C2   D2 E2
@@ -8939,8 +8939,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A5 B5 C5   D5 E5
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell() {
+        this.windowAndCheck(
                 "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
@@ -8952,8 +8952,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRangeFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell2() {
-        this.rangeAndCheck(
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell2() {
+        this.windowAndCheck(
                 "D4",
                 WIDTH * 5,
                 HEIGHT * 5,
@@ -8964,31 +8964,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void rangeAndCheck(final String cellOrLabel,
-                               final double width,
-                               final double height,
-                               final int frozenColumns,
-                               final int frozenRows,
-                               final SpreadsheetSelection selection,
-                               final String range) {
-        this.rangeAndCheck(
+    private void windowAndCheck(final String cellOrLabel,
+                                final double width,
+                                final double height,
+                                final int frozenColumns,
+                                final int frozenRows,
+                                final SpreadsheetSelection selection,
+                                final String window) {
+        this.windowAndCheck(
                 cellOrLabel,
                 width,
                 height,
                 frozenColumns,
                 frozenRows,
                 Optional.of(selection),
-                range
+                window
         );
     }
 
-    private void rangeAndCheck(final String cellOrLabel,
-                               final double width,
-                               final double height,
-                               final int frozenColumns,
-                               final int frozenRows,
-                               final Optional<SpreadsheetSelection> selection,
-                               final String range) {
+    private void windowAndCheck(final String cellOrLabel,
+                                final double width,
+                                final double height,
+                                final int frozenColumns,
+                                final int frozenRows,
+                                final Optional<SpreadsheetSelection> selection,
+                                final String window) {
         final SpreadsheetMetadata metadata = this.metadata()
                 .setOrRemove(
                         SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
@@ -9002,7 +9002,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 null
                 );
 
-        this.rangeAndCheck(
+        this.windowAndCheck(
                 BasicSpreadsheetEngine.with(metadata),
                 SpreadsheetSelection.parseCellOrLabel(cellOrLabel)
                         .viewport(
@@ -9012,7 +9012,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 true, // includeFrozenColumnsAndRows
                 selection,
                 this.createContext(metadata),
-                range
+                window
         );
     }
 

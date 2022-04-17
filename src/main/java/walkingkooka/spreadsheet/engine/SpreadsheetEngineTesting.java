@@ -966,61 +966,60 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "rowHeight " + row + " of " + engine);
     }
 
-    // range............................................................................................................
+    // window...........................................................................................................
 
-    default void rangeAndCheck(
+    default void windowAndCheck(
             final SpreadsheetEngine engine,
             final SpreadsheetViewport viewport,
             final boolean includeFrozenColumnsRows,
             final Optional<SpreadsheetSelection> selection,
             final SpreadsheetEngineContext context,
-            final String ranges) {
-        this.rangeAndCheck(
+            final String window) {
+        this.windowAndCheck(
                 engine,
                 viewport,
                 includeFrozenColumnsRows,
                 selection,
                 context,
-                SpreadsheetSelection.parseWindow(ranges)
+                SpreadsheetSelection.parseWindow(window)
         );
     }
 
-    default void rangeAndCheck(
+    default void windowAndCheck(
             final SpreadsheetEngine engine,
             final SpreadsheetViewport viewport,
             final boolean includeFrozenColumnsRows,
             final Optional<SpreadsheetSelection> selection,
             final SpreadsheetEngineContext context,
-            final SpreadsheetCellRange... ranges) {
-        this.rangeAndCheck(
+            final SpreadsheetCellRange... window) {
+        this.windowAndCheck(
                 engine,
                 viewport,
                 includeFrozenColumnsRows,
                 selection,
                 context,
-                Sets.of(ranges)
+                Sets.of(window)
         );
     }
 
-    default void rangeAndCheck(
+    default void windowAndCheck(
             final SpreadsheetEngine engine,
             final SpreadsheetViewport viewport,
             final boolean includeFrozenColumnsRows,
             final Optional<SpreadsheetSelection> selection,
             final SpreadsheetEngineContext context,
-            final Set<SpreadsheetCellRange> ranges) {
+            final Set<SpreadsheetCellRange> window) {
         this.checkEquals(
-                ranges,
-                engine.range(
+                window,
+                engine.window(
                         viewport,
                         includeFrozenColumnsRows,
                         selection,
                         context
                 ),
-                () -> "range " + viewport +
+                () -> "window " + viewport +
                         (includeFrozenColumnsRows ? " includeFrozenColumnsRows" : "") +
-                        selection.orElse(null) +
-                        " " + context
+                        selection.orElse(null)
         );
     }
 
