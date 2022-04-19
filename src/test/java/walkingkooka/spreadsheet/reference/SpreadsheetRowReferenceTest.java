@@ -398,7 +398,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testTestCellRangeBefore() {
-        this.testRangeCheck2(
+        this.testCellRangeAndCheck(
                 "2",
                 "C3:E5",
                 false
@@ -407,7 +407,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testTestCellRangeLeftEdge() {
-        this.testRangeCheck2(
+        this.testCellRangeAndCheck(
                 "3",
                 "C3:E5",
                 true
@@ -416,7 +416,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testTestCellRangeCenter() {
-        this.testRangeCheck2(
+        this.testCellRangeAndCheck(
                 "4",
                 "C3:E5",
                 true
@@ -425,7 +425,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testTestCellRangeRightEdge() {
-        this.testRangeCheck2(
+        this.testCellRangeAndCheck(
                 "5",
                 "C3:E5",
                 true
@@ -434,20 +434,10 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testTestCellRangeAfter() {
-        this.testRangeCheck2(
+        this.testCellRangeAndCheck(
                 "6",
                 "C3:E5",
                 false
-        );
-    }
-
-    private void testRangeCheck2(final String row,
-                                 final String range,
-                                 final boolean expected) {
-        this.testCellRangeAndCheck(
-                SpreadsheetRowReference.parseRow(row),
-                SpreadsheetCellRange.parseCellRange(range),
-                expected
         );
     }
 

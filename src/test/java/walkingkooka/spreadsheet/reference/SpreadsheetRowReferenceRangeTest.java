@@ -214,7 +214,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testTestCellRangeBefore() {
-        this.testCellRangeAndCheck2(
+        this.testCellRangeAndCheck(
                 "1:1",
                 "C3:D4",
                 false
@@ -223,7 +223,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testTestCellRangeBefore2() {
-        this.testCellRangeAndCheck2(
+        this.testCellRangeAndCheck(
                 "1:2",
                 "C3:D4",
                 false
@@ -232,7 +232,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testTestCellRangeLeftOverlap() {
-        this.testCellRangeAndCheck2(
+        this.testCellRangeAndCheck(
                 "1:3",
                 "C3:D4",
                 true
@@ -241,7 +241,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testTestCellRangeInside() {
-        this.testCellRangeAndCheck2(
+        this.testCellRangeAndCheck(
                 "4:5",
                 "C3:F6",
                 true
@@ -250,7 +250,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testTestCellRangeRightOverlap() {
-        this.testCellRangeAndCheck2(
+        this.testCellRangeAndCheck(
                 "4:5",
                 "C3:D4",
                 true
@@ -259,7 +259,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testTestCellRangeAll() {
-        this.testCellRangeAndCheck2(
+        this.testCellRangeAndCheck(
                 "1:5",
                 "C3:D4",
                 true
@@ -268,7 +268,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testTestCellRangeAfter() {
-        this.testCellRangeAndCheck2(
+        this.testCellRangeAndCheck(
                 "5:5",
                 "C3:D4",
                 false
@@ -277,20 +277,10 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testTestCellRangeAfter2() {
-        this.testCellRangeAndCheck2(
+        this.testCellRangeAndCheck(
                 "5:6",
                 "C3:D4",
                 false
-        );
-    }
-
-    private void testCellRangeAndCheck2(final String rowRange,
-                                        final String cellRange,
-                                        final boolean expected) {
-        this.testCellRangeAndCheck(
-                SpreadsheetSelection.parseRowRange(rowRange),
-                SpreadsheetSelection.parseCellRange(cellRange),
-                expected
         );
     }
 
