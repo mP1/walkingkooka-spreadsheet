@@ -114,6 +114,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // testCellRangeAndCheck............................................................................................
 
+    final void testCellRangeAndCheck(final String selection,
+                                     final String range,
+                                     final boolean expected) {
+        this.testCellRangeAndCheck(
+                this.parseString(selection),
+                SpreadsheetCellRange.parseCellRange(range),
+                expected
+        );
+    }
+
     final void testCellRangeAndCheck(final S selection,
                                      final SpreadsheetCellRange range,
                                      final boolean expected) {

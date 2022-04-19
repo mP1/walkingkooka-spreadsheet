@@ -573,11 +573,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         );
     }
 
-    // testCellRange.....................................................................................................
+    // testTestCellRange................................................................................................
 
     @Test
-    public void testCellRangeLeft() {
-        this.testCellRangeAndCheck2(
+    public void testTestCellRangeLeft() {
+        this.testCellRangeAndCheck(
                 "C3:D4",
                 "A3:B3",
                 false
@@ -585,8 +585,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testCellRangeRight() {
-        this.testCellRangeAndCheck2(
+    public void testTestCellRangeRight() {
+        this.testCellRangeAndCheck(
                 "C3:D4",
                 "C5:C6",
                 false
@@ -594,8 +594,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testCellRangeAboveLeft() {
-        this.testCellRangeAndCheck2(
+    public void testTestCellRangeAboveLeft() {
+        this.testCellRangeAndCheck(
                 "C3:D4",
                 "A1:B2",
                 false
@@ -603,8 +603,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testCellRangePartialLeft() {
-        this.testCellRangeAndCheck2(
+    public void testTestCellRangePartialLeft() {
+        this.testCellRangeAndCheck(
                 "C3:D4",
                 "C1:C3",
                 true
@@ -612,8 +612,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testCellRangePartialRight() {
-        this.testCellRangeAndCheck2(
+    public void testTestCellRangePartialRight() {
+        this.testCellRangeAndCheck(
                 "C3:D4",
                 "D4:F4",
                 true
@@ -621,8 +621,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testCellRangePartialAbove() {
-        this.testCellRangeAndCheck2(
+    public void testTestCellRangePartialAbove() {
+        this.testCellRangeAndCheck(
                 "C3:D4",
                 "C1:C3",
                 true
@@ -630,8 +630,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testCellRangePartialBelow() {
-        this.testCellRangeAndCheck2(
+    public void testTestCellRangePartialBelow() {
+        this.testCellRangeAndCheck(
                 "C3:D4",
                 "D4:D6",
                 true
@@ -639,8 +639,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testCellRangePartialLeftAbove() {
-        this.testCellRangeAndCheck2(
+    public void testTestCellRangePartialLeftAbove() {
+        this.testCellRangeAndCheck(
                 "C3:D4",
                 "A1:C3",
                 true
@@ -648,8 +648,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testCellRangePartialRightBelow() {
-        this.testCellRangeAndCheck2(
+    public void testTestCellRangePartialRightBelow() {
+        this.testCellRangeAndCheck(
                 "C3:D4",
                 "D4:E5",
                 true
@@ -657,8 +657,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testCellRangePartialInside() {
-        this.testCellRangeAndCheck2(
+    public void testTestCellRangePartialInside() {
+        this.testCellRangeAndCheck(
                 "C3:D4",
                 "C3:C3",
                 true
@@ -666,19 +666,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testCellRangePartialInside2() {
-        this.testCellRangeAndCheck2(
+    public void testTestCellRangePartialInside2() {
+        this.testCellRangeAndCheck(
                 "C3:D4",
                 "C3:D4",
                 true
-        );
-    }
-
-    private void testCellRangeAndCheck2(final String range, final String testRange, final boolean expected) {
-        this.testCellRangeAndCheck(
-                SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseCellRange(testRange),
-                expected
         );
     }
 
@@ -1117,7 +1109,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testCellRange() {
+    public void testTestCellRange() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("C3:Z99");
         assertSame(
                 range.cellRange(),
