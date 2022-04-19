@@ -32,14 +32,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
  * A visitor which accepts an original {@link SpreadsheetCellRange} and then attempts to do a minimal pan to include
  * the given {@link SpreadsheetSelection}.
  */
-final class BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static SpreadsheetCellRange pan(final SpreadsheetCellRange range,
                                     final SpreadsheetViewport viewport,
                                     final SpreadsheetSelection selection,
                                     final BasicSpreadsheetEngine engine,
                                     final SpreadsheetEngineContext context) {
-        final BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor visitor = new BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor(
+        final BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor visitor = new BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor(
                 range,
                 viewport,
                 engine,
@@ -49,10 +49,10 @@ final class BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor extends Sprea
         return visitor.range;
     }
 
-    BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor(final SpreadsheetCellRange range,
-                                                           final SpreadsheetViewport viewport,
-                                                           final BasicSpreadsheetEngine engine,
-                                                           final SpreadsheetEngineContext context) {
+    BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor(final SpreadsheetCellRange range,
+                                                            final SpreadsheetViewport viewport,
+                                                            final BasicSpreadsheetEngine engine,
+                                                            final SpreadsheetEngineContext context) {
         super();
 
         this.range = range;
