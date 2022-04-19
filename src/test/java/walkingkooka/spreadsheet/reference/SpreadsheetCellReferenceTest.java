@@ -763,6 +763,35 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // testRow.......................................................................................................
+
+    @Test
+    public void testTestRowAbove() {
+        this.testRowAndCheck(
+                "C3",
+                "2",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRowBelow() {
+        this.testRowAndCheck(
+                "C3",
+                "4",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRow() {
+        this.testRowAndCheck(
+                "C3",
+                "3",
+                true
+        );
+    }
+
     // ParseStringTesting...............................................................................................
 
     @Test

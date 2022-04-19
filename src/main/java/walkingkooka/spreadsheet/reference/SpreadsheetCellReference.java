@@ -238,6 +238,11 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return this.column().equalsIgnoreReferenceKind(column);
     }
 
+    @Override
+    public boolean testRow(final SpreadsheetRowReference row) {
+        return this.row().equalsIgnoreReferenceKind(row);
+    }
+
     // range/cellRange.......................................................................................
 
     /**

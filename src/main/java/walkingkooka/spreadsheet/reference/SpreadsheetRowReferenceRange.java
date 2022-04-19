@@ -88,6 +88,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     /**
      * Tests if the given {@link SpreadsheetRowReference} is within this {@link SpreadsheetRowReferenceRange}.
      */
+    @Override
     public boolean testRow(final SpreadsheetRowReference row) {
         return this.range.test(row);
     }

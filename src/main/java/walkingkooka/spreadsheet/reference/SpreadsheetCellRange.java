@@ -519,10 +519,8 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     public boolean test(final SpreadsheetCellReference reference) {
         checkCellReference(reference);
 
-        return reference.column()
-                .testCellRange(this) &&
-                reference.row()
-                        .testCellRange(this);
+        return this.testColumn(reference.column()) &&
+                this.testRow(reference.row());
     }
 
     // testCellRange.....................................................................................................
@@ -554,6 +552,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     /**
      * Returns true if the row is within this range.
      */
+    @Override
     public boolean testRow(final SpreadsheetRowReference row) {
         return this.rowReferenceRange()
                 .testRow(row);

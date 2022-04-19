@@ -369,17 +369,6 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
-    private void testRowAndCheck(final String rowRange,
-                                 final String row,
-                                 final boolean expected) {
-        this.checkEquals(
-                expected,
-                SpreadsheetSelection.parseRowRange(rowRange)
-                        .testRow(SpreadsheetSelection.parseRow(row)),
-                () -> rowRange + " testRow " + row
-        );
-    }
-
     // setColumnReferenceRange............................................................................................
 
     @Test

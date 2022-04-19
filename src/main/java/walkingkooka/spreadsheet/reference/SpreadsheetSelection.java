@@ -403,7 +403,13 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Tests if the selection includes the given {@link SpreadsheetColumnReference}.<br>
      * {@link SpreadsheetRowReference} and {@link SpreadsheetRowReferenceRange} both return false.
      */
-    public abstract boolean testColumn(final SpreadsheetColumnReference columnReference);
+    public abstract boolean testColumn(final SpreadsheetColumnReference column);
+
+    /**
+     * Tests if the selection includes the given {@link SpreadsheetRowReference}.<br>
+     * {@link SpreadsheetColumnReference} and {@link SpreadsheetColumnReferenceRange} both return false.
+     */
+    public abstract boolean testRow(final SpreadsheetRowReference row);
 
     // isXXX............................................................................................................
 
