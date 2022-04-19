@@ -451,7 +451,18 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
-    // rowRange...................................................................................................,,,
+    // testTestColumn...................................................................................................
+
+    @Test
+    public void testTestColumn() {
+        this.testColumnAndCheck(
+                "1",
+                "A",
+                false
+        );
+    }
+
+    // testRowRange...................................................................................................,,,
 
     @Test
     public void testRowRangeSpreadsheetRowRange() {

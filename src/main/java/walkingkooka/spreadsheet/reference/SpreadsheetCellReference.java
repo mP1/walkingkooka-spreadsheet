@@ -233,6 +233,11 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return range.test(this);
     }
 
+    @Override
+    public boolean testColumn(final SpreadsheetColumnReference column) {
+        return this.column().equalsIgnoreReferenceKind(column);
+    }
+
     // range/cellRange.......................................................................................
 
     /**

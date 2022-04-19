@@ -543,6 +543,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     /**
      * Returns true if the column is within this range.
      */
+    @Override
     public boolean testColumn(final SpreadsheetColumnReference column) {
         return this.columnReferenceRange()
                 .testColumn(column);

@@ -294,6 +294,17 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // testColumn.......................................................................................................
+
+    @Test
+    public void testTestColumn() {
+        this.testColumnAndCheck(
+                "1:2",
+                "A",
+                false
+        );
+    }
+
     // testRow..........................................................................................................
 
     @Test

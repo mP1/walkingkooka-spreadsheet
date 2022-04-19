@@ -150,10 +150,15 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         throw new UnsupportedOperationException();
     }
 
-    // testCellRange.....................................................................................................
+    // testXXX..........................................................................................................
 
     @Override
     public boolean testCellRange(final SpreadsheetCellRange range) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean testColumn(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();
     }
 

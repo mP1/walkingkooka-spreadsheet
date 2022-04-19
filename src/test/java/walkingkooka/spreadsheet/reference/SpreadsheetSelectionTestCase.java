@@ -124,6 +124,26 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    final void testColumnAndCheck(final String selection,
+                                  final String column,
+                                  final boolean expected) {
+        this.testColumnAndCheck(
+                this.parseString(selection),
+                column,
+                expected
+        );
+    }
+
+    final void testColumnAndCheck(final S selection,
+                                  final String column,
+                                  final boolean expected) {
+        this.checkEquals(
+                expected,
+                selection.testColumn(SpreadsheetSelection.parseColumn(column)),
+                selection + ".testColumn(" + column + ")"
+        );
+    }
+
     // toRelative.......................................................................................................
 
     final void toRelativeAndCheck(final S selection) {

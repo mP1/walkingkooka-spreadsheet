@@ -300,7 +300,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testTestColumnBefore() {
-        this.testColumnAndCheck2(
+        this.testColumnAndCheck(
                 "A:B",
                 "C",
                 false
@@ -309,7 +309,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testTestColumnBefore2() {
-        this.testColumnAndCheck2(
+        this.testColumnAndCheck(
                 "A:B",
                 "D",
                 false
@@ -318,7 +318,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testTestColumnLeftOverlap() {
-        this.testColumnAndCheck2(
+        this.testColumnAndCheck(
                 "B:C",
                 "B",
                 true
@@ -327,7 +327,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testTestColumnInside() {
-        this.testColumnAndCheck2(
+        this.testColumnAndCheck(
                 "D:F",
                 "E",
                 true
@@ -336,7 +336,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testTestColumnRightOverlap() {
-        this.testColumnAndCheck2(
+        this.testColumnAndCheck(
                 "D:E",
                 "E",
                 true
@@ -345,7 +345,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testTestColumnAfter() {
-        this.testColumnAndCheck2(
+        this.testColumnAndCheck(
                 "D:E",
                 "F",
                 false
@@ -354,21 +354,10 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testTestColumnAfter2() {
-        this.testColumnAndCheck2(
+        this.testColumnAndCheck(
                 "E:F",
                 "H",
                 false
-        );
-    }
-
-    private void testColumnAndCheck2(final String columnRange,
-                                     final String column,
-                                     final boolean expected) {
-        this.checkEquals(
-                expected,
-                SpreadsheetSelection.parseColumnRange(columnRange)
-                        .testColumn(SpreadsheetSelection.parseColumn(column)),
-                columnRange + ".testColumn(" + column + ")"
         );
     }
 
