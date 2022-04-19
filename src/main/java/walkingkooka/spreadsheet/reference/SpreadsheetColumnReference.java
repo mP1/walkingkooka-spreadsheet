@@ -174,10 +174,10 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
      */
     @Override
     public boolean test(final SpreadsheetCellReference reference) {
-        return this.equalsIgnoreReferenceKind(reference.column());
+        return this.testColumn(reference.column());
     }
 
-    // testCellRange.....................................................................................................
+    // testXXX.........................................................................................................
 
     @Override
     public boolean testCellRange(final SpreadsheetCellRange range) {
@@ -185,6 +185,11 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
         return this.compareTo(range.begin().column()) >= 0 &&
                 this.compareTo(range.end().column()) <= 0;
+    }
+
+    @Override
+    public boolean testColumn(final SpreadsheetColumnReference column) {
+        return this.equalsIgnoreReferenceKind(column);
     }
 
     // toRelative.......................................................................................................

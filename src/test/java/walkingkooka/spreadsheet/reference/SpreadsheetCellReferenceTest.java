@@ -744,6 +744,35 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // testColumn.......................................................................................................
+
+    @Test
+    public void testTestColumnBefore() {
+        this.testColumnAndCheck(
+                "C3",
+                "B",
+                false
+        );
+    }
+
+    @Test
+    public void testTestColumnAfter() {
+        this.testColumnAndCheck(
+                "C3",
+                "D",
+                false
+        );
+    }
+
+    @Test
+    public void testTestColumn() {
+        this.testColumnAndCheck(
+                "C3",
+                "C",
+                true
+        );
+    }
+
     // ParseStringTesting...............................................................................................
 
     @Test

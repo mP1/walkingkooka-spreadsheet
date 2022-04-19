@@ -176,6 +176,17 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
         assertThrows(UnsupportedOperationException.class, () -> this.createSelection().testCellRange(SpreadsheetCellRange.parseCellRange("A1")));
     }
 
+    // testColumnRange..................................................................................................
+
+    @Test
+    public void testColumnFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection()
+                        .testColumn(SpreadsheetReferenceKind.RELATIVE.firstColumn())
+        );
+    }
+
     // SpreadsheetExpressionReference...................................................................................
 
     @Test
