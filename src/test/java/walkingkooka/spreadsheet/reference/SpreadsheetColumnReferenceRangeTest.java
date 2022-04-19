@@ -351,6 +351,15 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    @Test
+    public void testTestRow() {
+        this.testRowAndCheck(
+                "E:F",
+                "1",
+                false
+        );
+    }
+
     // setRowReferenceRange............................................................................................
 
     @Test

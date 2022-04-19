@@ -735,7 +735,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testTestRowAbove() {
-        this.testTestRowAndCheck2(
+        this.testRowAndCheck(
                 "C3:D4",
                 "2",
                 false
@@ -744,7 +744,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testTestRowBelow() {
-        this.testTestRowAndCheck2(
+        this.testRowAndCheck(
                 "C3:D4",
                 "5",
                 false
@@ -753,7 +753,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testTestRowTop() {
-        this.testTestRowAndCheck2(
+        this.testRowAndCheck(
                 "C3:D4",
                 "3",
                 true
@@ -762,7 +762,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testTestRowBottom() {
-        this.testTestRowAndCheck2(
+        this.testRowAndCheck(
                 "C3:D4",
                 "4",
                 true
@@ -771,20 +771,10 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testTestRowInside() {
-        this.testTestRowAndCheck2(
+        this.testRowAndCheck(
                 "C3:E5",
                 "4",
                 true
-        );
-    }
-
-    private void testTestRowAndCheck2(final String range,
-                                      final String row,
-                                      final boolean expected) {
-        this.checkEquals(
-                expected,
-                SpreadsheetSelection.parseCellRange(range).testRow(SpreadsheetSelection.parseRow(row)),
-                range + " testRow " + row
         );
     }
 

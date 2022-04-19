@@ -162,6 +162,11 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public boolean testRow(final SpreadsheetRowReference row) {
+        throw new UnsupportedOperationException();
+    }
+
     // TreePrintable....................................................................................................
 
     @Override

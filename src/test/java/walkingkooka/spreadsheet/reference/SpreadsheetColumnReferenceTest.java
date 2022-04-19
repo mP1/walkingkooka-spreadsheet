@@ -141,6 +141,15 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
+    @Test
+    public void testTestRow() {
+        this.testRowAndCheck(
+                "A",
+                "1",
+                false
+        );
+    }
+
     // range............................................................................................................
 
     @Test

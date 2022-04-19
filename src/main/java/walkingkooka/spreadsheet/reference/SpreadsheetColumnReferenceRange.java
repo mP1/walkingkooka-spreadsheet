@@ -97,6 +97,11 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
+    public boolean testRow(final SpreadsheetRowReference row) {
+        return false;
+    }
+
+    @Override
     public SpreadsheetColumnReferenceRange toRelative() {
         final SpreadsheetColumnReferenceRange relative = this.begin()
                 .toRelative()

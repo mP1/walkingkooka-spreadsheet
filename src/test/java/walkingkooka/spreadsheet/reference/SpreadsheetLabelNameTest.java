@@ -187,6 +187,17 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
         );
     }
 
+    // testRowRange..................................................................................................
+
+    @Test
+    public void testRowFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection()
+                        .testRow(SpreadsheetReferenceKind.RELATIVE.firstRow())
+        );
+    }
+
     // SpreadsheetExpressionReference...................................................................................
 
     @Test

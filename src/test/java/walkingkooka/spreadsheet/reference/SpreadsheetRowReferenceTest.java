@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.tree.json.JsonNode;
@@ -59,13 +58,41 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.checkEquals(row, cell.row(), "row");
     }
 
-    @Test
-    public void testRow() {
-        final SpreadsheetRowReference reference = SpreadsheetReferenceKind.ABSOLUTE.row(123);
+    // testTestRow......................................................................................................
 
-        this.checkEquals(
-                SpreadsheetRow.with(reference),
-                reference.row()
+    @Test
+    public void testTestRowAbove() {
+        this.testRowAndCheck(
+                "3",
+                "2",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRowBelow() {
+        this.testRowAndCheck(
+                "3",
+                "4",
+                false
+        );
+    }
+
+    @Test
+    public void testTestRow() {
+        this.testRowAndCheck(
+                "3",
+                "3",
+                true
+        );
+    }
+
+    @Test
+    public void testTestRow2() {
+        this.testRowAndCheck(
+                "$3",
+                "3",
+                true
         );
     }
 

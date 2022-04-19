@@ -192,6 +192,11 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return this.equalsIgnoreReferenceKind(column);
     }
 
+    @Override
+    public boolean testRow(final SpreadsheetRowReference row) {
+        return false;
+    }
+
     // toRelative.......................................................................................................
 
     @Override
