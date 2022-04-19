@@ -1111,7 +1111,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 final SpreadsheetSelection spreadsheetSelection = selection.get();
 
                 if (!spreadsheetSelection.testCellRange(nonFrozenCells)) {
-                    nonFrozenCells = BasicSpreadsheetEngineRangeSpreadsheetSelectionVisitor.pan(
+                    nonFrozenCells = BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor.pan(
                             nonFrozenCells,
                             nonFrozenHome.viewport(width, height),
                             spreadsheetSelection,
