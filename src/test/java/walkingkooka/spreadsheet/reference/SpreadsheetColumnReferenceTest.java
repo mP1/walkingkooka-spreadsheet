@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
 import walkingkooka.tree.json.JsonNode;
@@ -59,16 +58,6 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final SpreadsheetCellReference cell = column.setRow(row);
         this.checkEquals(column, cell.column(), "column");
         this.checkEquals(row, cell.row(), "row");
-    }
-
-    @Test
-    public void testColumn() {
-        final SpreadsheetColumnReference reference = SpreadsheetReferenceKind.ABSOLUTE.column(123);
-
-        this.checkEquals(
-                SpreadsheetColumn.with(reference),
-                reference.column()
-        );
     }
 
     // Predicate........................................................................................................
@@ -138,6 +127,42 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
                 "F",
                 "C3:E5",
                 false
+        );
+    }
+
+    @Test
+    public void testTestColumn() {
+        this.testColumnAndCheck(
+                "A",
+                "A",
+                true
+        );
+    }
+
+    @Test
+    public void testTestColumnDifferent() {
+        this.testColumnAndCheck(
+                "Z",
+                "A",
+                false
+        );
+    }
+
+    @Test
+    public void testTestColumnDifferentReferenceKind() {
+        this.testColumnAndCheck(
+                "$B",
+                "B",
+                true
+        );
+    }
+
+    @Test
+    public void testTestColumnDifferentReferenceKind2() {
+        this.testColumnAndCheck(
+                "B",
+                "$B",
+                true
         );
     }
 
