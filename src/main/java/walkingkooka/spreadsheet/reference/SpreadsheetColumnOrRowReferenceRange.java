@@ -63,6 +63,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     /**
      * Returns the number of columns or rows in this range.
      */
+    @Override
     public final int count() {
         return this.end()
                 .value()

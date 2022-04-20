@@ -113,6 +113,11 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public int count() {
+        throw new UnsupportedOperationException();
+    }
+
     // SpreadsheetExpressionReference...................................................................................
 
     @Override

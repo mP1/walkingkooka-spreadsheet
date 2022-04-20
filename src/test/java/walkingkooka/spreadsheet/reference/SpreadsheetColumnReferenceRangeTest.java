@@ -177,7 +177,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     @Test
     public void testCountSingleton() {
         this.countAndCheck(
-                SpreadsheetSelection.parseColumnRange("C"),
+                "C",
                 1
         );
     }
@@ -185,7 +185,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     @Test
     public void testCount() {
         this.countAndCheck(
-                SpreadsheetSelection.parseColumnRange("C:D"),
+                "C:D",
                 2
         );
     }

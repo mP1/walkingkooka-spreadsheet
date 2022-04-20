@@ -55,6 +55,25 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         super();
     }
 
+    // testCellRangeAndCheck............................................................................................
+
+    final void countAndCheck(final String selection,
+                             final int expected) {
+        this.countAndCheck(
+                this.parseString(selection),
+                expected
+        );
+    }
+
+    final void countAndCheck(final S selection,
+                             final int expected) {
+        this.checkEquals(
+                expected,
+                selection.count(),
+                () -> selection + " count"
+        );
+    }
+
     // isAll............................................................................................................
 
     final void isAllAndCheck(final String selection,

@@ -70,14 +70,6 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
         return false;
     }
 
-    final void countAndCheck(final S range, final int expected) {
-        this.checkEquals(
-                expected,
-                range.count(),
-                () -> range + " count"
-        );
-    }
-
     final void isSingleAndCheck(final String range,
                                 final boolean expected) {
         this.checkEquals(

@@ -162,6 +162,16 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
                 a1, b2, c3, d4);
     }
 
+    // count...........................................................................................................
+
+    @Test
+    public void testCount() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().count()
+        );
+    }
+
     // Predicate........................................................................................................
 
     @Test

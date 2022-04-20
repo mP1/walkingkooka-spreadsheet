@@ -49,6 +49,11 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     }
 
     @Override
+    public final int count() {
+        return 1;
+    }
+
+    @Override
     public final boolean isAll() {
         return false;
     }

@@ -166,6 +166,28 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         this.isSingleCellAndCheck(range, false);
     }
 
+    // count............................................................................................................
+
+    @Test
+    public void testCountA1() {
+        this.countAndCheck("A1:A1", 1);
+    }
+
+    @Test
+    public void testCountB2() {
+        this.countAndCheck("B2:B2", 1);
+    }
+
+    @Test
+    public void testCountC3D4() {
+        this.countAndCheck("C3:D4", 4);
+    }
+
+    @Test
+    public void testCountE5F5() {
+        this.countAndCheck("E5:F5", 2);
+    }
+
     // isAll..........................................................................................................
 
     @Test

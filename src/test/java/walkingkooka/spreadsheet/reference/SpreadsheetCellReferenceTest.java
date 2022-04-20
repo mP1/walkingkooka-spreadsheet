@@ -111,6 +111,18 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.checkRow(different, differentRow);
     }
 
+    // count............................................................................................................
+
+    @Test
+    public void testCountA1() {
+        this.countAndCheck("A1", 1);
+    }
+
+    @Test
+    public void testCountB2() {
+        this.countAndCheck("B2", 1);
+    }
+
     // isAll..........................................................................................................
 
     @Test
