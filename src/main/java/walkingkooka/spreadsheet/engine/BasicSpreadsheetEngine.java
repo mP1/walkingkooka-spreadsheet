@@ -965,6 +965,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                             final SpreadsheetEngineContext context) {
         Objects.requireNonNull(viewport, "viewport");
         Objects.requireNonNull(selection, "selection");
+        selection.ifPresent(BasicSpreadsheetEngine::windowSelectionCheck);
         checkContext(context);
 
         double width = viewport.width();
@@ -1048,6 +1049,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         nonFrozenHome.column(),
                         0,
                         width,
+                        selection,
                         context
                 ) : null;
 
@@ -1056,6 +1058,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         nonFrozenHome.row(),
                         0,
                         height,
+                        selection,
                         context
                 ) : null;
 
@@ -1126,12 +1129,20 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return SpreadsheetDelta.createWindowSet(window);
     }
 
+    private static void windowSelectionCheck(final SpreadsheetSelection selection) {
+        if (selection.count() != 1) {
+            throw new IllegalArgumentException("Focused selection must only contain a single viewport element but was " + selection);
+        }
+    }
+
     /**
      * Uses the given home cell of the viewport and a X offset and width to compute the start and end columns.
+     * Note if the selection matches the left or right columns incompletely then that will advance left/right.
      */
     SpreadsheetColumnReferenceRange columnRange(final SpreadsheetColumnReference column,
                                                 final double xOffset,
                                                 final double width,
+                                                final Optional<SpreadsheetSelection> selection,
                                                 final SpreadsheetEngineContext context) {
         // columns
         double x = xOffset;
@@ -1175,9 +1186,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
                 for (; ; ) {
                     x = x - this.columnWidth(leftColumn, context);
-                    if (x <= 0) {
+                    if (0 == x) {
                         break;
                     }
+                    if (x < 0) {
+                        if (!selection.isPresent() || !selection.get().testColumn(leftColumn)) {
+                            break;
+                        }
+
+                        x = x + this.columnWidth(rightColumn, context);
+                        rightColumn = rightColumn.addSaturated(-1);
+                    }
+
                     leftColumn = leftColumn.addSaturated(-1);
                 }
 
@@ -1195,9 +1215,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 }
                 break;
             }
+
             x = x - this.columnWidth(rightColumn, context);
-            if (x <= 0) {
+            if (0 == x) {
                 break;
+            }
+            if (x < 0) {
+                if (!selection.isPresent() || !selection.get().testColumn(rightColumn)) {
+                    break;
+                }
+
+                x = x + this.columnWidth(leftColumn, context);
+                leftColumn = leftColumn.addSaturated(+1);
             }
             rightColumn = rightColumn.addSaturated(+1);
         }
@@ -1207,10 +1236,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     /**
      * Uses the given home cell of the viewport and a Y offset and height to compute the start and end rows.
+     * Note if the selection matches the top or bottom rows incompletely then that will advance up/down.
      */
     SpreadsheetRowReferenceRange rowRange(final SpreadsheetRowReference row,
                                           final double yOffset,
                                           final double height,
+                                          final Optional<SpreadsheetSelection> selection,
                                           final SpreadsheetEngineContext context) {
         // rows
         double y = yOffset;
@@ -1254,9 +1285,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
                 for (; ; ) {
                     y = y - this.rowHeight(topRow, context);
-                    if (y <= 0) {
+                    if (0 == y) {
                         break;
                     }
+                    if (y < 0) {
+                        if (!selection.isPresent() || !selection.get().testRow(topRow)) {
+                            break;
+                        }
+
+                        y = y + this.rowHeight(bottomRow, context);
+                        bottomRow = bottomRow.addSaturated(-1);
+                    }
+
                     topRow = topRow.addSaturated(-1);
                 }
 
@@ -1275,8 +1315,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 break;
             }
             y = y - this.rowHeight(bottomRow, context);
-            if (y <= 0) {
+            if (0 == y) {
                 break;
+            }
+            if (y < 0) {
+                if (!selection.isPresent() || !selection.get().testRow(bottomRow)) {
+                    break;
+                }
+
+                y = y + this.rowHeight(topRow, context);
+                topRow = topRow.addSaturated(+1);
             }
             bottomRow = bottomRow.addSaturated(+1);
         }

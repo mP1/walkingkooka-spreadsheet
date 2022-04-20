@@ -7484,45 +7484,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRangeWithin() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseCellRange("B2:D4"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionCellRangeWithin2() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseCellRange("B2:B3"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionCellRangeWithin3() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseCellRange("C3:D4"),
-                "B2:D4"
-        );
-    }
-
-    @Test
     public void testWindowSelectionColumnWithin() {
         this.windowAndCheck(
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("B"),
+                SpreadsheetSelection.parseColumn("B"),
                 "B2:D4"
         );
     }
@@ -7533,7 +7500,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("B:D"),
+                SpreadsheetSelection.parseColumn("B"),
                 "B2:D4"
         );
     }
@@ -7544,7 +7511,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("C:D"),
+                SpreadsheetSelection.parseColumn("C"),
                 "B2:D4"
         );
     }
@@ -7555,7 +7522,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("2"),
+                SpreadsheetSelection.parseRow("2"),
                 "B2:D4"
         );
     }
@@ -7566,7 +7533,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("2:4"),
+                SpreadsheetSelection.parseRow("3"),
                 "B2:D4"
         );
     }
@@ -7577,175 +7544,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("3:4"),
+                SpreadsheetSelection.parseRow("4"),
                 "B2:D4"
-        );
-    }
-
-    // window Selection Outside..........................................................................................
-
-    @Test
-    public void testWindowSelectionColumnRangeAll() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("B:D"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionColumnRangeAllLeft() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("A:D"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionColumnRangeAllRight() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("B:E"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionColumnRangeAllLeftAndRight() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("A:E"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionRowRangeAll() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("2:4"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionRowRangeAllAbove() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("1:4"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionRowRangeAllBelow() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("2:5"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionRowRangeAllAboveAndBelow() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("1:5"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionCellRangeAll() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseCellRange("B2:D4"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionCellRangeAllAbove() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseCellRange("B1:D4"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionCellRangeAllBelow() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseCellRange("B2:D5"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionCellRangeAllLeft() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseCellRange("A2:D4"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionCellRangeAllRight() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseCellRange("B2:E4"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionCellRangeAll2() {
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseCellRange("A1:E5"),
-                "B2:D4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionCellRangeAll3() {
-        this.windowAndCheck(
-                "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseCellRange("A1:I9"),
-                "C3:E5"
         );
     }
 
@@ -7982,7 +7782,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("A"),
+                SpreadsheetSelection.parseColumn("A"),
                 "A3:C5"
         );
     }
@@ -7993,8 +7793,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "C3",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("A:B"),
-                "A3:C5"
+                SpreadsheetSelection.parseColumn("B"),
+                "B3:D5"
         );
     }
 
@@ -8005,7 +7805,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("E"),
+                SpreadsheetSelection.parseColumn("E"),
                 "C2:E4"
         );
     }
@@ -8017,7 +7817,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("E:F"),
+                SpreadsheetSelection.parseColumn("F"),
                 "D2:F4"
         );
     }
@@ -8030,7 +7830,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("F"),
+                SpreadsheetSelection.parseColumn("F"),
                 "D2:F4"
         );
     }
@@ -8043,80 +7843,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "B2",
                 WIDTH * 3,
                 HEIGHT * 3,
-                SpreadsheetSelection.parseColumnRange("F:G"),
+                SpreadsheetSelection.parseColumn("G"),
                 "E2:G4"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionRowRangeTop() {
-        // BCD:234
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("1"),
-                "B1:D3"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionRowRangeTop2() {
-        this.windowAndCheck(
-                "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("1"),
-                "C1:E3"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionRowRangeTop3() {
-        this.windowAndCheck(
-                "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("1:2"),
-                "C1:E3"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionRowRangeBottom() {
-        // B2:D4 -> 1
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("5"),
-                "B3:D5"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionRowRangeBottom2() {
-        // B2:D4 -> 2
-        // BCD:234
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("6"),
-                "B4:D6"
-        );
-    }
-
-    @Test
-    public void testWindowSelectionRowRangeBottom3() {
-        // B2:D4 -> 2
-        // BCD:234
-        this.windowAndCheck(
-                "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
-                SpreadsheetSelection.parseRowRange("6:7"),
-                "B5:D7"
         );
     }
 
@@ -8961,6 +8689,72 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 3, // frozenRows
                 SpreadsheetSelection.parseCell("G4"),
                 "A1:C3,D1:E3,A4:C5,F4:G5"
+        );
+    }
+
+    // A1 B1   C1  D1 E1
+    // A2 B2   C2  D2 E2
+    //
+    // A3 B3   C3  D3 E3
+    //
+    // A4 B4   C4  D4 E4
+    // A5 B5   C5  D5 E5
+    @Test
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialWidth() {
+        this.windowAndCheck(
+                "C4",
+                WIDTH * 4 - 2,
+                HEIGHT * 4,
+                2, // frozenColumns
+                2, // frozenRows
+                SpreadsheetSelection.parseCell("D4"),
+                "A1:B2,D1:E2,A4:B5,D4:E5"
+        );
+    }
+
+    @Test
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialWidth2() {
+        this.windowAndCheck(
+                "C4",
+                WIDTH * 4 - 1,
+                HEIGHT * 4,
+                2, // frozenColumns
+                2, // frozenRows
+                SpreadsheetSelection.parseCell("D4"),
+                "A1:B2,D1:E2,A4:B5,D4:E5"
+        );
+    }
+
+    // A1 B1   C1  D1 E1
+    // A2 B2   C2  D2 E2
+    //
+    // A3 B3   C3  D3 E3
+    //
+    // A4 B4   C4  D4 E4
+    // A5 B5   C5  D5 E5
+    @Test
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialHeight() {
+        this.windowAndCheck(
+                "D3",
+                WIDTH * 4,
+                HEIGHT * 4 - 2,
+                2, // frozenColumns
+                2, // frozenRows
+                SpreadsheetSelection.parseCell("D4"),
+                "A1:B2,D1:E2,A4:B5,D4:E5"
+        );
+    }
+
+    @Test
+    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialHeight2() {
+        this.windowAndCheck(
+                "D3",
+                WIDTH * 4,
+                HEIGHT * 4 - 1,
+                2, // frozenColumns
+                2, // frozenRows
+                SpreadsheetSelection.parseCell("D4"),
+                "A1:B2,D1:E2,A4:B5,D4:E5"
         );
     }
 

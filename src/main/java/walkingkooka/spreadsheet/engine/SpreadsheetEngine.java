@@ -180,6 +180,12 @@ public interface SpreadsheetEngine {
      * Translates the {@link SpreadsheetViewport} into the actual {@link SpreadsheetCellRange} of cells that occupy that space.
      * The combination of parameters make it possible to load the range of cells that occupy the selected range and
      * automatically pan across as necessary to include the provided {@link SpreadsheetSelection}.
+     * The {@link SpreadsheetSelection} must contain a single
+     * <ul>
+     *     <li>{@link SpreadsheetCellReference}</li>
+     *     <li>{@link SpreadsheetColumnReference}</li>
+     *     <li>{@link SpreadsheetRowReference}</li>
+     * </ul>
      */
     Set<SpreadsheetCellRange> window(final SpreadsheetViewport viewport,
                                      final boolean includeFrozenColumnsRows,

@@ -28,6 +28,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 
+import java.util.Optional;
+
 /**
  * A visitor which accepts an original {@link SpreadsheetCellRange} and then attempts to do a minimal pan to include
  * the given {@link SpreadsheetSelection}.
@@ -68,8 +70,8 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
         final SpreadsheetCellReference begin = range.begin();
         final SpreadsheetCellReference end = range.end();
 
-        this.columnRange(begin.column(), end.column());
-        this.rowRange(begin.row(), end.row());
+        this.columnRange(range.columnReferenceRange());
+        this.rowRange(range.rowReferenceRange());
     }
 
     @Override
@@ -80,32 +82,35 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
 
     @Override
     protected void visit(final SpreadsheetColumnReference reference) {
-        this.columnRange(reference, reference);
+        this.columnRange(reference.columnRange());
     }
 
     @Override
     protected void visit(final SpreadsheetColumnReferenceRange range) {
-        this.columnRange(range.begin(), range.end());
+        this.columnRange(range);
     }
 
-    private void columnRange(final SpreadsheetColumnReference left,
-                             final SpreadsheetColumnReference right) {
-        final SpreadsheetCellRange range = this.range;
-        final SpreadsheetColumnReference beginColumn = range.begin().column();
+    private void columnRange(final SpreadsheetColumnReferenceRange columnRange) {
+        final SpreadsheetCellRange cellRange = this.range;
+        final SpreadsheetColumnReference beginColumn = cellRange.begin().column();
+
+        final SpreadsheetColumnReference left = columnRange.begin();
+        final SpreadsheetColumnReference right = columnRange.end();
 
         if (left.compareTo(beginColumn) < 0) {
 
             // set new left...
-            this.range = range.setColumnReferenceRange(
+            this.range = cellRange.setColumnReferenceRange(
                     this.engine.columnRange(
                             left,
                             0,
                             this.viewport.width(),
+                            Optional.of(columnRange),
                             this.context
                     )
             );
         } else {
-            final SpreadsheetColumnReference viewportRight = range.end().column();
+            final SpreadsheetColumnReference viewportRight = cellRange.end().column();
             if (right.compareTo(viewportRight) > 0) {
                 // set new right
 
@@ -118,11 +123,12 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
                         context
                 );
 
-                this.range = range.setColumnReferenceRange(
+                this.range = cellRange.setColumnReferenceRange(
                         engine.columnRange(
                                 beginColumn,
                                 rightOffset,
                                 this.viewport.width(),
+                                Optional.of(columnRange),
                                 context
                         )
                 );
@@ -137,32 +143,35 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
 
     @Override
     protected void visit(final SpreadsheetRowReference reference) {
-        this.rowRange(reference, reference);
+        this.rowRange(reference.rowRange());
     }
 
     @Override
     protected void visit(final SpreadsheetRowReferenceRange range) {
-        this.rowRange(range.begin(), range.end());
+        this.rowRange(range);
     }
 
-    private void rowRange(final SpreadsheetRowReference top,
-                          final SpreadsheetRowReference bottom) {
-        final SpreadsheetCellRange range = this.range;
-        final SpreadsheetRowReference beginRow = range.begin().row();
+    private void rowRange(SpreadsheetRowReferenceRange rowRange) {
+        final SpreadsheetCellRange celRange = this.range;
+        final SpreadsheetRowReference beginRow = celRange.begin().row();
+
+        final SpreadsheetRowReference top = rowRange.begin();
+        final SpreadsheetRowReference bottom = rowRange.end();
 
         if (top.compareTo(beginRow) < 0) {
 
             // set new top...
-            this.range = range.setRowReferenceRange(
+            this.range = celRange.setRowReferenceRange(
                     this.engine.rowRange(
                             top,
                             0,
                             this.viewport.height(),
+                            Optional.of(rowRange),
                             this.context
                     )
             );
         } else {
-            final SpreadsheetRowReference viewportBottom = range.end().row();
+            final SpreadsheetRowReference viewportBottom = celRange.end().row();
             if (bottom.compareTo(viewportBottom) > 0) {
                 // set new bottom
 
@@ -175,11 +184,12 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
                         context
                 );
 
-                this.range = range.setRowReferenceRange(
+                this.range = celRange.setRowReferenceRange(
                         engine.rowRange(
                                 beginRow,
                                 bottomOffset,
                                 this.viewport.height(),
+                                Optional.of(rowRange),
                                 context
                         )
                 );
