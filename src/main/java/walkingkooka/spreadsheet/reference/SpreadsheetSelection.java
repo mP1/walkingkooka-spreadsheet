@@ -481,6 +481,8 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * is invalid.
      */
     final void checkAnchor(final SpreadsheetViewportSelectionAnchor anchor) {
+        Objects.requireNonNull(anchor, "anchor");
+
         if (!this.isLabelName()) {
             final Set<SpreadsheetViewportSelectionAnchor> anyOf = this.anchors();
             if (!anyOf.contains(anchor)) {
