@@ -140,6 +140,12 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     }
 
     @Override
+    public int count() {
+        return this.columnReferenceRange().count() *
+                this.rowReferenceRange().count();
+    }
+
+    @Override
     public boolean isAll() {
         return this.begin().isFirst() && this.end().isLast();
     }

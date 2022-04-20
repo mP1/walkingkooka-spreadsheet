@@ -395,6 +395,13 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
+     * Returns the number of elements in this {@link SpreadsheetSelection}.
+     */
+    public abstract int count();
+
+    // test...........................................................................................................
+
+    /**
      * Tests if the selection be it a column, row or cell is within the given range.
      */
     public abstract boolean testCellRange(final SpreadsheetCellRange range);

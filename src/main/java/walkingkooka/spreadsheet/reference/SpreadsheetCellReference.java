@@ -186,6 +186,11 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     }
 
     @Override
+    public int count() {
+        return 1;
+    }
+
+    @Override
     public boolean isAll() {
         return false;
     }
