@@ -40,6 +40,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelection> implements ClassTesting2<S>,
@@ -1998,6 +1999,41 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected,
                 selection.extendDown(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate extendDown"
+        );
+    }
+
+    // focused.........................................................................................................
+
+    @Test
+    public final void testFocusedNullAnchorFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection().focused(null)
+        );
+    }
+
+    final void focusedAndCheck(final String selection,
+                               final SpreadsheetViewportSelectionAnchor anchor,
+                               final String expected) {
+        this.focusedAndCheck(
+                this.parseString(selection),
+                anchor,
+                this.parseString(expected).simplify()
+        );
+    }
+
+    final void focusedAndCheck(final S selection,
+                               final SpreadsheetViewportSelectionAnchor anchor,
+                               final SpreadsheetSelection expected) {
+        this.checkEquals(
+                1,
+                expected.count(),
+                () -> "Expected " + expected + " count must be one"
+        );
+        this.checkEquals(
+                expected,
+                selection.focused(anchor),
+                () -> selection + " anchor " + anchor + " focused"
         );
     }
 

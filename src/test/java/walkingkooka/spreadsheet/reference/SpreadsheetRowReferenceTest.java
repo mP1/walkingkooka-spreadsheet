@@ -857,6 +857,26 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // focused..........................................................................................................
+
+    @Test
+    public void testFocused() {
+        this.focusedAndCheck(
+                "1",
+                SpreadsheetViewportSelectionAnchor.NONE,
+                "1"
+        );
+    }
+
+    @Test
+    public void testFocused2() {
+        this.focusedAndCheck(
+                "$2",
+                SpreadsheetViewportSelectionAnchor.NONE,
+                "$2"
+        );
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test

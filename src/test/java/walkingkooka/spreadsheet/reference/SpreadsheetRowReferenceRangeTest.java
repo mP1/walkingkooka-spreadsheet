@@ -850,6 +850,26 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // focused..........................................................................................................
+
+    @Test
+    public void testFocusedTop() {
+        this.focusedAndCheck(
+                "1:2",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                "2"
+        );
+    }
+
+    @Test
+    public void testFocusedBottom() {
+        this.focusedAndCheck(
+                "$3:4",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                "$3"
+        );
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test

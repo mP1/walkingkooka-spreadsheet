@@ -531,6 +531,12 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     public abstract SpreadsheetViewportSelectionAnchor defaultAnchor();
 
     /**
+     * For the given combination of {@link SpreadsheetSelection} and {@link SpreadsheetViewportSelectionAnchor}
+     * return the focused {@link SpreadsheetSelection}.
+     */
+    public abstract SpreadsheetSelection focused(final SpreadsheetViewportSelectionAnchor anchor);
+
+    /**
      * Tests if this {@link SpreadsheetSelection} is hidden. A range is considered hidden if either its begin or end
      * are hidden.
      */
