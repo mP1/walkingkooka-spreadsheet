@@ -45,7 +45,6 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
     static SpreadsheetViewportSelection with(final SpreadsheetSelection selection,
                                              final SpreadsheetViewportSelectionAnchor anchor,
                                              final Optional<SpreadsheetViewportSelectionNavigation> navigation) {
-        Objects.requireNonNull(anchor, "anchor");
         selection.checkAnchor(anchor);
         Objects.requireNonNull(navigation, "navigation");
 
