@@ -473,6 +473,15 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
                 ));
     }
 
+    // focused...........................................................................................................
+
+    @Override
+    public SpreadsheetCellReference focused(final SpreadsheetViewportSelectionAnchor anchor) {
+        this.checkAnchor(anchor);
+        return anchor.column(this.columnReferenceRange())
+                .setRow(anchor.row(this.rowReferenceRange()));
+    }
+
     // simplify.........................................................................................................
 
     @Override

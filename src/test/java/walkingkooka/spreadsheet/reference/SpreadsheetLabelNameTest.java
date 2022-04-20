@@ -277,6 +277,16 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
         );
     }
 
+    // focused..........................................................................................................
+
+    @Test
+    public void testFocusedFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().focused(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
     // SpreadsheetExpressionReferenceVisitor.............................................................................
 
     @Test

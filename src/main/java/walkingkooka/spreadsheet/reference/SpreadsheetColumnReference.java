@@ -359,6 +359,14 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         );
     }
 
+    // focused...........................................................................................................
+
+    @Override
+    public SpreadsheetColumnReference focused(final SpreadsheetViewportSelectionAnchor anchor) {
+        this.checkAnchor(anchor);
+        return this;
+    }
+
     // Object...........................................................................................................
 
     @Override

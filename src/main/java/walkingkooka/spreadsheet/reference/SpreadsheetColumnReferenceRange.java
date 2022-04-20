@@ -246,6 +246,14 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
         );
     }
 
+    // focused...........................................................................................................
+
+    @Override
+    public SpreadsheetColumnReference focused(final SpreadsheetViewportSelectionAnchor anchor) {
+        this.checkAnchor(anchor);
+        return anchor.column(this);
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override

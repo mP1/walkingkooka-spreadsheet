@@ -469,6 +469,14 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         );
     }
 
+    // focused...........................................................................................................
+
+    @Override
+    public SpreadsheetCellReference focused(final SpreadsheetViewportSelectionAnchor anchor) {
+        this.checkAnchor(anchor);
+        return this;
+    }
+
     // Object...........................................................................................................
 
     @Override

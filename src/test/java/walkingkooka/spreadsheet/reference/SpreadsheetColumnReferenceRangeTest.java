@@ -858,6 +858,26 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // focused..........................................................................................................
+
+    @Test
+    public void testFocusedLeft() {
+        this.focusedAndCheck(
+                "A:B",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                "B"
+        );
+    }
+
+    @Test
+    public void testFocusedRight() {
+        this.focusedAndCheck(
+                "$C:D",
+                SpreadsheetViewportSelectionAnchor.RIGHT,
+                "$C"
+        );
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test

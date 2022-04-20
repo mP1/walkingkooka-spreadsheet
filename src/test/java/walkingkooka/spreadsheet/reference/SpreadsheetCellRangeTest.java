@@ -1900,6 +1900,26 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
         );
     }
 
+    // focused..........................................................................................................
+
+    @Test
+    public void testFocusedBottomRight() {
+        this.focusedAndCheck(
+                "A1:B2",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                "A1"
+        );
+    }
+
+    @Test
+    public void testFocusedTopLeft() {
+        this.focusedAndCheck(
+                "C3:$D$4",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                "$D$4"
+        );
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test

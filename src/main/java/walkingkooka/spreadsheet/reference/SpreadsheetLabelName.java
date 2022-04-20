@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -251,6 +252,14 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
     @Override
     Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
                                                final SpreadsheetViewportSelectionAnchor anchor) {
+        throw new UnsupportedOperationException();
+    }
+
+    // focused...........................................................................................................
+
+    @Override
+    public SpreadsheetLabelName focused(final SpreadsheetViewportSelectionAnchor anchor) {
+        Objects.requireNonNull(anchor, "anchor");
         throw new UnsupportedOperationException();
     }
 

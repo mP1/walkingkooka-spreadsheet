@@ -1282,6 +1282,26 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // focused..........................................................................................................
+
+    @Test
+    public void testFocused() {
+        this.focusedAndCheck(
+                "A1",
+                SpreadsheetViewportSelectionAnchor.NONE,
+                "A1"
+        );
+    }
+
+    @Test
+    public void testFocused2() {
+        this.focusedAndCheck(
+                "$B$2",
+                SpreadsheetViewportSelectionAnchor.NONE,
+                "$B$2"
+        );
+    }
+
     // SpreadsheetSelectionVisitor.......................................................................................
 
     @Test
