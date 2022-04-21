@@ -70,7 +70,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      */
     public final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
-    // modes used by isTextCellReference
+    // modes used by isCellReferenceText
     private final static int MODE_COLUMN_FIRST = 0;
     private final static int MODE_COLUMN = MODE_COLUMN_FIRST + 1;
     private final static int MODE_ROW_FIRST = MODE_COLUMN + 1;
