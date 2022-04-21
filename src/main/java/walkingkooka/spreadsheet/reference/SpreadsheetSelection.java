@@ -541,8 +541,12 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     /**
      * Getter that returns the default if any anchor for this type of {@link SpreadsheetSelection}.
-     * Label is a special case and will return {@link Optional#empty()} because it cant guess if its pointing to a
-     * cell or cell-range.
+     * <br>
+     * This is potentially useful in situation such as parsing a selection from history hash and a sensible default anchor
+     * is better than failing with an exception.
+     * <br>
+     * {@link SpreadsheetLabelName} is a special case and will return {@link SpreadsheetViewportSelectionAnchor#NONE} rather than throwing
+     * a {@link UnsupportedOperationException}.
      */
     public abstract SpreadsheetViewportSelectionAnchor defaultAnchor();
 
