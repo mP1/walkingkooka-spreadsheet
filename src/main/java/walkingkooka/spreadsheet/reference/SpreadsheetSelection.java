@@ -271,7 +271,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         return SpreadsheetCellRange.with(
                 Range.parse(
                         text,
-                        ':',
+                        SEPARATOR.character(),
                         SpreadsheetSelection::parseCell
                 )
         );
@@ -298,7 +298,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         return SpreadsheetColumnReferenceRange.with(
                 Range.parse(
                         text,
-                        ':',
+                        SEPARATOR.character(),
                         SpreadsheetSelection::parseColumn
                 )
         );
@@ -341,7 +341,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         return SpreadsheetRowReferenceRange.with(
                 Range.parse(
                         text,
-                        ':',
+                        SEPARATOR.character(),
                         SpreadsheetSelection::parseRow
                 )
         );
