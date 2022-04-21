@@ -203,7 +203,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     // parse............................................................................................................
 
     /**
-     * Parsers the given text into of the sub classes of {@link SpreadsheetExpressionReference}.
+     * Parsers the given text into one of the sub classes of {@link SpreadsheetExpressionReference}.
      */
     public static SpreadsheetExpressionReference parseExpressionReference(final String text) {
         checkText(text);
@@ -261,6 +261,11 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     /**
      * Parsers the text expecting a valid {@link SpreadsheetCellRange} or fails.
+     * eg
+     * <pre>
+     * A1,
+     * B2:C3
+     * </pre>
      */
     public static SpreadsheetCellRange parseCellRange(final String text) {
         return SpreadsheetCellRange.with(
@@ -375,7 +380,13 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     public final static CharacterConstant WINDOW_SEPARATOR = CharacterConstant.with(',');
 
     /**
-     * Parses a window query parameter or other string representation into a {@link Set}.
+     * Parses a window query parameter or other string representation into a {@link Set} or {@link SpreadsheetCellRange}.
+     * eg
+     * <pre>
+     * A1
+     * B2,C3
+     * D4:E5,F6,G7:HI
+     * </pre>
      */
     public static Set<SpreadsheetCellRange> parseWindow(final String window) {
         Objects.requireNonNull(window, "window");
@@ -395,7 +406,12 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
-     * Returns the number of elements in this {@link SpreadsheetSelection}.
+     * Returns the number of elements in this {@link SpreadsheetSelection}, where element may be cells, columns or rows.
+     * <pre>
+     * A = 1
+     * B:C = 2
+     * D4:E5 = 4
+     * </pre>
      */
     public abstract int count();
 
