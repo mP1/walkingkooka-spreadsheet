@@ -8188,6 +8188,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2
     // A3
     @Test
+    public void testWindowFrozenColumnsOnlyInvalidOverlappingHome() {
+        this.windowAndCheck(
+                "A1",
+                WIDTH * 1,
+                HEIGHT * 3,
+                1, // frozenColumns
+                0, // frozenRows
+                "A1:A3"
+        );
+    }
+
+    // A1
+    // A2
+    // A3
+    @Test
     public void testWindowFrozenColumnsOnly() {
         this.windowAndCheck(
                 "B1",
@@ -8286,6 +8301,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 2, // frozenColumns
                 0, // frozenRows
                 "A1:B3,F1:G3"
+        );
+    }
+
+    // A1 B1 C1 D1
+    @Test
+    public void testWindowFrozenRowsOnlyInvalidOverlappingHome() {
+        this.windowAndCheck(
+                "A1",
+                WIDTH * 4,
+                HEIGHT * 1,
+                0, // frozenColumns
+                1, // frozenRows
+                "A1:D1"
         );
     }
 
