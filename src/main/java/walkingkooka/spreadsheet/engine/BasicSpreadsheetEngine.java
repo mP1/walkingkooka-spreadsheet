@@ -1033,13 +1033,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetCellReference nonFrozenHome = context.resolveCellReference(viewport.cellOrLabel());
         if (null != frozenColumns) {
             final SpreadsheetColumnReference right = frozenColumns.end();
-            if (right.compareTo(nonFrozenHome.column()) > 0) {
+            if (right.compareTo(nonFrozenHome.column()) >= 0) {
                 nonFrozenHome = nonFrozenHome.setColumn(right.addSaturated(+1));
             }
         }
         if (null != frozenRows) {
             final SpreadsheetRowReference right = frozenRows.end();
-            if (right.compareTo(nonFrozenHome.row()) > 0) {
+            if (right.compareTo(nonFrozenHome.row()) >= 0) {
                 nonFrozenHome = nonFrozenHome.setRow(right.addSaturated(+1));
             }
         }
