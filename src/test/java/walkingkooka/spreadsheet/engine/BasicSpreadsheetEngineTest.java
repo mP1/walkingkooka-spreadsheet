@@ -98,6 +98,8 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 import walkingkooka.tree.expression.function.ExpressionFunctionContexts;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import walkingkooka.tree.text.FontStyle;
@@ -9136,6 +9138,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 }
 
                                 @Override
+                                public List<ExpressionFunctionParameter<?>> parameters() {
+                                    return Lists.of(
+                                            ExpressionFunctionParameterName.with("parameters")
+                                                    .variable(Object.class)
+                                    );
+                                }
+
+                                @Override
                                 public boolean requiresEvaluatedParameters() {
                                     return true;
                                 }
@@ -9156,6 +9166,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 }
 
                                 @Override
+                                public List<ExpressionFunctionParameter<?>> parameters() {
+                                    return Lists.of(
+                                            ExpressionFunctionParameterName.with("parameters")
+                                                    .variable(Object.class)
+                                    );
+                                }
+
+                                @Override
                                 public boolean requiresEvaluatedParameters() {
                                     return true;
                                 }
@@ -9171,6 +9189,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 public Object apply(final List<Object> parameters,
                                                     final ExpressionFunctionContext context) {
                                     return BasicSpreadsheetEngineTest.this.counter;
+                                }
+
+                                @Override
+                                public List<ExpressionFunctionParameter<?>> parameters() {
+                                    return Lists.of(
+                                            ExpressionFunctionParameterName.with("parameters")
+                                                    .variable(Object.class)
+                                    );
                                 }
 
                                 @Override

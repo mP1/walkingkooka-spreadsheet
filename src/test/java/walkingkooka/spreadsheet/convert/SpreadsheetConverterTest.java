@@ -225,6 +225,48 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     private final static String STRING_FALSE = "false";
     private final static String STRING_TRUE = "true";
 
+    // Object..........................................................................................................
+
+    @Test
+    public void testNullObject() {
+        this.convertAndCheck(
+                null,
+                Object.class
+        );
+    }
+
+    @Test
+    public void testBooleanTrueObject() {
+        this.convertAndCheck(
+                true,
+                Object.class
+        );
+    }
+
+    @Test
+    public void testExpressionNumberObject() {
+        this.convertAndCheck(
+                EXPRESSION_NUMBER_KIND.create(123),
+                Object.class
+        );
+    }
+
+    @Test
+    public void testIntegerObject() {
+        this.convertAndCheck(
+                1,
+                Object.class
+        );
+    }
+
+    @Test
+    public void testStringObject() {
+        this.convertAndCheck(
+                "abc123",
+                Object.class
+        );
+    }
+
     // boolean..........................................................................................................
 
     @Test

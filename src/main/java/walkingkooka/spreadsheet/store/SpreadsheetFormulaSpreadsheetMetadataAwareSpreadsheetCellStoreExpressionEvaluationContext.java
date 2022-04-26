@@ -29,6 +29,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.math.MathContext;
 import java.util.List;
@@ -67,6 +68,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
 
     @Override
     public ExpressionFunction<?, ExpressionFunctionContext> function(final FunctionExpressionName name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
+                                  final Object value) {
         throw new UnsupportedOperationException();
     }
 

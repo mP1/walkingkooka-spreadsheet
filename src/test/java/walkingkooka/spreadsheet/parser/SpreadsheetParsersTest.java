@@ -60,6 +60,8 @@ import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
@@ -2151,19 +2153,22 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 (t, c) -> t.cast(LocalTimeParserToken.class).value()
         );
 
-        final Converter converter = Converters.collection(Lists.of(
-                Converters.simple(),
-                ExpressionNumber.toConverter(Converters.numberNumber()),
-                ExpressionNumber.toConverter(Converters.localDateNumber(Converters.JAVA_EPOCH_OFFSET)),
-                ExpressionNumber.toConverter(Converters.localDateTimeNumber(Converters.JAVA_EPOCH_OFFSET)),
-                ExpressionNumber.toConverter(Converters.localTimeNumber()),
-                ExpressionNumber.fromConverter(Converters.numberLocalTime()),
-                ExpressionNumber.toConverter(stringDouble),
-                stringLocalDate,
-                stringLocalDateTime,
-                stringLocalTime,
-                Converters.objectString()
-        ));
+        final Converter converter = Converters.collection(
+                Lists.of(
+                        Converters.object(),
+                        Converters.simple(),
+                        ExpressionNumber.toConverter(Converters.numberNumber()),
+                        ExpressionNumber.toConverter(Converters.localDateNumber(Converters.JAVA_EPOCH_OFFSET)),
+                        ExpressionNumber.toConverter(Converters.localDateTimeNumber(Converters.JAVA_EPOCH_OFFSET)),
+                        ExpressionNumber.toConverter(Converters.localTimeNumber()),
+                        ExpressionNumber.fromConverter(Converters.numberLocalTime()),
+                        ExpressionNumber.toConverter(stringDouble),
+                        stringLocalDate,
+                        stringLocalDateTime,
+                        stringLocalTime,
+                        Converters.objectString()
+                )
+        );
 
         return new FakeExpressionEvaluationContext() {
 
@@ -2181,6 +2186,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             @Override
             public ExpressionNumberKind expressionNumberKind() {
                 return kind;
+            }
+
+            @Override
+            public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
+                                          final Object value) {
+                return parameter.convertOrFail(value, this);
             }
 
             @Override
@@ -2205,6 +2216,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                     public Object apply(final List<Object> parameters,
                                         final ExpressionFunctionContext context) {
                         return apply.apply(parameters, context);
+                    }
+
+                    public List<ExpressionFunctionParameter<?>> parameters() {
+                        return Lists.of(
+                                ExpressionFunctionParameterName.with("values")
+                                        .variable(Object.class)
+                        );
                     }
 
                     @Override
