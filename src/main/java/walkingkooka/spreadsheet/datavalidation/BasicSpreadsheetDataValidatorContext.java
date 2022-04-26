@@ -26,6 +26,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.math.MathContext;
 import java.util.List;
@@ -94,6 +95,12 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     @Override
     public boolean isPure(final FunctionExpressionName name) {
         return this.context.isPure(name);
+    }
+
+    @Override
+    public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
+                                  final Object value) {
+        return parameter.convertOrFail(value, this);
     }
 
     @Override

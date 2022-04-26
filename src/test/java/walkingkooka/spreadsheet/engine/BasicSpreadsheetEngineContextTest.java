@@ -57,6 +57,8 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.ValueExpression;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
 import java.math.BigDecimal;
@@ -785,12 +787,20 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 case "xyz":
                     return Cast.to(
                             new FakeExpressionFunction<Object, SpreadsheetExpressionFunctionContext>() {
+
                                 @Override
                                 public Object apply(final List<Object> parameters,
                                                     final SpreadsheetExpressionFunctionContext context) {
                                     return parameters.stream()
                                             .mapToLong(p -> context.convertOrFail(p, Long.class))
                                             .sum();
+                                }
+
+                                @Override
+                                public List<ExpressionFunctionParameter<?>> parameters() {
+                                    return Lists.of(
+                                            ExpressionFunctionParameterName.with("parameters").variable(Object.class)
+                                    );
                                 }
 
                                 @Override
@@ -824,6 +834,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
+                                public List<ExpressionFunctionParameter<?>> parameters() {
+                                    return Lists.of(
+                                            ExpressionFunctionParameterName.with("parameters").variable(Object.class)
+                                    );
+                                }
+
+                                @Override
                                 public boolean requiresEvaluatedParameters() {
                                     return true;
                                 }
@@ -849,6 +866,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
+                                public List<ExpressionFunctionParameter<?>> parameters() {
+                                    return Lists.of(
+                                            ExpressionFunctionParameterName.with("parameters").variable(Object.class)
+                                    );
+                                }
+
+                                @Override
                                 public boolean requiresEvaluatedParameters() {
                                     return false;
                                 }
@@ -871,6 +895,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 public Object apply(final List<Object> parameters,
                                                     final SpreadsheetExpressionFunctionContext context) {
                                     return context.spreadsheetMetadata();
+                                }
+
+                                @Override
+                                public List<ExpressionFunctionParameter<?>> parameters() {
+                                    return Lists.of(
+                                            ExpressionFunctionParameterName.with("parameters").variable(Object.class)
+                                    );
                                 }
 
                                 @Override

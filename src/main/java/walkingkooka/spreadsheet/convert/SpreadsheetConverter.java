@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
@@ -283,7 +284,8 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
     }
 
     private static boolean isSupportedType(final Class<?> type) {
-        return Boolean.class == type ||
+        return Object.class == type ||
+                Boolean.class == type ||
                 Character.class == type ||
                 LocalDate.class == type ||
                 LocalDateTime.class == type ||
@@ -297,10 +299,13 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> targetType,
                                          final ExpressionNumberConverterContext context) {
+        // special case if targetType = Object just return value.
         return this.canConvert(value, targetType, context) ?
-                null == value ?
-                        this.convertNull(targetType, context) :
-                        this.convertNonNull(value, targetType, context) :
+                Object.class == targetType ?
+                        Cast.to(Either.left(value)) :
+                        null == value ?
+                                this.convertNull(targetType, context) :
+                                this.convertNonNull(value, targetType, context) :
                 this.failConversion(value, targetType);
     }
 

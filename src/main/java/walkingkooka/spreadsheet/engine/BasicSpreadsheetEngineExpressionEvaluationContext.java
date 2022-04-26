@@ -31,6 +31,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.math.MathContext;
 import java.util.List;
@@ -68,6 +69,12 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     @Override
     public Optional<Object> reference(ExpressionReference expressionReference) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
+                                  final Object value) {
+        return parameter.convertOrFail(value, this);
     }
 
     @Override
