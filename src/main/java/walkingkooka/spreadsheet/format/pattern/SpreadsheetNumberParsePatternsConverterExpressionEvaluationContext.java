@@ -47,6 +47,11 @@ final class SpreadsheetNumberParsePatternsConverterExpressionEvaluationContext i
     }
 
     @Override
+    public CaseSensitivity caseSensitivity() {
+        return CaseSensitivity.INSENSITIVE;
+    }
+
+    @Override
     public Object evaluate(final Expression expression) {
         throw new UnsupportedOperationException();
     }
@@ -151,11 +156,6 @@ final class SpreadsheetNumberParsePatternsConverterExpressionEvaluationContext i
     }
 
     private final ExpressionNumberConverterContext context;
-
-    @Override
-    public CaseSensitivity stringEqualityCaseSensitivity() {
-        return CaseSensitivity.INSENSITIVE;
-    }
 
     @Override
     public String toString() {

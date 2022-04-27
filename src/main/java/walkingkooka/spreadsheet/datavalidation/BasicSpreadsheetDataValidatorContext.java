@@ -113,6 +113,11 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     private final Optional<Object> value;
 
     @Override
+    public CaseSensitivity caseSensitivity() {
+        return CaseSensitivity.INSENSITIVE;
+    }
+
+    @Override
     public String currencySymbol() {
         return this.context.currencySymbol();
     }
@@ -182,11 +187,6 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
         return this.context.convert(value, type);
-    }
-
-    @Override
-    public CaseSensitivity stringEqualityCaseSensitivity() {
-        return this.context.stringEqualityCaseSensitivity();
     }
 
     private final ExpressionEvaluationContext context;

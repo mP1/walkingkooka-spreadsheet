@@ -52,6 +52,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     @Override
+    public CaseSensitivity caseSensitivity() {
+        return CaseSensitivity.INSENSITIVE;
+    }
+
+    @Override
     public Object evaluate(final Expression expression) {
         return expression.toValue(this);
     }
@@ -160,11 +165,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     private final SpreadsheetMetadata metadata;
-
-    @Override
-    public CaseSensitivity stringEqualityCaseSensitivity() {
-        return CaseSensitivity.INSENSITIVE;
-    }
 
     @Override
     public String toString() {
