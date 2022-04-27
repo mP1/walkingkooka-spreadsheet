@@ -9114,8 +9114,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
                                 this.functions(),
-                                this.functionContext(),
-                                CaseSensitivity.INSENSITIVE
+                                this.functionContext()
                         )
                 );
             }
@@ -9221,6 +9220,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.functions(),
                         this.references(),
                         SpreadsheetExpressionFunctionContexts.referenceNotFound(),
+                        CaseSensitivity.INSENSITIVE,
                         this.converterContext()
                 );
             }

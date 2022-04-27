@@ -39,7 +39,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -177,8 +176,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                 metadata,
                                 this.functions,
                                 this.function
-                        ),
-                        CaseSensitivity.INSENSITIVE
+                        )
                 )
         );
     }

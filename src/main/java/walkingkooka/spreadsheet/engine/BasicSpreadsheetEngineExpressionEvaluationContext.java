@@ -57,6 +57,11 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     @Override
+    public CaseSensitivity caseSensitivity() {
+        return CaseSensitivity.INSENSITIVE;
+    }
+
+    @Override
     public Object evaluate(final Expression expression) {
         throw new UnsupportedOperationException();
     }
@@ -186,11 +191,6 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
 
     private SpreadsheetMetadata metadata() {
         return this.context.metadata();
-    }
-
-    @Override
-    public CaseSensitivity stringEqualityCaseSensitivity() {
-        return CaseSensitivity.INSENSITIVE;
     }
 
     private final SpreadsheetEngineContext context;
