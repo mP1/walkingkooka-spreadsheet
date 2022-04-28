@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -546,7 +547,55 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.parseExpressionAndCheck(from, expected, text);
     }
 
-    // Negative.........................................................................................
+    // Expression cell..................................................................................................
+
+    @Test
+    public void testExpressionCellReference() {
+        final String text = "A1";
+
+        this.parseExpressionAndCheck(
+                text,
+                SpreadsheetParserToken.cellReference(
+                        Lists.of(
+                                SpreadsheetParserToken.columnReference(
+                                        SpreadsheetSelection.parseColumn("A"),
+                                        "A"
+                                ),
+                                SpreadsheetParserToken.rowReference(
+                                        SpreadsheetSelection.parseRow("1"),
+                                        "1"
+                                )
+                        ),
+                        text
+                ),
+                text
+        );
+    }
+
+    @Test
+    public void testExpressionCellReferenceAbsolute() {
+        final String text = "$A$1";
+
+        this.parseExpressionAndCheck(
+                text,
+                SpreadsheetParserToken.cellReference(
+                        Lists.of(
+                                SpreadsheetParserToken.columnReference(
+                                        SpreadsheetSelection.parseColumn("$A"),
+                                        "$A"
+                                ),
+                                SpreadsheetParserToken.rowReference(
+                                        SpreadsheetSelection.parseRow("$1"),
+                                        "$1"
+                                )
+                        ),
+                        text
+                ),
+                text
+        );
+    }
+
+    // Negative........................................................................................................
 
     @Test
     public void testExpressionNegativeBigDecimal() {
