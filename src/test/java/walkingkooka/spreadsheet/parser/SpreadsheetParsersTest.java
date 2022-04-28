@@ -595,6 +595,92 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
+    // Expression cell range............................................................................................
+
+    @Test
+    public void testExpressionCellRange() {
+        final String text = "A1:B2";
+
+        this.parseExpressionAndCheck(
+                text,
+                SpreadsheetParserToken.cellRange(
+                        Lists.of(
+                                SpreadsheetParserToken.cellReference(
+                                        Lists.of(
+                                                SpreadsheetParserToken.columnReference(
+                                                        SpreadsheetSelection.parseColumn("A"),
+                                                        "A"
+                                                ),
+                                                SpreadsheetParserToken.rowReference(
+                                                        SpreadsheetSelection.parseRow("1"),
+                                                        "1"
+                                                )
+                                        ),
+                                        "A1"
+                                ),
+                                SpreadsheetParserToken.betweenSymbol(":", ":"),
+                                SpreadsheetParserToken.cellReference(
+                                        Lists.of(
+                                                SpreadsheetParserToken.columnReference(
+                                                        SpreadsheetSelection.parseColumn("B"),
+                                                        "B"
+                                                ),
+                                                SpreadsheetParserToken.rowReference(
+                                                        SpreadsheetSelection.parseRow("2"),
+                                                        "2"
+                                                )
+                                        ),
+                                        "B2"
+                                )
+                        ),
+                        text
+                ),
+                text
+        );
+    }
+
+    @Test
+    public void testExpressionCellRangeAbsolute() {
+        final String text = "$A$1:$B$2";
+
+        this.parseExpressionAndCheck(
+                text,
+                SpreadsheetParserToken.cellRange(
+                        Lists.of(
+                                SpreadsheetParserToken.cellReference(
+                                        Lists.of(
+                                                SpreadsheetParserToken.columnReference(
+                                                        SpreadsheetSelection.parseColumn("$A"),
+                                                        "$A"
+                                                ),
+                                                SpreadsheetParserToken.rowReference(
+                                                        SpreadsheetSelection.parseRow("$1"),
+                                                        "$1"
+                                                )
+                                        ),
+                                        "$A$1"
+                                ),
+                                SpreadsheetParserToken.betweenSymbol(":", ":"),
+                                SpreadsheetParserToken.cellReference(
+                                        Lists.of(
+                                                SpreadsheetParserToken.columnReference(
+                                                        SpreadsheetSelection.parseColumn("$B"),
+                                                        "$B"
+                                                ),
+                                                SpreadsheetParserToken.rowReference(
+                                                        SpreadsheetSelection.parseRow("$2"),
+                                                        "$2"
+                                                )
+                                        ),
+                                        "$B$2"
+                                )
+                        ),
+                        text
+                ),
+                text
+        );
+    }
+
     // Negative........................................................................................................
 
     @Test
