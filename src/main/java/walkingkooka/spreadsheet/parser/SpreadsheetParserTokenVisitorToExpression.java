@@ -37,8 +37,8 @@ import java.util.function.Function;
  */
 final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserTokenVisitor {
 
-    static Optional<Expression> accept(final SpreadsheetParserToken token,
-                                       final ExpressionEvaluationContext context) {
+    static Optional<Expression> toExpression(final SpreadsheetParserToken token,
+                                             final ExpressionEvaluationContext context) {
         Objects.requireNonNull(context, "context");
 
         final SpreadsheetParserTokenVisitorToExpression visitor = new SpreadsheetParserTokenVisitorToExpression(context);

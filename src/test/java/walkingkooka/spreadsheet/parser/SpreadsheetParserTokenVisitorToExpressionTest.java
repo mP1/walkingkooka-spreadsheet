@@ -26,13 +26,15 @@ public final class SpreadsheetParserTokenVisitorToExpressionTest extends Spreads
 
     @Test
     public void testNullExpressionNumberKindFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetParserTokenVisitorToExpression.accept(
-                SpreadsheetParserToken.number(
-                        Lists.of(
-                                SpreadsheetParserToken.digits("1", "1")
-                        ),
-                        "1"),
-                null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetParserTokenVisitorToExpression.toExpression(
+                        SpreadsheetParserToken.number(
+                                Lists.of(
+                                        SpreadsheetParserToken.digits("1", "1")
+                                ),
+                                "1"),
+                        null));
     }
 
     @Override
