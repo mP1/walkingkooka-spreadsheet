@@ -80,7 +80,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
 
     @Override
     protected void endVisit(final SpreadsheetCellRangeParserToken token) {
-        this.exit();
+        this.exitReference(token.toCellRange(), token);
     }
 
     @Override

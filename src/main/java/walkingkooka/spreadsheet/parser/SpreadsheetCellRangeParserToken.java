@@ -16,6 +16,7 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -32,7 +33,32 @@ public final class SpreadsheetCellRangeParserToken extends SpreadsheetBinaryPars
 
     private SpreadsheetCellRangeParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
+
+        final SpreadsheetCellRangeParserTokenSpreadsheetParserTokenVisitor visitor = SpreadsheetCellRangeParserTokenSpreadsheetParserTokenVisitor.with();
+        visitor.accept(this);
+
+        final List<SpreadsheetCellReferenceParserToken> components = visitor.components;
+        final int count = components.size();
+
+        switch (count) {
+            case 0:
+                throw new IllegalArgumentException("Missing begin");
+            case 1:
+                throw new IllegalArgumentException("Missing end");
+            case 2:
+                this.cellRange = components.get(0).cell()
+                        .cellRange(components.get(1).cell());
+                break;
+            default:
+                throw new IllegalArgumentException("Ranges must only have begin & end");
+        }
     }
+
+    public SpreadsheetCellRange toCellRange() {
+        return this.cellRange;
+    }
+
+    private final SpreadsheetCellRange cellRange;
 
     // SpreadsheetParserTokenVisitor....................................................................................
 

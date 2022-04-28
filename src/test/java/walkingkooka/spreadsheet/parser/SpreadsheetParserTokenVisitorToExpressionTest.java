@@ -19,6 +19,11 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContexts;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -35,6 +40,81 @@ public final class SpreadsheetParserTokenVisitorToExpressionTest extends Spreads
                                 ),
                                 "1"),
                         null));
+    }
+
+    @Test
+    public void testCellReference() {
+        this.toExpressionAndCheck(
+                SpreadsheetParserToken.cellReference(
+                        Lists.of(
+                                SpreadsheetParserToken.columnReference(
+                                        SpreadsheetSelection.parseColumn("A"),
+                                        "A"
+                                ),
+                                SpreadsheetParserToken.rowReference(
+                                        SpreadsheetSelection.parseRow("1"),
+                                        "1"
+                                )
+                        ),
+                        "A1"
+                ),
+                Expression.reference(
+                        SpreadsheetSelection.parseCell("A1")
+                )
+        );
+    }
+
+    @Test
+    public void testCellRange() {
+        this.toExpressionAndCheck(
+                SpreadsheetParserToken.cellRange(
+                        Lists.of(
+                                SpreadsheetParserToken.cellReference(
+                                        Lists.of(
+                                                SpreadsheetParserToken.columnReference(
+                                                        SpreadsheetSelection.parseColumn("A"),
+                                                        "A"
+                                                ),
+                                                SpreadsheetParserToken.rowReference(
+                                                        SpreadsheetSelection.parseRow("1"),
+                                                        "1"
+                                                )
+                                        ),
+                                        "A1"
+                                ),
+                                SpreadsheetParserToken.cellReference(
+                                        Lists.of(
+                                                SpreadsheetParserToken.columnReference(
+                                                        SpreadsheetSelection.parseColumn("B"),
+                                                        "B"
+                                                ),
+                                                SpreadsheetParserToken.rowReference(
+                                                        SpreadsheetSelection.parseRow("2"),
+                                                        "2"
+                                                )
+                                        ),
+                                        "A1"
+                                )
+                        ),
+                        "A1:B2"
+                ),
+                Expression.reference(
+                        SpreadsheetSelection.parseCellRange("A1:B2")
+                )
+        );
+    }
+
+    private void toExpressionAndCheck(final SpreadsheetParserToken token,
+                                      final Expression expression) {
+        this.checkEquals(
+                Optional.of(
+                        expression
+                ),
+                SpreadsheetParserTokenVisitorToExpression.toExpression(
+                        token,
+                        ExpressionEvaluationContexts.fake()
+                )
+        );
     }
 
     @Override
