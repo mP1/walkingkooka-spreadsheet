@@ -168,7 +168,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         return node.toValue(
                 ExpressionEvaluationContexts.basic(
-                        this.functions,
                         BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext.with(
                                 cell,
                                 this.storeRepository.cells(),
