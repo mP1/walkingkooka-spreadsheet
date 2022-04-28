@@ -209,7 +209,6 @@ public class JunitTest {
                                    final Optional<SpreadsheetCell> cell) {
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
-                                functions(),
                                 this.functionContext()
                         )
                 );

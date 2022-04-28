@@ -9113,7 +9113,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                    final Optional<SpreadsheetCell> cell) {
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
-                                this.functions(),
                                 this.functionContext()
                         )
                 );
