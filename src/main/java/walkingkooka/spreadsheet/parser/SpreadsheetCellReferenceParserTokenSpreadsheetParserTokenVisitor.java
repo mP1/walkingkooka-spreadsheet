@@ -16,29 +16,27 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import java.util.function.Consumer;
-
 /**
- * Used to filter the column and row for a {@link SpreadsheetCellReferenceParserToken}.
+ * Used to collect the column and row for a {@link SpreadsheetCellReferenceParserToken}.
  */
-final class SpreadsheetCellReferenceParserTokenConsumer implements Consumer<SpreadsheetParserToken> {
+final class SpreadsheetCellReferenceParserTokenSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
 
-    static SpreadsheetCellReferenceParserTokenConsumer with() {
-        return new SpreadsheetCellReferenceParserTokenConsumer();
+    static SpreadsheetCellReferenceParserTokenSpreadsheetParserTokenVisitor with() {
+        return new SpreadsheetCellReferenceParserTokenSpreadsheetParserTokenVisitor();
     }
 
-    private SpreadsheetCellReferenceParserTokenConsumer() {
+    private SpreadsheetCellReferenceParserTokenSpreadsheetParserTokenVisitor() {
         super();
     }
 
     @Override
-    public void accept(final SpreadsheetParserToken token) {
-        if (token.isColumnReference()) {
-            this.column = token.cast(SpreadsheetColumnReferenceParserToken.class);
-        }
-        if (token.isRowReference()) {
-            this.row = token.cast(SpreadsheetRowReferenceParserToken.class);
-        }
+    protected void visit(final SpreadsheetColumnReferenceParserToken token) {
+        this.column = token;
+    }
+
+    @Override
+    protected void visit(final SpreadsheetRowReferenceParserToken token) {
+        this.row = token;
     }
 
     SpreadsheetColumnReferenceParserToken column;
