@@ -36,16 +36,14 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
     private SpreadsheetCellReferenceParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
 
-        final SpreadsheetCellReferenceParserTokenConsumer checker = SpreadsheetCellReferenceParserTokenConsumer.with();
-        value.stream()
-                .filter(t -> t instanceof SpreadsheetParserToken)
-                .map(t -> (SpreadsheetParserToken) t)
-                .forEach(checker);
-        final SpreadsheetRowReferenceParserToken row = checker.row;
+        final SpreadsheetCellReferenceParserTokenSpreadsheetParserTokenVisitor visitor = SpreadsheetCellReferenceParserTokenSpreadsheetParserTokenVisitor.with();
+        visitor.accept(this);
+
+        final SpreadsheetRowReferenceParserToken row = visitor.row;
         if (null == row) {
             throw new IllegalArgumentException("Row missing from cell=" + text);
         }
-        final SpreadsheetColumnReferenceParserToken column = checker.column;
+        final SpreadsheetColumnReferenceParserToken column = visitor.column;
         if (null == column) {
             throw new IllegalArgumentException("Column missing from cell=" + text);
         }
