@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -45,14 +45,13 @@ public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinary
             @Override
             protected Visiting startVisit(final SpreadsheetParserToken n) {
                 b.append("1");
-                visited.add(n);
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final SpreadsheetParserToken n) {
                 b.append("2");
-                visited.add(n);
+                ;
             }
 
             @Override
@@ -71,38 +70,58 @@ public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinary
             }
 
             @Override
-            protected void visit(final SpreadsheetLabelNameParserToken t) {
+            protected Visiting startVisit(final SpreadsheetCellReferenceParserToken t) {
                 b.append("5");
-                visited.add(t);
-            }
-
-            @Override
-            protected void visit(final SpreadsheetBetweenSymbolParserToken t) {
-                b.append("6");
-                visited.add(t);
-            }
-
-            @Override
-            protected Visiting startVisit(final ParserToken t) {
-                b.append("7");
                 visited.add(t);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final ParserToken t) {
-                b.append("8");
+            protected void endVisit(final SpreadsheetCellReferenceParserToken t) {
+                b.append("6");
                 visited.add(t);
             }
+
+
+            @Override
+            protected void visit(final SpreadsheetColumnReferenceParserToken t) {
+                b.append("7");
+            }
+
+            @Override
+            protected void visit(final SpreadsheetRowReferenceParserToken t) {
+                b.append("8");
+            }
+
+            @Override
+            protected void visit(final SpreadsheetBetweenSymbolParserToken t) {
+                b.append("9");
+                visited.add(t);
+            }
+
+            @Override
+            protected Visiting startVisit(final ParserToken t) {
+                b.append("A");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final ParserToken t) {
+                b.append("B");
+            }
         }.accept(binary);
-        this.checkEquals("713715287162871528428", b.toString());
-        this.checkEquals(Lists.of(binary, binary, binary,
-                        left, left, left, left, left,
-                        symbol, symbol, symbol, symbol, symbol,
-                        right, right, right, right, right,
-                        binary, binary, binary),
+        this.checkEquals("A13A15A172BA182B62BA192BA15A172BA182B62B42B", b.toString());
+        this.checkEquals(
+                Lists.of(
+                        binary,
+                        left, left,
+                        symbol,
+                        right, right,
+                        binary
+                ),
                 visited,
-                "visited");
+                "visited"
+        );
     }
 
     @Override
@@ -112,12 +131,38 @@ public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinary
 
     @Override
     SpreadsheetParserToken leftToken() {
-        return SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName("left"), "left");
+        return SpreadsheetParserToken.cellReference(
+                Lists.of(
+                        this.column("A"),
+                        this.row("1")
+                ),
+                "A1"
+        );
     }
 
     @Override
     SpreadsheetParserToken rightToken() {
-        return SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName("right"), "right");
+        return SpreadsheetParserToken.cellReference(
+                Lists.of(
+                        this.column("B"),
+                        this.row("2")
+                ),
+                "B2"
+        );
+    }
+
+    private SpreadsheetColumnReferenceParserToken column(final String text) {
+        return SpreadsheetParserToken.columnReference(
+                SpreadsheetSelection.parseColumn(text),
+                text
+        );
+    }
+
+    private SpreadsheetRowReferenceParserToken row(final String text) {
+        return SpreadsheetParserToken.rowReference(
+                SpreadsheetSelection.parseRow(text),
+                text
+        );
     }
 
     @Override
