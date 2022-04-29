@@ -17,15 +17,199 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.store.FakeSpreadsheetLabelStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+
+import java.util.Optional;
+import java.util.Set;
 
 public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitorTest
         implements SpreadsheetExpressionReferenceVisitorTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor> {
 
+    @Test
+    public void testCell() {
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+        final String value = "B2Value";
+
+        this.valuesAndCheck(
+                new FakeSpreadsheetEngine() {
+                    @Override
+                    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
+                                                     final SpreadsheetEngineEvaluation evaluation,
+                                                     final SpreadsheetEngineContext context) {
+                        checkEquals(
+                                reference,
+                                cell,
+                                "loadCell"
+                        );
+
+                        return SpreadsheetDelta.EMPTY
+                                .setCells(
+                                        Sets.of(
+                                                reference.setFormula(
+                                                        SpreadsheetFormula.EMPTY
+                                                                .setText("=1+2")
+                                                                .setValue(
+                                                                        Optional.of(
+                                                                                value
+                                                                        )
+                                                                )
+                                                )
+                                        )
+                                );
+                    }
+                },
+                SpreadsheetEngineContexts.fake(),
+                reference,
+                Optional.of(value)
+        );
+    }
+
+    @Test
+    public void testLabelToCell() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
+        final String value = "B2Value";
+
+        this.valuesAndCheck(
+                new FakeSpreadsheetEngine() {
+                    @Override
+                    public SpreadsheetDelta loadCell(final SpreadsheetCellReference c,
+                                                     final SpreadsheetEngineEvaluation evaluation,
+                                                     final SpreadsheetEngineContext context) {
+                        checkEquals(
+                                cell,
+                                c,
+                                "loadCell"
+                        );
+
+                        return SpreadsheetDelta.EMPTY
+                                .setCells(
+                                        Sets.of(
+                                                cell.setFormula(
+                                                        SpreadsheetFormula.EMPTY
+                                                                .setText("=1+2")
+                                                                .setValue(
+                                                                        Optional.of(
+                                                                                value
+                                                                        )
+                                                                )
+                                                )
+                                        )
+                                );
+                    }
+                },
+                new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public SpreadsheetStoreRepository storeRepository() {
+                        return new FakeSpreadsheetStoreRepository() {
+                            @Override
+                            public SpreadsheetLabelStore labels() {
+                                return new FakeSpreadsheetLabelStore() {
+
+                                    @Override
+                                    public Optional<SpreadsheetLabelMapping> load(final SpreadsheetLabelName l) {
+                                        checkEquals(label, l);
+                                        return Optional.of(l.mapping(cell));
+                                    }
+                                };
+                            }
+                        };
+                    }
+                },
+                label,
+                Optional.of(value)
+        );
+    }
+
+    @Test
+    public void testCellRange() {
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:C3");
+        final String b2Value = "B2Value";
+        final Integer c3Value = 123;
+
+        this.valuesAndCheck(
+                new FakeSpreadsheetEngine() {
+                    @Override
+                    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
+                                                      final SpreadsheetEngineEvaluation evaluation,
+                                                      final SpreadsheetEngineContext context) {
+                        checkEquals(
+                                Sets.of(range),
+                                ranges,
+                                "loadCells ranges"
+                        );
+
+                        return SpreadsheetDelta.EMPTY
+                                .setCells(
+                                        Sets.of(
+                                                SpreadsheetSelection.parseCell("B2")
+                                                        .setFormula(
+                                                                SpreadsheetFormula.EMPTY
+                                                                        .setText("=1")
+                                                                        .setValue(
+                                                                                Optional.of(
+                                                                                        b2Value
+                                                                                )
+                                                                        )
+                                                        ),
+                                                SpreadsheetSelection.parseCell("C3")
+                                                        .setFormula(
+                                                                SpreadsheetFormula.EMPTY
+                                                                        .setText("=2")
+                                                                        .setValue(
+                                                                                Optional.of(
+                                                                                        c3Value
+                                                                                )
+                                                                        )
+                                                        )
+                                        )
+                                );
+                    }
+                },
+                SpreadsheetEngineContexts.fake(),
+                range,
+                Optional.of(
+                        Lists.of(b2Value, c3Value)
+                )
+        );
+    }
+
+    private void valuesAndCheck(final SpreadsheetEngine engine,
+                                final SpreadsheetEngineContext context,
+                                final SpreadsheetExpressionReference reference,
+                                final Optional<Object> value) {
+        this.checkEquals(
+                value,
+                SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor.values(
+                        reference,
+                        engine,
+                        context
+                ),
+                () -> "values " + reference
+        );
+    }
+
     @Override
     public SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor(null);
+        return new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor(
+                null,
+                null
+        );
     }
 
     @Override
