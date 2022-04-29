@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
@@ -53,9 +52,8 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
      * {@see SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction}
      */
     public static Function<ExpressionReference, Optional<Object>> expressionEvaluationContextExpressionReferenceExpressionFunction(final SpreadsheetEngine engine,
-                                                                                                                                   final SpreadsheetLabelStore labelStore,
                                                                                                                                    final SpreadsheetEngineContext context) {
-        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, labelStore, context);
+        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, context);
     }
 
     /**

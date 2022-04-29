@@ -111,7 +111,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         this.functions = functions;
         this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
                 engine,
-                storeRepository.labels(),
                 this
         );
 
