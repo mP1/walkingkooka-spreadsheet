@@ -115,6 +115,30 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkNoFormatted(cell);
     }
 
+    @Test
+    public void testWithFormulaListValue() {
+        final SpreadsheetCell cell = SpreadsheetCell.with(
+                REFERENCE,
+                SpreadsheetFormula.EMPTY.setText("=1+2")
+                        .setValue(
+                                Optional.of(Lists.empty())
+                        )
+        );
+
+        this.checkReference(cell);
+        this.checkFormula(
+                cell,
+                SpreadsheetFormula.EMPTY.setText("=1+2")
+                        .setValue(
+                                Optional.of(
+                                        SpreadsheetErrorKind.VALUE)
+                        )
+        );
+        this.checkTextStyle(cell);
+        this.checkNoFormat(cell);
+        this.checkNoFormatted(cell);
+    }
+
     // SetReference.....................................................................................................
 
     @Test
@@ -164,6 +188,27 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         this.checkReference(different, REFERENCE);
         this.checkFormula(different, differentFormula);
+        this.checkTextStyle(different);
+        this.checkFormat(different);
+        this.checkNoFormatted(different); // clear formatted because of formula / value change.
+    }
+
+    @Test
+    public void testSetFormulaDifferentListValue() {
+        final SpreadsheetCell cell = this.createCell();
+
+        final SpreadsheetCell different = cell.setFormula(
+                SpreadsheetFormula.EMPTY
+                        .setValue(Optional.of(Lists.empty()))
+        );
+        assertNotSame(cell, different);
+
+        this.checkReference(different, REFERENCE);
+        this.checkFormula(
+                different,
+                SpreadsheetFormula.EMPTY
+                        .setValue(Optional.of(SpreadsheetErrorKind.VALUE))
+        );
         this.checkTextStyle(different);
         this.checkFormat(different);
         this.checkNoFormatted(different); // clear formatted because of formula / value change.

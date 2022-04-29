@@ -38,6 +38,8 @@ import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -72,17 +74,33 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     public static SpreadsheetCell with(final SpreadsheetCellReference reference,
                                        final SpreadsheetFormula formula) {
         checkReference(reference);
-        checkFormula(formula);
 
-        return new SpreadsheetCell(reference, formula, NO_STYLE, NO_FORMAT, NO_FORMATTED_CELL);
+        return new SpreadsheetCell(
+                reference,
+                checkFormula(formula),
+                NO_STYLE,
+                NO_FORMAT,
+                NO_FORMATTED_CELL
+        );
     }
 
     private static void checkReference(final SpreadsheetCellReference reference) {
         Objects.requireNonNull(reference, "reference");
     }
 
-    private static void checkFormula(final SpreadsheetFormula formula) {
+    /**
+     * If a formula has a Collection value, return the value with {@link SpreadsheetErrorKind#VALUE}.
+     * A cell range resolves to a {@link List}, thus a cell = a range, will show an #VALUE!.
+     */
+    private static SpreadsheetFormula checkFormula(final SpreadsheetFormula formula) {
         Objects.requireNonNull(formula, "formula");
+
+        // if value is a List formula should have an ERROR of #VALUE!
+        return formula.setValue(
+                formula.value()
+                        .map(v -> v instanceof Collection ? SpreadsheetErrorKind.VALUE : v)
+        );
+        // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/2205
     }
 
     private static void checkTextStyle(final TextStyle style) {
@@ -143,8 +161,12 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     }
 
     public SpreadsheetCell setFormula(final SpreadsheetFormula formula) {
-        checkFormula(formula);
+        return this.setFormula0(
+                checkFormula(formula)
+        );
+    }
 
+    private SpreadsheetCell setFormula0(final SpreadsheetFormula formula) {
         return this.formula.equals(formula) ?
                 this :
                 this.replace(this.reference, formula, this.style, this.format, NO_FORMATTED_CELL);
