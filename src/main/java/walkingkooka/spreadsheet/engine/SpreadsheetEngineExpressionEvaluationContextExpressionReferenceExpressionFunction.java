@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -57,27 +55,13 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
 
     @Override
     public Optional<Object> apply(final ExpressionReference reference) {
-        Objects.requireNonNull(reference, "reference");
+        Objects.requireNonNull(reference, "values");
 
-        final SpreadsheetEngineContext context = this.context;
-        final SpreadsheetCellReference cellReference = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor.reference(
+        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor.values(
                 reference,
-                context.storeRepository().labels()
+                this.engine,
+                this.context
         );
-
-        final SpreadsheetDelta delta = this.engine.loadCell(cellReference,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context);
-
-        final Optional<SpreadsheetCell> cell = delta.cells()
-                .stream()
-                .filter(c -> c.reference().equalsIgnoreReferenceKind(cellReference))
-                .findFirst();
-        return cell.isPresent() ?
-                cell.get()
-                        .formula().
-                        value() :
-                Optional.empty();
     }
 
     private final SpreadsheetEngine engine;
