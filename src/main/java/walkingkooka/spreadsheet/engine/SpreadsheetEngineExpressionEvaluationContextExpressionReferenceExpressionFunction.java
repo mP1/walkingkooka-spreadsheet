@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -37,23 +36,22 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
      * Factory that creates a new {@link SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction}
      */
     static SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction with(final SpreadsheetEngine engine,
-                                                                                                  final SpreadsheetLabelStore labelStore,
                                                                                                   final SpreadsheetEngineContext context) {
         Objects.requireNonNull(engine, "engine");
-        Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(context, "context");
 
-        return new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction(engine, labelStore, context);
+        return new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction(
+                engine,
+                context
+        );
     }
 
     /**
      * Private ctor.
      */
     private SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction(final SpreadsheetEngine engine,
-                                                                                              final SpreadsheetLabelStore labelStore,
                                                                                               final SpreadsheetEngineContext context) {
         this.engine = engine;
-        this.labelStore = labelStore;
         this.context = context;
     }
 
@@ -61,11 +59,15 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     public Optional<Object> apply(final ExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
-        final SpreadsheetCellReference cellReference = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor.reference(reference, this.labelStore);
+        final SpreadsheetEngineContext context = this.context;
+        final SpreadsheetCellReference cellReference = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor.reference(
+                reference,
+                context.storeRepository().labels()
+        );
 
         final SpreadsheetDelta delta = this.engine.loadCell(cellReference,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                this.context);
+                context);
 
         final Optional<SpreadsheetCell> cell = delta.cells()
                 .stream()
@@ -79,7 +81,6 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     }
 
     private final SpreadsheetEngine engine;
-    private final SpreadsheetLabelStore labelStore;
     private final SpreadsheetEngineContext context;
 
     @Override

@@ -18,8 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.util.FunctionTesting;
 
@@ -32,38 +30,34 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
 
     @Test
     public void testWithNullEngineFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(null,
-                this.labelStore(),
-                this.spreadsheetEngineContext()));
-    }
-
-    @Test
-    public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(this.engine(),
-                null,
-                this.spreadsheetEngineContext()));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(null,
+                        this.spreadsheetEngineContext())
+        );
     }
 
     @Test
     public void testWithNullLabelSpreadsheetEngineContextFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(this.engine(),
-                this.labelStore(),
-                null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
+                        this.engine(),
+                        null
+                )
+        );
     }
 
     @Override
     public SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction createFunction() {
-        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(this.engine(),
-                this.labelStore(),
-                this.spreadsheetEngineContext());
+        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
+                this.engine(),
+                this.spreadsheetEngineContext()
+        );
     }
 
     private SpreadsheetEngine engine() {
         return SpreadsheetEngines.fake();
-    }
-
-    private SpreadsheetLabelStore labelStore() {
-        return SpreadsheetLabelStores.fake();
     }
 
     private SpreadsheetEngineContext spreadsheetEngineContext() {
