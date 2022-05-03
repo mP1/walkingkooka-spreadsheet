@@ -212,6 +212,9 @@ public final class Sample {
                 return ExpressionFunctionContexts.basic(
                         EXPRESSION_NUMBER_KIND,
                         this.functions(),
+                        (r) -> {
+                            throw new UnsupportedOperationException();
+                        },
                         this.references(),
                         SpreadsheetExpressionFunctionContexts.referenceNotFound(),
                         CaseSensitivity.INSENSITIVE,

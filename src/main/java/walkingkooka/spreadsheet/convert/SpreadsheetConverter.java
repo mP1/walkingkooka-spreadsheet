@@ -22,6 +22,8 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
@@ -292,7 +294,8 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 LocalTime.class == type ||
                 ExpressionNumber.isClass(type) ||
                 Number.class == type ||
-                String.class == type;
+                String.class == type ||
+                SpreadsheetError.class == type;
     }
 
     @Override
@@ -325,6 +328,11 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
     private <T> Either<T, String> convertNonNull(final Object value,
                                                  final Class<T> targetType,
                                                  final ExpressionNumberConverterContext context) {
+        // errors are a special type we dont want to try and convert them and report them inside a ConversionException which loses the error.
+        if (value instanceof SpreadsheetError) {
+            throw new SpreadsheetErrorConversionException((SpreadsheetError) value);
+        }
+
         final Converter<ExpressionNumberConverterContext> converter = SpreadsheetConverterSpreadsheetValueVisitor.converter(
                 value,
                 targetType,

@@ -21,6 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -143,6 +144,11 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
                            final List<Object> parameters) {
         return this.function(name)
                 .apply(parameters, this);
+    }
+
+    @Override
+    public Object handleException(final RuntimeException exception) {
+        return SpreadsheetErrorKind.translate(exception);
     }
 
     @Override
