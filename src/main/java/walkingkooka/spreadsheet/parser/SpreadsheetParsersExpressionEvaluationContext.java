@@ -77,6 +77,11 @@ final class SpreadsheetParsersExpressionEvaluationContext implements ExpressionE
     }
 
     @Override
+    public Object handleException(final RuntimeException exception) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean isPure(final FunctionExpressionName name) {
         throw new UnsupportedOperationException();
     }

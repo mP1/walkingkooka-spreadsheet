@@ -22,6 +22,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
@@ -161,22 +162,33 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     private final SpreadsheetParserContext parserContext;
 
     @Override
-    public Object evaluate(final Expression node,
+    public Object evaluate(final Expression expression,
                            final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(cell, "cell");
+
         final SpreadsheetMetadata metadata = this.metadata;
 
-        return node.toValue(
-                ExpressionEvaluationContexts.basic(
-                        BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext.with(
-                                cell,
-                                this.storeRepository.cells(),
-                                this.serverUrl,
-                                metadata,
-                                this.functions,
-                                this.function
-                        )
-                )
-        );
+        Object result;
+
+        try {
+            result = expression.toValue(
+                    ExpressionEvaluationContexts.basic(
+                            BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext.with(
+                                    cell,
+                                    this.storeRepository.cells(),
+                                    this.serverUrl,
+                                    metadata,
+                                    this.functions,
+                                    this.function
+                            )
+                    )
+            );
+        } catch (final RuntimeException exception) {
+            result = SpreadsheetErrorKind.translate(exception);
+        }
+
+        return result;
     }
 
     private final AbsoluteUrl serverUrl;

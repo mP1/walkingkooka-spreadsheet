@@ -87,6 +87,11 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
     }
 
     @Override
+    public Object handleException(final RuntimeException exception) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean canConvert(final Object value,
                               final Class<?> target) {
         return this.context.canConvert(value, target);

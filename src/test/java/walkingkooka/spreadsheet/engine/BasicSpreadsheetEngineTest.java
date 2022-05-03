@@ -9207,6 +9207,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return ExpressionFunctionContexts.basic(
                         this.metadata().expressionNumberKind(),
                         this.functions(),
+                        SpreadsheetErrorKind::translate,
                         this.references(),
                         SpreadsheetExpressionFunctionContexts.referenceNotFound(),
                         CaseSensitivity.INSENSITIVE,

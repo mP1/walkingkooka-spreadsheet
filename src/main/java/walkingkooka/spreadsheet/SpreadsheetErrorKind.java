@@ -95,6 +95,16 @@ public enum SpreadsheetErrorKind implements HasText {
     public static SpreadsheetError translate(final Throwable cause) {
         Objects.requireNonNull(cause, "cause");
 
+        return cause instanceof HasSpreadsheetError ?
+                translate0((HasSpreadsheetError) cause) :
+                translate1(cause);
+    }
+
+    private static SpreadsheetError translate0(final HasSpreadsheetError has) {
+        return has.spreadsheetError();
+    }
+
+    private static SpreadsheetError translate1(final Throwable cause) {
         Throwable translate = cause;
 
         if (cause instanceof ExpressionEvaluationException) {
@@ -104,10 +114,10 @@ public enum SpreadsheetErrorKind implements HasText {
             }
         }
 
-        return translate0(translate);
+        return translate2(translate);
     }
 
-    private static SpreadsheetError translate0(final Throwable cause) {
+    private static SpreadsheetError translate2(final Throwable cause) {
         final SpreadsheetErrorKind kind;
 
         do {

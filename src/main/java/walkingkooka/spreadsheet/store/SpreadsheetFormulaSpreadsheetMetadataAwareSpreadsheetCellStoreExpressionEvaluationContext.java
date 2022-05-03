@@ -89,6 +89,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     @Override
+    public Object handleException(final RuntimeException exception) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean canConvert(final Object value,
                               final Class<?> type) {
         throw new UnsupportedOperationException();

@@ -84,6 +84,11 @@ final class SpreadsheetNumberParsePatternsConverterExpressionEvaluationContext i
     }
 
     @Override
+    public Object handleException(final RuntimeException exception) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean canConvert(final Object value,
                               final Class<?> type) {
         return this.context.canConvert(value, type);

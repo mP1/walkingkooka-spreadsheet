@@ -40,6 +40,16 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
         );
     }
 
+    @Test
+    public void testTranslateSpreadsheetError() {
+        final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessage("Custom message 123");
+
+        this.checkEquals(
+                error,
+                SpreadsheetErrorKind.translate(new SpreadsheetErrorConversionException(error))
+        );
+    }
+
     private final static String MESSAGE = "Hello 123";
 
     @Test

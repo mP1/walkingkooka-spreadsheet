@@ -2322,6 +2322,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                                 (n) -> {
                                                     throw new UnsupportedOperationException();
                                                 },
+                                                (n) -> {
+                                                    throw new UnsupportedOperationException();
+                                                },
                                                 (r) -> {
                                                     throw new UnsupportedOperationException();
                                                 },

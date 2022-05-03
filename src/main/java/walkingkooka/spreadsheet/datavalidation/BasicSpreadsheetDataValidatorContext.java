@@ -93,6 +93,11 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
+    public Object handleException(final RuntimeException exception) {
+        return this.context.handleException(exception);
+    }
+
+    @Override
     public boolean isPure(final FunctionExpressionName name) {
         return this.context.isPure(name);
     }
