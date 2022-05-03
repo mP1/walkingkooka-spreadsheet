@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
@@ -65,6 +66,7 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 import walkingkooka.tree.expression.function.ExpressionFunctionContexts;
+import walkingkooka.tree.expression.function.ExpressionFunctionKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
@@ -79,6 +81,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -2547,13 +2550,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                     }
 
                     @Override
-                    public boolean requiresEvaluatedParameters() {
-                        return true;
-                    }
-
-                    @Override
-                    public boolean resolveReferences() {
-                        return true;
+                    public Set<ExpressionFunctionKind> kinds() {
+                        return Sets.of(
+                                ExpressionFunctionKind.REQUIRES_EVALUATED_PARAMETERS
+                        );
                     }
                 };
             }
