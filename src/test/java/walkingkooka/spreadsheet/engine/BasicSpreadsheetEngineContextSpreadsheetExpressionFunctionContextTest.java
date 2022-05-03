@@ -78,19 +78,33 @@ public final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionCon
 
     // ExpressionFunctionContextTesting................................................................................
 
+    @Override
     public void testFunctionNullFunctionNameFails() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void testFunctionUnknownFunctionNameFails() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void testEvaluateNullFunctionNameFails() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testEvaluateUnknownFunctionNameFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testEvaluateFunctionNullParametersFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testReferenceNullReferenceFails() {
         throw new UnsupportedOperationException();
     }
 

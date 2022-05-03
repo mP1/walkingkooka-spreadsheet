@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -57,6 +58,7 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.ValueExpression;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.ExpressionFunctionKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
@@ -67,6 +69,7 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -804,13 +807,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
-                                public boolean requiresEvaluatedParameters() {
-                                    return true;
-                                }
-
-                                @Override
-                                public boolean resolveReferences() {
-                                    return true;
+                                public Set<ExpressionFunctionKind> kinds() {
+                                    return Sets.of(
+                                            ExpressionFunctionKind.REQUIRES_EVALUATED_PARAMETERS
+                                    );
                                 }
 
                                 @Override
@@ -841,13 +841,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
-                                public boolean requiresEvaluatedParameters() {
-                                    return true;
-                                }
-
-                                @Override
-                                public boolean resolveReferences() {
-                                    return false; // dont want SpreadsheetCellReference parameter to be resolved
+                                public Set<ExpressionFunctionKind> kinds() {
+                                    return Sets.of(
+                                            ExpressionFunctionKind.REQUIRES_EVALUATED_PARAMETERS
+                                    );
                                 }
 
                                 @Override
@@ -873,13 +870,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
-                                public boolean requiresEvaluatedParameters() {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean resolveReferences() {
-                                    return true;
+                                public Set<ExpressionFunctionKind> kinds() {
+                                    return Sets.empty();
                                 }
 
                                 @Override
@@ -905,13 +897,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
-                                public boolean requiresEvaluatedParameters() {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean resolveReferences() {
-                                    return false;
+                                public Set<ExpressionFunctionKind> kinds() {
+                                    return Sets.empty();
                                 }
 
                                 @Override

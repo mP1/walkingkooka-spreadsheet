@@ -98,6 +98,7 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 import walkingkooka.tree.expression.function.ExpressionFunctionContexts;
+import walkingkooka.tree.expression.function.ExpressionFunctionKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
@@ -9144,13 +9145,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 }
 
                                 @Override
-                                public boolean requiresEvaluatedParameters() {
-                                    return true;
-                                }
-
-                                @Override
-                                public boolean resolveReferences() {
-                                    return false;
+                                public Set<ExpressionFunctionKind> kinds() {
+                                    return Sets.of(
+                                            ExpressionFunctionKind.REQUIRES_EVALUATED_PARAMETERS
+                                    );
                                 }
                             };
                         case "BasicSpreadsheetEngineTestSum":
@@ -9172,13 +9170,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 }
 
                                 @Override
-                                public boolean requiresEvaluatedParameters() {
-                                    return true;
-                                }
-
-                                @Override
-                                public boolean resolveReferences() {
-                                    return true;
+                                public Set<ExpressionFunctionKind> kinds() {
+                                    return Sets.of(
+                                            ExpressionFunctionKind.REQUIRES_EVALUATED_PARAMETERS
+                                    );
                                 }
                             };
                         case "BasicSpreadsheetEngineTestCounter":
@@ -9198,13 +9193,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 }
 
                                 @Override
-                                public boolean requiresEvaluatedParameters() {
-                                    return true;
-                                }
-
-                                @Override
-                                public boolean resolveReferences() {
-                                    return true;
+                                public Set<ExpressionFunctionKind> kinds() {
+                                    return Sets.empty();
                                 }
                             };
                         default:
