@@ -9147,7 +9147,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 @Override
                                 public Set<ExpressionFunctionKind> kinds() {
                                     return Sets.of(
-                                            ExpressionFunctionKind.REQUIRES_EVALUATED_PARAMETERS
+                                            ExpressionFunctionKind.EVALUATE_PARAMETERS
                                     );
                                 }
                             };
@@ -9172,7 +9172,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 @Override
                                 public Set<ExpressionFunctionKind> kinds() {
                                     return Sets.of(
-                                            ExpressionFunctionKind.REQUIRES_EVALUATED_PARAMETERS
+                                            ExpressionFunctionKind.EVALUATE_PARAMETERS
                                     );
                                 }
                             };
