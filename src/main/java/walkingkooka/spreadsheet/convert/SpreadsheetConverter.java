@@ -280,9 +280,10 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
     public boolean canConvert(final Object value,
                               final Class<?> targetType,
                               final ExpressionNumberConverterContext context) {
-        return isSupportedType(targetType) &&
-                false == (value instanceof LocalTime && targetType == LocalDate.class) &&
-                false == (value instanceof LocalDate && targetType == LocalTime.class);
+        return (null != value && value.getClass() == targetType) ||
+                isSupportedType(targetType) &&
+                        false == (value instanceof LocalTime && targetType == LocalDate.class) &&
+                        false == (value instanceof LocalDate && targetType == LocalTime.class);
     }
 
     private static boolean isSupportedType(final Class<?> type) {
@@ -333,6 +334,19 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
             throw new SpreadsheetErrorConversionException((SpreadsheetError) value);
         }
 
+        return value.getClass() == targetType ?
+                Cast.to(Either.left(value)) :
+                convertNonNull0(
+                        value,
+                        targetType,
+                        context
+                );
+
+    }
+
+    private <T> Either<T, String> convertNonNull0(final Object value,
+                                                  final Class<T> targetType,
+                                                  final ExpressionNumberConverterContext context) {
         final Converter<ExpressionNumberConverterContext> converter = SpreadsheetConverterSpreadsheetValueVisitor.converter(
                 value,
                 targetType,
