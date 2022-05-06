@@ -40,6 +40,9 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -264,6 +267,26 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         this.convertAndCheck(
                 "abc123",
                 Object.class
+        );
+    }
+
+    // SpreadsheetCellReference.........................................................................................
+
+    @Test
+    public void testSpreadsheetCellReference() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCell("A1" ),
+                SpreadsheetCellReference.class
+        );
+    }
+
+    // SpreadsheetCellRange.............................................................................................
+
+    @Test
+    public void testSpreadsheetCellRange() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCellRange("A1:B2" ),
+                SpreadsheetCellRange.class
         );
     }
 
