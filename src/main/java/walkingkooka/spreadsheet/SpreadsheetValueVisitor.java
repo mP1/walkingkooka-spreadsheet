@@ -17,6 +17,14 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
@@ -71,11 +79,17 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
                     this.visit((LocalTime) value);
                     break;
                 }
+                if (value instanceof SpreadsheetSelection) {
+                    this.selectionVisitor.accept((SpreadsheetSelection) value);
+                    break;
+                }
                 this.visit(value);
             } while (false);
         }
         this.endVisit(value);
     }
+
+    private final SpreadsheetValueVisitorSpreadsheetSelectionVisitor selectionVisitor = SpreadsheetValueVisitorSpreadsheetSelectionVisitor.with(this);
 
     protected Visiting startVisit(final Object value) {
         return Visiting.CONTINUE;
@@ -134,6 +148,34 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
     }
 
     protected void visit(final Long value) {
+        // nop
+    }
+
+    protected void visit(final SpreadsheetCellRange value) {
+        // nop
+    }
+
+    protected void visit(final SpreadsheetCellReference value) {
+        // nop
+    }
+
+    protected void visit(final SpreadsheetColumnReferenceRange value) {
+        // nop
+    }
+
+    protected void visit(final SpreadsheetColumnReference value) {
+        // nop
+    }
+
+    protected void visit(final SpreadsheetLabelName value) {
+        // nop
+    }
+
+    protected void visit(final SpreadsheetRowReferenceRange value) {
+        // nop
+    }
+
+    protected void visit(final SpreadsheetRowReference value) {
         // nop
     }
 

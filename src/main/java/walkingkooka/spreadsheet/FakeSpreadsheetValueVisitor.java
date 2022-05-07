@@ -17,6 +17,13 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.visit.Visiting;
 
@@ -94,6 +101,41 @@ public class FakeSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
     @Override
     protected void visit(final Long value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetCellRange value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetCellReference value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetColumnReference value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetColumnReferenceRange value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetLabelName value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetRowReference value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetRowReferenceRange value) {
         throw new UnsupportedOperationException();
     }
 
