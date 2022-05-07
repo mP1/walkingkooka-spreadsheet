@@ -81,6 +81,11 @@ final class SpreadsheetConverterSpreadsheetValueTypeVisitor<C extends ConverterC
     }
 
     @Override
+    protected void visitExpressionReference() {
+        this.converter = this.mapping.selection;
+    }
+
+    @Override
     protected void visitFloat() {
         this.converter = this.mapping.number;
     }

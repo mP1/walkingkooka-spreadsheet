@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -42,6 +43,22 @@ public final class SpreadsheetConverterSelectionConverterTest extends Spreadshee
                 SpreadsheetSelection.parseCellRange("B2:C3" ),
                 SpreadsheetCellReference.class,
                 SpreadsheetSelection.parseCell("B2" )
+        );
+    }
+
+    @Test
+    public void testCellToExpressionReference() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCell("Z99" ),
+                SpreadsheetExpressionReference.class
+        );
+    }
+
+    @Test
+    public void testCellRangeToExpressionReference() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCellRange("B2:C3" ),
+                SpreadsheetExpressionReference.class
         );
     }
 
