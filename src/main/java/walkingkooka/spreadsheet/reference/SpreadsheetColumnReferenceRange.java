@@ -282,6 +282,8 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
         return other instanceof SpreadsheetColumnReferenceRange;
     }
 
+    // Comparable.......................................................................................................
+
     @Override
     public int compareTo(final SpreadsheetColumnReferenceRange other) {
         int result = this.begin().compareTo(other.begin());
