@@ -51,7 +51,27 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
     }
 
     @Override
+    protected void visitCellRange() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitCellReference() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitCharacter() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitColumnReference() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitColumnReferenceRange() {
         throw new UnsupportedOperationException();
     }
 
@@ -67,6 +87,11 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
 
     @Override
     protected void visitInteger() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitLabel() {
         throw new UnsupportedOperationException();
     }
 
@@ -97,6 +122,16 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
 
     @Override
     protected void visitShort() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitRowReference() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitRowReferenceRange() {
         throw new UnsupportedOperationException();
     }
 

@@ -51,8 +51,20 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                 case "java.lang.Byte":
                     this.visitByte();
                     break;
+                case "walkingkooka.spreadsheet.reference.SpreadsheetCellRange":
+                    this.visitCellRange();
+                    break;
+                case "walkingkooka.spreadsheet.reference.SpreadsheetCellReference":
+                    this.visitCellReference();
+                    break;
                 case "java.lang.Character":
                     this.visitCharacter();
+                    break;
+                case "walkingkooka.spreadsheet.reference.SpreadsheetColumnReference":
+                    this.visitColumnReference();
+                    break;
+                case "walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange":
+                    this.visitColumnReferenceRange();
                     break;
                 case "java.lang.Double":
                     this.visitDouble();
@@ -62,6 +74,9 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                     break;
                 case "java.lang.Integer":
                     this.visitInteger();
+                    break;
+                case "walkingkooka.spreadsheet.reference.SpreadsheetLabelName":
+                    this.visitLabel();
                     break;
                 case "java.time.LocalDate":
                     this.visitLocalDate();
@@ -80,6 +95,12 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                     break;
                 case "java.lang.Short":
                     this.visitShort();
+                    break;
+                case "walkingkooka.spreadsheet.reference.SpreadsheetRowReference":
+                    this.visitRowReference();
+                    break;
+                case "walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange":
+                    this.visitRowReferenceRange();
                     break;
                 case "java.lang.String":
                     this.visitString();
@@ -116,7 +137,23 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
 
     }
 
+    protected void visitCellRange() {
+
+    }
+
+    protected void visitCellReference() {
+
+    }
+
     protected void visitCharacter() {
+
+    }
+
+    protected void visitColumnReference() {
+
+    }
+
+    protected void visitColumnReferenceRange() {
 
     }
 
@@ -129,6 +166,10 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
     }
 
     protected void visitInteger() {
+
+    }
+
+    protected void visitLabel() {
 
     }
 
@@ -149,6 +190,14 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
     }
 
     protected void visitNumber() {
+
+    }
+
+    protected void visitRowReference() {
+
+    }
+
+    protected void visitRowReferenceRange() {
 
     }
 

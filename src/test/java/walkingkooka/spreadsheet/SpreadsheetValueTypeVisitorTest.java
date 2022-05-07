@@ -19,6 +19,12 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigDecimal;
@@ -192,6 +198,74 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
+    public void testAcceptCellRange() {
+        final StringBuilder b = new StringBuilder();
+        final Class<SpreadsheetCellRange> type = SpreadsheetCellRange.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visitCellRange() {
+                b.append("3" );
+            }
+        }.accept(type);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptCellRange2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(SpreadsheetCellRange.class);
+    }
+
+    @Test
+    public void testAcceptCellReference() {
+        final StringBuilder b = new StringBuilder();
+        final Class<SpreadsheetCellReference> type = SpreadsheetCellReference.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visitCellReference() {
+                b.append("3" );
+            }
+        }.accept(type);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptCellReference2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(SpreadsheetCellReference.class);
+    }
+
+    @Test
     public void testAcceptCharacter() {
         final StringBuilder b = new StringBuilder();
         final Class<Character> type = Character.class;
@@ -200,7 +274,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1");
+                b.append("1" );
                 return Visiting.CONTINUE;
             }
 
@@ -223,6 +297,74 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     public void testAcceptCharacter2() {
         new SpreadsheetValueTypeVisitor() {
         }.accept(Character.class);
+    }
+
+    @Test
+    public void testAcceptColumnReference() {
+        final StringBuilder b = new StringBuilder();
+        final Class<SpreadsheetColumnReference> type = SpreadsheetColumnReference.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visitColumnReference() {
+                b.append("3" );
+            }
+        }.accept(type);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptColumnReference2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(SpreadsheetColumnReference.class);
+    }
+
+    @Test
+    public void testAcceptColumnReferenceRange() {
+        final StringBuilder b = new StringBuilder();
+        final Class<SpreadsheetColumnReferenceRange> type = SpreadsheetColumnReferenceRange.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visitColumnReferenceRange() {
+                b.append("3" );
+            }
+        }.accept(type);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptColumnReferenceRange2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(SpreadsheetColumnReferenceRange.class);
     }
 
     @Test
@@ -328,6 +470,40 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
+    public void testAcceptLabel() {
+        final StringBuilder b = new StringBuilder();
+        final Class<SpreadsheetLabelName> type = SpreadsheetLabelName.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visitLabel() {
+                b.append("3" );
+            }
+        }.accept(type);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptLabel2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(SpreadsheetLabelName.class);
+    }
+
+    @Test
     public void testAcceptLocalDate() {
         final StringBuilder b = new StringBuilder();
         final Class<LocalDate> type = LocalDate.class;
@@ -336,7 +512,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1");
+                b.append("1" );
                 return Visiting.CONTINUE;
             }
 
@@ -498,6 +674,40 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
+    public void testAcceptRowReferenceRange() {
+        final StringBuilder b = new StringBuilder();
+        final Class<SpreadsheetRowReferenceRange> type = SpreadsheetRowReferenceRange.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visitRowReferenceRange() {
+                b.append("3" );
+            }
+        }.accept(type);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptRowReferenceRange2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(SpreadsheetRowReferenceRange.class);
+    }
+
+    @Test
     public void testAcceptShort() {
         final StringBuilder b = new StringBuilder();
         final Class<Short> type = Short.class;
@@ -506,7 +716,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1");
+                b.append("1" );
                 return Visiting.CONTINUE;
             }
 
