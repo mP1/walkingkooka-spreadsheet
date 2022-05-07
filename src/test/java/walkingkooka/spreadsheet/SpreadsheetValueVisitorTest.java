@@ -20,6 +20,14 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.visit.Visiting;
@@ -202,6 +210,146 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     }
 
     @Test
+    public void testAcceptCellRange() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetCellRange value = SpreadsheetSelection.parseCellRange("A1:B2" );
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visit(final SpreadsheetCellRange v) {
+                assertSame(value, v);
+                b.append("3" );
+            }
+        }.accept(value);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptCellRange2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(SpreadsheetSelection.parseCellRange("A1:B2" ));
+    }
+
+    @Test
+    public void testAcceptCellReference() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetCellReference value = SpreadsheetSelection.parseCell("C3" );
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visit(final SpreadsheetCellReference v) {
+                assertSame(value, v);
+                b.append("3" );
+            }
+        }.accept(value);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptCellReference2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(SpreadsheetSelection.parseCell("C3" ));
+    }
+
+    @Test
+    public void testAcceptColumnReference() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetColumnReference value = SpreadsheetSelection.parseColumn("D" );
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visit(final SpreadsheetColumnReference v) {
+                assertSame(value, v);
+                b.append("3" );
+            }
+        }.accept(value);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptColumnReference2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(SpreadsheetSelection.parseColumn("C" ));
+    }
+
+    @Test
+    public void testAcceptColumnReferenceRange() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetColumnReferenceRange value = SpreadsheetSelection.parseColumnRange("E:F" );
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visit(final SpreadsheetColumnReferenceRange v) {
+                assertSame(value, v);
+                b.append("3" );
+            }
+        }.accept(value);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptColumnReferenceRange2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(SpreadsheetSelection.parseColumnRange("E:F" ));
+    }
+
+    @Test
     public void testAcceptDouble() {
         final StringBuilder b = new StringBuilder();
         final Double value = 123.5;
@@ -210,7 +358,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             @Override
             protected Visiting startVisit(final Object v) {
                 assertSame(value, v);
-                b.append("1");
+                b.append("1" );
                 return Visiting.CONTINUE;
             }
 
@@ -339,6 +487,41 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     public void testAcceptInteger2() {
         new SpreadsheetValueVisitor() {
         }.accept(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void testAcceptLabel() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetLabelName value = SpreadsheetSelection.labelName("Label123" );
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visit(final SpreadsheetLabelName v) {
+                assertSame(value, v);
+                b.append("3" );
+            }
+        }.accept(value);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptLabel2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(SpreadsheetSelection.labelName("Label123" ));
     }
 
     @Test
@@ -479,6 +662,76 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     public void testAcceptLong2() {
         new SpreadsheetValueVisitor() {
         }.accept(Long.MAX_VALUE);
+    }
+
+    @Test
+    public void testAcceptRowReference() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetRowReference value = SpreadsheetSelection.parseRow("1" );
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visit(final SpreadsheetRowReference v) {
+                assertSame(value, v);
+                b.append("3" );
+            }
+        }.accept(value);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptRowReference2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(SpreadsheetSelection.parseRow("1" ));
+    }
+
+    @Test
+    public void testAcceptRowReferenceRange() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetRowReferenceRange value = SpreadsheetSelection.parseRowRange("2:3" );
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visit(final SpreadsheetRowReferenceRange v) {
+                assertSame(value, v);
+                b.append("3" );
+            }
+        }.accept(value);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptRowReferenceRange2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(SpreadsheetSelection.parseRowRange("2:3" ));
     }
 
     @Test
