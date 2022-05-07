@@ -159,7 +159,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 null, // date
                 null, // date-time
                 null, // number
-                null, // selection
+                SpreadsheetConverterSelectionConverter.INSTANCE, // selection
                 Converters.objectString(), // string
                 null // time
         );
@@ -303,7 +303,8 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         return (null != value && value.getClass() == targetType) ||
                 isSupportedType(targetType) &&
                         false == (value instanceof LocalTime && targetType == LocalDate.class) &&
-                        false == (value instanceof LocalDate && targetType == LocalTime.class);
+                        false == (value instanceof LocalDate && targetType == LocalTime.class) ||
+                SpreadsheetConverterSelectionConverter.INSTANCE.canConvert(value, targetType, context);
     }
 
     private static boolean isSupportedType(final Class<?> type) {
