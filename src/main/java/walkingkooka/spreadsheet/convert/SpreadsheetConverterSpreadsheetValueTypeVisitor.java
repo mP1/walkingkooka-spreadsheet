@@ -61,6 +61,16 @@ final class SpreadsheetConverterSpreadsheetValueTypeVisitor<C extends ConverterC
     }
 
     @Override
+    protected void visitCellRange() {
+        this.converter = this.mapping.selection;
+    }
+
+    @Override
+    protected void visitCellReference() {
+        this.converter = this.mapping.selection;
+    }
+
+    @Override
     protected void visitCharacter() {
         this.converter = this.mapping.string;
     }

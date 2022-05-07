@@ -285,6 +285,15 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Test
+    public void testSpreadsheetCellReferenceToRange() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCell("Z99" ),
+                SpreadsheetCellRange.class,
+                SpreadsheetSelection.parseCellRange("Z99" )
+        );
+    }
+
+    @Test
     public void testSpreadsheetCellReferenceString() {
         this.convertAndCheckString(
                 SpreadsheetSelection.parseCell("A1" )
@@ -298,6 +307,15 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         this.convertAndCheck(
                 SpreadsheetSelection.parseCellRange("A1:B2" ),
                 SpreadsheetCellRange.class
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellRangeToCell() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCellRange("C3:D4" ),
+                SpreadsheetCellReference.class,
+                SpreadsheetSelection.parseCell("C3" )
         );
     }
 
