@@ -1043,10 +1043,46 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // Comparable.......................................................................................................
+
+    @Test
+    public void testCompareEquals() {
+        this.compareToAndCheckEquals(
+                SpreadsheetSelection.parseColumnRange("A:B" ),
+                SpreadsheetSelection.parseColumnRange("A:B" )
+        );
+    }
+
+    @Test
+    public void testCompareEqualsDifferentKind() {
+        this.compareToAndCheckEquals(
+                SpreadsheetSelection.parseColumnRange("A:B" ),
+                SpreadsheetSelection.parseColumnRange("$A:$B" )
+        );
+    }
+
+    @Test
+    public void testCompareEqualsLess() {
+        this.compareToAndCheckEquals(
+                SpreadsheetSelection.parseColumnRange("A:B" ),
+                SpreadsheetSelection.parseColumnRange("B:C" )
+        );
+    }
+
+    @Test
+    public void testCompareEqualsLessDifferentKind() {
+        this.compareToAndCheckEquals(
+                SpreadsheetSelection.parseColumnRange("A:B" ),
+                SpreadsheetSelection.parseColumnRange("$B:$C" )
+        );
+    }
+
+    // toString.........................................................................................................
+
     @Test
     public void testToString() {
-        final SpreadsheetColumnReference lower = SpreadsheetColumnReference.parseColumn("B");
-        final SpreadsheetColumnReference upper = SpreadsheetColumnReference.parseColumn("D");
+        final SpreadsheetColumnReference lower = SpreadsheetColumnReference.parseColumn("B" );
+        final SpreadsheetColumnReference upper = SpreadsheetColumnReference.parseColumn("D" );
 
         final Range<SpreadsheetColumnReference> range = Range.with(
                 RangeBound.inclusive(lower),
