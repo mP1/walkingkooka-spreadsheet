@@ -274,8 +274,14 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
         return other instanceof SpreadsheetRowReferenceRange;
     }
 
+    // Comparable.......................................................................................................
+
     @Override
     public int compareTo(final SpreadsheetRowReferenceRange other) {
-        throw new UnsupportedOperationException();
+        int result = this.begin().compareTo(other.begin());
+        if (0 == result) {
+            result = this.end().compareTo(other.end());
+        }
+        return result;
     }
 }
