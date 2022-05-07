@@ -42,6 +42,10 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
@@ -280,6 +284,13 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         );
     }
 
+    @Test
+    public void testSpreadsheetCellReferenceString() {
+        this.convertAndCheckString(
+                SpreadsheetSelection.parseCell("A1" )
+        );
+    }
+
     // SpreadsheetCellRange.............................................................................................
 
     @Test
@@ -287,6 +298,89 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         this.convertAndCheck(
                 SpreadsheetSelection.parseCellRange("A1:B2" ),
                 SpreadsheetCellRange.class
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellRangeString() {
+        this.convertAndCheckString(
+                SpreadsheetSelection.parseCellRange("A1:B2" )
+        );
+    }
+
+    // SpreadsheetColumnReference.......................................................................................
+
+    @Test
+    public void testSpreadsheetColumnReference() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseColumn("C" ),
+                SpreadsheetColumnReference.class
+        );
+    }
+
+    @Test
+    public void testSpreadsheetColumnReferenceString() {
+        this.convertAndCheckString(
+                SpreadsheetSelection.parseColumn("C" )
+        );
+    }
+
+    // SpreadsheetColumnReferenceRange..................................................................................
+
+    @Test
+    public void testSpreadsheetColumnReferenceRange() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseColumnRange("D:E" ),
+                SpreadsheetColumnReferenceRange.class
+        );
+    }
+
+    @Test
+    public void testSpreadsheetColumnReferenceRangeString() {
+        this.convertAndCheckString(
+                SpreadsheetSelection.parseColumnRange("D:E" )
+        );
+    }
+
+    // SpreadsheetRowReference.......................................................................................
+
+    @Test
+    public void testSpreadsheetRowReference() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseRow("5" ),
+                SpreadsheetRowReference.class
+        );
+    }
+
+    @Test
+    public void testSpreadsheetRowReferenceString() {
+        this.convertAndCheckString(
+                SpreadsheetSelection.parseRow("5" )
+        );
+    }
+
+    // SpreadsheetRowReferenceRange..................................................................................
+
+    @Test
+    public void testSpreadsheetRowReferenceRange() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseRowRange("6:7" ),
+                SpreadsheetRowReferenceRange.class
+        );
+    }
+
+    @Test
+    public void testSpreadsheetRowReferenceRangeString() {
+        this.convertAndCheckString(
+                SpreadsheetSelection.parseRowRange("6:7" )
+        );
+    }
+
+    private void convertAndCheckString(final SpreadsheetSelection selection) {
+        this.convertAndCheck(
+                selection,
+                String.class,
+                selection.toString()
         );
     }
 
