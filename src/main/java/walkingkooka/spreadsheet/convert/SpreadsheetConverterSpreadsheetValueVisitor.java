@@ -22,6 +22,13 @@ import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 
@@ -125,6 +132,41 @@ final class SpreadsheetConverterSpreadsheetValueVisitor<C extends ConverterConte
     @Override
     protected void visit(final Short value) {
         this.converter(this.mapping.number);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetCellRange value) {
+        this.converter(this.mapping.string);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetCellReference value) {
+        this.converter(this.mapping.string);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetColumnReferenceRange value) {
+        this.converter(this.mapping.string);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetColumnReference value) {
+        this.converter(this.mapping.string);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetLabelName value) {
+        this.converter(this.mapping.string);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetRowReferenceRange value) {
+        this.converter(this.mapping.string);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetRowReference value) {
+        this.converter(this.mapping.string);
     }
 
     @Override
