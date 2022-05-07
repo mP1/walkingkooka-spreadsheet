@@ -81,6 +81,11 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
     }
 
     @Override
+    protected void visitExpressionReference() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitFloat() {
         throw new UnsupportedOperationException();
     }

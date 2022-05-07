@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.visit.Visiting;
@@ -402,6 +403,40 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
+    public void testAcceptExpressionReference() {
+        final StringBuilder b = new StringBuilder();
+        final Class<SpreadsheetExpressionReference> type = SpreadsheetExpressionReference.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1" );
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2" );
+            }
+
+            @Override
+            protected void visitExpressionReference() {
+                b.append("3" );
+            }
+        }.accept(type);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptExpressionReference2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(SpreadsheetExpressionReference.class);
+    }
+
+    @Test
     public void testAcceptFloat() {
         final StringBuilder b = new StringBuilder();
         final Class<Float> type = Float.class;
@@ -410,7 +445,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1");
+                b.append("1" );
                 return Visiting.CONTINUE;
             }
 

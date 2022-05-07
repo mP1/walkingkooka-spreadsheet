@@ -69,6 +69,9 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                 case "java.lang.Double":
                     this.visitDouble();
                     break;
+                case "walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference":
+                    this.visitExpressionReference();
+                    break;
                 case "java.lang.Float":
                     this.visitFloat();
                     break;
@@ -158,6 +161,10 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
     }
 
     protected void visitDouble() {
+
+    }
+
+    protected void visitExpressionReference() {
 
     }
 
