@@ -136,37 +136,37 @@ final class SpreadsheetConverterSpreadsheetValueVisitor<C extends ConverterConte
 
     @Override
     protected void visit(final SpreadsheetCellRange value) {
-        this.converter(this.mapping.string);
+        this.converter(this.mapping.selection);
     }
 
     @Override
     protected void visit(final SpreadsheetCellReference value) {
-        this.converter(this.mapping.string);
+        this.converter(this.mapping.selection);
     }
 
     @Override
     protected void visit(final SpreadsheetColumnReferenceRange value) {
-        this.converter(this.mapping.string);
+        this.converter(this.mapping.selection);
     }
 
     @Override
     protected void visit(final SpreadsheetColumnReference value) {
-        this.converter(this.mapping.string);
+        this.converter(this.mapping.selection);
     }
 
     @Override
     protected void visit(final SpreadsheetLabelName value) {
-        this.converter(this.mapping.string);
+        this.converter(this.mapping.selection);
     }
 
     @Override
     protected void visit(final SpreadsheetRowReferenceRange value) {
-        this.converter(this.mapping.string);
+        this.converter(this.mapping.selection);
     }
 
     @Override
     protected void visit(final SpreadsheetRowReference value) {
-        this.converter(this.mapping.string);
+        this.converter(this.mapping.selection);
     }
 
     @Override

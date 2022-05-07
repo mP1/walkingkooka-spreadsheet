@@ -30,9 +30,18 @@ final class SpreadsheetConverterMapping<T> {
                                                    final T date,
                                                    final T dateTime,
                                                    final T number,
+                                                   final T selection,
                                                    final T string,
                                                    final T time) {
-        return new SpreadsheetConverterMapping<>(booleanValue, date, dateTime, number, string, time);
+        return new SpreadsheetConverterMapping<>(
+                booleanValue,
+                date,
+                dateTime,
+                number,
+                selection,
+                string,
+                time
+        );
     }
 
     /**
@@ -42,6 +51,7 @@ final class SpreadsheetConverterMapping<T> {
                                         final T date,
                                         final T dateTime,
                                         final T number,
+                                        final T selection,
                                         final T string,
                                         final T time) {
         super();
@@ -50,6 +60,7 @@ final class SpreadsheetConverterMapping<T> {
         this.date = date;
         this.dateTime = dateTime;
         this.number = number;
+        this.selection = selection;
         this.string = string;
         this.time = time;
     }
@@ -58,6 +69,8 @@ final class SpreadsheetConverterMapping<T> {
     final T date;
     final T dateTime;
     final T number;
+
+    final T selection;
 
     /**
      * String also includes character.
@@ -69,11 +82,12 @@ final class SpreadsheetConverterMapping<T> {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .separator(", ")
-                .label("boolean").value(this.booleanValue)
-                .label("date").value(this.date)
-                .label("dateTime").value(this.dateTime)
-                .label("number").value(this.number)
+                .separator(", " )
+                .label("boolean" ).value(this.booleanValue)
+                .label("date" ).value(this.date)
+                .label("dateTime" ).value(this.dateTime)
+                .label("number" ).value(this.number)
+                .label("selection" ).value(this.selection)
                 .label("string").value(this.string)
                 .label("time").value(this.time)
                 .build();

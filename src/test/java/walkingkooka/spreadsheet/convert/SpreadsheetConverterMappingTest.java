@@ -31,14 +31,20 @@ public final class SpreadsheetConverterMappingTest extends SpreadsheetConverterT
 
     @Test
     public void testToString2() {
-        final SpreadsheetConverterMapping<?> mapping = SpreadsheetConverterMapping.with(Converters.fake().setToString("Boolean1"),
-                Converters.fake().setToString("Date2"),
-                Converters.fake().setToString("DateTime3"),
-                Converters.fake().setToString("Number4"),
-                Converters.fake().setToString("String5"),
-                Converters.fake().setToString("Time6"));
+        final SpreadsheetConverterMapping<?> mapping = SpreadsheetConverterMapping.with(
+                Converters.fake().setToString("Boolean1" ),
+                Converters.fake().setToString("Date2" ),
+                Converters.fake().setToString("DateTime3" ),
+                Converters.fake().setToString("Number4" ),
+                Converters.fake().setToString("Selection5" ),
+                Converters.fake().setToString("String6" ),
+                Converters.fake().setToString("Time7" )
+        );
 
-        this.toStringAndCheck(mapping, "boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6");
+        this.toStringAndCheck(
+                mapping,
+                "boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, selection=Selection5, string=String6, time=Time7"
+        );
     }
 
     // ClassTesting.....................................................................................................

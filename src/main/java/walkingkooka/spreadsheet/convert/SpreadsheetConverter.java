@@ -114,6 +114,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 fromBoolean(LocalDate.class, dateTrue, dateFalse),
                 fromBoolean(LocalDateTime.class, dateTimeTrue, dateTimeFalse),
                 ExpressionNumber.toConverter(Converters.booleanNumber()),
+                null, // selection
                 SpreadsheetConverterBooleanString.with(fromBoolean(String.class, stringTrue, stringFalse), textFormatter.converter()), // boolean -> String
                 fromBoolean(LocalTime.class, timeTrue, timeFalse)
         ); // Time
@@ -126,6 +127,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 Converters.simple(), // date -> date
                 Converters.localDateLocalDateTime(),
                 ExpressionNumber.toConverter(Converters.localDateNumber(dateOffset)),
+                null, // selection
                 dateFormatter.converter(),
                 null // date -> time INVALID
         );
@@ -136,6 +138,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 Converters.localDateTimeLocalDate(),
                 Converters.simple(), // dateTime -> dateTime
                 ExpressionNumber.toConverter(Converters.localDateTimeNumber(dateOffset)),
+                null, // selection
                 dateTimeFormatter.converter(),
                 Converters.localDateTimeLocalTime()
         );
@@ -146,8 +149,20 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 ExpressionNumber.fromConverter(Converters.numberLocalDate(dateOffset)),
                 ExpressionNumber.fromConverter(Converters.numberLocalDateTime(dateOffset)),
                 ExpressionNumber.toConverter(ExpressionNumber.fromConverter(Converters.numberNumber())),
+                null, // selection
                 ExpressionNumber.fromConverter(numberFormatter.converter()),
                 ExpressionNumber.fromConverter(Converters.numberLocalTime()));
+
+        // selection
+        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> selection = SpreadsheetConverterMapping.with(
+                null, // boolean
+                null, // date
+                null, // date-time
+                null, // number
+                null, // selection
+                Converters.objectString(), // string
+                null // time
+        );
 
         // most attempts to support conversions such as Date -> Character are pointless but keep for the error failures.
         // String|Character ->
@@ -164,6 +179,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 fromCharacterOrString(
                         ExpressionNumber.toConverter(numberParser.converter().cast(ExpressionNumberConverterContext.class))
                 ),
+                null, // selection
                 fromCharacterOrString(
                         toCharacterOrString(
                                 Converters.simple() // String -> String
@@ -180,6 +196,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 null, // time -> date invalid
                 Converters.localTimeLocalDateTime(),
                 ExpressionNumber.toConverter(Converters.localTimeNumber()),
+                null, // selection
                 timeFormatter.converter(),
                 Converters.simple()
         ); // time -> time
@@ -189,6 +206,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 date,
                 dateTime,
                 number,
+                selection,
                 string,
                 time
         );
@@ -259,6 +277,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
             final Converter<ExpressionNumberConverterContext> date,
             final Converter<ExpressionNumberConverterContext> dateTime,
             final Converter<ExpressionNumberConverterContext> number,
+            final Converter<ExpressionNumberConverterContext> selection,
             final Converter<ExpressionNumberConverterContext> string,
             final Converter<ExpressionNumberConverterContext> time) {
         return SpreadsheetConverterMapping.with(
@@ -266,6 +285,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 date,
                 dateTime,
                 number,
+                selection,
                 toCharacterOrString(string),
                 time
         );
