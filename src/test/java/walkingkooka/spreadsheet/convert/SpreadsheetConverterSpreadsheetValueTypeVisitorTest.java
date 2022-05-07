@@ -35,28 +35,32 @@ public final class SpreadsheetConverterSpreadsheetValueTypeVisitorTest extends S
 
     @Test
     public void testToString() {
-        final SpreadsheetConverterMapping<Converter<ConverterContext>> mapping = SpreadsheetConverterMapping.with(Converters.fake().setToString("Boolean1"),
-                Converters.fake().setToString("Date2"),
-                Converters.fake().setToString("DateTime3"),
-                Converters.fake().setToString("Number4"),
-                Converters.fake().setToString("String5"),
-                Converters.fake().setToString("Time6"));
+        final SpreadsheetConverterMapping<Converter<ConverterContext>> mapping = SpreadsheetConverterMapping.with(Converters.fake().setToString("Boolean1" ),
+                Converters.fake().setToString("Date2" ),
+                Converters.fake().setToString("DateTime3" ),
+                Converters.fake().setToString("Number4" ),
+                Converters.fake().setToString("Selection5" ),
+                Converters.fake().setToString("String6" ),
+                Converters.fake().setToString("Time7" ));
         this.toStringAndCheck(new SpreadsheetConverterSpreadsheetValueTypeVisitor<>(mapping),
-                "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6");
+                "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, selection=Selection5, string=String6, time=Time7" );
     }
 
     @Test
     public void testToString2() {
-        final SpreadsheetConverterMapping<Converter<ConverterContext>> mapping = SpreadsheetConverterMapping.with(Converters.fake().setToString("Boolean1"),
-                Converters.fake().setToString("Date2"),
-                Converters.fake().setToString("DateTime3"),
-                Converters.fake().setToString("Number4"),
-                Converters.fake().setToString("String5"),
-                Converters.fake().setToString("Time6"));
+        final SpreadsheetConverterMapping<Converter<ConverterContext>> mapping = SpreadsheetConverterMapping.with(
+                Converters.fake().setToString("Boolean1" ),
+                Converters.fake().setToString("Date2" ),
+                Converters.fake().setToString("DateTime3" ),
+                Converters.fake().setToString("Number4" ),
+                Converters.fake().setToString("Selection5" ),
+                Converters.fake().setToString("String6" ),
+                Converters.fake().setToString("Time7" )
+        );
         final SpreadsheetConverterSpreadsheetValueTypeVisitor<ConverterContext> visitor = new SpreadsheetConverterSpreadsheetValueTypeVisitor<>(mapping);
         visitor.accept(LocalDate.class);
 
-        this.toStringAndCheck(visitor, "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6, converter=Date2");
+        this.toStringAndCheck(visitor, "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, selection=Selection5, string=String6, time=Time7, converter=Date2" );
     }
 
     @Override
