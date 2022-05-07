@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -285,6 +286,14 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Test
+    public void testSpreadsheetCellReferenceToExpressionReference() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCell("Z99" ),
+                SpreadsheetExpressionReference.class
+        );
+    }
+
+    @Test
     public void testSpreadsheetCellReferenceToRange() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCell("Z99" ),
@@ -316,6 +325,14 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 SpreadsheetSelection.parseCellRange("C3:D4" ),
                 SpreadsheetCellReference.class,
                 SpreadsheetSelection.parseCell("C3" )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellRangeToExpressionReference() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCellRange("C3:D4" ),
+                SpreadsheetExpressionReference.class
         );
     }
 

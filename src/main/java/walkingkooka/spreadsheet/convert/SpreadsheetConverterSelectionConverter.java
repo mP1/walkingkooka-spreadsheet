@@ -22,6 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 /**
@@ -47,7 +48,8 @@ final class SpreadsheetConverterSelectionConverter implements Converter<Expressi
                               final Class<?> type,
                               final ExpressionNumberConverterContext context) {
         return isCellRangeToCell(value, type) ||
-                isCellToCellRange(value, type);
+                isCellToCellRange(value, type) ||
+                isExpressionReference(value, type);
     }
 
     @Override
@@ -58,7 +60,9 @@ final class SpreadsheetConverterSelectionConverter implements Converter<Expressi
                 Cast.to(Either.left(cellToCellRange((SpreadsheetCellReference) value))) :
                 isCellRangeToCell(value, type) ?
                         Cast.to(Either.left(cellRangeToCell((SpreadsheetCellRange) value))) :
-                        this.failConversion(value, type);
+                        isExpressionReference(value, type) ?
+                                Cast.to(Either.left((SpreadsheetExpressionReference) value)) :
+                                this.failConversion(value, type);
     }
 
     private static boolean isCellToCellRange(Object value, Class<?> type) {
@@ -67,6 +71,11 @@ final class SpreadsheetConverterSelectionConverter implements Converter<Expressi
 
     private static boolean isCellRangeToCell(Object value, Class<?> type) {
         return value instanceof SpreadsheetCellRange && SpreadsheetCellReference.class == type;
+    }
+
+    private static boolean isExpressionReference(final Object value,
+                                                 final Class<?> type) {
+        return value instanceof SpreadsheetExpressionReference && SpreadsheetExpressionReference.class == type;
     }
 
     private static SpreadsheetCellRange cellToCellRange(final SpreadsheetCellReference cell) {
