@@ -303,6 +303,11 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> targetType,
                                          final ExpressionNumberConverterContext context) {
+        // errors are a special type we dont want to try and convert them and report them inside a ConversionException which loses the error.
+        if (value instanceof SpreadsheetError) {
+            throw new SpreadsheetErrorConversionException((SpreadsheetError) value);
+        }
+
         // special case if targetType = Object just return value.
         return this.canConvert(value, targetType, context) ?
                 Object.class == targetType ?
@@ -329,11 +334,6 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
     private <T> Either<T, String> convertNonNull(final Object value,
                                                  final Class<T> targetType,
                                                  final ExpressionNumberConverterContext context) {
-        // errors are a special type we dont want to try and convert them and report them inside a ConversionException which loses the error.
-        if (value instanceof SpreadsheetError) {
-            throw new SpreadsheetErrorConversionException((SpreadsheetError) value);
-        }
-
         return value.getClass() == targetType ?
                 Cast.to(Either.left(value)) :
                 convertNonNull0(
@@ -341,7 +341,6 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                         targetType,
                         context
                 );
-
     }
 
     private <T> Either<T, String> convertNonNull0(final Object value,
