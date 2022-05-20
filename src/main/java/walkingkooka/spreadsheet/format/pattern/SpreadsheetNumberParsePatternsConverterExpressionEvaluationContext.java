@@ -100,15 +100,49 @@ final class SpreadsheetNumberParsePatternsConverterExpressionEvaluationContext i
         return this.context.convert(value, target);
     }
 
+    // DateTimeContext..................................................................................................
+
+    @Override
+    public List<String> ampms() {
+        return this.context.ampms();
+    }
+
     @Override
     public int defaultYear() {
         return this.context.defaultYear();
     }
 
     @Override
+    public List<String> monthNames() {
+        return this.context.monthNames();
+    }
+
+    @Override
+    public List<String> monthNameAbbreviations() {
+        return this.context.monthNameAbbreviations();
+    }
+
+    @Override
+    public int twoToFourDigitYear(final int year) {
+        return this.context.twoToFourDigitYear(year);
+    }
+
+    @Override
     public int twoDigitYear() {
         return this.context.twoDigitYear();
     }
+
+    @Override
+    public List<String> weekDayNames() {
+        return this.context.weekDayNames();
+    }
+
+    @Override
+    public List<String> weekDayNameAbbreviations() {
+        return this.context.weekDayNameAbbreviations();
+    }
+
+    // DecimalNumberContext............................................................................................
 
     @Override
     public String currencySymbol() {
@@ -123,6 +157,11 @@ final class SpreadsheetNumberParsePatternsConverterExpressionEvaluationContext i
     @Override
     public String exponentSymbol() {
         return this.context.exponentSymbol();
+    }
+
+    @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        return this.context.expressionNumberKind();
     }
 
     @Override
@@ -153,11 +192,6 @@ final class SpreadsheetNumberParsePatternsConverterExpressionEvaluationContext i
     @Override
     public MathContext mathContext() {
         return this.context.mathContext();
-    }
-
-    @Override
-    public ExpressionNumberKind expressionNumberKind() {
-        return this.context.expressionNumberKind();
     }
 
     private final ExpressionNumberConverterContext context;

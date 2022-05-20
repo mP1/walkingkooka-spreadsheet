@@ -113,23 +113,69 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     private ConverterContext converterContext() {
-        return this.context.metadata()
+        return this.metadata()
                 .converterContext();
+    }
+
+    // DateTimeContext.................................................................................................
+
+    @Override
+    public List<String> ampms() {
+        return this.metadata()
+                .dateTimeContext()
+                .ampms();
     }
 
     @Override
     public int defaultYear() {
-        return this.context
-                .metadata()
-                .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
+        return this.metadata()
+                .dateTimeContext()
+                .defaultYear();
+    }
+
+    @Override
+    public List<String> monthNames() {
+        return this.metadata()
+                .dateTimeContext()
+                .monthNames();
+    }
+
+    @Override
+    public List<String> monthNameAbbreviations() {
+        return this.metadata()
+                .dateTimeContext()
+                .monthNameAbbreviations();
+    }
+
+    @Override
+    public int twoToFourDigitYear(final int year) {
+        return this.metadata()
+                .dateTimeContext()
+                .twoToFourDigitYear(year);
     }
 
     @Override
     public int twoDigitYear() {
-        return this.context
-                .metadata()
-                .getOrFail(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
+        return this.metadata()
+                .dateTimeContext()
+                .twoDigitYear();
     }
+
+    @Override
+    public List<String> weekDayNames() {
+        return this.metadata()
+                .dateTimeContext()
+                .weekDayNames();
+    }
+
+    @Override
+    public List<String> weekDayNameAbbreviations() {
+        return this.metadata()
+                .dateTimeContext()
+                .weekDayNameAbbreviations();
+    }
+
+    // DecimalNumberContext.............................................................................................
 
     @Override
     public String currencySymbol() {
