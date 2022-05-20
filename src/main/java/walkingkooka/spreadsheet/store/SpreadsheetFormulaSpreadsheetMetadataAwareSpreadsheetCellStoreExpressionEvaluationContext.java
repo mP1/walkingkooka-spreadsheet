@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.Either;
+import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -105,15 +106,61 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
         throw new UnsupportedOperationException();
     }
 
+    // DateTimeContext..................................................................................................
+
+    @Override
+    public List<String> ampms() {
+        return this.dateTimeContext()
+                .ampms();
+    }
+
     @Override
     public int defaultYear() {
-        return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
+        return this.dateTimeContext()
+                .defaultYear();
+    }
+
+    @Override
+    public List<String> monthNames() {
+        return this.dateTimeContext()
+                .monthNames();
+    }
+
+    @Override
+    public List<String> monthNameAbbreviations() {
+        return this.dateTimeContext()
+                .monthNameAbbreviations();
+    }
+
+    @Override
+    public int twoToFourDigitYear(final int year) {
+        return this.dateTimeContext()
+                .twoToFourDigitYear(year);
     }
 
     @Override
     public int twoDigitYear() {
-        return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
+        return this.dateTimeContext()
+                .twoDigitYear();
     }
+
+    @Override
+    public List<String> weekDayNames() {
+        return this.dateTimeContext()
+                .weekDayNames();
+    }
+
+    @Override
+    public List<String> weekDayNameAbbreviations() {
+        return this.dateTimeContext()
+                .weekDayNameAbbreviations();
+    }
+
+    private DateTimeContext dateTimeContext() {
+        return this.metadata.dateTimeContext();
+    }
+
+    // DecimalNumberContext.............................................................................................
 
     @Override
     public String currencySymbol() {
