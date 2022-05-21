@@ -21,8 +21,8 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
-import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursor;
@@ -111,7 +111,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final Parser<SpreadsheetParserContext> EXPRESSION_PARSER;
 
     /**
-     * Returns a {@link Parser} that parsers function invocations, starting with the name and parameters.
+     * Returns a {@link Parser} that parsers expression invocations, starting with the name and parameters.
      */
     public static Parser<SpreadsheetParserContext> function() {
         return FUNCTION_PARSER;

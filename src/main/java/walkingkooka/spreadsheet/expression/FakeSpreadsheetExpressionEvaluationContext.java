@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.function;
+package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;

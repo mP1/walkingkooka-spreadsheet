@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.function;
+package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionReference;

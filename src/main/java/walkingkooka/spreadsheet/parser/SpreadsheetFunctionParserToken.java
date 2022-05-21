@@ -16,7 +16,7 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
+import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
@@ -24,7 +24,7 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 /**
- * A function which includes its name and any parameters if any. Each parameter will be separated by a comma.
+ * A expression which includes its name and any parameters if any. Each parameter will be separated by a comma.
  * <br>
  * SUM(A10:A20)
  */
@@ -55,7 +55,7 @@ public final class SpreadsheetFunctionParserToken extends SpreadsheetParentParse
     }
 
     /**
-     * The name of the function
+     * The name of the expression
      */
     public SpreadsheetFunctionName functionName() {
         return this.name;

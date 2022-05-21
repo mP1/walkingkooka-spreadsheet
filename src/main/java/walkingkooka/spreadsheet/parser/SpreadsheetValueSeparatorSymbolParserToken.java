@@ -21,7 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import java.util.List;
 
 /**
- * Represents a comma symbol token which is used to separate parameters to a function.
+ * Represents a comma symbol token which is used to separate parameters to a expression.
  */
 public final class SpreadsheetValueSeparatorSymbolParserToken extends SpreadsheetSymbolParserToken {
 

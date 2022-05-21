@@ -174,7 +174,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     }
 
     /**
-     * Cache function
+     * Cache expression
      */
     private Function<SpreadsheetColorName, Optional<Color>> nameToColor;
 
@@ -187,7 +187,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     }
 
     /**
-     * Cache function
+     * Cache expression
      */
     private Function<Integer, Optional<Color>> numberToColor;
 

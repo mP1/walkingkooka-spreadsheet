@@ -16,10 +16,10 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
+import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 
 /**
- * Holds the actual function name within a function token.
+ * Holds the actual expression name within a expression token.
  */
 public final class SpreadsheetFunctionNameParserToken extends SpreadsheetNonSymbolParserToken<SpreadsheetFunctionName> {
 

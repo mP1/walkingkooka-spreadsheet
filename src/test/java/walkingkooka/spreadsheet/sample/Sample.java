@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -38,7 +39,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.function.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -211,7 +211,7 @@ public final class Sample {
 
             private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions() {
                 return (n) -> {
-                    throw new UnsupportedOperationException("unsupported function " + n);
+                    throw new UnsupportedOperationException("unsupported expression " + n);
                 };
             }
 

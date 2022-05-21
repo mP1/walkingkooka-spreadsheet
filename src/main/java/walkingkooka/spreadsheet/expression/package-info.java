@@ -15,4 +15,4 @@
  *
  */
 
-package walkingkooka.spreadsheet.function;
+package walkingkooka.spreadsheet.expression;

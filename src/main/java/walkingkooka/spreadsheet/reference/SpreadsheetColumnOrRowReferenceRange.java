@@ -142,7 +142,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     }
 
     /**
-     * Mapping function that returns a relative {@link SpreadsheetColumnOrRowReference} from the given value.
+     * Mapping expression that returns a relative {@link SpreadsheetColumnOrRowReference} from the given value.
      */
     abstract T iteratorIntToReference(int value);
 

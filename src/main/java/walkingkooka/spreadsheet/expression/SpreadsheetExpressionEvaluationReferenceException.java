@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.function;
+package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.spreadsheet.HasSpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;

@@ -16,7 +16,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.function;
+package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -36,7 +36,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     }
 
     /**
-     * A function that creates a {@link ExpressionEvaluationReferenceException}.
+     * A expression that creates a {@link ExpressionEvaluationReferenceException}.
      */
     public static Function<ExpressionReference, ExpressionEvaluationException> referenceNotFound() {
         return (r) -> {

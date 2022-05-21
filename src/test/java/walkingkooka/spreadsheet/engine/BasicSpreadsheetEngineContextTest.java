@@ -33,11 +33,11 @@ import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.function.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -908,7 +908,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                             }
                     );
                 default:
-                    throw new UnsupportedOperationException("Unknown function: " + n);
+                    throw new UnsupportedOperationException("Unknown expression: " + n);
             }
         };
     }

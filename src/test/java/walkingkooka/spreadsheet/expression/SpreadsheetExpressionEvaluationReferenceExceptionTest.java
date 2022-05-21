@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.function;
+package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.StandardThrowableTesting;

@@ -72,7 +72,7 @@ public enum SpreadsheetErrorKind implements HasText {
     private final String text;
 
     /**
-     * This value is return by ERROR.TYPE function.
+     * This value is return by ERROR.TYPE expression.
      */
     public int value() {
         return this.value;
@@ -139,7 +139,7 @@ public enum SpreadsheetErrorKind implements HasText {
                 break;
             }
 
-            // #VALUE! 	The wrong type of operand or function argument is used
+            // #VALUE! 	The wrong type of operand or expression argument is used
             if (cause instanceof ClassCastException) {
                 kind = VALUE;
                 break;
