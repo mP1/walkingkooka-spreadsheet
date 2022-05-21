@@ -26,7 +26,6 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.math.MathContext;
@@ -70,7 +69,7 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionFunctionContext> function(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
         throw new UnsupportedOperationException();
     }
 

@@ -64,8 +64,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionContext;
-import walkingkooka.tree.expression.function.ExpressionFunctionContexts;
 import walkingkooka.tree.expression.function.ExpressionFunctionKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
@@ -2317,23 +2315,21 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 expressionToString,
                 spreadsheetParserToken.toExpression(
                                 ExpressionEvaluationContexts.basic(
-                                        ExpressionFunctionContexts.basic(
-                                                ExpressionNumberKind.DEFAULT,
-                                                (n) -> {
-                                                    throw new UnsupportedOperationException();
-                                                },
-                                                (n) -> {
-                                                    throw new UnsupportedOperationException();
-                                                },
-                                                (r) -> {
-                                                    throw new UnsupportedOperationException();
-                                                },
-                                                (r) -> {
-                                                    throw new UnsupportedOperationException();
-                                                },
-                                                CaseSensitivity.SENSITIVE,
-                                                ConverterContexts.fake()
-                                        )
+                                        ExpressionNumberKind.DEFAULT,
+                                        (n) -> {
+                                            throw new UnsupportedOperationException();
+                                        },
+                                        (n) -> {
+                                            throw new UnsupportedOperationException();
+                                        },
+                                        (r) -> {
+                                            throw new UnsupportedOperationException();
+                                        },
+                                        (r) -> {
+                                            throw new UnsupportedOperationException();
+                                        },
+                                        CaseSensitivity.SENSITIVE,
+                                        ConverterContexts.fake()
                                 )
                         ).map(Object::toString)
                         .orElse("")
@@ -2502,7 +2498,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             @Override
             public Object evaluate(final FunctionExpressionName name,
                                    final List<Object> parameters) {
-                final ExpressionFunction<?, ExpressionFunctionContext> function = this.function(name);
+                final ExpressionFunction<?, ExpressionEvaluationContext> function = this.function(name);
 
                 return function.apply(
                         this.prepareParameters(function, parameters),
@@ -2522,7 +2518,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             }
 
             @Override
-            public ExpressionFunction<?, ExpressionFunctionContext> function(final FunctionExpressionName name) {
+            public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
                 switch (name.value()) {
                     case "Error.Type":
                         return function((p, c) -> "Hello");
@@ -2537,11 +2533,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 }
             }
 
-            private FakeExpressionFunction<Object, ExpressionFunctionContext> function(final BiFunction<List<Object>, ExpressionFunctionContext, Object> apply) {
+            private FakeExpressionFunction<Object, ExpressionEvaluationContext> function(final BiFunction<List<Object>, ExpressionEvaluationContext, Object> apply) {
                 return new FakeExpressionFunction<>() {
                     @Override
                     public Object apply(final List<Object> parameters,
-                                        final ExpressionFunctionContext context) {
+                                        final ExpressionEvaluationContext context) {
                         return apply.apply(parameters, context);
                     }
 

@@ -44,11 +44,10 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionEvaluationContexts;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -65,7 +64,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
     static BasicSpreadsheetEngineContext with(final SpreadsheetMetadata metadata,
-                                              final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
+                                              final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                               final SpreadsheetEngine engine,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetStoreRepository storeRepository,
@@ -91,7 +90,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Private ctor use factory.
      */
     private BasicSpreadsheetEngineContext(final SpreadsheetMetadata metadata,
-                                          final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
+                                          final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                           final SpreadsheetEngine engine,
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetStoreRepository storeRepository,
@@ -173,15 +172,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         try {
             result = expression.toValue(
-                    ExpressionEvaluationContexts.basic(
-                            BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext.with(
-                                    cell,
-                                    this.storeRepository.cells(),
-                                    this.serverUrl,
-                                    metadata,
-                                    this.functions,
-                                    this.function
-                            )
+                    BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext.with(
+                            cell,
+                            this.storeRepository.cells(),
+                            this.serverUrl,
+                            metadata,
+                            this.functions,
+                            this.function
                     )
             );
         } catch (final RuntimeException exception) {
@@ -196,7 +193,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Handles dispatching of functions.
      */
-    private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions;
+    private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions;
 
     private final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction function;
 
