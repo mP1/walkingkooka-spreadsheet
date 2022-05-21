@@ -161,8 +161,13 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext 
     @Override
     public Object evaluate(final FunctionExpressionName name,
                            final List<Object> parameters) {
-        return this.function(name)
-                .apply(parameters, this);
+        final ExpressionFunction<?, ExpressionEvaluationContext> function = this.function(name);
+
+        return function
+                .apply(
+                        this.prepareParameters(function, parameters),
+                        this
+                );
     }
 
     @Override
