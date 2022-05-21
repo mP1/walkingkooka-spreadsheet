@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.function;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.tree.expression.function.ExpressionFunctionContextTesting;
+import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
 
 import java.util.Optional;
 
-public interface SpreadsheetExpressionFunctionContextTesting<C extends SpreadsheetExpressionFunctionContext> extends ExpressionFunctionContextTesting<C> {
+public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C> {
 
     default void loadCellAndCheck(final C context,
                                   final SpreadsheetCellReference cellReference,

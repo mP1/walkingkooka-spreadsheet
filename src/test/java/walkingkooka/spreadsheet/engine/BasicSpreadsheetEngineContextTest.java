@@ -37,7 +37,7 @@ import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContext;
+import walkingkooka.spreadsheet.function.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -52,12 +52,12 @@ import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.ValueExpression;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 import walkingkooka.tree.expression.function.ExpressionFunctionKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
@@ -784,16 +784,16 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private final static String TEST_CONTEXT_SPREADSHEET_METADATA = "test-context-spreadsheet-metadata";
 
-    private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions() {
+    private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions() {
         return (n) -> {
             switch (n.value()) {
                 case "xyz":
                     return Cast.to(
-                            new FakeExpressionFunction<Object, SpreadsheetExpressionFunctionContext>() {
+                            new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
 
                                 @Override
                                 public Object apply(final List<Object> parameters,
-                                                    final SpreadsheetExpressionFunctionContext context) {
+                                                    final SpreadsheetExpressionEvaluationContext context) {
                                     return parameters.stream()
                                             .mapToLong(p -> context.convertOrFail(p, Long.class))
                                             .sum();
@@ -821,10 +821,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     );
                 case TEST_CONTEXT_LOADCELL:
                     return Cast.to(
-                            new FakeExpressionFunction<Object, SpreadsheetExpressionFunctionContext>() {
+                            new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
                                 @Override
                                 public Object apply(final List<Object> parameters,
-                                                    final SpreadsheetExpressionFunctionContext context) {
+                                                    final SpreadsheetExpressionEvaluationContext context) {
                                     return context.loadCell(
                                                     (SpreadsheetCellReference) parameters.get(0)
                                             ).get()
@@ -855,10 +855,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     );
                 case TEST_CONTEXT_SERVER_URL:
                     return Cast.to(
-                            new FakeExpressionFunction<Object, SpreadsheetExpressionFunctionContext>() {
+                            new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
                                 @Override
                                 public Object apply(final List<Object> parameters,
-                                                    final SpreadsheetExpressionFunctionContext context) {
+                                                    final SpreadsheetExpressionEvaluationContext context) {
                                     return context.serverUrl();
                                 }
 
@@ -882,10 +882,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     );
                 case TEST_CONTEXT_SPREADSHEET_METADATA:
                     return Cast.to(
-                            new FakeExpressionFunction<Object, SpreadsheetExpressionFunctionContext>() {
+                            new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
                                 @Override
                                 public Object apply(final List<Object> parameters,
-                                                    final SpreadsheetExpressionFunctionContext context) {
+                                                    final SpreadsheetExpressionEvaluationContext context) {
                                     return context.spreadsheetMetadata();
                                 }
 

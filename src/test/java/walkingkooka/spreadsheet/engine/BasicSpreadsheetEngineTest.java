@@ -44,7 +44,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
-import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContexts;
+import walkingkooka.spreadsheet.function.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -87,6 +87,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
@@ -96,8 +97,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionContext;
-import walkingkooka.tree.expression.function.ExpressionFunctionContexts;
 import walkingkooka.tree.expression.function.ExpressionFunctionKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
@@ -9114,12 +9113,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                    final Optional<SpreadsheetCell> cell) {
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
-                                this.functionContext()
+                                this.metadata().expressionNumberKind(),
+                                this.functions(),
+                                SpreadsheetErrorKind::translate,
+                                this.references(),
+                                SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
+                                CaseSensitivity.INSENSITIVE,
+                                this.converterContext()
                         )
                 );
             }
 
-            private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions() {
+            private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions() {
                 return (name) -> {
                     checkEquals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value(), "InvalidCellReference");
                     switch (name.value()) {
@@ -9127,7 +9132,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             return new FakeExpressionFunction<>() {
                                 @Override
                                 public Object apply(final List<Object> parameters,
-                                                    final ExpressionFunctionContext context) {
+                                                    final ExpressionEvaluationContext context) {
                                     final String reference = Cast.to(parameters.get(0));
 
                                     throw new ExpressionEvaluationReferenceException(
@@ -9155,7 +9160,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             return new FakeExpressionFunction<>() {
                                 @Override
                                 public Object apply(final List<Object> parameters,
-                                                    final ExpressionFunctionContext context) {
+                                                    final ExpressionEvaluationContext context) {
                                     return parameters.stream()
                                             .map(ExpressionNumber.class::cast)
                                             .reduce(context.expressionNumberKind().zero(), (l, r) -> l.add(r, context));
@@ -9180,7 +9185,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             return new FakeExpressionFunction<>() {
                                 @Override
                                 public Object apply(final List<Object> parameters,
-                                                    final ExpressionFunctionContext context) {
+                                                    final ExpressionEvaluationContext context) {
                                     return BasicSpreadsheetEngineTest.this.counter;
                                 }
 
@@ -9201,18 +9206,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             throw new UnknownExpressionFunctionException(name);
                     }
                 };
-            }
-
-            private ExpressionFunctionContext functionContext() {
-                return ExpressionFunctionContexts.basic(
-                        this.metadata().expressionNumberKind(),
-                        this.functions(),
-                        SpreadsheetErrorKind::translate,
-                        this.references(),
-                        SpreadsheetExpressionFunctionContexts.referenceNotFound(),
-                        CaseSensitivity.INSENSITIVE,
-                        this.converterContext()
-                );
             }
 
             private Function<ExpressionReference, Optional<Object>> references() {

@@ -21,11 +21,11 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.tree.expression.function.FakeExpressionFunctionContext;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import java.util.Optional;
 
-public class FakeSpreadsheetExpressionFunctionContext extends FakeExpressionFunctionContext implements SpreadsheetExpressionFunctionContext {
+public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
     @Override
     public Optional<SpreadsheetCell> cell() {
         throw new UnsupportedOperationException();

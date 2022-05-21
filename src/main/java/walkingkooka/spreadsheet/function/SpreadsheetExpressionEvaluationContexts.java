@@ -26,13 +26,13 @@ import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.function.Function;
 
-public final class SpreadsheetExpressionFunctionContexts implements PublicStaticHelper {
+public final class SpreadsheetExpressionEvaluationContexts implements PublicStaticHelper {
 
     /**
-     * {@see FakeSpreadsheetExpressionFunctionContext}
+     * {@see FakeSpreadsheetExpressionEvaluationContext}
      */
-    public static FakeSpreadsheetExpressionFunctionContext fake() {
-        return new FakeSpreadsheetExpressionFunctionContext();
+    public static FakeSpreadsheetExpressionEvaluationContext fake() {
+        return new FakeSpreadsheetExpressionEvaluationContext();
     }
 
     /**
@@ -58,7 +58,7 @@ public final class SpreadsheetExpressionFunctionContexts implements PublicStatic
     /**
      * Stop creation
      */
-    private SpreadsheetExpressionFunctionContexts() {
+    private SpreadsheetExpressionEvaluationContexts() {
         throw new UnsupportedOperationException();
     }
 }

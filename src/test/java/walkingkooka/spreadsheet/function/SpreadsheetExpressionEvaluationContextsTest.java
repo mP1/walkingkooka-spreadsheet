@@ -31,8 +31,8 @@ import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetExpressionFunctionContextsTest implements ClassTesting2<SpreadsheetExpressionFunctionContexts>,
-        PublicStaticHelperTesting<SpreadsheetExpressionFunctionContexts> {
+public final class SpreadsheetExpressionEvaluationContextsTest implements ClassTesting2<SpreadsheetExpressionEvaluationContexts>,
+        PublicStaticHelperTesting<SpreadsheetExpressionEvaluationContexts> {
 
     @Test
     public void testPublicStaticMethodsWithoutMathContextParameter() {
@@ -81,7 +81,7 @@ public final class SpreadsheetExpressionFunctionContextsTest implements ClassTes
     private void referenceNotFoundAndCheck(final ExpressionReference reference,
                                            final String expected) {
         final SpreadsheetExpressionEvaluationReferenceException created = (SpreadsheetExpressionEvaluationReferenceException)
-                SpreadsheetExpressionFunctionContexts.referenceNotFound()
+                SpreadsheetExpressionEvaluationContexts.referenceNotFound()
                         .apply(reference);
 
         this.checkEquals(
@@ -100,8 +100,8 @@ public final class SpreadsheetExpressionFunctionContextsTest implements ClassTes
     // ClassTesting2....................................................................................................
 
     @Override
-    public Class<SpreadsheetExpressionFunctionContexts> type() {
-        return SpreadsheetExpressionFunctionContexts.class;
+    public Class<SpreadsheetExpressionEvaluationContexts> type() {
+        return SpreadsheetExpressionEvaluationContexts.class;
     }
 
     @Override

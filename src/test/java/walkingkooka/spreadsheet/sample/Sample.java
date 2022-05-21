@@ -38,7 +38,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContexts;
+import walkingkooka.spreadsheet.function.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -61,13 +61,12 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionContext;
-import walkingkooka.tree.expression.function.ExpressionFunctionContexts;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -197,29 +196,23 @@ public final class Sample {
                                    final Optional<SpreadsheetCell> cell) {
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
-                                this.functionContext()
+                                EXPRESSION_NUMBER_KIND,
+                                this.functions(),
+                                (r) -> {
+                                    throw new UnsupportedOperationException();
+                                },
+                                this.references(),
+                                SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
+                                CaseSensitivity.INSENSITIVE,
+                                metadata.converterContext()
                         )
                 );
             }
 
-            private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions() {
+            private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions() {
                 return (n) -> {
                     throw new UnsupportedOperationException("unsupported function " + n);
                 };
-            }
-
-            private ExpressionFunctionContext functionContext() {
-                return ExpressionFunctionContexts.basic(
-                        EXPRESSION_NUMBER_KIND,
-                        this.functions(),
-                        (r) -> {
-                            throw new UnsupportedOperationException();
-                        },
-                        this.references(),
-                        SpreadsheetExpressionFunctionContexts.referenceNotFound(),
-                        CaseSensitivity.INSENSITIVE,
-                        metadata.converterContext()
-                );
             }
 
             private Function<ExpressionReference, Optional<Object>> references() {

@@ -27,7 +27,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.math.MathContext;
@@ -86,7 +85,7 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
         return new FakeExpressionEvaluationContext() {
 
             @Override
-            public ExpressionFunction<?, ExpressionFunctionContext> function(final FunctionExpressionName name) {
+            public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
                 throw new UnknownExpressionFunctionException(name);
             }
 

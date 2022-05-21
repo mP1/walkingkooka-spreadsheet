@@ -22,16 +22,17 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContext;
+import walkingkooka.spreadsheet.function.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.math.MathContext;
@@ -41,17 +42,17 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
-final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext implements SpreadsheetExpressionFunctionContext {
+final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
 
-    static BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext with(final Optional<SpreadsheetCell> cell,
-                                                                                  final SpreadsheetCellStore cellStore,
-                                                                                  final AbsoluteUrl serverUrl,
-                                                                                  final SpreadsheetMetadata spreadsheetMetadata,
-                                                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
-                                                                                  final Function<ExpressionReference, Optional<Object>> references) {
+    static BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
+                                                                                    final SpreadsheetCellStore cellStore,
+                                                                                    final AbsoluteUrl serverUrl,
+                                                                                    final SpreadsheetMetadata spreadsheetMetadata,
+                                                                                    final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                                                                                    final Function<ExpressionReference, Optional<Object>> references) {
         Objects.requireNonNull(cell, "cell");
 
-        return new BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext(
+        return new BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext(
                 cell,
                 cellStore,
                 serverUrl,
@@ -61,12 +62,12 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
         );
     }
 
-    private BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext(final Optional<SpreadsheetCell> cell,
-                                                                              final SpreadsheetCellStore cellStore,
-                                                                              final AbsoluteUrl serverUrl,
-                                                                              final SpreadsheetMetadata spreadsheetMetadata,
-                                                                              final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
-                                                                              final Function<ExpressionReference, Optional<Object>> references) {
+    private BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                final SpreadsheetCellStore cellStore,
+                                                                                final AbsoluteUrl serverUrl,
+                                                                                final SpreadsheetMetadata spreadsheetMetadata,
+                                                                                final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                                                                                final Function<ExpressionReference, Optional<Object>> references) {
         super();
         this.cell = cell;
         this.cellStore = cellStore;
@@ -76,7 +77,7 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
         this.references = references;
     }
 
-    // SpreadsheetExpressionFunctionContext............................................................................
+    // SpreadsheetExpressionEvaluationContext............................................................................
 
     @Override
     public Optional<SpreadsheetCell> cell() {
@@ -124,14 +125,32 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext im
 
     private final AbsoluteUrl serverUrl;
 
-    // ExpressionFunctionContext........................................................................................
+    // ExpressionEvaluationContext........................................................................................
 
     @Override
-    public ExpressionFunction<?, ExpressionFunctionContext> function(final FunctionExpressionName name) {
+    public Object evaluate(final Expression expression) {
+        Object result;
+
+        try {
+            result = expression.toValue(this);
+        } catch (final RuntimeException exception) {
+            result = this.handleException(exception);
+        }
+
+        return result;
+    }
+
+    @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
         return this.functions.apply(name);
     }
 
-    private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions;
+    @Override
+    public boolean isPure(final FunctionExpressionName name) {
+        return this.function(name).isPure(this);
+    }
+
+    private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions;
 
     @Override
     public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,

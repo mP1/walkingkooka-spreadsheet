@@ -21,15 +21,15 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 
 import java.util.Optional;
 
 /**
- * Enhances {@link ExpressionFunctionContext} adding a few extra methods required by a spreadsheet during
+ * Enhances {@link ExpressionEvaluationContext} adding a few extra methods required by a spreadsheet during
  * function execution.
  */
-public interface SpreadsheetExpressionFunctionContext extends ExpressionFunctionContext {
+public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext {
 
     /**
      * Returns the current cell that owns the expression or formula being executed.

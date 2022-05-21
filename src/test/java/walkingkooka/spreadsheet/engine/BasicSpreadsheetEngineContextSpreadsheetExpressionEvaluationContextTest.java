@@ -25,7 +25,7 @@ import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.function.SpreadsheetExpressionFunctionContextTesting;
+import walkingkooka.spreadsheet.function.SpreadsheetExpressionEvaluationContextTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -38,7 +38,7 @@ import java.math.MathContext;
 import java.util.Locale;
 import java.util.Optional;
 
-public final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContextTest implements SpreadsheetExpressionFunctionContextTesting<BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext> {
+public final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext> {
 
     private final static SpreadsheetCellReference CELL_REFERENCE = SpreadsheetSelection.parseCell("B2");
 
@@ -76,7 +76,7 @@ public final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionCon
         );
     }
 
-    // ExpressionFunctionContextTesting................................................................................
+    // ExpressionEvaluationContextTesting................................................................................
 
     @Override
     public void testFunctionNullFunctionNameFails() {
@@ -155,17 +155,17 @@ public final class BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionCon
     // ClassTesting......................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext> type() {
-        return BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext.class;
+    public Class<BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext> type() {
+        return BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext.class;
     }
 
     @Override
-    public BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext createContext() {
+    public BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext createContext() {
         return this.createContext(SpreadsheetCellStores.fake());
     }
 
-    public BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext createContext(final SpreadsheetCellStore cellStore) {
-        return BasicSpreadsheetEngineContextSpreadsheetExpressionFunctionContext.with(
+    public BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetCellStore cellStore) {
+        return BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext.with(
                 CELL,
                 cellStore,
                 SERVER_URL,
