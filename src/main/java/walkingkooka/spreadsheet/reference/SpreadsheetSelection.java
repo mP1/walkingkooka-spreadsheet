@@ -246,7 +246,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     /**
      * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}, and if the
-     * parse result is a label uses the provided function to resolve the label into a {@link SpreadsheetCellReference}.
+     * parse result is a label uses the provided expression to resolve the label into a {@link SpreadsheetCellReference}.
      */
     public static SpreadsheetCellReference parseCellOrLabelResolvingLabels(final String text,
                                                                            final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell) {

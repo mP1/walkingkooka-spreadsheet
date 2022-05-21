@@ -17,7 +17,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
+import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;

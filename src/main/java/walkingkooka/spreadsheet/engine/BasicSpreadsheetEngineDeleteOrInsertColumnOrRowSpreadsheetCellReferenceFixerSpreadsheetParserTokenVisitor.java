@@ -101,8 +101,8 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
     private boolean invalidCellReference = false;
 
     /**
-     * Returns a function that when executed will report that the original cell reference was deleted.
-     * The replaced token will appear to be invocation of a function with the reference in quotes.
+     * Returns a expression that when executed will report that the original cell reference was deleted.
+     * The replaced token will appear to be invocation of a expression with the reference in quotes.
      */
     private SpreadsheetParserToken cellReferenceDeleted(final SpreadsheetParserToken token) {
         final String text = token.text();

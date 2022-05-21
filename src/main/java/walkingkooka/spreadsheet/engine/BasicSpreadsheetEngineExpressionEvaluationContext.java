@@ -42,7 +42,7 @@ import java.util.function.Function;
  * A {@link ExpressionEvaluationContext} used exclusively by {@link BasicSpreadsheetEngine#parseFormulaIfNecessary(SpreadsheetCell, Function, SpreadsheetEngineContext)}
  * which uses this to convert a {@link walkingkooka.spreadsheet.parser.SpreadsheetParserToken#toExpression(ExpressionEvaluationContext)}.
  * <br>
- * None of the function or evaluation type methods should be called and all throw {@link UnsupportedOperationException}.
+ * None of the expression or evaluation type methods should be called and all throw {@link UnsupportedOperationException}.
  */
 final class BasicSpreadsheetEngineExpressionEvaluationContext implements ExpressionEvaluationContext {
 

@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.function;
+package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
@@ -28,7 +28,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
- * The {@link Name} of a function.
+ * The {@link Name} of a expression.
  */
 final public class SpreadsheetFunctionName implements Name, Comparable<SpreadsheetFunctionName> {
 
@@ -37,7 +37,7 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
     private final static CharPredicate PART = INITIAL.or(CharPredicates.range('0', '9').or(CharPredicates.is('.')));
 
     /**
-     * The maximum valid length of a function name.
+     * The maximum valid length of a expression name.
      */
     public final static int MAX_LENGTH = 255;
 

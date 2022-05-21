@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.function;
+package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -27,7 +27,7 @@ import java.util.Optional;
 
 /**
  * Enhances {@link ExpressionEvaluationContext} adding a few extra methods required by a spreadsheet during
- * function execution.
+ * expression execution.
  */
 public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext {
 

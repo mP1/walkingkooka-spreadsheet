@@ -161,7 +161,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     /**
      * Attempts to parse the formula if necessary and then update cell references that may have shifted due to a
-     * delete or insert. Note that references to deleted cells, will be replaced by a function that when executed
+     * delete or insert. Note that references to deleted cells, will be replaced by a expression that when executed
      * reports an error that the cell was deleted.
      */
     private SpreadsheetParserToken fixCellReferencesWithinExpression(final SpreadsheetParserToken token) {
@@ -173,13 +173,13 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     /**
      * Handles a column {@link SpreadsheetColumnReferenceParserToken} within an expression.
-     * It may be returned unmodified, replaced by a function if the reference was deleted or simply have the reference adjusted.
+     * It may be returned unmodified, replaced by a expression if the reference was deleted or simply have the reference adjusted.
      */
     abstract Optional<SpreadsheetColumnReferenceParserToken> fixCellReferencesWithinExpression(final SpreadsheetColumnReferenceParserToken token);
 
     /**
      * Handles a column {@link SpreadsheetRowReferenceParserToken} within an expression.
-     * It may be returned unmodified, replaced by a function if the reference was deleted or simply have the reference adjusted.
+     * It may be returned unmodified, replaced by a expression if the reference was deleted or simply have the reference adjusted.
      */
     abstract Optional<SpreadsheetRowReferenceParserToken> fixCellReferencesWithinExpression(final SpreadsheetRowReferenceParserToken token);
 
