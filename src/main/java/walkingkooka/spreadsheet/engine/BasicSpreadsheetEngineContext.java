@@ -141,7 +141,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     public SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
-        return BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor.lookup(reference, this.storeRepository().labels());
+        return BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor.resolveCellReference(
+                reference,
+                this.storeRepository()
+                        .labels()
+        );
     }
 
     // parsing formula and executing.....................................................................................

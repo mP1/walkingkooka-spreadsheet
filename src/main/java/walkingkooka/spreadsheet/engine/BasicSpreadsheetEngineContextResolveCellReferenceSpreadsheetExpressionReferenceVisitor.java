@@ -27,17 +27,17 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 /**
  * A {@link SpreadsheetExpressionReferenceVisitor} that resolves an {@link SpreadsheetExpressionReference} to a {@link SpreadsheetCellReference}.
  */
-final class BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
+final class BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
 
-    static SpreadsheetCellReference lookup(final SpreadsheetExpressionReference reference,
-                                           final SpreadsheetLabelStore store) {
-        final BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor visitor = new BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor(store);
+    static SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference,
+                                                         final SpreadsheetLabelStore store) {
+        final BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor visitor = new BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor(store);
         visitor.accept(reference);
         return visitor.result;
     }
 
     // @VisibleForTesting
-    BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor(final SpreadsheetLabelStore store) {
+    BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor(final SpreadsheetLabelStore store) {
         super();
         this.store = store;
     }
