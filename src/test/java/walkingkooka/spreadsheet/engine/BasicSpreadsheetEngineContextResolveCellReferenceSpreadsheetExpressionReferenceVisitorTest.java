@@ -20,15 +20,15 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
 
-public final class BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitorTest implements SpreadsheetExpressionReferenceVisitorTesting<BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor> {
+public final class BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitorTest implements SpreadsheetExpressionReferenceVisitorTesting<BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor> {
     @Override
-    public BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor(null);
+    public BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor createVisitor() {
+        return new BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor(null);
     }
 
     @Override
-    public Class<BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor> type() {
-        return BasicSpreadsheetEngineContextLookupSpreadsheetExpressionReferenceVisitor.class;
+    public Class<BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor> type() {
+        return BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor.class;
     }
 
     @Override
