@@ -18,15 +18,42 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public final class SpreadsheetExpressionEvaluationContexts implements PublicStaticHelper {
+
+    /**
+     * {@see BasicSpreadsheetExpressionEvaluationContext}
+     */
+    public static SpreadsheetExpressionEvaluationContext basic(final Optional<SpreadsheetCell> cell,
+                                                               final SpreadsheetCellStore cellStore,
+                                                               final AbsoluteUrl serverUrl,
+                                                               final SpreadsheetMetadata spreadsheetMetadata,
+                                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                                                               final Function<ExpressionReference, Optional<Object>> references) {
+        return BasicSpreadsheetExpressionEvaluationContext.with(
+                cell,
+                cellStore,
+                serverUrl,
+                spreadsheetMetadata,
+                functions,
+                references
+        );
+    }
 
     /**
      * {@see FakeSpreadsheetExpressionEvaluationContext}

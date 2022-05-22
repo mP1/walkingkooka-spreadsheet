@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.math.DecimalNumberContext;
@@ -24,7 +24,6 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContextTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -32,13 +31,22 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.math.MathContext;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
-public final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext> {
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public final class BasicSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<BasicSpreadsheetExpressionEvaluationContext> {
 
     private final static SpreadsheetCellReference CELL_REFERENCE = SpreadsheetSelection.parseCell("B2");
 
@@ -46,7 +54,115 @@ public final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationC
             CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2"))
     );
 
+    private final static SpreadsheetCellStore CELL_STORE = SpreadsheetCellStores.fake();
+
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://example.com");
+
+    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY;
+
+    private final static Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> FUNCTIONS = (n) -> {
+        Objects.requireNonNull(n, "name");
+        throw new UnknownExpressionFunctionException(n);
+    };
+
+    private final static Function<ExpressionReference, Optional<Object>> REFERENCES = (r) -> {
+        throw new UnsupportedOperationException();
+    };
+
+    // with.............................................................................................................
+
+    @Test
+    public void testWithNullCellFails() {
+        this.withFails(
+                null,
+                CELL_STORE,
+                SERVER_URL,
+                METADATA,
+                FUNCTIONS,
+                REFERENCES
+        );
+    }
+
+    @Test
+    public void testWithNullCellStoreFails() {
+        this.withFails(
+                CELL,
+                null,
+                SERVER_URL,
+                METADATA,
+                FUNCTIONS,
+                REFERENCES
+        );
+    }
+
+    @Test
+    public void testWithNullServerUrlFails() {
+        this.withFails(
+                CELL,
+                CELL_STORE,
+                null,
+                METADATA,
+                FUNCTIONS,
+                REFERENCES
+        );
+    }
+
+    @Test
+    public void testWithNullMetadataFails() {
+        this.withFails(
+                CELL,
+                CELL_STORE,
+                SERVER_URL,
+                null,
+                FUNCTIONS,
+                REFERENCES
+        );
+    }
+
+    @Test
+    public void testWithNullFunctionsFails() {
+        this.withFails(
+                CELL,
+                CELL_STORE,
+                SERVER_URL,
+                METADATA,
+                null,
+                REFERENCES
+        );
+    }
+
+    @Test
+    public void testWithNullReferencesFails() {
+        this.withFails(
+                CELL,
+                CELL_STORE,
+                SERVER_URL,
+                METADATA,
+                FUNCTIONS,
+                null
+        );
+    }
+
+    private void withFails(final Optional<SpreadsheetCell> cell,
+                           final SpreadsheetCellStore cellStore,
+                           final AbsoluteUrl serverUrl,
+                           final SpreadsheetMetadata spreadsheetMetadata,
+                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                           final Function<ExpressionReference, Optional<Object>> references) {
+        assertThrows(
+                NullPointerException.class,
+                () -> {
+                    BasicSpreadsheetExpressionEvaluationContext.with(
+                            cell,
+                            cellStore,
+                            serverUrl,
+                            spreadsheetMetadata,
+                            functions,
+                            references
+                    );
+                }
+        );
+    }
 
     // loadCell.........................................................................................................
 
@@ -77,6 +193,11 @@ public final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationC
     }
 
     // ExpressionEvaluationContextTesting................................................................................
+
+    @Override
+    public void testEvaluateExpressionUnknownFunctionNameFails() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public void testFunctionNullFunctionNameFails() {
@@ -155,17 +276,17 @@ public final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationC
     // ClassTesting......................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext> type() {
-        return BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext.class;
+    public Class<BasicSpreadsheetExpressionEvaluationContext> type() {
+        return BasicSpreadsheetExpressionEvaluationContext.class;
     }
 
     @Override
-    public BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext createContext() {
-        return this.createContext(SpreadsheetCellStores.fake());
+    public BasicSpreadsheetExpressionEvaluationContext createContext() {
+        return this.createContext(CELL_STORE);
     }
 
-    public BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetCellStore cellStore) {
-        return BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext.with(
+    public BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetCellStore cellStore) {
+        return BasicSpreadsheetExpressionEvaluationContext.with(
                 CELL,
                 cellStore,
                 SERVER_URL,
@@ -178,12 +299,8 @@ public final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationC
                         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
                         .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@"))
                         .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20),
-                (n) -> {
-                    throw new UnsupportedOperationException();
-                },
-                (r) -> {
-                    throw new UnsupportedOperationException();
-                }
+                FUNCTIONS,
+                REFERENCES
         );
     }
 }
