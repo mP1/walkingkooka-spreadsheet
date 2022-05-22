@@ -23,6 +23,7 @@ import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
@@ -176,7 +177,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         try {
             result = expression.toValue(
-                    BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext.with(
+                    SpreadsheetExpressionEvaluationContexts.basic(
                             cell,
                             this.storeRepository.cells(),
                             this.serverUrl,

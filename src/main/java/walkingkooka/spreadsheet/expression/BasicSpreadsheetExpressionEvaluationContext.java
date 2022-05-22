@@ -15,14 +15,13 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Either;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -42,17 +41,22 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
-final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
+final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
 
-    static BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
-                                                                                    final SpreadsheetCellStore cellStore,
-                                                                                    final AbsoluteUrl serverUrl,
-                                                                                    final SpreadsheetMetadata spreadsheetMetadata,
-                                                                                    final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
-                                                                                    final Function<ExpressionReference, Optional<Object>> references) {
+    static BasicSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
+                                                            final SpreadsheetCellStore cellStore,
+                                                            final AbsoluteUrl serverUrl,
+                                                            final SpreadsheetMetadata spreadsheetMetadata,
+                                                            final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                                                            final Function<ExpressionReference, Optional<Object>> references) {
         Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(cellStore, "cellStore");
+        Objects.requireNonNull(serverUrl, "serverUrl");
+        Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+        Objects.requireNonNull(functions, "functions");
+        Objects.requireNonNull(references, "references");
 
-        return new BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext(
+        return new BasicSpreadsheetExpressionEvaluationContext(
                 cell,
                 cellStore,
                 serverUrl,
@@ -62,12 +66,12 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext 
         );
     }
 
-    private BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
-                                                                                final SpreadsheetCellStore cellStore,
-                                                                                final AbsoluteUrl serverUrl,
-                                                                                final SpreadsheetMetadata spreadsheetMetadata,
-                                                                                final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
-                                                                                final Function<ExpressionReference, Optional<Object>> references) {
+    private BasicSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                        final SpreadsheetCellStore cellStore,
+                                                        final AbsoluteUrl serverUrl,
+                                                        final SpreadsheetMetadata spreadsheetMetadata,
+                                                        final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                                                        final Function<ExpressionReference, Optional<Object>> references) {
         super();
         this.cell = cell;
         this.cellStore = cellStore;
@@ -134,6 +138,8 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext 
 
     @Override
     public Object evaluate(final Expression expression) {
+        Objects.requireNonNull(expression, "expression");
+
         Object result;
 
         try {
