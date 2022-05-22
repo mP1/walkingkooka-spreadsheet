@@ -128,6 +128,11 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext 
     // ExpressionEvaluationContext........................................................................................
 
     @Override
+    public CaseSensitivity caseSensitivity() {
+        return CaseSensitivity.INSENSITIVE;
+    }
+
+    @Override
     public Object evaluate(final Expression expression) {
         Object result;
 
@@ -182,10 +187,7 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext 
 
     private final Function<ExpressionReference, Optional<Object>> references;
 
-    @Override
-    public CaseSensitivity caseSensitivity() {
-        return CaseSensitivity.INSENSITIVE;
-    }
+    // Convert..........................................................................................................
 
     @Override
     public boolean canConvert(final Object value,
@@ -200,6 +202,8 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext 
         return this.converterContext()
                 .convert(value, type);
     }
+
+    // DateTimeContext.................................................................................................
 
     @Override
     public List<String> ampms() {
@@ -270,6 +274,12 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext 
     }
 
     @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        return this.spreadsheetMetadata()
+                .expressionNumberKind();
+    }
+
+    @Override
     public char groupingSeparator() {
         return this.converterContext()
                 .groupingSeparator();
@@ -310,11 +320,7 @@ final class BasicSpreadsheetEngineContextSpreadsheetExpressionEvaluationContext 
                 .converterContext();
     }
 
-    @Override
-    public ExpressionNumberKind expressionNumberKind() {
-        return this.spreadsheetMetadata()
-                .expressionNumberKind();
-    }
+    // Object...........................................................................................................
 
     @Override
     public String toString() {
