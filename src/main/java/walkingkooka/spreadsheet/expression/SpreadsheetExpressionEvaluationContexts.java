@@ -18,6 +18,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.convert.Converter;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -60,6 +61,17 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
      */
     public static FakeSpreadsheetExpressionEvaluationContext fake() {
         return new FakeSpreadsheetExpressionEvaluationContext();
+    }
+
+    /**
+     * {@see FunctionParameterConverterSpreadsheetExpressionEvaluationContext}
+     */
+    public static SpreadsheetExpressionEvaluationContext functionParameterConverter(final Converter<SpreadsheetExpressionEvaluationContext> converter,
+                                                                                    final SpreadsheetExpressionEvaluationContext context) {
+        return FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
+                converter,
+                context
+        );
     }
 
     /**
