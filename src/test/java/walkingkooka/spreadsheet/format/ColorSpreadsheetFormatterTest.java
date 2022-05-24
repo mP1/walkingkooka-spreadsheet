@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
@@ -245,8 +244,14 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
         @Override
         public <T> Either<T, String> convert(final Object value, final Class<T> target) {
             return this.canConvert(value, target) ?
-                    Either.left(Cast.to(value.toString())) :
-                    this.failConversion(value, target);
+                    this.successfulConversion(
+                            value.toString(),
+                            target
+                    ) :
+                    this.failConversion(
+                            value,
+                            target
+                    );
         }
     }
 
