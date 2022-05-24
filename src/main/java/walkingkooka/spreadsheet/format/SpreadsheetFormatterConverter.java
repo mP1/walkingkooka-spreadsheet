@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.text.CharSequences;
@@ -50,7 +49,12 @@ final class SpreadsheetFormatterConverter implements Converter<ExpressionNumberC
                                          final Class<T> targetType,
                                          final ExpressionNumberConverterContext context) {
         return this.formatter.format(value, SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context))
-                .map(t -> Either.<T, String>left(Cast.to(t.text())))
+                .map(
+                        t -> this.successfulConversion(
+                                t.text(),
+                                targetType
+                        )
+                )
                 .orElse(Either.<T, String>right("Unable to convert " + CharSequences.quoteIfChars(value) + " to " + targetType.getName()));
     }
 

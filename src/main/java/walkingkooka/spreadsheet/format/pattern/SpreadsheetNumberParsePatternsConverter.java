@@ -121,7 +121,10 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter<Express
                         context
                 ).mapRight(old -> save.textBetween().toString()) :
                 ExpressionNumber.isClass(targetType) ?
-                        Either.left((T) number) :
+                        this.successfulConversion(
+                                number,
+                                targetType
+                        ) :
                         failConversion(save.textBetween().toString(), targetType);
     }
 
