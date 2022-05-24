@@ -417,18 +417,28 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
             @Override
             public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                 if (target.isInstance(value)) {
-                    return Either.left(target.cast(value));
+                    return this.successfulConversion(
+                            target.cast(value),
+                            target
+                    );
                 }
                 if (value instanceof Long && Number.class.isAssignableFrom(target)) {
                     return Converters.numberNumber().convert(value, target, this.converterContext());
                 }
                 if (value instanceof BigDecimal && String.class == target) {
-                    return Either.left(target.cast(new DecimalFormat("000.000").format(value)));
+                    return this.successfulConversion(
+                            target.cast(
+                                    new DecimalFormat("000.000").format(value)
+                            ),
+                            target
+                    );
                 }
                 return Converters.localDateTimeNumber(Converters.EXCEL_1900_DATE_SYSTEM_OFFSET)
-                        .convert(value,
+                        .convert(
+                                value,
                                 target,
-                                this.converterContext());
+                                this.converterContext()
+                        );
             }
 
             private ConverterContext converterContext() {

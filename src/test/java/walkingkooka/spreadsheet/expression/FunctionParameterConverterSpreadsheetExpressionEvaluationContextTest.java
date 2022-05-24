@@ -473,11 +473,10 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
                                                          final Class<T> type,
                                                          final SpreadsheetExpressionEvaluationContext context) {
                         if(this.canConvert(value, type, context)) {
-                            if(type == String.class) {
-                                return Cast.to(
-                                        Either.left(
-                                                "!!!" + value
-                                        )
+                            if (type == String.class) {
+                                return this.successfulConversion(
+                                        "!!!" + value,
+                                        type
                                 );
                             }
                         }

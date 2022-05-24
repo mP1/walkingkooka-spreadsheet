@@ -113,10 +113,16 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
             public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                 if (BigDecimal.class == target) {
                     if (value instanceof BigDecimal) {
-                        return Either.left(target.cast(value));
+                        return this.successfulConversion(
+                                target.cast(value),
+                                target
+                        );
                     }
                     if (value instanceof LocalDateTime) {
-                        return Either.left(target.cast(LOCAL_DATE_TIME_BIGDECIMAL));
+                        return this.successfulConversion(
+                                target.cast(LOCAL_DATE_TIME_BIGDECIMAL),
+                                target
+                        );
                     }
                 }
                 return Either.right("Failed to convert " + CharSequences.quoteIfChars(value) + " to " + target.getName());

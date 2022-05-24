@@ -134,7 +134,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                                 return Converters.localDateLocalDateTime().convert(value, target, ConverterContexts.fake());
                             }
                             if (value instanceof LocalDateTime) {
-                                return Either.left(Cast.to(value));
+                                return this.successfulConversion(
+                                        value,
+                                        target
+                                );
                             }
                             if (value instanceof LocalTime) {
                                 return Converters.localTimeLocalDateTime().convert(value, target, ConverterContexts.fake());

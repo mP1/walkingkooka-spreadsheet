@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
@@ -318,8 +317,14 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
             @Override
             public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                 return this.canConvert(value, target) ?
-                        Either.left(Cast.to(value.toString())) :
-                        this.failConversion(value, target);
+                        this.successfulConversion(
+                                value.toString(),
+                                target
+                        ) :
+                        this.failConversion(
+                                value,
+                                target
+                        );
             }
 
             @Override
