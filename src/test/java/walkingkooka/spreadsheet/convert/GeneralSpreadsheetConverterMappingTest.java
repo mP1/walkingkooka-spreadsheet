@@ -24,21 +24,21 @@ import walkingkooka.convert.Converters;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.TypeNameTesting;
 
-public final class SpreadsheetConverterMappingTest extends SpreadsheetConverterTestCase<SpreadsheetConverterMapping<?>>
-        implements ClassTesting2<SpreadsheetConverterMapping<?>>,
-        ToStringTesting<SpreadsheetConverterMapping<?>>,
-        TypeNameTesting<SpreadsheetConverterMapping<?>> {
+public final class GeneralSpreadsheetConverterMappingTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterMapping<?>>
+        implements ClassTesting2<GeneralSpreadsheetConverterMapping<?>>,
+        ToStringTesting<GeneralSpreadsheetConverterMapping<?>>,
+        TypeNameTesting<GeneralSpreadsheetConverterMapping<?>> {
 
     @Test
     public void testToString2() {
-        final SpreadsheetConverterMapping<?> mapping = SpreadsheetConverterMapping.with(
-                Converters.fake().setToString("Boolean1" ),
-                Converters.fake().setToString("Date2" ),
-                Converters.fake().setToString("DateTime3" ),
-                Converters.fake().setToString("Number4" ),
-                Converters.fake().setToString("Selection5" ),
-                Converters.fake().setToString("String6" ),
-                Converters.fake().setToString("Time7" )
+        final GeneralSpreadsheetConverterMapping<?> mapping = GeneralSpreadsheetConverterMapping.with(
+                Converters.fake().setToString("Boolean1"),
+                Converters.fake().setToString("Date2"),
+                Converters.fake().setToString("DateTime3"),
+                Converters.fake().setToString("Number4"),
+                Converters.fake().setToString("Selection5"),
+                Converters.fake().setToString("String6"),
+                Converters.fake().setToString("Time7")
         );
 
         this.toStringAndCheck(
@@ -50,8 +50,8 @@ public final class SpreadsheetConverterMappingTest extends SpreadsheetConverterT
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterMapping<?>> type() {
-        return Cast.to(SpreadsheetConverterMapping.class);
+    public Class<GeneralSpreadsheetConverterMapping<?>> type() {
+        return Cast.to(GeneralSpreadsheetConverterMapping.class);
     }
 
     // TypeNameTesting..................................................................................................

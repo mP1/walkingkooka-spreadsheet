@@ -25,8 +25,8 @@ import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetConverterSpreadsheetValueVisitorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetValueVisitor<ConverterContext>>
-        implements SpreadsheetValueVisitorTesting<SpreadsheetConverterSpreadsheetValueVisitor<ConverterContext>> {
+public final class GeneralSpreadsheetConverterSpreadsheetValueVisitorTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterSpreadsheetValueVisitor<ConverterContext>>
+        implements SpreadsheetValueVisitorTesting<GeneralSpreadsheetConverterSpreadsheetValueVisitor<ConverterContext>> {
 
     @Override
     public void testAllConstructorsVisibility() {
@@ -51,14 +51,14 @@ public final class SpreadsheetConverterSpreadsheetValueVisitorTest extends Sprea
     }
 
     @Override
-    public SpreadsheetConverterSpreadsheetValueVisitor<ConverterContext> createVisitor() {
-        return new SpreadsheetConverterSpreadsheetValueVisitor<>(String.class, null);
+    public GeneralSpreadsheetConverterSpreadsheetValueVisitor<ConverterContext> createVisitor() {
+        return new GeneralSpreadsheetConverterSpreadsheetValueVisitor<>(String.class, null);
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterSpreadsheetValueVisitor<ConverterContext>> type() {
-        return Cast.to(SpreadsheetConverterSpreadsheetValueVisitor.class);
+    public Class<GeneralSpreadsheetConverterSpreadsheetValueVisitor<ConverterContext>> type() {
+        return Cast.to(GeneralSpreadsheetConverterSpreadsheetValueVisitor.class);
     }
 }

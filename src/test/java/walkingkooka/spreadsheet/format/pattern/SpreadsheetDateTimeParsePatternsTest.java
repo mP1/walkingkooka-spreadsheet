@@ -377,7 +377,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
         );
     }
 
-    // converter........................................................................................................
+    // general........................................................................................................
 
     @Test
     public void testConvertDateTimeFails() {

@@ -40,25 +40,25 @@ import java.time.LocalTime;
 
 /**
  * A {@link SpreadsheetValueVisitor} which accepts the source value being converted. Each visit method will then select a
- * {@link SpreadsheetConverterMapping}
+ * {@link GeneralSpreadsheetConverterMapping}
  */
-final class SpreadsheetConverterSpreadsheetValueVisitor<C extends ConverterContext> extends SpreadsheetValueVisitor {
+final class GeneralSpreadsheetConverterSpreadsheetValueVisitor<C extends ConverterContext> extends SpreadsheetValueVisitor {
 
     /**
      * Uses the source value type and target type to pick a {@link Converter}.
      */
     static <C extends ConverterContext> Converter<C> converter(final Object value,
                                                                final Class<?> targetType,
-                                                               final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter<C>>> mapping) {
+                                                               final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<C>>> mapping) {
 
-        final SpreadsheetConverterSpreadsheetValueVisitor<C> visitor = new SpreadsheetConverterSpreadsheetValueVisitor<>(targetType,
+        final GeneralSpreadsheetConverterSpreadsheetValueVisitor<C> visitor = new GeneralSpreadsheetConverterSpreadsheetValueVisitor<>(targetType,
                 mapping);
         visitor.accept(value); // value = from
         return visitor.converter;
     }
 
-    SpreadsheetConverterSpreadsheetValueVisitor(final Class<?> targetType,
-                                                final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter<C>>> mapping) {
+    GeneralSpreadsheetConverterSpreadsheetValueVisitor(final Class<?> targetType,
+                                                       final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<C>>> mapping) {
         super();
         this.targetType = targetType;
         this.mapping = mapping;
@@ -184,10 +184,10 @@ final class SpreadsheetConverterSpreadsheetValueVisitor<C extends ConverterConte
      */
     private final Class<?> targetType;
 
-    private final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter<C>>> mapping;
+    private final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<C>>> mapping;
 
-    private void converter(final SpreadsheetConverterMapping<Converter<C>> converters) {
-        this.converter = SpreadsheetConverterSpreadsheetValueTypeVisitor.converter(converters, this.targetType);
+    private void converter(final GeneralSpreadsheetConverterMapping<Converter<C>> converters) {
+        this.converter = GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor.converter(converters, this.targetType);
     }
 
     private Converter<C> converter;

@@ -22,18 +22,18 @@ import walkingkooka.convert.Converter;
 
 /**
  * Holds individual values for each spreadsheet value type. The type parameter T should be either a {@link Converter} or
- * another {@link SpreadsheetConverterMapping}.
+ * another {@link GeneralSpreadsheetConverterMapping}.
  */
-final class SpreadsheetConverterMapping<T> {
+final class GeneralSpreadsheetConverterMapping<T> {
 
-    static <T> SpreadsheetConverterMapping<T> with(final T booleanValue,
-                                                   final T date,
-                                                   final T dateTime,
-                                                   final T number,
-                                                   final T selection,
-                                                   final T string,
-                                                   final T time) {
-        return new SpreadsheetConverterMapping<>(
+    static <T> GeneralSpreadsheetConverterMapping<T> with(final T booleanValue,
+                                                          final T date,
+                                                          final T dateTime,
+                                                          final T number,
+                                                          final T selection,
+                                                          final T string,
+                                                          final T time) {
+        return new GeneralSpreadsheetConverterMapping<>(
                 booleanValue,
                 date,
                 dateTime,
@@ -45,15 +45,15 @@ final class SpreadsheetConverterMapping<T> {
     }
 
     /**
-     * Factory that creates a new {@link SpreadsheetConverterMapping} with all the handlers.
+     * Factory that creates a new {@link GeneralSpreadsheetConverterMapping} with all the handlers.
      */
-    private SpreadsheetConverterMapping(final T booleanValue,
-                                        final T date,
-                                        final T dateTime,
-                                        final T number,
-                                        final T selection,
-                                        final T string,
-                                        final T time) {
+    private GeneralSpreadsheetConverterMapping(final T booleanValue,
+                                               final T date,
+                                               final T dateTime,
+                                               final T number,
+                                               final T selection,
+                                               final T string,
+                                               final T time) {
         super();
 
         this.booleanValue = booleanValue;

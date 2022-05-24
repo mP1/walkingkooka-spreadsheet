@@ -31,14 +31,14 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
  *     <li>{@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference} to {@link walkingkooka.spreadsheet.reference.SpreadsheetCellRange}</li>
  * </ul>
  */
-final class SpreadsheetConverterSelectionConverter implements Converter<ExpressionNumberConverterContext> {
+final class GeneralSpreadsheetConverterSelectionConverter implements Converter<ExpressionNumberConverterContext> {
 
     /**
      * Singleton
      */
-    final static SpreadsheetConverterSelectionConverter INSTANCE = new SpreadsheetConverterSelectionConverter();
+    final static GeneralSpreadsheetConverterSelectionConverter INSTANCE = new GeneralSpreadsheetConverterSelectionConverter();
 
-    private SpreadsheetConverterSelectionConverter() {
+    private GeneralSpreadsheetConverterSelectionConverter() {
         super();
     }
 

@@ -447,7 +447,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
 
         components.reportIfMissing();
 
-        return SpreadsheetConverters.converter(dateFormat.formatter(),
+        return SpreadsheetConverters.general(dateFormat.formatter(),
                 dateParser,
                 dateTimeFormat.formatter(),
                 dateTimeParser,

@@ -25,16 +25,16 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 /**
  * Pipes the result of converting {@link Boolean} to {@link String} and then to the text formatter.
  */
-final class SpreadsheetConverterBooleanString implements Converter<ExpressionNumberConverterContext> {
+final class GeneralSpreadsheetConverterBooleanString implements Converter<ExpressionNumberConverterContext> {
 
-    static SpreadsheetConverterBooleanString with(final Converter<ExpressionNumberConverterContext> booleanString,
-                                                  final Converter<ExpressionNumberConverterContext> textFormatter) {
-        return new SpreadsheetConverterBooleanString(booleanString.cast(ConverterContext.class),
+    static GeneralSpreadsheetConverterBooleanString with(final Converter<ExpressionNumberConverterContext> booleanString,
+                                                         final Converter<ExpressionNumberConverterContext> textFormatter) {
+        return new GeneralSpreadsheetConverterBooleanString(booleanString.cast(ConverterContext.class),
                 textFormatter.cast(ConverterContext.class));
     }
 
-    private SpreadsheetConverterBooleanString(final Converter<ConverterContext> booleanString,
-                                              final Converter<ConverterContext> textFormatter) {
+    private GeneralSpreadsheetConverterBooleanString(final Converter<ConverterContext> booleanString,
+                                                     final Converter<ConverterContext> textFormatter) {
         super();
         this.booleanString = booleanString;
         this.textFormatter = textFormatter;

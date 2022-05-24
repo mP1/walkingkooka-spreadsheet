@@ -30,7 +30,7 @@ import java.util.Optional;
 final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
 
     static ConverterSpreadsheetFormatter with(final Converter<ExpressionNumberConverterContext> converter) {
-        Objects.requireNonNull(converter, "converter");
+        Objects.requireNonNull(converter, "general");
         return new ConverterSpreadsheetFormatter(converter);
     }
 
