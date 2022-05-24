@@ -473,7 +473,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
         );
     }
 
-    // converter........................................................................................................
+    // general........................................................................................................
 
     @Test
     public void testConvertTimeFails() {

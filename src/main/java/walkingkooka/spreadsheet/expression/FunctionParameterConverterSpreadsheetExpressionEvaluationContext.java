@@ -51,7 +51,7 @@ final class FunctionParameterConverterSpreadsheetExpressionEvaluationContext imp
 
     static FunctionParameterConverterSpreadsheetExpressionEvaluationContext with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                                                  final SpreadsheetExpressionEvaluationContext context) {
-        Objects.requireNonNull(converter, "converter");
+        Objects.requireNonNull(converter, "general");
         Objects.requireNonNull(context, "context");
 
         return context instanceof FunctionParameterConverterSpreadsheetExpressionEvaluationContext ?
@@ -136,7 +136,7 @@ final class FunctionParameterConverterSpreadsheetExpressionEvaluationContext imp
     }
 
     /**
-     * The {@link Converter} that is overriding the converter support methods in the wrapped {@link SpreadsheetExpressionEvaluationContext}.
+     * The {@link Converter} that is overriding the general support methods in the wrapped {@link SpreadsheetExpressionEvaluationContext}.
      */
     // @VisibleForTesting
     final Converter<SpreadsheetExpressionEvaluationContext> converter;
@@ -171,7 +171,7 @@ final class FunctionParameterConverterSpreadsheetExpressionEvaluationContext imp
     // eval scoped......................................................................................................
 
     /**
-     * Evaluates the given {@link Expression} using this as the context which should result in the converter
+     * Evaluates the given {@link Expression} using this as the context which should result in the general
      * being used.
      */
     @Override

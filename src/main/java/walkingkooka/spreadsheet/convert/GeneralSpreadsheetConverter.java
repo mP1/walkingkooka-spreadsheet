@@ -40,21 +40,21 @@ import java.util.Objects;
  * A {@link Converter} that supports converting all the spreadsheet types to other types.
  * </pre>
  */
-final class SpreadsheetConverter implements Converter<ExpressionNumberConverterContext> {
+final class GeneralSpreadsheetConverter implements Converter<ExpressionNumberConverterContext> {
 
     /**
-     * Factory that creates a new {@link SpreadsheetConverter}.
+     * Factory that creates a new {@link GeneralSpreadsheetConverter}.
      */
-    static SpreadsheetConverter with(final SpreadsheetFormatter dateFormatter,
-                                     final SpreadsheetDateParsePatterns dateParser,
-                                     final SpreadsheetFormatter dateTimeFormatter,
-                                     final SpreadsheetDateTimeParsePatterns dateTimeParser,
-                                     final SpreadsheetFormatter numberFormatter,
-                                     final SpreadsheetNumberParsePatterns numberParser,
-                                     final SpreadsheetFormatter textFormatter,
-                                     final SpreadsheetFormatter timeFormatter,
-                                     final SpreadsheetTimeParsePatterns timeParser,
-                                     final long dateOffset) {
+    static GeneralSpreadsheetConverter with(final SpreadsheetFormatter dateFormatter,
+                                            final SpreadsheetDateParsePatterns dateParser,
+                                            final SpreadsheetFormatter dateTimeFormatter,
+                                            final SpreadsheetDateTimeParsePatterns dateTimeParser,
+                                            final SpreadsheetFormatter numberFormatter,
+                                            final SpreadsheetNumberParsePatterns numberParser,
+                                            final SpreadsheetFormatter textFormatter,
+                                            final SpreadsheetFormatter timeFormatter,
+                                            final SpreadsheetTimeParsePatterns timeParser,
+                                            final long dateOffset) {
         Objects.requireNonNull(dateFormatter, "dateFormatter");
         Objects.requireNonNull(dateParser, "dateParser");
 
@@ -69,7 +69,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         Objects.requireNonNull(timeFormatter, "timeFormatter");
         Objects.requireNonNull(timeParser, "timeParser");
 
-        return new SpreadsheetConverter(dateFormatter,
+        return new GeneralSpreadsheetConverter(dateFormatter,
                 dateParser,
                 dateTimeFormatter,
                 dateTimeParser,
@@ -81,16 +81,16 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 dateOffset);
     }
 
-    private SpreadsheetConverter(final SpreadsheetFormatter dateFormatter,
-                                 final SpreadsheetDateParsePatterns dateParser,
-                                 final SpreadsheetFormatter dateTimeFormatter,
-                                 final SpreadsheetDateTimeParsePatterns dateTimeParser,
-                                 final SpreadsheetFormatter numberFormatter,
-                                 final SpreadsheetNumberParsePatterns numberParser,
-                                 final SpreadsheetFormatter textFormatter,
-                                 final SpreadsheetFormatter timeFormatter,
-                                 final SpreadsheetTimeParsePatterns timeParser,
-                                 final long dateOffset) {
+    private GeneralSpreadsheetConverter(final SpreadsheetFormatter dateFormatter,
+                                        final SpreadsheetDateParsePatterns dateParser,
+                                        final SpreadsheetFormatter dateTimeFormatter,
+                                        final SpreadsheetDateTimeParsePatterns dateTimeParser,
+                                        final SpreadsheetFormatter numberFormatter,
+                                        final SpreadsheetNumberParsePatterns numberParser,
+                                        final SpreadsheetFormatter textFormatter,
+                                        final SpreadsheetFormatter timeFormatter,
+                                        final SpreadsheetTimeParsePatterns timeParser,
+                                        final long dateOffset) {
         super();
 
         final LocalDate dateTrue = LocalDate.ofEpochDay(dateOffset + 1);
@@ -108,20 +108,20 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         // wrap all number from/to converters to also handle ExpressionNumber
 
         // boolean ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> booleanConverter = mapping(
+        final GeneralSpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> booleanConverter = mapping(
                 Converters.simple(), // boolean -> boolean
                 fromBoolean(LocalDate.class, dateTrue, dateFalse),
                 fromBoolean(LocalDateTime.class, dateTimeTrue, dateTimeFalse),
                 ExpressionNumber.toConverter(Converters.booleanNumber()),
                 null, // selection
-                SpreadsheetConverterBooleanString.with(fromBoolean(String.class, stringTrue, stringFalse), textFormatter.converter()), // boolean -> String
+                GeneralSpreadsheetConverterBooleanString.with(fromBoolean(String.class, stringTrue, stringFalse), textFormatter.converter()), // boolean -> String
                 fromBoolean(LocalTime.class, timeTrue, timeFalse)
         ); // Time
 
         this.booleanConverter = booleanConverter;
 
         // LocalDate ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> date = mapping(
+        final GeneralSpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> date = mapping(
                 toBoolean(LocalDate.class, dateTrue),
                 Converters.simple(), // date -> date
                 Converters.localDateLocalDateTime(),
@@ -132,7 +132,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         );
 
         // LocalDateTime ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> dateTime = mapping(
+        final GeneralSpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> dateTime = mapping(
                 toBoolean(LocalDateTime.class, dateTimeTrue),
                 Converters.localDateTimeLocalDate(),
                 Converters.simple(), // dateTime -> dateTime
@@ -143,7 +143,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         );
 
         // Number ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> number = mapping(
+        final GeneralSpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> number = mapping(
                 ExpressionNumber.fromConverter(Converters.truthyNumberBoolean()),
                 ExpressionNumber.fromConverter(Converters.numberLocalDate(dateOffset)),
                 ExpressionNumber.fromConverter(Converters.numberLocalDateTime(dateOffset)),
@@ -153,19 +153,19 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 ExpressionNumber.fromConverter(Converters.numberLocalTime()));
 
         // selection
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> selection = SpreadsheetConverterMapping.with(
+        final GeneralSpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> selection = GeneralSpreadsheetConverterMapping.with(
                 null, // boolean
                 null, // date
                 null, // date-time
                 null, // number
-                SpreadsheetConverterSelectionConverter.INSTANCE, // selection
+                GeneralSpreadsheetConverterSelectionConverter.INSTANCE, // selection
                 Converters.objectString(), // string
                 null // time
         );
 
         // most attempts to support conversions such as Date -> Character are pointless but keep for the error failures.
         // String|Character ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> string = SpreadsheetConverterMapping.with(
+        final GeneralSpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> string = GeneralSpreadsheetConverterMapping.with(
                 fromCharacterOrString(
                         toBoolean(String.class, stringTrue)
                 ), // string -> boolean
@@ -190,7 +190,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         );
 
         // LocalTime ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> time = mapping(
+        final GeneralSpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> time = mapping(
                 toBoolean(LocalTime.class, timeTrue),
                 null, // time -> date invalid
                 Converters.localTimeLocalDateTime(),
@@ -200,7 +200,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 Converters.simple()
         ); // time -> time
 
-        this.mapping = SpreadsheetConverterMapping.with(
+        this.mapping = GeneralSpreadsheetConverterMapping.with(
                 booleanConverter,
                 date,
                 dateTime,
@@ -271,7 +271,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         return LocalDateTime.of(date, LocalTime.MIDNIGHT);
     }
 
-    private static SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> mapping(
+    private static GeneralSpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> mapping(
             final Converter<ExpressionNumberConverterContext> booleanValue,
             final Converter<ExpressionNumberConverterContext> date,
             final Converter<ExpressionNumberConverterContext> dateTime,
@@ -279,7 +279,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
             final Converter<ExpressionNumberConverterContext> selection,
             final Converter<ExpressionNumberConverterContext> string,
             final Converter<ExpressionNumberConverterContext> time) {
-        return SpreadsheetConverterMapping.with(
+        return GeneralSpreadsheetConverterMapping.with(
                 booleanValue,
                 date,
                 dateTime,
@@ -303,7 +303,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 isSupportedType(targetType) &&
                         false == (value instanceof LocalTime && targetType == LocalDate.class) &&
                         false == (value instanceof LocalDate && targetType == LocalTime.class) ||
-                SpreadsheetConverterSelectionConverter.INSTANCE.canConvert(value, targetType, context);
+                GeneralSpreadsheetConverterSelectionConverter.INSTANCE.canConvert(value, targetType, context);
     }
 
     private static boolean isSupportedType(final Class<?> type) {
@@ -340,7 +340,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
 
     private <T> Either<T, String> convertNull(final Class<T> targetType,
                                               final ExpressionNumberConverterContext context) {
-        return SpreadsheetConverterSpreadsheetValueTypeVisitor.converter(
+        return GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor.converter(
                 this.booleanConverter,
                 targetType
         ).convert(null, targetType, context);
@@ -349,7 +349,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
     /**
      * Handles converting null to the target type.
      */
-    private final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> booleanConverter;
+    private final GeneralSpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> booleanConverter;
 
     private <T> Either<T, String> convertNonNull(final Object value,
                                                  final Class<T> targetType,
@@ -366,7 +366,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
     private <T> Either<T, String> convertNonNull0(final Object value,
                                                   final Class<T> targetType,
                                                   final ExpressionNumberConverterContext context) {
-        final Converter<ExpressionNumberConverterContext> converter = SpreadsheetConverterSpreadsheetValueVisitor.converter(
+        final Converter<ExpressionNumberConverterContext> converter = GeneralSpreadsheetConverterSpreadsheetValueVisitor.converter(
                 value,
                 targetType,
                 this.mapping
@@ -376,7 +376,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 this.failConversion(value, targetType);
     }
 
-    private final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>>> mapping;
+    private final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>>> mapping;
 
     // toString.........................................................................................................
 

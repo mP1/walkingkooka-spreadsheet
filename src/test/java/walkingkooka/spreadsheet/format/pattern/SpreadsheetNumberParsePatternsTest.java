@@ -95,7 +95,7 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
         this.parseStringFails("hh:mm:sss", IllegalArgumentException.class);
     }
 
-    // converter........................................................................................................
+    // general........................................................................................................
 
     @Test
     public void testConvertFails() {

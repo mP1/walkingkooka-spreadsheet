@@ -26,14 +26,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 
-public final class SpreadsheetConverterSelectionConverterTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSelectionConverter> implements ConverterTesting2<SpreadsheetConverterSelectionConverter, ExpressionNumberConverterContext> {
+public final class GeneralSpreadsheetConverterSelectionConverterTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterSelectionConverter> implements ConverterTesting2<GeneralSpreadsheetConverterSelectionConverter, ExpressionNumberConverterContext> {
 
     @Test
     public void testCellToCellRange() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCell("Z99" ),
+                SpreadsheetSelection.parseCell("Z99"),
                 SpreadsheetCellRange.class,
-                SpreadsheetSelection.parseCellRange("Z99" )
+                SpreadsheetSelection.parseCellRange("Z99")
         );
     }
 
@@ -63,8 +63,8 @@ public final class SpreadsheetConverterSelectionConverterTest extends Spreadshee
     }
 
     @Override
-    public SpreadsheetConverterSelectionConverter createConverter() {
-        return SpreadsheetConverterSelectionConverter.INSTANCE;
+    public GeneralSpreadsheetConverterSelectionConverter createConverter() {
+        return GeneralSpreadsheetConverterSelectionConverter.INSTANCE;
     }
 
     @Override
@@ -73,7 +73,7 @@ public final class SpreadsheetConverterSelectionConverterTest extends Spreadshee
     }
 
     @Override
-    public Class<SpreadsheetConverterSelectionConverter> type() {
-        return SpreadsheetConverterSelectionConverter.class;
+    public Class<GeneralSpreadsheetConverterSelectionConverter> type() {
+        return GeneralSpreadsheetConverterSelectionConverter.class;
     }
 }

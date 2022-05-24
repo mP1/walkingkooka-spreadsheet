@@ -26,16 +26,16 @@ import walkingkooka.visit.Visitor;
 /**
  * A {@link Visitor} that locates the appropriate {@link Converter} for a given source and target {@link Class}.
  */
-final class SpreadsheetConverterSpreadsheetValueTypeVisitor<C extends ConverterContext> extends SpreadsheetValueTypeVisitor {
+final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends ConverterContext> extends SpreadsheetValueTypeVisitor {
 
-    static <C extends ConverterContext> Converter<C> converter(final SpreadsheetConverterMapping<Converter<C>> mapping,
+    static <C extends ConverterContext> Converter<C> converter(final GeneralSpreadsheetConverterMapping<Converter<C>> mapping,
                                                                final Class<?> targetType) {
-        final SpreadsheetConverterSpreadsheetValueTypeVisitor<C> visitor = new SpreadsheetConverterSpreadsheetValueTypeVisitor<>(mapping);
+        final GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C> visitor = new GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<>(mapping);
         visitor.accept(targetType);
         return visitor.converter;
     }
 
-    SpreadsheetConverterSpreadsheetValueTypeVisitor(final SpreadsheetConverterMapping<Converter<C>> mapping) {
+    GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor(final GeneralSpreadsheetConverterMapping<Converter<C>> mapping) {
         super();
         this.mapping = mapping;
     }
@@ -135,7 +135,7 @@ final class SpreadsheetConverterSpreadsheetValueTypeVisitor<C extends ConverterC
         this.converter = this.mapping.number; // handles other Number types.
     }
 
-    private final SpreadsheetConverterMapping<Converter<C>> mapping;
+    private final GeneralSpreadsheetConverterMapping<Converter<C>> mapping;
 
     /**
      * The {@link Converter} selected using the target type.
@@ -148,7 +148,7 @@ final class SpreadsheetConverterSpreadsheetValueTypeVisitor<C extends ConverterC
                 .separator(", ")
                 .valueSeparator(", ")
                 .label("mapping").value(this.mapping)
-                .label("converter").value(this.converter)
+                .label("general").value(this.converter)
                 .build();
     }
 }

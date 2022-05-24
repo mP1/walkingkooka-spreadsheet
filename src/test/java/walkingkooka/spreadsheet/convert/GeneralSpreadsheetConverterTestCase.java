@@ -21,10 +21,10 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
 
-public abstract class SpreadsheetConverterTestCase<T> implements ClassTesting<T>,
+public abstract class GeneralSpreadsheetConverterTestCase<T> implements ClassTesting<T>,
         TypeNameTesting<T> {
 
-    SpreadsheetConverterTestCase() {
+    GeneralSpreadsheetConverterTestCase() {
         super();
     }
 
@@ -39,6 +39,6 @@ public abstract class SpreadsheetConverterTestCase<T> implements ClassTesting<T>
 
     @Override
     public final String typeNamePrefix() {
-        return SpreadsheetConverter.class.getSimpleName();
+        return GeneralSpreadsheetConverter.class.getSimpleName();
     }
 }

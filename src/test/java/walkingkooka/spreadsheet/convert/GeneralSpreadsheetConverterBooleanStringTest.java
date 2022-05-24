@@ -27,7 +27,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
-public final class SpreadsheetConverterBooleanStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterBooleanString> implements ConverterTesting2<SpreadsheetConverterBooleanString, ExpressionNumberConverterContext> {
+public final class GeneralSpreadsheetConverterBooleanStringTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterBooleanString> implements ConverterTesting2<GeneralSpreadsheetConverterBooleanString, ExpressionNumberConverterContext> {
 
     @Test
     public void testNonBooleanFails() {
@@ -50,8 +50,8 @@ public final class SpreadsheetConverterBooleanStringTest extends SpreadsheetConv
     }
 
     @Override
-    public SpreadsheetConverterBooleanString createConverter() {
-        return SpreadsheetConverterBooleanString.with(
+    public GeneralSpreadsheetConverterBooleanString createConverter() {
+        return GeneralSpreadsheetConverterBooleanString.with(
                 Converters.booleanTrueFalse(
                         Predicates.customToString((v) -> v instanceof Boolean, "isBoolean"),
                         Predicates.is(String.class),
@@ -73,8 +73,8 @@ public final class SpreadsheetConverterBooleanStringTest extends SpreadsheetConv
     }
 
     @Override
-    public Class<SpreadsheetConverterBooleanString> type() {
-        return SpreadsheetConverterBooleanString.class;
+    public Class<GeneralSpreadsheetConverterBooleanString> type() {
+        return GeneralSpreadsheetConverterBooleanString.class;
     }
 
     @Override

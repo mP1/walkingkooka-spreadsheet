@@ -279,7 +279,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
         );
     }
 
-    // converter........................................................................................................
+    // general........................................................................................................
 
     @Test
     public void testConvertDateFails() {
