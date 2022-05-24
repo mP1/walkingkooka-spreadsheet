@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
@@ -332,7 +331,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         // special case if targetType = Object just return value.
         return this.canConvert(value, targetType, context) ?
                 Object.class == targetType ?
-                        Cast.to(Either.left(value)) :
+                        this.successfulConversion(value, targetType) :
                         null == value ?
                                 this.convertNull(targetType, context) :
                                 this.convertNonNull(value, targetType, context) :
@@ -356,7 +355,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                                                  final Class<T> targetType,
                                                  final ExpressionNumberConverterContext context) {
         return value.getClass() == targetType ?
-                Cast.to(Either.left(value)) :
+                this.successfulConversion(value, targetType) :
                 convertNonNull0(
                         value,
                         targetType,

@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
@@ -57,11 +56,20 @@ final class SpreadsheetConverterSelectionConverter implements Converter<Expressi
                                          final Class<T> type,
                                          final ExpressionNumberConverterContext context) {
         return isCellToCellRange(value, type) ?
-                Cast.to(Either.left(cellToCellRange((SpreadsheetCellReference) value))) :
+                this.successfulConversion(
+                        cellToCellRange((SpreadsheetCellReference) value),
+                        type
+                ) :
                 isCellRangeToCell(value, type) ?
-                        Cast.to(Either.left(cellRangeToCell((SpreadsheetCellRange) value))) :
+                        this.successfulConversion(
+                                cellRangeToCell((SpreadsheetCellRange) value),
+                                type
+                        ) :
                         isExpressionReference(value, type) ?
-                                Cast.to(Either.left((SpreadsheetExpressionReference) value)) :
+                                this.successfulConversion(
+                                        value,
+                                        type
+                                ) :
                                 this.failConversion(value, type);
     }
 
