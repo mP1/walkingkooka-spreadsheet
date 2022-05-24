@@ -76,8 +76,15 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPatternTe
                                                             public <T> Either<T, String> convert(final Object value,
                                                                                                  final Class<T> type,
                                                                                                  final ExpressionNumberConverterContext context) {
-                                                                final LocalDate date = (LocalDate) value;
-                                                                return Either.left(type.cast(LocalDateTime.of(date, LocalTime.MIDNIGHT)));
+                                                                return this.successfulConversion(
+                                                                        type.cast(
+                                                                                LocalDateTime.of(
+                                                                                        (LocalDate) value,
+                                                                                        LocalTime.MIDNIGHT
+                                                                                )
+                                                                        ),
+                                                                        type
+                                                                );
                                                             }
                                                         },
                         ConverterContexts.basic(
