@@ -77,7 +77,10 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern
                             public <T> Either<T, String> convert(final Object value,
                                                                  final Class<T> type,
                                                                  final ExpressionNumberConverterContext context) {
-                                return Either.left(type.cast(value));
+                                return this.successfulConversion(
+                                        type.cast(value),
+                                        type
+                                );
                             }
                         },
                         ConverterContexts.basic(

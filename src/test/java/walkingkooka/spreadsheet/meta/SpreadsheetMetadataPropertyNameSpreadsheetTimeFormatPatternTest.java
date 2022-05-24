@@ -80,7 +80,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
                                                                  final Class<T> type,
                                                                  final ExpressionNumberConverterContext context) {
                                 final LocalTime time = (LocalTime) value;
-                                return Either.left(type.cast(LocalDateTime.of(LocalDate.EPOCH, time)));
+                                return this.successfulConversion(
+                                        type.cast(
+                                                LocalDateTime.of(LocalDate.EPOCH, time)
+                                        ),
+                                        type
+                                );
                             }
                         },
                         ConverterContexts.basic(Converters.fake(),
