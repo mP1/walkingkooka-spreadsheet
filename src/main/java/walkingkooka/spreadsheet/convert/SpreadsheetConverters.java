@@ -54,6 +54,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see UnformattedNumberSpreadsheetConverter}
+     */
+    public static Converter<? extends ExpressionNumberConverterContext> unformattedNumber() {
+        return UnformattedNumberSpreadsheetConverter.instance();
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetConverters() {
