@@ -41,6 +41,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.FunctionExpression;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionKind;
@@ -267,24 +268,12 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
                         EXPRESSION_NUMBER_KIND.create(111),
                         EXPRESSION_NUMBER_KIND.create(222)
                 ),
-                "!!!111,!!!222"
+                "$111.,$222."
         );
     }
 
     @Test
-    public void testEvaluateFunctionParametersConverted() {
-        this.evaluateAndCheck(
-                CONCAT.name(),
-                Lists.of(
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(222))
-                ),
-                "!!!111,!!!222"
-        );
-    }
-
-    @Test
-    public void testEvaluateFunctionParametersConvertedNestedFunctionParametersIgnored() {
+    public void testEvaluateFunctionNestedFunctionNotConverted() {
         this.evaluateAndCheck(
                 CONCAT.name(),
                 Lists.of(
@@ -295,48 +284,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
                                 )
                         )
                 ),
-                "!!!111"
-        );
-    }
-
-    @Test
-    public void testEvaluateFunctionParametersConvertedNestedFunctionParametersIgnored2() {
-        this.evaluateAndCheck(
-                CONCAT.name(),
-                Lists.of(
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
-                        Expression.function(
-                                ECHO.name(),
-                                Lists.of(
-                                        Expression.value(EXPRESSION_NUMBER_KIND.create(222))
-                                )
-                        )
-                ),
-                "!!!111,!!!222"
-        );
-    }
-
-    @Test
-    public void testEvaluateFunctionParametersConvertedNestedFunctionParametersIgnored3() {
-        this.evaluateAndCheck(
-                CONCAT.name(),
-                Lists.of(
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
-                        Expression.function(
-                                ECHO.name(),
-                                Lists.of(
-                                        Expression.value(EXPRESSION_NUMBER_KIND.create(222))
-                                )
-                        ),
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(333)),
-                        Expression.function(
-                                ECHO.name(),
-                                Lists.of(
-                                        Expression.value(EXPRESSION_NUMBER_KIND.create(444))
-                                )
-                        )
-                ),
-                "!!!111,!!!222,!!!333,!!!444"
+                "$111."
         );
     }
 
@@ -365,7 +313,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
 
     @Test
     public void testEvaluateExpressionFunctionParametersConverted() {
-        this.evaluateAndCheck(
+        this.applyWithAndCheck(
                 Expression.function(
                         CONCAT.name(),
                         Lists.of(
@@ -379,7 +327,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
 
     @Test
     public void testEvaluateExpressionFunctionParametersConverted2() {
-        this.evaluateAndCheck(
+        this.applyWithAndCheck(
                 Expression.function(
                         CONCAT.name(),
                         Lists.of(
@@ -396,7 +344,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
 
     @Test
     public void testEvaluateExpressionFunctionParametersConverted3() {
-        this.evaluateAndCheck(
+        this.applyWithAndCheck(
                 Expression.function(
                         CONCAT.name(),
                         Lists.of(
@@ -413,7 +361,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
 
     @Test
     public void testEvaluateExpressionFunctionParametersConvertedNestedFunctionParameterNotConverted() {
-        this.evaluateAndCheck(
+        this.applyWithAndCheck(
                 Expression.function(
                         CONCAT.name(),
                         Lists.of(
@@ -431,7 +379,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
 
     @Test
     public void testEvaluateExpressionFunctionParametersConvertedNestedFunctionParameterNotConverted2() {
-        this.evaluateAndCheck(
+        this.applyWithAndCheck(
                 Expression.function(
                         CONCAT.name(),
                         Lists.of(
@@ -452,6 +400,29 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
                         )
                 ),
                 "!!!111,!!!222,!!!333,!!!444"
+        );
+    }
+
+    private <T> void applyWithAndCheck(final FunctionExpression function,
+                                       final T expected) {
+        final FunctionParameterConverterSpreadsheetExpressionEvaluationContext context = this.createContext();
+        final ExpressionFunction<T, ExpressionEvaluationContext> function2 =
+                Cast.to(
+                        context.function(function.name())
+                );
+
+        final List<?> parameters = function.value();
+
+        this.checkEquals(
+                expected,
+                function2.apply(
+                        context.prepareParameters(
+                                function2,
+                                Cast.to(parameters)
+                        ),
+                        context
+                ),
+                () -> "" + function
         );
     }
 

@@ -41,11 +41,15 @@ import java.util.Optional;
 
 /**
  * A {@link SpreadsheetExpressionEvaluationContext} that supports a custom {@link Converter} to be used to convert
- * *ONLY* parameter values for a top level {@link ExpressionFunction}.
+ * *ONLY* parameter values when executing a {@link ExpressionFunction}. Note this is intended to be created by a
+ * function wrapper and it will then prepare and execute the wrapped function. The wrapped {@link ExpressionFunction#kinds()}
+ * should return an empty {@link java.util.Set} so parameters are not altered in any way before it is dispatched.
+ *
  * <br>
  * This is necessary because some functions do not need the default conversion of values to another using the format or
  * parse patterns and more. The <pre>lower</pre> function handling of numbers is an example where this
  * {@link SpreadsheetExpressionEvaluationContext} is useful.
+ * <br>
  */
 final class FunctionParameterConverterSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
 
@@ -201,7 +205,7 @@ final class FunctionParameterConverterSpreadsheetExpressionEvaluationContext imp
             this.enableConverter = true;
             return parameter.convertOrFail(
                     value,
-                    1 == this.scope ?
+                    0 == this.scope ?
                             this :
                             this.context
             );
@@ -222,21 +226,9 @@ final class FunctionParameterConverterSpreadsheetExpressionEvaluationContext imp
     @Override
     public Object evaluate(final FunctionExpressionName name,
                            final List<Object> parameters) {
-        return 0 == this.scope ?
-            this.evaluate0(name, parameters) :
-                this.context.evaluate(name, parameters);
-    }
-
-    public Object evaluate0(final FunctionExpressionName name,
-                           final List<Object> parameters) {
-        final ExpressionFunction<?, ExpressionEvaluationContext> function = this.function(name);
-
+        this.scope++;
         try {
-            this.scope++;
-            return function.apply(
-                    this.prepareParameters(function, parameters),
-                    this
-            );
+            return this.context.evaluate(name, parameters);
         } finally {
             this.scope--;
         }
