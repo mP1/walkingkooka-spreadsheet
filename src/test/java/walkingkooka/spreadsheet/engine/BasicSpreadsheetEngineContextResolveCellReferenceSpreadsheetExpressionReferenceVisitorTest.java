@@ -38,6 +38,6 @@ public final class BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetE
 
     @Override
     public String typeNamePrefix() {
-        return BasicSpreadsheetEngineContext.class.getSimpleName() + "Lookup";
+        return BasicSpreadsheetEngineContext.class.getSimpleName();
     }
 }
