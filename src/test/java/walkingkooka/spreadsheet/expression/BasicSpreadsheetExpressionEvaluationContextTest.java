@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -227,6 +228,22 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     @Override
     public void testReferenceNullReferenceFails() {
         throw new UnsupportedOperationException();
+    }
+
+    // HasConverter.....................................................................................................
+
+    @Test
+    public void testConverter() {
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext();
+
+        final ExpressionNumber from = context.expressionNumberKind().create(123);
+        final String to = context.convertOrFail(from, String.class);
+
+        this.checkEquals(
+                to,
+                context.converter().convertOrFail(from, String.class, context),
+                () -> "converter with context and context convertOrFail should return the same"
+        );
     }
 
     // DecimalNumberContextTesting.....................................................................................

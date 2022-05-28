@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.convert.HasConverter;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -29,7 +30,8 @@ import java.util.Optional;
  * Enhances {@link ExpressionEvaluationContext} adding a few extra methods required by a spreadsheet during
  * expression execution.
  */
-public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext {
+public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext,
+        HasConverter<SpreadsheetExpressionEvaluationContext> {
 
     /**
      * Returns the current cell that owns the expression or formula being executed.

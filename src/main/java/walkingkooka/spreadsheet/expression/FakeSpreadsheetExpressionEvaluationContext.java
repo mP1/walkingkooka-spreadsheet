@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.convert.Converter;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -28,6 +29,11 @@ import java.util.Optional;
 public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
     @Override
     public Optional<SpreadsheetCell> cell() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Converter<SpreadsheetExpressionEvaluationContext> converter() {
         throw new UnsupportedOperationException();
     }
 
