@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Either;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -128,6 +129,14 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     private final AbsoluteUrl serverUrl;
+
+    // HasConverter.....................................................................................................
+
+    @Override
+    public Converter<SpreadsheetExpressionEvaluationContext> converter() {
+        return this.spreadsheetMetadata.converter()
+                .cast(SpreadsheetExpressionEvaluationContext.class);
+    }
 
     // ExpressionEvaluationContext........................................................................................
 

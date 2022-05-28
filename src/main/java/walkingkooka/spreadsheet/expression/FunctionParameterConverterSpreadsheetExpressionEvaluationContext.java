@@ -158,6 +158,11 @@ final class FunctionParameterConverterSpreadsheetExpressionEvaluationContext imp
     }
 
     @Override
+    public Converter<SpreadsheetExpressionEvaluationContext> converter() {
+        return this.context.converter();
+    }
+
+    @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         return this.context.loadCell(cell);
     }
