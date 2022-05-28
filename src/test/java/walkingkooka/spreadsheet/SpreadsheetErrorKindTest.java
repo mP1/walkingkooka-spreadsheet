@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.ConversionException;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -25,6 +26,7 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceLo
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
+import walkingkooka.tree.expression.ExpressionNumber;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -137,6 +139,19 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
         this.translateAndCheck(
                 new ClassCastException(MESSAGE),
                 SpreadsheetErrorKind.VALUE
+        );
+    }
+
+    @Test
+    public void testTranslateConversionException() {
+        this.translateAndCheck(
+                new ConversionException(
+                        MESSAGE,
+                        "abc",
+                        ExpressionNumber.class
+                ),
+                SpreadsheetErrorKind.VALUE,
+                "Cannot convert \"abc\" to ExpressionNumber"
         );
     }
 

@@ -25,6 +25,7 @@ package walkingkooka.spreadsheet;
 // #NULL
 // #NUM
 
+import walkingkooka.convert.ConversionException;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.ParserException;
@@ -119,6 +120,7 @@ public enum SpreadsheetErrorKind implements HasText {
 
     private static SpreadsheetError translate2(final Throwable cause) {
         final SpreadsheetErrorKind kind;
+        String message = cause.getMessage();
 
         do {
             if (cause instanceof HasSpreadsheetErrorKind) {
@@ -145,6 +147,15 @@ public enum SpreadsheetErrorKind implements HasText {
                 break;
             }
 
+            // #VALUE! 	The wrong type of operand or expression argument is used
+            if (cause instanceof ConversionException) {
+                kind = VALUE;
+
+                final ConversionException conversionException = (ConversionException) cause;
+                message = "Cannot convert " + CharSequences.quoteIfChars(conversionException.value()) + " to " + conversionException.type().getSimpleName();
+                break;
+            }
+
             // #NUM! 	A formula has invalid numeric data for the type of operation
             if (cause instanceof NullPointerException ||
                     cause instanceof IllegalArgumentException) {
@@ -160,8 +171,6 @@ public enum SpreadsheetErrorKind implements HasText {
 
             kind = VALUE;
         } while (false);
-
-        final String message = cause.getMessage();
 
         return SpreadsheetError.with(
                 kind,
