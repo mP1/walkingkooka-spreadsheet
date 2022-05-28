@@ -176,7 +176,13 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor<C extends Convert
 
     @Override
     protected void visit(final Object value) {
-        throw new ConversionException("Unable to convert " + CharSequences.quoteIfChars(value) + " to " + this.targetType.getName());
+        final Class<?> targetType = this.targetType;
+
+        throw new ConversionException(
+                "Unable to convert " + CharSequences.quoteIfChars(value) + " to " + targetType.getName(),
+                value,
+                targetType
+        );
     }
 
     /**

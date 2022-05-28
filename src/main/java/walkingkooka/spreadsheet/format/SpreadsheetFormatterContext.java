@@ -54,7 +54,9 @@ public interface SpreadsheetFormatterContext extends CanConvert,
      * Creates a {@link SpreadsheetFormatException}
      */
     @Override
-    default RuntimeException convertThrowable(final String message) {
+    default RuntimeException convertThrowable(final String message,
+                                              final Object value,
+                                              final Class<?> type) {
         return new SpreadsheetFormatException(message);
     }
 }
