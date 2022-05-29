@@ -481,6 +481,13 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         this.convertAndBackCheck(false, TIME_FALSE);
     }
 
+    // Character........................................................................................................
+
+    @Test
+    public void testCharacterToString() {
+        this.convertAndCheck('A', String.class, "A");
+    }
+
     // Date.............................................................................................................
 
     @Test
