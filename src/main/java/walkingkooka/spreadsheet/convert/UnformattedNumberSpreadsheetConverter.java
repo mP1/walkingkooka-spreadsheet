@@ -28,7 +28,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
  */
 final class UnformattedNumberSpreadsheetConverter<C extends ExpressionNumberConverterContext> implements Converter<C> {
 
-    static <C extends ExpressionNumberConverterContext> UnformattedNumberSpreadsheetConverter instance() {
+    static <C extends ExpressionNumberConverterContext> UnformattedNumberSpreadsheetConverter<C> instance() {
         return Cast.to(INSTANCE);
     }
 
