@@ -29,6 +29,13 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
     /**
+     * {@see FormatPatternConverter}
+     */
+    public static Converter<ExpressionNumberConverterContext> formatPattern(final String pattern) {
+        return FormatPatternConverter.with(pattern);
+    }
+
+    /**
      * {@see GeneralSpreadsheetConverter}
      */
     public static Converter<ExpressionNumberConverterContext> general(final SpreadsheetFormatter dateFormatter,
