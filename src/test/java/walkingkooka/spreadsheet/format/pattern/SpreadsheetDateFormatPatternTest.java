@@ -36,6 +36,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -436,7 +437,8 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
                 return DateTimeContexts.locale(
                         Locale.forLanguageTag("EN-AU"),
                         1900,
-                        20
+                        20,
+                        LocalDateTime::now
                 );
             }
         };

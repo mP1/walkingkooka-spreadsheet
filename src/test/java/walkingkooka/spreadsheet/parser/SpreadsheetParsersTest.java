@@ -2600,7 +2600,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private SpreadsheetParserContext createContext(final ExpressionNumberKind kind) {
         final DateTimeContext dateTimeContext = this.dateTimeContext();
         final DecimalNumberContext decimalNumberContext = this.decimalNumberContext();
-        return new SpreadsheetParserContext() {
+        return new FakeSpreadsheetParserContext() {
             @Override
             public List<String> ampms() {
                 return dateTimeContext.ampms();

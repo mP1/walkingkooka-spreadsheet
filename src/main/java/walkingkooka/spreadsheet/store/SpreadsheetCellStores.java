@@ -20,6 +20,9 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 
+import java.time.LocalDateTime;
+import java.util.function.Supplier;
+
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetCellStore} implementations.
  */
@@ -36,8 +39,13 @@ public final class SpreadsheetCellStores implements PublicStaticHelper {
      * {@see SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore}
      */
     public static SpreadsheetCellStore spreadsheetFormulaSpreadsheetMetadataAware(final SpreadsheetCellStore store,
-                                                                                  final SpreadsheetMetadata metadata) {
-        return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(store, metadata);
+                                                                                  final SpreadsheetMetadata metadata,
+                                                                                  final Supplier<LocalDateTime> now) {
+        return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                store,
+                metadata,
+                now
+        );
     }
 
     /**

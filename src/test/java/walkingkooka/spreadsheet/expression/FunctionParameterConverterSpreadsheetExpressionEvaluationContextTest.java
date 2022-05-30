@@ -51,6 +51,7 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
@@ -460,7 +461,8 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
                         SERVER_URL,
                         METADATA,
                         FUNCTIONS,
-                        REFERENCES
+                        REFERENCES,
+                        LocalDateTime::now
                 )
         );
     }

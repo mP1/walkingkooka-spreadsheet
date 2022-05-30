@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -55,14 +56,42 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         }
     };
 
+    private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
+
     @Test
     public void testWithNullIdFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(null, REPOSITORY));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                        null,
+                        REPOSITORY,
+                        NOW
+                )
+        );
     }
 
     @Test
     public void testWithNullRepositoryFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(ID, null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                        ID,
+                        null,
+                        NOW
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullNowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                        ID,
+                        REPOSITORY,
+                        null
+                )
+        );
     }
 
     @Test
@@ -156,7 +185,11 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(ID, REPOSITORY),
+                SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                        ID,
+                        REPOSITORY,
+                        NOW
+                ),
                 ID + " " + REPOSITORY
         );
     }
@@ -180,7 +213,8 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         SpreadsheetCellRangeStores.treeMap(),
                         SpreadsheetRowStores.treeMap(),
                         SpreadsheetUserStores.treeMap()
-                )
+                ),
+                NOW
         );
     }
 

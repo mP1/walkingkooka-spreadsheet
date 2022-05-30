@@ -136,7 +136,8 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
         return DateTimeContexts.locale(
                 this.locale(),
                 1900,
-                19
+                19,
+                LocalDateTime::now
         );
     }
 

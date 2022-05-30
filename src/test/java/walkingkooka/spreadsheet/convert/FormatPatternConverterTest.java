@@ -286,7 +286,12 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
                 converter,
                 ConverterContexts.basic(
                         converter.cast(ConverterContext.class),
-                        DateTimeContexts.locale(Locale.FRANCE, 1900, 50),
+                        DateTimeContexts.locale(
+                                Locale.FRANCE,
+                                1900,
+                                50,
+                                LocalDateTime::now
+                        ),
                         DecimalNumberContexts.american(MathContext.DECIMAL128)
                 ),
                 KIND

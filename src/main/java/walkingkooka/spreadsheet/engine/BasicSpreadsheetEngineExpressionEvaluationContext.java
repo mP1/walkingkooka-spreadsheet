@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Either;
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -33,10 +34,12 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * A {@link ExpressionEvaluationContext} used exclusively by {@link BasicSpreadsheetEngine#parseFormulaIfNecessary(SpreadsheetCell, Function, SpreadsheetEngineContext)}
@@ -46,13 +49,19 @@ import java.util.function.Function;
  */
 final class BasicSpreadsheetEngineExpressionEvaluationContext implements ExpressionEvaluationContext {
 
-    static BasicSpreadsheetEngineExpressionEvaluationContext with(final SpreadsheetEngineContext context) {
-        return new BasicSpreadsheetEngineExpressionEvaluationContext(context);
+    static BasicSpreadsheetEngineExpressionEvaluationContext with(final SpreadsheetEngineContext context,
+                                                                  final Supplier<LocalDateTime> now) {
+        return new BasicSpreadsheetEngineExpressionEvaluationContext(
+                context,
+                now
+        );
     }
 
-    private BasicSpreadsheetEngineExpressionEvaluationContext(final SpreadsheetEngineContext context) {
+    private BasicSpreadsheetEngineExpressionEvaluationContext(final SpreadsheetEngineContext context,
+                                                              final Supplier<LocalDateTime> now) {
         super();
         this.context = context;
+        this.now = now;
     }
 
     @Override
@@ -112,67 +121,81 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     private ConverterContext converterContext() {
-        return this.metadata()
-                .converterContext();
+        if (null == this.converterContext) {
+            this.converterContext = this.metadata()
+                    .converterContext(this.now);
+        }
+        return this.converterContext;
     }
+
+    private ConverterContext converterContext;
 
     // DateTimeContext.................................................................................................
 
     @Override
     public List<String> ampms() {
-        return this.metadata()
-                .dateTimeContext()
+        return this.dateTimeContext()
                 .ampms();
     }
 
     @Override
     public int defaultYear() {
-        return this.metadata()
-                .dateTimeContext()
+        return this.dateTimeContext()
                 .defaultYear();
     }
 
     @Override
     public List<String> monthNames() {
-        return this.metadata()
-                .dateTimeContext()
+        return this.dateTimeContext()
                 .monthNames();
     }
 
     @Override
     public List<String> monthNameAbbreviations() {
-        return this.metadata()
-                .dateTimeContext()
+        return this.dateTimeContext()
                 .monthNameAbbreviations();
     }
 
     @Override
+    public LocalDateTime now() {
+        return this.dateTimeContext()
+                .now();
+    }
+
+    @Override
     public int twoToFourDigitYear(final int year) {
-        return this.metadata()
-                .dateTimeContext()
+        return this.dateTimeContext()
                 .twoToFourDigitYear(year);
     }
 
     @Override
     public int twoDigitYear() {
-        return this.metadata()
-                .dateTimeContext()
+        return this.dateTimeContext()
                 .twoDigitYear();
     }
 
     @Override
     public List<String> weekDayNames() {
-        return this.metadata()
-                .dateTimeContext()
+        return this.dateTimeContext()
                 .weekDayNames();
     }
 
     @Override
     public List<String> weekDayNameAbbreviations() {
-        return this.metadata()
-                .dateTimeContext()
+        return this.dateTimeContext()
                 .weekDayNameAbbreviations();
     }
+
+    private DateTimeContext dateTimeContext() {
+        if (null == this.dateTimeContext) {
+            this.dateTimeContext = this.metadata()
+                    .dateTimeContext(this.now);
+        }
+
+        return this.dateTimeContext;
+    }
+
+    private DateTimeContext dateTimeContext;
 
     // DecimalNumberContext.............................................................................................
 
@@ -244,6 +267,8 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     private final SpreadsheetEngineContext context;
+
+    private final Supplier<LocalDateTime> now;
 
     @Override
     public String toString() {

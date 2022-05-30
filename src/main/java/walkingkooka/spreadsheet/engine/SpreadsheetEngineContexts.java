@@ -27,7 +27,9 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
 
@@ -39,14 +41,16 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final SpreadsheetEngine engine,
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetStoreRepository storeRepository,
-                                                 final AbsoluteUrl serverUrl) {
+                                                 final AbsoluteUrl serverUrl,
+                                                 final Supplier<LocalDateTime> now) {
         return BasicSpreadsheetEngineContext.with(
                 metadata,
                 functions,
                 engine,
                 fractioner,
                 storeRepository,
-                serverUrl
+                serverUrl,
+                now
         );
     }
 

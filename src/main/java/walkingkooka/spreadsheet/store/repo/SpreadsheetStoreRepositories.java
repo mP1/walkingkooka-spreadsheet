@@ -32,6 +32,9 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
+import java.time.LocalDateTime;
+import java.util.function.Supplier;
+
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetCellStore} implementations.
  */
@@ -77,8 +80,13 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
      * {@see SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository}
      */
     public static SpreadsheetStoreRepository spreadsheetMetadataAwareSpreadsheetCellStore(final SpreadsheetId id,
-                                                                                          final SpreadsheetStoreRepository repository) {
-        return SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(id, repository);
+                                                                                          final SpreadsheetStoreRepository repository,
+                                                                                          final Supplier<LocalDateTime> now) {
+        return SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                id,
+                repository,
+                now
+        );
     }
 
     /**

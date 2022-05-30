@@ -21,11 +21,9 @@ import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
@@ -205,32 +203,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     private Converter<ExpressionNumberConverterContext> converter;
 
     @Override
-    public ExpressionNumberConverterContext converterContext() {
-        if (null == this.converterContext) {
-            this.converterContext = this.converterContext0();
-        }
-        return this.converterContext;
-    }
-
-    /**
-     * Cached {@link ExpressionNumberConverterContext}.
-     */
-    private ExpressionNumberConverterContext converterContext;
-
-    @Override
-    public DateTimeContext dateTimeContext() {
-        if (null == this.dateTimeContext) {
-            this.dateTimeContext = this.dateTimeContext0();
-        }
-        return this.dateTimeContext;
-    }
-
-    /**
-     * Cached {@link DateTimeContext}.
-     */
-    private DateTimeContext dateTimeContext;
-
-    @Override
     public DecimalNumberContext decimalNumberContext() {
         if (null == this.decimalNumberContext) {
             this.decimalNumberContext = this.decimalNumberContext0();
@@ -295,19 +267,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      */
     private SpreadsheetFormatter formatter;
 
-    @Override
-    public synchronized SpreadsheetFormatterContext formatterContext() {
-        if (null == this.formatterContext) {
-            this.formatterContext = this.formatterContext0();
-        }
-        return this.formatterContext;
-    }
-
-    /**
-     * Cached {@link SpreadsheetFormatter}
-     */
-    private SpreadsheetFormatterContext formatterContext;
-
     // ParserContext....................................................................................................
 
     @Override
@@ -320,19 +279,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     }
 
     private Parser<SpreadsheetParserContext> parser;
-
-    // ParserContext....................................................................................................
-
-    @Override
-    public SpreadsheetParserContext parserContext() {
-        if (null == this.parserContext) {
-            this.parserContext = this.parserContext0();
-        }
-
-        return this.parserContext;
-    }
-
-    private SpreadsheetParserContext parserContext;
 
     // SpreadsheetMetadataVisitor.......................................................................................
 

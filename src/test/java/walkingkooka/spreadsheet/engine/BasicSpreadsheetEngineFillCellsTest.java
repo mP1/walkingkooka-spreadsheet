@@ -21,15 +21,24 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 
+import java.time.LocalDateTime;
+
 public final class BasicSpreadsheetEngineFillCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineFillCells>
         implements ToStringTesting<BasicSpreadsheetEngineFillCells> {
 
     @Test
     public void testToString() {
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(
-                SpreadsheetMetadata.EMPTY
+                SpreadsheetMetadata.EMPTY,
+                LocalDateTime::now
         );
-        this.toStringAndCheck(new BasicSpreadsheetEngineFillCells(engine, null), engine.toString());
+        this.toStringAndCheck(
+                new BasicSpreadsheetEngineFillCells(
+                        engine,
+                        null
+                ),
+                engine.toString()
+        );
     }
 
     @Override

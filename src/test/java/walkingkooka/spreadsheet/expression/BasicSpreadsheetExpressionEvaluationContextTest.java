@@ -40,10 +40,12 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -70,6 +72,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         throw new UnsupportedOperationException();
     };
 
+    private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
+
     // with.............................................................................................................
 
     @Test
@@ -80,7 +84,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 METADATA,
                 FUNCTIONS,
-                REFERENCES
+                REFERENCES,
+                NOW
         );
     }
 
@@ -92,7 +97,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 METADATA,
                 FUNCTIONS,
-                REFERENCES
+                REFERENCES,
+                NOW
         );
     }
 
@@ -104,7 +110,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 METADATA,
                 FUNCTIONS,
-                REFERENCES
+                REFERENCES,
+                NOW
         );
     }
 
@@ -116,7 +123,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 null,
                 FUNCTIONS,
-                REFERENCES
+                REFERENCES,
+                NOW
         );
     }
 
@@ -128,7 +136,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 METADATA,
                 null,
-                REFERENCES
+                REFERENCES,
+                NOW
         );
     }
 
@@ -140,6 +149,20 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 METADATA,
                 FUNCTIONS,
+                null,
+                NOW
+        );
+    }
+
+    @Test
+    public void testWithNullNowFails() {
+        this.withFails(
+                CELL,
+                CELL_STORE,
+                SERVER_URL,
+                METADATA,
+                FUNCTIONS,
+                REFERENCES,
                 null
         );
     }
@@ -149,7 +172,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final AbsoluteUrl serverUrl,
                            final SpreadsheetMetadata spreadsheetMetadata,
                            final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
-                           final Function<ExpressionReference, Optional<Object>> references) {
+                           final Function<ExpressionReference, Optional<Object>> references,
+                           final Supplier<LocalDateTime> now) {
         assertThrows(
                 NullPointerException.class,
                 () -> {
@@ -159,7 +183,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                             serverUrl,
                             spreadsheetMetadata,
                             functions,
-                            references
+                            references,
+                            now
                     );
                 }
         );
@@ -317,7 +342,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@"))
                         .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20),
                 FUNCTIONS,
-                REFERENCES
+                REFERENCES,
+                NOW
         );
     }
 }

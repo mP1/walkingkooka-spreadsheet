@@ -756,7 +756,8 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
                 return DateTimeContexts.locale(
                         Locale.forLanguageTag("EN-AU"),
                         1900,
-                        20
+                        20,
+                        LocalDateTime::now
                 );
             }
 

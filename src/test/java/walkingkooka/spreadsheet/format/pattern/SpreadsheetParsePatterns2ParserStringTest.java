@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -183,9 +184,11 @@ public final class SpreadsheetParsePatterns2ParserStringTest extends Spreadsheet
 
     private List<String> monthNames() {
         return DateTimeContexts.locale(
-                Locale.forLanguageTag("EN-AU"),
-                1900,
-                20).monthNames();
+                        Locale.forLanguageTag("EN-AU"),
+                        1900,
+                        20,
+                        LocalDateTime::now)
+                .monthNames();
     }
 
     @Override

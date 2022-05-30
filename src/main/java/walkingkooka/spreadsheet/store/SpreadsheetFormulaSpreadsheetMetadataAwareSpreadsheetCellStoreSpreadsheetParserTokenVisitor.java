@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
+import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetAdditionParserToken;
@@ -93,10 +94,12 @@ import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 /**
  * A {@link SpreadsheetParserTokenVisitor} that replaces tokens that are {@link Locale} sensitive, such as decimal-separator.
@@ -104,17 +107,21 @@ import java.util.function.BiFunction;
 final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
 
     static SpreadsheetParserToken update(final SpreadsheetParserToken token,
-                                         final SpreadsheetMetadata metadata) {
+                                         final SpreadsheetMetadata metadata,
+                                         final Supplier<LocalDateTime> now) {
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor visitor = new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor(
-                metadata
+                metadata,
+                now
         );
         visitor.accept(token);
         return visitor.children.get(0).cast(SpreadsheetParserToken.class);
     }
 
-    SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor(final SpreadsheetMetadata metadata) {
+    SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor(final SpreadsheetMetadata metadata,
+                                                                                                final Supplier<LocalDateTime> now) {
         super();
         this.metadata = metadata;
+        this.now = now;
     }
 
     @Override
@@ -344,7 +351,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetParserToken.amPm(value, this.metadata.dateTimeContext().ampm(value))
+                SpreadsheetParserToken.amPm(
+                        value,
+                        this.dateTimeContext()
+                                .ampm(value)
+                )
         );
     }
 
@@ -376,7 +387,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetParserToken.dayName(value, this.metadata.dateTimeContext().weekDayName(value))
+                SpreadsheetParserToken.dayName(
+                        value,
+                        this.dateTimeContext()
+                                .weekDayName(value)
+                )
         );
     }
 
@@ -385,7 +400,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetParserToken.dayNameAbbreviation(value, this.metadata.dateTimeContext().weekDayNameAbbreviation(value))
+                SpreadsheetParserToken.dayNameAbbreviation(
+                        value,
+                        this.dateTimeContext()
+                                .weekDayNameAbbreviation(value)
+                )
         );
     }
 
@@ -496,7 +515,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetParserToken.monthName(value, this.metadata.dateTimeContext().monthName(value))
+                SpreadsheetParserToken.monthName(
+                        value,
+                        this.dateTimeContext()
+                                .monthName(value)
+                )
         );
     }
 
@@ -505,7 +528,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetParserToken.monthNameAbbreviation(value, this.metadata.dateTimeContext().monthNameAbbreviation(value))
+                SpreadsheetParserToken.monthNameAbbreviation(
+                        value,
+                        this.dateTimeContext()
+                                .monthNameAbbreviation(value)
+                )
         );
     }
 
@@ -514,7 +541,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetParserToken.monthNameInitial(value, this.metadata.dateTimeContext().monthName(value).substring(0, 1))
+                SpreadsheetParserToken.monthNameInitial(
+                        value,
+                        this.dateTimeContext()
+                                .monthName(value).substring(0, 1)
+                )
         );
     }
 
@@ -655,6 +686,17 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     private List<ParserToken> children = Lists.array();
 
     private final SpreadsheetMetadata metadata;
+
+    private DateTimeContext dateTimeContext() {
+        if (null == this.dateTimeContext) {
+            this.dateTimeContext = this.metadata.dateTimeContext(this.now);
+        }
+        return this.dateTimeContext;
+    }
+
+    private final Supplier<LocalDateTime> now;
+
+    private DateTimeContext dateTimeContext;
 
     @Override
     public String toString() {

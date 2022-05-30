@@ -74,6 +74,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -81,6 +82,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public final class Sample {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+
+    private static final Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
     public static void main(final String[] args) {
         final SpreadsheetEngine engine = engine();
@@ -168,11 +171,15 @@ public final class Sample {
     private static SpreadsheetMetadata metadata;
 
     private static SpreadsheetEngine engine() {
-        return SpreadsheetEngines.basic(metadata());
+        return SpreadsheetEngines.basic(
+                metadata(),
+                NOW
+        );
     }
 
     private static SpreadsheetEngineContext engineContext(final SpreadsheetEngine engine) {
         final SpreadsheetMetadata metadata = metadata();
+
         return new FakeSpreadsheetEngineContext() {
 
             @Override
@@ -185,7 +192,7 @@ public final class Sample {
                 return Cast.to(SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
-                                metadata.converterContext(),
+                                metadata.converterContext(NOW),
                                 EXPRESSION_NUMBER_KIND,
                                 ',')) // TODO should fetch from metadata prop
                         .get());
@@ -204,7 +211,9 @@ public final class Sample {
                                 this.references(),
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
-                                metadata.converterContext()
+                                metadata.converterContext(
+                                        NOW
+                                )
                         )
                 );
             }
@@ -239,7 +248,10 @@ public final class Sample {
                                                     final SpreadsheetFormatter formatter) {
                 checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
 
-                return formatter.format(value, metadata.formatterContext());
+                return formatter.format(
+                        value,
+                        metadata.formatterContext(NOW)
+                );
             }
 
             @Override

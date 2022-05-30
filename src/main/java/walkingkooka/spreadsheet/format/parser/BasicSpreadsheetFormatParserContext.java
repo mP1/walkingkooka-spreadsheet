@@ -21,6 +21,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -89,6 +90,11 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     @Override
     public char negativeSign() {
         return this.context.negativeSign();
+    }
+
+    @Override
+    public LocalDateTime now() {
+        throw new UnsupportedOperationException();
     }
 
     @Override

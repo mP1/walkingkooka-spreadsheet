@@ -122,6 +122,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -205,9 +206,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static double WIDTH = 50;
     private final static double HEIGHT = 30;
 
+    private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
+
     @Test
     public void testWithNullMetadataFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngine.with(
+                        null,
+                        NOW
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullNowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngine.with(
+                        SpreadsheetMetadata.EMPTY,
+                        null
+                )
+        );
     }
 
     // loadCell.........................................................................................................
@@ -6984,7 +7004,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                       final double maxColumnWidth,
                                       final double expected) {
         this.columnWidthAndCheck(
-                BasicSpreadsheetEngine.with(metadata),
+                BasicSpreadsheetEngine.with(
+                        metadata,
+                        NOW
+                ),
                 column,
                 this.createContext(new FakeSpreadsheetCellStore() {
                     @Override
@@ -7002,7 +7025,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
         assertThrows(
                 TextStylePropertyValueException.class,
-                () -> BasicSpreadsheetEngine.with(SpreadsheetMetadata.EMPTY)
+                () -> BasicSpreadsheetEngine.with(
+                                SpreadsheetMetadata.EMPTY,
+                                NOW
+                        )
                         .columnWidth(
                                 column,
                                 this.createContext(
@@ -7048,7 +7074,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     final SpreadsheetMetadata metadata,
                                     final double expected) {
         this.rowHeightAndCheck(
-                BasicSpreadsheetEngine.with(metadata),
+                BasicSpreadsheetEngine.with(
+                        metadata,
+                        NOW
+                ),
                 row,
                 this.createContext(
                         new FakeSpreadsheetCellStore() {
@@ -7065,20 +7094,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRowHeightDefaultMissing() {
         final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("999");
-        assertThrows(TextStylePropertyValueException.class,
-                () -> BasicSpreadsheetEngine.with(SpreadsheetMetadata.EMPTY)
-                        .rowHeight(
-                                row,
-                                this.createContext(
-                                        new FakeSpreadsheetCellStore() {
+        assertThrows(
+                TextStylePropertyValueException.class,
+                () -> BasicSpreadsheetEngine.with(
+                        SpreadsheetMetadata.EMPTY,
+                        NOW
+                ).rowHeight(
+                        row,
+                        this.createContext(
+                                new FakeSpreadsheetCellStore() {
 
-                                            @Override
-                                            public double maxRowHeight(final SpreadsheetRowReference r) {
-                                                checkEquals(row, r);
-                                                return 0;
-                                            }
-                                        })
-                        )
+                                    @Override
+                                    public double maxRowHeight(final SpreadsheetRowReference r) {
+                                        checkEquals(row, r);
+                                        return 0;
+                                    }
+                                })
+                )
         );
     }
 
@@ -8827,7 +8859,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 );
 
         this.windowAndCheck(
-                BasicSpreadsheetEngine.with(metadata),
+                BasicSpreadsheetEngine.with(
+                        metadata,
+                        NOW
+                ),
                 SpreadsheetSelection.parseCellOrLabel(cellOrLabel)
                         .viewport(
                                 width,
@@ -8975,7 +9010,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Override
     public BasicSpreadsheetEngine createSpreadsheetEngine() {
-        return BasicSpreadsheetEngine.with(this.metadata());
+        return BasicSpreadsheetEngine.with(
+                this.metadata(),
+                NOW
+        );
     }
 
     @Override
@@ -9225,7 +9263,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             private ConverterContext converterContext() {
-                return this.metadata().converterContext();
+                return this.metadata()
+                        .converterContext(NOW);
             }
 
             @Override

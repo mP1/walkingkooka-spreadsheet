@@ -60,6 +60,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
@@ -1074,7 +1075,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return DateTimeContexts.locale(
                 this.decimalNumberContext().locale(),
                 1900,
-                50
+                50,
+                LocalDateTime::now
         );
     }
 

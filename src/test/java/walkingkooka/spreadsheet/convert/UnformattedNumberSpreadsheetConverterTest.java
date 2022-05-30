@@ -223,7 +223,8 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                         DateTimeContexts.locale(
                                 Locale.FRANCE,
                                 1900,
-                                50
+                                50,
+                                LocalDateTime::now
                         ),
                         DecimalNumberContexts.fake()
                 ),

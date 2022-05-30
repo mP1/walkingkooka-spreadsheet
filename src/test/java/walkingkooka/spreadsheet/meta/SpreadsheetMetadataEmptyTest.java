@@ -24,6 +24,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -138,8 +139,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
     @Test
     public void testParserContextAllRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
-                .parserContext());
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.parserContext(LocalDateTime::now)
+        );
         this.checkEquals("Required properties \"currency-symbol\", \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
                 thrown.getMessage(),
                 "message");
@@ -147,9 +150,12 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
     @Test
     public void testParserContextAllRequiredPropertiesAbsentFails2() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
-                .parserContext());
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
+                        .parserContext(LocalDateTime::now)
+        );
         this.checkEquals("Required properties \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
                 thrown.getMessage(),
                 "message");
