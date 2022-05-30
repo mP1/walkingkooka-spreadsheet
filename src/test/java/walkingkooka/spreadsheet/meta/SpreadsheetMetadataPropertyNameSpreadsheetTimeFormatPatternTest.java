@@ -89,7 +89,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
                             }
                         },
                         ConverterContexts.basic(Converters.fake(),
-                                DateTimeContexts.locale(Locale.ENGLISH, 1900, 20),
+                                DateTimeContexts.locale(
+                                        Locale.ENGLISH,
+                                        1900,
+                                        20,
+                                        LocalDateTime::now
+                                ),
                                 DecimalNumberContexts.american(MathContext.DECIMAL32)),
                         ExpressionNumberKind.DEFAULT
                 )

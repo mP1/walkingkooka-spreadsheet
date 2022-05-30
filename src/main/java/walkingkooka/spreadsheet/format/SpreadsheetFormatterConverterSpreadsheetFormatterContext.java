@@ -26,6 +26,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -149,6 +150,11 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     @Override
     public char negativeSign() {
         return context.negativeSign();
+    }
+
+    @Override
+    public LocalDateTime now() {
+        return this.context.now();
     }
 
     @Override

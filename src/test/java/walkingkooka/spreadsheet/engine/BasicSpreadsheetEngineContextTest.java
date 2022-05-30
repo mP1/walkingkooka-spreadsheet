@@ -66,11 +66,13 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -82,6 +84,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static int WIDTH = 1;
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://example.com/path123");
 
+    private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
+
     @Test
     public void testWithNullMetadataFails() {
         assertThrows(
@@ -92,7 +96,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         this.engine(),
                         FRACTIONER,
                         this.storeRepository(),
-                        SERVER_URL
+                        SERVER_URL,
+                        NOW
                 )
         );
     }
@@ -107,7 +112,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         this.engine(),
                         FRACTIONER,
                         this.storeRepository(),
-                        SERVER_URL
+                        SERVER_URL,
+                        NOW
                 )
         );
     }
@@ -122,7 +128,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         null,
                         FRACTIONER,
                         this.storeRepository(),
-                        SERVER_URL
+                        SERVER_URL,
+                        NOW
                 )
         );
     }
@@ -137,7 +144,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         this.engine(),
                         null,
                         this.storeRepository(),
-                        SERVER_URL
+                        SERVER_URL,
+                        NOW
                 )
         );
     }
@@ -152,7 +160,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         this.engine(),
                         FRACTIONER,
                         null,
-                        SERVER_URL
+                        SERVER_URL,
+                        NOW
                 )
         );
     }
@@ -167,6 +176,23 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         this.engine(),
                         FRACTIONER,
                         this.storeRepository(),
+                        null,
+                        NOW
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullNowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        this.metadata(),
+                        this.functions(),
+                        this.engine(),
+                        FRACTIONER,
+                        this.storeRepository(),
+                        SERVER_URL,
                         null
                 )
         );
@@ -747,7 +773,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         return labelStore;
                     }
                 },
-                SERVER_URL
+                SERVER_URL,
+                NOW
         );
     }
 

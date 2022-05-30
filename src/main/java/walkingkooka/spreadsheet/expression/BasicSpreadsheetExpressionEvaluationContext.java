@@ -36,11 +36,13 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
 
@@ -49,13 +51,15 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final AbsoluteUrl serverUrl,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
                                                             final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
-                                                            final Function<ExpressionReference, Optional<Object>> references) {
+                                                            final Function<ExpressionReference, Optional<Object>> references,
+                                                            final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(references, "references");
+        Objects.requireNonNull(now, "now");
 
         return new BasicSpreadsheetExpressionEvaluationContext(
                 cell,
@@ -63,7 +67,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 serverUrl,
                 spreadsheetMetadata,
                 functions,
-                references
+                references,
+                now
         );
     }
 
@@ -72,7 +77,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final AbsoluteUrl serverUrl,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
                                                         final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
-                                                        final Function<ExpressionReference, Optional<Object>> references) {
+                                                        final Function<ExpressionReference, Optional<Object>> references,
+                                                        final Supplier<LocalDateTime> now) {
         super();
         this.cell = cell;
         this.cellStore = cellStore;
@@ -80,6 +86,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.functions = functions;
         this.references = references;
+        this.now = now;
     }
 
     // SpreadsheetExpressionEvaluationContext............................................................................
@@ -245,6 +252,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
+    public LocalDateTime now() {
+        return this.converterContext()
+                .now();
+    }
+
+    @Override
     public int twoToFourDigitYear(final int year) {
         return this.converterContext()
                 .twoToFourDigitYear(year);
@@ -332,8 +345,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     private ConverterContext converterContext() {
         return this.spreadsheetMetadata()
-                .converterContext();
+                .converterContext(this.now);
     }
+
+    private final Supplier<LocalDateTime> now;
 
     // Object...........................................................................................................
 

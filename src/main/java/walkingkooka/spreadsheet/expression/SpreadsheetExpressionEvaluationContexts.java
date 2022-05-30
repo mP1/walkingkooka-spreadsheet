@@ -32,8 +32,10 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class SpreadsheetExpressionEvaluationContexts implements PublicStaticHelper {
 
@@ -45,14 +47,16 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final AbsoluteUrl serverUrl,
                                                                final SpreadsheetMetadata spreadsheetMetadata,
                                                                final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
-                                                               final Function<ExpressionReference, Optional<Object>> references) {
+                                                               final Function<ExpressionReference, Optional<Object>> references,
+                                                               final Supplier<LocalDateTime> now) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
                 cell,
                 cellStore,
                 serverUrl,
                 spreadsheetMetadata,
                 functions,
-                references
+                references,
+                now
         );
     }
 

@@ -32,11 +32,13 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -47,16 +49,23 @@ import java.util.stream.Collectors;
 final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore implements SpreadsheetCellStore {
 
     static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore with(final SpreadsheetCellStore store,
-                                                                               final SpreadsheetMetadata metadata) {
+                                                                               final SpreadsheetMetadata metadata,
+                                                                               final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(store, "store");
         Objects.requireNonNull(metadata, "metadata");
+        Objects.requireNonNull(now, "now");
 
         return store instanceof SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore ?
                 setMetadata(
                         (SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore) store,
-                        metadata
+                        metadata,
+                        now
                 ) :
-                new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(store, metadata);
+                new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(
+                        store,
+                        metadata,
+                        now
+                );
     }
 
     /**
@@ -65,18 +74,20 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
      */
     private static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore setMetadata(
             final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore store,
-            final SpreadsheetMetadata metadata) {
+            final SpreadsheetMetadata metadata,
+            final Supplier<LocalDateTime> now) {
         return metadata.equals(store.metadata) ?
                 store :
-                new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(store.store, metadata);
+                new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(store.store, metadata, now);
     }
 
     private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(final SpreadsheetCellStore store,
-                                                                           final SpreadsheetMetadata metadata) {
+                                                                           final SpreadsheetMetadata metadata,
+                                                                           final Supplier<LocalDateTime> now) {
         this.store = store;
         this.metadata = metadata;
+        this.now = now;
     }
-
 
     @Override
     public Optional<SpreadsheetCell> load(final SpreadsheetCellReference cellReference) {
@@ -142,8 +153,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
         return this.metadata.parser()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), metadata.parserContext())
-                .orElse(null)
+                .parse(
+                        TextCursors.charSequence(text),
+                        metadata.parserContext(this.now)
+                ).orElse(null)
                 .cast(SpreadsheetParserToken.class);
     }
 
@@ -235,7 +248,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         if (null != token) {
             token = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor.update(
                     token,
-                    this.metadata
+                    this.metadata,
+                    this.now
             );
             final String text = token.text();
             if (!formula.text().equals(text)) {
@@ -252,7 +266,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     private ExpressionEvaluationContext expressionEvaluationContext() {
-        return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext.with(this.metadata);
+        return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext.with(
+                this.metadata,
+                this.now
+        );
     }
 
     // @VisibleForTesting
@@ -260,6 +277,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
     // @VisibleForTesting
     final SpreadsheetMetadata metadata;
+
+    final Supplier<LocalDateTime> now;
 
     @Override
     public String toString() {

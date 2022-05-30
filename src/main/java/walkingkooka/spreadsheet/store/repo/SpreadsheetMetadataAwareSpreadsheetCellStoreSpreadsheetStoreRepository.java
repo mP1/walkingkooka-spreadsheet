@@ -33,7 +33,9 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * A {@link SpreadsheetStoreRepository} that rewraps the {@link SpreadsheetCellStore} each time a {@link SpreadsheetMetadata}
@@ -42,17 +44,25 @@ import java.util.Objects;
 final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository implements SpreadsheetStoreRepository {
 
     static SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository with(final SpreadsheetId id,
-                                                                                       final SpreadsheetStoreRepository repository) {
+                                                                                       final SpreadsheetStoreRepository repository,
+                                                                                       final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(repository, "repository");
+        Objects.requireNonNull(now, "now");
 
-        return new SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository(id, repository);
+        return new SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository(
+                id,
+                repository,
+                now
+        );
     }
 
     private SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository(final SpreadsheetId id,
-                                                                                   final SpreadsheetStoreRepository repository) {
+                                                                                   final SpreadsheetStoreRepository repository,
+                                                                                   final Supplier<LocalDateTime> now) {
         this.id = id;
         this.repository = repository;
+        this.now = now;
 
         repository.metadatas().addSaveWatcher(this::onSaveMetadata);
     }
@@ -68,7 +78,8 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
         if (expected.equals(id)) {
             this.cells = SpreadsheetCellStores.spreadsheetFormulaSpreadsheetMetadataAware(
                     this.repository.cells(),
-                    metadata
+                    metadata,
+                    this.now
             );
         }
     }
@@ -78,11 +89,14 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
         if (null == this.cells) {
             this.cells = SpreadsheetCellStores.spreadsheetFormulaSpreadsheetMetadataAware(
                     this.repository.cells(),
-                    this.repository.metadatas().loadOrFail(this.id)
+                    this.repository.metadatas().loadOrFail(this.id),
+                    this.now
             );
         }
         return cells;
     }
+
+    private final Supplier<LocalDateTime> now;
 
     /**
      * This will be updated each time a new {@link SpreadsheetMetadata} is saved.

@@ -28,7 +28,10 @@ public final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStor
 
     @Override
     public SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor createVisitor() {
-        return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor(null);
+        return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor(
+                null,
+                null
+        );
     }
 
     @Override

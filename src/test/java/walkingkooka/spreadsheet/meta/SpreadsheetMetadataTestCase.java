@@ -304,7 +304,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testHasDateTimeContextRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().dateTimeContext());
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> this.createObject().dateTimeContext(LocalDateTime::now)
+        );
         checkMessage(thrown,
                 "Required properties \"default-year\", \"locale\", \"two-digit-year\" missing.");
     }

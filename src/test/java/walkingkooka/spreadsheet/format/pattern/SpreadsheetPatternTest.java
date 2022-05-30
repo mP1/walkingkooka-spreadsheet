@@ -163,7 +163,12 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
 
                     private DateTimeContext dateTimeContext() {
-                        return DateTimeContexts.locale(EN_AU, 1900, 50);
+                        return DateTimeContexts.locale(
+                                EN_AU,
+                                1900,
+                                50,
+                                LocalDateTime::now
+                        );
                     }
 
                 },
@@ -384,7 +389,12 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         final Parser<SpreadsheetParserContext> parser = pattern.parser();
         final TextCursor cursor = TextCursors.charSequence(text);
 
-        final DateTimeContext dateTimeContext = DateTimeContexts.locale(EN_AU, 1800, 50);
+        final DateTimeContext dateTimeContext = DateTimeContexts.locale(
+                EN_AU,
+                1800,
+                50,
+                LocalDateTime::now
+        );
 
         this.checkEquals(
                 expected,

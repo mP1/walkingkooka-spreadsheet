@@ -30,6 +30,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.MathContext;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatternsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns, SpreadsheetNumberParsePatterns> {
@@ -71,7 +72,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns
                                 Converters.fake(),
                                 ConverterContexts.basic(
                                         Converters.fake(),
-                                        DateTimeContexts.locale(locale, 1900, 20),
+                                        DateTimeContexts.locale(locale, 1900, 20, LocalDateTime::now),
                                         DecimalNumberContexts.american(MathContext.DECIMAL32)
                                 ),
                                 kind)

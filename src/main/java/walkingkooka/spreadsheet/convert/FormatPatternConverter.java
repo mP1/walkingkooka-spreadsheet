@@ -44,7 +44,7 @@ final class FormatPatternConverter implements Converter<ExpressionNumberConverte
     public boolean canConvert(final Object value,
                               final Class<?> type,
                               final ExpressionNumberConverterContext context) {
-        return String.class == type;
+        return String.class == type || context.canConvert(value, type);
     }
 
     @Override
@@ -56,7 +56,7 @@ final class FormatPatternConverter implements Converter<ExpressionNumberConverte
                         this.formatUsingPattern(value, context),
                         type
                 ) :
-                this.failConversion(value, type);
+                context.convert(value, type);
     }
 
     private String formatUsingPattern(final Object value,

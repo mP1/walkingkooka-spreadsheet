@@ -32,6 +32,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
@@ -224,7 +225,8 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return DateTimeContexts.locale(
                 LOCALE,
                 1900,
-                50
+                50,
+                LocalDateTime::now
         );
     }
 

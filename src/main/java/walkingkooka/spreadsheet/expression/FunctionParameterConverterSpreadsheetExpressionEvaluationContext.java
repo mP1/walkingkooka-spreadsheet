@@ -34,6 +34,7 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -308,6 +309,11 @@ final class FunctionParameterConverterSpreadsheetExpressionEvaluationContext imp
     @Override
     public String monthNameAbbreviation(final int month) {
         return this.context.monthNameAbbreviation(month);
+    }
+
+    @Override
+    public LocalDateTime now() {
+        return this.context.now();
     }
 
     @Override

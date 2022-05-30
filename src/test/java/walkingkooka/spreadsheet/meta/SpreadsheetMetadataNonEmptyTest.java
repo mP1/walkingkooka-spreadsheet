@@ -86,6 +86,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -100,6 +101,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static int DEFAULT_YEAR = 1900;
+
+    private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
     @Test
     public void testId() {
@@ -1198,7 +1201,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ExpressionNumberConverterContexts.basic(Converters.fake(),
                         ConverterContexts.basic(
                                 Converters.fake(),
-                                DateTimeContexts.locale(Locale.ENGLISH, DEFAULT_YEAR, 20),
+                                DateTimeContexts.locale(
+                                        Locale.ENGLISH,
+                                        DEFAULT_YEAR,
+                                        20,
+                                        NOW
+                                ),
                                 DecimalNumberContexts.american(MathContext.DECIMAL32)
                         ),
                         metadata.expressionNumberKind())
@@ -1246,13 +1254,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.convertAndCheck3(LocalTime.of(12, 58, 59),
                 "Time 59 12",
                 metadata.converter(),
-                metadata.converterContext());
-    }
-
-    @Test
-    public void testConverterContextCached() {
-        final SpreadsheetMetadata metadata = createSpreadsheetMetadataWithConverterAndConverterContext();
-        assertSame(metadata.converterContext(), metadata.converterContext());
+                metadata.converterContext(NOW));
     }
 
     private final static String CURRENCY = "$AUD";
@@ -1289,8 +1291,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                     .set(SpreadsheetMetadataPropertyName.LOCALE, l)
                                     .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
 
-                            final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
-                            final DateTimeContext context = metadata.dateTimeContext();
+                    final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
+                    final DateTimeContext context = metadata.dateTimeContext(NOW);
                             this.amPmAndCheck(context, 13, symbols.getAmPmStrings()[1]);
                             this.monthNameAndCheck(context, 2, symbols.getMonths()[2]);
                             this.monthNameAbbreviationAndCheck(context, 3, symbols.getShortMonths()[3]);
@@ -1300,15 +1302,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
                         }
                 );
-    }
-
-    @Test
-    public void testDateTimeContextCached() {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
-                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20);
-        assertSame(metadata.dateTimeContext(), metadata.dateTimeContext());
     }
 
     // HasDecimalNumberContext..........................................................................................
@@ -1562,14 +1555,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testFormatterContextCached() {
-        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithFormatterContext();
-
-        assertSame(metadata.formatterContext(), metadata.formatterContext());
-        assertSame(metadata.formatterContext(), metadata.formatterContext());
-    }
-
-    private SpreadsheetMetadata createSpreadsheetMetadataWithFormatterContext() {
-        return this.createSpreadsheetMetadataWithConverter()
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter()
                 .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
@@ -1581,16 +1567,24 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN);
+
+        this.checkNotEquals(
+                null,
+                metadata.formatterContext(NOW)
+        );
     }
 
     // HasJsonNodeUnmarshallContext.......................................................................................
 
     @Test
     public void testJsonNodeUnmarshallContextSomeRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
-                .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
-                .jsonNodeUnmarshallContext());
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
+                        .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
+                        .jsonNodeUnmarshallContext()
+        );
         this.checkEquals("Required properties \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
@@ -1747,10 +1741,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                                  final T expected) {
         final TextCursor cursor = TextCursors.charSequence(text);
 
-        final ParserToken token = this.metadataWithParser().parser()
+        final ParserToken token = this.metadataWithParser()
+                .parser()
                 .parse(
                         cursor,
-                        this.parserWithParserContext().parserContext()
+                        this.metadataWithParserContext()
+                                .parserContext(NOW)
                 ).orElseThrow(() -> new AssertionError("parser failed"));
         this.checkEquals(true, cursor.isEmpty(), () -> cursor + " is not empty");
 
@@ -1773,12 +1769,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testParserContext() {
-        final SpreadsheetMetadata metadata = this.parserWithParserContext();
+        final SpreadsheetMetadata metadata = this.metadataWithParserContext();
 
-        assertSame(metadata.parserContext(), metadata.parserContext());
+        this.checkNotEquals(
+                null,
+                metadata.parserContext(NOW)
+        );
     }
 
-    private SpreadsheetMetadata parserWithParserContext() {
+    private SpreadsheetMetadata metadataWithParserContext() {
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)

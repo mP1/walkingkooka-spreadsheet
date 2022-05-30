@@ -61,12 +61,14 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * The default or basic implementation of {@link SpreadsheetEngine} that includes support for evaluating nodes,
@@ -77,19 +79,24 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Factory that creates a new {@link BasicSpreadsheetEngine}
      */
-    static BasicSpreadsheetEngine with(final SpreadsheetMetadata metadata) {
+    static BasicSpreadsheetEngine with(final SpreadsheetMetadata metadata,
+                                       final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(metadata, "metadata");
+        Objects.requireNonNull(now, "now");
 
         return new BasicSpreadsheetEngine(
-                metadata
+                metadata,
+                now
         );
     }
 
     /**
      * Private ctor.
      */
-    private BasicSpreadsheetEngine(final SpreadsheetMetadata metadata) {
+    private BasicSpreadsheetEngine(final SpreadsheetMetadata metadata,
+                                   final Supplier<LocalDateTime> now) {
         this.metadata = metadata;
+        this.now = now;
     }
 
     // LOAD CELL........................................................................................................
@@ -681,7 +688,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 if (null != token && false == formula.expression().isPresent()) {
                     formula = formula.setExpression(
                             token.toExpression(
-                                    BasicSpreadsheetEngineExpressionEvaluationContext.with(context)
+                                    BasicSpreadsheetEngineExpressionEvaluationContext.with(
+                                            context,
+                                            this.now
+                                    )
                             )
                     );
                 }
@@ -694,6 +704,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return formula;
     }
+
+    private final Supplier<LocalDateTime> now;
 
     /**
      * This {@link SpreadsheetParserToken} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
@@ -861,7 +873,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     )
             );
             final Boolean booleanResult = context.metadata()
-                    .converterContext()
+                    .converterContext(this.now)
                     .convertOrFail(test, Boolean.class);
             if (Boolean.TRUE.equals(booleanResult)) {
                 final TextNode formatted = cell.formatted()

@@ -21,16 +21,22 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class SpreadsheetEngines implements PublicStaticHelper {
 
     /**
      * {@see BasicSpreadsheetEngine}
      */
-    public static SpreadsheetEngine basic(final SpreadsheetMetadata metadata) {
-        return BasicSpreadsheetEngine.with(metadata);
+    public static SpreadsheetEngine basic(final SpreadsheetMetadata metadata,
+                                          final Supplier<LocalDateTime> now) {
+        return BasicSpreadsheetEngine.with(
+                metadata,
+                now
+        );
     }
 
     /**

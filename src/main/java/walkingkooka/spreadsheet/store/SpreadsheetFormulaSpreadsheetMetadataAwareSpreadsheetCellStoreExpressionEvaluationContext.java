@@ -32,9 +32,11 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * A minimalist {@link ExpressionEvaluationContext} that is used by {@link SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore} to
@@ -42,13 +44,19 @@ import java.util.Optional;
  */
 final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext implements ExpressionEvaluationContext {
 
-    static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext with(final SpreadsheetMetadata metadata) {
-        return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(metadata);
+    static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext with(final SpreadsheetMetadata metadata,
+                                                                                                          final Supplier<LocalDateTime> now) {
+        return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(
+                metadata,
+                now
+        );
     }
 
-    private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(final SpreadsheetMetadata metadata) {
+    private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(final SpreadsheetMetadata metadata,
+                                                                                                      final Supplier<LocalDateTime> now) {
         super();
         this.metadata = metadata;
+        this.now = now;
     }
 
     @Override
@@ -132,6 +140,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     @Override
+    public LocalDateTime now() {
+        return this.dateTimeContext()
+                .now();
+    }
+
+    @Override
     public int twoToFourDigitYear(final int year) {
         return this.dateTimeContext()
                 .twoToFourDigitYear(year);
@@ -156,8 +170,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     private DateTimeContext dateTimeContext() {
-        return this.metadata.dateTimeContext();
+        return this.metadata.dateTimeContext(this.now);
     }
+
+    private final Supplier<LocalDateTime> now;
 
     // DecimalNumberContext.............................................................................................
 

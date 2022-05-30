@@ -24,13 +24,11 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.HasDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
@@ -38,7 +36,6 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.HasSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -83,6 +80,7 @@ import walkingkooka.tree.text.TextStylePropertyValueException;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -90,18 +88,17 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * A {@link SpreadsheetMetadata} holds a {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
  */
 public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumberConverterContext>,
-        HasDateTimeContext,
         HasDecimalNumberContext,
         HasExpressionNumberKind,
         HasMathContext,
         HasParser<SpreadsheetParserContext>,
         HasSpreadsheetFormatter,
-        HasSpreadsheetFormatterContext,
         HateosResource<SpreadsheetId>,
         Patchable<SpreadsheetMetadata>,
         TreePrintable,
@@ -462,16 +459,14 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     /**
      * Returns a {@link ExpressionNumberConverterContext}
      */
-    public abstract ExpressionNumberConverterContext converterContext();
-
-    /**
-     * Factory that creates a {@link ConverterContext}
-     */
-    final ExpressionNumberConverterContext converterContext0() {
-        return ExpressionNumberConverterContexts.basic(this.converter(),
-                ConverterContexts.basic(Converters.fake(),
-                        this.dateTimeContext(),
-                        this.decimalNumberContext()),
+    public final ExpressionNumberConverterContext converterContext(final Supplier<LocalDateTime> now) {
+        return ExpressionNumberConverterContexts.basic(
+                this.converter(),
+                ConverterContexts.basic(
+                        Converters.fake(),
+                        this.dateTimeContext(now),
+                        this.decimalNumberContext()
+                ),
                 this.expressionNumberKind());
     }
 
@@ -483,10 +478,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
      * <li>{@link SpreadsheetMetadataPropertyName#LOCALE}</li>
      * </ul>
      */
-    @Override
-    public abstract DateTimeContext dateTimeContext();
-
-    final DateTimeContext dateTimeContext0() {
+    public final DateTimeContext dateTimeContext(final Supplier<LocalDateTime> now) {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
@@ -498,7 +490,8 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         return DateTimeContexts.locale(
                 locale,
                 defaultYear,
-                twoYearDigit
+                twoYearDigit,
+                now
         );
     }
 
@@ -648,17 +641,13 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public abstract SpreadsheetFormatterContext formatterContext();
-
-    /**
-     * Factory that combines properties returning a {@link SpreadsheetFormatterContext}.
-     */
-    final SpreadsheetFormatterContext formatterContext0() {
+    public SpreadsheetFormatterContext formatterContext(final Supplier<LocalDateTime> now) {
         return SpreadsheetFormatterContexts.basic(this.numberToColor(),
                 this.nameToColor(),
                 this.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
                 this.formatter(),
-                this.converterContext());
+                this.converterContext(now)
+        );
     }
 
     // HasParsers.......................................................................................................
@@ -698,12 +687,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     /**
      * Returns a {@link SpreadsheetParserContext}.
      */
-    public abstract SpreadsheetParserContext parserContext();
-
-    /**
-     * Creates a {@link SpreadsheetParserContext} after verifying required properties.
-     */
-    final SpreadsheetParserContext parserContext0() {
+    public final SpreadsheetParserContext parserContext(final Supplier<LocalDateTime> now) {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         // DateTimeContext
@@ -721,7 +705,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         components.reportIfMissing();
 
         return SpreadsheetParserContexts.basic(
-                this.dateTimeContext(),
+                this.dateTimeContext(now),
                 this.decimalNumberContext(),
                 this.expressionNumberKind(),
                 valueSeparator

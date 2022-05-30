@@ -987,7 +987,8 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                         DateTimeContexts.locale(
                                 Locale.ENGLISH,
                                 1900,
-                                20
+                                20,
+                                LocalDateTime::now
                         ),
                         DecimalNumberContexts.basic("C",
                                 'D',
