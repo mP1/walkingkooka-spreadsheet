@@ -24,14 +24,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionReference;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * A visitor which resolves any {@link ExpressionReference} down to values. A range may match many cells, resulting in
@@ -59,25 +56,16 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     // a cell always returns an Optional of a scalar value
     @Override
     protected void visit(final SpreadsheetCellReference reference) {
-        final List<Object> values = this.extractCells(
-                this.engine.loadCell(
-                        reference,
-                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                        context
-                ),
-                reference
+        final SpreadsheetDelta loaded = this.engine.loadCell(
+                reference,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                this.context
         );
 
-        switch (values.size()) {
-            case 0:
-                this.value = null;
-                break;
-            case 1:
-                this.value = values.get(0);
-                break;
-            default:
-                throw new UnsupportedOperationException();
-        }
+        this.value = extractValueOrNull(
+                reference,
+                loaded
+        );
     }
 
     @Override
@@ -90,40 +78,35 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
         );
     }
 
-    // a range always returns a Optional<List>
     @Override
     protected void visit(final SpreadsheetCellRange range) {
-        this.value =
-                Lists.immutable(
-                        this.extractCells(
-                                this.engine.loadCells(
-                                        Sets.of(range),
-                                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                                        context
-                                ),
-                                range
-                        )
-                );
+        final SpreadsheetDelta delta = this.engine.loadCells(
+                Sets.of(range),
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                this.context
+        );
+
+        this.value = Lists.immutable(
+                range.cellStream()
+                        .map(c -> this.extractValueOrNull(c, delta))
+                        .collect(Collectors.toList())
+        );
     }
 
     private final SpreadsheetEngine engine;
     private final SpreadsheetEngineContext context;
 
-    private List<Object> extractCells(final SpreadsheetDelta delta,
-                                      final SpreadsheetSelection selection) {
-        return delta.cells()
-                .stream()
-                .filter(c -> selection.test(c.reference()))
-                .flatMap(c -> extractValue(c))
-                .collect(Collectors.toList());
+    private Object extractValueOrNull(final SpreadsheetCellReference reference,
+                                      final SpreadsheetDelta delta) {
+        return delta.cell(reference)
+                .map(this::extractValueOrNull0)
+                .orElse(null);
     }
 
-    // J2cl Optional does not emulate Optional.stream().
-    private Stream<Object> extractValue(final SpreadsheetCell cell) {
+    private Object extractValueOrNull0(final SpreadsheetCell cell) {
         return cell.formula()
                 .value()
-                .map(v -> Arrays.stream(new Object[]{v}))
-                .orElse(Arrays.stream(new Object[0]));
+                .orElse(null);
     }
 
     private Object value;
