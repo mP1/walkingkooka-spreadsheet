@@ -138,6 +138,59 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
 
     @Test
     public void testCellRange() {
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:B3");
+        final String b2Value = "B2Value";
+        final Integer b3Value = 123;
+
+        this.valuesAndCheck(
+                new FakeSpreadsheetEngine() {
+                    @Override
+                    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
+                                                      final SpreadsheetEngineEvaluation evaluation,
+                                                      final SpreadsheetEngineContext context) {
+                        checkEquals(
+                                Sets.of(range),
+                                ranges,
+                                "loadCells ranges"
+                        );
+
+                        return SpreadsheetDelta.EMPTY
+                                .setCells(
+                                        Sets.of(
+                                                SpreadsheetSelection.parseCell("B2")
+                                                        .setFormula(
+                                                                SpreadsheetFormula.EMPTY
+                                                                        .setText("=1")
+                                                                        .setValue(
+                                                                                Optional.of(
+                                                                                        b2Value
+                                                                                )
+                                                                        )
+                                                        ),
+                                                SpreadsheetSelection.parseCell("B3")
+                                                        .setFormula(
+                                                                SpreadsheetFormula.EMPTY
+                                                                        .setText("=2")
+                                                                        .setValue(
+                                                                                Optional.of(
+                                                                                        b3Value
+                                                                                )
+                                                                        )
+                                                        )
+                                        )
+                                );
+                    }
+                },
+                SpreadsheetEngineContexts.fake(),
+                range,
+                Optional.of(
+                        Lists.of(b2Value, b3Value)
+                )
+        );
+    }
+
+    @Test
+    public void testCellRangeMissingCells() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:C3");
         final String b2Value = "B2Value";
         final Integer c3Value = 123;
@@ -184,7 +237,12 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
                 SpreadsheetEngineContexts.fake(),
                 range,
                 Optional.of(
-                        Lists.of(b2Value, c3Value)
+                        Lists.of(
+                                b2Value, // B2
+                                null, // B3
+                                null, // C2
+                                c3Value // C3
+                        )
                 )
         );
     }
