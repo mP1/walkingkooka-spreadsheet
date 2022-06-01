@@ -47,7 +47,13 @@ final class UnformattedNumberSpreadsheetConverterSpreadsheetValueVisitor extends
      */
     static Object convertToString(final Object value,
                                   final ExpressionNumberConverterContext context) {
+        return null == value ?
+                null :
+                convertToString0(value, context);
+    }
 
+    private static Object convertToString0(final Object value,
+                                           final ExpressionNumberConverterContext context) {
         final UnformattedNumberSpreadsheetConverterSpreadsheetValueVisitor visitor = new UnformattedNumberSpreadsheetConverterSpreadsheetValueVisitor(
                 context
         );
