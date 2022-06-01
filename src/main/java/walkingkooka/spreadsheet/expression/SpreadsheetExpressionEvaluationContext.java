@@ -42,7 +42,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
         Object result;
         try {
             result = this.reference(reference)
-                    .orElse(SpreadsheetErrorKind.REF.setMessage("Reference not found " + reference));
+                    .orElse(SpreadsheetErrorKind.REF.setMessage("Reference not found: " + reference));
         } catch (final RuntimeException exception) {
             result = this.handleException(exception);
         }
