@@ -20,9 +20,11 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
 
@@ -32,6 +34,21 @@ import java.util.Optional;
  */
 public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext,
         HasConverter<SpreadsheetExpressionEvaluationContext> {
+
+    /**
+     * If the {@link ExpressionReference} cannot be found returns a {@link SpreadsheetErrorKind#REF} with a message.
+     */
+    default Object referenceOrFail(final ExpressionReference reference) {
+        Object result;
+        try {
+            result = this.reference(reference)
+                    .orElse(SpreadsheetErrorKind.REF.setMessage("Reference not found " + reference));
+        } catch (final RuntimeException exception) {
+            result = this.handleException(exception);
+        }
+
+        return result;
+    }
 
     /**
      * Returns the current cell that owns the expression or formula being executed.
