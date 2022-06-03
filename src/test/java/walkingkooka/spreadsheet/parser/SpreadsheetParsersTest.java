@@ -2584,6 +2584,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                         decimalNumberContext()),
                                 this.expressionNumberKind()));
             }
+
+            @Override
+            public boolean isText(final Object value) {
+                return value instanceof Character || value instanceof CharSequence;
+            }
         };
     }
 
