@@ -60,6 +60,11 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
     }
 
     @Override
+    public boolean isText(final Object value) {
+        return value instanceof Character || value instanceof CharSequence;
+    }
+
+    @Override
     public boolean isPure(final FunctionExpressionName name) {
         throw new UnsupportedOperationException();
     }

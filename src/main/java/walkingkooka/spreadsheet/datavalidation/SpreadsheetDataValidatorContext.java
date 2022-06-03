@@ -26,6 +26,11 @@ import walkingkooka.tree.expression.ExpressionReference;
  */
 public interface SpreadsheetDataValidatorContext extends ExpressionEvaluationContext {
 
+    @Override
+    default boolean isText(final Object value) {
+        return value instanceof Character || value instanceof CharSequence;
+    }
+
     /**
      * A {@link ExpressionReference} identifying the cell being validated.
      */
