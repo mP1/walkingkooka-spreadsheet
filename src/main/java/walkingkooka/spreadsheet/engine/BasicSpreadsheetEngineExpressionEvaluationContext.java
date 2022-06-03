@@ -70,6 +70,11 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     @Override
+    public boolean isText(final Object value) {
+        return value instanceof Character || value instanceof CharSequence;
+    }
+
+    @Override
     public Object evaluate(final Expression expression) {
         throw new UnsupportedOperationException();
     }

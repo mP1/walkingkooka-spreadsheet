@@ -35,6 +35,11 @@ import java.util.Optional;
 public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext,
         HasConverter<SpreadsheetExpressionEvaluationContext> {
 
+    @Override
+    default boolean isText(final Object value) {
+        return value instanceof Character || value instanceof CharSequence;
+    }
+
     /**
      * If the {@link ExpressionReference} cannot be found returns a {@link SpreadsheetErrorKind#REF} with a message.
      */

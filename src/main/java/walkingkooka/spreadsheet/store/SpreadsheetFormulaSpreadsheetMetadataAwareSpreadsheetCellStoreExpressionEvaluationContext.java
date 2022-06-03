@@ -65,6 +65,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     @Override
+    public boolean isText(final Object value) {
+        return value instanceof Character || value instanceof CharSequence;
+    }
+
+    @Override
     public Object evaluate(final Expression expression) {
         return expression.toValue(this);
     }
