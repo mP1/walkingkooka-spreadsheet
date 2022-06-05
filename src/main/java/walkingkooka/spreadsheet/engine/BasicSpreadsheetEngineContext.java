@@ -112,7 +112,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         this.parserContext = SpreadsheetParserContexts.basic(
                 converterContext,
                 converterContext,
-                metadata.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND),
+                metadata.expressionNumberKind(),
                 metadata.getOrFail(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR)
         );
 
