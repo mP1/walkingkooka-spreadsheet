@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.tree.expression.Expression;
 
@@ -130,7 +131,9 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                       final SpreadsheetParserToken expected) {
         this.checkEquals(
                 expected,
-                context.parseFormula(formula),
+                context.parseFormula(
+                        TextCursors.charSequence(formula)
+                ),
                 () -> "parseFormula " + formula + " with context " + context);
     }
 
