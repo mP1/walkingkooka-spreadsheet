@@ -84,6 +84,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
@@ -9130,11 +9131,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetParserToken parseFormula(final String formula) {
+            public SpreadsheetParserToken parseFormula(final TextCursor formula) {
                 return SpreadsheetParsers.valueOrExpression(BasicSpreadsheetEngineTest.this.metadata().parser())
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(
-                                TextCursors.charSequence(formula),
+                                formula,
                                 SpreadsheetParserContexts.basic(
                                         DateTimeContexts.fake(),
                                         converterContext(),
