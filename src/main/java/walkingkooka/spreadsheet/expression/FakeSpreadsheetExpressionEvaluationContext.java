@@ -21,7 +21,9 @@ import walkingkooka.convert.Converter;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import java.util.Optional;
@@ -39,6 +41,11 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
 
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetParserToken parseFormula(final TextCursor formula) {
         throw new UnsupportedOperationException();
     }
 

@@ -17,13 +17,47 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C> {
+
+    // parseFormula......................................................................................................
+
+    @Test
+    default void testParseFormulaNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createContext().parseFormula(null));
+    }
+
+    default void parseFormulaAndCheck(final String expression,
+                                      final SpreadsheetParserToken expected) {
+        this.parseFormulaAndCheck(
+                this.createContext(),
+                expression,
+                expected
+        );
+    }
+
+    default void parseFormulaAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                      final String formula,
+                                      final SpreadsheetParserToken expected) {
+        this.checkEquals(
+                expected,
+                context.parseFormula(
+                        TextCursors.charSequence(formula)
+                ),
+                () -> "parseFormula " + formula + " with context " + context);
+    }
+
+    // loadCell.........................................................................................................
 
     default void loadCellAndCheck(final C context,
                                   final SpreadsheetCellReference cellReference,

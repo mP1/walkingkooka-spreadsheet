@@ -24,11 +24,19 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -122,6 +130,28 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     private final SpreadsheetCellStore cellStore;
+
+    @Override
+    public SpreadsheetParserToken parseFormula(final TextCursor formula) {
+        Objects.requireNonNull(formula, "formula");
+
+        final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+
+        final ExpressionNumberConverterContext converterContext = metadata.converterContext(now);
+
+        final SpreadsheetParserContext parserContext = SpreadsheetParserContexts.basic(
+                converterContext,
+                converterContext,
+                metadata.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND),
+                metadata.getOrFail(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR)
+        );
+
+        return SpreadsheetParsers.valueOrExpression(metadata.parser())
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(formula, parserContext)
+                .get()
+                .cast(SpreadsheetParserToken.class);
+    }
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
