@@ -49,7 +49,10 @@ abstract class SpreadsheetPatternSpreadsheetFormatParserTokenVisitor extends Spr
     }
 
     final Visiting failInvalid(final SpreadsheetFormatParserToken token) {
-        throw new InvalidCharacterException(this.token.text(), this.position);
+        throw new InvalidCharacterException(
+                this.token.text(),
+                this.position
+        );
     }
 
     private int position;

@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDecimalSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetGroupingSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -607,10 +606,6 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
 
     private SpreadsheetExponentSymbolParserToken exponent() {
         return SpreadsheetParserToken.exponentSymbol(EXPONENT, EXPONENT);
-    }
-
-    private SpreadsheetGroupingSeparatorSymbolParserToken group() {
-        return SpreadsheetParserToken.groupingSeparatorSymbol("" + GROUP, "" + GROUP);
     }
 
     private SpreadsheetMinusSymbolParserToken minus() {

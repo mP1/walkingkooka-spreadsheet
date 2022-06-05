@@ -29,7 +29,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -423,10 +422,6 @@ public final class SpreadsheetNumberParserTokenTest extends SpreadsheetParentPar
                 this.slashTextLiteral(),
                 this.year()
         );
-    }
-
-    private LocalDate date() {
-        return LocalDate.of(YEAR, MONTH, DAY);
     }
 
     @Override

@@ -26,7 +26,6 @@ public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C ext
     private final static String VALUE5 = TEXT5;
 
     private final static String TEXT6 = "6";
-    private final static String VALUE6 = TEXT6;
 
     SpreadsheetNumberParsePatternsComponentDigitTestCase() {
     }

@@ -408,22 +408,6 @@ public final class EnumJavaScriptSourceTool {
         return b;
     }
 
-    private static CharSequence capitalCase(final String name) {
-        final StringBuilder b = new StringBuilder();
-
-        char previous = '_';
-        for (char c : name.toCharArray()) {
-            b.append(
-                    '_' == previous ?
-                            Character.toUpperCase(c) :
-                            Character.toLowerCase(c)
-            );
-            previous = c;
-        }
-
-        return b;
-    }
-
     private static List<Enum<?>> values(final Class<Enum<?>> enumClass) throws Exception {
         final Enum<?>[] values = (Enum<?>[]) enumClass.getMethod("values")
                 .invoke(null);

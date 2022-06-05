@@ -332,10 +332,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
-    private SpreadsheetAmPmParserToken am() {
-        return SpreadsheetParserToken.amPm(0, "am");
-    }
-
     private SpreadsheetTextLiteralParserToken colon() {
         return textLiteral(":");
     }
