@@ -35,7 +35,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -47,7 +46,6 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
@@ -107,14 +105,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         this.metadata = metadata;
 
-        final ExpressionNumberConverterContext converterContext = metadata.converterContext(now);
-
-        this.parserContext = SpreadsheetParserContexts.basic(
-                converterContext,
-                converterContext,
-                metadata.expressionNumberKind(),
-                metadata.getOrFail(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR)
-        );
+        this.parserContext = metadata.parserContext(now);
 
         this.functions = functions;
         this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
@@ -127,7 +118,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 metadata.nameToColor(),
                 metadata.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
                 metadata.formatter(),
-                converterContext);
+                metadata.converterContext(now)
+        );
         this.fractioner = fractioner;
 
         this.storeRepository = storeRepository;
