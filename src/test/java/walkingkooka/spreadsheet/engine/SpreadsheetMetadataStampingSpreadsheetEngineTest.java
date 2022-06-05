@@ -51,6 +51,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.TextNode;
 
@@ -426,9 +427,12 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
             @Override
             public SpreadsheetParserToken parseFormula(final TextCursor formula) {
+                final TextCursorSavePoint beginning = formula.save();
+                formula.end();
+
                 checkEquals(
                         FORMULA_TEXT,
-                        formula.save().textBetween(),
+                        beginning.textBetween(),
                         "formula text"
                 );
                 return SpreadsheetParserToken.text(
