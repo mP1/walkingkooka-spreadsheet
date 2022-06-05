@@ -22,7 +22,10 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -34,6 +37,11 @@ import java.util.Optional;
  */
 public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext,
         HasConverter<SpreadsheetExpressionEvaluationContext> {
+
+    /**
+     * Parses the formula into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.
+     */
+    SpreadsheetParserToken parseFormula(final TextCursor formula);
 
     @Override
     default boolean isText(final Object value) {

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.AbsoluteUrl;
@@ -27,6 +28,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -218,6 +220,154 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
+    // parseFormula.....................................................................................................
+
+    @Test
+    public void testParseFormulaApostropheString() {
+        final String text = "abc123";
+        final String formula = "'" + text;
+
+        this.parseFormulaAndCheck(
+                formula,
+                SpreadsheetParserToken.text(
+                        Lists.of(
+                                SpreadsheetParserToken.apostropheSymbol("'", "'"),
+                                SpreadsheetParserToken.textLiteral(text, text)
+                        ),
+                        formula
+                )
+        );
+    }
+
+    @Test
+    public void testParseFormulaDate() {
+        final String text = "31/12/2000";
+
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.date(
+                        Lists.of(
+                                SpreadsheetParserToken.dayNumber(31, "31"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.monthNumber(12, "12"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.year(2000, "2000")
+                        ),
+                        text
+                )
+        );
+    }
+
+    @Test
+    public void testParseFormulaDateTime() {
+        final String text = "31/12/2000, 12:58:59";
+
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.dateTime(
+                        Lists.of(
+                                SpreadsheetParserToken.dayNumber(31, "31"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.monthNumber(12, "12"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.year(2000, "2000"),
+                                SpreadsheetParserToken.textLiteral(",", ","),
+                                SpreadsheetParserToken.textLiteral(" ", " "),
+                                SpreadsheetParserToken.hour(12, "12"),
+                                SpreadsheetParserToken.textLiteral(":", ":"),
+                                SpreadsheetParserToken.minute(58, "58"),
+                                SpreadsheetParserToken.textLiteral(":", ":"),
+                                SpreadsheetParserToken.seconds(59, "59")
+                        ),
+                        text
+                )
+        );
+    }
+
+    @Test
+    public void testParseFormulaNumber() {
+        final String text = "123";
+
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.number(
+                        Lists.of(
+                                SpreadsheetParserToken.digits(text, text)
+                        ),
+                        text
+                )
+        );
+    }
+
+    private final static char DECIMAL = '.';
+
+    @Test
+    public void testParseFormulaNumber2() {
+        final String text = "1" + DECIMAL + "5";
+
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.number(
+                        Lists.of(
+                                SpreadsheetParserToken.digits("1", "1"),
+                                SpreadsheetParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL),
+                                SpreadsheetParserToken.digits("5", "5")
+                        ),
+                        text
+                )
+        );
+    }
+
+    @Test
+    public void testParseFormulaTime() {
+        final String text = "12:58";
+
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.time(
+                        Lists.of(
+                                SpreadsheetParserToken.hour(12, "12"),
+                                SpreadsheetParserToken.textLiteral(":", ":"),
+                                SpreadsheetParserToken.minute(58, "58")
+                        ),
+                        text
+                )
+        );
+    }
+
+    @Test
+    public void testParseFormulaExpression() {
+        final String text = "=1+2";
+
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.expression(
+                        Lists.of(
+                                SpreadsheetParserToken.equalsSymbol("=", "="),
+                                SpreadsheetParserToken.addition(
+                                        Lists.of(
+                                                SpreadsheetParserToken.number(
+                                                        Lists.of(
+                                                                SpreadsheetParserToken.digits("1", "1")
+                                                        ),
+                                                        "1"
+                                                ),
+                                                SpreadsheetParserToken.plusSymbol("+", "+"),
+                                                SpreadsheetParserToken.number(
+                                                        Lists.of(
+                                                                SpreadsheetParserToken.digits("2", "2")
+                                                        ),
+                                                        "2"
+                                                )
+                                        ),
+                                        "1+2"
+                                )
+                        ),
+                        text
+                )
+        );
+    }
+
     // ExpressionEvaluationContextTesting................................................................................
 
     @Override
@@ -285,7 +435,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Override
     public String exponentSymbol() {
-        return DECIMAL_NUMBER_CONTEXT.exponentSymbol();
+        return "e";
     }
 
     @Override
@@ -332,7 +482,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 cellStore,
                 SERVER_URL,
-                SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-US"))
+                SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                         .loadFromLocale()
                         .set(SpreadsheetMetadataPropertyName.PRECISION, DECIMAL_NUMBER_CONTEXT.mathContext().getPrecision())
                         .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, DECIMAL_NUMBER_CONTEXT.mathContext().getRoundingMode())
