@@ -50,6 +50,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.TextNode;
 
@@ -424,8 +425,12 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             }
 
             @Override
-            public SpreadsheetParserToken parseFormula(final String formula) {
-                checkEquals(FORMULA_TEXT, formula, "formula text");
+            public SpreadsheetParserToken parseFormula(final TextCursor formula) {
+                checkEquals(
+                        FORMULA_TEXT,
+                        formula.save().textBetween(),
+                        "formula text"
+                );
                 return SpreadsheetParserToken.text(
                         Lists.of(
                                 SpreadsheetParserToken.apostropheSymbol("'", "'"),

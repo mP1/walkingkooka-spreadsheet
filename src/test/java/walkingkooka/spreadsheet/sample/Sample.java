@@ -58,6 +58,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
@@ -188,13 +189,17 @@ public final class Sample {
             }
 
             @Override
-            public SpreadsheetParserToken parseFormula(final String formula) {
+            public SpreadsheetParserToken parseFormula(final TextCursor formula) {
                 return Cast.to(SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
-                                metadata.converterContext(NOW),
-                                EXPRESSION_NUMBER_KIND,
-                                ',')) // TODO should fetch from metadata prop
+                        .parse(
+                                formula,
+                                SpreadsheetParserContexts.basic(
+                                        DateTimeContexts.fake(),
+                                        metadata.converterContext(NOW),
+                                        EXPRESSION_NUMBER_KIND,
+                                        ',')
+                        ) // TODO should fetch from metadata prop
                         .get());
             }
 
