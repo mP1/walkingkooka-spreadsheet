@@ -177,10 +177,6 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         );
     }
 
-    final SpreadsheetPercentSymbolParserToken percentSymbol() {
-        return SpreadsheetParserToken.percentSymbol("%", "%");
-    }
-
     final static int SECONDS = 59;
 
     final SpreadsheetSecondsParserToken seconds() {

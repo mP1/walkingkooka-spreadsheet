@@ -38,7 +38,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetMillisecondParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinuteParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameAbbreviationParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMonthNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParentParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -382,10 +381,6 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         return SpreadsheetParserToken.minusSymbol("" + MINUS, "" + MINUS);
     }
 
-    static SpreadsheetMinuteParserToken minute8() {
-        return SpreadsheetParserToken.minute(8, "8");
-    }
-
     static SpreadsheetMinuteParserToken minute58() {
         return SpreadsheetParserToken.minute(58, "58");
     }
@@ -396,10 +391,6 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     static SpreadsheetMonthNameAbbreviationParserToken monthDec() {
         return SpreadsheetParserToken.monthNameAbbreviation(12, "Dec");
-    }
-
-    static SpreadsheetMonthNameParserToken monthDecember() {
-        return SpreadsheetParserToken.monthName(12, "December");
     }
 
     static SpreadsheetPlusSymbolParserToken plus() {
