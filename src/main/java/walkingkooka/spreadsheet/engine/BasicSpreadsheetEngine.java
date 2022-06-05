@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.Length;
@@ -677,7 +678,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 SpreadsheetParserToken token = formula.token()
                         .orElse(null);
                 if (null == token) {
-                    token = context.parseFormula(text);
+                    token = context.parseFormula(
+                            TextCursors.charSequence(text)
+                    );
                 }
                 if (null != token) {
                     token = parsed.apply(token);

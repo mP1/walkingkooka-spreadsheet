@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 
 import java.util.Optional;
@@ -48,9 +49,9 @@ public interface SpreadsheetEngineContext extends Context {
     SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference);
 
     /**
-     * Parses the formula into an {@link Expression}.
+     * Parses the formula into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.
      */
-    SpreadsheetParserToken parseFormula(final String formula);
+    SpreadsheetParserToken parseFormula(final TextCursor formula);
 
     /**
      * Evaluates the expression into a value.

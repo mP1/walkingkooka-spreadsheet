@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.test.Fake;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 
 import java.util.Objects;
@@ -46,7 +47,7 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public SpreadsheetParserToken parseFormula(final String formula) {
+    public SpreadsheetParserToken parseFormula(final TextCursor formula) {
         Objects.requireNonNull(formula, "formula");
         throw new UnsupportedOperationException();
     }

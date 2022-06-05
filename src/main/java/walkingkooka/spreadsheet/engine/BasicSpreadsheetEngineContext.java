@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
@@ -160,10 +161,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // parsing formula and executing.....................................................................................
 
     @Override
-    public SpreadsheetParserToken parseFormula(final String formula) {
+    public SpreadsheetParserToken parseFormula(final TextCursor formula) {
         return SpreadsheetParsers.valueOrExpression(this.metadata.parser())
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(formula), this.parserContext)
+                .parse(formula, this.parserContext)
                 .get()
                 .cast(SpreadsheetParserToken.class);
     }
