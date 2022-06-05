@@ -51,7 +51,6 @@ public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinary
             @Override
             protected void endVisit(final SpreadsheetParserToken n) {
                 b.append("2");
-                ;
             }
 
             @Override
