@@ -521,7 +521,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private final SpreadsheetDelta setWindow0(final SpreadsheetDeltaWindowSet window) {
+    private SpreadsheetDelta setWindow0(final SpreadsheetDeltaWindowSet window) {
         return this.window().equals(window) ?
                 this :
                 this.setWindow1(window);
