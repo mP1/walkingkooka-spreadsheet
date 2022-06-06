@@ -132,8 +132,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     private final SpreadsheetCellStore cellStore;
 
     @Override
-    public SpreadsheetParserToken parseFormula(final TextCursor formula) {
-        Objects.requireNonNull(formula, "formula");
+    public SpreadsheetParserToken parseExpression(final TextCursor expression) {
+        Objects.requireNonNull(expression, "expression");
 
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
@@ -146,9 +146,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 metadata.getOrFail(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR)
         );
 
-        return SpreadsheetParsers.valueOrExpression(metadata.parser())
+        return SpreadsheetParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(formula, parserContext)
+                .parse(expression, parserContext)
                 .get()
                 .cast(SpreadsheetParserToken.class);
     }

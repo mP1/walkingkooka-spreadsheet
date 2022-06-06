@@ -30,31 +30,31 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C> {
 
-    // parseFormula......................................................................................................
+    // parseExpression......................................................................................................
 
     @Test
-    default void testParseFormulaNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createContext().parseFormula(null));
+    default void testParseExpressionNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createContext().parseExpression(null));
     }
 
-    default void parseFormulaAndCheck(final String expression,
-                                      final SpreadsheetParserToken expected) {
-        this.parseFormulaAndCheck(
+    default void parseExpressionAndCheck(final String expression,
+                                         final SpreadsheetParserToken expected) {
+        this.parseExpressionAndCheck(
                 this.createContext(),
                 expression,
                 expected
         );
     }
 
-    default void parseFormulaAndCheck(final SpreadsheetExpressionEvaluationContext context,
-                                      final String formula,
-                                      final SpreadsheetParserToken expected) {
+    default void parseExpressionAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                         final String expression,
+                                         final SpreadsheetParserToken expected) {
         this.checkEquals(
                 expected,
-                context.parseFormula(
-                        TextCursors.charSequence(formula)
+                context.parseExpression(
+                        TextCursors.charSequence(expression)
                 ),
-                () -> "parseFormula " + formula + " with context " + context);
+                () -> "parseExpression " + expression + " with context " + context);
     }
 
     // loadCell.........................................................................................................
