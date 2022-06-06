@@ -220,75 +220,31 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
-    // parseFormula.....................................................................................................
+    // parseExpression.....................................................................................................
 
     @Test
-    public void testParseFormulaApostropheString() {
+    public void testParseExpressionQuotedString() {
         final String text = "abc123";
-        final String formula = "'" + text;
+        final String expression = '"' + text + '"';
 
-        this.parseFormulaAndCheck(
-                formula,
+        this.parseExpressionAndCheck(
+                expression,
                 SpreadsheetParserToken.text(
                         Lists.of(
-                                SpreadsheetParserToken.apostropheSymbol("'", "'"),
-                                SpreadsheetParserToken.textLiteral(text, text)
+                                SpreadsheetParserToken.doubleQuoteSymbol("\"", "\""),
+                                SpreadsheetParserToken.textLiteral(text, text),
+                                SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"")
                         ),
-                        formula
+                        expression
                 )
         );
     }
 
     @Test
-    public void testParseFormulaDate() {
-        final String text = "31/12/2000";
-
-        this.parseFormulaAndCheck(
-                text,
-                SpreadsheetParserToken.date(
-                        Lists.of(
-                                SpreadsheetParserToken.dayNumber(31, "31"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.monthNumber(12, "12"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.year(2000, "2000")
-                        ),
-                        text
-                )
-        );
-    }
-
-    @Test
-    public void testParseFormulaDateTime() {
-        final String text = "31/12/2000, 12:58:59";
-
-        this.parseFormulaAndCheck(
-                text,
-                SpreadsheetParserToken.dateTime(
-                        Lists.of(
-                                SpreadsheetParserToken.dayNumber(31, "31"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.monthNumber(12, "12"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.year(2000, "2000"),
-                                SpreadsheetParserToken.textLiteral(",", ","),
-                                SpreadsheetParserToken.textLiteral(" ", " "),
-                                SpreadsheetParserToken.hour(12, "12"),
-                                SpreadsheetParserToken.textLiteral(":", ":"),
-                                SpreadsheetParserToken.minute(58, "58"),
-                                SpreadsheetParserToken.textLiteral(":", ":"),
-                                SpreadsheetParserToken.seconds(59, "59")
-                        ),
-                        text
-                )
-        );
-    }
-
-    @Test
-    public void testParseFormulaNumber() {
+    public void testParseExpressionNumber() {
         final String text = "123";
 
-        this.parseFormulaAndCheck(
+        this.parseExpressionAndCheck(
                 text,
                 SpreadsheetParserToken.number(
                         Lists.of(
@@ -302,10 +258,10 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private final static char DECIMAL = '.';
 
     @Test
-    public void testParseFormulaNumber2() {
+    public void testParseExpressionNumber2() {
         final String text = "1" + DECIMAL + "5";
 
-        this.parseFormulaAndCheck(
+        this.parseExpressionAndCheck(
                 text,
                 SpreadsheetParserToken.number(
                         Lists.of(
@@ -319,48 +275,25 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Test
-    public void testParseFormulaTime() {
-        final String text = "12:58";
+    public void testParseExpressionAdditionExpression() {
+        final String text = "1+2";
 
-        this.parseFormulaAndCheck(
+        this.parseExpressionAndCheck(
                 text,
-                SpreadsheetParserToken.time(
+                SpreadsheetParserToken.addition(
                         Lists.of(
-                                SpreadsheetParserToken.hour(12, "12"),
-                                SpreadsheetParserToken.textLiteral(":", ":"),
-                                SpreadsheetParserToken.minute(58, "58")
-                        ),
-                        text
-                )
-        );
-    }
-
-    @Test
-    public void testParseFormulaExpression() {
-        final String text = "=1+2";
-
-        this.parseFormulaAndCheck(
-                text,
-                SpreadsheetParserToken.expression(
-                        Lists.of(
-                                SpreadsheetParserToken.equalsSymbol("=", "="),
-                                SpreadsheetParserToken.addition(
+                                SpreadsheetParserToken.number(
                                         Lists.of(
-                                                SpreadsheetParserToken.number(
-                                                        Lists.of(
-                                                                SpreadsheetParserToken.digits("1", "1")
-                                                        ),
-                                                        "1"
-                                                ),
-                                                SpreadsheetParserToken.plusSymbol("+", "+"),
-                                                SpreadsheetParserToken.number(
-                                                        Lists.of(
-                                                                SpreadsheetParserToken.digits("2", "2")
-                                                        ),
-                                                        "2"
-                                                )
+                                                SpreadsheetParserToken.digits("1", "1")
                                         ),
-                                        "1+2"
+                                        "1"
+                                ),
+                                SpreadsheetParserToken.plusSymbol("+", "+"),
+                                SpreadsheetParserToken.number(
+                                        Lists.of(
+                                                SpreadsheetParserToken.digits("2", "2")
+                                        ),
+                                        "2"
                                 )
                         ),
                         text
