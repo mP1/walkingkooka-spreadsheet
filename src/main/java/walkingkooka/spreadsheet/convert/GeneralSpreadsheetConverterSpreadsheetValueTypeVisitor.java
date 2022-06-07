@@ -136,7 +136,7 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     }
 
     @Override
-    protected void visitUnknown() {
+    protected void visitUnknown(final String typeName) {
         this.converter = this.mapping.number; // handles other Number types.
     }
 

@@ -830,12 +830,16 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
 
             @Override
-            protected void visitUnknown() {
-                b.append("3");
+            protected void visitUnknown(final String typeName) {
+                b.append("3")
+                        .append(typeName);
             }
         }.accept(type);
 
-        this.checkEquals("132", b.toString());
+        this.checkEquals(
+                "13" + type.getName() + "2",
+                b.toString()
+        );
     }
 
     @Test

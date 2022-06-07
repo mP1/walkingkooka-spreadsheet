@@ -112,7 +112,7 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                     this.visitString();
                     break;
                 default:
-                    this.visitUnknown();
+                    this.visitUnknown(name);
                     break;
             }
         }
@@ -223,7 +223,7 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
 
     }
 
-    protected void visitUnknown() {
+    protected void visitUnknown(final String typeName) {
 
     }
 }
