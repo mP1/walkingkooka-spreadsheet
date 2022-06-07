@@ -296,16 +296,23 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetCellReferenceToRange() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCell("Z99" ),
+                SpreadsheetSelection.parseCell("Z99"),
                 SpreadsheetCellRange.class,
-                SpreadsheetSelection.parseCellRange("Z99" )
+                SpreadsheetSelection.parseCellRange("Z99")
         );
     }
 
     @Test
-    public void testSpreadsheetCellReferenceString() {
+    public void testSpreadsheetCellReferenceToSpreadsheetSelection() {
+        this.convertAndCheckSpreadsheetSelection(
+                SpreadsheetSelection.parseCell("A1")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellReferenceToString() {
         this.convertAndCheckString(
-                SpreadsheetSelection.parseCell("A1" )
+                SpreadsheetSelection.parseCell("A1")
         );
     }
 
@@ -331,15 +338,22 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetCellRangeToExpressionReference() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCellRange("C3:D4" ),
+                SpreadsheetSelection.parseCellRange("C3:D4"),
                 SpreadsheetExpressionReference.class
         );
     }
 
     @Test
-    public void testSpreadsheetCellRangeString() {
+    public void testSpreadsheetCellRangeToSpreadsheetSelection() {
+        this.convertAndCheckSpreadsheetSelection(
+                SpreadsheetSelection.parseCellRange("C3:D4")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellRangeToString() {
         this.convertAndCheckString(
-                SpreadsheetSelection.parseCellRange("A1:B2" )
+                SpreadsheetSelection.parseCellRange("A1:B2")
         );
     }
 
@@ -348,15 +362,22 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetColumnReference() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseColumn("C" ),
+                SpreadsheetSelection.parseColumn("C"),
                 SpreadsheetColumnReference.class
         );
     }
 
     @Test
-    public void testSpreadsheetColumnReferenceString() {
+    public void testSpreadsheetColumnReferenceToSpreadsheetSelection() {
+        this.convertAndCheckSpreadsheetSelection(
+                SpreadsheetSelection.parseColumn("C")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetColumnReferenceToString() {
         this.convertAndCheckString(
-                SpreadsheetSelection.parseColumn("C" )
+                SpreadsheetSelection.parseColumn("C")
         );
     }
 
@@ -365,15 +386,22 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetColumnReferenceRange() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseColumnRange("D:E" ),
+                SpreadsheetSelection.parseColumnRange("D:E"),
                 SpreadsheetColumnReferenceRange.class
         );
     }
 
     @Test
-    public void testSpreadsheetColumnReferenceRangeString() {
+    public void testSpreadsheetColumnReferenceRangeToSpreadsheetSelection() {
+        this.convertAndCheckSpreadsheetSelection(
+                SpreadsheetSelection.parseColumnRange("D:E")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetColumnReferenceRangeToString() {
         this.convertAndCheckString(
-                SpreadsheetSelection.parseColumnRange("D:E" )
+                SpreadsheetSelection.parseColumnRange("D:E")
         );
     }
 
@@ -382,15 +410,22 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetRowReference() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseRow("5" ),
+                SpreadsheetSelection.parseRow("5"),
                 SpreadsheetRowReference.class
         );
     }
 
     @Test
-    public void testSpreadsheetRowReferenceString() {
+    public void testSpreadsheetRowReferenceToSpreadsheetSelection() {
+        this.convertAndCheckSpreadsheetSelection(
+                SpreadsheetSelection.parseRow("5")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetRowReferenceToString() {
         this.convertAndCheckString(
-                SpreadsheetSelection.parseRow("5" )
+                SpreadsheetSelection.parseRow("5")
         );
     }
 
@@ -399,15 +434,30 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetRowReferenceRange() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseRowRange("6:7" ),
+                SpreadsheetSelection.parseRowRange("6:7"),
                 SpreadsheetRowReferenceRange.class
         );
     }
 
     @Test
-    public void testSpreadsheetRowReferenceRangeString() {
+    public void testSpreadsheetRowReferenceRangeToSpreadsheetSelection() {
+        this.convertAndCheckSpreadsheetSelection(
+                SpreadsheetSelection.parseRowRange("6:7")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetRowReferenceRangeToString() {
         this.convertAndCheckString(
-                SpreadsheetSelection.parseRowRange("6:7" )
+                SpreadsheetSelection.parseRowRange("6:7")
+        );
+    }
+
+    private void convertAndCheckSpreadsheetSelection(final SpreadsheetSelection selection) {
+        this.convertAndCheck(
+                selection,
+                SpreadsheetSelection.class,
+                selection
         );
     }
 

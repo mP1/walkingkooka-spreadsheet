@@ -126,6 +126,11 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     }
 
     @Override
+    protected void visitSpreadsheetSelection() {
+        this.converter = this.mapping.selection;
+    }
+
+    @Override
     protected void visitString() {
         this.converter = this.mapping.string;
     }
