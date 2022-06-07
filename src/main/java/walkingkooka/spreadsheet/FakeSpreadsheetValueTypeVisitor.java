@@ -141,6 +141,11 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
     }
 
     @Override
+    protected void visitSpreadsheetSelection() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitString() {
         throw new UnsupportedOperationException();
     }
