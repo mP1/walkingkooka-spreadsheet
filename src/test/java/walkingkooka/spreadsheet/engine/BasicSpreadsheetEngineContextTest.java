@@ -82,7 +82,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
     private final static char VALUE_SEPARATOR = ',';
     private final static int WIDTH = 1;
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://example.com/path123");
+    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com/path123");
 
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 

@@ -27,7 +27,7 @@
   <packaging>jar</packaging>
 
   <name>walkingkooka-spreadsheet</name>
-  <url>http://www.github.com/mP1/walkingkooka-spreadsheet</url>
+  <url>https://www.github.com/mP1/walkingkooka-spreadsheet</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

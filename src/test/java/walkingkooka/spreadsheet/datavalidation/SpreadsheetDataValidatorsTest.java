@@ -556,7 +556,7 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
 
     @Test
     public void testTextAbsoluteUrlPass() {
-        this.validatePassCheck(SpreadsheetDataValidators.textAbsoluteUrl(), "http://example.com");
+        this.validatePassCheck(SpreadsheetDataValidators.textAbsoluteUrl(), "https://example.com");
     }
 
     @Test

@@ -61,7 +61,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static SpreadsheetCellStore CELL_STORE = SpreadsheetCellStores.fake();
 
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://example.com");
+    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY;
 
