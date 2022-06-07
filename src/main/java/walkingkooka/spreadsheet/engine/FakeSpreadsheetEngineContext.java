@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -49,6 +50,11 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     @Override
     public SpreadsheetParserToken parseFormula(final TextCursor formula) {
         Objects.requireNonNull(formula, "formula");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isPure(final FunctionExpressionName function) {
         throw new UnsupportedOperationException();
     }
 

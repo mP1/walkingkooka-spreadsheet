@@ -28,13 +28,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionPurityContext;
 
 import java.util.Optional;
 
 /**
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
-public interface SpreadsheetEngineContext extends Context {
+public interface SpreadsheetEngineContext extends Context, ExpressionPurityContext {
 
     /**
      * Returns the current {@link SpreadsheetMetadata}

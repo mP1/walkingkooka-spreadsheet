@@ -167,6 +167,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     private final SpreadsheetParserContext parserContext;
 
     @Override
+    public boolean isPure(final FunctionExpressionName function) {
+        return this.functions.apply(function)
+                .isPure(this);
+    }
+
+    @Override
     public Object evaluate(final Expression expression,
                            final Optional<SpreadsheetCell> cell) {
         Objects.requireNonNull(expression, "expression");
