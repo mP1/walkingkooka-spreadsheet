@@ -22,6 +22,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 /**
@@ -48,7 +49,8 @@ final class GeneralSpreadsheetConverterSelectionConverter implements Converter<E
                               final ExpressionNumberConverterContext context) {
         return isCellRangeToCell(value, type) ||
                 isCellToCellRange(value, type) ||
-                isExpressionReference(value, type);
+                isExpressionReference(value, type) ||
+                isSelection(value, type);
     }
 
     @Override
@@ -70,7 +72,12 @@ final class GeneralSpreadsheetConverterSelectionConverter implements Converter<E
                                         value,
                                         type
                                 ) :
-                                this.failConversion(value, type);
+                                isSelection(value, type) ?
+                                        this.successfulConversion(
+                                                value,
+                                                type
+                                        ) :
+                                        this.failConversion(value, type);
     }
 
     private static boolean isCellToCellRange(Object value, Class<?> type) {
@@ -84,6 +91,11 @@ final class GeneralSpreadsheetConverterSelectionConverter implements Converter<E
     private static boolean isExpressionReference(final Object value,
                                                  final Class<?> type) {
         return value instanceof SpreadsheetExpressionReference && SpreadsheetExpressionReference.class == type;
+    }
+
+    private static boolean isSelection(final Object value,
+                                       final Class<?> type) {
+        return value instanceof SpreadsheetSelection && SpreadsheetSelection.class == type;
     }
 
     private static SpreadsheetCellRange cellToCellRange(final SpreadsheetCellReference cell) {

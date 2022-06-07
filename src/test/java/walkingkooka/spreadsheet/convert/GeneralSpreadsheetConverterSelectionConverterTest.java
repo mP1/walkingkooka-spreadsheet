@@ -29,6 +29,14 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 public final class GeneralSpreadsheetConverterSelectionConverterTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterSelectionConverter> implements ConverterTesting2<GeneralSpreadsheetConverterSelectionConverter, ExpressionNumberConverterContext> {
 
     @Test
+    public void testCellToSpreadsheetSelection() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCell("Z99"),
+                SpreadsheetSelection.class
+        );
+    }
+
+    @Test
     public void testCellToCellRange() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCell("Z99"),
@@ -40,16 +48,24 @@ public final class GeneralSpreadsheetConverterSelectionConverterTest extends Gen
     @Test
     public void testCellRangeToCell() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCellRange("B2:C3" ),
+                SpreadsheetSelection.parseCellRange("B2:C3"),
                 SpreadsheetCellReference.class,
-                SpreadsheetSelection.parseCell("B2" )
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
+    @Test
+    public void testCellRangeToSpreadsheetSelection() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCellRange("B2:C3"),
+                SpreadsheetSelection.class
         );
     }
 
     @Test
     public void testCellToExpressionReference() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCell("Z99" ),
+                SpreadsheetSelection.parseCell("Z99"),
                 SpreadsheetExpressionReference.class
         );
     }
