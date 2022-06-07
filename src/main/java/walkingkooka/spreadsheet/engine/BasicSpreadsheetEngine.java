@@ -634,20 +634,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return result;
     }
 
-    SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                            final SpreadsheetEngineContext context) {
-        return this.formatAndApplyStyle(
-                cell.setFormula(
-                        this.parseFormulaAndEvaluate(
-                                cell,
-                                context)
-                ),
-                context);
-    }
-
-    private SpreadsheetFormula parseFormulaAndEvaluate(final SpreadsheetCell cell,
-                                                       final SpreadsheetEngineContext context) {
-        return this.evaluateIfPossible(
+    // Visible for SpreadsheetEngineEvaluation only called by COMPUTE_IF_NECESSARY & FORCE_RECOMPUTE
+    SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                                 final SpreadsheetEngineEvaluation evaluation,
+                                                 final SpreadsheetEngineContext context) {
+        return evaluation.evaluateIfNecessary(
+                this,
                 cell.setFormula(
                         this.parseFormulaIfNecessary(
                                 cell,
@@ -655,7 +647,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 context
                         )
                 ),
-                context);
+                context
+        );
     }
 
     // PARSE .........................................................................................................
@@ -735,18 +728,20 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * If a value is available try and re-use or if an expression is present evaluate it.
      */
-    private SpreadsheetFormula evaluateIfPossible(final SpreadsheetCell cell,
-                                                  final SpreadsheetEngineContext context) {
+    // called by SpreadsheetEngineEvaluation#COMPUTE_IF_NECESSARY
+    SpreadsheetCell evaluateAndStyleIfNecessary(final SpreadsheetCell cell,
+                                                final SpreadsheetEngineContext context) {
         final SpreadsheetFormula formula = cell.formula();
 
         return formula.value()
                 .orElse(null) instanceof SpreadsheetError ?
-                formula : // value present - using cached.
-                this.evaluate(cell, context);
+                cell : // value present - using cached.
+                this.evaluateAndStyle(cell, context);
     }
 
-    private SpreadsheetFormula evaluate(final SpreadsheetCell cell,
-                                        final SpreadsheetEngineContext context) {
+    // called by SpreadsheetEngineEvaluation#FORCE_REOCOMPUTE
+    SpreadsheetCell evaluateAndStyle(final SpreadsheetCell cell,
+                                     final SpreadsheetEngineContext context) {
         SpreadsheetFormula formula = cell.formula();
 
         try {
@@ -765,7 +760,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         } catch (final Exception cause) {
             formula = this.setError(formula, cause);
         }
-        return formula;
+        return this.formatAndApplyStyle(
+                cell.setFormula(formula),
+                context
+        );
     }
 
     // ERROR HANDLING..............................................................................................

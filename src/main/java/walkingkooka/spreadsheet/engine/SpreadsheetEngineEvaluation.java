@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Cast;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -41,10 +42,17 @@ public enum SpreadsheetEngineEvaluation {
                     .cells()
                     .save(cell.setFormula(cell.formula().clear()));
         }
+
+        @Override
+        SpreadsheetCell evaluateIfNecessary(final BasicSpreadsheetEngine engine,
+                                            final SpreadsheetCell cell,
+                                            final SpreadsheetEngineContext context) {
+            throw new UnsupportedOperationException(); // clear never even tries to evaluate
+        }
     },
 
     /**
-     * Performs no new evaluation of the formula, leaves the original value or error alone and does not change the style.
+     * Performs no new parsing or evaluation of the formula, leaves the original value or error alone and does not change the style.
      */
     SKIP_EVALUATE {
         @Override
@@ -53,9 +61,18 @@ public enum SpreadsheetEngineEvaluation {
                                                 final SpreadsheetEngineContext context) {
             return cell;
         }
+
+        @Override
+        SpreadsheetCell evaluateIfNecessary(final BasicSpreadsheetEngine engine,
+                                            final SpreadsheetCell cell,
+                                            final SpreadsheetEngineContext context) {
+            throw new UnsupportedOperationException(); // skip never even tries to evaluate
+        }
     },
+
     /**
-     * Clears the value in the formula, evaluates the formula and value and applies styling.
+     * Clears the value in the formula, parses if necessary and evaluates the formula and value and applies styling.
+     * The {@link walkingkooka.tree.expression.Expression#isPure(ExpressionPurityContext)} is ignored.
      */
     FORCE_RECOMPUTE {
         @Override
@@ -63,20 +80,50 @@ public enum SpreadsheetEngineEvaluation {
                                                 final BasicSpreadsheetEngine engine,
                                                 final SpreadsheetEngineContext context) {
             // clear value and error to allow evaluation to continue.
-            return engine.formulaEvaluateAndStyle(cell.setFormula(cell.formula().clear()),
-                    context);
+            return engine.parseFormulaEvaluateAndStyle(
+                    cell.setFormula(
+                            cell.formula()
+                                    .clear()
+                    ),
+                    this,
+                    context
+            );
+        }
+
+        @Override
+        SpreadsheetCell evaluateIfNecessary(final BasicSpreadsheetEngine engine,
+                                            final SpreadsheetCell cell,
+                                            final SpreadsheetEngineContext context) {
+            return engine.evaluateAndStyle(
+                    cell,
+                    context
+            );
         }
     },
 
     /**
-     * Evaluates the formula and value and applies styling.
+     * Parses if necessary and evaluates the formula if the expression is NOT pure and a value/error is already present.
      */
     COMPUTE_IF_NECESSARY {
         @Override
         SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                 final BasicSpreadsheetEngine engine,
                                                 final SpreadsheetEngineContext context) {
-            return engine.formulaEvaluateAndStyle(cell, context);
+            return engine.parseFormulaEvaluateAndStyle(
+                    cell,
+                    this,
+                    context
+            );
+        }
+
+        @Override
+        SpreadsheetCell evaluateIfNecessary(final BasicSpreadsheetEngine engine,
+                                            final SpreadsheetCell cell,
+                                            final SpreadsheetEngineContext context) {
+            return engine.evaluateAndStyleIfNecessary(
+                    cell,
+                    context
+            );
         }
     };
 
@@ -87,6 +134,13 @@ public enum SpreadsheetEngineEvaluation {
     abstract SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                      final BasicSpreadsheetEngine engine,
                                                      final SpreadsheetEngineContext context);
+
+    /**
+     * This method is only really executed by {@link #COMPUTE_IF_NECESSARY} and {@link #FORCE_RECOMPUTE}.
+     */
+    abstract SpreadsheetCell evaluateIfNecessary(final BasicSpreadsheetEngine engine,
+                                                 final SpreadsheetCell cell,
+                                                 final SpreadsheetEngineContext context);
 
     // LinkRelation.....................................................................................................
 

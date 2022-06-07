@@ -94,6 +94,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -148,6 +149,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static String DATETIME_PATTERN = DATE_PATTERN + " " + TIME_PATTERN;
     private final static String NUMBER_PATTERN = "#";
     private final static String TEXT_PATTERN = "@";
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
         @Override
@@ -372,6 +375,109 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.createContext(defaultYear, engine, context.storeRepository()));
 
         assertSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
+
+        this.checkValue(
+                second,
+                LocalDate.of(1900, 2, 1)
+        );
+        this.checkFormattedText(
+                second,
+                "1900/02/01 FORMATTED_PATTERN_SUFFIX"
+        );
+    }
+
+    @Test
+    public void testLoadCellComputeIfNecessaryHonoursExpressionIsPure() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        context.storeRepository()
+                .cells()
+                .save(this.cell(a, "1/2"));
+
+        final SpreadsheetCell first = this.loadCellOrFail(
+                engine,
+                a,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                context
+        );
+        this.checkValue(
+                first,
+                LocalDate.of(DEFAULT_YEAR, 2, 1)
+        );
+
+        final int defaultYear = DEFAULT_YEAR + 100;
+
+        final SpreadsheetCell second = this.loadCellOrFail(
+                engine,
+                a,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                this.createContext(defaultYear, engine, context.storeRepository())
+        );
+
+        assertSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
+
+        this.checkValue(
+                second,
+                LocalDate.of(1900, 2, 1)
+        );
+        this.checkFormattedText(
+                second,
+                "1900/02/01 FORMATTED_PATTERN_SUFFIX"
+        );
+    }
+
+    @Test
+    public void testLoadCellComputeIfNecessaryHonoursFunctionIsPure() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        context.storeRepository()
+                .cells()
+                .save(
+                        this.cell(
+                                a,
+                                "=BasicSpreadsheetEngineTestValue()"
+                        )
+                );
+
+        final Object value = EXPRESSION_NUMBER_KIND.one();
+        this.value = value;
+
+        final SpreadsheetCell first = this.loadCellOrFail(
+                engine,
+                a,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context
+        );
+        this.checkValue(
+                first,
+                this.value
+        );
+        this.checkFormattedText(
+                first,
+                "1 FORMATTED_PATTERN_SUFFIX"
+        );
+
+        final Object value2 = EXPRESSION_NUMBER_KIND.create(2);
+        this.value = value2;
+
+        final SpreadsheetCell second = this.loadCellOrFail(
+                engine,
+                a,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context
+        );
+        this.checkValue(
+                second,
+                value2
+        );
+        this.checkFormattedText(
+                second,
+                "2 FORMATTED_PATTERN_SUFFIX"
+        );
     }
 
     @Test
@@ -397,10 +503,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context);
         assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
+
+        this.checkFormattedText(second);
     }
 
     @Test
-    public void testLoadCellForceRecomputeIgnoresExpression() {
+    public void testLoadCellForceRecomputeIgnoresValue() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -424,6 +532,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.checkValue(
                 second,
                 LocalDate.of(defaultYear, 2, 1)
+        );
+        this.checkFormattedText(
+                second,
+                "2000/02/01 FORMATTED_PATTERN_SUFFIX"
         );
     }
 
@@ -546,20 +658,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(3, 1);
 
-        this.counter = BigDecimal.ZERO;
+        this.value = BigDecimal.ZERO;
 
-        engine.saveCell(this.cell(a, "=1+2+BasicSpreadsheetEngineTestCounter()"), context);
+        engine.saveCell(this.cell(a, "=1+2+BasicSpreadsheetEngineTestValue()"), context);
         engine.saveCell(this.cell(b, "=3+4+" + a), context);
         engine.saveCell(this.cell(c, "=5+6+" + a), context);
 
         // updating this counter results in $A having its value recomputed forcing a cascade update of $b and $c
-        this.counter = number(100);
+        this.value = number(100);
 
         this.loadCellAndCheck(engine,
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                formattedCellWithValue(a, "=1+2+BasicSpreadsheetEngineTestCounter()", number(100 + 3)),
+                formattedCellWithValue(a, "=1+2+BasicSpreadsheetEngineTestValue()", number(100 + 3)),
                 formattedCellWithValue(b, "=3+4+" + a, number(3 + 4 + 103)),
                 formattedCellWithValue(c, "=5+6+" + a, number(5 + 6 + 103)));
     }
@@ -9165,7 +9277,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions() {
                 return (name) -> {
-                    checkEquals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value(), "InvalidCellReference");
                     switch (name.value()) {
                         case "InvalidCellReference":
                             return new FakeExpressionFunction<>() {
@@ -9220,12 +9331,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     );
                                 }
                             };
-                        case "BasicSpreadsheetEngineTestCounter":
+                        case "BasicSpreadsheetEngineTestValue":
                             return new FakeExpressionFunction<>() {
                                 @Override
                                 public Object apply(final List<Object> parameters,
                                                     final ExpressionEvaluationContext context) {
-                                    return BasicSpreadsheetEngineTest.this.counter;
+                                    return BasicSpreadsheetEngineTest.this.value;
                                 }
 
                                 @Override
@@ -9239,6 +9350,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 @Override
                                 public Set<ExpressionFunctionKind> kinds() {
                                     return Sets.empty();
+                                }
+
+                                @Override
+                                public boolean isPure(final ExpressionPurityContext context) {
+                                    return false;
                                 }
                             };
                         default:
@@ -9313,7 +9429,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         };
     }
 
-    private Object counter;
+    private Object value;
 
     private SpreadsheetFormatter formatter(final String pattern,
                                            final Optional<Color> color,
@@ -9544,7 +9660,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .loadFromLocale()
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
