@@ -72,7 +72,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     @Test
     public void testBigDecimal() {
         this.convertToStringAndCheck(
-                new BigDecimal(1.25),
+                BigDecimal.valueOf(1.25),
                 "1.25"
         );
     }
