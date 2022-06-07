@@ -931,9 +931,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "values from returned cell=" + cell);
     }
 
+    default void checkFormattedText(final SpreadsheetCell cell) {
+        this.checkEquals(Optional.empty(), cell.formatted(), "formatted text absent");
+    }
+
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     default void checkFormattedText(final SpreadsheetCell cell, final String text) {
-        this.checkNotEquals(Optional.empty(), cell.formatted(), "formatted text absent");
+        this.checkNotEquals(Optional.empty(), cell.formatted(), "formatted text present");
         this.checkEquals(text, cell.formatted().get().text(), "formattedText");
     }
 
