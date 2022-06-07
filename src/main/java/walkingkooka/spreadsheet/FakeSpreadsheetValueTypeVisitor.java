@@ -151,7 +151,7 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
     }
 
     @Override
-    protected void visitUnknown() {
+    protected void visitUnknown(final String typeName) {
         throw new UnsupportedOperationException();
     }
 }
