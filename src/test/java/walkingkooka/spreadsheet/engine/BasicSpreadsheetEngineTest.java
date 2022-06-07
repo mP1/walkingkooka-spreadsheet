@@ -504,7 +504,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context);
         assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
 
-        this.checkFormattedText(second);
+        this.checkFormattedText(
+                second,
+                "End of text at (6,1) \"=1+2+\" expected BINARY_SUB_EXPRESSION"
+        );
     }
 
     @Test
@@ -9273,6 +9276,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.converterContext()
                         )
                 );
+            }
+
+            @Override
+            public boolean isPure(final FunctionExpressionName function) {
+                return this.functions()
+                        .apply(function)
+                        .isPure(this);
             }
 
             private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions() {

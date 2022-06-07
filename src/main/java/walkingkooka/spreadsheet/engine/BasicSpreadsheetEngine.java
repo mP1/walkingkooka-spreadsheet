@@ -57,6 +57,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -151,7 +152,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
             this.maybeParseAndEvaluateAndFormat(cell,
-                    SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                    SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                     context);
             changes.refreshUpdated();
             return this.prepareDelta(
@@ -627,7 +628,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     SpreadsheetCell maybeParseAndEvaluateAndFormat(final SpreadsheetCell cell,
                                                    final SpreadsheetEngineEvaluation evaluation,
                                                    final SpreadsheetEngineContext context) {
-        final SpreadsheetCell result = evaluation.formulaEvaluateAndStyle(cell, this, context);
+        final SpreadsheetCell result = evaluation.parseFormulaEvaluateAndStyle(cell, this, context);
         context.storeRepository()
                 .cells()
                 .save(result); // update cells enabling caching of parsing and value and errors.
@@ -638,17 +639,27 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                  final SpreadsheetEngineEvaluation evaluation,
                                                  final SpreadsheetEngineContext context) {
-        return evaluation.evaluateIfNecessary(
-                this,
-                cell.setFormula(
-                        this.parseFormulaIfNecessary(
-                                cell,
-                                Function.identity(),
-                                context
-                        )
-                ),
+        final SpreadsheetFormula formula = this.parseFormulaIfNecessary(
+                cell,
+                Function.identity(),
                 context
         );
+
+        // formula parse error ?
+        final Optional<SpreadsheetError> maybeError = formula.error();
+
+        return maybeError.isPresent() ?
+                this.formatAndApplyStyle(
+                        cell.setFormula(formula),
+                        context
+                ) :
+                this.evaluateAndStyle(
+                        cell.setFormula(
+                                formula
+                        ),
+                        evaluation,
+                        context
+                );
     }
 
     // PARSE .........................................................................................................
@@ -726,43 +737,76 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // EVAL .........................................................................................................
 
     /**
-     * If a value is available try and re-use or if an expression is present evaluate it.
+     * This is only called if the formula was parsed an {@link Expression} exists ready for evaluation.
      */
-    // called by SpreadsheetEngineEvaluation#COMPUTE_IF_NECESSARY
-    SpreadsheetCell evaluateAndStyleIfNecessary(final SpreadsheetCell cell,
-                                                final SpreadsheetEngineContext context) {
-        final SpreadsheetFormula formula = cell.formula();
-
-        return formula.value()
-                .orElse(null) instanceof SpreadsheetError ?
-                cell : // value present - using cached.
-                this.evaluateAndStyle(cell, context);
-    }
-
-    // called by SpreadsheetEngineEvaluation#FORCE_REOCOMPUTE
-    SpreadsheetCell evaluateAndStyle(final SpreadsheetCell cell,
-                                     final SpreadsheetEngineContext context) {
+    private SpreadsheetCell evaluateAndStyle(final SpreadsheetCell cell,
+                                             final SpreadsheetEngineEvaluation evaluation,
+                                             final SpreadsheetEngineContext context) {
         SpreadsheetFormula formula = cell.formula();
 
         try {
-            final Optional<Expression> expression = formula.expression();
-            if (expression.isPresent()) {
+            // ask enum to dispatch
+            final Optional<Expression> maybeExpression = formula.expression();
+            if (maybeExpression.isPresent()) {
                 formula = formula.setValue(
-                        Optional.ofNullable(
-                                context.evaluate(
-                                        expression.get(),
-                                        Optional.of(cell)
-                                )
+                        evaluation.evaluate(
+                                this,
+                                maybeExpression.get(),
+                                formula,
+                                cell,
+                                context
                         )
                 );
             }
 
         } catch (final Exception cause) {
-            formula = this.setError(formula, cause);
+            formula = this.setError(
+                    cell.formula(),
+                    cause
+            );
         }
-        return this.formatAndApplyStyle(
-                cell.setFormula(formula),
-                context
+
+        final SpreadsheetCell after = cell.setFormula(formula);
+
+        return cell.equals(after) ?
+                cell :
+                this.formatAndApplyStyle(
+                        after,
+                        context
+                );
+    }
+
+    /**
+     * If a formatted value is present and the {@link Expression#isPure(ExpressionPurityContext)} then return
+     * the current {@link SpreadsheetFormula#value()} otherwise evaluate the expression again.
+     */
+    // SpreadsheetEngineEvaluation#COMPUTE_IF_NECESSARY
+    Optional<Object> evaluateIfNecessary(final Expression expression,
+                                         final SpreadsheetFormula formula,
+                                         final SpreadsheetCell cell,
+                                         final SpreadsheetEngineContext context) {
+        return cell.formatted().isPresent() && expression.isPure(context) ?
+                formula.value() :
+                this.evaluate(
+                        expression,
+                        cell,
+                        context
+                );
+    }
+
+    /**
+     * Unconditionally evaluate the {@link Expression} returning the value.
+     */
+    // SpreadsheetEngineEvaluation#FORCE_RECOMPUTE
+    Optional<Object> evaluate(final Expression expression,
+                              final SpreadsheetCell cell,
+                              final SpreadsheetEngineContext context) {
+
+        return Optional.ofNullable(
+                context.evaluate(
+                        expression,
+                        Optional.of(cell)
+                )
         );
     }
 

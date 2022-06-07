@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Cast;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -27,6 +29,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public enum SpreadsheetEngineEvaluation {
 
@@ -35,19 +38,21 @@ public enum SpreadsheetEngineEvaluation {
      */
     CLEAR_VALUE_ERROR_SKIP_EVALUATE {
         @Override
-        SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                final BasicSpreadsheetEngine engine,
-                                                final SpreadsheetEngineContext context) {
+        SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                                     final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetEngineContext context) {
             return context.storeRepository()
                     .cells()
                     .save(cell.setFormula(cell.formula().clear()));
         }
 
         @Override
-        SpreadsheetCell evaluateIfNecessary(final BasicSpreadsheetEngine engine,
-                                            final SpreadsheetCell cell,
-                                            final SpreadsheetEngineContext context) {
-            throw new UnsupportedOperationException(); // clear never even tries to evaluate
+        Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
+                                  final Expression expression,
+                                  final SpreadsheetFormula formula,
+                                  final SpreadsheetCell cell,
+                                  final SpreadsheetEngineContext context) {
+            throw new UnsupportedOperationException();
         }
     },
 
@@ -56,17 +61,19 @@ public enum SpreadsheetEngineEvaluation {
      */
     SKIP_EVALUATE {
         @Override
-        SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                final BasicSpreadsheetEngine engine,
-                                                final SpreadsheetEngineContext context) {
+        SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                                     final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetEngineContext context) {
             return cell;
         }
 
         @Override
-        SpreadsheetCell evaluateIfNecessary(final BasicSpreadsheetEngine engine,
-                                            final SpreadsheetCell cell,
-                                            final SpreadsheetEngineContext context) {
-            throw new UnsupportedOperationException(); // skip never even tries to evaluate
+        Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
+                                  final Expression expression,
+                                  final SpreadsheetFormula formula,
+                                  final SpreadsheetCell cell,
+                                  final SpreadsheetEngineContext context) {
+            throw new UnsupportedOperationException();
         }
     },
 
@@ -76,9 +83,9 @@ public enum SpreadsheetEngineEvaluation {
      */
     FORCE_RECOMPUTE {
         @Override
-        SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                final BasicSpreadsheetEngine engine,
-                                                final SpreadsheetEngineContext context) {
+        SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                                     final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetEngineContext context) {
             // clear value and error to allow evaluation to continue.
             return engine.parseFormulaEvaluateAndStyle(
                     cell.setFormula(
@@ -91,10 +98,13 @@ public enum SpreadsheetEngineEvaluation {
         }
 
         @Override
-        SpreadsheetCell evaluateIfNecessary(final BasicSpreadsheetEngine engine,
-                                            final SpreadsheetCell cell,
-                                            final SpreadsheetEngineContext context) {
-            return engine.evaluateAndStyle(
+        Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
+                                  final Expression expression,
+                                  final SpreadsheetFormula formula,
+                                  final SpreadsheetCell cell,
+                                  final SpreadsheetEngineContext context) {
+            return engine.evaluate(
+                    expression,
                     cell,
                     context
             );
@@ -106,9 +116,9 @@ public enum SpreadsheetEngineEvaluation {
      */
     COMPUTE_IF_NECESSARY {
         @Override
-        SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                final BasicSpreadsheetEngine engine,
-                                                final SpreadsheetEngineContext context) {
+        SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                                     final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetEngineContext context) {
             return engine.parseFormulaEvaluateAndStyle(
                     cell,
                     this,
@@ -117,10 +127,14 @@ public enum SpreadsheetEngineEvaluation {
         }
 
         @Override
-        SpreadsheetCell evaluateIfNecessary(final BasicSpreadsheetEngine engine,
-                                            final SpreadsheetCell cell,
-                                            final SpreadsheetEngineContext context) {
-            return engine.evaluateAndStyleIfNecessary(
+        Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
+                                  final Expression expression,
+                                  final SpreadsheetFormula formula,
+                                  final SpreadsheetCell cell,
+                                  final SpreadsheetEngineContext context) {
+            return engine.evaluateIfNecessary(
+                    expression,
+                    formula,
                     cell,
                     context
             );
@@ -131,16 +145,18 @@ public enum SpreadsheetEngineEvaluation {
         this.linkRelation = LinkRelation.with(this.name().toLowerCase().replace('_', '-'));
     }
 
-    abstract SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                     final BasicSpreadsheetEngine engine,
-                                                     final SpreadsheetEngineContext context);
+    abstract SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                                          final BasicSpreadsheetEngine engine,
+                                                          final SpreadsheetEngineContext context);
 
     /**
      * This method is only really executed by {@link #COMPUTE_IF_NECESSARY} and {@link #FORCE_RECOMPUTE}.
      */
-    abstract SpreadsheetCell evaluateIfNecessary(final BasicSpreadsheetEngine engine,
-                                                 final SpreadsheetCell cell,
-                                                 final SpreadsheetEngineContext context);
+    abstract Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
+                                       final Expression expression,
+                                       final SpreadsheetFormula formula,
+                                       final SpreadsheetCell cell,
+                                       final SpreadsheetEngineContext context);
 
     // LinkRelation.....................................................................................................
 
