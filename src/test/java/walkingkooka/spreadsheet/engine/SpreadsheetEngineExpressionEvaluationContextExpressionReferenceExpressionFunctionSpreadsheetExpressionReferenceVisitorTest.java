@@ -50,6 +50,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
                     @Override
                     public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
                                                      final SpreadsheetEngineEvaluation evaluation,
+                                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                      final SpreadsheetEngineContext context) {
                         checkEquals(
                                 reference,
@@ -90,6 +91,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
                     @Override
                     public SpreadsheetDelta loadCell(final SpreadsheetCellReference c,
                                                      final SpreadsheetEngineEvaluation evaluation,
+                                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                      final SpreadsheetEngineContext context) {
                         checkEquals(
                                 cell,
@@ -147,6 +149,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
                     @Override
                     public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
                                                       final SpreadsheetEngineEvaluation evaluation,
+                                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                       final SpreadsheetEngineContext context) {
                         checkEquals(
                                 Sets.of(range),
@@ -200,6 +203,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
                     @Override
                     public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
                                                       final SpreadsheetEngineEvaluation evaluation,
+                                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                       final SpreadsheetEngineContext context) {
                         checkEquals(
                                 Sets.of(range),

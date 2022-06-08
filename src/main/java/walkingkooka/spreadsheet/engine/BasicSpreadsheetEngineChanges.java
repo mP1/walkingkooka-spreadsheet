@@ -49,43 +49,76 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
 
     static BasicSpreadsheetEngineChanges with(final BasicSpreadsheetEngine engine,
                                               final SpreadsheetEngineContext context,
+                                              final Set<SpreadsheetDeltaProperties> deltaProperties,
                                               final BasicSpreadsheetEngineChangesMode mode) {
-        return new BasicSpreadsheetEngineChanges(engine, context, mode);
+        return new BasicSpreadsheetEngineChanges(
+                engine,
+                context,
+                deltaProperties,
+                mode
+        );
     }
 
     private BasicSpreadsheetEngineChanges(final BasicSpreadsheetEngine engine,
                                           final SpreadsheetEngineContext context,
+                                          final Set<SpreadsheetDeltaProperties> deltaProperties,
                                           final BasicSpreadsheetEngineChangesMode mode) {
         super();
 
         this.mode = mode;
+        this.deltaProperties = deltaProperties;
 
         this.engine = engine;
         this.context = context;
 
+        // test $deltaProperties for each watcher registration.
+
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
         final SpreadsheetCellStore cellStore = repository.cells();
-        this.onSaveCell = cellStore.addSaveWatcher(this::onCellSaved);
-        this.onDeleteCell = cellStore.addDeleteWatcher(this::onCellDeleted);
 
+        this.onSaveCell = deltaProperties.contains(SpreadsheetDeltaProperties.CELLS) ?
+                cellStore.addSaveWatcher(this::onCellSaved) :
+                null;
+
+        this.onDeleteCell = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS) ?
+                cellStore.addDeleteWatcher(this::onCellDeleted) :
+                null;
+
+        // ???
         this.onDeleteCellReferences = repository.cellReferences()
                 .addRemoveReferenceWatcher(this::onCellReferenceDeleted);
 
         final SpreadsheetColumnStore columnStore = repository.columns();
-        this.onSaveColumn = columnStore.addSaveWatcher(this::onColumnSaved);
-        this.onDeleteColumn = columnStore.addDeleteWatcher(this::onColumnDeleted);
+        this.onSaveColumn = deltaProperties.contains(SpreadsheetDeltaProperties.COLUMNS) ?
+                columnStore.addSaveWatcher(this::onColumnSaved) :
+                null;
+        this.onDeleteColumn = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS) ?
+                columnStore.addDeleteWatcher(this::onColumnDeleted) :
+                null;
 
         final SpreadsheetLabelStore labelStore = repository.labels();
-        this.onSaveLabel = labelStore.addSaveWatcher(this::onLabelSaved);
-        this.onDeleteLabel = labelStore.addDeleteWatcher(this::onLabelDeleted);
+
+        this.onSaveLabel = deltaProperties.contains(SpreadsheetDeltaProperties.LABELS) ?
+                labelStore.addSaveWatcher(this::onLabelSaved) :
+                null;
+        this.onDeleteLabel = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_LABELS) ?
+                labelStore.addDeleteWatcher(this::onLabelDeleted) :
+                null;
 
         final SpreadsheetRowStore rowStore = repository.rows();
-        this.onSaveRow = rowStore.addSaveWatcher(this::onRowSaved);
-        this.onDeleteRow = rowStore.addDeleteWatcher(this::onRowDeleted);
+        this.onSaveRow = deltaProperties.contains(SpreadsheetDeltaProperties.ROWS) ?
+                rowStore.addSaveWatcher(this::onRowSaved) :
+                null;
+        this.onDeleteRow = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_ROWS) ?
+                rowStore.addDeleteWatcher(this::onRowDeleted) :
+                null;
 
         this.repository = repository;
     }
+
+    private final Runnable NULL = () -> {
+    };
 
     // dispatch using mode to the final target.
 
@@ -537,6 +570,9 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
      */
     private final Map<SpreadsheetRowReference, SpreadsheetRow> updatedAndDeletedRows = Maps.sorted();
 
+    // VisibleFor BasicSpreadsheetEngine
+    final Set<SpreadsheetDeltaProperties> deltaProperties;
+
     private final BasicSpreadsheetEngine engine;
     private final SpreadsheetEngineContext context;
     private final SpreadsheetStoreRepository repository;
@@ -546,6 +582,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
      */
     @Override
     public void close() {
+        // some might be null if the corresponding {@link SpreadsheetDeltaProperties} was clear.
         Watchers.removeAllThenFail(
                 this.onSaveCell,
                 this.onDeleteCell,

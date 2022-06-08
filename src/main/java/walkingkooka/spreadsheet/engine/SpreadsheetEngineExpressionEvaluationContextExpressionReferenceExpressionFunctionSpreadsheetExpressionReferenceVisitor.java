@@ -26,8 +26,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -45,6 +47,11 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
         return Optional.ofNullable(visitor.value);
     }
 
+    /**
+     * The loadCell and loadCells only want the values, not interested in all the other stuff like deleted or columns/rows etc.
+     */
+    private final static Set<SpreadsheetDeltaProperties> SPREADSHEET_DELTA_PROPERTIES = EnumSet.of(SpreadsheetDeltaProperties.CELLS);
+
     // @VisibleForTesting
     SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor(final SpreadsheetEngine engine,
                                                                                                                            final SpreadsheetEngineContext context) {
@@ -59,6 +66,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
         final SpreadsheetDelta loaded = this.engine.loadCell(
                 reference,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SPREADSHEET_DELTA_PROPERTIES,
                 this.context
         );
 
@@ -83,6 +91,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
         final SpreadsheetDelta delta = this.engine.loadCells(
                 Sets.of(range),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SPREADSHEET_DELTA_PROPERTIES,
                 this.context
         );
 

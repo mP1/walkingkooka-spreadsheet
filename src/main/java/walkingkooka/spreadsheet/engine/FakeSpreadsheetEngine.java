@@ -41,6 +41,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     @Override
     public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
                                      final SpreadsheetEngineEvaluation evaluation,
+                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
@@ -112,6 +113,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     @Override
     public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
                                       final SpreadsheetEngineEvaluation evaluation,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }

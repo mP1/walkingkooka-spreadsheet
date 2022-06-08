@@ -102,6 +102,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                 engine.loadCell(
                         SpreadsheetCellReference.parseCell("A1"),
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                        SpreadsheetDeltaProperties.ALL,
                         context
                 )
         );
@@ -121,6 +122,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetDelta delta = engine.loadCell(
                 cell.reference(),
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                SpreadsheetDeltaProperties.ALL,
                 context
         );
         final SpreadsheetCell loaded = delta.cells().iterator().next();

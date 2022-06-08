@@ -27,6 +27,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReference;
 
+import java.util.Set;
+
 /**
  * Controls what happens whenever a save to cell store happens.
  */
@@ -151,11 +153,29 @@ enum BasicSpreadsheetEngineChangesMode {
     };
 
     /**
-     * Factory that creates a {@link BasicSpreadsheetEngineChanges}
+     * Factory that creates a {@link BasicSpreadsheetEngineChanges}, this should be called by all {@link SpreadsheetEngine} except for the loadCellXXX methods.
      */
     final BasicSpreadsheetEngineChanges createChanges(final BasicSpreadsheetEngine engine,
                                                       final SpreadsheetEngineContext context) {
-        return BasicSpreadsheetEngineChanges.with(engine, context, this);
+        return this.createChanges(
+                engine,
+                SpreadsheetDeltaProperties.ALL,
+                context
+        );
+    }
+
+    /**
+     * Factory that creates a {@link BasicSpreadsheetEngineChanges}
+     */
+    final BasicSpreadsheetEngineChanges createChanges(final BasicSpreadsheetEngine engine,
+                                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                      final SpreadsheetEngineContext context) {
+        return BasicSpreadsheetEngineChanges.with(
+                engine,
+                context,
+                deltaProperties,
+                this
+        );
     }
 
     abstract void onCellSaved(final SpreadsheetCell cell,
