@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
@@ -29,7 +28,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
-import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.math.BigDecimal;
@@ -176,13 +174,7 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor<C extends Convert
 
     @Override
     protected void visit(final Object value) {
-        final Class<?> targetType = this.targetType;
-
-        throw new ConversionException(
-                "Unable to convert " + CharSequences.quoteIfChars(value) + " to " + targetType.getName(),
-                value,
-                targetType
-        );
+        // fail!
     }
 
     /**
