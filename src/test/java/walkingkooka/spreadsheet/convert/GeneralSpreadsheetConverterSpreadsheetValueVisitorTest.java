@@ -19,11 +19,8 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class GeneralSpreadsheetConverterSpreadsheetValueVisitorTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterSpreadsheetValueVisitor<ConverterContext>>
         implements SpreadsheetValueVisitorTesting<GeneralSpreadsheetConverterSpreadsheetValueVisitor<ConverterContext>> {
@@ -33,15 +30,14 @@ public final class GeneralSpreadsheetConverterSpreadsheetValueVisitorTest extend
     }
 
     @Test
-    public void testAcceptUnknownValue() {
-        final ConversionException thrown = assertThrows(
-                ConversionException.class,
-                () -> this.createVisitor().accept(this)
-        );
+    public void testConverterUnknownValue() {
         this.checkEquals(
-                "Unable to convert " + this + " to java.lang.String",
-                thrown.getMessage(),
-                "message"
+                null,
+                GeneralSpreadsheetConverterSpreadsheetValueVisitor.converter(
+                        this,
+                        Void.class,
+                        null
+                )
         );
     }
 
