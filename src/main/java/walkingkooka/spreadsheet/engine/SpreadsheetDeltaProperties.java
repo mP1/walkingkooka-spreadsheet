@@ -81,7 +81,7 @@ public enum SpreadsheetDeltaProperties {
                 csv0(selection);
     }
 
-    private final static Set<SpreadsheetDeltaProperties> ALL = Sets.readOnly(
+    public final static Set<SpreadsheetDeltaProperties> ALL = Sets.readOnly(
             EnumSet.allOf(SpreadsheetDeltaProperties.class)
     );
 
