@@ -81,9 +81,16 @@ public enum SpreadsheetDeltaProperties {
                 csv0(selection);
     }
 
-    public final static Set<SpreadsheetDeltaProperties> ALL = Sets.readOnly(
-            EnumSet.allOf(SpreadsheetDeltaProperties.class)
-    );
+    // J2cl EnumSet.allOf not implemented.
+    //
+    // https://github.com/google/j2cl/blob/master/jre/java/java/util/EnumSet.java#L134
+    static {
+        final EnumSet<SpreadsheetDeltaProperties> all = EnumSet.noneOf(SpreadsheetDeltaProperties.class);
+        all.addAll(Sets.of(SpreadsheetDeltaProperties.values()));
+        ALL = Sets.readOnly(all);
+    }
+
+    public final static Set<SpreadsheetDeltaProperties> ALL;
 
     private static Set<SpreadsheetDeltaProperties> csv0(final String values) {
         return Arrays.stream(values.split(","))
