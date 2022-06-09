@@ -102,7 +102,7 @@ public final class SpreadsheetDeltaPropertiesTest implements ClassTesting<Spread
     @Test
     public void testCsvWithStar() {
         this.csvAndCheck(
-                "cells,columns,deleted-cells",
+                "*",
                 EnumSet.allOf(SpreadsheetDeltaProperties.class)
         );
     }
@@ -110,8 +110,8 @@ public final class SpreadsheetDeltaPropertiesTest implements ClassTesting<Spread
     private void csvAndCheck(final String csv,
                              final Set<SpreadsheetDeltaProperties> properties) {
         this.checkEquals(
-                properties,
                 SpreadsheetDeltaProperties.csv(csv),
+                properties,
                 () -> "csv " + csv
         );
     }
