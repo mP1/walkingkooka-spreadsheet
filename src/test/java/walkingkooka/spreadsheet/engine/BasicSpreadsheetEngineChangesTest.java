@@ -94,6 +94,7 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
                         };
                     }
                 },
+                SpreadsheetDeltaProperties.ALL,
                 BasicSpreadsheetEngineChangesMode.IMMEDIATE
         );
 

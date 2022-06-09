@@ -50,6 +50,7 @@ public interface SpreadsheetEngine {
      */
     SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
                               final SpreadsheetEngineEvaluation evaluation,
+                              final Set<SpreadsheetDeltaProperties> deltaProperties,
                               final SpreadsheetEngineContext context);
 
     /**
@@ -121,6 +122,7 @@ public interface SpreadsheetEngine {
      */
     SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
                                final SpreadsheetEngineEvaluation evaluation,
+                               final Set<SpreadsheetDeltaProperties> deltaProperties,
                                final SpreadsheetEngineContext context);
 
     /**

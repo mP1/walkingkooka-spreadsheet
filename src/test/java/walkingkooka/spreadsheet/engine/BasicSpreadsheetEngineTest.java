@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
@@ -253,7 +254,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
                         .setLabels(SpreadsheetDelta.NO_LABELS),
-                engine.loadCell(reference, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context)
+                engine.loadCell(
+                        reference,
+                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                        SpreadsheetDeltaProperties.ALL,
+                        context
+                )
         );
     }
 
@@ -272,7 +278,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
                         .setLabels(Sets.of(LABEL.mapping(LABEL_CELL))),
-                engine.loadCell(LABEL_CELL, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context)
+                engine.loadCell(
+                        LABEL_CELL,
+                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                        SpreadsheetDeltaProperties.ALL,
+                        context
+                )
         );
     }
 
@@ -286,10 +297,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells()
                 .save(this.cell(cellReference, "=1+2"));
 
-        this.loadCellAndCheckWithoutValueOrError(engine,
+        this.loadCellAndCheckWithoutValueOrError(
+                engine,
                 cellReference,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
-                context);
+                SpreadsheetDeltaProperties.ALL,
+                context
+        );
     }
 
     @Test
@@ -341,14 +355,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells()
                 .save(this.cell(cellReference, "=1+2"));
 
-        final SpreadsheetCell first = this.loadCellOrFail(engine,
+        final SpreadsheetCell first = this.loadCellOrFail(
+                engine,
                 cellReference,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context);
-        final SpreadsheetCell second = this.loadCellOrFail(engine,
+                context
+        );
+
+        final SpreadsheetCell second = this.loadCellOrFail(
+                engine,
                 cellReference,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context);
+                context
+        );
 
         assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
     }
@@ -673,6 +692,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellAndCheck(engine,
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 formattedCellWithValue(a, "=1+2+BasicSpreadsheetEngineTestValue()", number(100 + 3)),
                 formattedCellWithValue(b, "=3+4+" + a, number(3 + 4 + 103)),
@@ -820,6 +840,109 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.checkEquals(Optional.of(italics.replace(TextNode.text("7 " + FORMATTED_PATTERN_SUFFIX)).root()),
                 cell.formatted(),
                 () -> "TextStyle should include underline if correct rule was applied=" + cell);
+    }
+
+    @Test
+    public void testLoadCellSpreadsheetDeltaPropertiesCells() {
+        this.loadCellAndCheck(
+                SpreadsheetDeltaProperties.CELLS
+        );
+    }
+
+    @Test
+    public void testLoadCellSpreadsheetDeltaPropertiesCellsLabel() {
+        this.loadCellAndCheck(
+                SpreadsheetDeltaProperties.CELLS,
+                SpreadsheetDeltaProperties.LABELS
+        );
+    }
+
+    @Test
+    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2280")
+    public void testLoadCellSpreadsheetDeltaPropertiesCellsColumnWidths() {
+        this.loadCellAndCheck(
+                SpreadsheetDeltaProperties.CELLS,
+                SpreadsheetDeltaProperties.COLUMN_WIDTHS
+        );
+    }
+
+    @Test
+    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2280")
+    public void testLoadCellSpreadsheetDeltaPropertiesCellsRowHeights() {
+        this.loadCellAndCheck(
+                SpreadsheetDeltaProperties.CELLS,
+                SpreadsheetDeltaProperties.ROW_HEIGHTS
+        );
+    }
+
+    @Test
+    public void testLoadCellSpreadsheetDeltaPropertiesAll() {
+        this.loadCellAndCheck(SpreadsheetDeltaProperties.ALL);
+    }
+
+    private void loadCellAndCheck(final SpreadsheetDeltaProperties... deltaProperties) {
+        this.loadCellAndCheck(
+                Sets.of(deltaProperties)
+        );
+    }
+
+    private void loadCellAndCheck(final Set<SpreadsheetDeltaProperties> deltaProperties) {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.parseCell("A1");
+
+        final SpreadsheetCell cell = this.cell(cellReference, "=1+2");
+
+        context.storeRepository()
+                .cells()
+                .save(cell);
+
+        final SpreadsheetLabelMapping label = LABEL.mapping(cellReference);
+
+        context.storeRepository()
+                .labels()
+                .save(label);
+
+        final SpreadsheetDelta delta = engine.loadCell(
+                cellReference,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                deltaProperties,
+                context
+        );
+
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.CELLS)) {
+            this.checkNotEquals(
+                    Sets.empty(),
+                    delta.cells(),
+                    () -> "cells should have cell, " + deltaProperties
+            );
+        } else {
+            this.checkEquals(
+                    Sets.empty(),
+                    delta.cells(),
+                    () -> "cells should be empty, " + deltaProperties
+            );
+        }
+
+        this.checkEquals(
+                deltaProperties.contains(SpreadsheetDeltaProperties.LABELS) ? Sets.of(label) : Sets.empty(),
+                delta.labels(),
+                () -> "labels, " + deltaProperties
+        );
+
+//        https://github.com/mP1/walkingkooka-spreadsheet/issues/2280
+//        this.checkEquals(
+//                deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_WIDTHS) ? Maps.of(cellReference.column(), WIDTH) : Maps.empty(),
+//                delta.columnWidths(),
+//                () -> "columnWidths, " + deltaProperties
+//        );
+//
+//        this.checkEquals(
+//                deltaProperties.contains(SpreadsheetDeltaProperties.ROW_HEIGHTS) ? Maps.of(cellReference.row(), HEIGHT) : Maps.empty(),
+//                delta.rowHeights(),
+//                () -> "rowHeights, " + deltaProperties
+//        );
     }
 
     private void saveRule(final boolean result,
@@ -5482,6 +5605,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 "A1:B2",
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context
         );
     }
@@ -5514,6 +5638,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 "A1:B2,D4:E5",
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 this.loadCellOrFail(engine, a1, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context),
                 this.loadCellOrFail(engine, d4, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context)
@@ -5548,6 +5673,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 range,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
@@ -5577,6 +5703,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 range,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
@@ -5617,6 +5744,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 range,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
@@ -5642,6 +5770,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 "z9",
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 this.formattedCellWithError(
                         z9,
@@ -5669,6 +5798,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 "b2:c3",
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 this.formattedCellWithValue(b2, this.expressionNumberKind().create(2)),
                 this.formattedCellWithValue(c3, this.expressionNumberKind().create(3))
@@ -5693,6 +5823,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 "b2:c3",
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 this.formattedCellWithValue(b2, this.expressionNumberKind().create(4)),
                 this.formattedCellWithValue(c3, this.expressionNumberKind().create(2))
@@ -5720,6 +5851,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 "a1",
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 this.formattedCellWithValue(a1, this.expressionNumberKind().create(1 + 10 + 100)),
                 this.formattedCellWithValue(b2, this.expressionNumberKind().create(1 + 10)),
@@ -5754,6 +5886,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 range,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(Sets.of(
@@ -5793,6 +5926,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 range,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(Sets.of(
@@ -5849,6 +5983,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 Sets.of(range),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
@@ -5909,6 +6044,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 range,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(Sets.of(
@@ -5991,11 +6127,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 1); // a deleted
 
-        this.loadCellAndCheck(engine,
+        this.loadCellAndCheck(
+                engine,
                 b,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                this.formattedCellWithValue(b, "=2+0", number(2)));
+                this.formattedCellWithValue(b, "=2+0", number(2))
+        );
     }
 
     @Test
@@ -6067,11 +6206,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 1); // a&b deleted, leaving c
 
-        this.loadCellAndCheck(engine,
+        this.loadCellAndCheck(
+                engine,
                 c,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                this.formattedCellWithValue(c, "=3+0", number(3)));
+                this.formattedCellWithValue(c, "=3+0", number(3))
+        );
     }
 
     // fill save with missing cells......................................................................................
@@ -6099,17 +6241,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(context.storeRepository().cells(), 2); // a + b saved
 
-        this.loadCellAndCheck(engine,
+        this.loadCellAndCheck(
+                engine,
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                this.formattedCellWithValue(a, "=1+0", number(1)));
+                this.formattedCellWithValue(a, "=1+0", number(1))
+        );
 
-        this.loadCellAndCheck(engine,
+        this.loadCellAndCheck(
+                engine,
                 b,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                this.formattedCellWithValue(b, "=2+0", number(2)));
+                this.formattedCellWithValue(b, "=2+0", number(2))
+        );
     }
 
     @Test
@@ -6142,23 +6290,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 3); // a + b saved + c
 
-        this.loadCellAndCheck(engine,
+        this.loadCellAndCheck(
+                engine,
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                this.formattedCellWithValue(a, "=1+0", number(1))); // fill should have evaluated.
+                this.formattedCellWithValue(a, "=1+0", number(1))
+        ); // fill should have evaluated.
 
-        this.loadCellAndCheck(engine,
+        this.loadCellAndCheck(
+                engine,
                 b,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                this.formattedCellWithValue(b, "=2+0", number(2)));
+                this.formattedCellWithValue(b, "=2+0", number(2))
+        );
 
-        this.loadCellAndCheck(engine,
+        this.loadCellAndCheck(
+                engine,
                 c,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                cellC);
+                cellC
+        );
     }
 
     // fill moves cell..................................................................................................
@@ -6197,17 +6354,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 2); // a + c, b deleted
 
-        this.loadCellAndCheck(engine,
+        this.loadCellAndCheck(
+                engine,
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                this.formattedCellWithValue(a, "=1+0", number(1)));
+                this.formattedCellWithValue(a, "=1+0", number(1))
+        );
 
-        this.loadCellAndCheck(engine,
+        this.loadCellAndCheck(
+                engine,
                 c,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                this.formattedCellWithValue(c, "=3+0", number(3)));
+                this.formattedCellWithValue(c, "=3+0", number(3))
+        );
     }
 
     @Test
@@ -6244,11 +6407,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 1);
 
-        this.loadCellAndCheck(engine,
+        this.loadCellAndCheck(
+                engine,
                 c,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                this.formattedCellWithValue(c, "=3+0", number(3)));
+                this.formattedCellWithValue(c, "=3+0", number(3))
+        );
     }
 
     // fill moves 1 cell................................................................................................
@@ -9380,6 +9546,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         final SpreadsheetDelta delta = engine.loadCell(
                                 cell,
                                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                                SpreadsheetDeltaProperties.ALL,
                                 this
                         );
                         return delta.cell(cell)
