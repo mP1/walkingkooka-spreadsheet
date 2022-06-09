@@ -76,7 +76,7 @@ public enum SpreadsheetDeltaProperties {
      * If the selection is null or empty string all of them are returned.
      */
     public static Set<SpreadsheetDeltaProperties> csv(final String selection) {
-        return CharSequences.isNullOrEmpty(selection) ?
+        return CharSequences.isNullOrEmpty(selection) || "*".equals(selection) ?
                 ALL :
                 csv0(selection);
     }
