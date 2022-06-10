@@ -36,12 +36,18 @@ public final class GeneralSpreadsheetConverterBooleanStringTest extends GeneralS
 
     @Test
     public void testTrue() {
-        this.convertAndCheck(true, String.class, "truetrue");
+        this.convertAndCheck(
+                true,
+                "truetrue"
+        );
     }
 
     @Test
     public void testFalse() {
-        this.convertAndCheck(false, String.class, "falsefalse");
+        this.convertAndCheck(
+                false,
+                "falsefalse"
+        );
     }
 
     @Test
