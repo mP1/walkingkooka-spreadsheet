@@ -158,7 +158,7 @@ final class GeneralSpreadsheetConverter implements Converter<ExpressionNumberCon
                 null, // date
                 null, // date-time
                 null, // number
-                GeneralSpreadsheetConverterSelectionConverter.INSTANCE, // selection
+                GeneralSpreadsheetConverterSelectionStringConverter.INSTANCE, // selection
                 Converters.objectString(), // string
                 null // time
         );
@@ -178,7 +178,9 @@ final class GeneralSpreadsheetConverter implements Converter<ExpressionNumberCon
                 fromCharacterOrString(
                         ExpressionNumber.toConverter(numberParser.converter().cast(ExpressionNumberConverterContext.class))
                 ),
-                null, // selection
+                fromCharacterOrString(
+                        GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter.INSTANCE
+                ), // selection
                 fromCharacterOrString(
                         toCharacterOrString(
                                 Converters.simple() // String -> String
@@ -303,7 +305,8 @@ final class GeneralSpreadsheetConverter implements Converter<ExpressionNumberCon
                 isSupportedType(targetType) &&
                         false == (value instanceof LocalTime && targetType == LocalDate.class) &&
                         false == (value instanceof LocalDate && targetType == LocalTime.class) ||
-                GeneralSpreadsheetConverterSelectionConverter.INSTANCE.canConvert(value, targetType, context);
+                GeneralSpreadsheetConverterSelectionStringConverter.INSTANCE.canConvert(value, targetType, context) ||
+                GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter.INSTANCE.canConvert(value, targetType, context);
     }
 
     private static boolean isSupportedType(final Class<?> type) {

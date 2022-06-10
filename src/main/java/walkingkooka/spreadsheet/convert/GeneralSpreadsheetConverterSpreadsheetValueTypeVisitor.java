@@ -76,6 +76,16 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     }
 
     @Override
+    protected void visitColumnReference() {
+        this.converter = this.mapping.selection;
+    }
+
+    @Override
+    protected void visitColumnReferenceRange() {
+        this.converter = this.mapping.selection;
+    }
+
+    @Override
     protected void visitDouble() {
         this.converter = this.mapping.number;
     }
@@ -118,6 +128,16 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     @Override
     protected void visitNumber() {
         this.converter = this.mapping.number;
+    }
+
+    @Override
+    protected void visitRowReference() {
+        this.converter = this.mapping.selection;
+    }
+
+    @Override
+    protected void visitRowReferenceRange() {
+        this.converter = this.mapping.selection;
     }
 
     @Override
