@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
@@ -513,12 +512,12 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testBooleanTrueString() {
-        this.convertAndCheck2(true, STRING_TRUE + TEXT_SUFFIX);
+        this.convertAndCheck(true, STRING_TRUE + TEXT_SUFFIX);
     }
 
     @Test
     public void testBooleanFalseString() {
-        this.convertAndCheck2(false, false + TEXT_SUFFIX);
+        this.convertAndCheck(false, false + TEXT_SUFFIX);
     }
 
     @Test
@@ -577,12 +576,12 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testDateTrueBoolean() {
-        this.convertAndCheck2(DATE_TRUE, true);
+        this.convertAndCheck(DATE_TRUE, true);
     }
 
     @Test
     public void testDateFalseBoolean() {
-        this.convertAndCheck2(DATE_FALSE, false);
+        this.convertAndCheck(DATE_FALSE, false);
     }
 
     @Test
@@ -618,7 +617,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testDateTrueString() {
-        this.convertAndCheck2(DATE, "D 2000-12-31");
+        this.convertAndCheck(DATE, "D 2000-12-31");
     }
 
     @Test
@@ -630,17 +629,17 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testDateTimeTrueBoolean() {
-        this.convertAndCheck2(DATE_TIME_TRUE, true);
+        this.convertAndCheck(DATE_TIME_TRUE, true);
     }
 
     @Test
     public void testDateTimeFalseBoolean() {
-        this.convertAndCheck2(DATE_TIME_FALSE, false);
+        this.convertAndCheck(DATE_TIME_FALSE, false);
     }
 
     @Test
     public void testDateTimeDate() {
-        this.convertAndCheck2(DATE_TIME, DATE);
+        this.convertAndCheck(DATE_TIME, DATE);
     }
 
     @Test
@@ -666,12 +665,12 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testDateTimeTrueString() {
-        this.convertAndCheck2(DATE_TIME, "DT 2000-12-31 12-58");
+        this.convertAndCheck(DATE_TIME, "DT 2000-12-31 12-58");
     }
 
     @Test
     public void testDateTimeTime() {
-        this.convertAndCheck2(DATE_TIME, TIME);
+        this.convertAndCheck(DATE_TIME, TIME);
     }
 
     // Number...........................................................................................................
@@ -774,12 +773,12 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testNumberTrueString() {
-        this.convertAndCheck2(12.5, "N 12D5");
+        this.convertAndCheck(12.5, "N 12D5");
     }
 
     @Test
     public void testNumberFalseString() {
-        this.convertAndCheck2(false, TIME_FALSE);
+        this.convertAndCheck(false, TIME_FALSE);
     }
 
     @Test
@@ -812,7 +811,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testCharacterString() {
-        this.convertAndCheck2(
+        this.convertAndCheck(
                 'A',
                 "A"
         );
@@ -820,7 +819,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testStringBooleanFalse() {
-        this.convertAndCheck2(
+        this.convertAndCheck(
                 STRING_FALSE,
                 false
         );
@@ -828,7 +827,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testStringBooleanTrue() {
-        this.convertAndCheck2(
+        this.convertAndCheck(
                 STRING_TRUE,
                 true
         );
@@ -836,7 +835,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testStringCharacter() {
-        this.convertAndCheck2(
+        this.convertAndCheck(
                 "A",
                 'A'
         );
@@ -844,7 +843,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testStringDate() {
-        this.convertAndCheck2(
+        this.convertAndCheck(
                 "D 2000-12-31",
                 DATE
         );
@@ -854,7 +853,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testStringDateTime() {
-        this.convertAndCheck2(
+        this.convertAndCheck(
                 "DT 31 12 2000 12 58 59",
                 DATE_TIME
         );
@@ -862,7 +861,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testStringNumber() {
-        this.convertAndCheck2(
+        this.convertAndCheck(
                 "123",
                 EXPRESSION_NUMBER_KIND.create(123)
         );
@@ -871,12 +870,12 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testStringString() {
         final String text = "abc123";
-        this.convertAndCheck2(text, text);
+        this.convertAndCheck(text, text);
     }
 
     @Test
     public void testStringTime() {
-        this.convertAndCheck2(
+        this.convertAndCheck(
                 "T 12 58 59",
                 TIME
         );
@@ -886,12 +885,12 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testTimeTrueBoolean() {
-        this.convertAndCheck2(TIME_TRUE, true);
+        this.convertAndCheck(TIME_TRUE, true);
     }
 
     @Test
     public void testTimeFalseBoolean() {
-        this.convertAndCheck2(TIME_FALSE, false);
+        this.convertAndCheck(TIME_FALSE, false);
     }
 
     @Test
@@ -901,7 +900,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testTimeDateTime() {
-        this.convertAndCheck2(TIME, LocalDateTime.of(DATE_FALSE, TIME));
+        this.convertAndCheck(TIME, LocalDateTime.of(DATE_FALSE, TIME));
     }
 
     @Test
@@ -922,7 +921,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testTimeTrueString() {
-        this.convertAndCheck2(DATE, "D 2000-12-31");
+        this.convertAndCheck(DATE, "D 2000-12-31");
     }
 
     @Test
@@ -1052,17 +1051,10 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 EXPRESSION_NUMBER_KIND);
     }
 
-    private void convertAndCheck2(final Object value,
-                                  final Object expected) {
-        this.convertAndCheck(value,
-                Cast.to(expected.getClass()),
-                expected);
-    }
-
     private void convertAndBackCheck(final Object value,
                                      final Object expected) {
-        this.convertAndCheck2(value, expected);
-        this.convertAndCheck2(expected, value);
+        this.convertAndCheck(value, expected);
+        this.convertAndCheck(expected, value);
     }
 
     private void convertNumberAndCheck(final Object value,
