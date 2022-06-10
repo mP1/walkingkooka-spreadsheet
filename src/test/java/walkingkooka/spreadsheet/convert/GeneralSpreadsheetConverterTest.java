@@ -574,6 +574,50 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         this.convertAndCheck(null, String.class, "falsetext-literal-123");
     }
 
+    // character.......................................................................................................
+
+    @Test
+    public void testCharacterToSpreadsheetColumnReference() {
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("X");
+
+        this.convertAndCheck(
+                'X',
+                column
+        );
+    }
+
+    @Test
+    public void testCharacterToSpreadsheetColumnReferenceRange() {
+        final SpreadsheetColumnReferenceRange range = SpreadsheetSelection.parseColumnRange("X");
+
+        this.convertAndCheck(
+                'X',
+                range
+        );
+    }
+
+    @Test
+    public void testCharacterToSpreadsheetRowReference() {
+        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("1");
+
+        this.convertAndCheck(
+                '1',
+                row
+        );
+    }
+
+    @Test
+    public void testCharacterToSpreadsheetRowReferenceRange() {
+        final SpreadsheetRowReferenceRange range = SpreadsheetSelection.parseRowRange("1");
+
+        this.convertAndCheck(
+                '1',
+                range
+        );
+    }
+
+    // date............................................................................................................
+
     @Test
     public void testDateTrueBoolean() {
         this.convertAndCheck(DATE_TRUE, true);
@@ -864,6 +908,66 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         this.convertAndCheck(
                 "123",
                 EXPRESSION_NUMBER_KIND.create(123)
+        );
+    }
+
+    @Test
+    public void testStringToSpreadsheetCellReference() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
+
+        this.convertAndCheck(
+                cell.toString(),
+                cell
+        );
+    }
+
+    @Test
+    public void testStringToSpreadsheetCellRange() {
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("Z99:Z100");
+
+        this.convertAndCheck(
+                range.toString(),
+                range
+        );
+    }
+
+    @Test
+    public void testStringToSpreadsheetColumnReference() {
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("Z");
+
+        this.convertAndCheck(
+                column.toString(),
+                column
+        );
+    }
+
+    @Test
+    public void testStringToSpreadsheetColumnReferenceRange() {
+        final SpreadsheetColumnReferenceRange range = SpreadsheetSelection.parseColumnRange("X:Y");
+
+        this.convertAndCheck(
+                range.toString(),
+                range
+        );
+    }
+
+    @Test
+    public void testStringToSpreadsheetRowReference() {
+        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("123");
+
+        this.convertAndCheck(
+                row.toString(),
+                row
+        );
+    }
+
+    @Test
+    public void testStringToSpreadsheetRowReferenceRange() {
+        final SpreadsheetRowReferenceRange range = SpreadsheetSelection.parseRowRange("123:456");
+
+        this.convertAndCheck(
+                range.toString(),
+                range
         );
     }
 
