@@ -749,26 +749,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                   final SpreadsheetEngineEvaluation evaluation,
                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
                                   final SpreadsheetEngineContext context,
-                                  final SpreadsheetCell... cells) {
-        this.loadCellAndCheck(
-                engine,
-                reference,
-                evaluation,
-                deltaProperties,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(cells)
-                )
-        );
-    }
-
-    default void loadCellAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetCellReference reference,
-                                  final SpreadsheetEngineEvaluation evaluation,
-                                  final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                  final SpreadsheetEngineContext context,
                                   final SpreadsheetDelta loaded) {
-        this.checkEquals(loaded,
+        this.checkEquals(
+                loaded,
                 engine.loadCell(
                         reference,
                         evaluation,
@@ -804,35 +787,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void saveCellAndCheck(final SpreadsheetEngine engine,
                                   final SpreadsheetCell save,
                                   final SpreadsheetEngineContext context,
-                                  final SpreadsheetCell... updated) {
-        this.saveCellAndCheck(engine,
-                save,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
-    }
-
-    default void saveCellAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetCell save,
-                                  final SpreadsheetEngineContext context,
                                   final SpreadsheetDelta delta) {
         checkEquals(
                 delta,
                 engine.saveCell(save, context),
                 () -> "saveCell " + save
-        );
-    }
-
-    default void deleteCellAndCheck(final SpreadsheetEngine engine,
-                                    final SpreadsheetCellReference delete,
-                                    final SpreadsheetEngineContext context,
-                                    final SpreadsheetCell... updated) {
-        this.deleteCellAndCheck(
-                engine,
-                delete,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(Sets.of(updated))
-                        .setDeletedCells(Sets.of(delete))
         );
     }
 
@@ -998,20 +957,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 ),
                 () -> "loadCells " + range + " " + evaluation
         );
-    }
-
-    default void fillCellsAndCheck(final SpreadsheetEngine engine,
-                                   final Collection<SpreadsheetCell> cells,
-                                   final SpreadsheetCellRange from,
-                                   final SpreadsheetCellRange to,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetCell... updated) {
-        this.fillCellsAndCheck(engine,
-                cells,
-                from,
-                to,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
     }
 
     default void fillCellsAndCheck(final SpreadsheetEngine engine,
