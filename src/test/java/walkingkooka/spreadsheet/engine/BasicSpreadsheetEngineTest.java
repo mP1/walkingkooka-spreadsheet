@@ -208,8 +208,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.labelName("Label123");
     private final static SpreadsheetCellReference LABEL_CELL = SpreadsheetCellReference.parseCell("Z99");
 
-    private final static double WIDTH = 50;
-    private final static double HEIGHT = 30;
+    private final static double COLUMN_WIDTH = 50;
+    private final static double ROW_HEIGHT = 30;
 
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
@@ -7402,8 +7402,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowLeft() {
         this.windowAndCheck(
                 "A1",
-                WIDTH,
-                HEIGHT,
+                COLUMN_WIDTH,
+                ROW_HEIGHT,
                 "A1"
         );
     }
@@ -7412,8 +7412,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowLeft2() {
         this.windowAndCheck(
                 "A1",
-                3 * WIDTH,
-                HEIGHT,
+                3 * COLUMN_WIDTH,
+                ROW_HEIGHT,
                 "A1:C1"
         );
     }
@@ -7422,8 +7422,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowLeft3() {
         this.windowAndCheck(
                 "A1",
-                WIDTH - 1,
-                HEIGHT,
+                COLUMN_WIDTH - 1,
+                ROW_HEIGHT,
                 "A1"
         );
     }
@@ -7432,8 +7432,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowLeft4() {
         this.windowAndCheck(
                 "A1",
-                WIDTH + 1,
-                HEIGHT,
+                COLUMN_WIDTH + 1,
+                ROW_HEIGHT,
                 "A1:B1"
         );
     }
@@ -7442,8 +7442,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowLeft5() {
         this.windowAndCheck(
                 "A1",
-                WIDTH * 4 - 1,
-                HEIGHT,
+                COLUMN_WIDTH * 4 - 1,
+                ROW_HEIGHT,
                 "A1:D1"
         );
     }
@@ -7452,8 +7452,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowLeft6() {
         this.windowAndCheck(
                 "A1",
-                WIDTH * 4 + 1,
-                HEIGHT,
+                COLUMN_WIDTH * 4 + 1,
+                ROW_HEIGHT,
                 "A1:E1"
         );
     }
@@ -7462,8 +7462,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidX() {
         this.windowAndCheck(
                 "M1",
-                WIDTH,
-                HEIGHT,
+                COLUMN_WIDTH,
+                ROW_HEIGHT,
                 "M1"
         );
     }
@@ -7472,8 +7472,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidX2() {
         this.windowAndCheck(
                 "M1",
-                3 * WIDTH,
-                HEIGHT,
+                3 * COLUMN_WIDTH,
+                ROW_HEIGHT,
                 "M1:O1"
         );
     }
@@ -7482,8 +7482,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidX3() {
         this.windowAndCheck(
                 "M1",
-                WIDTH - 1,
-                HEIGHT,
+                COLUMN_WIDTH - 1,
+                ROW_HEIGHT,
                 "M1"
         );
     }
@@ -7492,8 +7492,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidX4() {
         this.windowAndCheck(
                 "M1",
-                WIDTH + 1,
-                HEIGHT,
+                COLUMN_WIDTH + 1,
+                ROW_HEIGHT,
                 "M1:N1"
         );
     }
@@ -7502,8 +7502,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidX5() {
         this.windowAndCheck(
                 "M1",
-                WIDTH * 4 - 1,
-                HEIGHT,
+                COLUMN_WIDTH * 4 - 1,
+                ROW_HEIGHT,
                 "M1:P1"
         );
     }
@@ -7512,8 +7512,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidX6() {
         this.windowAndCheck(
                 "M1",
-                WIDTH * 4 + 1,
-                HEIGHT,
+                COLUMN_WIDTH * 4 + 1,
+                ROW_HEIGHT,
                 "M1:Q1"
         );
     }
@@ -7524,8 +7524,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowRight() {
         this.windowAndCheck(
                 "XFD1",
-                WIDTH,
-                HEIGHT,
+                COLUMN_WIDTH,
+                ROW_HEIGHT,
                 "XFD1"
         );
     }
@@ -7534,8 +7534,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowRight2() {
         this.windowAndCheck(
                 "XFD1",
-                3 * WIDTH,
-                HEIGHT,
+                3 * COLUMN_WIDTH,
+                ROW_HEIGHT,
                 "XFB1:XFD1"
         );
     }
@@ -7544,8 +7544,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowRight3() {
         this.windowAndCheck(
                 "XFD1",
-                WIDTH - 1,
-                HEIGHT,
+                COLUMN_WIDTH - 1,
+                ROW_HEIGHT,
                 "XFD1"
         );
     }
@@ -7554,8 +7554,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowRight4() {
         this.windowAndCheck(
                 "XFD1",
-                WIDTH + 1,
-                HEIGHT,
+                COLUMN_WIDTH + 1,
+                ROW_HEIGHT,
                 "XFC1:XFD1"
         );
     }
@@ -7564,8 +7564,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowRight5() {
         this.windowAndCheck(
                 "XFD1",
-                WIDTH * 4 - 1,
-                HEIGHT,
+                COLUMN_WIDTH * 4 - 1,
+                ROW_HEIGHT,
                 "XFA1:XFD1"
         );
     }
@@ -7574,8 +7574,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowRight6() {
         this.windowAndCheck(
                 "XFD1",
-                WIDTH * 4 + 1,
-                HEIGHT,
+                COLUMN_WIDTH * 4 + 1,
+                ROW_HEIGHT,
                 "XEZ1:XFD1"
         );
     }
@@ -7586,8 +7586,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowTop() {
         this.windowAndCheck(
                 "A1",
-                WIDTH,
-                HEIGHT,
+                COLUMN_WIDTH,
+                ROW_HEIGHT,
                 "A1"
         );
     }
@@ -7596,8 +7596,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowTop2() {
         this.windowAndCheck(
                 "A1",
-                WIDTH,
-                3 * HEIGHT,
+                COLUMN_WIDTH,
+                3 * ROW_HEIGHT,
                 "A1:A3"
         );
     }
@@ -7606,8 +7606,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowTop3() {
         this.windowAndCheck(
                 "A1",
-                WIDTH,
-                HEIGHT - 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT - 1,
                 "A1"
         );
     }
@@ -7616,8 +7616,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowTop4() {
         this.windowAndCheck(
                 "A1",
-                WIDTH,
-                HEIGHT + 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT + 1,
                 "A1:A2"
         );
     }
@@ -7626,8 +7626,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowTop5() {
         this.windowAndCheck(
                 "A1",
-                WIDTH,
-                HEIGHT * 4 - 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT * 4 - 1,
                 "A1:A4"
         );
     }
@@ -7636,8 +7636,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowTop6() {
         this.windowAndCheck(
                 "A1",
-                WIDTH,
-                HEIGHT * 4 + 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT * 4 + 1,
                 "A1:A5"
         );
     }
@@ -7646,8 +7646,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidY() {
         this.windowAndCheck(
                 "A10",
-                WIDTH,
-                HEIGHT,
+                COLUMN_WIDTH,
+                ROW_HEIGHT,
                 "A10"
         );
     }
@@ -7656,8 +7656,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidY2() {
         this.windowAndCheck(
                 "A10",
-                WIDTH,
-                3 * HEIGHT,
+                COLUMN_WIDTH,
+                3 * ROW_HEIGHT,
                 "A10:A12"
         );
     }
@@ -7666,8 +7666,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidY3() {
         this.windowAndCheck(
                 "A10",
-                WIDTH,
-                HEIGHT - 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT - 1,
                 "A10"
         );
     }
@@ -7676,8 +7676,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidY4() {
         this.windowAndCheck(
                 "A10",
-                WIDTH,
-                HEIGHT + 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT + 1,
                 "A10:A11"
         );
     }
@@ -7686,8 +7686,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidY5() {
         this.windowAndCheck(
                 "A10",
-                WIDTH,
-                HEIGHT * 4 - 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT * 4 - 1,
                 "A10:A13"
         );
     }
@@ -7696,8 +7696,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowMidY6() {
         this.windowAndCheck(
                 "A10",
-                WIDTH,
-                HEIGHT * 4 + 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT * 4 + 1,
                 "A10:A14"
         );
     }
@@ -7708,8 +7708,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowBottom() {
         this.windowAndCheck(
                 "A1048576",
-                WIDTH,
-                HEIGHT,
+                COLUMN_WIDTH,
+                ROW_HEIGHT,
                 "A1048576"
         );
     }
@@ -7718,8 +7718,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowBottom2() {
         this.windowAndCheck(
                 "A1048576",
-                WIDTH,
-                3 * HEIGHT,
+                COLUMN_WIDTH,
+                3 * ROW_HEIGHT,
                 "A1048574:A1048576"
         );
     }
@@ -7728,8 +7728,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowBottom3() {
         this.windowAndCheck(
                 "A1048576",
-                WIDTH,
-                HEIGHT - 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT - 1,
                 "A1048576"
         );
     }
@@ -7738,8 +7738,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowBottom4() {
         this.windowAndCheck(
                 "A1048576",
-                WIDTH,
-                HEIGHT + 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT + 1,
                 "A1048575:A1048576"
         );
     }
@@ -7748,8 +7748,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowBottom5() {
         this.windowAndCheck(
                 "A1048576",
-                WIDTH,
-                HEIGHT * 4 - 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT * 4 - 1,
                 "A1048573:A1048576"
         );
     }
@@ -7758,8 +7758,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowBottom6() {
         this.windowAndCheck(
                 "A1048576",
-                WIDTH,
-                HEIGHT * 4 + 1,
+                COLUMN_WIDTH,
+                ROW_HEIGHT * 4 + 1,
                 "A1048572:A1048576"
         );
     }
@@ -7770,8 +7770,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionCellWithin() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("B2"),
                 "B2:D4"
         );
@@ -7781,8 +7781,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionCellWithin2() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("C3"),
                 "B2:D4"
         );
@@ -7792,8 +7792,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionCellWithin3() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("D4"),
                 "B2:D4"
         );
@@ -7803,8 +7803,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionColumnWithin() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("B"),
                 "B2:D4"
         );
@@ -7814,8 +7814,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionColumnWithin2() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("B"),
                 "B2:D4"
         );
@@ -7825,8 +7825,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionColumnWithin3() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("C"),
                 "B2:D4"
         );
@@ -7836,8 +7836,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionRowWithin() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseRow("2"),
                 "B2:D4"
         );
@@ -7847,8 +7847,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionRowWithin2() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseRow("3"),
                 "B2:D4"
         );
@@ -7858,8 +7858,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionRowWithin3() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseRow("4"),
                 "B2:D4"
         );
@@ -7871,8 +7871,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionCellLeft() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("A2"),
                 "A2:C4"
         );
@@ -7882,8 +7882,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionCellLeft2() {
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("A3"),
                 "A3:C5"
         );
@@ -7894,8 +7894,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("E2"),
                 "C2:E4"
         );
@@ -7907,8 +7907,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // BCD:234
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("F2"),
                 "D2:F4"
         );
@@ -7919,8 +7919,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // BCD:234
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("B1"),
                 "B1:D3"
         );
@@ -7930,8 +7930,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionCellTop2() {
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("C1"),
                 "C1:E3"
         );
@@ -7942,8 +7942,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("B5"),
                 "B3:D5"
         );
@@ -7955,8 +7955,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // BCD:234
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("B6"),
                 "B4:D6"
         );
@@ -7967,8 +7967,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // C3:E5
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("A2"),
                 "A2:C4"
         );
@@ -7979,8 +7979,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // C3:E5
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCell("G6"),
                 "E4:G6"
         );
@@ -7990,8 +7990,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionColumnLeft() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("A"),
                 "A2:C4"
         );
@@ -8001,8 +8001,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionColumnLeft2() {
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("A"),
                 "A3:C5"
         );
@@ -8013,8 +8013,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("E"),
                 "C2:E4"
         );
@@ -8026,8 +8026,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // BCD:234
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("F"),
                 "D2:F4"
         );
@@ -8038,8 +8038,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // BCD:234
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseRow("1"),
                 "B1:D3"
         );
@@ -8049,8 +8049,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionRowTop2() {
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseRow("1"),
                 "C1:E3"
         );
@@ -8061,8 +8061,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseRow("5"),
                 "B3:D5"
         );
@@ -8074,8 +8074,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // BCD:234
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseRow("6"),
                 "B4:D6"
         );
@@ -8085,8 +8085,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionColumnReferenceLeft() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumnRange("A"),
                 "A2:C4"
         );
@@ -8096,8 +8096,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionColumnReferenceLeft2() {
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("A"),
                 "A3:C5"
         );
@@ -8107,8 +8107,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionColumnReferenceLeft3() {
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("B"),
                 "B3:D5"
         );
@@ -8119,8 +8119,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("E"),
                 "C2:E4"
         );
@@ -8131,8 +8131,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("F"),
                 "D2:F4"
         );
@@ -8144,8 +8144,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // BCD:234
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("F"),
                 "D2:F4"
         );
@@ -8157,8 +8157,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // BCD:234
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseColumn("G"),
                 "E2:G4"
         );
@@ -8168,8 +8168,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionCellRangeLeft() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("A2"),
                 "A2:C4"
         );
@@ -8179,8 +8179,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionCellRangeLeft2() {
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("A3"),
                 "A3:C5"
         );
@@ -8191,8 +8191,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("E2"),
                 "C2:E4"
         );
@@ -8204,8 +8204,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // BCD:234
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("F2"),
                 "D2:F4"
         );
@@ -8216,8 +8216,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // BCD:234
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B1"),
                 "B1:D3"
         );
@@ -8227,8 +8227,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowSelectionCellRangeTop2() {
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("C1"),
                 "C1:E3"
         );
@@ -8239,8 +8239,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B5"),
                 "B3:D5"
         );
@@ -8252,8 +8252,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // BCD:234
         this.windowAndCheck(
                 "B2",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("B6"),
                 "B4:D6"
         );
@@ -8264,8 +8264,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // C3:E5
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("A2"),
                 "A2:C4"
         );
@@ -8276,8 +8276,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // C3:E5
         this.windowAndCheck(
                 "C3",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 SpreadsheetSelection.parseCellRange("G6"),
                 "E4:G6"
         );
@@ -8289,8 +8289,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowColumnHidden() {
         final SpreadsheetViewport viewport = SpreadsheetViewport.with(
                 SpreadsheetSelection.parseCell("A1"),
-                WIDTH * 4,
-                HEIGHT * 2
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 2
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
@@ -8334,8 +8334,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowRowHidden() {
         final SpreadsheetViewport viewport = SpreadsheetViewport.with(
                 SpreadsheetSelection.parseCell("A1"),
-                WIDTH * 4,
-                HEIGHT * 2
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 2
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
@@ -8428,8 +8428,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowIgnoreFrozenColumnsFrozenRows() {
         this.windowAndCheck(
                 "A1",
-                WIDTH * 4,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 3,
                 0, // frozenColumns
                 0, // frozenRows
                 SpreadsheetEngine.NO_SELECTION,
@@ -8441,8 +8441,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowIgnoreFrozenColumnsFrozenRows2() {
         this.windowAndCheck(
                 "B2",
-                WIDTH * 4,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 3,
                 0, // frozenColumns
                 0, // frozenRows
                 SpreadsheetEngine.NO_SELECTION,
@@ -8456,8 +8456,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRows() {
         this.windowAndCheck(
                 "Z99",
-                WIDTH * 2,
-                HEIGHT * 2,
+                COLUMN_WIDTH * 2,
+                ROW_HEIGHT * 2,
                 2, // frozenColumns
                 2, // frozenRows
                 "A1:B2"
@@ -8468,8 +8468,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRows2() {
         this.windowAndCheck(
                 "Z99",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 3, // frozenColumns
                 3, // frozenRows
                 "A1:C3"
@@ -8480,8 +8480,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsOnly() {
         this.windowAndCheck(
                 "Z99",
-                WIDTH * 2,
-                HEIGHT * 2,
+                COLUMN_WIDTH * 2,
+                ROW_HEIGHT * 2,
                 9, // frozenColumns
                 9, // frozenRows
                 "A1:B2"
@@ -8492,8 +8492,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsOnly2() {
         this.windowAndCheck(
                 "Z99",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 9, // frozenColumns
                 9, // frozenRows
                 "A1:C3"
@@ -8507,8 +8507,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsOnlyInvalidOverlappingHome() {
         this.windowAndCheck(
                 "A1",
-                WIDTH * 1,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 1,
+                ROW_HEIGHT * 3,
                 1, // frozenColumns
                 0, // frozenRows
                 "A1:A3"
@@ -8522,8 +8522,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsOnly() {
         this.windowAndCheck(
                 "B1",
-                WIDTH * 1,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 1,
+                ROW_HEIGHT * 3,
                 1, // frozenColumns
                 0, // frozenRows
                 "A1:A3"
@@ -8537,8 +8537,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsOnly2() {
         this.windowAndCheck(
                 "B1",
-                WIDTH * 2,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 2,
+                ROW_HEIGHT * 3,
                 2, // frozenColumns
                 0, // frozenRows
                 "A1:B3"
@@ -8552,8 +8552,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsOnly3() {
         this.windowAndCheck(
                 "B1",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 3, // frozenColumns
                 0, // frozenRows
                 "A1:C3"
@@ -8567,8 +8567,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsOnly4() {
         this.windowAndCheck(
                 "B1",
-                WIDTH * 3,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 3,
+                ROW_HEIGHT * 3,
                 99, // frozenColumns
                 0, // frozenRows
                 "A1:C3"
@@ -8582,8 +8582,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumns() {
         this.windowAndCheck(
                 "B1",
-                WIDTH * 4,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 3,
                 1, // frozenColumns
                 0, // frozenRows
                 "A1:A3,B1:D3"
@@ -8597,8 +8597,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumns2() {
         this.windowAndCheck(
                 "c1",
-                WIDTH * 4,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 3,
                 2, // frozenColumns
                 0, // frozenRows
                 "A1:B3,C1:D3"
@@ -8612,8 +8612,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsNonFrozenGap() {
         this.windowAndCheck(
                 "f1",
-                WIDTH * 4,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 3,
                 2, // frozenColumns
                 0, // frozenRows
                 "A1:B3,F1:G3"
@@ -8625,8 +8625,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenRowsOnlyInvalidOverlappingHome() {
         this.windowAndCheck(
                 "A1",
-                WIDTH * 4,
-                HEIGHT * 1,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 1,
                 0, // frozenColumns
                 1, // frozenRows
                 "A1:D1"
@@ -8638,8 +8638,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenRowsOnly() {
         this.windowAndCheck(
                 "A2",
-                WIDTH * 4,
-                HEIGHT * 1,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 1,
                 0, // frozenColumns
                 1, // frozenRows
                 "A1:D1"
@@ -8652,8 +8652,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenRowsOnly2() {
         this.windowAndCheck(
                 "A2",
-                WIDTH * 4,
-                HEIGHT * 2,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 2,
                 0, // frozenColumns
                 2, // frozenRows
                 "A1:D2"
@@ -8666,8 +8666,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenRowsOnly3() {
         this.windowAndCheck(
                 "A2",
-                WIDTH * 4,
-                HEIGHT * 2,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 2,
                 0, // frozenColumns
                 99, // frozenRows
                 "A1:D2"
@@ -8682,8 +8682,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenRows() {
         this.windowAndCheck(
                 "A2",
-                WIDTH * 4,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 3,
                 0, // frozenColumns
                 1, // frozenRows
                 "A1:D1,A2:D3"
@@ -8699,8 +8699,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenRows2() {
         this.windowAndCheck(
                 "a3",
-                WIDTH * 4,
-                HEIGHT * 3,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 3,
                 0, // frozenColumns
                 2, // frozenRows
                 "A1:D2,A3:D3"
@@ -8718,8 +8718,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenRowsNonFrozenGap() {
         this.windowAndCheck(
                 "a3",
-                WIDTH * 4,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 5,
                 0, // frozenColumns
                 2, // frozenRows
                 "A1:D2,A3:D5"
@@ -8736,8 +8736,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenRowsNonFrozenGap2() {
         this.windowAndCheck(
                 "a6",
-                WIDTH * 4,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 5,
                 0, // frozenColumns
                 2, // frozenRows
                 "A1:D2,A6:D8"
@@ -8754,8 +8754,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowOnlyFrozenRowsInvalidHome() {
         this.windowAndCheck(
                 "A1",
-                WIDTH * 4,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 5,
                 0, // frozenColumns
                 2, // frozenRows
                 "A1:D2,A3:D5"
@@ -8771,8 +8771,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozen() {
         this.windowAndCheck(
                 "b2",
-                WIDTH * 4,
-                HEIGHT * 4,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 4,
                 1, // frozenColumns
                 1, // frozenRows
                 "A1,B1:D1,A2:A4,B2:D4"
@@ -8788,8 +8788,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozen2() {
         this.windowAndCheck(
                 "b3",
-                WIDTH * 4,
-                HEIGHT * 4,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 4,
                 1, // frozenColumns
                 2, // frozenRows
                 "A1:A2,B1:D2,A3:A4,B3:D4"
@@ -8805,8 +8805,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozen3() {
         this.windowAndCheck(
                 "c2",
-                WIDTH * 4,
-                HEIGHT * 4,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 4,
                 2, // frozenColumns
                 1, // frozenRows
                 "A1:B1,C1:D1,A2:B4,C2:D4"
@@ -8822,8 +8822,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozen4() {
         this.windowAndCheck(
                 "c3",
-                WIDTH * 4,
-                HEIGHT * 4,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 4,
                 2, // frozenColumns
                 2, // frozenRows
                 "A1:B2,C1:D2,A3:B4,C3:D4"
@@ -8839,8 +8839,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenInvalidHome() {
         this.windowAndCheck(
                 "A1",
-                WIDTH * 4,
-                HEIGHT * 4,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 4,
                 2, // frozenColumns
                 2, // frozenRows
                 "A1:B2,C1:D2,A3:B4,C3:D4"
@@ -8857,8 +8857,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenGap() {
         this.windowAndCheck(
                 "c8",
-                WIDTH * 4,
-                HEIGHT * 4,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 4,
                 2, // frozenColumns
                 3, // frozenRows
                 "A1:B3,C1:D3,A8:B8,C8:D8"
@@ -8876,8 +8876,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenGap2() {
         this.windowAndCheck(
                 "c8",
-                WIDTH * 4,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 5,
                 2, // frozenColumns
                 3, // frozenRows
                 "A1:B3,C1:D3,A8:B9,C8:D9"
@@ -8914,8 +8914,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenFrozenColumn() {
         this.windowAndCheck(
                 "D4",
-                WIDTH * 5,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 5,
+                ROW_HEIGHT * 5,
                 3, // frozenColumns
                 3, // frozenRows
                 SpreadsheetSelection.parseColumn("A"),
@@ -8927,8 +8927,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenColumn() {
         this.windowAndCheck(
                 "D4",
-                WIDTH * 5,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 5,
+                ROW_HEIGHT * 5,
                 3, // frozenColumns
                 3, // frozenRows
                 SpreadsheetSelection.parseColumn("D"),
@@ -8940,8 +8940,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenFrozenRow() {
         this.windowAndCheck(
                 "D4",
-                WIDTH * 5,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 5,
+                ROW_HEIGHT * 5,
                 3, // frozenColumns
                 3, // frozenRows
                 SpreadsheetSelection.parseRow("1"),
@@ -8953,8 +8953,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenRow() {
         this.windowAndCheck(
                 "D4",
-                WIDTH * 5,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 5,
+                ROW_HEIGHT * 5,
                 3, // frozenColumns
                 3, // frozenRows
                 SpreadsheetSelection.parseRow("4"),
@@ -8966,8 +8966,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenFrozenCell() {
         this.windowAndCheck(
                 "D4",
-                WIDTH * 5,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 5,
+                ROW_HEIGHT * 5,
                 3, // frozenColumns
                 3, // frozenRows
                 SpreadsheetSelection.parseCell("A1"),
@@ -8979,8 +8979,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenCell() {
         this.windowAndCheck(
                 "D4",
-                WIDTH * 5,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 5,
+                ROW_HEIGHT * 5,
                 3, // frozenColumns
                 3, // frozenRows
                 SpreadsheetSelection.parseCell("D4"),
@@ -8992,8 +8992,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenCell2() {
         this.windowAndCheck(
                 "D4",
-                WIDTH * 5,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 5,
+                ROW_HEIGHT * 5,
                 3, // frozenColumns
                 3, // frozenRows
                 SpreadsheetSelection.parseCell("E5"),
@@ -9014,8 +9014,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell() {
         this.windowAndCheck(
                 "D4",
-                WIDTH * 5,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 5,
+                ROW_HEIGHT * 5,
                 3, // frozenColumns
                 3, // frozenRows
                 SpreadsheetSelection.parseCell("F4"),
@@ -9027,8 +9027,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell2() {
         this.windowAndCheck(
                 "D4",
-                WIDTH * 5,
-                HEIGHT * 5,
+                COLUMN_WIDTH * 5,
+                ROW_HEIGHT * 5,
                 3, // frozenColumns
                 3, // frozenRows
                 SpreadsheetSelection.parseCell("G4"),
@@ -9047,8 +9047,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialWidth() {
         this.windowAndCheck(
                 "C4",
-                WIDTH * 4 - 2,
-                HEIGHT * 4,
+                COLUMN_WIDTH * 4 - 2,
+                ROW_HEIGHT * 4,
                 2, // frozenColumns
                 2, // frozenRows
                 SpreadsheetSelection.parseCell("D4"),
@@ -9060,8 +9060,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialWidth2() {
         this.windowAndCheck(
                 "C4",
-                WIDTH * 4 - 1,
-                HEIGHT * 4,
+                COLUMN_WIDTH * 4 - 1,
+                ROW_HEIGHT * 4,
                 2, // frozenColumns
                 2, // frozenRows
                 SpreadsheetSelection.parseCell("D4"),
@@ -9080,8 +9080,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialHeight() {
         this.windowAndCheck(
                 "D3",
-                WIDTH * 4,
-                HEIGHT * 4 - 2,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 4 - 2,
                 2, // frozenColumns
                 2, // frozenRows
                 SpreadsheetSelection.parseCell("D4"),
@@ -9093,8 +9093,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialHeight2() {
         this.windowAndCheck(
                 "D3",
-                WIDTH * 4,
-                HEIGHT * 4 - 1,
+                COLUMN_WIDTH * 4,
+                ROW_HEIGHT * 4 - 1,
                 2, // frozenColumns
                 2, // frozenRows
                 SpreadsheetSelection.parseCell("D4"),
@@ -9851,8 +9851,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetParsePatterns.parseTimeFormatPattern(TIME_PATTERN + suffix))
                 .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseTimeParsePatterns(TIME_PATTERN))
                 .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
-                        .set(TextStylePropertyName.WIDTH, Length.parsePixels(WIDTH + "px"))
-                        .set(TextStylePropertyName.HEIGHT, Length.parsePixels(HEIGHT + "px"))
+                        .set(TextStylePropertyName.WIDTH, Length.parsePixels(COLUMN_WIDTH + "px"))
+                        .set(TextStylePropertyName.HEIGHT, Length.parsePixels(ROW_HEIGHT + "px"))
                 );
     }
 
