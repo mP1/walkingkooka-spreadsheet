@@ -601,8 +601,78 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         if (addDeletedRows) {
             delta = delta.setDeletedRows(changes.deletedRows());
         }
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_WIDTHS)) {
+            final Map<SpreadsheetColumnReference, Double> columnsWidths = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+
+            for (final SpreadsheetCell cell : updatedCells) {
+                this.addColumnWidthIfNecessary(
+                        cell.reference()
+                                .column()
+                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
+                        columnsWidths,
+                        context
+                );
+            }
+
+            for (final SpreadsheetCellReference cell : deletedCells) {
+                this.addColumnWidthIfNecessary(
+                        cell.column()
+                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
+                        columnsWidths,
+                        context
+                );
+            }
+
+            delta = delta.setColumnWidths(columnsWidths);
+        }
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.ROW_HEIGHTS)) {
+            final Map<SpreadsheetRowReference, Double> rowsHeights = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+
+            for (final SpreadsheetCell cell : updatedCells) {
+                this.addRowHeightIfNecessary(
+                        cell.reference()
+                                .row()
+                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
+                        rowsHeights,
+                        context
+                );
+            }
+
+            for (final SpreadsheetCellReference cell : deletedCells) {
+                this.addRowHeightIfNecessary(
+                        cell.row()
+                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
+                        rowsHeights,
+                        context
+                );
+            }
+
+            delta = delta.setRowHeights(rowsHeights);
+        }
 
         return delta;
+    }
+
+    private void addColumnWidthIfNecessary(final SpreadsheetColumnReference column,
+                                           final Map<SpreadsheetColumnReference, Double> columnsWidths,
+                                           final SpreadsheetEngineContext context) {
+        if (false == columnsWidths.containsKey(column)) {
+            final double width = this.columnWidth(column, context);
+            if (width > 0) {
+                columnsWidths.put(column, width);
+            }
+        }
+    }
+
+    private void addRowHeightIfNecessary(final SpreadsheetRowReference row,
+                                         final Map<SpreadsheetRowReference, Double> rowsHeights,
+                                         final SpreadsheetEngineContext context) {
+        if (false == rowsHeights.containsKey(row)) {
+            final double height = this.rowHeight(row, context);
+            if (height > 0) {
+                rowsHeights.put(row, height);
+            }
+        }
     }
 
     private <R extends SpreadsheetColumnOrRowReference & Comparable<R>, H extends HasSpreadsheetReference<R>> void addIfNecessary(final R reference,

@@ -71,6 +71,9 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -163,6 +166,11 @@ public class JunitTest {
                     .set(SpreadsheetMetadataPropertyName.PRECISION, 123)
                     .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR)
                     .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123))
+                    .set(SpreadsheetMetadataPropertyName.STYLE,
+                            TextStyle.EMPTY.set(TextStylePropertyName.WIDTH, Length.pixel(50.0))
+                                    .set(TextStylePropertyName.HEIGHT, Length.pixel(50.0))
+                                    .set(TextStylePropertyName.HEIGHT, Length.pixel(50.0))
+                    )
                     .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@@"))
                     .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("hh:mm"))
                     .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("hh:mmhh:mm:ss.000"))
