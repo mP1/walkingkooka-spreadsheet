@@ -69,6 +69,11 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                 case "java.lang.Double":
                     this.visitDouble();
                     break;
+                case "walkingkooka.tree.expression.ExpressionNumber":
+                case "walkingkooka.tree.expression.ExpressionNumberBigDecimal":
+                case "walkingkooka.tree.expression.ExpressionNumberDouble":
+                    this.visitExpressionNumber();
+                    break;
                 case "walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference":
                     this.visitExpressionReference();
                     break;
@@ -164,6 +169,10 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
     }
 
     protected void visitDouble() {
+
+    }
+
+    protected void visitExpressionNumber() {
 
     }
 
