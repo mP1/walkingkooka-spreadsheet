@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigDecimal;
@@ -403,6 +405,53 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
+    public void testExpressionNumber() {
+        this.acceptExpressionNumber(ExpressionNumber.class);
+    }
+
+    @Test
+    public void testExpressionNumberBigDecimal() {
+        this.acceptExpressionNumber(
+                ExpressionNumberKind.BIG_DECIMAL.zero()
+                        .getClass()
+        );
+    }
+
+    @Test
+    public void testExpressionNumberDouble() {
+        this.acceptExpressionNumber(
+                ExpressionNumberKind.DOUBLE.zero()
+                        .getClass()
+        );
+    }
+
+    private void acceptExpressionNumber(final Class<? extends ExpressionNumber> number) {
+        final StringBuilder b = new StringBuilder();
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(number, t);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(number, t);
+                b.append("2");
+            }
+
+            @Override
+            protected void visitExpressionNumber() {
+                b.append("3");
+            }
+        }.accept(number);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
     public void testAcceptExpressionReference() {
         final StringBuilder b = new StringBuilder();
         final Class<SpreadsheetExpressionReference> type = SpreadsheetExpressionReference.class;
@@ -423,7 +472,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
 
             @Override
             protected void visitExpressionReference() {
-                b.append("3" );
+                b.append("3");
             }
         }.accept(type);
 
