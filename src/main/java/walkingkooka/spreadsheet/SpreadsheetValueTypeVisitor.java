@@ -23,7 +23,7 @@ import walkingkooka.visit.Visitor;
 import java.util.Objects;
 
 /**
- * A {@link Visitor} that dispatches on a spreadsheet value {@link Class type}. Unknown types will call {@link #visitUnknown()}.
+ * A {@link Visitor} that dispatches on a spreadsheet value {@link Class type}. Unknown types will call {@link #visitUnknown(String)}.
  */
 public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
 

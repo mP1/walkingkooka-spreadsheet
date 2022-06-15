@@ -117,9 +117,6 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
         this.repository = repository;
     }
 
-    private final Runnable NULL = () -> {
-    };
-
     // dispatch using mode to the final target.
 
     private void onCellSaved(final SpreadsheetCell cell) {

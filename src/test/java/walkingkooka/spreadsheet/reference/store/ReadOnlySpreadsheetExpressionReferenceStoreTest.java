@@ -146,6 +146,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testSaveReferencesReplaceAddReferenceWatcher2() {
     }
 
