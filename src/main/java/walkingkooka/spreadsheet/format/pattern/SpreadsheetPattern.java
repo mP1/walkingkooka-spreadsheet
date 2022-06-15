@@ -53,7 +53,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Holds a tokens that may be used to parse or format values along with helpers.
@@ -391,10 +390,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
         }
 
         return patternParser.apply(
-                patterns.stream()
-                        .collect(
-                                Collectors.joining(";")
-                        )
+                String.join(";", patterns)
         );
     }
 
