@@ -34,6 +34,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testSaveWithoutRequiredFails() {
         // ignore
     }
