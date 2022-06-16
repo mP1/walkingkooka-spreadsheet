@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -44,9 +43,7 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
 
     @Test
     public void testToString() {
-        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(
-                SpreadsheetMetadata.EMPTY
-        );
+        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.INSTANCE;
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChanges.with(
                 engine,

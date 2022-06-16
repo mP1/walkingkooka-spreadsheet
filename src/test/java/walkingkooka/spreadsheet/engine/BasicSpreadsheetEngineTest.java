@@ -247,16 +247,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
-    @Test
-    public void testWithNullMetadataFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngine.with(
-                        null
-                )
-        );
-    }
-
     // loadCell.........................................................................................................
 
     @Test
@@ -8190,17 +8180,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                       final double maxColumnWidth,
                                       final double expected) {
         this.columnWidthAndCheck(
-                BasicSpreadsheetEngine.with(
-                        metadata
-                ),
+                this.createSpreadsheetEngine(),
                 column,
-                this.createContext(new FakeSpreadsheetCellStore() {
-                    @Override
-                    public double maxColumnWidth(final SpreadsheetColumnReference c) {
-                        checkEquals(column, c);
-                        return maxColumnWidth;
-                    }
-                }),
+                this.createContext(
+                        metadata,
+                        new FakeSpreadsheetCellStore() {
+                            @Override
+                            public double maxColumnWidth(final SpreadsheetColumnReference c) {
+                                checkEquals(column, c);
+                                return maxColumnWidth;
+                            }
+                        }),
                 expected
         );
     }
@@ -8210,9 +8200,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
         assertThrows(
                 TextStylePropertyValueException.class,
-                () -> BasicSpreadsheetEngine.with(
-                                SpreadsheetMetadata.EMPTY
-                        )
+                () -> this.createSpreadsheetEngine()
                         .columnWidth(
                                 column,
                                 this.createContext(
@@ -8222,7 +8210,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 checkEquals(column, c);
                                                 return 0;
                                             }
-                                        })
+                                        }
+                                )
                         )
         );
     }
@@ -8258,11 +8247,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     final SpreadsheetMetadata metadata,
                                     final double expected) {
         this.rowHeightAndCheck(
-                BasicSpreadsheetEngine.with(
-                        metadata
-                ),
+                this.createSpreadsheetEngine(),
                 row,
                 this.createContext(
+                        metadata,
                         new FakeSpreadsheetCellStore() {
                             @Override
                             public double maxRowHeight(final SpreadsheetRowReference c) {
@@ -8279,19 +8267,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("999");
         assertThrows(
                 TextStylePropertyValueException.class,
-                () -> BasicSpreadsheetEngine.with(
-                        SpreadsheetMetadata.EMPTY
-                ).rowHeight(
-                        row,
-                        this.createContext(
-                                new FakeSpreadsheetCellStore() {
+                () -> this.createSpreadsheetEngine()
+                        .rowHeight(
+                                row,
+                                this.createContext(
+                                        new FakeSpreadsheetCellStore() {
 
-                                    @Override
-                                    public double maxRowHeight(final SpreadsheetRowReference r) {
-                                        checkEquals(row, r);
-                                        return 0;
-                                    }
-                                })
+                                            @Override
+                                            public double maxRowHeight(final SpreadsheetRowReference r) {
+                                                checkEquals(row, r);
+                                                return 0;
+                                            }
+                                        }
+                                )
                 )
         );
     }
@@ -10041,9 +10029,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 );
 
         this.windowAndCheck(
-                BasicSpreadsheetEngine.with(
-                        metadata
-                ),
+                this.createSpreadsheetEngine(),
                 SpreadsheetSelection.parseCellOrLabel(cellOrLabel)
                         .viewport(
                                 width,
@@ -10191,9 +10177,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Override
     public BasicSpreadsheetEngine createSpreadsheetEngine() {
-        return BasicSpreadsheetEngine.with(
-                this.metadata()
-        );
+        return BasicSpreadsheetEngine.INSTANCE;
     }
 
     @Override
@@ -10203,8 +10187,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private SpreadsheetEngineContext createContext(final SpreadsheetCellStore cellStore) {
         return this.createContext(
+                SpreadsheetMetadata.EMPTY,
+                cellStore
+        );
+    }
+
+    private SpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
+                                                   final SpreadsheetCellStore cellStore) {
+        return this.createContext(
                 DEFAULT_YEAR,
                 SpreadsheetEngines.fake(),
+                metadata,
                 this.createSpreadsheetStoreRepository(cellStore)
         );
     }

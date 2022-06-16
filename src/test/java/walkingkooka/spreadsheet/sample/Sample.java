@@ -179,9 +179,7 @@ public final class Sample {
     private static SpreadsheetMetadata metadata;
 
     private static SpreadsheetEngine engine() {
-        return SpreadsheetEngines.basic(
-                metadata()
-        );
+        return SpreadsheetEngines.basic();
     }
 
     private static SpreadsheetEngineContext engineContext(final SpreadsheetEngine engine) {

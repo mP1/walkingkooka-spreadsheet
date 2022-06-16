@@ -329,9 +329,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     @Override
     public SpreadsheetMetadataStampingSpreadsheetEngine createSpreadsheetEngine() {
         return SpreadsheetMetadataStampingSpreadsheetEngine.with(
-                SpreadsheetEngines.basic(
-                        BEFORE
-                ),
+                SpreadsheetEngines.basic(),
                 this.stamper()
         );
     }
