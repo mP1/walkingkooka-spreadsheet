@@ -77,21 +77,15 @@ import java.util.function.Function;
 final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     /**
-     * Factory that creates a new {@link BasicSpreadsheetEngine}
+     * Singleton
      */
-    static BasicSpreadsheetEngine with(final SpreadsheetMetadata metadata) {
-        Objects.requireNonNull(metadata, "metadata");
-
-        return new BasicSpreadsheetEngine(
-                metadata
-        );
-    }
+    static BasicSpreadsheetEngine INSTANCE = new BasicSpreadsheetEngine();
 
     /**
      * Private ctor.
      */
-    private BasicSpreadsheetEngine(final SpreadsheetMetadata metadata) {
-        this.metadata = metadata;
+    private BasicSpreadsheetEngine() {
+        super();
     }
 
     // LOAD CELL........................................................................................................
@@ -1096,7 +1090,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .cells()
                     .maxColumnWidth(columnReference);
             if (0 == columnWidth) {
-                columnWidth = columnWidthOrRowHeight(TextStylePropertyName.WIDTH);
+                columnWidth = columnWidthOrRowHeight(
+                        TextStylePropertyName.WIDTH,
+                        context
+                );
             }
             return columnWidth;
         }
@@ -1118,7 +1115,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .cells()
                     .maxRowHeight(rowReference);
             if (0 == rowHeight) {
-                rowHeight = columnWidthOrRowHeight(TextStylePropertyName.HEIGHT);
+                rowHeight = columnWidthOrRowHeight(
+                        TextStylePropertyName.HEIGHT,
+                        context
+                );
             }
             return rowHeight;
         }
@@ -1129,11 +1129,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Gets the double value for the given {@link TextStylePropertyName} which is either WIDTH or HEIGHT>
      */
-    private double columnWidthOrRowHeight(final TextStylePropertyName<Length<?>> propertyName) {
-        return this.metadata.getEffectiveStylePropertyOrFail(propertyName).pixelValue();
+    private double columnWidthOrRowHeight(final TextStylePropertyName<Length<?>> propertyName,
+                                          final SpreadsheetEngineContext context) {
+        return context.metadata()
+                .getEffectiveStylePropertyOrFail(propertyName)
+                .pixelValue();
     }
-
-    private final SpreadsheetMetadata metadata;
 
     // WINDOW...........................................................................................................
 
@@ -1628,6 +1629,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public String toString() {
-        return this.metadata.toString();
+        return this.getClass().getSimpleName();
     }
 }

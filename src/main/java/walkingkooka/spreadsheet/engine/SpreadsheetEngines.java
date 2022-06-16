@@ -29,10 +29,8 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngine}
      */
-    public static SpreadsheetEngine basic(final SpreadsheetMetadata metadata) {
-        return BasicSpreadsheetEngine.with(
-                metadata
-        );
+    public static SpreadsheetEngine basic() {
+        return BasicSpreadsheetEngine.INSTANCE;
     }
 
     /**
