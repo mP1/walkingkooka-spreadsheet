@@ -330,8 +330,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     public SpreadsheetMetadataStampingSpreadsheetEngine createSpreadsheetEngine() {
         return SpreadsheetMetadataStampingSpreadsheetEngine.with(
                 SpreadsheetEngines.basic(
-                        BEFORE,
-                        LocalDateTime::now
+                        BEFORE
                 ),
                 this.stamper()
         );

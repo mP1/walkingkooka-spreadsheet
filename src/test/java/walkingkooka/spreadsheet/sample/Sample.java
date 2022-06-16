@@ -180,8 +180,7 @@ public final class Sample {
 
     private static SpreadsheetEngine engine() {
         return SpreadsheetEngines.basic(
-                metadata(),
-                NOW
+                metadata()
         );
     }
 

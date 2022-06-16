@@ -39,16 +39,13 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
-import java.time.LocalDateTime;
-
 public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChanges>
         implements ToStringTesting<BasicSpreadsheetEngineChanges> {
 
     @Test
     public void testToString() {
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(
-                SpreadsheetMetadata.EMPTY,
-                LocalDateTime::now
+                SpreadsheetMetadata.EMPTY
         );
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChanges.with(
