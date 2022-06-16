@@ -190,8 +190,7 @@ public class JunitTest {
 
     private static SpreadsheetEngine engine() {
         return SpreadsheetEngines.basic(
-                metadata(),
-                NOW
+                metadata()
         );
     }
 

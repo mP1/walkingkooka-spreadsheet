@@ -252,18 +252,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngine.with(
-                        null,
-                        NOW
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullNowFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngine.with(
-                        SpreadsheetMetadata.EMPTY,
                         null
                 )
         );
@@ -8203,8 +8191,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                       final double expected) {
         this.columnWidthAndCheck(
                 BasicSpreadsheetEngine.with(
-                        metadata,
-                        NOW
+                        metadata
                 ),
                 column,
                 this.createContext(new FakeSpreadsheetCellStore() {
@@ -8224,8 +8211,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         assertThrows(
                 TextStylePropertyValueException.class,
                 () -> BasicSpreadsheetEngine.with(
-                                SpreadsheetMetadata.EMPTY,
-                                NOW
+                                SpreadsheetMetadata.EMPTY
                         )
                         .columnWidth(
                                 column,
@@ -8273,8 +8259,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     final double expected) {
         this.rowHeightAndCheck(
                 BasicSpreadsheetEngine.with(
-                        metadata,
-                        NOW
+                        metadata
                 ),
                 row,
                 this.createContext(
@@ -8295,8 +8280,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         assertThrows(
                 TextStylePropertyValueException.class,
                 () -> BasicSpreadsheetEngine.with(
-                        SpreadsheetMetadata.EMPTY,
-                        NOW
+                        SpreadsheetMetadata.EMPTY
                 ).rowHeight(
                         row,
                         this.createContext(
@@ -10058,8 +10042,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
                 BasicSpreadsheetEngine.with(
-                        metadata,
-                        NOW
+                        metadata
                 ),
                 SpreadsheetSelection.parseCellOrLabel(cellOrLabel)
                         .viewport(
@@ -10209,8 +10192,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Override
     public BasicSpreadsheetEngine createSpreadsheetEngine() {
         return BasicSpreadsheetEngine.with(
-                this.metadata(),
-                NOW
+                this.metadata()
         );
     }
 
