@@ -44,8 +44,6 @@ public interface SpreadsheetEngineContext extends Context, ExpressionPurityConte
     SpreadsheetMetadata metadata();
 
     /**
-     * ]]
-     * <p>
      * Resolves a {@link SpreadsheetExpressionReference} to a {@link SpreadsheetCellReference}.
      */
     SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference);
