@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
+import walkingkooka.datetime.HasNow;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -35,7 +36,7 @@ import java.util.Optional;
 /**
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
-public interface SpreadsheetEngineContext extends Context, ExpressionPurityContext {
+public interface SpreadsheetEngineContext extends Context, ExpressionPurityContext, HasNow {
 
     /**
      * Returns the current {@link SpreadsheetMetadata}
