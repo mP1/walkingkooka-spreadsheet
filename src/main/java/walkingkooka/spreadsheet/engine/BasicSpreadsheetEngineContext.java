@@ -210,6 +210,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     private final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction function;
 
+    // HasNow...........................................................................................................
+
+    @Override
+    public LocalDateTime now() {
+        return this.now.get();
+    }
+
     private final Supplier<LocalDateTime> now;
 
     // parsing and formatting text......................................................................................
