@@ -194,12 +194,10 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
     public void testWithNullConverterFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
-                            null,
-                            SpreadsheetExpressionEvaluationContexts.fake()
-                    );
-                }
+                () -> FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
+                        null,
+                        SpreadsheetExpressionEvaluationContexts.fake()
+                )
         );
     }
 
@@ -207,12 +205,10 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
     public void testWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
-                            Converters.fake(),
-                            null
-                    );
-                }
+                () -> FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
+                        Converters.fake(),
+                        null
+                )
         );
     }
 

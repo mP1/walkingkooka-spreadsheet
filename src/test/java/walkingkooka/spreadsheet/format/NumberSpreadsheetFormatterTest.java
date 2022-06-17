@@ -54,17 +54,19 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
                         "#"
                 )
         );
-        assertThrows(SpreadsheetFormatException.class, () -> {
-            formatter.canFormat(
-                    BigDecimal.ZERO,
-                    new FakeSpreadsheetFormatterContext() {
-                        @Override
-                        public boolean canConvert(final Object value,
-                                                  final Class<?> type) {
-                            return false;
-                        }
-                    });
-        });
+        assertThrows(
+                SpreadsheetFormatException.class,
+                () ->
+                        formatter.canFormat(
+                                BigDecimal.ZERO,
+                                new FakeSpreadsheetFormatterContext() {
+                                    @Override
+                                    public boolean canConvert(final Object value,
+                                                              final Class<?> type) {
+                                        return false;
+                                    }
+                                })
+        );
     }
 
     // text-literal, escaped etc........................................................................................
