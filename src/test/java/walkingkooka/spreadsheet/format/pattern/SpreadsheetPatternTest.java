@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
@@ -346,15 +347,16 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-// https://github.com/mP1/walkingkooka-spreadsheet/issues/1442
+    // https://github.com/mP1/walkingkooka-spreadsheet/issues/1442
 // SpreadsheetPattern from Locale needs permutation with millis (added to seconds)
-//    @Test
-//    public void testTimeParsePatternsLocaleHourMinuteSecondMillis() {
-//        this.localeTimePatternParseAndCheck(
-//                "12:58:59.123",
-//                LocalTime.of(12, 58, 59, 1230000)
-//        );
-//    }
+    @Test
+    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/1442")
+    public void testTimeParsePatternsLocaleHourMinuteSecondMillis() {
+        this.localeTimePatternParseAndCheck(
+                "12:58:59.123",
+                LocalTime.of(12, 58, 59, 1230000)
+        );
+    }
 
     @Test
     public void testTimeParsePatternsLocaleHourMinuteAmpm() {
