@@ -58,6 +58,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -2447,32 +2448,35 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private ExpressionEvaluationContext expressionEvaluationContext(final ExpressionNumberKind kind) {
         final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(c, c);
 
-        final Converter stringDouble = Converters.parser(
+        final Converter<ExpressionNumberConverterContext> stringDouble = Converters.parser(
                 Double.class,
                 Parsers.doubleParser(),
                 parserContext,
                 (t, c) -> t.cast(DoubleParserToken.class).value()
-        );
-        final Converter stringLocalDate = Converters.parser(
+        ).cast(ExpressionNumberConverterContext.class);
+
+        final Converter<ExpressionNumberConverterContext> stringLocalDate = Converters.parser(
                 LocalDate.class,
                 Parsers.localDate((c) -> DateTimeFormatter.ISO_LOCAL_DATE),
                 parserContext,
                 (t, c) -> t.cast(LocalDateParserToken.class).value()
-        );
-        final Converter stringLocalDateTime = Converters.parser(
+        ).cast(ExpressionNumberConverterContext.class);
+
+        final Converter<ExpressionNumberConverterContext> stringLocalDateTime = Converters.parser(
                 LocalDateTime.class,
                 Parsers.localDateTime((c) -> DateTimeFormatter.ISO_LOCAL_DATE_TIME),
                 parserContext,
                 (t, c) -> t.cast(LocalDateTimeParserToken.class).value()
-        );
-        final Converter stringLocalTime = Converters.parser(
+        ).cast(ExpressionNumberConverterContext.class);
+
+        final Converter<ExpressionNumberConverterContext> stringLocalTime = Converters.parser(
                 LocalTime.class,
                 Parsers.localTime((c) -> DateTimeFormatter.ISO_LOCAL_TIME),
                 parserContext,
                 (t, c) -> t.cast(LocalTimeParserToken.class).value()
-        );
+        ).cast(ExpressionNumberConverterContext.class);
 
-        final Converter converter = Converters.collection(
+        final Converter<ExpressionNumberConverterContext> converter = Converters.collection(
                 Lists.of(
                         Converters.object(),
                         Converters.simple(),
@@ -2571,14 +2575,17 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             }
 
             @Override
-            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                return converter.convert(value,
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return converter.convert(
+                        value,
                         target,
                         ExpressionNumberConverterContexts.basic(Converters.fake(),
                                 ConverterContexts.basic(Converters.fake(),
                                         dateTimeContext(),
                                         decimalNumberContext()),
-                                this.expressionNumberKind()));
+                                this.expressionNumberKind())
+                );
             }
 
             @Override
