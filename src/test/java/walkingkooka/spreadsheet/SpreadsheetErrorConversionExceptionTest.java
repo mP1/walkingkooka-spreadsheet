@@ -31,9 +31,7 @@ public final class SpreadsheetErrorConversionExceptionTest implements ClassTesti
     public void testNewNullSpreadsheetErrorFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    new SpreadsheetErrorConversionException(null);
-                }
+                () -> new SpreadsheetErrorConversionException(null)
         );
     }
 

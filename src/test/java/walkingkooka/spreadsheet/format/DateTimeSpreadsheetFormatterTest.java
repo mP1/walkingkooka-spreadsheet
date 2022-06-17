@@ -53,20 +53,22 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
     public void testFormatConvertLocalDateTimeFails() {
         final LocalDateTime value = LocalDateTime.now();
 
-        assertThrows(SpreadsheetFormatException.class, () -> {
-            this.createFormatter().format(
-                    value,
-                    new FakeSpreadsheetFormatterContext() {
+        assertThrows(
+                SpreadsheetFormatException.class,
+                () -> this.createFormatter().format(
+                        value,
+                        new FakeSpreadsheetFormatterContext() {
 
-                        @Override
-                        public <T> Either<T, String> convert(final Object v,
-                                                             final Class<T> type) {
-                            assertSame(value, v, "value");
-                            checkEquals(LocalDateTime.class, type, "type");
-                            return Either.right("Failed!");
+                            @Override
+                            public <T> Either<T, String> convert(final Object v,
+                                                                 final Class<T> type) {
+                                assertSame(value, v, "value");
+                                checkEquals(LocalDateTime.class, type, "type");
+                                return Either.right("Failed!");
+                            }
                         }
-                    });
-        });
+                )
+        );
     }
 
     @Test

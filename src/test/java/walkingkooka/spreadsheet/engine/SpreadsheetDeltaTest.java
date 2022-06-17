@@ -1476,16 +1476,20 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testResolveLabelsNullJsonFails() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
-            SpreadsheetDelta.resolveCellLabels(null, LABEL_TO_CELL);
-        });
+        Assertions.assertThrows(
+                NullPointerException.class,
+                () ->
+                        SpreadsheetDelta.resolveCellLabels(null, LABEL_TO_CELL)
+        );
     }
 
     @Test
     public void testResolveLabelsNullCellToLabelsFails() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
-            SpreadsheetDelta.resolveCellLabels(JsonNode.object(), null);
-        });
+        Assertions.assertThrows(
+                NullPointerException.class,
+                () ->
+                        SpreadsheetDelta.resolveCellLabels(JsonNode.object(), null)
+        );
     }
 
     @Test

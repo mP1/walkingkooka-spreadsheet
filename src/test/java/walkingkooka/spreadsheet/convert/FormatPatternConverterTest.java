@@ -50,9 +50,7 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     public void testWithNullPatternFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    FormatPatternConverter.with(null);
-                }
+                () -> FormatPatternConverter.with(null)
         );
     }
 
@@ -60,9 +58,7 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     public void testWithEmptyPatternFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> {
-                    FormatPatternConverter.with("");
-                }
+                () -> FormatPatternConverter.with("")
         );
     }
 

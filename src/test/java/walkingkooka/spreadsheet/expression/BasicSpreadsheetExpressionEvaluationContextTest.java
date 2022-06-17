@@ -178,17 +178,15 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final Supplier<LocalDateTime> now) {
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    BasicSpreadsheetExpressionEvaluationContext.with(
-                            cell,
-                            cellStore,
-                            serverUrl,
-                            spreadsheetMetadata,
-                            functions,
-                            references,
-                            now
-                    );
-                }
+                () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                        cell,
+                        cellStore,
+                        serverUrl,
+                        spreadsheetMetadata,
+                        functions,
+                        references,
+                        now
+                )
         );
     }
 
