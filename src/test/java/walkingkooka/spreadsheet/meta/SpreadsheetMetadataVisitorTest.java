@@ -504,17 +504,15 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     class TestSpreadsheetMetadataVisitor extends FakeSpreadsheetMetadataVisitor {
 
         <T> void accept(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {
-            this.expected = value;
 
             final SpreadsheetMetadata metadata = metadata(propertyName, value);
             this.accept(metadata);
-            checkEquals(this.expected, this.visited);
+            checkEquals(value, this.visited);
 
             new SpreadsheetMetadataVisitor() {
             }.accept(metadata);
         }
 
-        private Object expected;
         Object visited;
 
         @Override
