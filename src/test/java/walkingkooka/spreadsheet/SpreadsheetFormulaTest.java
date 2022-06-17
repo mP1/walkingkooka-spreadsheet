@@ -858,11 +858,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 formula.error(),
                 () -> "formula shouldnt have error=" + formula
         );
-
-//        this.checkError(
-//                formula,
-//                SpreadsheetFormula.NO_ERROR
-//        );
     }
 
     private void checkError(final SpreadsheetFormula formula,
