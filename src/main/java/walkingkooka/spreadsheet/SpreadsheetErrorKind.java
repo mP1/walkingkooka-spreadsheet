@@ -144,6 +144,7 @@ public enum SpreadsheetErrorKind implements HasText {
             // #VALUE! 	The wrong type of operand or expression argument is used
             if (cause instanceof ClassCastException) {
                 kind = VALUE;
+                message = SpreadsheetErrorKindClassCastExceptionMessage.extractClassCastExceptionMessage(message);
                 break;
             }
 
