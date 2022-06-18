@@ -107,7 +107,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             this.loadCell0(reference, evaluation, changes, context);
             return this.prepareDelta(
                     changes,
-                    reference.cellRange(),
                     context
             );
         }
@@ -146,7 +145,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             changes.refreshUpdated();
             return this.prepareDelta(
                     changes,
-                    cell.reference().cellRange(),
                     context
             );
         }
@@ -390,24 +388,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
-    private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
-                                          final SpreadsheetEngineContext context) {
-        return this.prepareDelta(
-                changes,
-                SpreadsheetDelta.NO_WINDOW,
-                context
-        );
-    }
-
     /**
      * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
      */
     private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
-                                          final SpreadsheetCellRange window,
                                           final SpreadsheetEngineContext context) {
         return this.prepareDelta(
                 changes,
-                Sets.of(window),
+                changes.deletedAndUpdatedCellRange()
+                        .map(Sets::of)
+                        .orElse(Sets.empty()),
                 context
         );
     }

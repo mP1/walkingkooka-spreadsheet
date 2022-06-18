@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.store.Watchers;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -373,12 +374,12 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     }
 
     // cells............................................................................................................
-    
+
     /**
      * Returns all the updated {@link SpreadsheetCell}.
      */
     Set<SpreadsheetCell> updatedCells() {
-        if(null == this.updatedCells) {
+        if (null == this.updatedCells) {
             this.extractUpdatedCellsDeletedCells();
         }
         return Sets.readOnly(this.updatedCells);
@@ -387,10 +388,65 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     private Set<SpreadsheetCell> updatedCells;
 
     /**
+     * Returns a {@link SpreadsheetCellRange} that includes all the {@link #deletedCells()} and {@link #updatedCells()}
+     */
+    Optional<SpreadsheetCellRange> deletedAndUpdatedCellRange() {
+        SpreadsheetColumnReference left = null;
+        SpreadsheetColumnReference right = null;
+
+        SpreadsheetRowReference top = null;
+        SpreadsheetRowReference bottom = null;
+
+        for (final SpreadsheetCell cell : this.updatedCells()) {
+            final SpreadsheetCellReference cellReference = cell.reference();
+            final SpreadsheetColumnReference column = cellReference.column();
+            final SpreadsheetRowReference row = cellReference.row();
+
+            if (null == left) {
+                left = column;
+                right = column;
+                top = row;
+                bottom = row;
+            } else {
+                left = left.min(column);
+                right = right.max(column);
+                top = top.min(row);
+                bottom = bottom.max(row);
+            }
+        }
+
+        for (final SpreadsheetCellReference cellReference : this.deletedCells()) {
+            final SpreadsheetColumnReference column = cellReference.column();
+            final SpreadsheetRowReference row = cellReference.row();
+
+            if (null == left) {
+                left = column;
+                right = column;
+                top = row;
+                bottom = row;
+            } else {
+                left = left.min(column);
+                right = right.max(column);
+                top = top.min(row);
+                bottom = bottom.max(row);
+            }
+        }
+
+        return null != left ?
+                Optional.of(
+                        left.columnRange(right)
+                                .setRowReferenceRange(
+                                        top.rowRange(bottom)
+                                )
+                ) :
+                Optional.empty();
+    }
+
+    /**
      * Returns all cells that were deleted for any reason.
      */
     Set<SpreadsheetCellReference> deletedCells() {
-        if(null == this.deletedCells) {
+        if (null == this.deletedCells) {
             this.extractUpdatedCellsDeletedCells();
         }
         return Sets.readOnly(this.deletedCells);
