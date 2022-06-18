@@ -53,6 +53,12 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public SpreadsheetDelta saveCells(final Set<SpreadsheetCell> cells,
+                                      final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetDelta deleteCell(final SpreadsheetCellReference cell,
                                        final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();

@@ -60,6 +60,12 @@ public interface SpreadsheetEngine {
                               final SpreadsheetEngineContext context);
 
     /**
+     * Saves All the cell, and updates all affected (referenced cells) returning all updated cells.
+     */
+    SpreadsheetDelta saveCells(final Set<SpreadsheetCell> cells,
+                               final SpreadsheetEngineContext context);
+
+    /**
      * Deletes the cell, removing references and updates and returns all affected (referenced cells).
      */
     SpreadsheetDelta deleteCell(final SpreadsheetCellReference cell,

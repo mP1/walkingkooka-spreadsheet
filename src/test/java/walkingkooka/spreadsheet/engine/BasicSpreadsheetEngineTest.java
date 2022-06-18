@@ -1845,6 +1845,226 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellStoreAndCheck(context.storeRepository().cells(), a1Formatted);
     }
 
+    // saveCells......................................................................................................
+
+    @Test
+    public void testSaveCellsNoCells() {
+        this.saveCellsAndCheck(
+                this.createSpreadsheetEngine(),
+                SpreadsheetDelta.NO_CELLS,
+                SpreadsheetEngineContexts.fake(),
+                SpreadsheetDelta.EMPTY
+        );
+    }
+
+    @Test
+    public void testSaveCellsOnlyValues() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "=1+2");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+                a1,
+                number(3)
+        );
+
+        final SpreadsheetCell b2 = this.cell("b2", "=4+5");
+        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(
+                b2,
+                number(9)
+        );
+
+        this.saveCellsAndCheck(
+                engine,
+                Sets.of(
+                        a1, b2
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1Formatted,
+                                        b2Formatted
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A,B")
+                        ).setRowHeights(
+                                rowHeights("1,2")
+                        )
+        );
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+
+        this.loadCellStoreAndCheck(
+                cellStore,
+                a1Formatted,
+                b2Formatted
+        );
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(cellReferenceStore, 0);
+    }
+
+    @Test
+    public void testSaveCellsOnlyWithCrossReferences() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "=100");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+                a1,
+                number(100)
+        );
+
+        final SpreadsheetCell b2 = this.cell("b2", "=a1+2");
+        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(
+                b2,
+                number(100 + 2)
+        );
+
+        this.saveCellsAndCheck(
+                engine,
+                Sets.of(
+                        a1, b2
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1Formatted,
+                                        b2Formatted
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A,B")
+                        ).setRowHeights(
+                                rowHeights("1,2")
+                        )
+        );
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+
+        this.loadCellStoreAndCheck(
+                cellStore,
+                a1Formatted,
+                b2Formatted
+        );
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(cellReferenceStore, 1); // b2 -> a1
+    }
+
+    @Test
+    public void testSaveCellsOnlyWithCrossReferences2() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "=b2+1");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+                a1,
+                number(1000 + 1)
+        );
+
+        final SpreadsheetCell b2 = this.cell("b2", "=1000");
+        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(
+                b2,
+                number(1000)
+        );
+
+        this.saveCellsAndCheck(
+                engine,
+                Sets.of(
+                        a1, b2
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1Formatted,
+                                        b2Formatted
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A,B")
+                        ).setRowHeights(
+                                rowHeights("1,2")
+                        )
+        );
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+
+        this.loadCellStoreAndCheck(
+                cellStore,
+                a1Formatted,
+                b2Formatted
+        );
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(cellReferenceStore, 1); // b2 -> a1
+    }
+
+    @Test
+    public void testSaveCellsOnlyWithCrossReferences3() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "=b2+100");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+                a1,
+                number(1000 + 100)
+        );
+
+        final SpreadsheetCell b2 = this.cell("b2", "=1000");
+        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(
+                b2,
+                number(1000)
+        );
+
+        final SpreadsheetCell c3 = this.cell("c3", "=a1+1");
+        final SpreadsheetCell c3Formatted = this.formattedCellWithValue(
+                c3,
+                number(1000 + 100 + 1)
+        );
+
+        this.saveCellsAndCheck(
+                engine,
+                Sets.of(
+                        a1, b2, c3
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1Formatted,
+                                        b2Formatted,
+                                        c3Formatted
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A,B,C")
+                        ).setRowHeights(
+                                rowHeights("1,2,3")
+                        )
+        );
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+
+        this.loadCellStoreAndCheck(
+                cellStore,
+                a1Formatted,
+                b2Formatted,
+                c3Formatted
+        );
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(cellReferenceStore, 2);
+    }
+
     // deleteCell....................................................................................................
 
     @Test
