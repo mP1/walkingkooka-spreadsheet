@@ -135,7 +135,17 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
     }
 
     @Test
-    public void testTranslateClassCastException() {
+    public void testTranslateClassCastExceptionCustomMessage() {
+        this.translateAndCheck(
+                new ClassCastException(MESSAGE),
+                SpreadsheetErrorKind.VALUE,
+                MESSAGE
+        );
+    }
+
+    // "walkingkooka.spreadsheet.SpreadsheetErrorKindTest cannot be cast to java.base/java.lang.Void"
+    @Test
+    public void testTranslateClassCastExceptionClassNameCannotBeCastoClassName() {
         ClassCastException thrown = null;
         try {
             final Object object = this;
@@ -147,7 +157,19 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
         this.translateAndCheck(
                 new ClassCastException(thrown.getMessage()),
                 SpreadsheetErrorKind.VALUE,
-                "Failed to convert " + this.getClass().getSimpleName() + " to " + Void.class.getSimpleName()
+                "Failed to convert " + this.getClass().getSimpleName() + " to Void"
+        );
+    }
+
+    // class walkingkooka.spreadsheet.SpreadsheetError cannot be cast to class walkingkooka.tree.expression.ExpressionNumber
+    // (walkingkooka.spreadsheet.SpreadsheetError and walkingkooka.tree.expression.ExpressionNumber are in unnamed module of loader 'app')
+
+    @Test
+    public void testTranslateClassCastExceptionClassClassNameCannotBeCastToClasClassName() {
+        this.translateAndCheck(
+                new ClassCastException("class walkingkooka.spreadsheet.SpreadsheetError cannot be cast to class walkingkooka.tree.expression.ExpressionNumber(walkingkooka.spreadsheet.SpreadsheetError and walkingkooka.tree.expression.ExpressionNumber are in unnamed module of loader 'app')"),
+                SpreadsheetErrorKind.VALUE,
+                "Failed to convert SpreadsheetError to ExpressionNumber"
         );
     }
 
