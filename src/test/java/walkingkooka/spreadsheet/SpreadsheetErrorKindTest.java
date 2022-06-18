@@ -136,9 +136,18 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
 
     @Test
     public void testTranslateClassCastException() {
+        ClassCastException thrown = null;
+        try {
+            final Object object = this;
+            final Void voidVoid = (Void) object; // intended, want to capture the ClassCastException message.
+        } catch (final ClassCastException expected) {
+            thrown = expected;
+        }
+
         this.translateAndCheck(
-                new ClassCastException(MESSAGE),
-                SpreadsheetErrorKind.VALUE
+                new ClassCastException(thrown.getMessage()),
+                SpreadsheetErrorKind.VALUE,
+                "Failed to convert " + this.getClass().getSimpleName() + " to " + Void.class.getSimpleName()
         );
     }
 
