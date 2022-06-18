@@ -288,8 +288,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.checkEquals(
                 SpreadsheetDelta.EMPTY
-                        .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setLabels(Sets.of(LABEL.mapping(LABEL_CELL))),
+                        .setCells(SpreadsheetDelta.NO_CELLS),
                 engine.loadCell(
                         LABEL_CELL,
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -2041,7 +2040,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
         final SpreadsheetCell b2 = this.cell("$B$2", "=20");
-        labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
+        final SpreadsheetLabelMapping labelMapping = SpreadsheetLabelMapping.with(
+                labelB2,
+                b2.reference()
+        );
+        labelStore.save(labelMapping);
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=1+" + labelB2);
         engine.saveCell(a1, context);
@@ -2065,6 +2068,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         b2.reference()
                                 )
+                        ).setLabels(
+                                Sets.of(labelMapping)
                         ).setColumnWidths(
                                 columnWidths("A,B")
                         ).setRowHeights(
