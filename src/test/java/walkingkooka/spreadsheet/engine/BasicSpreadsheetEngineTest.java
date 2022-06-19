@@ -10692,25 +10692,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private void loadCellStoreAndCheck(final SpreadsheetCellStore store,
                                        final SpreadsheetCell... cells) {
-        this.checkEquals(Lists.of(cells),
+        this.checkEquals(
+                Lists.of(cells),
                 store.all(),
-                () -> "all cells in " + store);
+                () -> "loaded all cells in " + store
+        );
     }
 
     private void loadLabelStoreAndCheck(final SpreadsheetLabelStore store,
                                         final SpreadsheetLabelMapping... mappings) {
-        this.checkEquals(Lists.of(mappings),
+        this.checkEquals(
+                Lists.of(mappings),
                 store.all(),
-                () -> "all mappings in " + store);
+                () -> "loaded all label mappings in " + store
+        );
     }
 
     private <E extends SpreadsheetCellReferenceOrLabelName & Comparable<E>>
     void loadReferencesAndCheck(final SpreadsheetExpressionReferenceStore<E> store,
                                 final E cell,
                                 final SpreadsheetCellReference... out) {
-        this.checkEquals(Optional.ofNullable(out.length == 0 ? null : Sets.of(out)),
+        this.checkEquals(
+                Optional.ofNullable(out.length == 0 ? null : Sets.of(out)),
                 store.load(cell),
-                "references to " + cell);
+                () -> "references to " + cell
+        );
     }
 
     private void loadReferrersAndCheck(final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store,
