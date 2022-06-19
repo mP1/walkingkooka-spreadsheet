@@ -6458,6 +6458,46 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellsWithReferencesToReferences2() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetCell a1 = this.cell("a1", "=c3+100");
+        cellStore.save(a1);
+
+        final SpreadsheetCell b2 = this.cell("b2", "=a1+10");
+        cellStore.save(b2);
+
+        final SpreadsheetCell c3 = this.cell("c3", "=1");
+        cellStore.save(c3);
+
+        final Set<SpreadsheetCellRange> window = SpreadsheetSelection.parseWindow("a1:c3");
+
+        this.loadCellsAndCheck(
+                engine,
+                window,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(a1, this.expressionNumberKind().create(1 + 100)),
+                                        this.formattedCellWithValue(b2, this.expressionNumberKind().create(1 + 100 + 10)),
+                                        this.formattedCellWithValue(c3, this.expressionNumberKind().one())
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A,B,C")
+                        ).setRowHeights(
+                                rowHeights("1,2,3")
+                        ).setWindow(window)
+        );
+    }
+
+    @Test
     public void testLoadCellsWithLabels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
