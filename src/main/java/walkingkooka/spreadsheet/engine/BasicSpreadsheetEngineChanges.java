@@ -271,7 +271,12 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     // BATCH MODE....................................................................................................
 
     void onCellSavedBatch(final SpreadsheetCell cell) {
-        this.batchCell(cell.reference());
+        final SpreadsheetCellReference reference = cell.reference();
+        this.unsavedCells.add(reference);
+
+        this.removePreviousExpressionReferences(reference);
+        this.addNewExpressionReferences(reference, cell.formula());
+        this.batchReferrers(reference);
     }
 
     void onCellDeletedBatch(final SpreadsheetCellReference cell) {
