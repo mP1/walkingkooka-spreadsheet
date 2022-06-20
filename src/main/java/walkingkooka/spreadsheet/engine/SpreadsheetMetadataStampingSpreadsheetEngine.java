@@ -106,6 +106,15 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public SpreadsheetDelta saveCells(final Set<SpreadsheetCell> cells,
+                                      final SpreadsheetEngineContext context) {
+        return this.stamp(
+                () -> this.engine.saveCells(cells, context),
+                context
+        );
+    }
+
+    @Override
     public SpreadsheetDelta deleteCell(final SpreadsheetCellReference cell,
                                        final SpreadsheetEngineContext context) {
         return this.stamp(

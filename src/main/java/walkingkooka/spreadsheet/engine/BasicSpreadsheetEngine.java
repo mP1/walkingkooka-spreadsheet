@@ -150,6 +150,40 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    // SAVE CELLS.......................................................................................................
+
+    /**
+     * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
+     */
+    @Override
+    public SpreadsheetDelta saveCells(final Set<SpreadsheetCell> cells,
+                                      final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cells, "cells");
+        checkContext(context);
+
+        return cells.isEmpty() ?
+                SpreadsheetDelta.EMPTY :
+                this.saveCellsNotEmpty(cells, context);
+    }
+
+    private SpreadsheetDelta saveCellsNotEmpty(final Set<SpreadsheetCell> cells,
+                                               final SpreadsheetEngineContext context) {
+        // save all cells.
+        for (final SpreadsheetCell cell : cells) {
+            this.saveCell(cell, context);
+        }
+
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
+            for (final SpreadsheetCell cell : cells) {
+                this.loadCell0(cell.reference(), SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, changes, context);
+            }
+            return this.prepareDelta(
+                    changes,
+                    context
+            );
+        }
+    }
+
     // DELETE CELL....................................................................................................
 
     /**

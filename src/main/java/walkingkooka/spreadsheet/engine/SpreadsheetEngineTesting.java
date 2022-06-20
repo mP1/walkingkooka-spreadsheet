@@ -795,6 +795,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    default void saveCellsAndCheck(final SpreadsheetEngine engine,
+                                   final Set<SpreadsheetCell> save,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta delta) {
+        checkEquals(
+                delta,
+                engine.saveCells(save, context),
+                () -> "saveCells " + save
+        );
+    }
+
     default void deleteCellAndCheck(final SpreadsheetEngine engine,
                                     final SpreadsheetCellReference delete,
                                     final SpreadsheetEngineContext context,
