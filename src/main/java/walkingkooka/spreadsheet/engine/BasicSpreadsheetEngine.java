@@ -169,14 +169,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetDelta saveCellsNotEmpty(final Set<SpreadsheetCell> cells,
                                                final SpreadsheetEngineContext context) {
         // save all cells.
-        for (final SpreadsheetCell cell : cells) {
-            this.saveCell(cell, context);
-        }
-
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
             for (final SpreadsheetCell cell : cells) {
-                this.loadCell0(cell.reference(), SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, changes, context);
+                final SpreadsheetCell saved = this.maybeParseAndEvaluateAndFormat(
+                        cell,
+                        SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                        context
+                );
+
+                changes.onCellSavedBatch(saved);
             }
+            changes.refreshUpdated();
+
             return this.prepareDelta(
                     changes,
                     context
