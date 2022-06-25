@@ -163,7 +163,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +
                         "    LabelB2: B2\n" +
-                        "    LabelC3: C3\n"
+                        "    LabelC3: C3:D4\n"
         );
     }
 
@@ -223,7 +223,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +
                         "    LabelB2: B2\n" +
-                        "    LabelC3: C3\n"
+                        "    LabelC3: C3:D4\n"
         );
     }
 
@@ -257,7 +257,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +
                         "    LabelB2: B2\n" +
-                        "    LabelC3: C3\n" +
+                        "    LabelC3: C3:D4\n" +
                         "  deletedCells:\n" +
                         "    C1,C2\n"
         );
@@ -399,7 +399,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +
                         "    LabelB2: B2\n" +
-                        "    LabelC3: C3\n" +
+                        "    LabelC3: C3:D4\n" +
                         "  deletedCells:\n" +
                         "    C1,C2\n" +
                         "  deletedColumns:\n" +
@@ -782,7 +782,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
-                "selection: A1:B2 BOTTOM_RIGHT cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3");
+                "selection: A1:B2 BOTTOM_RIGHT cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4");
     }
 
     @Test
@@ -800,7 +800,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS
                 ),
-                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 deletedCells: C1, C2");
+                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 deletedCells: C1, C2");
     }
 
     @Test

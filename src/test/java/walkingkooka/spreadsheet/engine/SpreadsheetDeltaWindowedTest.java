@@ -408,7 +408,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +
                         "    LabelB2: B2\n" +
-                        "    LabelC3: C3\n" +
+                        "    LabelC3: C3:D4\n" +
                         "  window:\n" +
                         "    A1:E5\n"
         );
@@ -474,7 +474,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +
                         "    LabelB2: B2\n" +
-                        "    LabelC3: C3\n" +
+                        "    LabelC3: C3:D4\n" +
                         "  window:\n" +
                         "    A1:E5\n"
         );
@@ -511,7 +511,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +
                         "    LabelB2: B2\n" +
-                        "    LabelC3: C3\n" +
+                        "    LabelC3: C3:D4\n" +
                         "  deletedCells:\n" +
                         "    C1,C2\n" +
                         "  window:\n" +
@@ -668,7 +668,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +
                         "    LabelB2: B2\n" +
-                        "    LabelC3: C3\n" +
+                        "    LabelC3: C3:D4\n" +
                         "  deletedCells:\n" +
                         "    C1,C2\n" +
                         "  deletedColumns:\n" +
@@ -957,7 +957,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()
                 ),
-                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 window: A1:E5");
+                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 window: A1:E5");
     }
 
     @Test
@@ -976,7 +976,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         this.window()
                 ),
-                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3 deletedCells: C1, C2 window: A1:E5");
+                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 deletedCells: C1, C2 window: A1:E5");
     }
 
     @Test

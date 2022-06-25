@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -70,6 +71,60 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.checkEquals(
                 Sets.empty(),
                 SpreadsheetDelta.NO_WINDOW
+        );
+    }
+
+    // setLabel.........................................................................................................
+
+    @Test
+    public void testSetLabelsWithLabelRangeInsideWindow() {
+        final Set<SpreadsheetLabelMapping> mappings = this.labelMappingsLabel123ToC3E5();
+
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
+                .setWindow(SpreadsheetSelection.parseWindow("B2:F6"))
+                .setLabels(mappings);
+
+        this.checkEquals(
+                mappings,
+                delta.labels(),
+                "labels"
+        );
+    }
+
+    @Test
+    public void testSetLabelsWithLabelRangePartiallyOutsideWindow() {
+        final Set<SpreadsheetLabelMapping> mappings = this.labelMappingsLabel123ToC3E5();
+
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
+                .setWindow(SpreadsheetSelection.parseWindow("B2:D4"))
+                .setLabels(mappings);
+
+        this.checkEquals(
+                mappings,
+                delta.labels(),
+                "labels"
+        );
+    }
+
+    @Test
+    public void testSetLabelsWithLabelRangeWholeyOutsideWindow() {
+        final Set<SpreadsheetLabelMapping> mappings = this.labelMappingsLabel123ToC3E5();
+
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
+                .setWindow(SpreadsheetSelection.parseWindow("A1:B2"))
+                .setLabels(mappings);
+
+        this.checkEquals(
+                SpreadsheetDelta.NO_LABELS,
+                delta.labels(),
+                "labels"
+        );
+    }
+
+    private Set<SpreadsheetLabelMapping> labelMappingsLabel123ToC3E5() {
+        return Sets.of(
+                SpreadsheetSelection.labelName("Label123")
+                        .mapping(SpreadsheetSelection.parseCellRange("C3:E5"))
         );
     }
 

@@ -733,7 +733,26 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkColumns(before);
         this.checkRows(before);
     }
-    
+
+    @Test
+    public final void testSetDifferentWindowWithLabels() {
+        final D before = this.createSpreadsheetDelta();
+
+        final Set<SpreadsheetCellRange> window = SpreadsheetSelection.parseWindow("A1:Z9999");
+        this.checkNotEquals(window, this.window());
+
+        final SpreadsheetDelta after = before.setWindow(window);
+
+        this.checkCells(after);
+        this.checkColumns(after);
+        this.checkRows(after);
+        this.checkWindow(after, window);
+
+        this.checkCells(before);
+        this.checkColumns(before);
+        this.checkRows(before);
+    }
+
     // unmarshall.......................................................................................................
 
     @Test
@@ -1041,7 +1060,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 this.label1a().mapping(this.a1().reference()),
                 this.label1b().mapping(this.a1().reference()),
                 this.label2().mapping(this.b2().reference()),
-                this.label3().mapping(this.c3().reference())
+                this.label3().mapping(SpreadsheetSelection.parseCellRange("C3:D4"))
         );
     }
 
@@ -1394,12 +1413,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     final JsonNode labelsJson() {
         return this.marshallContext()
                 .marshallCollection(
-                        Sets.of(
-                                this.label1a().mapping(this.a1().reference()),
-                                this.label1b().mapping(this.a1().reference()),
-                                this.label2().mapping(this.b2().reference()),
-                                this.label3().mapping(this.c3().reference())
-                        )
+                        this.labels()
                 );
     }
 
