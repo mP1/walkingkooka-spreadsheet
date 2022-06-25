@@ -107,7 +107,11 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         store.save(SpreadsheetLabelMapping.with(label, reference));
         store.save(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("DifferentLabel"), SpreadsheetSelection.parseCell("A1")));
 
-        this.labelsAndCheck(store, reference, label);
+        this.labelsAndCheck(
+                store,
+                reference,
+                label.mapping(reference)
+        );
     }
 
     @Test
@@ -120,11 +124,17 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
 
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
 
-        store.save(SpreadsheetLabelMapping.with(label1, reference));
-        store.save(SpreadsheetLabelMapping.with(label2, reference));
-        store.save(SpreadsheetLabelMapping.with(label3, reference));
+        final SpreadsheetLabelMapping mapping1 = store.save(SpreadsheetLabelMapping.with(label1, reference));
+        final SpreadsheetLabelMapping mapping2 = store.save(SpreadsheetLabelMapping.with(label2, reference));
+        final SpreadsheetLabelMapping mapping3 = store.save(SpreadsheetLabelMapping.with(label3, reference));
 
-        this.labelsAndCheck(store, reference, label1, label2, label3);
+        this.labelsAndCheck(
+                store,
+                reference,
+                mapping1,
+                mapping2,
+                mapping3
+        );
     }
 
     @Test
@@ -135,10 +145,15 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LabelZ99");
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
 
-        store.save(SpreadsheetLabelMapping.with(indirect, reference));
-        store.save(SpreadsheetLabelMapping.with(label, indirect));
+        final SpreadsheetLabelMapping mapping1 = store.save(SpreadsheetLabelMapping.with(indirect, reference));
+        final SpreadsheetLabelMapping mapping2 = store.save(SpreadsheetLabelMapping.with(label, indirect));
 
-        this.labelsAndCheck(store, reference, indirect, label);
+        this.labelsAndCheck(
+                store,
+                reference,
+                mapping1,
+                mapping2
+        );
     }
 
     default void loadCellReferencesOrRangesAndCheck(final SpreadsheetLabelStore store,
@@ -150,17 +165,23 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     }
 
     default void labelsAndCheck(final SpreadsheetLabelStore store,
-                                final SpreadsheetCellReference reference,
-                                final SpreadsheetLabelName... labels) {
-        this.labelsAndCheck(store, reference, Sets.of(labels));
+                                final SpreadsheetExpressionReference reference,
+                                final SpreadsheetLabelMapping... labels) {
+        this.labelsAndCheck(
+                store,
+                reference,
+                Sets.of(labels)
+        );
     }
 
     default void labelsAndCheck(final SpreadsheetLabelStore store,
-                                final SpreadsheetCellReference reference,
-                                final Set<SpreadsheetLabelName> labels) {
-        this.checkEquals(labels,
+                                final SpreadsheetExpressionReference reference,
+                                final Set<SpreadsheetLabelMapping> labels) {
+        this.checkEquals(
+                labels,
                 store.labels(reference),
-                () -> "labels for " + reference);
+                () -> "labels for " + reference
+        );
     }
 
     @Test

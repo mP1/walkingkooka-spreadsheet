@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.store.FakeStore;
@@ -40,7 +40,7 @@ public class FakeSpreadsheetLabelStore extends FakeStore<SpreadsheetLabelName, S
     }
 
     @Override
-    public Set<SpreadsheetLabelName> labels(final SpreadsheetCellReference cell) {
+    public Set<SpreadsheetLabelMapping> labels(final SpreadsheetExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 }

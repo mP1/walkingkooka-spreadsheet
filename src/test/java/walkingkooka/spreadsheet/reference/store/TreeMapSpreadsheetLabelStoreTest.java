@@ -30,6 +30,106 @@ import java.util.TreeMap;
 
 public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<TreeMapSpreadsheetLabelStore> {
 
+    // labels..........................................................................................................
+
+    @Test
+    public void testLabelsNoneWithCell() {
+        this.labelsNoneAndCheck(
+                SpreadsheetSelection.parseCellRange("a3")
+        );
+    }
+
+    @Test
+    public void testLabelsNoneWithCellRange() {
+        this.labelsNoneAndCheck(
+                SpreadsheetSelection.parseCellRange("a3:a4")
+        );
+    }
+
+    private void labelsNoneAndCheck(final SpreadsheetExpressionReference selection) {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = this.label1();
+        final SpreadsheetLabelName label2 = this.label2();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a2 = this.a2();
+
+        store.save(label1.mapping(a1));
+        store.save(label2.mapping(a2));
+
+        this.labelsAndCheck(
+                store,
+                selection
+        );
+    }
+
+    @Test
+    public void testLabelsSomeWithCell() {
+        this.labelsSomeAndCheck(
+                this.a2()
+        );
+    }
+
+    @Test
+    public void testLabelsSomeWithCellRange() {
+        this.labelsSomeAndCheck(
+                SpreadsheetSelection.parseCellRange("a2:a3")
+        );
+    }
+
+    private void labelsSomeAndCheck(final SpreadsheetExpressionReference selection) {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = this.label1();
+        final SpreadsheetLabelName label2 = this.label2();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a2 = this.a2();
+
+        store.save(label1.mapping(a1));
+        final SpreadsheetLabelMapping mapping = store.save(label2.mapping(a2));
+
+        this.labelsAndCheck(
+                store,
+                selection,
+                mapping
+        );
+    }
+
+    @Test
+    public void testLabelsSomeWithCell2() {
+        this.labelsSomeAndCheck(
+                this.a2()
+        );
+    }
+
+    @Test
+    public void testLabelsSomeWithCellRange2() {
+        this.labelsSomeAndCheck2(
+                SpreadsheetSelection.parseCellRange("a2:a3")
+        );
+    }
+
+    private void labelsSomeAndCheck2(final SpreadsheetExpressionReference selection) {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = this.label1();
+        final SpreadsheetLabelName label2 = this.label2();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellRange a2 = SpreadsheetSelection.parseCellRange("a2:b3");
+
+        store.save(label1.mapping(a1));
+        final SpreadsheetLabelMapping mapping = store.save(label2.mapping(a2));
+
+        this.labelsAndCheck(
+                store,
+                selection,
+                mapping
+        );
+    }
+
     // findSimilar......................................................................................................
 
     @Test

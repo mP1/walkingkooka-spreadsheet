@@ -2866,7 +2866,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetCellReference.parseCell("N10"))
+                                        LABEL.mapping(SpreadsheetCellReference.parseCell("$N$10"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d, e)
@@ -3494,7 +3494,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.formattedCellWithValue(b.addRow(-count), "=2+0", number(2 + 0)))
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetCellReference.parseCell("A4"))
+                                        LABEL.mapping(SpreadsheetCellReference.parseCell("$A$4"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -3964,7 +3964,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetCellReference.parseCell("A10"))
+                                        LABEL.mapping(
+                                                SpreadsheetCellReference.parseCellRange("$A$10:$A$15")
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(d)
@@ -4364,7 +4366,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetCellReference.parseCell("C1"))
+                                        LABEL.mapping(SpreadsheetCellReference.parseCell("$C$1"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -4826,7 +4828,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0)))
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetCellReference.parseCell("J1"))
+                                        LABEL.mapping(
+                                                SpreadsheetCellReference.parseCellRange("$J$1:$O$1")
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(d)
@@ -5166,7 +5170,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetCellReference.parseCell("O9"))
+                                        LABEL.mapping(SpreadsheetCellReference.parseCell("$O$9"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b, d)
@@ -5301,7 +5305,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetCellReference.parseCell("P1"))
+                                        LABEL.mapping(
+                                                SpreadsheetCellReference.parseCellRange("$P$1:$U$1")
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(c)
@@ -5881,7 +5887,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        SpreadsheetLabelMapping.with(LABEL, SpreadsheetSelection.parseCell("I15"))
+                                        SpreadsheetLabelMapping.with(LABEL, SpreadsheetSelection.parseCell("$I$15"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b, d)
@@ -6017,7 +6023,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetSelection.parseCell("A16"))
+                                        LABEL.mapping(
+                                                SpreadsheetSelection.parseCellRange("$A$16:$A$21")
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(c)
