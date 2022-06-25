@@ -559,7 +559,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     }
                             );
 
-                    if (false && addLabels) {
+                    if (addLabels) {
                         addLabels(
                                 range,
                                 labelStore,
