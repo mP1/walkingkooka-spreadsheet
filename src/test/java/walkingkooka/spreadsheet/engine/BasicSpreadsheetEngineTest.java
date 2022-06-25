@@ -6775,7 +6775,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsOnlyLabels() {
+    public void testLoadCellsOnlyLabelsToCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -6798,6 +6798,69 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setWindow(range)
                         .setLabels(
                                 Sets.of(mapping)
+                        )
+        );
+    }
+
+    @Test
+    public void testLoadCellsOnlyLabelsToRange() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelStore labelStore = context.storeRepository()
+                .labels();
+
+        final SpreadsheetLabelName labelC3d4 = SpreadsheetLabelName.labelName("LabelC3d4");
+        final SpreadsheetCellRange c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
+        final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(labelC3d4.mapping(c3d4));
+
+        final Set<SpreadsheetCellRange> range = SpreadsheetSelection.parseWindow("b2:e5");
+
+        this.loadCellsAndCheck(
+                engine,
+                range,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setWindow(range)
+                        .setLabels(
+                                Sets.of(mappingC3d4)
+                        )
+        );
+    }
+
+    @Test
+    public void testLoadCellsOnlyLabelsToCellAndRange() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelStore labelStore = context.storeRepository()
+                .labels();
+
+        final SpreadsheetLabelName labelC3 = SpreadsheetLabelName.labelName("LabelC3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+        final SpreadsheetLabelMapping mappingC3 = labelStore.save(labelC3.mapping(c3));
+
+        final SpreadsheetLabelName labelC3d4 = SpreadsheetLabelName.labelName("LabelC3d4");
+        final SpreadsheetCellRange c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
+        final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(labelC3d4.mapping(c3d4));
+
+        final Set<SpreadsheetCellRange> range = SpreadsheetSelection.parseWindow("b2:e5");
+
+        this.loadCellsAndCheck(
+                engine,
+                range,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setWindow(range)
+                        .setLabels(
+                                Sets.of(
+                                        mappingC3,
+                                        mappingC3d4
+                                )
                         )
         );
     }
