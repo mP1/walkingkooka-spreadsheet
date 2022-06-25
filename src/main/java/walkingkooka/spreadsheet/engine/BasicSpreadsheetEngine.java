@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -554,17 +555,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                         rowStore
                                                 );
                                             }
-
-                                            if (addLabels) {
-                                                addLabels(
-                                                        c,
-                                                        labelStore,
-                                                        labels
-                                                );
-                                            }
                                         }
                                     }
                             );
+
+                    if (false && addLabels) {
+                        addLabels(
+                                range,
+                                labelStore,
+                                labels
+                        );
+                    }
                 }
             }
         }
@@ -702,7 +703,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
-    private static void addLabels(final SpreadsheetCellReference reference,
+    private static void addLabels(final SpreadsheetExpressionReference reference,
                                   final SpreadsheetLabelStore store,
                                   final Set<SpreadsheetLabelMapping> all) {
         for (final SpreadsheetLabelMapping mapping : store.labels(reference)) {
