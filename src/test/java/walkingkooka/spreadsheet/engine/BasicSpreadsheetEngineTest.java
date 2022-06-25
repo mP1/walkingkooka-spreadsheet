@@ -6775,6 +6775,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellsOnlyLabels() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelStore labelStore = context.storeRepository()
+                .labels();
+
+        final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelC3");
+        final SpreadsheetCellReference c3 = SpreadsheetCellReference.parseCell("c3");
+        final SpreadsheetLabelMapping mapping = labelStore.save(label.mapping(c3));
+
+        final Set<SpreadsheetCellRange> range = SpreadsheetSelection.parseWindow("b2:d4");
+
+        this.loadCellsAndCheck(
+                engine,
+                range,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setWindow(range)
+                        .setLabels(
+                                Sets.of(mapping)
+                        )
+        );
+    }
+
+    @Test
     public void testLoadCellsWithLabelsLabelWithoutCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
