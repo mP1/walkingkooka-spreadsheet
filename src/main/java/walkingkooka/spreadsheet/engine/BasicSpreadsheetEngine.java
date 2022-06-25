@@ -705,8 +705,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private static void addLabels(final SpreadsheetCellReference reference,
                                   final SpreadsheetLabelStore store,
                                   final Set<SpreadsheetLabelMapping> all) {
-        for (final SpreadsheetLabelName label : store.labels(reference)) {
-            all.add(label.mapping(reference));
+        for (final SpreadsheetLabelMapping mapping : store.labels(reference)) {
+            all.add(mapping);
         }
     }
 

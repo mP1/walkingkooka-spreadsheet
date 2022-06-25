@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -98,8 +98,8 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<SpreadsheetLabelName> labels(final SpreadsheetCellReference cell) {
-        return this.store.labels(cell);
+    public Set<SpreadsheetLabelMapping> labels(final SpreadsheetExpressionReference reference) {
+        return this.store.labels(reference);
     }
 
     private final SpreadsheetLabelStore store;

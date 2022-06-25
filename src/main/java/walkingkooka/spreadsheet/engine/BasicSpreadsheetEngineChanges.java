@@ -593,7 +593,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
 
         repository.labels()
                 .labels(reference)
-                .forEach(this::batchLabel);
+                .forEach(m -> this.batchLabel(m.label()));
 
         repository.rangeToCells()
                 .loadCellReferenceRanges(reference)

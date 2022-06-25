@@ -23,8 +23,11 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+
+import java.util.Map;
 
 public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitorTest implements SpreadsheetExpressionReferenceVisitorTesting<TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor> {
 
@@ -36,14 +39,23 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionRefere
         final SpreadsheetLabelName label1 = SpreadsheetExpressionReference.labelName("ABCDEF123");
         final SpreadsheetLabelName label2 = SpreadsheetExpressionReference.labelName("DEFGHI456");
 
-        final TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor visitor = new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor(b2,
-                Maps.of(label1, label1.mapping(a1), label2, label2.mapping(a1)));
+        final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = Maps.of(
+                label1, label1.mapping(a1),
+                label2, label2.mapping(a1)
+        );
 
-        visitor.accept(b2);
-        visitor.accept(label1);
-        visitor.accept(label2);
+        final TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor visitor = new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor(
+                mappings,
+                a1
+        );
 
-        this.toStringAndCheck(visitor, "[ABCDEF123, DEFGHI456]");
+        mappings.values()
+                .forEach(m -> visitor.acceptAndUpdateLabels(m));
+
+        this.toStringAndCheck(
+                visitor,
+                "[ABCDEF123=A1, DEFGHI456=A1]"
+        );
     }
 
     @Override

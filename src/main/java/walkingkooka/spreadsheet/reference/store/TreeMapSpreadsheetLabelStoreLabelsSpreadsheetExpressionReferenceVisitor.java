@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference.store;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -32,37 +33,40 @@ import java.util.Set;
  */
 final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
 
-    static Set<SpreadsheetLabelName> gather(final SpreadsheetCellReference reference,
-                                            final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
-        final TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor visitor = new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor(reference,
-                mappings);
+    static Set<SpreadsheetLabelMapping> gather(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
+                                               final SpreadsheetExpressionReference selection) {
+        final TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor visitor = new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor(
+                mappings,
+                selection
+        );
 
         mappings.values()
-                .forEach(visitor::acceptMapping);
+                .forEach(visitor::acceptAndUpdateLabels);
 
-        return visitor.labels;
+        return Sets.readOnly(visitor.labels);
     }
 
     // VisibleForTesting
-    TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor(final SpreadsheetCellReference reference,
-                                                                            final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
+    TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
+                                                                            final SpreadsheetExpressionReference selection) {
         super();
 
-        this.reference = reference;
+        this.filter = selection;
         this.mappings = mappings;
     }
 
-    private void acceptMapping(final SpreadsheetLabelMapping mapping) {
+    // VisibleForTesting
+    void acceptAndUpdateLabels(final SpreadsheetLabelMapping mapping) {
         this.add = false;
         this.accept(mapping.reference());
         if (this.add) {
-            this.labels.add(mapping.label());
+            this.labels.add(mapping);
         }
     }
 
     @Override
     protected void visit(final SpreadsheetCellReference reference) {
-        this.add = this.reference.compareTo(reference) == 0;
+        this.add = this.filter.test(reference);
     }
 
     @Override
@@ -73,22 +77,32 @@ final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisi
                 this.accept(mapping.reference());
             }
         }
-
-        if (this.add) {
-            this.labels.add(label);
-        }
     }
 
     @Override
     protected void visit(final SpreadsheetCellRange range) {
         this.add = this.add | range.cellStream()
-                .anyMatch(r -> r.compareTo(this.reference) == 0);
+                .anyMatch(filter);
     }
 
-    private final SpreadsheetCellReference reference;
+    /**
+     * The source containing all mappings.
+     */
     private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings;
-    private final Set<SpreadsheetLabelName> labels = Sets.ordered();
 
+    /**
+     * This filter will match label mappings as they are visited.
+     */
+    private final SpreadsheetExpressionReference filter;
+
+    /**
+     * The result being built.
+     */
+    private final Set<SpreadsheetLabelMapping> labels = Sets.ordered();
+
+    /**
+     * A flag that starts as false and becomes true if a mapping is matched by the filter.
+     */
     private boolean add;
 
     @Override
