@@ -687,8 +687,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 m -> {
                     final SpreadsheetExpressionReference r = m.reference();
 
-                    return window.stream()
-                            .anyMatch(r::testCellRange);
+                    return r.isLabelName() ||
+                            window.stream()
+                                    .anyMatch(r::testCellRange);
                 }
         );
     }
