@@ -10469,7 +10469,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigate() {
+    public void testNavigateCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -10489,11 +10489,37 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateLabel() {
+    public void testNavigateLabelUnchanged() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCellReference selection = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetCellReference selection = SpreadsheetSelection.parseCell("A1");
+
+        context.storeRepository()
+                .labels()
+                .save(LABEL.mapping(selection));
+
+        final SpreadsheetViewportSelection viewportSelection = selection.setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
+
+        this.navigateAndCheck(
+                engine,
+                viewportSelection
+                        .setNavigation(
+                                Optional.of(
+                                        SpreadsheetViewportSelectionNavigation.LEFT
+                                )
+                        ),
+                context,
+                viewportSelection
+        );
+    }
+
+    @Test
+    public void testNavigateLabelToCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference selection = SpreadsheetSelection.parseCell("A1");
 
         context.storeRepository()
                 .labels()
@@ -10508,8 +10534,33 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ),
                 context,
-                SpreadsheetSelection.parseCell("C2")
+                SpreadsheetSelection.parseCell("B1")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    @Test
+    public void testNavigateLabelToRange() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellRange selection = SpreadsheetSelection.parseCellRange("A1:B1");
+
+        context.storeRepository()
+                .labels()
+                .save(LABEL.mapping(selection));
+
+        this.navigateAndCheck(
+                engine,
+                selection.setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
+                        .setNavigation(
+                                Optional.of(
+                                        SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
+                                )
+                        ),
+                context,
+                SpreadsheetSelection.parseCellRange("A1:C1")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
         );
     }
 

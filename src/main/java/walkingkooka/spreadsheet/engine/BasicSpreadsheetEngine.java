@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -48,6 +49,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
@@ -1581,22 +1583,70 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final Optional<SpreadsheetViewportSelectionNavigation> maybeNavigation = selection.navigation();
         return maybeNavigation.isPresent() ?
-                this.navigateNavigation(selection, context) :
-                this.navigateWithoutNavigation(selection, context);
+                this.navigateWithNavigation(
+                        selection,
+                        maybeNavigation.get(),
+                        context
+                ) :
+                this.navigateWithoutNavigation(
+                        selection,
+                        context
+                );
     }
 
-    private Optional<SpreadsheetViewportSelection> navigateNavigation(final SpreadsheetViewportSelection selection,
-                                                                      final SpreadsheetEngineContext context) {
+    private Optional<SpreadsheetViewportSelection> navigateWithNavigation(final SpreadsheetViewportSelection viewportSelection,
+                                                                          final SpreadsheetViewportSelectionNavigation navigation,
+                                                                          final SpreadsheetEngineContext context) {
+        final SpreadsheetSelection selection = viewportSelection.selection();
+        final SpreadsheetViewportSelectionAnchor anchor = viewportSelection.anchor();
+
+        return selection.isLabelName() ?
+                this.navigateWithNavigationLabel(
+                Cast.to(selection),
+                anchor,
+                navigation,
+                context
+        ) :
+                this.navigateWithNavigation0(
+                        selection,
+                        anchor,
+                        navigation,
+                        context
+                );
+    }
+
+    private Optional<SpreadsheetViewportSelection> navigateWithNavigationLabel(final SpreadsheetLabelName label,
+                                                                               final SpreadsheetViewportSelectionAnchor anchor,
+                                                                               final SpreadsheetViewportSelectionNavigation navigation,
+                                                                               final SpreadsheetEngineContext context) {
+        final SpreadsheetSelection cellOrRange = context.resolveIfLabel(label);
+        final Optional<SpreadsheetViewportSelection> after = this.navigateWithNavigation0(
+                cellOrRange,
+                anchor,
+                navigation,
+                context
+        );
+
+        // if the original selection was a cell or range & after doing the navigation its the same restore the label.
+        return after.map(
+            s -> s.selection().equalsIgnoreReferenceKind(cellOrRange) ?
+                        s.setSelection(label) :
+                        s
+        );
+    }
+
+    private Optional<SpreadsheetViewportSelection> navigateWithNavigation0(final SpreadsheetSelection selection,
+                                                                           final SpreadsheetViewportSelectionAnchor anchor,
+                                                                           final SpreadsheetViewportSelectionNavigation navigation,
+                                                                           final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        return selection.navigation()
-                .get()
-                .perform(
-                        selection.selection(),
-                        selection.anchor(),
-                        repository.columns(),
-                        repository.rows()
-                );
+        return navigation.perform(
+                selection,
+                anchor,
+                repository.columns(),
+                repository.rows()
+        );
     }
 
     /**
