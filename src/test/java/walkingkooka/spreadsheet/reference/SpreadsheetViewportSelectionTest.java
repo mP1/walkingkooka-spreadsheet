@@ -142,9 +142,18 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 anchor,
                 navigation
         );
-        assertSame(selection, viewportSelection.selection(), "selection");
-        this.checkEquals(anchor, viewportSelection.anchor(), "anchor");
-        this.checkEquals(navigation, viewportSelection.navigation(), "navigation");
+        this.checkSelection(
+                viewportSelection,
+                selection
+        );
+        this.checkAnchor(
+                viewportSelection,
+                anchor
+        );
+        this.checkNavigation(
+                viewportSelection,
+                navigation
+        );
     }
 
     // cellRange.........................................................................................................
@@ -335,17 +344,18 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
         final SpreadsheetViewportSelection viewportSelection = selection.setAnchor(
                 anchor
         );
-        assertSame(selection, viewportSelection.selection(), "selection");
-
-        this.checkEquals(
-                anchor,
-                viewportSelection.anchor(),
-                "anchor"
+        this.checkSelection(
+                viewportSelection,
+                selection
         );
-        this.checkEquals(
-                SpreadsheetViewportSelection.NO_NAVIGATION,
-                viewportSelection.navigation(),
-                "navigation"
+
+        this.checkAnchor(
+                viewportSelection,
+                anchor
+        );
+        this.checkNavigation(
+                viewportSelection,
+                SpreadsheetViewportSelection.NO_NAVIGATION
         );
     }
 
@@ -386,20 +396,44 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 selection,
                 differentSelection
         );
+        this.checkSelection(
+                differentSelection,
+                selection.selection()
+        );
+        this.checkAnchor(
+                differentSelection,
+                selection.anchor()
+        );
+        this.checkNavigation(
+                differentSelection,
+                navigation
+        );
+    }
+
+    private void checkSelection(final SpreadsheetViewportSelection viewportSelection,
+                                final SpreadsheetSelection selection) {
         this.checkEquals(
-                selection.selection(),
-                differentSelection.selection(),
+                selection,
+                viewportSelection.selection(),
                 "selection"
         );
+    }
+
+    private void checkAnchor(final SpreadsheetViewportSelection viewportSelection,
+                             final SpreadsheetViewportSelectionAnchor anchor) {
         this.checkEquals(
-                selection.anchor(),
-                differentSelection.anchor(),
+                anchor,
+                viewportSelection.anchor(),
                 "anchor"
         );
+    }
+
+    private void checkNavigation(final SpreadsheetViewportSelection viewportSelection,
+                                 final Optional<SpreadsheetViewportSelectionNavigation> navigation) {
         this.checkEquals(
                 navigation,
-                differentSelection.navigation(),
-                "navigation("
+                viewportSelection.navigation(),
+                "navigation"
         );
     }
 
