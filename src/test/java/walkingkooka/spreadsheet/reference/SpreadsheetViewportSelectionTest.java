@@ -359,6 +359,56 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
         );
     }
 
+    // setSelection.....................................................................................................
+
+    @Test
+    public void testSetSelectionNullFails() {
+        final SpreadsheetViewportSelection viewportSelection = this.createObject();
+        assertThrows(
+                NullPointerException.class,
+                () -> viewportSelection.setSelection(null)
+        );
+    }
+
+    @Test
+    public void testSetSelectionSame() {
+        final SpreadsheetViewportSelection viewportSelection = this.createObject();
+        assertSame(
+                viewportSelection,
+                viewportSelection.setSelection(viewportSelection.selection())
+        );
+    }
+
+    @Test
+    public void testSetSelectionDifferent() {
+        final SpreadsheetViewportSelection viewportSelection = this.createObject();
+
+        final SpreadsheetSelection selection = SpreadsheetSelection.parseCellRange("ZZ99");
+        this.checkNotEquals(
+                SELECTION,
+                selection,
+                "different selection"
+        );
+
+        final SpreadsheetViewportSelection different = viewportSelection.setSelection(selection);
+        assertNotSame(
+                viewportSelection,
+                different
+        );
+        this.checkSelection(
+                different,
+                selection
+        );
+        this.checkAnchor(
+                different,
+                viewportSelection.anchor()
+        );
+        this.checkNavigation(
+                different,
+                viewportSelection.navigation()
+        );
+    }
+
     // setNavigation.....................................................................................................
 
     @Test
