@@ -10450,6 +10450,71 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testNavigateSelectionLabelMissingNavigation() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        context.storeRepository()
+                .labels()
+                .save(LABEL.mapping(SpreadsheetSelection.parseCell("B2")));
+
+        final SpreadsheetViewportSelection viewportSelection = LABEL
+                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
+
+        this.navigateAndCheck(
+                engine,
+                viewportSelection,
+                context,
+                Optional.of(viewportSelection)
+        );
+    }
+
+    @Test
+    public void testNavigate() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        this.navigateAndCheck(
+                engine,
+                SpreadsheetSelection.parseCell("B2")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setNavigation(
+                                Optional.of(
+                                        SpreadsheetViewportSelectionNavigation.RIGHT
+                                )
+                        ),
+                context,
+                SpreadsheetSelection.parseCell("C2")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    @Test
+    public void testNavigateLabel() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference selection = SpreadsheetSelection.parseCell("B2");
+
+        context.storeRepository()
+                .labels()
+                .save(LABEL.mapping(selection));
+
+        this.navigateAndCheck(
+                engine,
+                selection.setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setNavigation(
+                                Optional.of(
+                                        SpreadsheetViewportSelectionNavigation.RIGHT
+                                )
+                        ),
+                context,
+                SpreadsheetSelection.parseCell("C2")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    @Test
     public void testNavigateHidden() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();

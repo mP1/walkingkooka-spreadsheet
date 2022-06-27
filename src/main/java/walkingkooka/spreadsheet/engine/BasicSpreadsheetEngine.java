@@ -1601,14 +1601,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Assumes a selection without navigation, returning an {@link SpreadsheetEngine#NO_VIEWPORT_SELECTION} if
      * the selection is hidden.
      */
-    private Optional<SpreadsheetViewportSelection> navigateWithoutNavigation(final SpreadsheetViewportSelection selection,
+    private Optional<SpreadsheetViewportSelection> navigateWithoutNavigation(final SpreadsheetViewportSelection viewportSelection,
                                                                              final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        return selection.selection()
+        SpreadsheetSelection selection = viewportSelection.selection();
+        if (selection.isLabelName()) {
+            selection = context.resolveCellReference((SpreadsheetLabelName) selection);
+        }
+
+        return selection
                 .isHidden(repository.columns()::isHidden, repository.rows()::isHidden) ?
                 SpreadsheetEngine.NO_VIEWPORT_SELECTION :
-                Optional.of(selection);
+                Optional.of(viewportSelection);
     }
 
     // checkers.........................................................................................................
