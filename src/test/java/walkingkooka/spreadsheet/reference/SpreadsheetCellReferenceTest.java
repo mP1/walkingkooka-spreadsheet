@@ -881,14 +881,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                 SpreadsheetSelection.parseCell("$A$1"));
     }
 
-    // SpreadsheetExpressionReference...................................................................................
-
-    @Test
-    public void testToCell() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
-        assertSame(cell, cell.toCell());
-    }
-
     // isHidden.........................................................................................................
 
     @Test

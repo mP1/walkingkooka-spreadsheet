@@ -256,6 +256,11 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
         return this.end().row().value() - this.begin().row().value() + 1;
     }
 
+    @Override
+    public SpreadsheetCellReference toCellOrFail() {
+        return this.begin();
+    }
+
     /**
      * A stream that provides all {@link SpreadsheetColumnReference}.
      */
@@ -492,11 +497,6 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     }
 
     // SpreadsheetExpressionReference...................................................................................
-
-    @Override
-    public SpreadsheetCellReference toCell() {
-        return this.begin();
-    }
 
     @Override
     public SpreadsheetCellRange cellRange() {

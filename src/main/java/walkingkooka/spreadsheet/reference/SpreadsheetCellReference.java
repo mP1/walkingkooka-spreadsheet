@@ -205,6 +205,11 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         return this.column().isLast() && this.row().isLast();
     }
 
+    @Override
+    public SpreadsheetCellReference toCellOrFail() {
+        return this;
+    }
+
     // setFormula.......................................................................................................
 
     /**
@@ -299,13 +304,6 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     @Override
     public Optional<String> id() {
         return Optional.of(this.hateosLinkId());
-    }
-
-    // SpreadsheetExpressionReference...................................................................................
-
-    @Override
-    public SpreadsheetCellReference toCell() {
-        return this;
     }
 
     // SpreadsheetSelectionVisitor......................................................................................
