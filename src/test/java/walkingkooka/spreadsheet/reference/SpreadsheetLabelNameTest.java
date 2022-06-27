@@ -149,6 +149,13 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
         // test ignored because short generated names will clash with valid cell references and fail the test.
     }
 
+    // toCellOrFail.....................................................................................................
+
+    @Test
+    public void testToCellOrFailFails() {
+        this.toCellOrFailFails();
+    }
+
     // Comparator ......................................................................................................
 
     @Test

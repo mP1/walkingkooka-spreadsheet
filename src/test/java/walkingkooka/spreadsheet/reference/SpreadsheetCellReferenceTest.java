@@ -188,6 +188,18 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // toCellOrFail.....................................................................................................
+
+    @Test
+    public void testToCellOrFail() {
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z9");
+
+        this.toCellOrFailAndCheck(
+                reference,
+                reference
+        );
+    }
+
     // Predicate........................................................................................................
 
     @Test

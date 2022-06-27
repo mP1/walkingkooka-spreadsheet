@@ -465,6 +465,12 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
+     * Not really a cast operation but only {@link SpreadsheetCellReference} and {@link SpreadsheetCellRange} will
+     * succeed all other types will throw {@link UnsupportedOperationException}.
+     */
+    public abstract SpreadsheetCellReference toCellOrFail();
+
+    /**
      * If the sub class has a {@link SpreadsheetReferenceKind} return a new instance with that set to {@link SpreadsheetReferenceKind#RELATIVE}.
      * The sub class {@link SpreadsheetLabelName} will always return <code>this</code>.
      */

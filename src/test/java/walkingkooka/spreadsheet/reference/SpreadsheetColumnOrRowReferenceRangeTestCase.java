@@ -46,6 +46,13 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
         );
     }
 
+    // toCellOrFail.....................................................................................................
+
+    @Test
+    public final void testToCellOrFailFails() {
+        this.toCellOrFailFails();
+    }
+
     // compare.........................................................................................................
 
     @Override

@@ -149,6 +149,11 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
         return this;
     }
 
+    @Override
+    public final SpreadsheetCellReference toCellOrFail() {
+        throw new UnsupportedOperationException();
+    }
+
     // Object...........................................................................................................
 
     @Override

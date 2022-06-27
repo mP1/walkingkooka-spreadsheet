@@ -293,6 +293,13 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.checkEquals(this.createReference(max), reference.addSaturated(+2));
     }
 
+    // toCellOrFail.....................................................................................................
+
+    @Test
+    public final void testToCellOrFailFails() {
+        this.toCellOrFailFails();
+    }
+
     // helper............................................................................................................
 
     final R createSelection() {
