@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
@@ -42,6 +44,15 @@ public interface SpreadsheetEngineContext extends Context, ExpressionPurityConte
      * Returns the current {@link SpreadsheetMetadata}
      */
     SpreadsheetMetadata metadata();
+
+    /**
+     * If the {@link SpreadsheetSelection} if a label resolve it into a {@link SpreadsheetCellReference}.
+     */
+    default SpreadsheetSelection resolveCellReferenceIfLabel(final SpreadsheetSelection selection) {
+        return selection.isLabelName() ?
+                this.resolveCellReference((SpreadsheetLabelName) selection) :
+                selection;
+    }
 
     /**
      * Resolves a {@link SpreadsheetExpressionReference} to a {@link SpreadsheetCellReference}.

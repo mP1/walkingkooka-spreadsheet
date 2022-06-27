@@ -1605,12 +1605,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                                              final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        SpreadsheetSelection selection = viewportSelection.selection();
-        if (selection.isLabelName()) {
-            selection = context.resolveCellReference((SpreadsheetLabelName) selection);
-        }
-
-        return selection
+        return context.resolveCellReferenceIfLabel(viewportSelection.selection())
                 .isHidden(repository.columns()::isHidden, repository.rows()::isHidden) ?
                 SpreadsheetEngine.NO_VIEWPORT_SELECTION :
                 Optional.of(viewportSelection);
