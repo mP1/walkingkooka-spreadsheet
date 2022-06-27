@@ -26,8 +26,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
@@ -42,73 +40,75 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         ParserTesting,
         HasLocaleTesting {
 
-    // resolveCellReference...............................................................................................
+    // resolveIfLabel...............................................................................................
 
     @Test
-    default void testResolveCellReferenceNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createContext().resolveCellReference(null));
+    default void testResolveIfLabelNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .resolveIfLabel(null)
+        );
     }
 
     @Test
-    default void testResolveCellReferenceRange() {
-        this.resolveCellReferenceAndCheck(
-                SpreadsheetSelection.parseExpressionReference("B2:B3"),
+    default void testResolveIfLabelCell() {
+        this.resolveIfLabelAndCheck(
                 SpreadsheetSelection.parseCell("B2")
         );
     }
 
-    default void resolveCellReferenceAndFail(final SpreadsheetExpressionReference reference) {
-        this.resolveCellReferenceAndFail(
+    @Test
+    default void testResolveIfLabelColumn() {
+        this.resolveIfLabelAndCheck(
+                SpreadsheetSelection.parseColumn("Z")
+        );
+    }
+
+    @Test
+    default void testResolveIfLabelColumnRange() {
+        this.resolveIfLabelAndCheck(
+                SpreadsheetSelection.parseColumnRange("X:Y")
+        );
+    }
+
+    @Test
+    default void testResolveIfLabelRow() {
+        this.resolveIfLabelAndCheck(
+                SpreadsheetSelection.parseRow("2")
+        );
+    }
+
+    @Test
+    default void testResolveIfLabelRowRange() {
+        this.resolveIfLabelAndCheck(
+                SpreadsheetSelection.parseRowRange("3:4")
+        );
+    }
+
+    default void resolveIfLabelAndCheck(final SpreadsheetSelection selection) {
+        this.resolveIfLabelAndCheck(
+                selection,
+                selection
+        );
+    }
+
+    default void resolveIfLabelAndCheck(final SpreadsheetSelection selection,
+                                        final SpreadsheetSelection expected) {
+        this.resolveIfLabelAndCheck(
                 this.createContext(),
-                reference
-        );
-    }
-
-    default void resolveCellReferenceAndFail(final SpreadsheetEngineContext context,
-                                             final SpreadsheetExpressionReference reference) {
-        assertThrows(RuntimeException.class, () -> context.resolveCellReference(reference),
-                () -> "resolveCellReference " + reference
-        );
-    }
-
-    default void resolveCellReferenceAndFail(final SpreadsheetExpressionReference reference,
-                                             final String message) {
-        this.resolveCellReferenceAndFail(
-                this.createContext(),
-                reference,
-                message
-        );
-    }
-
-    default void resolveCellReferenceAndFail(final SpreadsheetEngineContext context,
-                                             final SpreadsheetExpressionReference reference,
-                                             final String message) {
-        final RuntimeException thrown = assertThrows(RuntimeException.class, () -> context.resolveCellReference(reference),
-                () -> "resolveCellReference " + reference
-        );
-        this.checkEquals(
-                message,
-                thrown.getMessage(),
-                () -> "resolveCellReference " + reference
-        );
-    }
-
-    default void resolveCellReferenceAndCheck(final SpreadsheetExpressionReference reference,
-                                              final SpreadsheetCellReference expected) {
-        this.resolveCellReferenceAndCheck(
-                this.createContext(),
-                reference,
+                selection,
                 expected
         );
     }
 
-    default void resolveCellReferenceAndCheck(final SpreadsheetEngineContext context,
-                                              final SpreadsheetExpressionReference reference,
-                                              final SpreadsheetCellReference expected) {
+    default void resolveIfLabelAndCheck(final SpreadsheetEngineContext context,
+                                        final SpreadsheetSelection selection,
+                                        final SpreadsheetSelection expected) {
         this.checkEquals(
                 expected,
-                context.resolveCellReference(reference),
-                () -> "resolveCellReference " + reference
+                context.resolveIfLabel(selection),
+                () -> "resolveIfLabel " + selection
         );
     }
 

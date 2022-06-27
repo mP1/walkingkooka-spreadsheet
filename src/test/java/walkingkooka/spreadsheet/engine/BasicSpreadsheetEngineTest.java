@@ -90,7 +90,6 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
-import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -10709,16 +10708,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return new FakeSpreadsheetEngineContext() {
 
             @Override
-            public SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference) {
-                if (reference.isCellReference()) {
-                    return (SpreadsheetCellReference) reference;
-                }
-                if (reference.isLabelName()) {
+            public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+                if (selection.isLabelName()) {
                     return this.storeRepository()
                             .labels()
-                            .cellReferenceOrFail(reference);
+                            .cellReferenceOrFail((SpreadsheetExpressionReference) selection);
                 }
-                throw new ExpressionEvaluationException("Unable to find " + reference);
+                return selection;
             }
 
             public SpreadsheetMetadata metadata() {
@@ -10862,7 +10858,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             private Function<ExpressionReference, Optional<Object>> references() {
                 return (r -> {
                     if (r instanceof SpreadsheetExpressionReference) {
-                        final SpreadsheetCellReference cell = this.resolveCellReference((SpreadsheetExpressionReference) r);
+                        final SpreadsheetCellReference cell = this.resolveIfLabel((SpreadsheetSelection) r).toCellOrFail();
                         final SpreadsheetDelta delta = engine.loadCell(
                                 cell,
                                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
