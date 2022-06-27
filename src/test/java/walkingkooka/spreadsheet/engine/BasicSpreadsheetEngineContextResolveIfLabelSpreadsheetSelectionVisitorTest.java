@@ -18,17 +18,17 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
-public final class BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitorTest implements SpreadsheetExpressionReferenceVisitorTesting<BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor> {
+public final class BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor> {
     @Override
-    public BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor(null);
+    public BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor createVisitor() {
+        return new BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor(null);
     }
 
     @Override
-    public Class<BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor> type() {
-        return BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor.class;
+    public Class<BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor> type() {
+        return BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor.class;
     }
 
     @Override

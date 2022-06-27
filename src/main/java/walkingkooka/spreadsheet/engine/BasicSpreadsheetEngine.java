@@ -1239,7 +1239,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
 
         // non frozen viewport
-        SpreadsheetCellReference nonFrozenHome = context.resolveCellReference(viewport.cellOrLabel());
+        SpreadsheetCellReference nonFrozenHome = context.resolveIfLabel(
+                viewport.cellOrLabel()
+        ).toCellOrFail();
         if (null != frozenColumns) {
             final SpreadsheetColumnReference right = frozenColumns.end();
             if (right.compareTo(nonFrozenHome.column()) >= 0) {
@@ -1605,7 +1607,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                                              final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        return context.resolveCellReferenceIfLabel(viewportSelection.selection())
+        return context.resolveIfLabel(viewportSelection.selection())
                 .isHidden(repository.columns()::isHidden, repository.rows()::isHidden) ?
                 SpreadsheetEngine.NO_VIEWPORT_SELECTION :
                 Optional.of(viewportSelection);

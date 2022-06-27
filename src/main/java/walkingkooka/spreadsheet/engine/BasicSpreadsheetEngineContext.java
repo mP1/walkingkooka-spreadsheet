@@ -37,8 +37,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
@@ -137,14 +136,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     private final SpreadsheetMetadata metadata;
 
-    // resolveCellReference.............................................................................................
+    // resolveIfLabel.............................................................................................
 
     @Override
-    public SpreadsheetCellReference resolveCellReference(final SpreadsheetExpressionReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        return BasicSpreadsheetEngineContextResolveCellReferenceSpreadsheetExpressionReferenceVisitor.resolveCellReference(
-                reference,
+    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+        return BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor.resolveIfLabel(
+                selection,
                 this.storeRepository()
                         .labels()
         );

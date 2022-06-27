@@ -198,33 +198,32 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    // resolveCellReference..............................................................................................
+    // resolveIfLabel..............................................................................................
 
     @Test
-    public void testResolveCellReferenceCellReference() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A1");
-        this.resolveCellReferenceAndCheck(
-                cell,
-                cell
+    public void testResolveIfLabelLabelUnknownFails() {
+        final RuntimeException thrown = assertThrows(
+                RuntimeException.class,
+                () -> this.createContext(
+                        SpreadsheetLabelStores.treeMap()
+                ).resolveIfLabel(SpreadsheetLabelName.labelName("UnknownLabel123"))
+        );
+        this.checkEquals(
+                "Unknown Label: UnknownLabel123",
+                thrown.getMessage(),
+                "message"
         );
     }
 
     @Test
-    public void testResolveCellReferenceLabelUnknownFails() {
-        this.resolveCellReferenceAndFail(
-                SpreadsheetLabelName.labelName("UnknownLabel")
-        );
-    }
-
-    @Test
-    public void testResolveCellReferenceLabel() {
+    public void testResolveIfLabelLabel() {
         final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("A1");
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("Label456");
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
         store.save(label.mapping(cell));
 
-        this.resolveCellReferenceAndCheck(
+        this.resolveIfLabelAndCheck(
                 this.createContext(store),
                 label,
                 cell
@@ -232,7 +231,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testResolveCellReferenceLabelToLabelToCell() {
+    public void testResolveIfLabelLabelToLabelToCell() {
         final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("A1");
         final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label111");
         final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label222");
@@ -241,7 +240,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         store.save(label1.mapping(label2));
         store.save(label2.mapping(cell));
 
-        this.resolveCellReferenceAndCheck(
+        this.resolveIfLabelAndCheck(
                 this.createContext(store),
                 label1,
                 cell
