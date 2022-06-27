@@ -103,7 +103,7 @@ final class GeneralSpreadsheetConverterSelectionStringConverter implements Conve
     }
 
     private static SpreadsheetCellReference cellRangeToCell(final SpreadsheetCellRange range) {
-        return range.toCell();
+        return range.toCellOrFail();
     }
 
     @Override

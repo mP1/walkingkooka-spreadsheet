@@ -31,16 +31,6 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
         super();
     }
 
-    @Override
-    public final SpreadsheetCellReference toCellOrFail() {
-        return this.toCell();
-    }
-
-    /**
-     * Converts the cell or range into a single {@link SpreadsheetCellReference}.
-     */
-    public abstract SpreadsheetCellReference toCell();
-
     /**
      * Converts this cell or range into a range. Cells will become a range of itself while range returns itself
      */
