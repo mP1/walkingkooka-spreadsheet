@@ -128,6 +128,11 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
                 this;
     }
 
+    @Override
+    public final SpreadsheetCellReference toCellOrFail() {
+        throw new UnsupportedOperationException();
+    }
+
     // Iterable.........................................................................................................
 
     @Override

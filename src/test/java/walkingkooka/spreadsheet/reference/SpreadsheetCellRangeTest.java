@@ -447,6 +447,18 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         );
     }
 
+    // toCellOrFail.....................................................................................................
+
+    @Test
+    public void testToCellOrFail() {
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:C3");
+
+        this.toCellOrFailAndCheck(
+                range,
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
     // test.............................................................................................................
 
     @Test
