@@ -46,6 +46,7 @@ public interface SpreadsheetEngine {
      * <li>If the cell is not found it will not be present in the resulting {@link SpreadsheetDelta}.</li>
      * <li>If parsing or evaluating the cell fails it will be present with an error.</li>
      * <li>Any additional cells that require recomputing because of the requested cell will also be returned.</li>
+     * <li>If the cell was not found and labels are requested {@link SpreadsheetDeltaProperties#LABELS} any labels will be returned.</li>
      * </ul>
      */
     SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,

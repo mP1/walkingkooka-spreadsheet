@@ -281,13 +281,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.checkEquals(Optional.empty(), context.storeRepository().cells().load(LABEL_CELL));
 
-        context.storeRepository()
+        final SpreadsheetLabelMapping labelMapping = context.storeRepository()
                 .labels()
                 .save(LABEL.mapping(LABEL_CELL));
 
         this.checkEquals(
                 SpreadsheetDelta.EMPTY
-                        .setCells(SpreadsheetDelta.NO_CELLS),
+                        .setCells(SpreadsheetDelta.NO_CELLS)
+                        .setLabels(
+                                Sets.of(labelMapping)
+                        ),
                 engine.loadCell(
                         LABEL_CELL,
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,

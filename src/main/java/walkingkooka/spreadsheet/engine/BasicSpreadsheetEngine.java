@@ -95,6 +95,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     /**
      * Loads the cell honouring the {@link SpreadsheetEngineEvaluation} which may result in loading and evaluating other cells.
+     * Note if the cell was not found and labels are requested the labels will be loaded and present in the {@link SpreadsheetDelta}.
      */
     @Override
     public SpreadsheetDelta loadCell(final SpreadsheetCellReference reference,
@@ -107,19 +108,36 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, deltaProperties, context)) {
-            this.loadCell0(reference, evaluation, changes, context);
-
-            return this.prepareDelta(
+            final boolean loaded = this.loadCell0(
+                    reference,
+                    evaluation,
                     changes,
                     context
             );
+
+            SpreadsheetDelta delta = this.prepareDelta(
+                    changes,
+                    context
+            );
+
+            // load any labels for the requested cell when it was NOT found and labels are requested.
+            if (deltaProperties.contains(SpreadsheetDeltaProperties.LABELS) && !loaded) {
+                delta = delta.setLabels(
+                        context.storeRepository().labels().labels(reference)
+                );
+            }
+
+            return delta;
         }
     }
 
-    void loadCell0(final SpreadsheetCellReference reference,
-                   final SpreadsheetEngineEvaluation evaluation,
-                   final BasicSpreadsheetEngineChanges changes,
-                   final SpreadsheetEngineContext context) {
+    /**
+     * Loads the given cell, returning true if it was successful.
+     */
+    boolean loadCell0(final SpreadsheetCellReference reference,
+                      final SpreadsheetEngineEvaluation evaluation,
+                      final BasicSpreadsheetEngineChanges changes,
+                      final SpreadsheetEngineContext context) {
         final Optional<SpreadsheetCell> loaded = context.storeRepository()
                 .cells()
                 .load(reference);
@@ -128,6 +146,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
             return evaluated;
         });
+
+        return loaded.isPresent();
     }
 
     // SAVE CELL........................................................................................................
