@@ -108,6 +108,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, deltaProperties, context)) {
             this.loadCell0(reference, evaluation, changes, context);
+
             return this.prepareDelta(
                     changes,
                     context
@@ -127,7 +128,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
             return evaluated;
         });
-        changes.refreshUpdated();
     }
 
     // SAVE CELL........................................................................................................
@@ -142,10 +142,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
-            this.maybeParseAndEvaluateAndFormat(cell,
+            this.maybeParseAndEvaluateAndFormat(
+                    cell,
                     SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                    context);
-            changes.refreshUpdated();
+                    context
+            );
             return this.prepareDelta(
                     changes,
                     context
@@ -182,7 +183,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
                 changes.onCellSavedBatch(saved);
             }
-            changes.refreshUpdated();
 
             return this.prepareDelta(
                     changes,
@@ -206,7 +206,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context.storeRepository()
                     .cells()
                     .delete(reference);
-            changes.refreshUpdated();
             return this.prepareDelta(changes, context);
         }
     }
@@ -250,7 +249,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
             }
 
-            changes.refreshUpdated();
             return this.prepareDelta(changes, context);
         }
     }
@@ -295,7 +293,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
             }
 
-            changes.refreshUpdated();
             return this.prepareDelta(changes, context);
         }
     }
@@ -311,9 +308,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn.with(column.value(), count, this, context)
-                    .delete();
-            changes.refreshUpdated();
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn.with(
+                    column.value(),
+                    count,
+                    this,
+                    context
+            ).delete();
+
             return this.prepareDelta(changes, context);
         }
     }
@@ -327,9 +328,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow.with(row.value(), count, this, context)
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow.with(
+                            row.value(),
+                            count,
+                            this,
+                            context
+                    )
                     .delete();
-            changes.refreshUpdated();
+
             return this.prepareDelta(changes, context);
         }
     }
@@ -343,11 +349,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn.with(column.value(), count,
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn.with(
+                            column.value(),
+                            count,
                             this,
-                            context)
+                            context
+                    )
                     .insert();
-            changes.refreshUpdated();
+
             return this.prepareDelta(changes, context);
         }
     }
@@ -361,9 +370,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow.with(row.value(), count, this, context)
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow.with(
+                            row.value(),
+                            count,
+                            this,
+                            context
+                    )
                     .insert();
-            changes.refreshUpdated();
+
             return this.prepareDelta(changes, context);
         }
     }
@@ -403,7 +417,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         );
             }
 
-            changes.refreshUpdated();
             return this.prepareDelta(
                     changes,
                     ranges,
@@ -423,8 +436,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
-            BasicSpreadsheetEngineFillCells.execute(cells, from, to, this, context);
-            changes.refreshUpdated();
+            BasicSpreadsheetEngineFillCells.execute(
+                    cells,
+                    from,
+                    to,
+                    this,
+                    context
+            );
+
             return this.prepareDelta(changes, context);
         }
     }
@@ -434,6 +453,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
                                           final SpreadsheetEngineContext context) {
+        changes.refreshUpdated();
+
         return this.prepareDelta(
                 changes,
                 changes.deletedAndUpdatedCellRange()
@@ -449,6 +470,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
                                           final Set<SpreadsheetCellRange> window,
                                           final SpreadsheetEngineContext context) {
+        changes.refreshUpdated();
+
         final Set<SpreadsheetDeltaProperties> deltaProperties = changes.deltaProperties;
 
         final boolean addCells = deltaProperties.contains(SpreadsheetDeltaProperties.CELLS);
@@ -738,7 +761,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context.storeRepository()
                     .labels()
                     .save(mapping);
-            changes.refreshUpdated();
+
             return this.prepareDelta(changes, context);
         }
     }
@@ -753,7 +776,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context.storeRepository()
                     .labels()
                     .delete(label);
-            changes.refreshUpdated();
+
             return this.prepareDelta(changes, context);
         }
     }
