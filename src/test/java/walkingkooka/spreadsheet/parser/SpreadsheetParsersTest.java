@@ -106,8 +106,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 testName.endsWith("Double()") ?
                         ExpressionNumberKind.DOUBLE :
                         null;
-
-        System.out.println(this.expressionNumberKind + " " + testInfo.getDisplayName());
     }
 
     // apostrophe string values.........................................................................................
