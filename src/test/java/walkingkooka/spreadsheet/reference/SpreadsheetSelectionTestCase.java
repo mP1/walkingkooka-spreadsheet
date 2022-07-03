@@ -223,13 +223,13 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             assertSame(
                     expected,
                     selection.toRelative(),
-                    () -> selection.toString()
+                    selection::toString
             );
         } else {
             this.checkEquals(
                     expected,
                     selection.toRelative(),
-                    () -> selection.toString()
+                    selection::toString
             );
         }
     }
@@ -533,7 +533,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                              final SpreadsheetRowStore rowStore,
                              final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(s -> s.simplify()),
+                expected.map(SpreadsheetSelection::simplify),
                 selection.left(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate left"
         );
@@ -792,7 +792,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                              final SpreadsheetRowStore rowStore,
                              final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(s -> s.simplify()),
+                expected.map(SpreadsheetSelection::simplify),
                 selection.up(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate up"
         );
@@ -1051,7 +1051,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                             final SpreadsheetRowStore rowStore,
                             final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(s -> s.simplify()),
+                expected.map(SpreadsheetSelection::simplify),
                 selection.right(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate right"
         );
@@ -1309,7 +1309,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                              final SpreadsheetRowStore rowStore,
                              final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(s -> s.simplify()),
+                expected.map(SpreadsheetSelection::simplify),
                 selection.down(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate down"
         );
@@ -1394,7 +1394,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             );
         }
         this.checkEquals(
-                expected.map(s -> s.simplify()),
+                expected.map(SpreadsheetSelection::simplify),
                 selection.extendRange(Cast.to(moved), anchor),
                 () -> selection + " extendRange " + moved + " " + anchor
         );

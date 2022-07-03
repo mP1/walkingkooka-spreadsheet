@@ -224,7 +224,7 @@ final class FormatPatternConverterSpreadsheetValueVisitor extends SpreadsheetVal
                                         SpreadsheetFormatters.fake(), // should never be called
                                         this.context
                                 )
-                        ).map(t -> t.text())
+                        ).map(SpreadsheetText::text)
                         .orElse("")
         );
     }

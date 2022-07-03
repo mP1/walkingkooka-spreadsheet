@@ -1678,7 +1678,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testParserMissingProperties() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateParsePatterns("yyyy/mm/dd"));
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> metadata.parser());
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                metadata::parser
+        );
         this.checkEquals("Required properties \"date-time-parse-patterns\", \"number-parse-patterns\", \"time-parse-patterns\" missing.", thrown.getMessage());
     }
 

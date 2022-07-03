@@ -59,7 +59,11 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern
         final String formatted = pattern.formatter()
                 .format(number, spreadsheetFormatterContext()).get().text();
 
-        this.checkEquals(expected, formatted, () -> pattern.toString());
+        this.checkEquals(
+                expected,
+                formatted,
+                pattern::toString
+        );
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {

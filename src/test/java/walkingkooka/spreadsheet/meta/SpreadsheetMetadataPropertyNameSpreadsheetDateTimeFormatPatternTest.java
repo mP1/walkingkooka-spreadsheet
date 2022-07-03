@@ -57,7 +57,11 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPatte
         final LocalDateTime date = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
         final String formatted = pattern.formatter()
                 .format(date, spreadsheetFormatterContext()).get().text();
-        this.checkEquals("Friday, December 31, 1999 at 12:58:59 PM", formatted, () -> pattern.toString());
+        this.checkEquals(
+                "Friday, December 31, 1999 at 12:58:59 PM",
+                formatted,
+                pattern::toString
+        );
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {

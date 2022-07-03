@@ -104,8 +104,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
     @Test
     public void testExpressionNumberContextAllRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
-                .expressionNumberContext());
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                SpreadsheetMetadata.EMPTY::expressionNumberContext
+        );
         this.checkEquals("Required properties \"expression-number-kind\", \"precision\", \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
@@ -117,7 +119,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testJsonNodeUnmarshallContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.jsonNodeUnmarshallContext()
+                SpreadsheetMetadata.EMPTY::jsonNodeUnmarshallContext
         );
         this.checkEquals("Required properties \"expression-number-kind\", \"precision\", \"rounding-mode\" missing.",
                 thrown.getMessage(),
@@ -128,8 +130,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
     @Test
     public void testParserAllRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
-                .parser());
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                SpreadsheetMetadata.EMPTY::parser
+        );
         this.checkEquals("Required properties \"date-parse-patterns\", \"date-time-parse-patterns\", \"number-parse-patterns\", \"time-parse-patterns\" missing.",
                 thrown.getMessage(),
                 "message");

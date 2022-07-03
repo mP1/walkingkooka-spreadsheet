@@ -38,7 +38,7 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
      * This means a map with a key of $A will match a get with just "A" and return the value.
      */
     public final static Comparator<SpreadsheetColumnOrRowReference> COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR =
-            (l, r) -> l.compareSpreadsheetColumnOrRowReference(r);
+            SpreadsheetColumnOrRowReference::compareSpreadsheetColumnOrRowReference;
 
     /**
      * Package private to limit sub classing.
