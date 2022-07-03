@@ -60,7 +60,11 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
         final String formatted = pattern.formatter()
                 .format(time, spreadsheetFormatterContext()).get().text();
 
-        this.checkEquals("12:58:59 PM", formatted, () -> pattern.toString());
+        this.checkEquals(
+                "12:58:59 PM",
+                formatted,
+                pattern::toString
+        );
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {

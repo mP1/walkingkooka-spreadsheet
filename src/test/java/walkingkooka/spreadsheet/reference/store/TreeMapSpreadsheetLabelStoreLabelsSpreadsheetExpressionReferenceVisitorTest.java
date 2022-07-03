@@ -50,7 +50,7 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionRefere
         );
 
         mappings.values()
-                .forEach(m -> visitor.acceptAndUpdateLabels(m));
+                .forEach(visitor::acceptAndUpdateLabels);
 
         this.toStringAndCheck(
                 visitor,

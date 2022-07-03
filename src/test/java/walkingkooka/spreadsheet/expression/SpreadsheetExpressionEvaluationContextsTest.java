@@ -87,13 +87,13 @@ public final class SpreadsheetExpressionEvaluationContextsTest implements ClassT
         this.checkEquals(
                 expected,
                 created.getMessage(),
-                () -> created.getMessage()
+                created::getMessage
         );
 
         assertSame(
                 SpreadsheetErrorKind.REF,
                 created.spreadsheetErrorKind(),
-                () -> created.getMessage()
+                created::getMessage
         );
     }
 

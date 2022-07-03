@@ -41,7 +41,13 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTe
                         MathContext.DECIMAL32
                 )
                 .unmarshall(resource, SpreadsheetMetadata.class);
-        this.checkEquals(Converters.EXCEL_1900_DATE_SYSTEM_OFFSET, metadata.getOrFail(SpreadsheetMetadataPropertyName.DATETIME_OFFSET), () -> resource.toString());
+        this.checkEquals(
+                Converters.EXCEL_1900_DATE_SYSTEM_OFFSET,
+                metadata.getOrFail(
+                        SpreadsheetMetadataPropertyName.DATETIME_OFFSET
+                ),
+                resource::toString
+        );
     }
 
     @Override

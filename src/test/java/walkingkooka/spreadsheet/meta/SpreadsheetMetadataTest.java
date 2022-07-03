@@ -157,7 +157,10 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testLoadFromLocaleNullFails() {
-        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> SpreadsheetMetadata.EMPTY.loadFromLocale());
+        assertThrows(
+                SpreadsheetMetadataPropertyValueException.class,
+                SpreadsheetMetadata.EMPTY::loadFromLocale
+        );
     }
 
     @Test

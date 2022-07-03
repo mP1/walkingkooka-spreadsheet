@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -166,7 +167,7 @@ public final class SpreadsheetParsePatterns2ParserStringTest extends Spreadsheet
     @Override
     public SpreadsheetParsePatterns2ParserString createParser() {
         return SpreadsheetParsePatterns2ParserString.stringChoices(
-                (c) -> c.monthNames(),
+                DateTimeContext::monthNames,
                 SpreadsheetParserToken::monthName,
                 PATTERN
         );

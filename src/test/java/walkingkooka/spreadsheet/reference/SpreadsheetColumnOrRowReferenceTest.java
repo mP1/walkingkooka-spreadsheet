@@ -110,13 +110,13 @@ public final class SpreadsheetColumnOrRowReferenceTest implements ClassTesting<S
         this.checkEquals(
                 a,
                 referenceToValue.get(A.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)),
-                () -> referenceToValue.toString()
+                referenceToValue::toString
         );
 
         this.checkEquals(
                 a,
                 referenceToValue.get(A.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)),
-                () -> referenceToValue.toString()
+                referenceToValue::toString
         );
     }
 
@@ -133,13 +133,13 @@ public final class SpreadsheetColumnOrRowReferenceTest implements ClassTesting<S
         this.checkEquals(
                 row1,
                 referenceToValue.get(ROW1.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)),
-                () -> referenceToValue.toString()
+                referenceToValue::toString
         );
 
         this.checkEquals(
                 row1,
                 referenceToValue.get(ROW1.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)),
-                () -> referenceToValue.toString()
+                referenceToValue::toString
         );
     }
 

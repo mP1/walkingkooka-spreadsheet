@@ -192,7 +192,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
                                                       final SpreadsheetRowStore rowStore) {
         return this.extendColumn(
                 this.isSingle() ? SpreadsheetViewportSelectionAnchor.RIGHT : anchor,
-                (c) -> columnStore.leftSkipHidden(c)
+                columnStore::leftSkipHidden
         );
     }
 
@@ -202,7 +202,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
                                                        final SpreadsheetRowStore rowStore) {
         return this.extendColumn(
                 this.isSingle() ? SpreadsheetViewportSelectionAnchor.LEFT : anchor,
-                (c) -> columnStore.rightSkipHidden(c)
+                columnStore::rightSkipHidden
         );
     }
 
