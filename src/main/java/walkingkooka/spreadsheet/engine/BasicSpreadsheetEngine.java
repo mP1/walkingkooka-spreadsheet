@@ -82,7 +82,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Singleton
      */
-    static BasicSpreadsheetEngine INSTANCE = new BasicSpreadsheetEngine();
+    final static BasicSpreadsheetEngine INSTANCE = new BasicSpreadsheetEngine();
 
     /**
      * Private ctor.
