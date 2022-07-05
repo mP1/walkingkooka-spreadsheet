@@ -1030,6 +1030,51 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testSaveCellEmptyFormulaTwice() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, "");
+        this.saveCellAndCheck(
+                engine,
+                a1,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1Formatted)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        )
+        );
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+
+        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(cellReferenceStore, 0);
+
+        this.saveCellAndCheck(
+                engine,
+                a1,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1Formatted)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        )
+        );
+    }
+
+    @Test
     public void testSaveCellInvalidDate() {
         this.saveCellWithErrorAndCheck(
                 "1999/99/31",
@@ -1432,6 +1477,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b2Formatted,
                 context,
                 SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        b2Formatted
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        )
         );
     }
 
@@ -1842,6 +1896,45 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowHeights(
                                 rowHeights("1")
                         )
+        );
+
+        this.loadCellStoreAndCheck(context.storeRepository().cells(), a1Formatted);
+    }
+
+    @Test
+    public void testSaveCellTwice() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "'Hello");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+                a1,
+                "Hello"
+        );
+
+        final SpreadsheetDelta saved = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                a1Formatted
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                );
+
+        this.saveCellAndCheck(
+                engine,
+                a1,
+                context,
+                saved
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1,
+                context,
+                saved
         );
 
         this.loadCellStoreAndCheck(context.storeRepository().cells(), a1Formatted);
