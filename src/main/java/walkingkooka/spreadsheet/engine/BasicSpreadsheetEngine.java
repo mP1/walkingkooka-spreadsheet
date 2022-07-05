@@ -162,11 +162,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
-            this.maybeParseAndEvaluateAndFormat(
+            final SpreadsheetCell saved = this.maybeParseAndEvaluateAndFormat(
                     cell,
                     SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                     context
             );
+            changes.onCellSavedImmediate(saved);
             return this.prepareDelta(
                     changes,
                     context
