@@ -698,10 +698,19 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     // only called by SpreadsheetViewportSelection
     final String treeString() {
-        return this.printTreeLabel() + " " + this;
+        return this.selectionTypeName() + " " + this;
     }
 
-    abstract String printTreeLabel();
+    /**
+     * Getter that returns the selection tyoe name, a unique selection type name identifier in kebab-case form.
+     * <br>
+     * <pre>
+     * {@link SpreadsheetCellReference} returns <pre>cell</pre>
+     * {@link SpreadsheetCellRange} returns <pre>cell-range</pre>
+     * {@link SpreadsheetColumnReference} returns <pre>column</pre>
+     * </pre>
+     */
+    public abstract String selectionTypeName();
 
     // Object...........................................................................................................
 

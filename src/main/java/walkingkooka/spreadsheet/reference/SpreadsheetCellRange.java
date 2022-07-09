@@ -576,7 +576,7 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     // TreePrintable....................................................................................................
 
     @Override
-    String printTreeLabel() {
+    public String selectionTypeName() {
         return "cell-range";
     }
 

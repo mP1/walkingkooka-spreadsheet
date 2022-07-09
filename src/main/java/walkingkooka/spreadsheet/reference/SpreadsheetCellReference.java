@@ -323,7 +323,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     // TreePrintable....................................................................................................
 
     @Override
-    String printTreeLabel() {
+    public String selectionTypeName() {
         return "cell";
     }
 

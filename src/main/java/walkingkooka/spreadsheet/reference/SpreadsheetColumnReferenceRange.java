@@ -271,7 +271,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     // TreePrintable....................................................................................................
 
     @Override
-    String printTreeLabel() {
+    public String selectionTypeName() {
         return "column-range";
     }
 

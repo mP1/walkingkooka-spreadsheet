@@ -223,7 +223,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     // TreePrintable....................................................................................................
 
     @Override
-    String printTreeLabel() {
+    public String selectionTypeName() {
         return "column";
     }
 
