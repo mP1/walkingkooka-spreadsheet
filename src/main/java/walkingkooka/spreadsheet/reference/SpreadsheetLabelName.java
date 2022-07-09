@@ -176,7 +176,7 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
     // TreePrintable....................................................................................................
 
     @Override
-    String printTreeLabel() {
+    public String selectionTypeName() {
         return "label";
     }
 

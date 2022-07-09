@@ -119,7 +119,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     // TreePrintable....................................................................................................
 
     @Override
-    String printTreeLabel() {
+    public String selectionTypeName() {
         return "row-range";
     }
 
