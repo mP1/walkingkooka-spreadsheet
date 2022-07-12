@@ -129,7 +129,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     private SpreadsheetColumnReference columnReference() {
-        return SpreadsheetColumnReference.parseColumn("A");
+        return SpreadsheetSelection.parseColumn("A");
     }
 
     // range............................................................................................................
@@ -249,8 +249,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     @Test
     public void testAdd() {
         this.checkEquals(
-                SpreadsheetRowReference.parseRow("9"),
-                SpreadsheetRowReference.parseRow("7").add(2)
+                SpreadsheetSelection.parseRow("9"),
+                SpreadsheetSelection.parseRow("7").add(2)
         );
     }
 
@@ -259,8 +259,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     @Test
     public void testAddSaturated() {
         this.checkEquals(
-                SpreadsheetRowReference.parseRow("9"),
-                SpreadsheetRowReference.parseRow("7").addSaturated(2)
+                SpreadsheetSelection.parseRow("9"),
+                SpreadsheetSelection.parseRow("7").addSaturated(2)
         );
     }
 
@@ -337,8 +337,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     private void maxAndCheck(final String reference,
                              final String other,
                              final boolean RIGHT) {
-        this.maxAndCheck(SpreadsheetRowReference.parseRow(reference),
-                SpreadsheetRowReference.parseRow(other),
+        this.maxAndCheck(SpreadsheetSelection.parseRow(reference),
+                SpreadsheetSelection.parseRow(other),
                 RIGHT);
     }
 
@@ -420,8 +420,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     private void minAndCheck(final String reference,
                              final String other,
                              final boolean left) {
-        this.minAndCheck(SpreadsheetRowReference.parseRow(reference),
-                SpreadsheetRowReference.parseRow(other),
+        this.minAndCheck(SpreadsheetSelection.parseRow(reference),
+                SpreadsheetSelection.parseRow(other),
                 left);
     }
 

@@ -40,7 +40,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     @Test
     public void testJsonNodeUnmarshallWithLabel() {
         final String label = "label123";
-        this.checkEquals(SpreadsheetExpressionReference.labelName(label),
+        this.checkEquals(SpreadsheetSelection.labelName(label),
                 SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(label), this.unmarshallContext())
         );
     }
@@ -52,7 +52,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
 
     @Test
     public void testJsonRoundtripLabel() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetExpressionReference.labelName("Label123"));
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetSelection.labelName("Label123"));
     }
 
     @Test

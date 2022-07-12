@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public final class SpreadsheetLabelNameParserTest extends SpreadsheetParserTestCase<SpreadsheetLabelNameParser, SpreadsheetLabelNameParserToken> {
 
@@ -89,11 +89,17 @@ public final class SpreadsheetLabelNameParserTest extends SpreadsheetParserTestC
         this.parseAndCheck2(text, "");
     }
 
-    private void parseAndCheck2(final String text, final String textAfter) {
-        this.parseAndCheck(text + textAfter,
-                SpreadsheetLabelNameParserToken.with(SpreadsheetExpressionReference.labelName(text), text),
+    private void parseAndCheck2(final String text,
+                                final String textAfter) {
+        this.parseAndCheck(
+                text + textAfter,
+                SpreadsheetLabelNameParserToken.with(
+                        SpreadsheetSelection.labelName(text),
+                        text
+                ),
                 text,
-                textAfter);
+                textAfter
+        );
     }
 
     @Override

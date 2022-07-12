@@ -18,10 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
@@ -36,7 +33,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     @Test
     public void testCheckCellRange() {
         this.checkValue(
-                SpreadsheetCellRange.parseCellRange("A1:B2")
+                SpreadsheetSelection.parseCellRange("A1:B2")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
         );
     }
@@ -44,7 +41,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     @Test
     public void testCheckColumn() {
         this.checkValue(
-                SpreadsheetColumnReference.parseColumn("AB")
+                SpreadsheetSelection.parseColumn("AB")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
@@ -60,7 +57,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     @Test
     public void testCheckRow() {
         this.checkValue(
-                SpreadsheetRowReference.parseRow("1234")
+                SpreadsheetSelection.parseRow("1234")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }

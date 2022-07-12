@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -36,8 +35,8 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionRefere
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
 
-        final SpreadsheetLabelName label1 = SpreadsheetExpressionReference.labelName("ABCDEF123");
-        final SpreadsheetLabelName label2 = SpreadsheetExpressionReference.labelName("DEFGHI456");
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("ABCDEF123");
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("DEFGHI456");
 
         final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = Maps.of(
                 label1, label1.mapping(a1),

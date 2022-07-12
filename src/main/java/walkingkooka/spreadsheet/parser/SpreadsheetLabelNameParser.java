@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.Parser;
@@ -58,7 +58,12 @@ final class SpreadsheetLabelNameParser implements Parser<SpreadsheetParserContex
     private Optional<ParserToken> token(final ParserToken stringParserToken, final TextCursorSavePoint save) {
         final String text = stringParserToken.text();
         return text.length() < SpreadsheetLabelName.MAX_LENGTH && !SpreadsheetLabelName.isCellReferenceText(text) ?
-                Optional.of(SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName(text), text)) :
+                Optional.of(
+                        SpreadsheetParserToken.labelName(
+                                SpreadsheetSelection.labelName(text),
+                                text
+                        )
+                ) :
                 restoreAndNothing(save);
     }
 

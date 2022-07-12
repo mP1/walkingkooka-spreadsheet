@@ -52,7 +52,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
         final Set<SpreadsheetLabelMapping> different = Sets.of(
                 SpreadsheetLabelName.labelName("Different")
-                        .mapping(SpreadsheetCellReference.parseCell("A3"))
+                        .mapping(SpreadsheetSelection.parseCell("A3"))
         );
 
         final SpreadsheetDelta after = before.setLabels(different);
@@ -65,7 +65,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testSetLabelsOutsideWindowFiltered() {
         final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
         final Set<SpreadsheetLabelMapping> different = Sets.of(
-                SpreadsheetLabelName.labelName("Different").mapping(SpreadsheetCellReference.parseCell("Z99"))
+                SpreadsheetLabelName.labelName("Different").mapping(SpreadsheetSelection.parseCell("Z99"))
         );
 
         final SpreadsheetDelta after = before.setLabels(different);
@@ -81,13 +81,13 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         final SpreadsheetCellReference a1 = this.a1().reference();
         final SpreadsheetLabelName kept = SpreadsheetLabelName.labelName("Kept");
 
-        final SpreadsheetCellReference a3 = SpreadsheetCellReference.parseCell("A3");
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("A3");
         final SpreadsheetLabelName kept3 = SpreadsheetLabelName.labelName("Kept2");
 
         final Set<SpreadsheetLabelMapping> different = Sets.of(
                 kept.mapping(a1),
                 kept3.mapping(a3),
-                SpreadsheetLabelName.labelName("Lost").mapping(SpreadsheetCellReference.parseCell("Z99"))
+                SpreadsheetLabelName.labelName("Lost").mapping(SpreadsheetSelection.parseCell("Z99"))
         );
 
         final SpreadsheetDelta after = before.setLabels(different);

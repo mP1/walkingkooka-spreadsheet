@@ -24,7 +24,6 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
@@ -144,7 +143,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
 
     @Test
     public void testEqualsDifferentCellReference() {
-        this.checkNotEquals(SpreadsheetViewport.with(SpreadsheetCellReference.parseCell("a1"), WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetViewport.with(SpreadsheetSelection.parseCell("a1"), WIDTH, HEIGHT));
     }
 
     @Test
@@ -279,7 +278,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
         this.unmarshallAndCheck(
                 JsonNode.string("$B$9:30:40"),
                 SpreadsheetViewport.with(
-                        SpreadsheetCellReference.parseCell("$B$9"),
+                        SpreadsheetSelection.parseCell("$B$9"),
                         30,
                         40
                 )
@@ -373,11 +372,11 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     //helper............................................................................................................
 
     private SpreadsheetCellReference reference() {
-        return SpreadsheetCellReference.parseCell("B9");
+        return SpreadsheetSelection.parseCell("B9");
     }
 
     private SpreadsheetLabelName label() {
-        return SpreadsheetExpressionReference.labelName("Label123");
+        return SpreadsheetSelection.labelName("Label123");
     }
 
     private void check(final SpreadsheetViewport viewport) {

@@ -206,7 +206,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static char VALUE_SEPARATOR = ';';
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.labelName("Label123");
-    private final static SpreadsheetCellReference LABEL_CELL = SpreadsheetCellReference.parseCell("Z99");
+    private final static SpreadsheetCellReference LABEL_CELL = SpreadsheetSelection.parseCell("Z99");
 
     private final static double COLUMN_WIDTH = 50;
 
@@ -258,7 +258,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCell("K99");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("K99");
         this.checkEquals(Optional.empty(), context.storeRepository().cells().load(reference));
 
         this.checkEquals(
@@ -1339,7 +1339,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName unknown = SpreadsheetExpressionReference.labelName("LABELXYZ");
+        final SpreadsheetLabelName unknown = SpreadsheetSelection.labelName("LABELXYZ");
 
         final SpreadsheetCell a1 = this.cell("a1", "=1+" + unknown);
         final SpreadsheetCell a1Formatted = this.formattedCellWithError(
@@ -1384,7 +1384,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1 = this.cell("$A$1", "=1+2");
         engine.saveCell(a1, context);
 
-        final SpreadsheetCellReference a1Reference = SpreadsheetCellReference.parseCell("$A$1");
+        final SpreadsheetCellReference a1Reference = SpreadsheetSelection.parseCell("$A$1");
         final SpreadsheetCell b2 = this.cell("$B$2", "=5+" + a1Reference);
 
         this.saveCellAndCheck(
@@ -1494,7 +1494,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference b2Reference = SpreadsheetCellReference.parseCell("$B$2");
+        final SpreadsheetCellReference b2Reference = SpreadsheetSelection.parseCell("$B$2");
         final SpreadsheetCell a1 = this.cell("$A$1", "=" + b2Reference + "+5");
         engine.saveCell(a1, context);
 
@@ -1533,7 +1533,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         context.storeRepository()
                 .labels()
-                .save(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("LABELA1"), this.cellReference("A1")));
+                .save(SpreadsheetLabelMapping.with(SpreadsheetSelection.labelName("LABELA1"), this.cellReference("A1")));
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=10");
         engine.saveCell(a1, context);
@@ -1567,7 +1567,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCell b2 = this.cell("$B$2", "=5");
 
-        final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
+        final SpreadsheetLabelName labelB2 = SpreadsheetSelection.labelName("LABELB2");
         labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=10+" + labelB2);
@@ -1654,10 +1654,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelStore labelStore = repository.labels();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
-        final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
+        final SpreadsheetLabelName labelB2 = SpreadsheetSelection.labelName("LABELB2");
         labelStore.save(SpreadsheetLabelMapping.with(labelB2, this.cellReference("B2")));
 
-        final SpreadsheetLabelName labelD4 = SpreadsheetExpressionReference.labelName("LABELD4");
+        final SpreadsheetLabelName labelD4 = SpreadsheetSelection.labelName("LABELD4");
         labelStore.save(SpreadsheetLabelMapping.with(labelD4, this.cellReference("D4")));
 
         final SpreadsheetCell d4 = this.cell("$D$4", "=20");
@@ -1703,11 +1703,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelStore labelStore = repository.labels();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
-        final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
+        final SpreadsheetLabelName labelB2 = SpreadsheetSelection.labelName("LABELB2");
         final SpreadsheetCellReference b2Reference = this.cellReference("B2");
         labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2Reference));
 
-        final SpreadsheetLabelName labelD4 = SpreadsheetExpressionReference.labelName("LABELD4");
+        final SpreadsheetLabelName labelD4 = SpreadsheetSelection.labelName("LABELD4");
         labelStore.save(SpreadsheetLabelMapping.with(labelD4, this.cellReference("D4")));
 
         final SpreadsheetCell d4 = this.cell("$D$4", "=20");
@@ -1718,7 +1718,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCell(this.cell("$A$1", "=10+" + labelB2 + "+C2"), context);
 
-        final SpreadsheetCellReference e5Reference = SpreadsheetCellReference.parseCell("$E$5");
+        final SpreadsheetCellReference e5Reference = SpreadsheetSelection.parseCell("$E$5");
         final SpreadsheetCell a1 = this.cell("$A$1", "=40+" + labelD4 + "+" + e5Reference);
         this.saveCellAndCheck(
                 engine,
@@ -2224,7 +2224,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testDeleteCellWithCellReferrers() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
-        final SpreadsheetCellReference b2Reference = SpreadsheetCellReference.parseCell("$B$2");
+        final SpreadsheetCellReference b2Reference = SpreadsheetSelection.parseCell("$B$2");
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=1+" + b2Reference);
         engine.saveCell(a1, context);
@@ -2312,7 +2312,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
-        final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
+        final SpreadsheetLabelName labelB2 = SpreadsheetSelection.labelName("LABELB2");
         final SpreadsheetCell b2 = this.cell("$B$2", "=20");
         labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
 
@@ -2353,7 +2353,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
-        final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
+        final SpreadsheetLabelName labelB2 = SpreadsheetSelection.labelName("LABELB2");
         final SpreadsheetCell b2 = this.cell("$B$2", "=20");
         final SpreadsheetLabelMapping labelMapping = SpreadsheetLabelMapping.with(
                 labelB2,
@@ -2961,7 +2961,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetCellReference.parseCell("$N$10"))
+                                        LABEL.mapping(SpreadsheetSelection.parseCell("$N$10"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d, e)
@@ -3589,7 +3589,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.formattedCellWithValue(b.addRow(-count), "=2+0", number(2 + 0)))
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetCellReference.parseCell("$A$4"))
+                                        LABEL.mapping(SpreadsheetSelection.parseCell("$A$4"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -4060,7 +4060,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setLabels(
                                 Sets.of(
                                         LABEL.mapping(
-                                                SpreadsheetCellReference.parseCellRange("$A$10:$A$15")
+                                                SpreadsheetSelection.parseCellRange("$A$10:$A$15")
                                         )
                                 )
                         ).setDeletedCells(
@@ -4461,7 +4461,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetCellReference.parseCell("$C$1"))
+                                        LABEL.mapping(SpreadsheetSelection.parseCell("$C$1"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -4924,7 +4924,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setLabels(
                                 Sets.of(
                                         LABEL.mapping(
-                                                SpreadsheetCellReference.parseCellRange("$J$1:$O$1")
+                                                SpreadsheetSelection.parseCellRange("$J$1:$O$1")
                                         )
                                 )
                         ).setDeletedCells(
@@ -5265,7 +5265,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.mapping(SpreadsheetCellReference.parseCell("$O$9"))
+                                        LABEL.mapping(SpreadsheetSelection.parseCell("$O$9"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b, d)
@@ -5401,7 +5401,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setLabels(
                                 Sets.of(
                                         LABEL.mapping(
-                                                SpreadsheetCellReference.parseCellRange("$P$1:$U$1")
+                                                SpreadsheetSelection.parseCellRange("$P$1:$U$1")
                                         )
                                 )
                         ).setDeletedCells(
@@ -6530,7 +6530,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetColumnStore columnStore = context.storeRepository()
                 .columns();
 
-        final SpreadsheetCellReference c3 = SpreadsheetCellReference.parseCell("C3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
         final SpreadsheetColumn c = c3.column()
                 .column();
 
@@ -6569,7 +6569,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelStore labelStore = context.storeRepository()
                 .labels();
 
-        final SpreadsheetCellReference b2 = SpreadsheetCellReference.parseCell("C3");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("C3");
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelC3");
 
         labelStore.save(label.mapping(b2));
@@ -6601,7 +6601,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRowStore rowStore = context.storeRepository()
                 .rows();
 
-        final SpreadsheetCellReference c3 = SpreadsheetCellReference.parseCell("C3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
         final SpreadsheetRow c = c3.row()
                 .row();
 
@@ -6878,7 +6878,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels();
 
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelC3");
-        final SpreadsheetCellReference c3 = SpreadsheetCellReference.parseCell("c3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
         final SpreadsheetLabelMapping mapping = labelStore.save(label.mapping(c3));
 
         final Set<SpreadsheetCellRange> range = SpreadsheetSelection.parseWindow("b2:d4");
@@ -6975,7 +6975,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels();
 
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelD4");
-        final SpreadsheetCellReference d4 = SpreadsheetCellReference.parseCell("d4");
+        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
         labelStore.save(label.mapping(d4));
 
         final Set<SpreadsheetCellRange> range = SpreadsheetSelection.parseWindow("c3:d4");
@@ -7024,7 +7024,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell d4 = this.cell("d4", "=4");
         cellStore.save(d4);
 
-        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("a1:c3");
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("a1:c3");
 
         final SpreadsheetColumn bHidden = b2.reference()
                 .column()
@@ -8247,7 +8247,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
         this.saveLabelAndCheck(engine,
@@ -8256,7 +8256,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadLabelAndFailCheck(
                 engine,
-                SpreadsheetExpressionReference.labelName("UnknownLabel"),
+                SpreadsheetSelection.labelName("UnknownLabel"),
                 this.createContext()
         );
     }
@@ -8268,7 +8268,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
         this.saveLabelAndCheck(engine,
@@ -8285,7 +8285,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
         this.saveLabelAndCheck(engine,
@@ -8303,7 +8303,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
         engine.saveCell(this.cell("B2", "=99"), context);
@@ -8320,7 +8320,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
         engine.saveCell(this.cell("A1", "=" + label + "+1"), context);
@@ -8348,7 +8348,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
         final SpreadsheetColumn a = SpreadsheetSelection.parseColumn("a")
@@ -8390,7 +8390,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
         final SpreadsheetRow row1 = SpreadsheetSelection.parseRow("1")
@@ -8434,7 +8434,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
         this.saveLabelAndCheck(engine,
@@ -8453,7 +8453,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
         engine.saveCell(this.cell("A1", "=" + label + "+1"), context);
@@ -8490,7 +8490,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
                 label,
                 SpreadsheetSelection.parseCell("B2")
@@ -8549,7 +8549,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
                 label,
                 SpreadsheetSelection.parseCell("B2")
@@ -8607,7 +8607,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testColumnWidth() {
-        final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("Z");
         final double expected = 150.5;
 
         this.columnWidthAndCheck2(
@@ -8619,7 +8619,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testColumnWidthDefaults() {
-        final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("Z");
         final double expected = 150.5;
 
         SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS;
@@ -8656,7 +8656,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testColumnWidthDefaultMissing() {
-        final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("Z");
         assertThrows(
                 TextStylePropertyValueException.class,
                 () -> this.createSpreadsheetEngine()
@@ -8680,7 +8680,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testRowHeight() {
         this.rowHeightAndCheck2(
-                SpreadsheetRowReference.parseRow("987"),
+                SpreadsheetSelection.parseRow("987"),
                 SpreadsheetMetadata.EMPTY,
                 150.5
         );
@@ -8688,7 +8688,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testRowHeightDefaults() {
-        final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("987");
+        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("987");
         final double expected = 150.5;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS;
@@ -8723,7 +8723,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testRowHeightDefaultMissing() {
-        final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("999");
+        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("999");
         assertThrows(
                 TextStylePropertyValueException.class,
                 () -> this.createSpreadsheetEngine()

@@ -126,7 +126,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final D before = this.createSpreadsheetDelta();
 
         final Set<SpreadsheetCell> different = Sets.of(
-                SpreadsheetCellReference.parseCell("E1")
+                SpreadsheetSelection.parseCell("E1")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY
                                         .setText("99")
@@ -1083,7 +1083,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                            final Set<SpreadsheetLabelMapping> labels) {
         this.checkEquals(labels, delta.labels(), "labels");
         assertThrows(UnsupportedOperationException.class, () -> delta.labels()
-                .add(SpreadsheetLabelName.labelName("LabelZ").mapping(SpreadsheetCellReference.parseCell("Z9")))
+                .add(SpreadsheetLabelName.labelName("LabelZ").mapping(SpreadsheetSelection.parseCell("Z9")))
         );
     }
 
@@ -1246,7 +1246,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Map<SpreadsheetColumnReference, Double> columnWidths() {
         return Maps.of(
-                SpreadsheetColumnReference.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("A"),
                 50.0
         );
     }
@@ -1255,7 +1255,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Map<SpreadsheetColumnReference, Double> differentColumnWidths() {
         return Maps.of(
-                SpreadsheetColumnReference.parseColumn("B"),
+                SpreadsheetSelection.parseColumn("B"),
                 999.0
         );
     }
@@ -1277,7 +1277,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Map<SpreadsheetRowReference, Double> rowHeights() {
         return Maps.of(
-                SpreadsheetRowReference.parseRow("1"),
+                SpreadsheetSelection.parseRow("1"),
                 75.0
         );
     }
@@ -1286,7 +1286,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Map<SpreadsheetRowReference, Double> differentRowHeights() {
         return Maps.of(
-                SpreadsheetRowReference.parseRow("2"),
+                SpreadsheetSelection.parseRow("2"),
                 999.0
         );
     }

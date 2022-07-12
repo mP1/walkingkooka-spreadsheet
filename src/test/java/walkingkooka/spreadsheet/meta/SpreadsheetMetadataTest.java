@@ -26,7 +26,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -150,7 +150,12 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.ROUNDING_MODE));
         this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR));
 
-        this.checkEquals(Optional.of(SpreadsheetCellReference.parseCell("A1")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT_CELL));
+        this.checkEquals(
+                Optional.of(
+                        SpreadsheetSelection.parseCell("A1")
+                ),
+                nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT_CELL)
+        );
     }
 
     // loadFromLocale...................................................................................................

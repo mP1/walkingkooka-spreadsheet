@@ -23,7 +23,6 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -77,7 +76,7 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionTest imple
 
     @Test
     public void testLabelToUnknown() {
-        this.applyAndCheck(SpreadsheetExpressionReference.labelName("unknown"), Optional.empty());
+        this.applyAndCheck(SpreadsheetSelection.labelName("unknown"), Optional.empty());
     }
 
     @Test
@@ -109,7 +108,7 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionTest imple
     }
 
     private SpreadsheetLabelName labelB1() {
-        return SpreadsheetExpressionReference.labelName("labelB1");
+        return SpreadsheetSelection.labelName("labelB1");
     }
 
     private SpreadsheetCellReference cellB1() {
@@ -117,7 +116,7 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionTest imple
     }
 
     private SpreadsheetLabelName labelRangeC1D2() {
-        return SpreadsheetExpressionReference.labelName("labelRangeC1D2");
+        return SpreadsheetSelection.labelName("labelRangeC1D2");
     }
 
     private SpreadsheetCellRange rangeC1C2() {

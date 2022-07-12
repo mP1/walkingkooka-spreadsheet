@@ -34,8 +34,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testWith() {
-        final SpreadsheetRowReference lower = SpreadsheetRowReference.parseRow("2");
-        final SpreadsheetRowReference upper = SpreadsheetRowReference.parseRow("4");
+        final SpreadsheetRowReference lower = SpreadsheetSelection.parseRow("2");
+        final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("4");
 
         final Range<SpreadsheetRowReference> range = Range.with(
                 RangeBound.inclusive(lower),
@@ -192,22 +192,22 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testTestAbove() {
-        this.testFalse(SpreadsheetCellReference.parseCell("A1"));
+        this.testFalse(SpreadsheetSelection.parseCell("A1"));
     }
 
     @Test
     public void testTestLeft() {
-        this.testTrue(SpreadsheetCellReference.parseCell("B2"));
+        this.testTrue(SpreadsheetSelection.parseCell("B2"));
     }
 
     @Test
     public void testTestRight() {
-        this.testTrue(SpreadsheetCellReference.parseCell("D4"));
+        this.testTrue(SpreadsheetSelection.parseCell("D4"));
     }
 
     @Test
     public void testTestBelow() {
-        this.testFalse(SpreadsheetCellReference.parseCell("E5"));
+        this.testFalse(SpreadsheetSelection.parseCell("E5"));
     }
 
     // testCellRange....................................................................................................
@@ -1081,8 +1081,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testToString() {
-        final SpreadsheetRowReference lower = SpreadsheetRowReference.parseRow("2" );
-        final SpreadsheetRowReference upper = SpreadsheetRowReference.parseRow("4" );
+        final SpreadsheetRowReference lower = SpreadsheetSelection.parseRow("2");
+        final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("4");
 
         final Range<SpreadsheetRowReference> range = Range.with(
                 RangeBound.inclusive(lower),
@@ -1094,8 +1094,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Override
     SpreadsheetRowReferenceRange createSelection() {
-        final SpreadsheetRowReference lower = SpreadsheetRowReference.parseRow("2");
-        final SpreadsheetRowReference upper = SpreadsheetRowReference.parseRow("4");
+        final SpreadsheetRowReference lower = SpreadsheetSelection.parseRow("2");
+        final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("4");
 
         return SpreadsheetRowReferenceRange.with(
                 Range.with(

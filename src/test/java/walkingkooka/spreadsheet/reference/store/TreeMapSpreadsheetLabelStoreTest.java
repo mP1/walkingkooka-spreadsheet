@@ -267,7 +267,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         store.save(SpreadsheetLabelMapping.with(this.label1(), this.a1()));
 
         this.loadCellReferencesOrRangesAndCheck(store,
-                SpreadsheetExpressionReference.labelName("unknown"),
+                SpreadsheetSelection.labelName("unknown"),
                 Sets.empty());
     }
 
@@ -337,15 +337,15 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private SpreadsheetLabelName label1() {
-        return SpreadsheetExpressionReference.labelName("label1");
+        return SpreadsheetSelection.labelName("label1");
     }
 
     private SpreadsheetLabelName label2() {
-        return SpreadsheetExpressionReference.labelName("label2");
+        return SpreadsheetSelection.labelName("label2");
     }
 
     private SpreadsheetLabelName label3() {
-        return SpreadsheetExpressionReference.labelName("label3");
+        return SpreadsheetSelection.labelName("label3");
     }
 
     private SpreadsheetCellReference a1() {

@@ -45,7 +45,6 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
@@ -94,7 +93,7 @@ public final class Sample {
         final SpreadsheetEngineContext engineContext = engineContext(engine);
 
         engine.saveCell(
-                SpreadsheetCellReference.parseCell("A1")
+                SpreadsheetSelection.parseCell("A1")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY
                                         .setText("12+B2")
@@ -103,7 +102,7 @@ public final class Sample {
         );
 
         final SpreadsheetDelta delta = engine.saveCell(
-                SpreadsheetCellReference.parseCell("B2")
+                SpreadsheetSelection.parseCell("B2")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("34")
                         ),

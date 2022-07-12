@@ -17,8 +17,8 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -82,7 +82,7 @@ public final class SpreadsheetLabelNameParserTokenTest extends SpreadsheetNonSym
 
     @Override
     SpreadsheetLabelName value() {
-        return SpreadsheetExpressionReference.labelName(this.text());
+        return SpreadsheetSelection.labelName(this.text());
     }
 
     @Override
@@ -92,7 +92,10 @@ public final class SpreadsheetLabelNameParserTokenTest extends SpreadsheetNonSym
 
     @Override
     public SpreadsheetLabelNameParserToken createDifferentToken() {
-        return SpreadsheetLabelNameParserToken.with(SpreadsheetExpressionReference.labelName("different"), "different");
+        return SpreadsheetLabelNameParserToken.with(
+                SpreadsheetSelection.labelName("different"),
+                "different"
+        );
     }
 
     @Override

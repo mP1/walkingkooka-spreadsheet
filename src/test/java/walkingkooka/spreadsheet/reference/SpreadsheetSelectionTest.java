@@ -254,7 +254,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseStringLabel() {
         final String label = "label123";
-        this.parseStringAndCheck(label, SpreadsheetExpressionReference.labelName(label));
+        this.parseStringAndCheck(label, SpreadsheetSelection.labelName(label));
     }
 
     @Test
@@ -298,7 +298,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseCellOrLabelCell() {
         final String text = "A1";
-        this.parseCellOrLabelAndCheck(text, SpreadsheetCellReference.parseCell(text));
+        this.parseCellOrLabelAndCheck(text, SpreadsheetSelection.parseCell(text));
     }
 
     @Test

@@ -121,7 +121,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
 
     @Override
     public void testLabelsWithCellReference() {
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LabelZ99");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LabelZ99");
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
         final SpreadsheetLabelMapping mapping = label.mapping(reference);
 
@@ -171,7 +171,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     private SpreadsheetLabelName labelName() {
-        return SpreadsheetExpressionReference.labelName("elephant");
+        return SpreadsheetSelection.labelName("elephant");
     }
 
     private SpreadsheetCellReference reference() {

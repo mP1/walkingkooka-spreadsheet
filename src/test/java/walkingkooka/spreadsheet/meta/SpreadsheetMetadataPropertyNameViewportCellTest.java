@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Locale;
 
@@ -47,7 +48,7 @@ public final class SpreadsheetMetadataPropertyNameViewportCellTest extends Sprea
 
     @Override
     SpreadsheetCellReference propertyValue() {
-        return SpreadsheetCellReference.parseCell("B99");
+        return SpreadsheetSelection.parseCell("B99");
     }
 
     @Override
