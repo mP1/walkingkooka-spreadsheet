@@ -156,7 +156,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseCell() {
         this.checkEquals(SpreadsheetSelection.parseCell("A1"),
-                SpreadsheetExpressionReference.cell(SpreadsheetSelection.parseColumn("A"),
+                SpreadsheetSelection.cell(SpreadsheetSelection.parseColumn("A"),
                         SpreadsheetSelection.parseRow("1")));
     }
 

@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.StoreTesting;
@@ -350,7 +349,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     final SpreadsheetCellReference cellReference(final int column, final int row) {
-        return SpreadsheetExpressionReference.cell(SpreadsheetReferenceKind.RELATIVE.column(column),
+        return SpreadsheetSelection.cell(SpreadsheetReferenceKind.RELATIVE.column(column),
                 SpreadsheetReferenceKind.RELATIVE.row(row));
     }
 

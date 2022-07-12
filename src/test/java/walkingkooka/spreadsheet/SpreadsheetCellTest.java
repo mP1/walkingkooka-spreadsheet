@@ -28,7 +28,6 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -1100,7 +1099,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private static SpreadsheetCellReference reference(final int column, final int row) {
-        return SpreadsheetExpressionReference.cell(
+        return SpreadsheetSelection.cell(
                 SpreadsheetReferenceKind.RELATIVE.column(column),
                 SpreadsheetReferenceKind.RELATIVE.row(row)
         );
