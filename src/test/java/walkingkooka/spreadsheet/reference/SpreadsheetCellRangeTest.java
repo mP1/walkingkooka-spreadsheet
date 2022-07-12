@@ -594,7 +594,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     private void testTrue(final String range,
                           final String cell) {
         this.testTrue(
-                SpreadsheetCellRange.parseCellRange(range),
+                SpreadsheetSelection.parseCellRange(range),
                 SpreadsheetSelection.parseCell(cell)
         );
     }
@@ -602,7 +602,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
     private void testFalse(final String range,
                            final String cell) {
         this.testFalse(
-                SpreadsheetCellRange.parseCellRange(range),
+                SpreadsheetSelection.parseCellRange(range),
                 SpreadsheetSelection.parseCell(cell)
         );
     }
@@ -910,7 +910,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testCellsEmpty() {
-        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
         final List<SpreadsheetCellReference> absent = Lists.array();
         range.cells(Lists.empty(), this::cellsPresent, absent::add);
@@ -920,7 +920,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testCellsFull() {
-        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
         final List<SpreadsheetCell> present = Lists.array();
 
@@ -940,7 +940,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testCellsMixed() {
-        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCell b1 = this.b1();
         final SpreadsheetCell b2 = this.b2();
@@ -965,7 +965,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testCellsMixed2() {
-        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCellReference b1 = this.cellReference("B1");
         final SpreadsheetCellReference b2 = this.cellReference("B2");
@@ -990,7 +990,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testCellsMixed3() {
-        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCell b1 = this.b1();
         final SpreadsheetCellReference b2 = this.cellReference("B2");
@@ -1016,7 +1016,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testCellsMixedAbsoluteCellReferences() {
-        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("$B$1:$C$3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("$B$1:$C$3"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCell b1 = this.b1();
         final SpreadsheetCellReference b2 = this.cellReference("B2");
@@ -1041,7 +1041,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testCellsIgnoresOutOfRange() {
-        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("B1:C2"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C2"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCell b1 = this.b1();
         final SpreadsheetCellReference b2 = this.cellReference("B2");
@@ -1981,8 +1981,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
 
     private void toRelativeAndCheck(final String start,
                                     final String expected) {
-        final SpreadsheetCellRange actual = SpreadsheetCellRange.parseCellRange(start).toRelative();
-        this.checkEquals(SpreadsheetCellRange.parseCellRange(expected),
+        final SpreadsheetCellRange actual = SpreadsheetSelection.parseCellRange(start).toRelative();
+        this.checkEquals(SpreadsheetSelection.parseCellRange(expected),
                 actual,
                 () -> start + " toRelative");
     }
@@ -2124,12 +2124,12 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
 
     @Test
     public void testToStringSingleton() {
-        this.toStringAndCheck(SpreadsheetCellRange.parseCellRange("Z9"), "Z9");
+        this.toStringAndCheck(SpreadsheetSelection.parseCellRange("Z9"), "Z9");
     }
 
     @Test
     public void testString() {
-        this.toStringAndCheck(SpreadsheetCellRange.parseCellRange("C3:D4"), "C3:D4");
+        this.toStringAndCheck(SpreadsheetSelection.parseCellRange("C3:D4"), "C3:D4");
     }
 
     // helpers .........................................................................................................
@@ -2340,16 +2340,16 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     @Test
     public void testCompareEqualDifferentSpreadsheetReferenceKind() {
         this.compareToAndCheckEquals(
-                SpreadsheetCellRange.parseCellRange("$A$1:$B$2"),
-                SpreadsheetCellRange.parseCellRange("A1:B2")
+                SpreadsheetSelection.parseCellRange("$A$1:$B$2"),
+                SpreadsheetSelection.parseCellRange("A1:B2")
         );
     }
 
     @Test
     public void testCompareEqualLess() {
         this.compareToAndCheckLess(
-                SpreadsheetCellRange.parseCellRange("$A$1:$B$2"),
-                SpreadsheetCellRange.parseCellRange("B2:C3")
+                SpreadsheetSelection.parseCellRange("$A$1:$B$2"),
+                SpreadsheetSelection.parseCellRange("B2:C3")
         );
     }
 
@@ -2389,17 +2389,17 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
 
     @Test
     public void testJsonNodeUnmarshall() {
-        this.unmarshallAndCheck(JsonNode.string("A1:A2"), SpreadsheetCellRange.parseCellRange("A1:A2"));
+        this.unmarshallAndCheck(JsonNode.string("A1:A2"), SpreadsheetSelection.parseCellRange("A1:A2"));
     }
 
     @Test
     public void testJsonNodeMarshall2() {
-        this.marshallAndCheck(SpreadsheetCellRange.parseCellRange("A1:A2"), JsonNode.string("A1:A2"));
+        this.marshallAndCheck(SpreadsheetSelection.parseCellRange("A1:A2"), JsonNode.string("A1:A2"));
     }
 
     @Test
     public void testJsonNodeMarshallRoundtrip() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetCellRange.parseCellRange("A1:A2"));
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetSelection.parseCellRange("A1:A2"));
     }
 
     //helper.................................................................................................
@@ -2504,7 +2504,7 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
 
     @Override
     public SpreadsheetCellRange createIterable() {
-        return SpreadsheetCellRange.parseCellRange("B2:C3");
+        return SpreadsheetSelection.parseCellRange("B2:C3");
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
@@ -2519,6 +2519,6 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
 
     @Override
     public SpreadsheetCellRange parseString(final String text) {
-        return SpreadsheetCellRange.parseCellRange(text);
+        return SpreadsheetSelection.parseCellRange(text);
     }
 }

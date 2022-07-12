@@ -22,7 +22,6 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -59,7 +58,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
 
     @Test
     public void testDifferentTarget() {
-        this.checkNotEquals(TargetAndSpreadsheetCellReference.with(SpreadsheetExpressionReference.labelName("Different"), this.reference()));
+        this.checkNotEquals(TargetAndSpreadsheetCellReference.with(SpreadsheetSelection.labelName("Different"), this.reference()));
     }
 
     @Test
@@ -78,7 +77,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     }
 
     private SpreadsheetLabelName label() {
-        return SpreadsheetExpressionReference.labelName("Label123");
+        return SpreadsheetSelection.labelName("Label123");
     }
 
     private SpreadsheetCellReference reference() {

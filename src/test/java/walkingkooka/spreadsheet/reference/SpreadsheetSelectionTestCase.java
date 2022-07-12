@@ -156,7 +156,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                      final boolean expected) {
         this.testCellRangeAndCheck(
                 this.parseString(selection),
-                SpreadsheetCellRange.parseCellRange(range),
+                SpreadsheetSelection.parseCellRange(range),
                 expected
         );
     }

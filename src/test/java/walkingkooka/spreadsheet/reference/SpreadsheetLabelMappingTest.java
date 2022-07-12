@@ -39,7 +39,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         TreePrintableTesting,
         ToStringTesting<SpreadsheetLabelMapping> {
 
-    private final static SpreadsheetLabelName LABEL = SpreadsheetExpressionReference.labelName("label123");
+    private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("label123");
     private final static SpreadsheetExpressionReference REFERENCE = cell(1);
 
     @Test
@@ -89,7 +89,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Test
     public void testSetLabelDifferent() {
         final SpreadsheetLabelMapping mapping = this.createObject();
-        final SpreadsheetLabelName differentLabel = SpreadsheetExpressionReference.labelName("different");
+        final SpreadsheetLabelName differentLabel = SpreadsheetSelection.labelName("different");
         final SpreadsheetLabelMapping different = mapping.setLabel(differentLabel);
 
         assertNotSame(mapping, different);
@@ -195,7 +195,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Test
     public void testEqualsDifferentLabel() {
-        this.checkNotEquals(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("different"), REFERENCE));
+        this.checkNotEquals(SpreadsheetLabelMapping.with(SpreadsheetSelection.labelName("different"), REFERENCE));
     }
 
     @Test

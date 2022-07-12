@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
 
 import java.math.MathContext;
@@ -189,7 +189,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         )
                 );
 
-        final SpreadsheetCell cell = SpreadsheetCellReference.parseCell("B2")
+        final SpreadsheetCell cell = SpreadsheetSelection.parseCell("B2")
                 .setFormula(
                         formula
                 );
@@ -208,7 +208,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
                 .setText(text);
 
-        final SpreadsheetCell requires = SpreadsheetCellReference.parseCell("B2")
+        final SpreadsheetCell requires = SpreadsheetSelection.parseCell("B2")
                 .setFormula(
                         formula
                 );
@@ -243,7 +243,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
                 .setText(text);
 
-        final SpreadsheetCell requires = SpreadsheetCellReference.parseCell("B2")
+        final SpreadsheetCell requires = SpreadsheetSelection.parseCell("B2")
                 .setFormula(formula);
 
         final SpreadsheetCell with = requires.setFormula(
@@ -270,7 +270,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
                 .setText(text);
 
-        final SpreadsheetCell requires = SpreadsheetCellReference.parseCell("B2")
+        final SpreadsheetCell requires = SpreadsheetSelection.parseCell("B2")
                 .setFormula(formula);
 
         final SpreadsheetCell with = requires.setFormula(
@@ -403,7 +403,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     }
 
     private SpreadsheetCell cell(SpreadsheetFormula formula) {
-        return SpreadsheetCellReference.parseCell("C3")
+        return SpreadsheetSelection.parseCell("C3")
                 .setFormula(formula);
     }
 

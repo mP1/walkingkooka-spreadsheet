@@ -233,22 +233,22 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testToRelativeAlreadyAbsolute() {
-        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCell("$B$2"));
+        this.toRelativeAndCheck0(SpreadsheetSelection.parseCell("$B$2"));
     }
 
     @Test
     public void testToRelativeRelative() {
-        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCell("B2"));
+        this.toRelativeAndCheck0(SpreadsheetSelection.parseCell("B2"));
     }
 
     @Test
     public void testToRelativeMixed() {
-        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCell("$B2"));
+        this.toRelativeAndCheck0(SpreadsheetSelection.parseCell("$B2"));
     }
 
     @Test
     public void testToRelativeMixed2() {
-        this.toRelativeAndCheck0(SpreadsheetCellReference.parseCell("B$2"));
+        this.toRelativeAndCheck0(SpreadsheetSelection.parseCell("B$2"));
     }
 
     private void toRelativeAndCheck0(final SpreadsheetCellReference reference) {
@@ -261,22 +261,22 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testToAbsoluteAlreadyAbsolute() {
-        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCell("$B$2"));
+        this.toAbsoluteAndCheck(SpreadsheetSelection.parseCell("$B$2"));
     }
 
     @Test
     public void testToAbsoluteRelative() {
-        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCell("B2"));
+        this.toAbsoluteAndCheck(SpreadsheetSelection.parseCell("B2"));
     }
 
     @Test
     public void testToAbsoluteMixed() {
-        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCell("$B2"));
+        this.toAbsoluteAndCheck(SpreadsheetSelection.parseCell("$B2"));
     }
 
     @Test
     public void testToAbsoluteMixed2() {
-        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCell("B$2"));
+        this.toAbsoluteAndCheck(SpreadsheetSelection.parseCell("B$2"));
     }
 
     private void toAbsoluteAndCheck(final SpreadsheetCellReference reference) {
@@ -320,16 +320,16 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddColumnSaturationUnderflows() {
-        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B2");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
         this.checkEquals(
-                SpreadsheetCellReference.parseCell("A2"),
+                SpreadsheetSelection.parseCell("A2"),
                 cell.addColumnSaturated(-3)
         );
     }
 
     @Test
     public void testAddColumnSaturationOverflows() {
-        final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("2");
+        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("2");
         final SpreadsheetCellReference cell = SpreadsheetReferenceKind.RELATIVE.column(SpreadsheetColumnReference.MAX_VALUE - 2)
                 .setRow(row);
         this.checkEquals(
@@ -341,9 +341,9 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddColumnSaturation() {
-        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B2");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
         this.checkEquals(
-                SpreadsheetCellReference.parseCell("D2"),
+                SpreadsheetSelection.parseCell("D2"),
                 cell.addColumnSaturated(+2)
         );
     }
@@ -370,16 +370,16 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddRowSaturationUnderflows() {
-        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B3");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B3");
         this.checkEquals(
-                SpreadsheetCellReference.parseCell("B1"),
+                SpreadsheetSelection.parseCell("B1"),
                 cell.addRowSaturated(-3)
         );
     }
 
     @Test
     public void testAddRowSaturationOverflows() {
-        final SpreadsheetColumnReference column = SpreadsheetRowReference.parseColumn("B");
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
         final SpreadsheetCellReference cell = SpreadsheetReferenceKind.RELATIVE.row(SpreadsheetRowReference.MAX_VALUE - 2)
                 .setColumn(column);
         this.checkEquals(
@@ -390,9 +390,9 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testAddRowSaturation() {
-        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("B2");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
         this.checkEquals(
-                SpreadsheetCellReference.parseCell("B4"),
+                SpreadsheetSelection.parseCell("B4"),
                 cell.addRowSaturated(+2)
         );
     }
@@ -579,8 +579,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testCellRangeAbsolute() {
         this.cellRangeAndCheck(
-                SpreadsheetCellReference.parseCell("$B$2"),
-                SpreadsheetCellRange.parseCellRange("$B$2")
+                SpreadsheetSelection.parseCell("$B$2"),
+                SpreadsheetSelection.parseCellRange("$B$2")
         );
     }
 
@@ -589,8 +589,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final String text = "C3";
 
         this.cellRangeAndCheck(
-                SpreadsheetCellReference.parseCell(text),
-                SpreadsheetCellRange.parseCellRange(text)
+                SpreadsheetSelection.parseCell(text),
+                SpreadsheetSelection.parseCellRange(text)
         );
     }
 

@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -44,7 +43,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     @Test
     public void testMaxColumnWidthColumnWithoutCells() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
-        maxColumnWidthAndCheck(store, SpreadsheetColumnReference.parseColumn("A"), 0);
+        maxColumnWidthAndCheck(store, SpreadsheetSelection.parseColumn("A"), 0);
     }
 
     @Test
@@ -53,7 +52,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         store.save(cellWithWidth("C3", 50.0));
         store.save(cellWithWidth("D4", 150.0));
 
-        this.maxColumnWidthAndCheck(store, SpreadsheetColumnReference.parseColumn("C"), 50.0);
+        this.maxColumnWidthAndCheck(store, SpreadsheetSelection.parseColumn("C"), 50.0);
     }
 
     @Test
@@ -62,7 +61,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         store.save(cellWithWidth("C3", 50.0));
         store.save(cellWithWidth("C4", 0));
 
-        this.maxColumnWidthAndCheck(store, SpreadsheetColumnReference.parseColumn("C"), 50.0);
+        this.maxColumnWidthAndCheck(store, SpreadsheetSelection.parseColumn("C"), 50.0);
     }
 
     @Test
@@ -73,12 +72,12 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         store.save(cellWithWidth("C5", 99.0));
         store.save(cellWithWidth("D4", 150.0));
 
-        this.maxColumnWidthAndCheck(store, SpreadsheetColumnReference.parseColumn("C"), 99.0);
+        this.maxColumnWidthAndCheck(store, SpreadsheetSelection.parseColumn("C"), 99.0);
     }
 
     private SpreadsheetCell cellWithWidth(final String cellReference,
                                           final double pixels) {
-        SpreadsheetCell cell = SpreadsheetCellReference.parseCell(cellReference)
+        SpreadsheetCell cell = SpreadsheetSelection.parseCell(cellReference)
                 .setFormula(SpreadsheetFormula.EMPTY
                         .setText("1+2")
                 );
@@ -107,7 +106,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     @Test
     public void testMaxRowHeightRowWithoutCells() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
-        maxRowHeightAndCheck(store, SpreadsheetRowReference.parseRow("9"), 0);
+        maxRowHeightAndCheck(store, SpreadsheetSelection.parseRow("9"), 0);
     }
 
     @Test
@@ -116,7 +115,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         store.save(cellWithHeight("C3", 50.0));
         store.save(cellWithHeight("D4", 150.0));
 
-        this.maxRowHeightAndCheck(store, SpreadsheetRowReference.parseRow("3"), 50.0);
+        this.maxRowHeightAndCheck(store, SpreadsheetSelection.parseRow("3"), 50.0);
     }
 
     @Test
@@ -125,7 +124,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         store.save(cellWithHeight("C3", 50.0));
         store.save(cellWithHeight("C4", 0));
 
-        this.maxRowHeightAndCheck(store, SpreadsheetRowReference.parseRow("3"), 50.0);
+        this.maxRowHeightAndCheck(store, SpreadsheetSelection.parseRow("3"), 50.0);
     }
 
     @Test
@@ -136,12 +135,12 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         store.save(cellWithHeight("E3", 99.0));
         store.save(cellWithHeight("Z99", 150.0));
 
-        this.maxRowHeightAndCheck(store, SpreadsheetRowReference.parseRow("3"), 99.0);
+        this.maxRowHeightAndCheck(store, SpreadsheetSelection.parseRow("3"), 99.0);
     }
 
     private SpreadsheetCell cellWithHeight(final String cellReference,
                                            final double pixels) {
-        SpreadsheetCell cell = SpreadsheetCellReference.parseCell(cellReference)
+        SpreadsheetCell cell = SpreadsheetSelection.parseCell(cellReference)
                 .setFormula(
                         SpreadsheetFormula.EMPTY
                                 .setText("1+2")

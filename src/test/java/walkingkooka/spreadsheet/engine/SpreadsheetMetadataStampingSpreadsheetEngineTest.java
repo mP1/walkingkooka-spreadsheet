@@ -100,7 +100,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
         assertNotNull(
                 engine.loadCell(
-                        SpreadsheetCellReference.parseCell("A1"),
+                        SpreadsheetSelection.parseCell("A1"),
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                         SpreadsheetDeltaProperties.ALL,
                         context
@@ -295,7 +295,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     }
 
     private SpreadsheetCell cell() {
-        return SpreadsheetCellReference.parseCell("A1")
+        return SpreadsheetSelection.parseCell("A1")
                 .setFormula(
                         SpreadsheetFormula.EMPTY
                                 .setText(FORMULA_TEXT)

@@ -36,7 +36,6 @@ import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
@@ -468,7 +467,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String text = "Hello";
 
         this.cellReferenceParseAndCheck(text,
-                SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName(text), text),
+                SpreadsheetParserToken.labelName(SpreadsheetSelection.labelName(text), text),
                 text);
     }
 
@@ -2719,7 +2718,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetLabelNameParserToken label(final String label) {
-        return SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName(label), label);
+        return SpreadsheetParserToken.labelName(SpreadsheetSelection.labelName(label), label);
     }
 
     private SpreadsheetParserToken negative(final SpreadsheetParserToken number) {

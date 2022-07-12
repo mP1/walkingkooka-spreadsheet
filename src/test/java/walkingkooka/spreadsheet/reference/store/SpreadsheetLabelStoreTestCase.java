@@ -19,17 +19,17 @@ package walkingkooka.spreadsheet.reference.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelStore> implements SpreadsheetLabelStoreTesting<S> {
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(2));
-    final static SpreadsheetLabelName LABEL = SpreadsheetExpressionReference.labelName("label123");
+    final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("label123");
 
     @Test
     public final void testLoadUnknownFails() {
@@ -142,6 +142,6 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
     }
 
     final SpreadsheetLabelMapping mapping(final String label, final int column, final int row) {
-        return SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName(label), cell(column, row));
+        return SpreadsheetLabelMapping.with(SpreadsheetSelection.labelName(label), cell(column, row));
     }
 }

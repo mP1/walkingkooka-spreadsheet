@@ -42,7 +42,7 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
 
     @Test
     public void testAcceptSpreadsheetLabelName() {
-        this.createVisitor().accept(SpreadsheetExpressionReference.labelName("Label123"));
+        this.createVisitor().accept(SpreadsheetSelection.labelName("Label123"));
     }
 
     @Test

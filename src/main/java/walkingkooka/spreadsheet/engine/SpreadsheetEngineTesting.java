@@ -76,7 +76,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     SpreadsheetColumnReference COLUMN = SpreadsheetReferenceKind.ABSOLUTE.column(1);
     SpreadsheetRowReference ROW = SpreadsheetReferenceKind.ABSOLUTE.row(2);
     SpreadsheetCellReference CELL_REFERENCE = COLUMN.setRow(ROW);
-    SpreadsheetLabelName LABEL = SpreadsheetExpressionReference.labelName("LABEL123");
+    SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("LABEL123");
 
     @Test
     default void testLoadCellNullCellFails() {
@@ -428,7 +428,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testSaveLabelNullContextFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().saveLabel(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("LABEL123"),
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().saveLabel(SpreadsheetLabelMapping.with(SpreadsheetSelection.labelName("LABEL123"),
                 SpreadsheetSelection.parseCell("A1")), null));
     }
 
@@ -465,7 +465,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testRemoveLabelNullContextFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().removeLabel(SpreadsheetExpressionReference.labelName("label"), null));
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().removeLabel(SpreadsheetSelection.labelName("label"), null));
     }
 
     default void removeLabelAndCheck(final SpreadsheetEngine engine,

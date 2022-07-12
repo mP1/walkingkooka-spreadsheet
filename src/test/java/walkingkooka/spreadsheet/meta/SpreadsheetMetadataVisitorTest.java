@@ -407,7 +407,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.SELECTION,
-                SpreadsheetCellReference.parseCell("A2")
+                SpreadsheetSelection.parseCell("A2")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
@@ -489,7 +489,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitViewportCell(final SpreadsheetCellReference cell) {
                 this.visited = cell;
             }
-        }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetCellReference.parseCell("B99"));
+        }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetSelection.parseCell("B99"));
     }
 
     private static <T> SpreadsheetMetadata metadata(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {

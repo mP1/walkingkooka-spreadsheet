@@ -217,7 +217,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testResolveIfLabelLabel() {
-        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("A1");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A1");
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("Label456");
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
@@ -232,7 +232,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testResolveIfLabelLabelToLabelToCell() {
-        final SpreadsheetCellReference cell = SpreadsheetCellReference.parseCell("A1");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A1");
         final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label111");
         final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label222");
 

@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
@@ -101,7 +101,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         assertNotSame(repository.repository.cells(), repository.cells(), "cells");
 
         cellStore.save(
-                SpreadsheetCellReference.parseCell("A1")
+                SpreadsheetSelection.parseCell("A1")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=4+5+6")
                         )
@@ -164,7 +164,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         repository.metadatas()
                 .save(metadata);
 
-        final SpreadsheetCell cell = SpreadsheetCellReference.parseCell("A1")
+        final SpreadsheetCell cell = SpreadsheetSelection.parseCell("A1")
                 .setFormula(
                         SpreadsheetFormula.EMPTY
                                 .setText("1.5")

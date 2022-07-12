@@ -24,7 +24,6 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -80,7 +79,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
 
     @Test
     public void testLabelToUnknown() {
-        this.acceptAndCheck(SpreadsheetExpressionReference.labelName("unknown"));
+        this.acceptAndCheck(SpreadsheetSelection.labelName("unknown"));
     }
 
     @Test
@@ -118,7 +117,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
     }
 
     private SpreadsheetLabelName labelB1() {
-        return SpreadsheetExpressionReference.labelName("labelB1");
+        return SpreadsheetSelection.labelName("labelB1");
     }
 
     private SpreadsheetCellReference cellB1() {
@@ -126,7 +125,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
     }
 
     private SpreadsheetLabelName labelRangeC1D2() {
-        return SpreadsheetExpressionReference.labelName("labelRangeC1D2");
+        return SpreadsheetSelection.labelName("labelRangeC1D2");
     }
 
     private SpreadsheetCellRange rangeC1C2() {

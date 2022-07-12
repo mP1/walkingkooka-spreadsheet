@@ -103,7 +103,7 @@ public class JunitTest {
         final SpreadsheetEngineContext engineContext = engineContext(engine);
 
         engine.saveCell(
-                SpreadsheetCellReference.parseCell("A1")
+                SpreadsheetSelection.parseCell("A1")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY
                                         .setText("12+B2")
@@ -112,7 +112,7 @@ public class JunitTest {
         );
 
         final SpreadsheetDelta delta = engine.saveCell(
-                SpreadsheetCellReference.parseCell("B2")
+                SpreadsheetSelection.parseCell("B2")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("34")
                         ),

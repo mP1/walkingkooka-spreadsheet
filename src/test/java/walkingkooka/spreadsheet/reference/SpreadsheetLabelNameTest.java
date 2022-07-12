@@ -128,7 +128,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
 
     @Test
     public void testMappingLabel() {
-        this.mappingAndCheck(SpreadsheetExpressionReference.labelName("LABEL456"));
+        this.mappingAndCheck(SpreadsheetSelection.labelName("LABEL456"));
     }
 
     @Test
@@ -183,14 +183,14 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
 
     @Test
     public void testTestFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createSelection().test(SpreadsheetCellReference.parseCell("A1")));
+        assertThrows(UnsupportedOperationException.class, () -> this.createSelection().test(SpreadsheetSelection.parseCell("A1")));
     }
 
     // testCellRange.....................................................................................................
 
     @Test
     public void testRangeFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createSelection().testCellRange(SpreadsheetCellRange.parseCellRange("A1")));
+        assertThrows(UnsupportedOperationException.class, () -> this.createSelection().testCellRange(SpreadsheetSelection.parseCellRange("A1")));
     }
 
     // testColumnRange..................................................................................................
