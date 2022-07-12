@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
@@ -93,9 +93,14 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
     private void checkCell(final SpreadsheetCellReferenceParserToken cell,
                            final SpreadsheetRowReferenceParserToken row,
                            final SpreadsheetColumnReferenceParserToken column) {
-        this.checkEquals(SpreadsheetExpressionReference.cell(column.value(), row.value()),
+        this.checkEquals(
+                SpreadsheetSelection.cell(
+                        column.value(),
+                        row.value()
+                ),
                 cell.cell(),
-                "cell");
+                "cell"
+        );
     }
 
     @Override
