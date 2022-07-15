@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -948,6 +949,16 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         this.convertAndCheck(
                 range.toString(),
                 range
+        );
+    }
+
+    @Test
+    public void testStringToSpreadsheetLabelName() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        this.convertAndCheck(
+                label.toString(),
+                label
         );
     }
 

@@ -111,6 +111,11 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     }
 
     @Override
+    protected void visitLabel() {
+        this.converter = this.mapping.selection;
+    }
+
+    @Override
     protected void visitLocalDate() {
         this.converter = this.mapping.date;
     }

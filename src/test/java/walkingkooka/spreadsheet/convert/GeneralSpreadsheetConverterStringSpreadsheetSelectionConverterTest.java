@@ -61,6 +61,14 @@ public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverte
     }
 
     @Test
+    public void testStringToLabel() {
+        this.convertAndCheck2(
+                "Label123",
+                SpreadsheetSelection::labelName
+        );
+    }
+
+    @Test
     public void testStringToRow() {
         this.convertAndCheck2(
                 "6",
