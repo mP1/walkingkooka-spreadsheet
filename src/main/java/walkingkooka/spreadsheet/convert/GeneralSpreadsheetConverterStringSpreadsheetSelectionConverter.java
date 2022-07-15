@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -50,6 +51,7 @@ final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter imple
                         type == SpreadsheetCellRange.class ||
                         type == SpreadsheetColumnReference.class ||
                         type == SpreadsheetColumnReferenceRange.class ||
+                        type == SpreadsheetLabelName.class ||
                         type == SpreadsheetRowReference.class ||
                         type == SpreadsheetRowReferenceRange.class);
     }

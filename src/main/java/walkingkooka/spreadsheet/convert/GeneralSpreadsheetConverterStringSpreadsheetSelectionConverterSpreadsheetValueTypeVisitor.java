@@ -59,6 +59,11 @@ final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpread
     }
 
     @Override
+    protected void visitLabel() {
+        this.selection = SpreadsheetSelection.labelName(this.string);
+    }
+
+    @Override
     protected void visitRowReference() {
         this.selection = SpreadsheetSelection.parseRow(this.string);
     }
