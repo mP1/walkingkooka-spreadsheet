@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.InvalidTextLengthException;
+import walkingkooka.compare.Comparators;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
@@ -291,7 +292,7 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
     }
 
     private boolean equals1(final SpreadsheetLabelName other) {
-        return this.name.equals(other.name);
+        return this.compareTo(other) == Comparators.EQUAL;
     }
 
     @Override
