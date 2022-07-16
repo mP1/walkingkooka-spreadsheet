@@ -378,6 +378,14 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
         );
     }
 
+    @Test
+    public void testEqualsDifferentCase() {
+        this.checkEqualsAndHashCode(
+                SpreadsheetLabelName.with("Label123"),
+                SpreadsheetLabelName.with("LABEL123")
+        );
+    }
+
     @Override
     SpreadsheetLabelName createSelection() {
         return this.createComparable();
