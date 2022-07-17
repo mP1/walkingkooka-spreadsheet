@@ -2538,7 +2538,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         return apply.apply(parameters, context);
                     }
 
-                    public List<ExpressionFunctionParameter<?>> parameters() {
+                    @Override
+                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                         return Lists.of(
                                 ExpressionFunctionParameterName.with("values")
                                         .variable(Object.class)

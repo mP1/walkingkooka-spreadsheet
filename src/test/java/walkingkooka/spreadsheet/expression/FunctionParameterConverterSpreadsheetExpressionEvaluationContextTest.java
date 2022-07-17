@@ -111,7 +111,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
         }
 
         @Override
-        public List<ExpressionFunctionParameter<?>> parameters() {
+        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
             return Lists.of(
                     ExpressionFunctionParameterName.with("strings")
                             .variable(String.class)
@@ -148,7 +148,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
         }
 
         @Override
-        public List<ExpressionFunctionParameter<?>> parameters() {
+        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
             return Lists.of(NUMBER);
         }
 

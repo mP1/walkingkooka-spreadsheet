@@ -826,7 +826,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
-                                public List<ExpressionFunctionParameter<?>> parameters() {
+                                public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                                     return Lists.of(
                                             ExpressionFunctionParameterName.with("parameters").variable(Object.class)
                                     );
@@ -860,7 +860,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
-                                public List<ExpressionFunctionParameter<?>> parameters() {
+                                public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                                     return Lists.of(
                                             ExpressionFunctionParameterName.with("parameters").variable(Object.class)
                                     );
@@ -889,7 +889,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
-                                public List<ExpressionFunctionParameter<?>> parameters() {
+                                public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                                     return Lists.of(
                                             ExpressionFunctionParameterName.with("parameters").variable(Object.class)
                                     );
@@ -916,7 +916,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 }
 
                                 @Override
-                                public List<ExpressionFunctionParameter<?>> parameters() {
+                                public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                                     return Lists.of(
                                             ExpressionFunctionParameterName.with("parameters").variable(Object.class)
                                     );
