@@ -58,8 +58,8 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.ValueExpression;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
@@ -70,7 +70,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -828,14 +827,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 @Override
                                 public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                                     return Lists.of(
-                                            ExpressionFunctionParameterName.with("parameters").variable(Object.class)
-                                    );
-                                }
-
-                                @Override
-                                public Set<ExpressionFunctionKind> kinds() {
-                                    return Sets.of(
-                                            ExpressionFunctionKind.EVALUATE_PARAMETERS
+                                            ExpressionFunctionParameterName.with("parameters")
+                                                    .variable(Object.class)
+                                                    .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
                                     );
                                 }
 
@@ -862,14 +856,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 @Override
                                 public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                                     return Lists.of(
-                                            ExpressionFunctionParameterName.with("parameters").variable(Object.class)
-                                    );
-                                }
-
-                                @Override
-                                public Set<ExpressionFunctionKind> kinds() {
-                                    return Sets.of(
-                                            ExpressionFunctionKind.EVALUATE_PARAMETERS
+                                            ExpressionFunctionParameterName.with("parameters")
+                                                    .variable(Object.class)
+                                                    .setKinds(
+                                                            Sets.of(ExpressionFunctionParameterKind.EVALUATE)
+                                                    )
                                     );
                                 }
 
@@ -891,13 +882,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 @Override
                                 public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                                     return Lists.of(
-                                            ExpressionFunctionParameterName.with("parameters").variable(Object.class)
+                                            ExpressionFunctionParameterName.with("parameters")
+                                                    .variable(Object.class)
                                     );
-                                }
-
-                                @Override
-                                public Set<ExpressionFunctionKind> kinds() {
-                                    return Sets.empty();
                                 }
 
                                 @Override
@@ -918,13 +905,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 @Override
                                 public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                                     return Lists.of(
-                                            ExpressionFunctionParameterName.with("parameters").variable(Object.class)
+                                            ExpressionFunctionParameterName.with("parameters")
+                                                    .variable(Object.class)
                                     );
-                                }
-
-                                @Override
-                                public Set<ExpressionFunctionKind> kinds() {
-                                    return Sets.empty();
                                 }
 
                                 @Override

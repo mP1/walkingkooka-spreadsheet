@@ -98,8 +98,8 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
@@ -10935,13 +10935,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     return Lists.of(
                                             ExpressionFunctionParameterName.with("parameters")
                                                     .variable(Object.class)
-                                    );
-                                }
-
-                                @Override
-                                public Set<ExpressionFunctionKind> kinds() {
-                                    return Sets.of(
-                                            ExpressionFunctionKind.EVALUATE_PARAMETERS
+                                                    .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
                                     );
                                 }
                             };
@@ -10960,13 +10954,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     return Lists.of(
                                             ExpressionFunctionParameterName.with("parameters")
                                                     .variable(Object.class)
-                                    );
-                                }
-
-                                @Override
-                                public Set<ExpressionFunctionKind> kinds() {
-                                    return Sets.of(
-                                            ExpressionFunctionKind.EVALUATE_PARAMETERS
+                                                    .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
                                     );
                                 }
                             };
@@ -10984,11 +10972,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                             ExpressionFunctionParameterName.with("parameters")
                                                     .variable(Object.class)
                                     );
-                                }
-
-                                @Override
-                                public Set<ExpressionFunctionKind> kinds() {
-                                    return Sets.empty();
                                 }
 
                                 @Override

@@ -44,20 +44,18 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpression;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -115,20 +113,13 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
             return Lists.of(
                     ExpressionFunctionParameterName.with("strings")
                             .variable(String.class)
+                            .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
             );
         }
 
         @Override
         public Class<String> returnType() {
             return String.class;
-        }
-
-        @Override
-        public Set<ExpressionFunctionKind> kinds() {
-            return EnumSet.of(
-                    ExpressionFunctionKind.CONVERT_PARAMETERS,
-                    ExpressionFunctionKind.EVALUATE_PARAMETERS
-            );
         }
     };
 
@@ -152,20 +143,13 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
             return Lists.of(NUMBER);
         }
 
-        private final ExpressionFunctionParameter<ExpressionNumber> NUMBER =  ExpressionFunctionParameterName.with("number")
-                .required(ExpressionNumber.class);
+        private final ExpressionFunctionParameter<ExpressionNumber> NUMBER = ExpressionFunctionParameterName.with("number")
+                .required(ExpressionNumber.class)
+                .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
 
         @Override
         public Class<ExpressionNumber> returnType() {
             return ExpressionNumber.class;
-        }
-
-        @Override
-        public Set<ExpressionFunctionKind> kinds() {
-            return EnumSet.of(
-                    ExpressionFunctionKind.CONVERT_PARAMETERS,
-                    ExpressionFunctionKind.EVALUATE_PARAMETERS
-            );
         }
     };
 
