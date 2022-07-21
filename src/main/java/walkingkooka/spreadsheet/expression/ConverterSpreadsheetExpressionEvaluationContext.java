@@ -54,35 +54,35 @@ import java.util.Optional;
  * {@link SpreadsheetExpressionEvaluationContext} is useful.
  * <br>
  */
-final class FunctionParameterConverterSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
+final class ConverterSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
 
-    static FunctionParameterConverterSpreadsheetExpressionEvaluationContext with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
-                                                                                 final SpreadsheetExpressionEvaluationContext context) {
+    static ConverterSpreadsheetExpressionEvaluationContext with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
+                                                                final SpreadsheetExpressionEvaluationContext context) {
         Objects.requireNonNull(converter, "general");
         Objects.requireNonNull(context, "context");
 
-        return context instanceof FunctionParameterConverterSpreadsheetExpressionEvaluationContext ?
+        return context instanceof ConverterSpreadsheetExpressionEvaluationContext ?
                 unwrap(
                         converter,
-                        (FunctionParameterConverterSpreadsheetExpressionEvaluationContext) context
+                        (ConverterSpreadsheetExpressionEvaluationContext) context
                 ) :
-                new FunctionParameterConverterSpreadsheetExpressionEvaluationContext(
+                new ConverterSpreadsheetExpressionEvaluationContext(
                         converter,
                         context
                 );
     }
 
-    private static FunctionParameterConverterSpreadsheetExpressionEvaluationContext unwrap(final Converter<SpreadsheetExpressionEvaluationContext> converter,
-                                                                                           final FunctionParameterConverterSpreadsheetExpressionEvaluationContext context) {
-        return new FunctionParameterConverterSpreadsheetExpressionEvaluationContext(
+    private static ConverterSpreadsheetExpressionEvaluationContext unwrap(final Converter<SpreadsheetExpressionEvaluationContext> converter,
+                                                                          final ConverterSpreadsheetExpressionEvaluationContext context) {
+        return new ConverterSpreadsheetExpressionEvaluationContext(
                 converter,
                 context.context
         );
     }
 
 
-    private FunctionParameterConverterSpreadsheetExpressionEvaluationContext(final Converter<SpreadsheetExpressionEvaluationContext> converter,
-                                                                             final SpreadsheetExpressionEvaluationContext context) {
+    private ConverterSpreadsheetExpressionEvaluationContext(final Converter<SpreadsheetExpressionEvaluationContext> converter,
+                                                            final SpreadsheetExpressionEvaluationContext context) {
         this.converter = converter;
         this.context = context;
     }

@@ -68,11 +68,11 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     }
 
     /**
-     * {@see FunctionParameterConverterSpreadsheetExpressionEvaluationContext}
+     * {@see ConverterSpreadsheetExpressionEvaluationContext}
      */
     public static SpreadsheetExpressionEvaluationContext functionParameterConverter(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                                                     final SpreadsheetExpressionEvaluationContext context) {
-        return FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
+        return ConverterSpreadsheetExpressionEvaluationContext.with(
                 converter,
                 context
         );
