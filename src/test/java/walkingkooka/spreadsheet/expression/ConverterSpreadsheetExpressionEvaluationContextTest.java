@@ -62,7 +62,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class FunctionParameterConverterSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<FunctionParameterConverterSpreadsheetExpressionEvaluationContext> {
+public final class ConverterSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<ConverterSpreadsheetExpressionEvaluationContext> {
 
     private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.DECIMAL128);
 
@@ -178,7 +178,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
     public void testWithNullConverterFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
+                () -> ConverterSpreadsheetExpressionEvaluationContext.with(
                         null,
                         SpreadsheetExpressionEvaluationContexts.fake()
                 )
@@ -189,7 +189,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
     public void testWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
+                () -> ConverterSpreadsheetExpressionEvaluationContext.with(
                         Converters.fake(),
                         null
                 )
@@ -201,7 +201,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
         final Converter<SpreadsheetExpressionEvaluationContext> converter = Converters.fake();
-        final FunctionParameterConverterSpreadsheetExpressionEvaluationContext created = FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
+        final ConverterSpreadsheetExpressionEvaluationContext created = ConverterSpreadsheetExpressionEvaluationContext.with(
                 converter,
                 context
         );
@@ -214,13 +214,13 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
     public void testWithDoubleWrap() {
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
-        final FunctionParameterConverterSpreadsheetExpressionEvaluationContext first = FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
+        final ConverterSpreadsheetExpressionEvaluationContext first = ConverterSpreadsheetExpressionEvaluationContext.with(
                 Converters.fake(),
                 context
         );
 
         final Converter<SpreadsheetExpressionEvaluationContext> converter = Converters.fake();
-        final FunctionParameterConverterSpreadsheetExpressionEvaluationContext doubleWrapped = FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
+        final ConverterSpreadsheetExpressionEvaluationContext doubleWrapped = ConverterSpreadsheetExpressionEvaluationContext.with(
                 converter,
                 first
         );
@@ -386,7 +386,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
 
     private <T> void applyWithAndCheck(final FunctionExpression function,
                                        final T expected) {
-        final FunctionParameterConverterSpreadsheetExpressionEvaluationContext context = this.createContext();
+        final ConverterSpreadsheetExpressionEvaluationContext context = this.createContext();
         final ExpressionFunction<T, ExpressionEvaluationContext> function2 =
                 Cast.to(
                         context.function(function.name())
@@ -410,8 +410,8 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
     // helpers..........................................................................................................
 
     @Override
-    public FunctionParameterConverterSpreadsheetExpressionEvaluationContext createContext() {
-        return FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
+    public ConverterSpreadsheetExpressionEvaluationContext createContext() {
+        return ConverterSpreadsheetExpressionEvaluationContext.with(
                 new Converter<>() {
                     @Override
                     public boolean canConvert(final Object value,
@@ -455,7 +455,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
         this.toStringAndCheck(
-                FunctionParameterConverterSpreadsheetExpressionEvaluationContext.with(
+                ConverterSpreadsheetExpressionEvaluationContext.with(
                         converter,
                         context
                 ),
@@ -508,7 +508,7 @@ public final class FunctionParameterConverterSpreadsheetExpressionEvaluationCont
     // ClassTesting....................................................................................................
 
     @Override
-    public Class<FunctionParameterConverterSpreadsheetExpressionEvaluationContext> type() {
-        return FunctionParameterConverterSpreadsheetExpressionEvaluationContext.class;
+    public Class<ConverterSpreadsheetExpressionEvaluationContext> type() {
+        return ConverterSpreadsheetExpressionEvaluationContext.class;
     }
 }
