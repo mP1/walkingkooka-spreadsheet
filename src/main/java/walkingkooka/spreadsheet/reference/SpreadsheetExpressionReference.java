@@ -36,6 +36,11 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
      */
     public abstract SpreadsheetCellRange cellRange();
 
+    /**
+     * Returns this {@link SpreadsheetExpressionReference} in relative form. This is a no-op for {@link SpreadsheetLabelName}.
+     */
+    abstract public SpreadsheetExpressionReference toRelative();
+
     // SpreadsheetExpressionReferenceVisitor............................................................................
 
     abstract void accept(final SpreadsheetExpressionReferenceVisitor visitor);
