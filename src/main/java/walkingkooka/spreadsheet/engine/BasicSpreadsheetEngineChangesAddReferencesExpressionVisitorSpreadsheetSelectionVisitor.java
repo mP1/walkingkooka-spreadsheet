@@ -19,23 +19,23 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReference;
 
 /**
- * A {@link SpreadsheetExpressionReferenceVisitor} that adds references to each reference present within cell formula.
+ * A {@link SpreadsheetSelectionVisitor} that adds references to each reference present within cell formula.
  */
-final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
+final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor with(final SpreadsheetCellReference target,
-                                                                                                                 final SpreadsheetEngineContext context) {
-        return new BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(target, context);
+    static BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor with(final SpreadsheetCellReference target,
+                                                                                                       final SpreadsheetEngineContext context) {
+        return new BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor(target, context);
     }
 
     // VisibleForTesting
-    BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(final SpreadsheetCellReference target,
-                                                                                                     final SpreadsheetEngineContext context) {
+    BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor(final SpreadsheetCellReference target,
+                                                                                           final SpreadsheetEngineContext context) {
         super();
         this.target = target;
         this.context = context;

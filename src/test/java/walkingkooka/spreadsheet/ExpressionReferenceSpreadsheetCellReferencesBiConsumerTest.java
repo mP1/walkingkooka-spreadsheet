@@ -24,6 +24,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -31,7 +32,6 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
 
@@ -87,7 +87,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
         this.acceptAndCheck(this.labelRangeC1D2(), this.cellC1(), this.cellC2());
     }
 
-    private void acceptAndCheck(final ExpressionReference reference,
+    private void acceptAndCheck(final SpreadsheetExpressionReference reference,
                                 final SpreadsheetCellReference... references) {
         final List<SpreadsheetCellReference> actual = Lists.array();
         this.createBiConsumer().accept(reference, actual::add);

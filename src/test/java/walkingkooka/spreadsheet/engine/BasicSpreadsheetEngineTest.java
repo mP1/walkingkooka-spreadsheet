@@ -10988,7 +10988,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             private Function<ExpressionReference, Optional<Object>> references() {
                 return (r -> {
                     if (r instanceof SpreadsheetExpressionReference) {
-                        final SpreadsheetCellReference cell = this.resolveIfLabel((SpreadsheetSelection) r).toCellOrFail();
+                        final SpreadsheetCellReference cell = this.resolveIfLabel((SpreadsheetExpressionReference) r)
+                                .toCellOrFail();
                         final SpreadsheetDelta delta = engine.loadCell(
                                 cell,
                                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,

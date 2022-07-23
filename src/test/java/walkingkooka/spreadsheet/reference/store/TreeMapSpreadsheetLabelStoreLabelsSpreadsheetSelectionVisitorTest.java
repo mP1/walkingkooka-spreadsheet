@@ -21,14 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
 import java.util.Map;
 
-public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitorTest implements SpreadsheetExpressionReferenceVisitorTesting<TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor> {
+public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor> {
 
     @Test
     public void testToString() {
@@ -43,7 +43,7 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionRefere
                 label2, label2.mapping(a1)
         );
 
-        final TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor visitor = new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor(
+        final TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor(
                 mappings,
                 a1
         );
@@ -58,8 +58,8 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionRefere
     }
 
     @Override
-    public TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor(null, null);
+    public TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor createVisitor() {
+        return new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor(null, null);
     }
 
     @Override
@@ -73,7 +73,7 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionRefere
     }
 
     @Override
-    public Class<TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor> type() {
-        return TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor.class;
+    public Class<TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor> type() {
+        return TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor.class;
     }
 }

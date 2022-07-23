@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.util.PropertiesPath;
@@ -285,49 +284,6 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
                 UnsupportedOperationException.class,
                 () -> this.createSelection().focused(SpreadsheetViewportSelectionAnchor.NONE)
         );
-    }
-
-    // SpreadsheetExpressionReferenceVisitor.............................................................................
-
-    @Test
-    public void testSpreadsheetExpressionReferenceVisitorAccept() {
-        final StringBuilder b = new StringBuilder();
-        final SpreadsheetLabelName reference = this.createSelection();
-
-        new FakeSpreadsheetExpressionReferenceVisitor() {
-            @Override
-            protected Visiting startVisit(final ExpressionReference r) {
-                assertSame(reference, r);
-                b.append("1");
-                return Visiting.CONTINUE;
-            }
-
-            @Override
-            protected void endVisit(final ExpressionReference r) {
-                assertSame(reference, r);
-                b.append("2");
-            }
-
-            @Override
-            protected Visiting startVisit(final SpreadsheetExpressionReference r) {
-                assertSame(reference, r);
-                b.append("3");
-                return Visiting.CONTINUE;
-            }
-
-            @Override
-            protected void endVisit(final SpreadsheetExpressionReference r) {
-                assertSame(reference, r);
-                b.append("4");
-            }
-
-            @Override
-            protected void visit(final SpreadsheetLabelName r) {
-                assertSame(reference, r);
-                b.append("5");
-            }
-        }.accept(reference);
-        this.checkEquals("13542", b.toString());
     }
 
     // equalsIgnoreReferenceKind.........................................................................................

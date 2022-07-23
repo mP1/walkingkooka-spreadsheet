@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -31,24 +31,24 @@ import java.util.Optional;
  * Accepts a {@link SpreadsheetLabelName} and returns a {@link SpreadsheetCellReference} or {@link Optional#empty()},
  * using a {@link SpreadsheetLabelStore} to resolve labels.
  */
-final class SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
+final class SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     private final SpreadsheetLabelStore store;
     private SpreadsheetCellReference reference = null;
 
-    static Optional<SpreadsheetCellReference> reference(final ExpressionReference reference,
+    static Optional<SpreadsheetCellReference> reference(final SpreadsheetExpressionReference reference,
                                                         final SpreadsheetLabelStore store) {
         Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(store, "store");
 
-        final SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor visitor = new SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor(store);
+        final SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor(store);
         visitor.accept(reference);
         return Optional.ofNullable(
                 visitor.reference
         );
     }
 
-    SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor(final SpreadsheetLabelStore store) {
+    SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor(final SpreadsheetLabelStore store) {
         super();
         this.store = store;
     }

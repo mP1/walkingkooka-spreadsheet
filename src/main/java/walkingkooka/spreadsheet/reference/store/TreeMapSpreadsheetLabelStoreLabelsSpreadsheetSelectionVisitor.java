@@ -21,21 +21,21 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 
 import java.util.Map;
 import java.util.Set;
 
 /**
- * A {@link SpreadsheetExpressionReferenceVisitor} that visits all mappings, and aims to return only {@link SpreadsheetLabelName} that map to the given {@link SpreadsheetCellReference}.
+ * A {@link SpreadsheetSelectionVisitor} that visits all mappings, and aims to return only {@link SpreadsheetLabelName} that map to the given {@link SpreadsheetCellReference}.
  */
-final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
+final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static Set<SpreadsheetLabelMapping> gather(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
                                                final SpreadsheetExpressionReference selection) {
-        final TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor visitor = new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor(
+        final TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor(
                 mappings,
                 selection
         );
@@ -47,8 +47,8 @@ final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisi
     }
 
     // VisibleForTesting
-    TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
-                                                                            final SpreadsheetExpressionReference selection) {
+    TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
+                                                                  final SpreadsheetExpressionReference selection) {
         super();
 
         this.filter = selection;

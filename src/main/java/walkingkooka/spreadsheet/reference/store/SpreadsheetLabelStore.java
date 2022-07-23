@@ -52,7 +52,7 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
      * Attempts to resolve the given label to a {@link SpreadsheetCellReference}.
      */
     default Optional<SpreadsheetCellReference> cellReference(final SpreadsheetExpressionReference reference) {
-        return SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor.reference(reference, this);
+        return SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor.reference(reference, this);
     }
 
     /**

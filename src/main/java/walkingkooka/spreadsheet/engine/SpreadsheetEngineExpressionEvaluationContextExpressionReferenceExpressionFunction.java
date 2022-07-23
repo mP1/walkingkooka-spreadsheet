@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -57,8 +58,8 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     public Optional<Object> apply(final ExpressionReference reference) {
         Objects.requireNonNull(reference, "values");
 
-        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor.values(
-                reference,
+        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor.values(
+                (SpreadsheetExpressionReference) reference,
                 this.engine,
                 this.context
         );

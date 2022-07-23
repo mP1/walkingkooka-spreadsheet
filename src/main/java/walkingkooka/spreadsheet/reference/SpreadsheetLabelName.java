@@ -139,13 +139,6 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
         visitor.visit(this);
     }
 
-    // SpreadsheetExpressionReferenceVisitor............................................................................
-
-    @Override
-    void accept(final SpreadsheetExpressionReferenceVisitor visitor) {
-        visitor.visit(this);
-    }
-
     // Predicate<SpreadsheetCellReference>..............................................................................
 
     /**

@@ -18,14 +18,14 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.ExpressionVisitor;
 import walkingkooka.tree.expression.ReferenceExpression;
 
 /**
- * Accepts an {@link Expression} passes all {@link ExpressionReference} to a {@link SpreadsheetExpressionReferenceVisitor}.
+ * Accepts an {@link Expression} passes all {@link ExpressionReference} to a {@link walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor}.
  */
 final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor extends ExpressionVisitor {
 
@@ -47,12 +47,12 @@ final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor extends 
     @Override
     protected void visit(final ReferenceExpression node) {
         if (null == this.visitor) {
-            this.visitor = BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor.with(
+            this.visitor = BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor.with(
                     this.target,
                     this.context
             );
         }
-        this.visitor.accept(node.value());
+        this.visitor.accept((SpreadsheetExpressionReference) node.value());
     }
 
     /**
@@ -63,9 +63,9 @@ final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor extends 
     private final SpreadsheetEngineContext context;
 
     /**
-     * Cache of the {@link BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor} that will process each and every encountered {@link ReferenceExpression}.
+     * Cache of the {@link BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor} that will process each and every encountered {@link ReferenceExpression}.
      */
-    private BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor visitor;
+    private BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor visitor;
 
     @Override
     public String toString() {
