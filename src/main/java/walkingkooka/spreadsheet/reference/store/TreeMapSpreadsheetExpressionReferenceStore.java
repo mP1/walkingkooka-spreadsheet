@@ -22,7 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.store.Store;
 import walkingkooka.store.Watchers;
 
@@ -37,11 +37,11 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetExpressionReferenceStore} that uses a {@link Map} to store an entity to {@link SpreadsheetCellReference}
  */
-// using a type parameter of T extends SpreadsheetCellReferenceOrLabelName & Comparable<T> causes a Transpiler ERROR.
+// using a type parameter of T extends SpreadsheetExpressionReference & Comparable<T> causes a Transpiler ERROR.
 // Error:TreeMapSpreadsheetExpressionReferenceStore.java:39: This class must implement the inherited abstract method SpreadsheetExpressionReference.equalsIgnoreReferenceK
-final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetCellReferenceOrLabelName> implements SpreadsheetExpressionReferenceStore<T> {
+final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference> implements SpreadsheetExpressionReferenceStore<T> {
 
-    static <T extends SpreadsheetCellReferenceOrLabelName> TreeMapSpreadsheetExpressionReferenceStore<T> create() {
+    static <T extends SpreadsheetExpressionReference> TreeMapSpreadsheetExpressionReferenceStore<T> create() {
         return new TreeMapSpreadsheetExpressionReferenceStore<>();
     }
 
