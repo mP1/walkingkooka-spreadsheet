@@ -1286,7 +1286,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         // non frozen viewport
         SpreadsheetCellReference nonFrozenHome = context.resolveIfLabel(
-                viewport.cellOrLabel()
+                viewport.home()
         ).toCellOrFail();
         if (null != frozenColumns) {
             final SpreadsheetColumnReference right = frozenColumns.end();

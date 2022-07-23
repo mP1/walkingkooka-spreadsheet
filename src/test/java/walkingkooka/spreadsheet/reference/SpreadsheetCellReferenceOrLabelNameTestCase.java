@@ -47,7 +47,7 @@ public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<S extends Spre
 
         final SpreadsheetViewport viewport = selection.viewport(width, height);
 
-        this.checkEquals(selection.toRelative(), viewport.cellOrLabel(), "cellOrLabel");
+        this.checkEquals(selection.toRelative(), viewport.home(), "home");
         this.checkEquals(width, viewport.width(), "width");
         this.checkEquals(height, viewport.height(), "height");
     }

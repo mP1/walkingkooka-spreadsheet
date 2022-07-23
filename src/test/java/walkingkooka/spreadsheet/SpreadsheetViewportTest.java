@@ -43,7 +43,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     private final static double HEIGHT = 30;
 
     @Test
-    public void testWithNullReferenceFails() {
+    public void testWithNullHomeFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetViewport.with(null, WIDTH, HEIGHT));
     }
 
@@ -142,7 +142,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     @Test
-    public void testEqualsDifferentCellReference() {
+    public void testEqualsDifferentHome() {
         this.checkNotEquals(SpreadsheetViewport.with(SpreadsheetSelection.parseCell("a1"), WIDTH, HEIGHT));
     }
 
@@ -389,17 +389,21 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     private void check(final SpreadsheetViewport viewport,
-                       final SpreadsheetCellReferenceOrLabelName reference,
+                       final SpreadsheetCellReferenceOrLabelName home,
                        final double width,
                        final double height) {
-        this.checkReference(viewport, reference);
+        this.checkHome(viewport, home);
         this.checkWidth(viewport, width);
         this.checkHeight(viewport, height);
     }
 
-    private void checkReference(final SpreadsheetViewport viewport,
-                                final SpreadsheetCellReferenceOrLabelName reference) {
-        this.checkEquals(reference, viewport.cellOrLabel(), () -> "viewport width=" + viewport);
+    private void checkHome(final SpreadsheetViewport viewport,
+                           final SpreadsheetCellReferenceOrLabelName home) {
+        this.checkEquals(
+                home,
+                viewport.home(),
+                () -> "viewport: " + viewport
+        );
     }
 
     private void checkWidth(final SpreadsheetViewport viewport,
