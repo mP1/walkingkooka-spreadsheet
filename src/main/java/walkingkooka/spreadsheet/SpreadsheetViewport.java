@@ -30,7 +30,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Objects;
 
 /**
- * Represents a rectangle selection of cells, starting from an cell cellOrLabel covering the given pixel dimensions.
+ * Represents a rectangle selection of cells, starting from an cell home covering the given pixel dimensions.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport> {
@@ -40,7 +40,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     /**
      * Parses the width and height from text in the following format.
      * <pre>
-     * cell-cellOrLabel SEPARATOR width SEPARATOR height
+     * cell-home SEPARATOR width SEPARATOR height
      * </pre>
      * Where width and height are decimal numbers.
      */
@@ -55,19 +55,19 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
                 throw new IllegalArgumentException("Expected 3 tokens in " + CharSequences.quoteAndEscape(text));
         }
 
-        final SpreadsheetCellReferenceOrLabelName cellOrLabel;
+        final SpreadsheetCellReferenceOrLabelName home;
         try {
-            cellOrLabel = SpreadsheetSelection.parseCellOrLabel(tokens[0]);
+            home = SpreadsheetSelection.parseCellOrLabel(tokens[0]);
         } catch (final NumberFormatException cause) {
-            throw new IllegalArgumentException("Invalid cellOrLabel in " + CharSequences.quoteAndEscape(text));
+            throw new IllegalArgumentException("Invalid home in " + CharSequences.quoteAndEscape(text));
         }
 
-        if (!(cellOrLabel.isCellReference() || cellOrLabel.isLabelName())) {
-            throw new IllegalArgumentException("CellOrLabel must be cell or label got " + cellOrLabel);
+        if (!(home.isCellReference() || home.isLabelName())) {
+            throw new IllegalArgumentException("CellOrLabel must be cell or label got " + home);
         }
 
         return with(
-                cellOrLabel,
+                home,
                 parseDouble(tokens[1], "width", text),
                 parseDouble(tokens[2], "height", text)
         );
@@ -86,30 +86,30 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     /**
      * Factory that creates a new {@link SpreadsheetViewport}.
      */
-    public static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName cellOrLabel,
+    public static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName home,
                                            final double width,
                                            final double height) {
-        Objects.requireNonNull(cellOrLabel, "cellOrLabel");
+        Objects.requireNonNull(home, "home");
         if (width < 0) {
             throw new IllegalArgumentException("Invalid width " + width + " < 0");
         }
         if (height < 0) {
             throw new IllegalArgumentException("Invalid height " + width + " < 0");
         }
-        return new SpreadsheetViewport(cellOrLabel, width, height);
+        return new SpreadsheetViewport(home, width, height);
     }
 
-    private SpreadsheetViewport(final SpreadsheetCellReferenceOrLabelName cellOrLabel,
+    private SpreadsheetViewport(final SpreadsheetCellReferenceOrLabelName home,
                                 final double width,
                                 final double height) {
         super();
-        this.cellOrLabel = cellOrLabel.toRelative();
+        this.home = home.toRelative();
         this.width = width;
         this.height = height;
     }
 
     /**
-     * Tests if the offset (assumed to be relative to {@link #cellOrLabel} is within this rectangle.
+     * Tests if the offset (assumed to be relative to {@link #home} is within this rectangle.
      * This will be used to test or load cells to fill a rectangular region or window of the spreadsheet being displayed.
      */
     public boolean test(final double x,
@@ -120,11 +120,11 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
     // properties.......................................................................................................
 
-    public SpreadsheetCellReferenceOrLabelName cellOrLabel() {
-        return this.cellOrLabel;
+    public SpreadsheetCellReferenceOrLabelName home() {
+        return this.home;
     }
 
-    private final SpreadsheetCellReferenceOrLabelName cellOrLabel;
+    private final SpreadsheetCellReferenceOrLabelName home;
 
     public double width() {
         return this.width;
@@ -143,7 +143,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.cellOrLabel,
+                this.home,
                 this.width,
                 this.height
         );
@@ -157,14 +157,14 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     }
 
     private boolean equals0(final SpreadsheetViewport other) {
-        return this.cellOrLabel.equals(other.cellOrLabel) &&
+        return this.home.equals(other.home) &&
                 this.width == other.width &&
                 this.height == other.height;
     }
 
     @Override
     public String toString() {
-        return this.cellOrLabel.toString() +
+        return this.home.toString() +
                 SEPARATOR +
                 toStringWithoutTrailingZero(this.width) +
                 SEPARATOR +
