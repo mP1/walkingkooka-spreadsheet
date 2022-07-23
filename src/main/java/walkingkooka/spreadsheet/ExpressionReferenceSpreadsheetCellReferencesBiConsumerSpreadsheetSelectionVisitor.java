@@ -19,27 +19,27 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 
 import java.util.function.Consumer;
 
 /**
- * A {@link SpreadsheetExpressionReferenceVisitor} that resolves labels and ranges to a {@link SpreadsheetCellReference}
+ * A {@link SpreadsheetSelectionVisitor} that resolves labels and ranges to a {@link SpreadsheetCellReference}
  */
-final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
+final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static void findSpreadsheetCellReferences(final ExpressionReference reference,
+    static void findSpreadsheetCellReferences(final SpreadsheetExpressionReference reference,
                                               final ExpressionReferenceSpreadsheetCellReferencesBiConsumer stores,
                                               final Consumer<SpreadsheetCellReference> references) {
-        new ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor(stores, references)
+        new ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitor(stores, references)
                 .accept(reference);
     }
 
     // @VisibleForTesting
-    ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor(final ExpressionReferenceSpreadsheetCellReferencesBiConsumer stores,
-                                                                                                final Consumer<SpreadsheetCellReference> references) {
+    ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitor(final ExpressionReferenceSpreadsheetCellReferencesBiConsumer stores,
+                                                                                      final Consumer<SpreadsheetCellReference> references) {
         super();
         this.stores = stores;
         this.references = references;

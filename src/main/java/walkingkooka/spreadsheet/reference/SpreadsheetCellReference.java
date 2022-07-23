@@ -313,13 +313,6 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
         visitor.visit(this);
     }
 
-    // SpreadsheetExpressionReferenceVisitor............................................................................
-
-    @Override
-    void accept(final SpreadsheetExpressionReferenceVisitor visitor) {
-        visitor.visit(this);
-    }
-
     // TreePrintable....................................................................................................
 
     @Override

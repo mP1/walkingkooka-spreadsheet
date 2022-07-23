@@ -20,24 +20,24 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 
-public final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitorTest implements
-        SpreadsheetExpressionReferenceVisitorTesting<ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor>,
-        ToStringTesting<ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor> {
+public final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitorTest implements
+        SpreadsheetSelectionVisitorTesting<ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor>,
+        ToStringTesting<ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor> {
 
     @Test
     public void testToString() {
         final ExpressionReferenceSpreadsheetCellReferenceFunction f = ExpressionReferenceSpreadsheetCellReferenceFunction.with(SpreadsheetLabelStores.fake(),
                 SpreadsheetCellRangeStores.fake());
-        this.toStringAndCheck(new ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor(f), f + " null");
+        this.toStringAndCheck(new ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor(f), f + " null");
     }
 
     @Override
-    public ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor(null);
+    public ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor createVisitor() {
+        return new ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor(null);
     }
 
     @Override
@@ -51,7 +51,7 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadshee
     }
 
     @Override
-    public Class<ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor> type() {
-        return ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor.class;
+    public Class<ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor> type() {
+        return ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor.class;
     }
 }

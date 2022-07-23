@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -1334,49 +1333,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
             }
         }.accept(selection);
         this.checkEquals("132", b.toString());
-    }
-
-    // SpreadsheetExpressionReferenceVisitor.............................................................................
-
-    @Test
-    public void testSpreadsheetExpressionReferenceVisitorAccept() {
-        final StringBuilder b = new StringBuilder();
-        final SpreadsheetCellReference reference = this.createSelection();
-
-        new FakeSpreadsheetExpressionReferenceVisitor() {
-            @Override
-            protected Visiting startVisit(final ExpressionReference r) {
-                assertSame(reference, r);
-                b.append("1");
-                return Visiting.CONTINUE;
-            }
-
-            @Override
-            protected void endVisit(final ExpressionReference r) {
-                assertSame(reference, r);
-                b.append("2");
-            }
-
-            @Override
-            protected Visiting startVisit(final SpreadsheetExpressionReference r) {
-                assertSame(reference, r);
-                b.append("3");
-                return Visiting.CONTINUE;
-            }
-
-            @Override
-            protected void endVisit(final SpreadsheetExpressionReference r) {
-                assertSame(reference, r);
-                b.append("4");
-            }
-
-            @Override
-            protected void visit(final SpreadsheetCellReference r) {
-                assertSame(reference, r);
-                b.append("5");
-            }
-        }.accept(reference);
-        this.checkEquals("13542", b.toString());
     }
 
     // TreePrintable....................................................................................................

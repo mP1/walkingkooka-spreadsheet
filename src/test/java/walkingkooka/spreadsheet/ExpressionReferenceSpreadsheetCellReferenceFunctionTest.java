@@ -23,6 +23,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -30,7 +31,6 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.util.FunctionTesting;
 
 import java.util.Optional;
@@ -38,7 +38,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ExpressionReferenceSpreadsheetCellReferenceFunctionTest implements FunctionTesting<ExpressionReferenceSpreadsheetCellReferenceFunction,
-        ExpressionReference,
+        SpreadsheetExpressionReference,
         Optional<SpreadsheetCellReference>>,
         ClassTesting2<ExpressionReferenceSpreadsheetCellReferenceFunction>,
         ToStringTesting<ExpressionReferenceSpreadsheetCellReferenceFunction> {

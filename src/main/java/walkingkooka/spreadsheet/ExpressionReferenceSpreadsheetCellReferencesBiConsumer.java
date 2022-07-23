@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -29,7 +30,7 @@ import java.util.function.Consumer;
 /**
  * Finds all {@link SpreadsheetCellReference} for an {@link ExpressionReference} and feeds them to a {@link Consumer}.
  */
-final class ExpressionReferenceSpreadsheetCellReferencesBiConsumer implements BiConsumer<ExpressionReference, Consumer<SpreadsheetCellReference>> {
+final class ExpressionReferenceSpreadsheetCellReferencesBiConsumer implements BiConsumer<SpreadsheetExpressionReference, Consumer<SpreadsheetCellReference>> {
 
     static ExpressionReferenceSpreadsheetCellReferencesBiConsumer with(final SpreadsheetLabelStore labelStore,
                                                                        final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore) {
@@ -47,11 +48,12 @@ final class ExpressionReferenceSpreadsheetCellReferencesBiConsumer implements Bi
     }
 
     @Override
-    public void accept(final ExpressionReference reference,
+    public void accept(final SpreadsheetExpressionReference reference,
                        final Consumer<SpreadsheetCellReference> spreadsheetCellReferences) {
         Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(rangeToCellStore, "rangeToCellStore");
-        ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor.findSpreadsheetCellReferences(reference,
+        ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitor.findSpreadsheetCellReferences(
+                reference,
                 this,
                 spreadsheetCellReferences);
     }

@@ -22,8 +22,9 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.EnumSet;
@@ -36,13 +37,13 @@ import java.util.stream.Collectors;
  * A visitor which resolves any {@link ExpressionReference} down to values. A range may match many cells, resulting in
  * a {@link List} while a single cell might return a value.
  */
-final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
+final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static Optional<Object> values(final ExpressionReference reference,
+    static Optional<Object> values(final SpreadsheetExpressionReference reference,
                                    final SpreadsheetEngine engine,
                                    final SpreadsheetEngineContext context) {
-        final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor visitor =
-                new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor(engine, context);
+        final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor visitor =
+                new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor(engine, context);
         visitor.accept(reference);
         return Optional.ofNullable(visitor.value);
     }
@@ -53,8 +54,8 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     private final static Set<SpreadsheetDeltaProperties> SPREADSHEET_DELTA_PROPERTIES = EnumSet.of(SpreadsheetDeltaProperties.CELLS);
 
     // @VisibleForTesting
-    SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor(final SpreadsheetEngine engine,
-                                                                                                                           final SpreadsheetEngineContext context) {
+    SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor(final SpreadsheetEngine engine,
+                                                                                                                 final SpreadsheetEngineContext context) {
         super();
         this.engine = engine;
         this.context = context;

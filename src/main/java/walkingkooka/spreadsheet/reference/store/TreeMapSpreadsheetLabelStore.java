@@ -190,14 +190,14 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     public Set<? super ExpressionReference> loadCellReferencesOrRanges(final SpreadsheetLabelName label) {
         Objects.requireNonNull(label, "label");
 
-        return Sets.readOnly(TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor.gather(label, this.mappings));
+        return Sets.readOnly(TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor.gather(label, this.mappings));
     }
 
     @Override
     public Set<SpreadsheetLabelMapping> labels(final SpreadsheetExpressionReference selection) {
         Objects.requireNonNull(selection, "selection");
 
-        return TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor.gather(
+        return TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor.gather(
                 this.mappings,
                 selection
         );

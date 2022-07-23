@@ -21,15 +21,15 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 
 import java.util.function.Consumer;
 
-public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitorTest implements
-        SpreadsheetExpressionReferenceVisitorTesting<ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor>,
-        ToStringTesting<ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor> {
+public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitorTest implements
+        SpreadsheetSelectionVisitorTesting<ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitor>,
+        ToStringTesting<ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitor> {
 
     @Test
     public void testToString() {
@@ -46,13 +46,13 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreads
                 return "SpreadsheetCellReferences123";
             }
         };
-        this.toStringAndCheck(new ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor(f, references),
+        this.toStringAndCheck(new ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitor(f, references),
                 f + " SpreadsheetCellReferences123");
     }
 
     @Override
-    public ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor(null, null);
+    public ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitor createVisitor() {
+        return new ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitor(null, null);
     }
 
     @Override
@@ -66,7 +66,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreads
     }
 
     @Override
-    public Class<ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor> type() {
-        return ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor.class;
+    public Class<ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitor> type() {
+        return ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSelectionVisitor.class;
     }
 }

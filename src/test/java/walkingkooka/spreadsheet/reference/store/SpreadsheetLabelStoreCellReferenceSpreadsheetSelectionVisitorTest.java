@@ -22,21 +22,21 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitorTest implements SpreadsheetExpressionReferenceVisitorTesting<SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor> {
+public final class SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor> {
 
     @Test
     public void testNullReferenceFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor.reference(null, SpreadsheetLabelStores.fake())
+                () -> SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor.reference(null, SpreadsheetLabelStores.fake())
         );
     }
 
@@ -44,7 +44,7 @@ public final class SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionRefere
     public void testNullLabelStoreFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor.reference(cell(), null)
+                () -> SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor.reference(cell(), null)
         );
     }
 
@@ -131,19 +131,19 @@ public final class SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionRefere
                                    final SpreadsheetCellReference expected) {
         this.checkEquals(
                 Optional.ofNullable(expected),
-                SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor.reference(reference, store),
+                SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor.reference(reference, store),
                 () -> "reference " + reference + " store=" + store
         );
     }
 
     @Override
-    public SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor(null);
+    public SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor createVisitor() {
+        return new SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor(null);
     }
 
     @Override
-    public Class<SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor> type() {
-        return SpreadsheetLabelStoreCellReferenceSpreadsheetExpressionReferenceVisitor.class;
+    public Class<SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor> type() {
+        return SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor.class;
     }
 
     @Override

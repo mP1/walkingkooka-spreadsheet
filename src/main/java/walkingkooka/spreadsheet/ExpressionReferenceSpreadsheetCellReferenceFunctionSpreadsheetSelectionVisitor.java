@@ -19,26 +19,26 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetExpressionReferenceVisitor} that resolves labels and ranges to a {@link SpreadsheetCellReference}
+ * A {@link SpreadsheetSelectionVisitor} that resolves labels and ranges to a {@link SpreadsheetCellReference}
  */
-final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
+final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static Optional<SpreadsheetCellReference> toSpreadsheetCellReference(final ExpressionReference reference,
+    static Optional<SpreadsheetCellReference> toSpreadsheetCellReference(final SpreadsheetExpressionReference reference,
                                                                          final ExpressionReferenceSpreadsheetCellReferenceFunction function) {
-        final ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor visitor = new ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor(function);
+        final ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor visitor = new ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor(function);
         visitor.accept(reference);
         return Optional.ofNullable(visitor.reference);
     }
 
     // @VisibleForTesting
-    ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor(final ExpressionReferenceSpreadsheetCellReferenceFunction function) {
+    ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor(final ExpressionReferenceSpreadsheetCellReferenceFunction function) {
         super();
         this.function = function;
     }

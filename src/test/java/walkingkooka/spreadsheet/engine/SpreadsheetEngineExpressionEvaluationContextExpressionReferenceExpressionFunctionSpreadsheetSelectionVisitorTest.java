@@ -25,10 +25,10 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 import walkingkooka.spreadsheet.reference.store.FakeSpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
@@ -37,8 +37,8 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import java.util.Optional;
 import java.util.Set;
 
-public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitorTest
-        implements SpreadsheetExpressionReferenceVisitorTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor> {
+public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitorTest
+        implements SpreadsheetSelectionVisitorTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor> {
 
     @Test
     public void testCell() {
@@ -257,7 +257,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
                                 final Optional<Object> value) {
         this.checkEquals(
                 value,
-                SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor.values(
+                SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor.values(
                         reference,
                         engine,
                         context
@@ -267,8 +267,8 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
     }
 
     @Override
-    public SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor(
+    public SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor createVisitor() {
+        return new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor(
                 null,
                 null
         );
@@ -280,8 +280,8 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
     }
 
     @Override
-    public Class<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor> type() {
-        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor.class;
+    public Class<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor> type() {
+        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor.class;
     }
 
     @Override

@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
-import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -31,8 +31,8 @@ public final class SpreadsheetBiConsumers implements PublicStaticHelper {
     /**
      * {@see ExpressionReferenceSpreadsheetCellReferencesBiConsumer}
      */
-    public static BiConsumer<ExpressionReference, Consumer<SpreadsheetCellReference>> expressionReferenceSpreadsheetCellReferences(final SpreadsheetLabelStore labelStore,
-                                                                                                                                   final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore) {
+    public static BiConsumer<SpreadsheetExpressionReference, Consumer<SpreadsheetCellReference>> expressionReferenceSpreadsheetCellReferences(final SpreadsheetLabelStore labelStore,
+                                                                                                                                              final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore) {
         return ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(labelStore, rangeToCellStore);
     }
 

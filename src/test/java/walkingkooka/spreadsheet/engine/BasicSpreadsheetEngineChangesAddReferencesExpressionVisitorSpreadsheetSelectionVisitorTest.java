@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
-public final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor>
-        implements SpreadsheetExpressionReferenceVisitorTesting<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor> {
+public final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor>
+        implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor> {
 
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.parseCell("A99");
 
@@ -33,14 +33,14 @@ public final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSp
     }
 
     @Override
-    public Class<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor> type() {
-        return BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor.class;
+    public Class<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor> type() {
+        return BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor.class;
     }
 
     // VisitingTesting.............................................................................................................
 
     @Override
-    public BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(CELL, null);
+    public BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor createVisitor() {
+        return new BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor(CELL, null);
     }
 }

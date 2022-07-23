@@ -18,8 +18,9 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
@@ -29,7 +30,7 @@ import java.util.function.Function;
 /**
  * Resolves an {@link ExpressionReference} to a {@link SpreadsheetCellReference}.
  */
-final class ExpressionReferenceSpreadsheetCellReferenceFunction implements Function<ExpressionReference, Optional<SpreadsheetCellReference>> {
+final class ExpressionReferenceSpreadsheetCellReferenceFunction implements Function<SpreadsheetExpressionReference, Optional<SpreadsheetCellReference>> {
 
     static ExpressionReferenceSpreadsheetCellReferenceFunction with(final SpreadsheetLabelStore labelStore,
                                                                     final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCellStore) {
@@ -46,10 +47,13 @@ final class ExpressionReferenceSpreadsheetCellReferenceFunction implements Funct
     }
 
     @Override
-    public Optional<SpreadsheetCellReference> apply(final ExpressionReference reference) {
+    public Optional<SpreadsheetCellReference> apply(final SpreadsheetExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
-        return ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor.toSpreadsheetCellReference(reference, this);
+        return ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor.toSpreadsheetCellReference(
+                reference,
+                this
+        );
     }
 
     final SpreadsheetLabelStore labelStore;

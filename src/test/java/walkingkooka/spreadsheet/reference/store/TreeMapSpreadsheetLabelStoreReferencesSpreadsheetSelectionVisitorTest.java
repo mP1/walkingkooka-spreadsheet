@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
-public final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitorTest implements SpreadsheetExpressionReferenceVisitorTesting<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor> {
+public final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor> {
 
     @Override
-    public TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor(null);
+    public TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor createVisitor() {
+        return new TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor(null);
     }
 
     @Override
@@ -38,7 +38,7 @@ public final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionRe
     }
 
     @Override
-    public Class<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor> type() {
-        return TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor.class;
+    public Class<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor> type() {
+        return TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor.class;
     }
 }

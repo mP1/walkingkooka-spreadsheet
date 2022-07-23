@@ -510,13 +510,6 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
         visitor.visit(this);
     }
 
-    // SpreadsheetExpressionReferenceVisitor............................................................................
-
-    @Override
-    void accept(final SpreadsheetExpressionReferenceVisitor visitor) {
-        visitor.visit(this);
-    }
-
     // Iterable.........................................................................................................
 
     @Override

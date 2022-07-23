@@ -25,11 +25,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
@@ -241,7 +241,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Deletes the mapping because the target was deleted or fixes the reference.
      */
     final void deleteOrFixLabelMapping(final SpreadsheetLabelMapping mapping) {
-        new SpreadsheetExpressionReferenceVisitor() {
+        new SpreadsheetSelectionVisitor() {
             @Override
             protected void visit(final SpreadsheetCellReference reference) {
                 BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.deleteOrFixSpreadsheetCellReference(reference, mapping);
@@ -328,7 +328,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Fixes a mapping because the target was moved because of inserted columns or rows.
      */
     final void insertFixLabelMapping(final SpreadsheetLabelMapping mapping) {
-        new SpreadsheetExpressionReferenceVisitor() {
+        new SpreadsheetSelectionVisitor() {
             @Override
             protected void visit(final SpreadsheetCellReference reference) {
                 BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.insertFixSpreadsheetCellReference(reference, mapping);
