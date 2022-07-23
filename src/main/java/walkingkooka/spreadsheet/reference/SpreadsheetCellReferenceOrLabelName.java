@@ -58,5 +58,6 @@ abstract public class SpreadsheetCellReferenceOrLabelName extends SpreadsheetExp
         return SpreadsheetViewport.with(this, width, height);
     }
 
+    @Override
     abstract public SpreadsheetCellReferenceOrLabelName toRelative();
 }
