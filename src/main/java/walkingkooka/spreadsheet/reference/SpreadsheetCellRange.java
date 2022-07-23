@@ -22,6 +22,7 @@ import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
@@ -259,6 +260,19 @@ public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
     @Override
     public SpreadsheetCellReference toCellOrFail() {
         return this.begin();
+    }
+
+    /**
+     * Creates a {@link SpreadsheetViewport} with the begin or top/left cell.
+     */
+    @Override
+    public SpreadsheetViewport viewport(final double width,
+                                        final double height) {
+        return SpreadsheetViewport.with(
+                this.begin(),
+                width,
+                height
+        );
     }
 
     /**

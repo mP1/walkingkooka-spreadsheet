@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.tree.expression.ExpressionReference;
 
 /**
@@ -40,4 +41,10 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
      * Returns this {@link SpreadsheetExpressionReference} in relative form. This is a no-op for {@link SpreadsheetLabelName}.
      */
     abstract public SpreadsheetExpressionReference toRelative();
+
+    /**
+     * Factory that creates a {@link SpreadsheetViewport}.
+     */
+    abstract public SpreadsheetViewport viewport(final double width,
+                                                 final double height);
 }
