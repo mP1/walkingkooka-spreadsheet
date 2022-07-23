@@ -414,6 +414,21 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferen
         this.checkEquals(rows, different.rowReferenceRange());
     }
 
+    // viewport.........................................................................................................
+
+    @Test
+    public void testViewport() {
+        final SpreadsheetCellRange range = this.createSelection();
+        final double width = 30.5;
+        final double height = 40.5;
+
+        this.viewportAndCheck(
+                range,
+                width,
+                height,
+                range.begin()
+        );
+    }
     // simplify.........................................................................................................
 
     @Test

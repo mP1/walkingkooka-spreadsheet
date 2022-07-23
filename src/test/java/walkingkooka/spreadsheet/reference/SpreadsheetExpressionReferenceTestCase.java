@@ -18,11 +18,29 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.SpreadsheetViewport;
 
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> extends SpreadsheetSelectionTestCase<R> {
 
     SpreadsheetExpressionReferenceTestCase() {
         super();
+    }
+    // viewport........................................................................................................
+
+    final void viewportAndCheck(final SpreadsheetExpressionReference selection,
+                                final double width,
+                                final double height,
+                                final SpreadsheetExpressionReference expected) {
+        final SpreadsheetViewport viewport = selection.viewport(width, height);
+        this.checkEquals(
+                SpreadsheetViewport.with(
+                        expected,
+                        width,
+                        height
+                ),
+                viewport,
+                () -> selection + " viewport " + width + "," + height
+        );
     }
 
     // equalsIgnoreReferenceKind..........................................................................................

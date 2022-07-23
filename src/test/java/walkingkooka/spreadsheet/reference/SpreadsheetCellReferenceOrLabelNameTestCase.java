@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting2;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
 
 public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<S extends SpreadsheetCellReferenceOrLabelName & Comparable<S>> extends SpreadsheetExpressionReferenceTestCase<S>
         implements ComparableTesting2<S> {
@@ -41,14 +40,15 @@ public abstract class SpreadsheetCellReferenceOrLabelNameTestCase<S extends Spre
 
     @Test
     public final void testViewport() {
+        final SpreadsheetExpressionReference selection = this.createSelection();
         final double width = 30.5;
         final double height = 40.5;
-        final S selection = this.createSelection();
 
-        final SpreadsheetViewport viewport = selection.viewport(width, height);
-
-        this.checkEquals(selection.toRelative(), viewport.home(), "home");
-        this.checkEquals(width, viewport.width(), "width");
-        this.checkEquals(height, viewport.height(), "height");
+        this.viewportAndCheck(
+                selection,
+                width,
+                height,
+                selection
+        );
     }
 }
