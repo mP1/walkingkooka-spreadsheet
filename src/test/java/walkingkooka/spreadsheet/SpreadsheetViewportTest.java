@@ -23,7 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
@@ -389,7 +389,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     private void check(final SpreadsheetViewport viewport,
-                       final SpreadsheetCellReferenceOrLabelName home,
+                       final SpreadsheetExpressionReference home,
                        final double width,
                        final double height) {
         this.checkHome(viewport, home);
@@ -398,7 +398,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     private void checkHome(final SpreadsheetViewport viewport,
-                           final SpreadsheetCellReferenceOrLabelName home) {
+                           final SpreadsheetExpressionReference home) {
         this.checkEquals(
                 home,
                 viewport.home(),
