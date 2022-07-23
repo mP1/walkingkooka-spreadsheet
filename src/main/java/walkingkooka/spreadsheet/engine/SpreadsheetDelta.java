@@ -29,7 +29,6 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -1093,7 +1092,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final List<JsonNode> resolved = Lists.array();
 
         for (final Map.Entry<JsonPropertyName, JsonNode> child : cells.objectOrFail().asMap().entrySet()) {
-            final SpreadsheetCellReferenceOrLabelName cellReferenceOrLabelName = SpreadsheetSelection.parseCellOrLabel(child.getKey().value());
+            final SpreadsheetSelection cellReferenceOrLabelName = SpreadsheetSelection.parseCellOrLabel(child.getKey().value());
 
             final JsonNode value = child.getValue();
             resolved.add(
