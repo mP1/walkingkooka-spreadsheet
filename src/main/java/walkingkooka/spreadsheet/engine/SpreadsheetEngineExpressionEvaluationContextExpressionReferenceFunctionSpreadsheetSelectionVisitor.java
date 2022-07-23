@@ -37,13 +37,13 @@ import java.util.stream.Collectors;
  * A visitor which resolves any {@link ExpressionReference} down to values. A range may match many cells, resulting in
  * a {@link List} while a single cell might return a value.
  */
-final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static Optional<Object> values(final SpreadsheetExpressionReference reference,
                                    final SpreadsheetEngine engine,
                                    final SpreadsheetEngineContext context) {
-        final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor visitor =
-                new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor(engine, context);
+        final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor visitor =
+                new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor(engine, context);
         visitor.accept(reference);
         return Optional.ofNullable(visitor.value);
     }
@@ -54,8 +54,8 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     private final static Set<SpreadsheetDeltaProperties> SPREADSHEET_DELTA_PROPERTIES = EnumSet.of(SpreadsheetDeltaProperties.CELLS);
 
     // @VisibleForTesting
-    SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor(final SpreadsheetEngine engine,
-                                                                                                                 final SpreadsheetEngineContext context) {
+    SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor(final SpreadsheetEngine engine,
+                                                                                                       final SpreadsheetEngineContext context) {
         super();
         this.engine = engine;
         this.context = context;
