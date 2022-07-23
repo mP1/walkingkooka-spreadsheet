@@ -29,17 +29,17 @@ import java.util.function.Function;
  * A {@link Function} which may be passed to {@link walkingkooka.tree.expression.ExpressionEvaluationContexts#basic}
  * and acts as a bridge resolving {@link ExpressionReference} to a {@link Expression}.
  */
-final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction implements Function<ExpressionReference, Optional<Object>> {
+final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction implements Function<ExpressionReference, Optional<Object>> {
 
     /**
-     * Factory that creates a new {@link SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction}
+     * Factory that creates a new {@link SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction}
      */
-    static SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction with(final SpreadsheetEngine engine,
-                                                                                                  final SpreadsheetEngineContext context) {
+    static SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction with(final SpreadsheetEngine engine,
+                                                                                        final SpreadsheetEngineContext context) {
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(context, "context");
 
-        return new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction(
+        return new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction(
                 engine,
                 context
         );
@@ -48,8 +48,8 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     /**
      * Private ctor.
      */
-    private SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction(final SpreadsheetEngine engine,
-                                                                                              final SpreadsheetEngineContext context) {
+    private SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction(final SpreadsheetEngine engine,
+                                                                                    final SpreadsheetEngineContext context) {
         this.engine = engine;
         this.context = context;
     }
@@ -58,7 +58,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     public Optional<Object> apply(final ExpressionReference reference) {
         Objects.requireNonNull(reference, "values");
 
-        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitor.values(
+        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor.values(
                 (SpreadsheetExpressionReference) reference,
                 this.engine,
                 this.context

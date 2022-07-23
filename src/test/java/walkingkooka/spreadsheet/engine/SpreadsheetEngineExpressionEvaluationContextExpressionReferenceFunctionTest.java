@@ -25,14 +25,14 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionTest
-        implements FunctionTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction, ExpressionReference, Optional<Object>> {
+public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionTest
+        implements FunctionTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction, ExpressionReference, Optional<Object>> {
 
     @Test
     public void testWithNullEngineFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(null,
+                () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction.with(null,
                         this.spreadsheetEngineContext())
         );
     }
@@ -41,7 +41,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
     public void testWithNullLabelSpreadsheetEngineContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
+                () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction.with(
                         this.engine(),
                         null
                 )
@@ -49,8 +49,8 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
     }
 
     @Override
-    public SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction createFunction() {
-        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(
+    public SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction createFunction() {
+        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction.with(
                 this.engine(),
                 this.spreadsheetEngineContext()
         );
@@ -65,7 +65,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
     }
 
     @Override
-    public Class<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction> type() {
-        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.class;
+    public Class<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction> type() {
+        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction.class;
     }
 }
