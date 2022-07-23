@@ -40,7 +40,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     /**
      * Parses the width and height from text in the following format.
      * <pre>
-     * cell-home SEPARATOR width SEPARATOR height
+     * cell/label SEPARATOR width SEPARATOR height
      * </pre>
      * Where width and height are decimal numbers.
      */
@@ -63,7 +63,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
         }
 
         if (!(home.isCellReference() || home.isLabelName())) {
-            throw new IllegalArgumentException("CellOrLabel must be cell or label got " + home);
+            throw new IllegalArgumentException("home must be cell or label got " + home);
         }
 
         return with(
