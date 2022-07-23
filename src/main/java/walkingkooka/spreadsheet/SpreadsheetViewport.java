@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -55,9 +55,9 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
                 throw new IllegalArgumentException("Expected 3 tokens in " + CharSequences.quoteAndEscape(text));
         }
 
-        final SpreadsheetCellReferenceOrLabelName home;
+        final SpreadsheetExpressionReference home;
         try {
-            home = SpreadsheetSelection.parseCellOrLabel(tokens[0]);
+            home = SpreadsheetSelection.parseExpressionReference(tokens[0]);
         } catch (final NumberFormatException cause) {
             throw new IllegalArgumentException("Invalid home in " + CharSequences.quoteAndEscape(text));
         }
@@ -86,7 +86,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     /**
      * Factory that creates a new {@link SpreadsheetViewport}.
      */
-    public static SpreadsheetViewport with(final SpreadsheetCellReferenceOrLabelName home,
+    public static SpreadsheetViewport with(final SpreadsheetExpressionReference home,
                                            final double width,
                                            final double height) {
         Objects.requireNonNull(home, "home");
@@ -99,7 +99,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
         return new SpreadsheetViewport(home, width, height);
     }
 
-    private SpreadsheetViewport(final SpreadsheetCellReferenceOrLabelName home,
+    private SpreadsheetViewport(final SpreadsheetExpressionReference home,
                                 final double width,
                                 final double height) {
         super();
@@ -120,11 +120,11 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
 
     // properties.......................................................................................................
 
-    public SpreadsheetCellReferenceOrLabelName home() {
+    public SpreadsheetExpressionReference home() {
         return this.home;
     }
 
-    private final SpreadsheetCellReferenceOrLabelName home;
+    private final SpreadsheetExpressionReference home;
 
     public double width() {
         return this.width;
