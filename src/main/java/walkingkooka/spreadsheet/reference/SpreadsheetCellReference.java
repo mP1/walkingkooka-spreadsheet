@@ -21,6 +21,7 @@ import walkingkooka.compare.Comparators;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -31,8 +32,10 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
 
+import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -41,7 +44,7 @@ import java.util.function.Predicate;
  * {@link #compareTo(SpreadsheetCellReference)} ignores the {@link SpreadsheetReferenceKind} of the column and row.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLabelName
+public final class SpreadsheetCellReference extends SpreadsheetExpressionReference
         implements Comparable<SpreadsheetCellReference>,
         HateosResource<String> {
 
@@ -208,6 +211,28 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrLa
     @Override
     public SpreadsheetCellReference toCellOrFail() {
         return this;
+    }
+
+    @Override
+    public SpreadsheetSelection simplify() {
+        return this;
+    }
+
+    @Override
+    Set<SpreadsheetViewportSelectionAnchor> anchors() {
+        return ANCHORS;
+    }
+
+    private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
+
+    // SpreadsheetViewport..............................................................................................
+
+    /**
+     * Creates a {@link SpreadsheetViewport} using this as the top/left.
+     */
+    public SpreadsheetViewport viewport(final double width,
+                                        final double height) {
+        return SpreadsheetViewport.with(this, width, height);
     }
 
     // setFormula.......................................................................................................
