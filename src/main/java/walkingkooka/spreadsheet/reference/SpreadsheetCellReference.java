@@ -44,7 +44,7 @@ import java.util.function.Predicate;
  * {@link #compareTo(SpreadsheetCellReference)} ignores the {@link SpreadsheetReferenceKind} of the column and row.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetCellReference extends SpreadsheetExpressionReference
+public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRange
         implements Comparable<SpreadsheetCellReference>,
         HateosResource<String> {
 
