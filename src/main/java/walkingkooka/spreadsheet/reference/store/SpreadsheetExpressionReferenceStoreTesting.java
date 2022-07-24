@@ -22,7 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.StoreTesting;
 
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 @SuppressWarnings("unchecked")
 public interface SpreadsheetExpressionReferenceStoreTesting<S extends SpreadsheetExpressionReferenceStore<T>,
-        T extends SpreadsheetCellReferenceOrLabelName & Comparable<T>>
+        T extends SpreadsheetExpressionReference & Comparable<T>>
         extends StoreTesting<S, T, Set<SpreadsheetCellReference>>,
         TypeNameTesting<S> {
 
