@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
@@ -46,6 +47,11 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
 
     @Override
     public SpreadsheetParserToken parseExpression(final TextCursor expression) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
         throw new UnsupportedOperationException();
     }
 

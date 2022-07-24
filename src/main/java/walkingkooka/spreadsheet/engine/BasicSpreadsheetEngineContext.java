@@ -188,6 +188,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                             metadata,
                             this.functions,
                             this.function,
+                            this::resolveIfLabel,
                             this.now
                     )
             );

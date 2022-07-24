@@ -48,6 +48,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetMetadata spreadsheetMetadata,
                                                                final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                                                final Function<ExpressionReference, Optional<Object>> references,
+                                                               final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                                                final Supplier<LocalDateTime> now) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
                 cell,
@@ -56,6 +57,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                 spreadsheetMetadata,
                 functions,
                 references,
+                resolveIfLabel,
                 now
         );
     }

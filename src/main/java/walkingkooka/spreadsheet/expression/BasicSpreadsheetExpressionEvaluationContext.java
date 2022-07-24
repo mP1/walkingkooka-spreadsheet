@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
@@ -61,6 +62,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetMetadata spreadsheetMetadata,
                                                             final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                                             final Function<ExpressionReference, Optional<Object>> references,
+                                                            final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                                             final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(cellStore, "cellStore");
@@ -68,6 +70,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(references, "references");
+        Objects.requireNonNull(resolveIfLabel, "resolveIfLabel");
         Objects.requireNonNull(now, "now");
 
         return new BasicSpreadsheetExpressionEvaluationContext(
@@ -77,6 +80,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 spreadsheetMetadata,
                 functions,
                 references,
+                resolveIfLabel,
                 now
         );
     }
@@ -87,6 +91,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetMetadata spreadsheetMetadata,
                                                         final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                                         final Function<ExpressionReference, Optional<Object>> references,
+                                                        final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                                         final Supplier<LocalDateTime> now) {
         super();
         this.cell = cell;
@@ -95,6 +100,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.functions = functions;
         this.references = references;
+        this.resolveIfLabel = resolveIfLabel;
         this.now = now;
     }
 
@@ -153,6 +159,13 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .get()
                 .cast(SpreadsheetParserToken.class);
     }
+
+    @Override
+    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+        return this.resolveIfLabel.apply(selection);
+    }
+
+    private final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel;
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {

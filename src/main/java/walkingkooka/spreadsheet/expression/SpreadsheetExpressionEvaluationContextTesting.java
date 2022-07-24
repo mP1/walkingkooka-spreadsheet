@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
 
@@ -66,6 +67,26 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                 expected,
                 context.loadCell(cellReference),
                 () -> "loadCell " + cellReference
+        );
+    }
+
+    // resolveIfLabel...................................................................................................
+
+    @Test
+    default void testResolveIfLabelNullSelectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().resolveIfLabel(null)
+        );
+    }
+
+    default void resolveIfLabel(final C context,
+                                final SpreadsheetSelection selection,
+                                final SpreadsheetSelection expected) {
+        this.checkEquals(
+                expected,
+                context.resolveIfLabel(selection),
+                () -> "resolveIfLabel " + selection
         );
     }
 }
