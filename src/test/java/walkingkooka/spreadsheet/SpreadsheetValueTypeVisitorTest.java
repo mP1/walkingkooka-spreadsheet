@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -266,6 +267,40 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     public void testAcceptCellReference2() {
         new SpreadsheetValueTypeVisitor() {
         }.accept(SpreadsheetCellReference.class);
+    }
+
+    @Test
+    public void testAcceptCellReferenceOrRange() {
+        final StringBuilder b = new StringBuilder();
+        final Class<SpreadsheetCellReferenceOrRange> type = SpreadsheetCellReferenceOrRange.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2");
+            }
+
+            @Override
+            protected void visitCellReferenceOrRange() {
+                b.append("3");
+            }
+        }.accept(type);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptCellReferenceOrRange2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(SpreadsheetCellReferenceOrRange.class);
     }
 
     @Test
