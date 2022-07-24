@@ -37,7 +37,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import java.util.Optional;
 import java.util.Set;
 
-public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetSelectionVisitorTestEvaluationContextReference
+public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitorTest
         implements SpreadsheetSelectionVisitorTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor> {
 
     @Test
