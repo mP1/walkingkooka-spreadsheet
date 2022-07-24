@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
@@ -173,6 +174,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     @Override
     public SpreadsheetParserToken parseExpression(final TextCursor expression) {
         return this.context.parseExpression(expression);
+    }
+
+    @Override
+    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+        return this.context.resolveIfLabel(selection);
     }
 
     @Override

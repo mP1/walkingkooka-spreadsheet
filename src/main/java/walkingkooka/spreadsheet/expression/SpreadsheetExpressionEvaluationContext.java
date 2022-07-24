@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -77,6 +78,12 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
      * Loads the cell for the given {@link SpreadsheetCellReference}, note that the formula is not evaluated.
      */
     Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell);
+
+    /**
+     * If the {@link SpreadsheetSelection} is a {@link walkingkooka.spreadsheet.reference.SpreadsheetLabelName}
+     * resolve to a {@link SpreadsheetCellReference} or {@link walkingkooka.spreadsheet.reference.SpreadsheetCellRange}.
+     */
+    SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection);
 
     /**
      * Returns the {@link SpreadsheetMetadata} for the enclosing spreadsheet.

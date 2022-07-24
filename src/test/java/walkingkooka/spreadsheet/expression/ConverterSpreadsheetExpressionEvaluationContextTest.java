@@ -172,6 +172,11 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         throw new UnsupportedOperationException();
     };
 
+    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
+        Objects.requireNonNull(s, "selection");
+        throw new UnsupportedOperationException();
+    };
+
     // tests............................................................................................................
 
     @Test
@@ -442,6 +447,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         METADATA,
                         FUNCTIONS,
                         REFERENCES,
+                        RESOLVE_IF_LABEL,
                         LocalDateTime::now
                 )
         );
