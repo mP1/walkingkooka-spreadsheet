@@ -22,13 +22,16 @@ import walkingkooka.compare.Comparators;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
+import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 /**
@@ -40,7 +43,7 @@ import java.util.function.Predicate;
  * </pre>
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelName
+final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         implements Comparable<SpreadsheetLabelName>,
         Name {
 
@@ -130,6 +133,28 @@ final public class SpreadsheetLabelName extends SpreadsheetCellReferenceOrLabelN
     @Override
     public SpreadsheetCellRange cellRange() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetSelection simplify() {
+        return this;
+    }
+
+    @Override
+    Set<SpreadsheetViewportSelectionAnchor> anchors() {
+        return ANCHORS;
+    }
+
+    private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
+
+    // SpreadsheetViewport..............................................................................................
+
+    /**
+     * Creates a {@link SpreadsheetViewport} using this as the top/left.
+     */
+    public SpreadsheetViewport viewport(final double width,
+                                        final double height) {
+        return SpreadsheetViewport.with(this, width, height);
     }
 
     // SpreadsheetSelectionVisitor......................................................................................

@@ -237,10 +237,6 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}
      */
     public static SpreadsheetExpressionReference parseCellOrLabel(final String text) {
-        return SpreadsheetSelection.parseCellOrLabel0(text);
-    }
-
-    private static SpreadsheetCellReferenceOrLabelName parseCellOrLabel0(final String text) {
         checkText(text);
 
         return isCellReferenceText(text) ?
@@ -847,17 +843,6 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
-     * Accepts a json string and returns a {@link SpreadsheetCellReferenceOrLabelName} or fails.
-     */
-    static SpreadsheetCellReferenceOrLabelName unmarshallSpreadsheetCellReferenceOrLabelName(final JsonNode node,
-                                                                                             final JsonNodeUnmarshallContext context) {
-        return unmarshall0(
-                node,
-                SpreadsheetSelection::parseCellOrLabel0
-        );
-    }
-
-    /**
      * Generic helper that tries to convert the node into a string and call a parse method.
      */
     private static <R extends ExpressionReference> R unmarshall0(final JsonNode node,
@@ -910,12 +895,6 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         register(
                 SpreadsheetSelection::unmarshallRowRange,
                 SpreadsheetRowReferenceRange.class
-        );
-
-        //noinspection StaticInitializerReferencesSubClass
-        register(
-                SpreadsheetExpressionReference::unmarshallSpreadsheetCellReferenceOrLabelName,
-                SpreadsheetCellReferenceOrLabelName.class
         );
 
         SpreadsheetCell.NO_FORMATTED_CELL.isPresent();

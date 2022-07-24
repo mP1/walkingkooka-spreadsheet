@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
@@ -31,8 +32,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLabelNameTestCase<SpreadsheetLabelName>
-        implements NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName> {
+final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetLabelName>
+        implements ComparableTesting2<SpreadsheetLabelName>,
+        NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName> {
 
     @Test
     public void testCreateContainsSeparatorFails() {
@@ -153,6 +155,31 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetCellReferenceOrLa
     @Test
     public void testToCellOrFailFails() {
         this.toCellOrFailFails();
+    }
+
+    // simplify.........................................................................................................
+
+    @Test
+    public void testSimplify() {
+        this.simplifyAndCheck(
+                this.createSelection()
+        );
+    }
+
+    // SpreadsheetViewport.........................................................................................
+
+    @Test
+    public void testViewport() {
+        final SpreadsheetLabelName selection = this.createSelection();
+        final double width = 30.5;
+        final double height = 40.5;
+
+        this.viewportAndCheck(
+                selection,
+                width,
+                height,
+                selection
+        );
     }
 
     // Comparator ......................................................................................................

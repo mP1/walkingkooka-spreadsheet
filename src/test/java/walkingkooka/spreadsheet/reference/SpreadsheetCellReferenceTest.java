@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -34,8 +35,9 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReferenceOrLabelNameTestCase<SpreadsheetCellReference>
-        implements HateosResourceTesting<SpreadsheetCellReference> {
+public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetCellReference>
+        implements ComparableTesting2<SpreadsheetCellReference>,
+        HateosResourceTesting<SpreadsheetCellReference> {
 
     @Test
     public void testA1Constant() {
@@ -196,6 +198,31 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.toCellOrFailAndCheck(
                 reference,
                 reference
+        );
+    }
+
+    // simplify.........................................................................................................
+
+    @Test
+    public void testSimplify() {
+        this.simplifyAndCheck(
+                this.createSelection()
+        );
+    }
+
+    // SpreadsheetViewport.........................................................................................
+
+    @Test
+    public void testViewport() {
+        final SpreadsheetCellReference selection = this.createSelection();
+        final double width = 30.5;
+        final double height = 40.5;
+
+        this.viewportAndCheck(
+                selection,
+                width,
+                height,
+                selection
         );
     }
 
