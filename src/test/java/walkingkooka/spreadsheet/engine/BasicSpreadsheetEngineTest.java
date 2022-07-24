@@ -53,7 +53,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -11259,7 +11258,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private <E extends SpreadsheetCellReferenceOrLabelName & Comparable<E>>
+    private <E extends SpreadsheetExpressionReference & Comparable<E>>
     void loadReferencesAndCheck(final SpreadsheetExpressionReferenceStore<E> store,
                                 final E cell,
                                 final SpreadsheetCellReference... out) {
