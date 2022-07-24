@@ -1092,7 +1092,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final List<JsonNode> resolved = Lists.array();
 
         for (final Map.Entry<JsonPropertyName, JsonNode> child : cells.objectOrFail().asMap().entrySet()) {
-            final SpreadsheetSelection cellReferenceOrLabelName = SpreadsheetSelection.parseCellOrLabel(child.getKey().value());
+            final SpreadsheetExpressionReference cellReferenceOrLabelName = SpreadsheetSelection.parseCellOrLabel(child.getKey().value());
 
             final JsonNode value = child.getValue();
             resolved.add(

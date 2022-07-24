@@ -236,7 +236,11 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     /**
      * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}
      */
-    public static SpreadsheetCellReferenceOrLabelName parseCellOrLabel(final String text) {
+    public static SpreadsheetExpressionReference parseCellOrLabel(final String text) {
+        return SpreadsheetSelection.parseCellOrLabel0(text);
+    }
+
+    private static SpreadsheetCellReferenceOrLabelName parseCellOrLabel0(final String text) {
         checkText(text);
 
         return isCellReferenceText(text) ?
@@ -253,7 +257,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         checkText(text);
         Objects.requireNonNull(labelToCell, "labelToCell");
 
-        final SpreadsheetCellReferenceOrLabelName cellOrLabel = parseCellOrLabel(text);
+        final SpreadsheetExpressionReference cellOrLabel = parseCellOrLabel(text);
         return cellOrLabel.isLabelName() ?
                 labelToCell.apply((SpreadsheetLabelName) cellOrLabel) :
                 (SpreadsheetCellReference) cellOrLabel;
@@ -849,7 +853,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                                                                                              final JsonNodeUnmarshallContext context) {
         return unmarshall0(
                 node,
-                SpreadsheetExpressionReference::parseCellOrLabel
+                SpreadsheetSelection::parseCellOrLabel0
         );
     }
 

@@ -78,14 +78,15 @@ public final class SpreadsheetCellReferenceOrLabelNameTest implements ClassTesti
     @Override
     public SpreadsheetCellReferenceOrLabelName unmarshall(final JsonNode node,
                                                           final JsonNodeUnmarshallContext context) {
-        return SpreadsheetExpressionReference.unmarshallSpreadsheetCellReferenceOrLabelName(
-                node,
-                context
-        );
+        return (SpreadsheetCellReferenceOrLabelName)
+                SpreadsheetExpressionReference.unmarshallSpreadsheetCellReferenceOrLabelName(
+                        node,
+                        context
+                );
     }
 
     @Override
     public SpreadsheetCellReferenceOrLabelName createJsonNodeMarshallingValue() {
-        return SpreadsheetSelection.parseCellOrLabel("A1");
+        return (SpreadsheetCellReferenceOrLabelName) SpreadsheetSelection.parseCellOrLabel("A1");
     }
 }

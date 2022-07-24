@@ -308,8 +308,9 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     private void parseCellOrLabelAndCheck(final String text,
-                                          final SpreadsheetCellReferenceOrLabelName expected) {
-        final SpreadsheetCellReferenceOrLabelName parsed = SpreadsheetSelection.parseCellOrLabel(text);
+                                          final SpreadsheetExpressionReference expected) {
+        final SpreadsheetExpressionReference parsed = SpreadsheetSelection.parseCellOrLabel(text);
+
         this.checkEquals(
                 expected,
                 parsed,
