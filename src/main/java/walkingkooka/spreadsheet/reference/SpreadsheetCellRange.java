@@ -47,7 +47,7 @@ import java.util.stream.Stream;
  * of other {@link SpreadsheetSelection}.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetCellRange extends SpreadsheetExpressionReference
+public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         implements Comparable<SpreadsheetCellRange>,
         HasRange<SpreadsheetCellReference>,
         HasRangeBounds<SpreadsheetCellReference>,

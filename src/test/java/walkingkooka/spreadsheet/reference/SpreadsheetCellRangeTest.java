@@ -43,7 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellRangeTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetCellRange>
+public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellRange>
         implements
         ComparableTesting2<SpreadsheetCellRange>,
         IterableTesting<SpreadsheetCellRange, SpreadsheetCellReference>,
