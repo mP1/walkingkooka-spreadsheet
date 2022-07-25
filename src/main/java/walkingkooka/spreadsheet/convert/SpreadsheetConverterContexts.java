@@ -18,6 +18,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.convert.Converter;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -29,9 +30,11 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetConverterContext}
      */
-    public static SpreadsheetConverterContext basic(final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+    public static SpreadsheetConverterContext basic(final Converter<SpreadsheetConverterContext> converter,
+                                                    final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                                     final ExpressionNumberConverterContext context) {
         return BasicSpreadsheetConverterContext.with(
+                converter,
                 resolveIfLabel,
                 context
         );
