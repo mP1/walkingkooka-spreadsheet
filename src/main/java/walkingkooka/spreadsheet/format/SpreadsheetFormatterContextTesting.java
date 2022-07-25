@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
-import walkingkooka.convert.ConverterContextTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumberConverterContextTesting;
 
 import java.util.Optional;
 
-public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatterContext> extends ConverterContextTesting<C> {
+public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatterContext> extends ExpressionNumberConverterContextTesting<C> {
 
     default C createCanConvert() {
         return this.createContext();
