@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
+import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -31,22 +32,52 @@ import java.util.function.Function;
 
 final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext {
 
-    static BasicSpreadsheetConverterContext with(final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+    static BasicSpreadsheetConverterContext with(final Converter<SpreadsheetConverterContext> converter,
+                                                 final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                                  final ExpressionNumberConverterContext context) {
+        Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(resolveIfLabel, "resolveIfLabel");
         Objects.requireNonNull(context, "context");
 
         return new BasicSpreadsheetConverterContext(
+                converter,
                 resolveIfLabel,
                 context
         );
     }
 
-    private BasicSpreadsheetConverterContext(final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+    private BasicSpreadsheetConverterContext(final Converter<SpreadsheetConverterContext> converter,
+                                             final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                              final ExpressionNumberConverterContext context) {
+        this.converter = converter;
         this.resolveIfLabel = resolveIfLabel;
         this.context = context;
     }
+
+
+    @Override
+    public boolean canConvert(final Object value,
+                              final Class<?> type) {
+        return this.converter.canConvert(
+                value,
+                type,
+                this
+        );
+    }
+
+    @Override
+    public <T> Either<T, String> convert(final Object value,
+                                         final Class<T> type) {
+        return this.converter.convert(
+                value,
+                type,
+                this
+        );
+    }
+
+    private final Converter<SpreadsheetConverterContext> converter;
+
+    // resolveIfLabel..................................................................................................
 
     @Override
     public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
@@ -60,18 +91,6 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     @Override
     public Locale locale() {
         return this.context.locale();
-    }
-
-    @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type) {
-        return this.context.canConvert(value, type);
-    }
-
-    @Override
-    public <T> Either<T, String> convert(final Object value,
-                                         final Class<T> type) {
-        return this.context.convert(value, type);
     }
 
     @Override
@@ -163,7 +182,9 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     @Override
     public String toString() {
-        return this.resolveIfLabel +
+        return this.converter +
+                " " +
+                this.resolveIfLabel +
                 " " +
                 this.context;
     }

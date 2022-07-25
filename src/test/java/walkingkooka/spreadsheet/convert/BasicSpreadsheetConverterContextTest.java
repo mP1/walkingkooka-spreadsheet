@@ -26,7 +26,6 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -41,17 +40,30 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DEFAULT;
 
-    private final static Converter<ExpressionNumberConverterContext> CONVERTER = Converters.numberNumber();
+    private final static Converter<SpreadsheetConverterContext> CONVERTER = Converters.numberNumber();
 
     private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
         throw new UnsupportedOperationException();
     };
 
     @Test
+    public void testWithNullConverterFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetConverterContext.with(
+                        null,
+                        RESOLVE_IF_LABEL,
+                        ExpressionNumberConverterContexts.fake()
+                )
+        );
+    }
+
+    @Test
     public void testWithNullResolveIfLabelFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetConverterContext.with(
+                        CONVERTER,
                         null,
                         ExpressionNumberConverterContexts.fake()
                 )
@@ -63,6 +75,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetConverterContext.with(
+                        CONVERTER,
                         RESOLVE_IF_LABEL,
                         null
                 )
@@ -82,7 +95,9 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                RESOLVE_IF_LABEL +
+                CONVERTER +
+                        " " +
+                        RESOLVE_IF_LABEL +
                         " " +
                         this.converterContext() +
                         " " +
@@ -93,9 +108,10 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     @Override
     public BasicSpreadsheetConverterContext createContext() {
         return BasicSpreadsheetConverterContext.with(
+                CONVERTER,
                 RESOLVE_IF_LABEL,
                 ExpressionNumberConverterContexts.basic(
-                        CONVERTER,
+                        Converters.fake(),
                         this.converterContext(),
                         KIND
                 )
