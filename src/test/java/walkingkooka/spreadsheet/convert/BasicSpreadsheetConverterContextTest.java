@@ -25,6 +25,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -32,6 +33,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -41,11 +43,29 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static Converter<ExpressionNumberConverterContext> CONVERTER = Converters.numberNumber();
 
+    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
+        throw new UnsupportedOperationException();
+    };
+
+    @Test
+    public void testWithNullResolveIfLabelFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetConverterContext.with(
+                        null,
+                        ExpressionNumberConverterContexts.fake()
+                )
+        );
+    }
+
     @Test
     public void testWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> BasicSpreadsheetConverterContext.with(null)
+                () -> BasicSpreadsheetConverterContext.with(
+                        RESOLVE_IF_LABEL,
+                        null
+                )
         );
     }
 
@@ -62,13 +82,18 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                this.converterContext() + " " + KIND
+                RESOLVE_IF_LABEL +
+                        " " +
+                        this.converterContext() +
+                        " " +
+                        KIND
         );
     }
 
     @Override
     public BasicSpreadsheetConverterContext createContext() {
         return BasicSpreadsheetConverterContext.with(
+                RESOLVE_IF_LABEL,
                 ExpressionNumberConverterContexts.basic(
                         CONVERTER,
                         this.converterContext(),

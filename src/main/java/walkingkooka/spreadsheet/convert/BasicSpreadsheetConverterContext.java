@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -26,18 +27,35 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.function.Function;
 
 final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext {
 
-    static BasicSpreadsheetConverterContext with(final ExpressionNumberConverterContext context) {
+    static BasicSpreadsheetConverterContext with(final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+                                                 final ExpressionNumberConverterContext context) {
+        Objects.requireNonNull(resolveIfLabel, "resolveIfLabel");
         Objects.requireNonNull(context, "context");
 
-        return new BasicSpreadsheetConverterContext(context);
+        return new BasicSpreadsheetConverterContext(
+                resolveIfLabel,
+                context
+        );
     }
 
-    private BasicSpreadsheetConverterContext(final ExpressionNumberConverterContext context) {
+    private BasicSpreadsheetConverterContext(final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+                                             final ExpressionNumberConverterContext context) {
+        this.resolveIfLabel = resolveIfLabel;
         this.context = context;
     }
+
+    @Override
+    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+        return this.resolveIfLabel.apply(selection);
+    }
+
+    private final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel;
+
+    // ExpressionNumberConverterContext.................................................................................
 
     @Override
     public Locale locale() {
@@ -145,6 +163,8 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     @Override
     public String toString() {
-        return this.context.toString();
+        return this.resolveIfLabel +
+                " " +
+                this.context;
     }
 }
