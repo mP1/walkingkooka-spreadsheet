@@ -17,7 +17,13 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.FakeExpressionNumberConverterContext;
 
 public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConverterContext implements SpreadsheetConverterContext {
+
+    @Override
+    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+        throw new UnsupportedOperationException();
+    }
 }
