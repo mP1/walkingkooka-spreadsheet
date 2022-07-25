@@ -19,8 +19,20 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+
+import java.util.Objects;
 
 public final class SpreadsheetConverterContexts implements PublicStaticHelper {
+
+    /**
+     * {@see BasicSpreadsheetConverterContext}
+     */
+    public static SpreadsheetConverterContext basic(final ExpressionNumberConverterContext context) {
+        Objects.requireNonNull(context, "context");
+
+        return BasicSpreadsheetConverterContext.with(context);
+    }
 
     /**
      * {@see FakeSpreadsheetConverterContext}
