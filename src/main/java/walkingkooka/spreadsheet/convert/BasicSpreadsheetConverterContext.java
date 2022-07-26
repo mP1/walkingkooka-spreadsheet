@@ -75,6 +75,11 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         );
     }
 
+    @Override
+    public Converter<SpreadsheetConverterContext> converter() {
+        return this.converter;
+    }
+
     private final Converter<SpreadsheetConverterContext> converter;
 
     // resolveIfLabel..................................................................................................
