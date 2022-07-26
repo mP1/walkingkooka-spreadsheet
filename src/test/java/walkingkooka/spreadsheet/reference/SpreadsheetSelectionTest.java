@@ -410,6 +410,83 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    // parseCellOrCellRange.............................................................................................
+
+    @Test
+    public void testParseCellOrCellRangeNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.parseCellOrCellRange(null)
+        );
+    }
+
+    @Test
+    public void testParseCellOrCellRangeEmptyFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseCellOrCellRange("")
+        );
+    }
+
+    @Test
+    public void testParseCellOrCellRangeInvalidCellFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseCellOrCellRange("A@@@")
+        );
+        this.checkEquals(
+                "Unrecognized character 'A' at (1,1) \"A@@@\" expected (SpreadsheetColumnReference, SpreadsheetRowReference)",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testParseCellOrCellRangeInvalidCellRangeFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseCellOrCellRange("A1:")
+        );
+        this.checkEquals(
+                "Empty upper range in \"A1:\"",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testParseCellOrCellRangeWithCell() {
+        this.parseCellOrCellRangeAndCheck(
+                "A1",
+                SpreadsheetSelection.parseCell("A1")
+        );
+    }
+
+    @Test
+    public void testParseCellOrCellRangeWithCellRange() {
+        this.parseCellOrCellRangeAndCheck(
+                "B2:C3",
+                SpreadsheetSelection.parseCellOrCellRange("B2:C3")
+        );
+    }
+
+    @Test
+    public void testParseCellOrCellRangeWithCellRangeSame() {
+        this.parseCellOrCellRangeAndCheck(
+                "D4:D4",
+                SpreadsheetSelection.parseCellOrCellRange("D4:D4")
+        );
+    }
+
+    private void parseCellOrCellRangeAndCheck(final String text,
+                                              final SpreadsheetCellReferenceOrRange expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetSelection.parseCellOrCellRange(text),
+                () -> "parseCellOrCellRange(" + CharSequences.quoteAndEscape(text) + ")"
+        );
+    }
+
     // parseRow.........................................................................................................
 
     @Test

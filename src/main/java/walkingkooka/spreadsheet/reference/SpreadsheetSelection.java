@@ -260,6 +260,23 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
+     * Parsers the text expecting a valid {@link SpreadsheetCell} or {@link SpreadsheetCellRange} or fails.
+     * eg
+     * <pre>
+     * A1, // cell
+     * B2:C3 // cell-range
+     * D4:D4 // cell-range
+     * </pre>
+     */
+    public static SpreadsheetCellReferenceOrRange parseCellOrCellRange(final String text) {
+        checkText(text);
+
+        return -1 == text.indexOf(SEPARATOR.character()) ?
+                parseCell(text) :
+                parseCellRange(text);
+    }
+
+    /**
      * Parsers the text expecting a valid {@link SpreadsheetCellRange} or fails.
      * eg
      * <pre>
