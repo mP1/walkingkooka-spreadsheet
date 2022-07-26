@@ -23,12 +23,14 @@ import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -36,7 +38,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 
-public final class SpreadsheetFormatterConverterTest implements ConverterTesting2<SpreadsheetFormatterConverter, ExpressionNumberConverterContext> {
+public final class SpreadsheetFormatterConverterTest implements ConverterTesting2<SpreadsheetFormatterConverter, SpreadsheetConverterContext> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
@@ -112,11 +114,22 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
     }
 
     @Override
-    public ExpressionNumberConverterContext createContext() {
-        return ExpressionNumberConverterContexts.basic(Converters.fake(),
-                ConverterContexts.basic(Converters.fake(),
-                        DateTimeContexts.fake(), DecimalNumberContexts.american(MathContext.UNLIMITED)),
-                EXPRESSION_NUMBER_KIND);
+    public SpreadsheetConverterContext createContext() {
+        return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverters.basic(),
+                (s) -> {
+                    throw new UnsupportedOperationException();
+                },
+                ExpressionNumberConverterContexts.basic(
+                        Converters.fake(),
+                        ConverterContexts.basic(
+                                Converters.fake(),
+                                DateTimeContexts.fake(),
+                                DecimalNumberContexts.american(MathContext.UNLIMITED)
+                        ),
+                        EXPRESSION_NUMBER_KIND
+                )
+        );
     }
 
     @Override

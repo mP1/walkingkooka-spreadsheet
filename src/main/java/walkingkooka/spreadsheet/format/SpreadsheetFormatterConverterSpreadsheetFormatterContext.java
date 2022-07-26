@@ -18,11 +18,10 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.Converters;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
@@ -33,11 +32,11 @@ import java.util.Optional;
 
 final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext {
 
-    static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final ExpressionNumberConverterContext context) {
+    static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final SpreadsheetConverterContext context) {
         return new SpreadsheetFormatterConverterSpreadsheetFormatterContext(context);
     }
 
-    private SpreadsheetFormatterConverterSpreadsheetFormatterContext(final ExpressionNumberConverterContext context) {
+    private SpreadsheetFormatterConverterSpreadsheetFormatterContext(final SpreadsheetConverterContext context) {
         super();
 
         this.context = context;
@@ -45,17 +44,21 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
 
     @Override
     public List<String> ampms() {
-        return context.ampms();
+        return this.context.ampms();
     }
 
     @Override
     public String ampm(final int hourOfDay) {
-        return context.ampm(hourOfDay);
+        return this.context.ampm(hourOfDay);
     }
 
     @Override
-    public boolean canConvert(final Object value, final Class<?> target) {
-        return CONVERTER.canConvert(value, target, this.context);
+    public boolean canConvert(final Object value,
+                              final Class<?> type) {
+        return this.context.canConvert(
+                value,
+                type
+        );
     }
 
     @Override
@@ -74,18 +77,18 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
-    public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-        return CONVERTER.convert(value, target, this.context);
+    public <T> Either<T, String> convert(final Object value,
+                                         final Class<T> type) {
+        return this.context.convert(
+                value,
+                type
+        );
     }
 
-    /**
-     * Supports number -> number, date -> datetime, time -> datetime.
-     */
-    private final static Converter<ExpressionNumberConverterContext> CONVERTER = Converters.collection(Lists.of(
-            Converters.simple(),
-            Converters.numberNumber(),
-            Converters.localDateLocalDateTime(),
-            Converters.localTimeLocalDateTime()));
+    @Override
+    public Converter<SpreadsheetConverterContext> converter() {
+        return this.context.converter();
+    }
 
     @Override
     public Optional<SpreadsheetText> defaultFormatText(final Object value) {
@@ -94,12 +97,12 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
 
     @Override
     public String currencySymbol() {
-        return context.currencySymbol();
+        return this.context.currencySymbol();
     }
 
     @Override
     public char decimalSeparator() {
-        return context.decimalSeparator();
+        return this.context.decimalSeparator();
     }
 
     @Override
@@ -109,47 +112,47 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
 
     @Override
     public String exponentSymbol() {
-        return context.exponentSymbol();
+        return this.context.exponentSymbol();
     }
 
     @Override
     public char groupingSeparator() {
-        return context.groupingSeparator();
+        return this.context.groupingSeparator();
     }
 
     @Override
     public Locale locale() {
-        return context.locale();
+        return this.context.locale();
     }
 
     @Override
     public MathContext mathContext() {
-        return context.mathContext();
+        return this.context.mathContext();
     }
 
     @Override
     public List<String> monthNames() {
-        return context.monthNames();
+        return this.context.monthNames();
     }
 
     @Override
     public String monthName(final int month) {
-        return context.monthName(month);
+        return this.context.monthName(month);
     }
 
     @Override
     public List<String> monthNameAbbreviations() {
-        return context.monthNameAbbreviations();
+        return this.context.monthNameAbbreviations();
     }
 
     @Override
     public String monthNameAbbreviation(final int month) {
-        return context.monthNameAbbreviation(month);
+        return this.context.monthNameAbbreviation(month);
     }
 
     @Override
     public char negativeSign() {
-        return context.negativeSign();
+        return this.context.negativeSign();
     }
 
     @Override
@@ -159,37 +162,42 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
 
     @Override
     public char percentageSymbol() {
-        return context.percentageSymbol();
+        return this.context.percentageSymbol();
     }
 
     @Override
     public char positiveSign() {
-        return context.positiveSign();
+        return this.context.positiveSign();
+    }
+
+    @Override
+    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+        return this.context.resolveIfLabel(selection);
     }
 
     @Override
     public int twoDigitYear() {
-        return context.twoDigitYear();
+        return this.context.twoDigitYear();
     }
 
     @Override
     public List<String> weekDayNames() {
-        return context.weekDayNames();
+        return this.context.weekDayNames();
     }
 
     @Override
     public String weekDayName(final int day) {
-        return context.weekDayName(day);
+        return this.context.weekDayName(day);
     }
 
     @Override
     public List<String> weekDayNameAbbreviations() {
-        return context.weekDayNameAbbreviations();
+        return this.context.weekDayNameAbbreviations();
     }
 
     @Override
     public String weekDayNameAbbreviation(final int day) {
-        return context.weekDayNameAbbreviation(day);
+        return this.context.weekDayNameAbbreviation(day);
     }
 
     @Override
@@ -197,7 +205,7 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
         return this.context.expressionNumberKind();
     }
 
-    private final ExpressionNumberConverterContext context;
+    private final SpreadsheetConverterContext context;
 
     @Override
     public String toString() {

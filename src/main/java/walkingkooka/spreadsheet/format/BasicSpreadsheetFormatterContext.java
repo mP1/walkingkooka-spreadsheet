@@ -20,7 +20,9 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
@@ -40,34 +42,34 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int cellCharacterWidth,
                                                  final SpreadsheetFormatter defaultSpreadsheetFormatter,
-                                                 final ExpressionNumberConverterContext converterContext) {
+                                                 final SpreadsheetConverterContext context) {
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
         if (cellCharacterWidth <= 0) {
             throw new IllegalArgumentException("Invalid cellCharacterWidth " + cellCharacterWidth + " <= 0");
         }
-        Objects.requireNonNull(converterContext, "converterContext");
+        Objects.requireNonNull(context, "context");
         Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
 
         return new BasicSpreadsheetFormatterContext(numberToColor,
                 nameToColor,
                 cellCharacterWidth,
                 defaultSpreadsheetFormatter,
-                converterContext);
+                context);
     }
 
     private BasicSpreadsheetFormatterContext(final Function<Integer, Optional<Color>> numberToColor,
                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                              final int cellCharacterWidth,
                                              final SpreadsheetFormatter defaultSpreadsheetFormatter,
-                                             final ExpressionNumberConverterContext converterContext) {
+                                             final SpreadsheetConverterContext context) {
         super();
 
         this.numberToColor = numberToColor;
         this.nameToColor = nameToColor;
         this.cellCharacterWidth = cellCharacterWidth;
 
-        this.converterContext = converterContext;
+        this.context = context;
 
         this.defaultSpreadsheetFormatter = defaultSpreadsheetFormatter;
     }
@@ -98,14 +100,20 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     // Converter........................................................................................................
 
     @Override
-    public boolean canConvert(final Object value, final Class<?> target) {
-        return this.converterContext.canConvert(value, target);
+    public boolean canConvert(final Object value,
+                              final Class<?> type) {
+        return this.context.canConvert(value, type);
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
-                                         final Class<T> target) {
-        return this.converterContext.convert(value, target);
+                                         final Class<T> type) {
+        return this.context.convert(value, type);
+    }
+
+    @Override
+    public Converter<SpreadsheetConverterContext> converter() {
+        return this.context.converter();
     }
 
     // defaultFormatText.................................................................................................
@@ -121,97 +129,102 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
 
     @Override
     public List<String> ampms() {
-        return this.converterContext.ampms();
+        return this.context.ampms();
     }
 
     @Override
     public int defaultYear() {
-        return this.converterContext.defaultYear();
+        return this.context.defaultYear();
     }
 
     @Override
     public List<String> monthNames() {
-        return this.converterContext.monthNames();
+        return this.context.monthNames();
     }
 
     @Override
     public List<String> monthNameAbbreviations() {
-        return this.converterContext.monthNameAbbreviations();
+        return this.context.monthNameAbbreviations();
     }
 
     @Override
     public LocalDateTime now() {
-        return this.converterContext.now();
+        return this.context.now();
     }
 
     @Override
     public int twoDigitYear() {
-        return this.converterContext.twoDigitYear();
+        return this.context.twoDigitYear();
     }
 
     @Override
     public List<String> weekDayNames() {
-        return this.converterContext.weekDayNames();
+        return this.context.weekDayNames();
     }
 
     @Override
     public List<String> weekDayNameAbbreviations() {
-        return this.converterContext.weekDayNameAbbreviations();
+        return this.context.weekDayNameAbbreviations();
     }
 
     // DecimalNumberContext.............................................................................................
 
     @Override
     public String currencySymbol() {
-        return this.converterContext.currencySymbol();
+        return this.context.currencySymbol();
     }
 
     @Override
     public char decimalSeparator() {
-        return this.converterContext.decimalSeparator();
+        return this.context.decimalSeparator();
     }
 
     @Override
     public String exponentSymbol() {
-        return this.converterContext.exponentSymbol();
+        return this.context.exponentSymbol();
     }
 
     @Override
     public char groupingSeparator() {
-        return this.converterContext.groupingSeparator();
+        return this.context.groupingSeparator();
     }
 
     @Override
     public char percentageSymbol() {
-        return this.converterContext.percentageSymbol();
+        return this.context.percentageSymbol();
     }
 
     @Override
     public MathContext mathContext() {
-        return this.converterContext.mathContext();
+        return this.context.mathContext();
     }
 
     @Override
     public char negativeSign() {
-        return this.converterContext.negativeSign();
+        return this.context.negativeSign();
     }
 
     @Override
     public char positiveSign() {
-        return this.converterContext.positiveSign();
+        return this.context.positiveSign();
     }
 
     @Override
     public Locale locale() {
-        return this.converterContext.locale();
+        return this.context.locale();
     }
 
     @Override
     public ExpressionNumberKind expressionNumberKind() {
-        return this.converterContext.expressionNumberKind();
+        return this.context.expressionNumberKind();
     }
 
-    private final ExpressionNumberConverterContext converterContext;
+    @Override
+    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+        return this.context.resolveIfLabel(selection);
+    }
+
+    private final SpreadsheetConverterContext context;
 
     // Object...........................................................................................................
 
@@ -221,7 +234,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                 .label("cellCharacterWidth").value(this.cellCharacterWidth)
                 .label("numberToColor").value(this.numberToColor)
                 .label("nameToColor").value(this.nameToColor)
-                .label("converterContext").value(this.converterContext)
+                .label("context").value(this.context)
                 .build();
     }
 }

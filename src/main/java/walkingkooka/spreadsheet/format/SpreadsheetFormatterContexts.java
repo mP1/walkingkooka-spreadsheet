@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -33,12 +33,14 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
                                                     final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                     final int cellCharacterWidth,
                                                     final SpreadsheetFormatter defaultSpreadsheetFormatter,
-                                                    final ExpressionNumberConverterContext converterContext) {
-        return BasicSpreadsheetFormatterContext.with(numberToColor,
+                                                    final SpreadsheetConverterContext context) {
+        return BasicSpreadsheetFormatterContext.with(
+                numberToColor,
                 nameToColor,
                 cellCharacterWidth,
                 defaultSpreadsheetFormatter,
-                converterContext);
+                context
+        );
     }
 
     /**
