@@ -27,6 +27,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -41,9 +42,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
+import java.util.function.Function;
 
 public final class UnformattedNumberSpreadsheetConverterTest implements ConverterTesting2<UnformattedNumberSpreadsheetConverter<ExpressionNumberConverterContext>, ExpressionNumberConverterContext>,
         ToStringTesting<UnformattedNumberSpreadsheetConverter<ExpressionNumberConverterContext>> {
+
+    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
+        throw new UnsupportedOperationException();
+    };
 
     @Test
     public void testConvertToNumberFails() {
@@ -188,7 +194,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Override
-    public ExpressionNumberConverterContext createContext() {
+    public SpreadsheetConverterContext createContext() {
         final JsonNodeUnmarshallContext context = JsonNodeUnmarshallContexts.basic(
                 ExpressionNumberKind.DOUBLE,
                 MathContext.UNLIMITED
@@ -214,21 +220,25 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 SpreadsheetMetadata.class
         );
 
-        final Converter<ExpressionNumberConverterContext> converter = metadata.converter();
+        final Converter<SpreadsheetConverterContext> converter = metadata.converter();
 
-        return ExpressionNumberConverterContexts.basic(
+        return SpreadsheetConverterContexts.basic(
                 converter,
-                ConverterContexts.basic(
-                        Cast.to(converter),
-                        DateTimeContexts.locale(
-                                Locale.FRANCE,
-                                1900,
-                                50,
-                                LocalDateTime::now
+                RESOLVE_IF_LABEL,
+                ExpressionNumberConverterContexts.basic(
+                        Converters.fake(),
+                        ConverterContexts.basic(
+                                Cast.to(converter),
+                                DateTimeContexts.locale(
+                                        Locale.FRANCE,
+                                        1900,
+                                        50,
+                                        LocalDateTime::now
+                                ),
+                                DecimalNumberContexts.fake()
                         ),
-                        DecimalNumberContexts.fake()
-                ),
-                ExpressionNumberKind.DOUBLE
+                        ExpressionNumberKind.DOUBLE
+                )
         );
     }
 

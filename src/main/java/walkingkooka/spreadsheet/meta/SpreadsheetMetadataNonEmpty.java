@@ -22,12 +22,12 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -190,7 +190,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     private Function<Integer, Optional<Color>> numberToColor;
 
     @Override
-    public Converter<ExpressionNumberConverterContext> converter() {
+    public Converter<SpreadsheetConverterContext> converter() {
         if (null == this.converter) {
             this.converter = this.converter0();
         }
@@ -200,7 +200,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     /**
      * Cached {@link Converter}.
      */
-    private Converter<ExpressionNumberConverterContext> converter;
+    private Converter<SpreadsheetConverterContext> converter;
 
     @Override
     public DecimalNumberContext decimalNumberContext() {

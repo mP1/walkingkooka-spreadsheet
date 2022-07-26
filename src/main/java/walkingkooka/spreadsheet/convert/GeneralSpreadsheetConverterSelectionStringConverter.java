@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 /**
  * A {@link Converter} that only handles the following selection to selection conversions.
@@ -32,7 +31,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
  *     <li>{@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference} to {@link walkingkooka.spreadsheet.reference.SpreadsheetCellRange}</li>
  * </ul>
  */
-final class GeneralSpreadsheetConverterSelectionStringConverter implements Converter<ExpressionNumberConverterContext> {
+final class GeneralSpreadsheetConverterSelectionStringConverter implements Converter<SpreadsheetConverterContext> {
 
     /**
      * Singleton
@@ -46,7 +45,7 @@ final class GeneralSpreadsheetConverterSelectionStringConverter implements Conve
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type,
-                              final ExpressionNumberConverterContext context) {
+                              final SpreadsheetConverterContext context) {
         return isCellRangeToCell(value, type) ||
                 isCellToCellRange(value, type) ||
                 isExpressionReference(value, type) ||
@@ -56,7 +55,7 @@ final class GeneralSpreadsheetConverterSelectionStringConverter implements Conve
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type,
-                                         final ExpressionNumberConverterContext context) {
+                                         final SpreadsheetConverterContext context) {
         return isCellToCellRange(value, type) ?
                 this.successfulConversion(
                         cellToCellRange((SpreadsheetCellReference) value),

@@ -21,10 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 
-public final class GeneralSpreadsheetConverterSelectionStringConverterTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterSelectionStringConverter> implements ConverterTesting2<GeneralSpreadsheetConverterSelectionStringConverter, ExpressionNumberConverterContext> {
+public final class GeneralSpreadsheetConverterSelectionStringConverterTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterSelectionStringConverter>
+        implements ConverterTesting2<GeneralSpreadsheetConverterSelectionStringConverter, SpreadsheetConverterContext> {
 
     @Test
     public void testCellToSpreadsheetSelection() {
@@ -80,8 +79,8 @@ public final class GeneralSpreadsheetConverterSelectionStringConverterTest exten
     }
 
     @Override
-    public ExpressionNumberConverterContext createContext() {
-        return ExpressionNumberConverterContexts.fake();
+    public SpreadsheetConverterContext createContext() {
+        return SpreadsheetConverterContexts.fake();
     }
 
     @Override

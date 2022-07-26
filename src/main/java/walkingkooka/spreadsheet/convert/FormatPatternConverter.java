@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 /**
  * A {@link Converter} that only selects converting values to a {@link String} using the given pattern
@@ -28,7 +27,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
  * <br>
  * This {@link Converter} exists to support functions like text where the user provides a value and a pattern.
  */
-final class FormatPatternConverter implements Converter<ExpressionNumberConverterContext> {
+final class FormatPatternConverter implements Converter<SpreadsheetConverterContext> {
 
     static FormatPatternConverter with(final String pattern) {
         CharSequences.failIfNullOrEmpty(pattern, "pattern");
@@ -43,14 +42,14 @@ final class FormatPatternConverter implements Converter<ExpressionNumberConverte
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type,
-                              final ExpressionNumberConverterContext context) {
+                              final SpreadsheetConverterContext context) {
         return String.class == type || context.canConvert(value, type);
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type,
-                                         final ExpressionNumberConverterContext context) {
+                                         final SpreadsheetConverterContext context) {
         return this.canConvert(value, type, context) ?
                 this.successfulConversion(
                         this.formatUsingPattern(value, context),
@@ -60,7 +59,7 @@ final class FormatPatternConverter implements Converter<ExpressionNumberConverte
     }
 
     private String formatUsingPattern(final Object value,
-                                      final ExpressionNumberConverterContext context) {
+                                      final SpreadsheetConverterContext context) {
         return FormatPatternConverterSpreadsheetValueVisitor.format(
                 value,
                 this.pattern,

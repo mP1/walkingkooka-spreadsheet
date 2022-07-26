@@ -20,13 +20,11 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 
 import java.util.function.Function;
 
 public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter>
-        implements ConverterTesting2<GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter, ExpressionNumberConverterContext> {
+        implements ConverterTesting2<GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter, SpreadsheetConverterContext> {
 
     @Test
     public void testStringToCell() {
@@ -98,8 +96,8 @@ public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverte
     }
 
     @Override
-    public ExpressionNumberConverterContext createContext() {
-        return ExpressionNumberConverterContexts.fake();
+    public SpreadsheetConverterContext createContext() {
+        return SpreadsheetConverterContexts.fake();
     }
 
     @Override

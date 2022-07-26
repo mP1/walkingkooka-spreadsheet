@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -40,23 +39,25 @@ import java.time.LocalTime;
  * A {@link SpreadsheetValueVisitor} which accepts the source value being converted. Each visit method will then select a
  * {@link GeneralSpreadsheetConverterMapping}
  */
-final class GeneralSpreadsheetConverterSpreadsheetValueVisitor<C extends ConverterContext> extends SpreadsheetValueVisitor {
+final class GeneralSpreadsheetConverterSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
     /**
      * Uses the source value type and target type to pick a {@link Converter}.
      */
-    static <C extends ConverterContext> Converter<C> converter(final Object value,
-                                                               final Class<?> targetType,
-                                                               final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<C>>> mapping) {
+    static Converter<SpreadsheetConverterContext> converter(final Object value,
+                                                            final Class<?> targetType,
+                                                            final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>>> mapping) {
 
-        final GeneralSpreadsheetConverterSpreadsheetValueVisitor<C> visitor = new GeneralSpreadsheetConverterSpreadsheetValueVisitor<>(targetType,
-                mapping);
+        final GeneralSpreadsheetConverterSpreadsheetValueVisitor visitor = new GeneralSpreadsheetConverterSpreadsheetValueVisitor(
+                targetType,
+                mapping
+        );
         visitor.accept(value); // value = from
         return visitor.converter;
     }
 
     GeneralSpreadsheetConverterSpreadsheetValueVisitor(final Class<?> targetType,
-                                                       final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<C>>> mapping) {
+                                                       final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>>> mapping) {
         super();
         this.targetType = targetType;
         this.mapping = mapping;
@@ -182,13 +183,13 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor<C extends Convert
      */
     private final Class<?> targetType;
 
-    private final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<C>>> mapping;
+    private final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>>> mapping;
 
-    private void converter(final GeneralSpreadsheetConverterMapping<Converter<C>> converters) {
+    private void converter(final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> converters) {
         this.converter = GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor.converter(converters, this.targetType);
     }
 
-    private Converter<C> converter;
+    private Converter<SpreadsheetConverterContext> converter;
 
     @Override
     public String toString() {

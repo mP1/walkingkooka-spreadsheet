@@ -18,16 +18,13 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 
-public final class GeneralSpreadsheetConverterBooleanStringTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterBooleanString> implements ConverterTesting2<GeneralSpreadsheetConverterBooleanString, ExpressionNumberConverterContext> {
+public final class GeneralSpreadsheetConverterBooleanStringTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterBooleanString>
+        implements ConverterTesting2<GeneralSpreadsheetConverterBooleanString, SpreadsheetConverterContext> {
 
     @Test
     public void testNonBooleanFails() {
@@ -65,17 +62,16 @@ public final class GeneralSpreadsheetConverterBooleanStringTest extends GeneralS
                         "true",
                         "false"
                 ),
-                SpreadsheetTextFormatPattern.parseTextFormatPattern("@@").formatter().converter()
+                SpreadsheetTextFormatPattern.parseTextFormatPattern("@@")
+                        .formatter()
+                        .converter()
+                        .cast(SpreadsheetConverterContext.class)
         );
     }
 
     @Override
-    public ExpressionNumberConverterContext createContext() {
-        return ExpressionNumberConverterContexts.basic(
-                Converters.fake(),
-                ConverterContexts.fake(),
-                ExpressionNumberKind.DEFAULT
-        );
+    public SpreadsheetConverterContext createContext() {
+        return SpreadsheetConverterContexts.fake();
     }
 
     @Override

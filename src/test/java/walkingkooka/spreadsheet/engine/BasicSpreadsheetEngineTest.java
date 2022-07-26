@@ -152,6 +152,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
+    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
+        throw new UnsupportedOperationException();
+    };
+
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
         @Override
         public boolean canConvert(final Object value,
@@ -11004,7 +11008,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             private ConverterContext converterContext() {
                 return this.metadata()
-                        .converterContext(NOW);
+                        .converterContext(
+                                NOW,
+                                RESOLVE_IF_LABEL
+                        );
             }
 
             @Override
