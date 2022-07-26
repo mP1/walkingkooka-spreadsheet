@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.function.Function;
@@ -28,7 +29,10 @@ public abstract class GeneralSpreadsheetConverterTestCase<T> implements ClassTes
         TypeNameTesting<T> {
 
     final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
-        throw new UnsupportedOperationException();
+        if (s instanceof SpreadsheetLabelName) {
+            throw new IllegalArgumentException("Did not expected label: " + s);
+        }
+        return s;
     };
 
     GeneralSpreadsheetConverterTestCase() {

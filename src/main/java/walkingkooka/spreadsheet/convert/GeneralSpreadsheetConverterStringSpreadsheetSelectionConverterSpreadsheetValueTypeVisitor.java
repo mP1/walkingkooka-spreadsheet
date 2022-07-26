@@ -49,6 +49,11 @@ final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpread
     }
 
     @Override
+    protected void visitCellReferenceOrRange() {
+        this.selection = SpreadsheetSelection.parseCellOrCellRange(this.string);
+    }
+
+    @Override
     protected void visitColumnReference() {
         this.selection = SpreadsheetSelection.parseColumn(this.string);
     }

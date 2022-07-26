@@ -169,7 +169,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 null, // date
                 null, // date-time
                 null, // number
-                GeneralSpreadsheetConverterSelectionStringConverter.INSTANCE, // selection
+                GeneralSpreadsheetConverterSelectionConverter.INSTANCE, // selection
                 Converters.objectString(), // string
                 null // time
         );
@@ -320,7 +320,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 isSupportedType(targetType) &&
                         false == (value instanceof LocalTime && targetType == LocalDate.class) &&
                         false == (value instanceof LocalDate && targetType == LocalTime.class) ||
-                GeneralSpreadsheetConverterSelectionStringConverter.INSTANCE.canConvert(value, targetType, context) ||
+                GeneralSpreadsheetConverterSelectionConverter.INSTANCE.canConvert(value, targetType, context) ||
                 GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter.INSTANCE.canConvert(value, targetType, context);
     }
 

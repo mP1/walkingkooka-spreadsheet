@@ -71,6 +71,11 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     }
 
     @Override
+    protected void visitCellReferenceOrRange() {
+        this.converter = this.mapping.selection;
+    }
+
+    @Override
     protected void visitCharacter() {
         this.converter = this.mapping.string;
     }
