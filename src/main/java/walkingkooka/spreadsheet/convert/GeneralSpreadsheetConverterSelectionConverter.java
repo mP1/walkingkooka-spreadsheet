@@ -21,6 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -31,14 +32,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
  *     <li>{@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference} to {@link walkingkooka.spreadsheet.reference.SpreadsheetCellRange}</li>
  * </ul>
  */
-final class GeneralSpreadsheetConverterSelectionStringConverter implements Converter<SpreadsheetConverterContext> {
+final class GeneralSpreadsheetConverterSelectionConverter implements Converter<SpreadsheetConverterContext> {
 
     /**
      * Singleton
      */
-    final static GeneralSpreadsheetConverterSelectionStringConverter INSTANCE = new GeneralSpreadsheetConverterSelectionStringConverter();
+    final static GeneralSpreadsheetConverterSelectionConverter INSTANCE = new GeneralSpreadsheetConverterSelectionConverter();
 
-    private GeneralSpreadsheetConverterSelectionStringConverter() {
+    private GeneralSpreadsheetConverterSelectionConverter() {
         super();
     }
 
@@ -46,8 +47,9 @@ final class GeneralSpreadsheetConverterSelectionStringConverter implements Conve
     public boolean canConvert(final Object value,
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
-        return isCellRangeToCell(value, type) ||
+        return isCellOrCellRange(value, type) ||
                 isCellToCellRange(value, type) ||
+                isCellRangeToCell(value, type) ||
                 isExpressionReference(value, type) ||
                 isSelection(value, type);
     }
@@ -66,17 +68,32 @@ final class GeneralSpreadsheetConverterSelectionStringConverter implements Conve
                                 cellRangeToCell((SpreadsheetCellRange) value),
                                 type
                         ) :
-                        isExpressionReference(value, type) ?
+                        isCellOrCellRange(value, type) ?
                                 this.successfulConversion(
-                                        value,
+                                        context.resolveIfLabel((SpreadsheetSelection) value),
                                         type
                                 ) :
-                                isSelection(value, type) ?
+                                isExpressionReference(value, type) ?
                                         this.successfulConversion(
                                                 value,
                                                 type
                                         ) :
-                                        this.failConversion(value, type);
+                                        isSelection(value, type) ?
+                                                this.successfulConversion(
+                                                        value,
+                                                        type
+                                                ) :
+                                                this.failConversion(value, type);
+    }
+
+    private static boolean isCellOrCellRange(final Object value,
+                                             final Class<?> type) {
+        return value instanceof SpreadsheetSelection &&
+                (
+                        SpreadsheetCellReference.class == type ||
+                                SpreadsheetCellRange.class == type ||
+                                SpreadsheetCellReferenceOrRange.class == type
+                );
     }
 
     private static boolean isCellToCellRange(final Object value,

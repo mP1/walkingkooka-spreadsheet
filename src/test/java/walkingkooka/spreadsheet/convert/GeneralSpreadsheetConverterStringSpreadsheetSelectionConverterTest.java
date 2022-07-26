@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterTesting2;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.function.Function;
@@ -39,6 +40,33 @@ public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverte
         this.convertAndCheck2(
                 "B2:C3",
                 SpreadsheetSelection::parseCellRange
+        );
+    }
+
+    @Test
+    public void testStringToSpreadsheetCellOrCellRangeWithCell() {
+        this.convertAndCheck(
+                "A1",
+                SpreadsheetCellReferenceOrRange.class,
+                SpreadsheetSelection.parseCell("A1")
+        );
+    }
+
+    @Test
+    public void testStringToSpreadsheetCellOrCellRangeWithCellRange() {
+        this.convertAndCheck(
+                "B2:C3",
+                SpreadsheetCellReferenceOrRange.class,
+                SpreadsheetSelection.parseCellRange("B2:C3")
+        );
+    }
+
+    @Test
+    public void testStringToSpreadsheetCellOrCellRangeWithCellRangeSingle() {
+        this.convertAndCheck(
+                "D4:D4",
+                SpreadsheetCellReferenceOrRange.class,
+                SpreadsheetSelection.parseCellRange("D4")
         );
     }
 

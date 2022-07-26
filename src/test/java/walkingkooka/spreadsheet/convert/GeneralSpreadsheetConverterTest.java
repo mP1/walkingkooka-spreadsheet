@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -277,17 +278,25 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // SpreadsheetCellReference.........................................................................................
 
     @Test
-    public void testSpreadsheetCellReference() {
+    public void testSpreadsheetCellReferenceToCellReference() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCell("A1" ),
+                SpreadsheetSelection.parseCell("A1"),
                 SpreadsheetCellReference.class
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellReferenceToCellReferenceOrRange() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetCellReferenceOrRange.class
         );
     }
 
     @Test
     public void testSpreadsheetCellReferenceToExpressionReference() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCell("Z99" ),
+                SpreadsheetSelection.parseCell("Z99"),
                 SpreadsheetExpressionReference.class
         );
     }
@@ -318,9 +327,17 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // SpreadsheetCellRange.............................................................................................
 
     @Test
-    public void testSpreadsheetCellRange() {
+    public void testSpreadsheetCellRangeToCellOrCellRange() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCellRange("A1:B2" ),
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetCellReferenceOrRange.class
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellRangeToCellRange() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetCellRange.class
         );
     }
@@ -328,9 +345,9 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetCellRangeToCell() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCellRange("C3:D4" ),
+                SpreadsheetSelection.parseCellRange("C3:D4"),
                 SpreadsheetCellReference.class,
-                SpreadsheetSelection.parseCell("C3" )
+                SpreadsheetSelection.parseCell("C3")
         );
     }
 
@@ -401,6 +418,42 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testSpreadsheetColumnReferenceRangeToString() {
         this.convertAndCheckString(
                 SpreadsheetSelection.parseColumnRange("D:E")
+        );
+    }
+
+    // SpreadsheetLabelName............................................................................................
+
+    @Test
+    public void testSpreadsheetLabelNameToLabel() {
+        this.convertAndCheck(
+                SpreadsheetSelection.labelName("Label123"),
+                SpreadsheetLabelName.class
+        );
+    }
+
+    @Test
+    public void testSpreadsheetLabelNameToCell() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123Cell");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z999");
+
+        this.convertAndCheck(
+                label,
+                SpreadsheetCellReference.class,
+                this.createContext(label, cell),
+                cell
+        );
+    }
+
+    @Test
+    public void testSpreadsheetLabelNameToCellRange() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123Range");
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("Z9:Z99");
+
+        this.convertAndCheck(
+                label,
+                SpreadsheetCellRange.class,
+                this.createContext(label, range),
+                range
         );
     }
 
@@ -922,11 +975,37 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
+    public void testStringLabelToSpreadsheetCellReference() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
+
+        this.convertAndCheck(
+                cell.toString(),
+                SpreadsheetCellReference.class,
+                this.createContext(label, cell),
+                cell
+        );
+    }
+
+    @Test
     public void testStringToSpreadsheetCellRange() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("Z99:Z100");
 
         this.convertAndCheck(
                 range.toString(),
+                range
+        );
+    }
+
+    @Test
+    public void testStringLabelToSpreadsheetCellRange() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("Z9:Z99");
+
+        this.convertAndCheck(
+                range.toString(),
+                SpreadsheetCellRange.class,
+                this.createContext(label, range),
                 range
         );
     }
@@ -1144,9 +1223,23 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Override
     public SpreadsheetConverterContext createContext() {
+        return this.createContext(RESOLVE_IF_LABEL);
+    }
+
+    private SpreadsheetConverterContext createContext(final SpreadsheetLabelName label,
+                                                      final SpreadsheetSelection selection) {
+        return this.createContext(
+                (s) -> {
+                    this.checkEquals(label, s, "label");
+                    return selection;
+                }
+        );
+    }
+
+    private SpreadsheetConverterContext createContext(final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
         return SpreadsheetConverterContexts.basic(
                 SpreadsheetConverters.basic(),
-                RESOLVE_IF_LABEL,
+                resolveIfLabel,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(

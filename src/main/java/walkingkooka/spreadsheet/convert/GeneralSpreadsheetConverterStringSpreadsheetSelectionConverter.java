@@ -22,6 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -47,6 +48,7 @@ final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter imple
                               final SpreadsheetConverterContext context) {
         return (value instanceof Character || value instanceof String) &&
                 (type == SpreadsheetCellReference.class ||
+                        type == SpreadsheetCellReferenceOrRange.class ||
                         type == SpreadsheetCellRange.class ||
                         type == SpreadsheetColumnReference.class ||
                         type == SpreadsheetColumnReferenceRange.class ||
