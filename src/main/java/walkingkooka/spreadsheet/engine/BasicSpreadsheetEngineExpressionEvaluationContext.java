@@ -130,9 +130,7 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
             this.converterContext = this.metadata()
                     .converterContext(
                             this.now,
-                            (s) -> {
-                                throw new UnsupportedOperationException(); // TODO EngineContext.resolveIfLabel
-                            }
+                            this.context::resolveIfLabel
                     );
         }
         return this.converterContext;
