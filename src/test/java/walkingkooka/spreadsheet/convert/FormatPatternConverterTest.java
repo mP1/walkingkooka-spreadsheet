@@ -28,7 +28,6 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -39,12 +38,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class FormatPatternConverterTest implements ConverterTesting2<FormatPatternConverter, ExpressionNumberConverterContext> {
+public final class FormatPatternConverterTest implements ConverterTesting2<FormatPatternConverter, SpreadsheetConverterContext> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
+
+    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
+        throw new UnsupportedOperationException();
+    };
 
     @Test
     public void testWithNullPatternFails() {
@@ -268,8 +272,8 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     }
 
     @Override
-    public ExpressionNumberConverterContext createContext() {
-        final Converter<ExpressionNumberConverterContext> converter = Converters.collection(
+    public SpreadsheetConverterContext createContext() {
+        final Converter<SpreadsheetConverterContext> converter = Converters.collection(
                 Lists.of(
                         ExpressionNumber.fromConverter(Converters.numberNumber()),
                         Converters.localDateLocalDateTime(),
@@ -278,19 +282,23 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
                 )
         );
 
-        return ExpressionNumberConverterContexts.basic(
+        return SpreadsheetConverterContexts.basic(
                 converter,
-                ConverterContexts.basic(
-                        converter.cast(ConverterContext.class),
-                        DateTimeContexts.locale(
-                                Locale.FRANCE,
-                                1900,
-                                50,
-                                LocalDateTime::now
+                RESOLVE_IF_LABEL,
+                ExpressionNumberConverterContexts.basic(
+                        Converters.fake(),
+                        ConverterContexts.basic(
+                                converter.cast(ConverterContext.class),
+                                DateTimeContexts.locale(
+                                        Locale.FRANCE,
+                                        1900,
+                                        50,
+                                        LocalDateTime::now
+                                ),
+                                DecimalNumberContexts.american(MathContext.DECIMAL128)
                         ),
-                        DecimalNumberContexts.american(MathContext.DECIMAL128)
-                ),
-                KIND
+                        KIND
+                )
         );
     }
 

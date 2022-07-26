@@ -117,7 +117,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 metadata.nameToColor(),
                 metadata.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
                 metadata.formatter(),
-                metadata.converterContext(now)
+                metadata.converterContext(
+                        now,
+                        this::resolveIfLabel
+                )
         );
         this.fractioner = fractioner;
 

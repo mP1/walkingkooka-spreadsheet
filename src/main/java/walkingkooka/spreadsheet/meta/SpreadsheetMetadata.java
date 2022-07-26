@@ -34,6 +34,8 @@ import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -93,7 +95,7 @@ import java.util.function.Supplier;
 /**
  * A {@link SpreadsheetMetadata} holds a {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
  */
-public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumberConverterContext>,
+public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetConverterContext>,
         HasDecimalNumberContext,
         HasExpressionNumberKind,
         HasMathContext,
@@ -418,12 +420,12 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
      * </ul>
      */
     @Override
-    public abstract Converter<ExpressionNumberConverterContext> converter();
+    public abstract Converter<SpreadsheetConverterContext> converter();
 
     /**
      * Lazy factory that creates a {@link Converter} using current properties.
      */
-    public final Converter<ExpressionNumberConverterContext> converter0() {
+    public final Converter<SpreadsheetConverterContext> converter0() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final SpreadsheetDateFormatPattern dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN);
@@ -444,7 +446,8 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
 
         components.reportIfMissing();
 
-        return SpreadsheetConverters.general(dateFormat.formatter(),
+        return SpreadsheetConverters.general(
+                dateFormat.formatter(),
                 dateParser,
                 dateTimeFormat.formatter(),
                 dateTimeParser,
@@ -453,21 +456,28 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
                 textFormat.formatter(),
                 timeFormat.formatter(),
                 timeParser,
-                dateOffset);
+                dateOffset
+        );
     }
 
     /**
      * Returns a {@link ExpressionNumberConverterContext}
      */
-    public final ExpressionNumberConverterContext converterContext(final Supplier<LocalDateTime> now) {
-        return ExpressionNumberConverterContexts.basic(
+    public final SpreadsheetConverterContext converterContext(final Supplier<LocalDateTime> now,
+                                                              final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
+        return SpreadsheetConverterContexts.basic(
                 this.converter(),
-                ConverterContexts.basic(
+                resolveIfLabel,
+                ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
-                        this.dateTimeContext(now),
-                        this.decimalNumberContext()
-                ),
-                this.expressionNumberKind());
+                        ConverterContexts.basic(
+                                Converters.fake(),
+                                this.dateTimeContext(now),
+                                this.decimalNumberContext()
+                        ),
+                        this.expressionNumberKind()
+                )
+        );
     }
 
     // HasDateTimeContext...............................................................................................
@@ -641,12 +651,16 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public SpreadsheetFormatterContext formatterContext(final Supplier<LocalDateTime> now) {
+    public SpreadsheetFormatterContext formatterContext(final Supplier<LocalDateTime> now,
+                                                        final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
         return SpreadsheetFormatterContexts.basic(this.numberToColor(),
                 this.nameToColor(),
                 this.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
                 this.formatter(),
-                this.converterContext(now)
+                this.converterContext(
+                        now,
+                        resolveIfLabel
+                )
         );
     }
 

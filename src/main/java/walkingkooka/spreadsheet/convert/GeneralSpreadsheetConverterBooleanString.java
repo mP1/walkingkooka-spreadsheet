@@ -20,15 +20,14 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 /**
  * Pipes the result of converting {@link Boolean} to {@link String} and then to the text formatter.
  */
-final class GeneralSpreadsheetConverterBooleanString implements Converter<ExpressionNumberConverterContext> {
+final class GeneralSpreadsheetConverterBooleanString implements Converter<SpreadsheetConverterContext> {
 
-    static GeneralSpreadsheetConverterBooleanString with(final Converter<ExpressionNumberConverterContext> booleanString,
-                                                         final Converter<ExpressionNumberConverterContext> textFormatter) {
+    static GeneralSpreadsheetConverterBooleanString with(final Converter<SpreadsheetConverterContext> booleanString,
+                                                         final Converter<SpreadsheetConverterContext> textFormatter) {
         return new GeneralSpreadsheetConverterBooleanString(booleanString.cast(ConverterContext.class),
                 textFormatter.cast(ConverterContext.class));
     }
@@ -43,14 +42,14 @@ final class GeneralSpreadsheetConverterBooleanString implements Converter<Expres
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type,
-                              final ExpressionNumberConverterContext context) {
+                              final SpreadsheetConverterContext context) {
         return this.booleanString.canConvert(value, type, context);
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type,
-                                         final ExpressionNumberConverterContext context) {
+                                         final SpreadsheetConverterContext context) {
         Either<T, String> result = this.booleanString.convert(value, type, context);
         if (result.isLeft()) {
             result = this.textFormatter.convert(result.leftValue(), type, context);

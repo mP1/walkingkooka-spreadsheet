@@ -128,7 +128,12 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     private ConverterContext converterContext() {
         if (null == this.converterContext) {
             this.converterContext = this.metadata()
-                    .converterContext(this.now);
+                    .converterContext(
+                            this.now,
+                            (s) -> {
+                                throw new UnsupportedOperationException(); // TODO EngineContext.resolveIfLabel
+                            }
+                    );
         }
         return this.converterContext;
     }

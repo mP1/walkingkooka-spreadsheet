@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.convert.HasConverter;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -36,8 +36,7 @@ import java.util.Optional;
  * Enhances {@link ExpressionEvaluationContext} adding a few extra methods required by a spreadsheet during
  * expression execution.
  */
-public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext,
-        HasConverter<SpreadsheetExpressionEvaluationContext> {
+public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext, SpreadsheetConverterContext {
 
     /**
      * Parses the {@link String expression} into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.

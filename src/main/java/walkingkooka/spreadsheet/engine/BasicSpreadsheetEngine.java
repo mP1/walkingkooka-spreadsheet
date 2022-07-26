@@ -1109,7 +1109,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     )
             );
             final Boolean booleanResult = context.metadata()
-                    .converterContext(context::now)
+                    .converterContext(
+                            context::now,
+                            context::resolveIfLabel
+                    )
                     .convertOrFail(test, Boolean.class);
             if (Boolean.TRUE.equals(booleanResult)) {
                 final TextNode formatted = cell.formatted()

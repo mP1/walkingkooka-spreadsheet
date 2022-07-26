@@ -28,13 +28,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 /**
  * A {@link Converter} that handles converting {@link String} into {@link SpreadsheetSelection} using the right
  * {@link SpreadsheetSelection} parseXXX method.
  */
-final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter implements Converter<ExpressionNumberConverterContext> {
+final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter implements Converter<SpreadsheetConverterContext> {
 
     final static GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter INSTANCE = new GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter();
 
@@ -45,7 +44,7 @@ final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter imple
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type,
-                              final ExpressionNumberConverterContext context) {
+                              final SpreadsheetConverterContext context) {
         return (value instanceof Character || value instanceof String) &&
                 (type == SpreadsheetCellReference.class ||
                         type == SpreadsheetCellRange.class ||
@@ -59,7 +58,7 @@ final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter imple
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type,
-                                         final ExpressionNumberConverterContext context) {
+                                         final SpreadsheetConverterContext context) {
         return this.canConvert(value, type, context) ?
                 this.successfulConversion(
                         GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor.parse(

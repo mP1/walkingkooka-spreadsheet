@@ -37,6 +37,8 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
@@ -57,7 +59,6 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberContext;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
@@ -1194,21 +1195,27 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                   final Object expected) {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter();
 
-        this.convertAndCheck3(value,
+        this.convertAndCheck3(
+                value,
                 expected,
                 metadata.converter(),
-                ExpressionNumberConverterContexts.basic(Converters.fake(),
-                        ConverterContexts.basic(
-                                Converters.fake(),
-                                DateTimeContexts.locale(
-                                        Locale.ENGLISH,
-                                        DEFAULT_YEAR,
-                                        20,
-                                        NOW
+                SpreadsheetConverterContexts.basic(
+                        Converters.fake(),
+                        RESOLVE_IF_LABEL,
+                        ExpressionNumberConverterContexts.basic(Converters.fake(),
+                                ConverterContexts.basic(
+                                        Converters.fake(),
+                                        DateTimeContexts.locale(
+                                                Locale.ENGLISH,
+                                                DEFAULT_YEAR,
+                                                20,
+                                                NOW
+                                        ),
+                                        DecimalNumberContexts.american(MathContext.DECIMAL32)
                                 ),
-                                DecimalNumberContexts.american(MathContext.DECIMAL32)
-                        ),
-                        metadata.expressionNumberKind())
+                                metadata.expressionNumberKind()
+                        )
+                )
         );
     }
 
@@ -1238,22 +1245,29 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private void convertAndCheck3(final Object value,
                                   final Object expected,
-                                  final Converter<ExpressionNumberConverterContext> converter,
-                                  final ExpressionNumberConverterContext context) {
-        this.convertAndCheck(converter,
+                                  final Converter<SpreadsheetConverterContext> converter,
+                                  final SpreadsheetConverterContext context) {
+        this.convertAndCheck(
+                converter,
                 value,
                 Cast.to(expected.getClass()),
                 context,
-                expected);
+                expected
+        );
     }
 
     @Test
     public void testConvertWithConverterContext() {
         final SpreadsheetMetadata metadata = createSpreadsheetMetadataWithConverterAndConverterContext();
-        this.convertAndCheck3(LocalTime.of(12, 58, 59),
+        this.convertAndCheck3(
+                LocalTime.of(12, 58, 59),
                 "Time 59 12",
                 metadata.converter(),
-                metadata.converterContext(NOW));
+                metadata.converterContext(
+                        NOW,
+                        RESOLVE_IF_LABEL
+                )
+        );
     }
 
     private final static String CURRENCY = "$AUD";
@@ -1569,7 +1583,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         this.checkNotEquals(
                 null,
-                metadata.formatterContext(NOW)
+                metadata.formatterContext(
+                        NOW,
+                        RESOLVE_IF_LABEL
+                )
         );
     }
 

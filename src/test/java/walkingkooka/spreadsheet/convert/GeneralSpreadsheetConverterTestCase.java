@@ -20,9 +20,16 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+
+import java.util.function.Function;
 
 public abstract class GeneralSpreadsheetConverterTestCase<T> implements ClassTesting<T>,
         TypeNameTesting<T> {
+
+    final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
+        throw new UnsupportedOperationException();
+    };
 
     GeneralSpreadsheetConverterTestCase() {
         super();

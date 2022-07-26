@@ -23,6 +23,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -144,7 +145,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
-        final ExpressionNumberConverterContext converterContext = metadata.converterContext(now);
+        final ExpressionNumberConverterContext converterContext = metadata.converterContext(
+                this.now,
+                this.resolveIfLabel
+        );
 
         final SpreadsheetParserContext parserContext = SpreadsheetParserContexts.basic(
                 converterContext,
@@ -184,9 +188,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     // HasConverter.....................................................................................................
 
     @Override
-    public Converter<SpreadsheetExpressionEvaluationContext> converter() {
-        return this.spreadsheetMetadata.converter()
-                .cast(SpreadsheetExpressionEvaluationContext.class);
+    public Converter<SpreadsheetConverterContext> converter() {
+        return this.spreadsheetMetadata.converter();
     }
 
     // ExpressionEvaluationContext........................................................................................
@@ -389,7 +392,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     private ConverterContext converterContext() {
         return this.spreadsheetMetadata()
-                .converterContext(this.now);
+                .converterContext(
+                        this.now,
+                        this.resolveIfLabel
+                );
     }
 
     private final Supplier<LocalDateTime> now;

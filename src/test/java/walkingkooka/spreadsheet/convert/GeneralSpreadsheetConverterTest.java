@@ -52,7 +52,6 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -68,7 +67,7 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverter>
-        implements ConverterTesting2<GeneralSpreadsheetConverter, ExpressionNumberConverterContext> {
+        implements ConverterTesting2<GeneralSpreadsheetConverter, SpreadsheetConverterContext> {
 
     private final static long DATE_OFFSET = Converters.JAVA_EPOCH_OFFSET;
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
@@ -1144,26 +1143,32 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Override
-    public ExpressionNumberConverterContext createContext() {
-        return ExpressionNumberConverterContexts.basic(Converters.fake(),
-                ConverterContexts.basic(
+    public SpreadsheetConverterContext createContext() {
+        return SpreadsheetConverterContexts.basic(
+                Converters.fake(),
+                RESOLVE_IF_LABEL,
+                ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
-                        DateTimeContexts.locale(
-                                Locale.ENGLISH,
-                                1900,
-                                20,
-                                LocalDateTime::now
-                        ),
-                        DecimalNumberContexts.basic("C",
-                                'D',
-                                "E",
-                                'G',
-                                'M',
-                                'P',
-                                'L',
-                                Locale.ENGLISH,
-                                MathContext.DECIMAL32)),
-                EXPRESSION_NUMBER_KIND);
+                        ConverterContexts.basic(
+                                Converters.fake(),
+                                DateTimeContexts.locale(
+                                        Locale.ENGLISH,
+                                        1900,
+                                        20,
+                                        LocalDateTime::now
+                                ),
+                                DecimalNumberContexts.basic("C",
+                                        'D',
+                                        "E",
+                                        'G',
+                                        'M',
+                                        'P',
+                                        'L',
+                                        Locale.ENGLISH,
+                                        MathContext.DECIMAL32)),
+                        EXPRESSION_NUMBER_KIND
+                )
+        );
     }
 
     private void convertAndBackCheck(final Object value,
@@ -1174,8 +1179,8 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     private void convertNumberAndCheck(final Object value,
                                        final double expected) {
-        final Converter<ExpressionNumberConverterContext> converter = this.createConverter();
-        final ExpressionNumberConverterContext context = this.createContext();
+        final Converter<SpreadsheetConverterContext> converter = this.createConverter();
+        final SpreadsheetConverterContext context = this.createContext();
 
         this.convertAndBackCheck(value, converter.convertOrFail(expected, BigDecimal.class, context));
         this.convertAndBackCheck(value, converter.convertOrFail(expected, BigInteger.class, context));

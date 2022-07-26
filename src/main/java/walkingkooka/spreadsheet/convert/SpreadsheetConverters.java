@@ -24,30 +24,29 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
     /**
      * {@see FormatPatternConverter}
      */
-    public static Converter<ExpressionNumberConverterContext> formatPattern(final String pattern) {
+    public static Converter<SpreadsheetConverterContext> formatPattern(final String pattern) {
         return FormatPatternConverter.with(pattern);
     }
 
     /**
      * {@see GeneralSpreadsheetConverter}
      */
-    public static Converter<ExpressionNumberConverterContext> general(final SpreadsheetFormatter dateFormatter,
-                                                                      final SpreadsheetDateParsePatterns dateParser,
-                                                                      final SpreadsheetFormatter dateTimeFormatter,
-                                                                      final SpreadsheetDateTimeParsePatterns dateTimeParser,
-                                                                      final SpreadsheetFormatter numberFormatter,
-                                                                      final SpreadsheetNumberParsePatterns numberParser,
-                                                                      final SpreadsheetFormatter textFormatter,
-                                                                      final SpreadsheetFormatter timeFormatter,
-                                                                      final SpreadsheetTimeParsePatterns timeParser,
-                                                                      final long dateOffset) {
+    public static Converter<SpreadsheetConverterContext> general(final SpreadsheetFormatter dateFormatter,
+                                                                 final SpreadsheetDateParsePatterns dateParser,
+                                                                 final SpreadsheetFormatter dateTimeFormatter,
+                                                                 final SpreadsheetDateTimeParsePatterns dateTimeParser,
+                                                                 final SpreadsheetFormatter numberFormatter,
+                                                                 final SpreadsheetNumberParsePatterns numberParser,
+                                                                 final SpreadsheetFormatter textFormatter,
+                                                                 final SpreadsheetFormatter timeFormatter,
+                                                                 final SpreadsheetTimeParsePatterns timeParser,
+                                                                 final long dateOffset) {
         return GeneralSpreadsheetConverter.with(dateFormatter,
                 dateParser,
                 dateTimeFormatter,
@@ -63,7 +62,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     /**
      * {@see UnformattedNumberSpreadsheetConverter}
      */
-    public static Converter<? extends ExpressionNumberConverterContext> unformattedNumber() {
+    public static Converter<SpreadsheetConverterContext> unformattedNumber() {
         return UnformattedNumberSpreadsheetConverter.instance();
     }
 
