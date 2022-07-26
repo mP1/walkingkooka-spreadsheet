@@ -79,11 +79,13 @@ final class GeneralSpreadsheetConverterSelectionStringConverter implements Conve
                                         this.failConversion(value, type);
     }
 
-    private static boolean isCellToCellRange(Object value, Class<?> type) {
+    private static boolean isCellToCellRange(final Object value,
+                                             final Class<?> type) {
         return value instanceof SpreadsheetCellReference && SpreadsheetCellRange.class == type;
     }
 
-    private static boolean isCellRangeToCell(Object value, Class<?> type) {
+    private static boolean isCellRangeToCell(final Object value,
+                                             final Class<?> type) {
         return value instanceof SpreadsheetCellRange && SpreadsheetCellReference.class == type;
     }
 
