@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
-import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 
 import java.util.Optional;
 
-public class FakeSpreadsheetFormatterContext extends FakeExpressionEvaluationContext implements SpreadsheetFormatterContext {
+public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterContext implements SpreadsheetFormatterContext {
 
     @Override
     public int cellCharacterWidth() {

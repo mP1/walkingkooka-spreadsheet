@@ -34,7 +34,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -54,7 +53,7 @@ final class FormatPatternConverterSpreadsheetValueVisitor extends SpreadsheetVal
 
     static String format(final Object value,
                          final String pattern,
-                         final ExpressionNumberConverterContext context) {
+                         final SpreadsheetConverterContext context) {
         final FormatPatternConverterSpreadsheetValueVisitor visitor = new FormatPatternConverterSpreadsheetValueVisitor(
                 pattern,
                 context
@@ -65,7 +64,7 @@ final class FormatPatternConverterSpreadsheetValueVisitor extends SpreadsheetVal
 
     // VisibleForTesting
     FormatPatternConverterSpreadsheetValueVisitor(final String pattern,
-                                                  final ExpressionNumberConverterContext context) {
+                                                  final SpreadsheetConverterContext context) {
         super();
         this.pattern = pattern;
         this.context = context;
@@ -250,7 +249,7 @@ final class FormatPatternConverterSpreadsheetValueVisitor extends SpreadsheetVal
      */
     private final String pattern;
 
-    private final ExpressionNumberConverterContext context;
+    private final SpreadsheetConverterContext context;
 
     private String formatted;
 

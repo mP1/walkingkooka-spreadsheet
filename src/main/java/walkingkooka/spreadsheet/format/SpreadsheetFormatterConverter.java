@@ -19,13 +19,13 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 /**
  * A {@link Converter} which formats a value to {@link String text} using the given {@link SpreadsheetFormatter}.
  */
-final class SpreadsheetFormatterConverter implements Converter<ExpressionNumberConverterContext> {
+final class SpreadsheetFormatterConverter implements Converter<SpreadsheetConverterContext> {
 
     static SpreadsheetFormatterConverter with(final SpreadsheetFormatter formatter) {
         return new SpreadsheetFormatterConverter(formatter);
@@ -39,23 +39,29 @@ final class SpreadsheetFormatterConverter implements Converter<ExpressionNumberC
 
     @Override
     public boolean canConvert(final Object value,
-                              final Class<?> targetType,
-                              final ExpressionNumberConverterContext context) {
-        return String.class == targetType && this.formatter.canFormat(value, SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context));
+                              final Class<?> type,
+                              final SpreadsheetConverterContext context) {
+        return String.class == type &&
+                this.formatter.canFormat(
+                        value,
+                        SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context)
+                );
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
-                                         final Class<T> targetType,
-                                         final ExpressionNumberConverterContext context) {
-        return this.formatter.format(value, SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context))
+                                         final Class<T> type,
+                                         final SpreadsheetConverterContext context) {
+        return this.formatter.format(
+                        value,
+                        SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context))
                 .map(
                         t -> this.successfulConversion(
                                 t.text(),
-                                targetType
+                                type
                         )
                 )
-                .orElse(Either.<T, String>right("Unable to convert " + CharSequences.quoteIfChars(value) + " to " + targetType.getName()));
+                .orElse(Either.<T, String>right("Unable to convert " + CharSequences.quoteIfChars(value) + " to " + type.getName()));
     }
 
     private final SpreadsheetFormatter formatter;

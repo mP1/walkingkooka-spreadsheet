@@ -1194,15 +1194,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     private void convertAndCheck2(final Object value,
                                   final Object expected) {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter();
+        final Converter<SpreadsheetConverterContext> converter = metadata.converter();
 
         this.convertAndCheck3(
                 value,
                 expected,
                 metadata.converter(),
                 SpreadsheetConverterContexts.basic(
-                        Converters.fake(),
+                        converter,
                         RESOLVE_IF_LABEL,
-                        ExpressionNumberConverterContexts.basic(Converters.fake(),
+                        ExpressionNumberConverterContexts.basic(
+                                Converters.fake(),
                                 ConverterContexts.basic(
                                         Converters.fake(),
                                         DateTimeContexts.locale(

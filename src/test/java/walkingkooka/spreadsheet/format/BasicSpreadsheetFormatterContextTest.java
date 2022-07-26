@@ -25,7 +25,9 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -44,70 +46,94 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static Locale LOCALE = Locale.CANADA_FRENCH;
 
+    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
+        throw new UnsupportedOperationException();
+    };
+
     @Test
     public void testWithNullNumberToColorFails() {
-        this.withFails(null,
+        this.withFails(
+                null,
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,
                 this.defaultSpreadsheetFormatter(),
-                this.converterContext());
+                this.converterContext()
+        );
     }
 
     @Test
     public void testWithNullNameToColorFails() {
-        this.withFails(this.numberToColor(),
+        this.withFails(
+                this.numberToColor(),
                 null,
                 CELL_CHARACTER_WIDTH,
                 this.defaultSpreadsheetFormatter(),
-                this.converterContext());
+                this.converterContext()
+        );
     }
 
     @Test
     public void testWithInvalidCellCharacterWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
-                this.nameToColor(),
-                -1,
-                this.defaultSpreadsheetFormatter(),
-                this.converterContext()));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
+                        this.nameToColor(),
+                        -1,
+                        this.defaultSpreadsheetFormatter(),
+                        this.converterContext()
+                )
+        );
     }
 
     @Test
     public void testWithInvalidCellCharacterWidthFails2() {
-        assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
-                this.nameToColor(),
-                0,
-                this.defaultSpreadsheetFormatter(),
-                this.converterContext()));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
+                        this.nameToColor(),
+                        0,
+                        this.defaultSpreadsheetFormatter(),
+                        this.converterContext())
+        );
     }
 
     @Test
     public void testWithNullDefaultSpreadsheetFormatterFails() {
-        this.withFails(this.numberToColor(),
+        this.withFails(
+                this.numberToColor(),
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,
                 null,
-                this.converterContext());
+                this.converterContext()
+        );
     }
 
     @Test
     public void testWIthNullConverterContextFails() {
-        this.withFails(this.numberToColor(),
+        this.withFails(
+                this.numberToColor(),
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,
                 this.defaultSpreadsheetFormatter(),
-                null);
+                null
+        );
     }
 
     private void withFails(final Function<Integer, Optional<Color>> numberToColor,
                            final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                            final int width,
                            final SpreadsheetFormatter defaultSpreadsheetFormatter,
-                           final ExpressionNumberConverterContext converterContext) {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetFormatterContext.with(numberToColor,
-                nameToColor,
-                width,
-                defaultSpreadsheetFormatter,
-                converterContext));
+                           final SpreadsheetConverterContext converterContext) {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetFormatterContext.with(
+                        numberToColor,
+                        nameToColor,
+                        width,
+                        defaultSpreadsheetFormatter,
+                        converterContext
+                )
+        );
     }
 
     @Test
@@ -145,8 +171,10 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createContext(),
-                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 converterContext=locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE");
+        this.toStringAndCheck(
+                this.createContext(),
+                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean " + RESOLVE_IF_LABEL + " locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE"
+        );
     }
 
     @Override
@@ -211,13 +239,17 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         };
     }
 
-    private ExpressionNumberConverterContext converterContext() {
-        return ExpressionNumberConverterContexts.basic(
+    private SpreadsheetConverterContext converterContext() {
+        return SpreadsheetConverterContexts.basic(
                 Converters.truthyNumberBoolean(),
-                ConverterContexts.basic(Converters.fake(),
-                        this.dateTimeContext(),
-                        this.decimalNumberContext()),
-                EXPRESSION_NUMBER_KIND
+                RESOLVE_IF_LABEL,
+                ExpressionNumberConverterContexts.basic(
+                        Converters.fake(),
+                        ConverterContexts.basic(Converters.fake(),
+                                this.dateTimeContext(),
+                                this.decimalNumberContext()),
+                        EXPRESSION_NUMBER_KIND
+                )
         );
     }
 

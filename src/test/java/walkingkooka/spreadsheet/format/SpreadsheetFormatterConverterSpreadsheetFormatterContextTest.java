@@ -24,7 +24,9 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -77,8 +79,11 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
 
     @Test
     public void testToString() {
-        final ExpressionNumberConverterContext converterContext = this.converterContext();
-        this.toStringAndCheck(SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(converterContext), converterContext.toString());
+        final SpreadsheetConverterContext converterContext = this.converterContext();
+        this.toStringAndCheck(
+                SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(converterContext),
+                converterContext.toString()
+        );
     }
 
     @Override
@@ -126,10 +131,22 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
         return this.decimalNumberContext().positiveSign();
     }
 
-    private ExpressionNumberConverterContext converterContext() {
-        return ExpressionNumberConverterContexts.basic(Converters.fake(),
-                ConverterContexts.basic(Converters.fake(), dateTimeContext(), decimalNumberContext()),
-                ExpressionNumberKind.DEFAULT);
+    private SpreadsheetConverterContext converterContext() {
+        return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverters.basic(),
+                (s) -> {
+                    throw new UnsupportedOperationException();
+                },
+                ExpressionNumberConverterContexts.basic(
+                        Converters.fake(),
+                        ConverterContexts.basic(
+                                Converters.fake(),
+                                dateTimeContext(),
+                                decimalNumberContext()
+                        ),
+                        ExpressionNumberKind.DEFAULT
+                )
+        );
     }
 
     private DateTimeContext dateTimeContext() {

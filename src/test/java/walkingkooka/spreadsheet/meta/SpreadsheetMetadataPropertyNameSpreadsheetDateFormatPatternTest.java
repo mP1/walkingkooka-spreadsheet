@@ -24,11 +24,12 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -70,34 +71,43 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPatternTe
                 }),
                 1,
                 SpreadsheetFormatters.fake(),
-                ExpressionNumberConverterContexts.basic(new FakeConverter<>() {
+                SpreadsheetConverterContexts.basic(
+                        new FakeConverter<>() {
 
-                                                            @Override
-                                                            public <T> Either<T, String> convert(final Object value,
-                                                                                                 final Class<T> type,
-                                                                                                 final ExpressionNumberConverterContext context) {
-                                                                return this.successfulConversion(
-                                                                        type.cast(
-                                                                                LocalDateTime.of(
-                                                                                        (LocalDate) value,
-                                                                                        LocalTime.MIDNIGHT
-                                                                                )
-                                                                        ),
-                                                                        type
-                                                                );
-                                                            }
-                                                        },
-                        ConverterContexts.basic(
+                            @Override
+                            public <T> Either<T, String> convert(final Object value,
+                                                                 final Class<T> type,
+                                                                 final SpreadsheetConverterContext context) {
+                                return this.successfulConversion(
+                                        type.cast(
+                                                LocalDateTime.of(
+                                                        (LocalDate) value,
+                                                        LocalTime.MIDNIGHT
+                                                )
+                                        ),
+                                        type
+                                );
+                            }
+                        },
+                        RESOLVE_IF_LABEL,
+                        SpreadsheetConverterContexts.basic(
                                 Converters.fake(),
-                                DateTimeContexts.locale(
-                                        Locale.ENGLISH,
-                                        1900,
-                                        20,
-                                        LocalDateTime::now
-                                ),
-                                DecimalNumberContexts.american(MathContext.DECIMAL32)
-                        ),
-                        ExpressionNumberKind.DEFAULT
+                                RESOLVE_IF_LABEL,
+                                ExpressionNumberConverterContexts.basic(
+                                        Converters.fake(),
+                                        ConverterContexts.basic(
+                                                Converters.fake(),
+                                                DateTimeContexts.locale(
+                                                        Locale.ENGLISH,
+                                                        1900,
+                                                        20,
+                                                        LocalDateTime::now
+                                                ),
+                                                DecimalNumberContexts.american(MathContext.DECIMAL32)
+                                        ),
+                                        ExpressionNumberKind.DEFAULT
+                                )
+                        )
                 )
         );
     }

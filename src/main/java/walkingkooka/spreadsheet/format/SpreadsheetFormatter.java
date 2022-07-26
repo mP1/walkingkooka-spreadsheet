@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -28,7 +28,7 @@ import java.util.Optional;
 /**
  * Formats a value
  */
-public interface SpreadsheetFormatter extends HasConverter<ExpressionNumberConverterContext> {
+public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterContext> {
 
     /**
      * Constant holding a failed format.
@@ -54,7 +54,7 @@ public interface SpreadsheetFormatter extends HasConverter<ExpressionNumberConve
     /**
      * {@see SpreadsheetFormatterConverter}
      */
-    default Converter<ExpressionNumberConverterContext> converter() {
+    default Converter<SpreadsheetConverterContext> converter() {
         return SpreadsheetFormatterConverter.with(this);
     }
 

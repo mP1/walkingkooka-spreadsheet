@@ -17,7 +17,9 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
@@ -26,6 +28,22 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 
 public final class SpreadsheetConverters implements PublicStaticHelper {
+
+    /**
+     * A basic {@link Converter} that supports number -> number, date -> datetime, time -> datetime.
+     */
+    public static Converter<SpreadsheetConverterContext> basic() {
+        return CONVERTER;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> CONVERTER = Converters.collection(
+            Lists.of(
+                    Converters.simple(),
+                    Converters.numberNumber(),
+                    Converters.localDateLocalDateTime(),
+                    Converters.localTimeLocalDateTime()
+            )
+    );
 
     /**
      * {@see FormatPatternConverter}

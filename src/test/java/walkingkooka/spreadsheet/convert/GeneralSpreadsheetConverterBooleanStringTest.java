@@ -22,6 +22,7 @@ import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 
 public final class GeneralSpreadsheetConverterBooleanStringTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterBooleanString>
         implements ConverterTesting2<GeneralSpreadsheetConverterBooleanString, SpreadsheetConverterContext> {
@@ -71,7 +72,11 @@ public final class GeneralSpreadsheetConverterBooleanStringTest extends GeneralS
 
     @Override
     public SpreadsheetConverterContext createContext() {
-        return SpreadsheetConverterContexts.fake();
+        return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverters.basic(),
+                RESOLVE_IF_LABEL,
+                ExpressionNumberConverterContexts.fake()
+        );
     }
 
     @Override
