@@ -17,11 +17,12 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
-public interface SpreadsheetConverterContext extends ExpressionNumberConverterContext {
+public interface SpreadsheetConverterContext extends ExpressionNumberConverterContext, HasConverter<SpreadsheetConverterContext> {
 
     /**
      * Resolves a {@link SpreadsheetSelection} if it is a {@link SpreadsheetLabelName} otherwise returning the original.
