@@ -304,6 +304,17 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
+     * Parses text expecting either a {@link SpreadsheetCellRange} or {@link SpreadsheetLabelName}
+     */
+    public static SpreadsheetExpressionReference parseCellRangeOrLabel(final String text) {
+        checkText(text);
+
+        return isLabelText(text) ?
+                labelName(text) :
+                parseCellRange(text);
+    }
+
+    /**
      * Parsers the text expecting a valid {@link SpreadsheetColumnReference} or fails.
      */
     public static SpreadsheetColumnReference parseColumn(final String text) {

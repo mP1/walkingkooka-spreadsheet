@@ -211,6 +211,57 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                         SpreadsheetSelection.parseRow("1")));
     }
 
+    // parseCellRangeOrLabel............................................................................................
+
+    @Test
+    public void testParseCellRangeOrLabelWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.parseCellRangeOrLabel(null)
+        );
+    }
+
+    @Test
+    public void testParseCellRangeOrLabelWithEmptyFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseCellRangeOrLabel("")
+        );
+    }
+
+    @Test
+    public void testParseCellRangeOrLabelWithCell() {
+        this.parseCellRangeOrLabelCheck(
+                "a1",
+                SpreadsheetSelection::parseCellRange
+        );
+    }
+
+    @Test
+    public void testParseCellRangeOrLabelWithCellRange() {
+        this.parseCellRangeOrLabelCheck(
+                "B2:C3",
+                SpreadsheetSelection::parseCellRange
+        );
+    }
+
+    @Test
+    public void testParseCellRangeOrLabelWithLabel() {
+        this.parseCellRangeOrLabelCheck(
+                "Label123",
+                SpreadsheetSelection::labelName
+        );
+    }
+
+    private void parseCellRangeOrLabelCheck(final String text,
+                                            final Function<String, SpreadsheetExpressionReference> expected) {
+        this.checkEquals(
+                expected.apply(text),
+                SpreadsheetSelection.parseCellRangeOrLabel(text),
+                () -> "parseCellRangeOrLabel " + CharSequences.quoteAndEscape(text)
+        );
+    }
+
     // parseColumn......................................................................................................
 
     @Test
