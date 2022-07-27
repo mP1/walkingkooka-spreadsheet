@@ -22,6 +22,7 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.util.PropertiesPath;
@@ -37,43 +38,86 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName> {
 
     @Test
-    public void testCreateContainsSeparatorFails() {
-        assertThrows(InvalidCharacterException.class, () -> SpreadsheetLabelName.with("xyz" + PropertiesPath.SEPARATOR.string()));
+    public void testWithContainsSeparatorFails() {
+        this.withFails(
+                "xyz" + PropertiesPath.SEPARATOR,
+                InvalidCharacterException.class
+        );
     }
 
     @Test
     public void testWithInvalidInitialFails() {
-        assertThrows(InvalidCharacterException.class, () -> SpreadsheetLabelName.with("1abc"));
+        this.withFails(
+                "1abc",
+                InvalidCharacterException.class
+        );
     }
 
     @Test
     public void testWithInvalidPartFails() {
-        assertThrows(InvalidCharacterException.class, () -> SpreadsheetLabelName.with("abc$def"));
-    }
-
-    @Test
-    public void testCellReferenceFails() {
-        final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetLabelName.with("A1")
-        );
-
-        this.checkEquals(
-                "Label cannot be a valid cell reference=\"A1\"",
-                thrown.getMessage()
+        this.withFails(
+                "abc$def",
+                InvalidCharacterException.class,
+                "Invalid character '$' at 3 in \"abc$def\""
         );
     }
 
     @Test
-    public void testCellReferenceFails2() {
-        final IllegalArgumentException thrown = assertThrows(
+    public void testWithCellReferenceFails() {
+        this.withFails(
+                "A1",
                 IllegalArgumentException.class,
-                () -> SpreadsheetLabelName.with("AB12")
+                "Label cannot be a valid cell reference=\"A1\""
+        );
+    }
+
+    @Test
+    public void testWithCellReferenceFails2() {
+        this.withFails(
+                "AB12",
+                IllegalArgumentException.class,
+                "Label cannot be a valid cell reference=\"AB12\""
+        );
+    }
+
+    @Test
+    public void testWithCellRangeFails() {
+        this.withFails(
+                "A1:B2",
+                IllegalArgumentException.class
+        );
+    }
+
+    private <T extends IllegalArgumentException> void withFails(final String text,
+                                                                final Class<T> throwsClass) {
+
+        this.withFails(
+                text,
+                throwsClass,
+                null
+        );
+    }
+
+    private <T extends IllegalArgumentException> void withFails(final String text,
+                                                                final Class<T> throwsClass,
+                                                                final String message) {
+        final T thrown = assertThrows(
+                throwsClass,
+                () -> SpreadsheetLabelName.with(text)
         );
 
+        if (null != message) {
+            this.checkEquals(
+                    message,
+                    thrown.getMessage(),
+                    "message"
+            );
+        }
+
         this.checkEquals(
-                "Label cannot be a valid cell reference=\"AB12\"",
-                thrown.getMessage()
+                false,
+                SpreadsheetLabelName.isLabelText0(text),
+                () -> "isLabelText0(" + CharSequences.quoteAndEscape(text) + ")"
         );
     }
 
@@ -84,42 +128,52 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testWith2() {
-        this.createNameAndCheck("ZZZ1");
+        this.createNameAndCheck2("ZZZ1");
     }
 
     @Test
     public void testWith3() {
-        this.createNameAndCheck("A123Hello");
+        this.createNameAndCheck2("A123Hello");
     }
 
     @Test
     public void testWith4() {
-        this.createNameAndCheck("A1B2C2");
+        this.createNameAndCheck2("A1B2C2");
     }
 
     @Test
     public void testWithMissingRow() {
-        this.createNameAndCheck("A");
+        this.createNameAndCheck2("A");
     }
 
     @Test
     public void testWithMissingRow2() {
-        this.createNameAndCheck("ABC");
+        this.createNameAndCheck2("ABC");
     }
 
     @Test
     public void testWithEnormousColumn() {
-        this.createNameAndCheck("ABCDEF1");
+        this.createNameAndCheck2("ABCDEF1");
     }
 
     @Test
     public void testWithEnormousColumn2() {
-        this.createNameAndCheck("ABCDEF");
+        this.createNameAndCheck2("ABCDEF");
     }
 
     @Test
     public void testWithInvalidRow() {
-        this.createNameAndCheck("A" + (SpreadsheetRowReference.MAX_VALUE + 1 + 1));
+        this.createNameAndCheck2("A" + (SpreadsheetRowReference.MAX_VALUE + 1 + 1));
+    }
+
+    private void createNameAndCheck2(final String value) {
+        this.createNameAndCheck(value);
+
+        this.checkEquals(
+                true,
+                SpreadsheetLabelName.isLabelText0(value),
+                () -> "with " + CharSequences.quoteAndEscape(value) + " was successful "
+        );
     }
 
     @Test

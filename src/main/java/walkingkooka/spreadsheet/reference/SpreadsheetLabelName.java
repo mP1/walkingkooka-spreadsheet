@@ -60,6 +60,15 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
      */
     public final static int MAX_LENGTH = 255;
 
+    static boolean isLabelText0(final String text) {
+        return CharPredicates.isInitialAndPart(
+                text,
+                INITIAL,
+                PART
+        ) &&
+                !SpreadsheetSelection.isCellReferenceText(text);
+    }
+
     /**
      * Factory that creates a {@link SpreadsheetLabelName}
      */

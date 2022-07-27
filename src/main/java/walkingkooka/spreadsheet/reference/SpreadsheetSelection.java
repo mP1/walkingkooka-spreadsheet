@@ -148,6 +148,15 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         return MODE_ROW == mode;
     }
 
+    /**
+     * Tests if the given {@link String text} is a valid label.
+     */
+    public static boolean isLabelText(final String text) {
+        Objects.requireNonNull(text, "text");
+
+        return SpreadsheetLabelName.isLabelText0(text);
+    }
+
     // sub class factories..............................................................................................
 
     /**

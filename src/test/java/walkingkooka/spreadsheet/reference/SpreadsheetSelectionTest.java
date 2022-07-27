@@ -151,6 +151,57 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         }
     }
 
+    // isLabelText......................................................................................................
+
+    @Test
+    public void testIsLabelTextNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.isLabelText(null)
+        );
+    }
+
+    @Test
+    public void testIsLabelTextEmpty() {
+        this.isLabelTextAndCheck(
+                "",
+                false
+        );
+    }
+
+    @Test
+    public void testIsLabelTextWithLabel() {
+        this.isLabelTextAndCheck(
+                "Label123",
+                true
+        );
+    }
+
+    @Test
+    public void testIsLabelTextWithCell() {
+        this.isLabelTextAndCheck(
+                "A1",
+                false
+        );
+    }
+
+    @Test
+    public void testIsLabelTextWithCellRange() {
+        this.isLabelTextAndCheck(
+                "A1:B2",
+                false
+        );
+    }
+
+    private void isLabelTextAndCheck(final String text,
+                                     final boolean expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetSelection.isLabelText(text),
+                () -> "isLabelText(" + CharSequences.quoteAndEscape(text) + ")"
+        );
+    }
+
     // parseCell.......................................................................................................
 
     @Test
