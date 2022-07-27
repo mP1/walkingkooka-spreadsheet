@@ -65,7 +65,8 @@ final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter imple
                 this.successfulConversion(
                         GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor.parse(
                                 (String) value,
-                                Cast.to(type)
+                                Cast.to(type),
+                                context
                         ),
                         type
                 ) :
