@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterTesting2;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -32,6 +34,19 @@ public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverte
         this.convertAndCheck2(
                 "A1",
                 SpreadsheetSelection::parseCell
+        );
+    }
+
+    @Test
+    public void testStringLabelToSpreadsheetCellWithLabel() {
+        final String label = "Label123";
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
+
+        this.convertAndCheck(
+                label,
+                SpreadsheetCellReference.class,
+                this.createContext(label, cell),
+                cell
         );
     }
 
@@ -53,6 +68,32 @@ public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverte
     }
 
     @Test
+    public void testStringLabelToSpreadsheetCellOrCellRangeWithCell() {
+        final String label = "Label123";
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
+
+        this.convertAndCheck(
+                label,
+                SpreadsheetCellReferenceOrRange.class,
+                this.createContext(label, cell),
+                cell
+        );
+    }
+
+    @Test
+    public void testStringLabelToSpreadsheetCellOrCellRangeWithCellRange() {
+        final String label = "Label123";
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:C3");
+
+        this.convertAndCheck(
+                label,
+                SpreadsheetCellReferenceOrRange.class,
+                this.createContext(label, range),
+                range
+        );
+    }
+
+    @Test
     public void testStringToSpreadsheetCellOrCellRangeWithCellRange() {
         this.convertAndCheck(
                 "B2:C3",
@@ -67,6 +108,19 @@ public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverte
                 "D4:D4",
                 SpreadsheetCellReferenceOrRange.class,
                 SpreadsheetSelection.parseCellRange("D4")
+        );
+    }
+
+    @Test
+    public void testStringLabelToSpreadsheetCellRangeWithCellRange() {
+        final String label = "Label123";
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:C3");
+
+        this.convertAndCheck(
+                label,
+                SpreadsheetCellRange.class,
+                this.createContext(label, range),
+                range
         );
     }
 
@@ -125,7 +179,30 @@ public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverte
 
     @Override
     public SpreadsheetConverterContext createContext() {
-        return SpreadsheetConverterContexts.fake();
+        return this.createContext(
+                (s) -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
+    }
+
+    private SpreadsheetConverterContext createContext(final String label,
+                                                      final SpreadsheetSelection cellOrLabel) {
+        return this.createContext(
+                (s) -> {
+                    this.checkEquals(SpreadsheetSelection.labelName(label), s, "label");
+                    return cellOrLabel;
+                }
+        );
+    }
+
+    private SpreadsheetConverterContext createContext(final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
+        return new FakeSpreadsheetConverterContext() {
+            @Override
+            public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+                return resolveIfLabel.apply(selection);
+            }
+        };
     }
 
     @Override

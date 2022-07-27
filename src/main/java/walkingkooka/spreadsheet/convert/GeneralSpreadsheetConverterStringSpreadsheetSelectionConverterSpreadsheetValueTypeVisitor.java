@@ -21,36 +21,58 @@ import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
+import java.util.function.Function;
+
 /**
  * A {@link SpreadsheetValueTypeVisitor} which accepts the {@link String} and calls the right parse method on {@link SpreadsheetSelection}.
  */
 final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
 
     static <S extends SpreadsheetSelection> S parse(final String string,
-                                                    final Class<S> selectionType) {
-        final GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor visitor = new GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(string);
+                                                    final Class<S> selectionType,
+                                                    final SpreadsheetConverterContext context) {
+        final GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor visitor = new GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(
+                string,
+                context
+        );
         visitor.accept(selectionType);
         return Cast.to(visitor.selection);
     }
 
-    GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(final String string) {
+    GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(final String string,
+                                                                                              final SpreadsheetConverterContext context) {
         super();
         this.string = string;
+        this.context = context;
     }
 
     @Override
     protected void visitCellRange() {
-        this.selection = SpreadsheetSelection.parseCellRange(this.string);
+        this.parseLabelOr(
+                SpreadsheetSelection::parseCellRange
+        );
     }
 
     @Override
     protected void visitCellReference() {
-        this.selection = SpreadsheetSelection.parseCell(this.string);
+        this.parseLabelOr(
+                SpreadsheetSelection::parseCell
+        );
     }
 
     @Override
     protected void visitCellReferenceOrRange() {
-        this.selection = SpreadsheetSelection.parseCellOrCellRange(this.string);
+        this.parseLabelOr(
+                SpreadsheetSelection::parseCellOrCellRange
+        );
+    }
+
+    private void parseLabelOr(final Function<String, SpreadsheetSelection> parse) {
+        final String string = this.string;
+
+        this.selection = SpreadsheetSelection.isLabelText(string) ?
+                this.context.resolveIfLabel(SpreadsheetSelection.labelName(string)) :
+                parse.apply(string);
     }
 
     @Override
@@ -79,6 +101,9 @@ final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpread
     }
 
     private final String string;
+
+    // needed to resolve labels
+    private final SpreadsheetConverterContext context;
 
     private SpreadsheetSelection selection;
 

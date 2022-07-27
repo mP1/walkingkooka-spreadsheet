@@ -457,6 +457,32 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         );
     }
 
+    @Test
+    public void testSpreadsheetLabelNameToCellOrRangeCell() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123Cell");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z999");
+
+        this.convertAndCheck(
+                label,
+                SpreadsheetCellReferenceOrRange.class,
+                this.createContext(label, cell),
+                cell
+        );
+    }
+
+    @Test
+    public void testSpreadsheetLabelNameToCellOrRangeCellRange() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123CellRange");
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:c3");
+
+        this.convertAndCheck(
+                label,
+                SpreadsheetCellReferenceOrRange.class,
+                this.createContext(label, range),
+                range
+        );
+    }
+
     // SpreadsheetRowReference.......................................................................................
 
     @Test

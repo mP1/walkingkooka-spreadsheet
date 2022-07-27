@@ -25,7 +25,10 @@ public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverte
 
     @Override
     public GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor createVisitor() {
-        return new GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor("");
+        return new GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(
+                "",
+                null
+        );
     }
 
     @Override
