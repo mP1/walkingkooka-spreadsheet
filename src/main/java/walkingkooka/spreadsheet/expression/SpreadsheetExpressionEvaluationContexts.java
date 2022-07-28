@@ -23,6 +23,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -33,6 +34,7 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -72,12 +74,16 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     /**
      * {@see ConverterSpreadsheetExpressionEvaluationContext}
      */
-    public static SpreadsheetExpressionEvaluationContext functionParameterConverter(final Converter<SpreadsheetExpressionEvaluationContext> converter,
-                                                                                    final SpreadsheetExpressionEvaluationContext context) {
-        return ConverterSpreadsheetExpressionEvaluationContext.with(
-                converter,
-                context
-        );
+    public static SpreadsheetExpressionEvaluationContext functionParameterConverter(final Converter<SpreadsheetExpressionEvaluationContext> converter, final SpreadsheetExpressionEvaluationContext context) {
+        return ConverterSpreadsheetExpressionEvaluationContext.with(converter, context);
+    }
+
+    /**
+     * {@see LocalLabelsSpreadsheetExpressionEvaluationContext}
+     */
+    public static SpreadsheetExpressionEvaluationContext localLabels(final Map<SpreadsheetLabelName, Object> nameAndValues, final SpreadsheetExpressionEvaluationContext context) {
+
+        return LocalLabelsSpreadsheetExpressionEvaluationContext.with(nameAndValues, context);
     }
 
     /**
