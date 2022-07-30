@@ -162,7 +162,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
 
     @Override
     protected void endVisit(final SpreadsheetFunctionParserToken token) {
-        final Expression function = Expression.function(
+        final Expression function = Expression.namedFunction(
                 FunctionExpressionName.with(token.functionName().value()),
                 this.children);
         this.exit();
