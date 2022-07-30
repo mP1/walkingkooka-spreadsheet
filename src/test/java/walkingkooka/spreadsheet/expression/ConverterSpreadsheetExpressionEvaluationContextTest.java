@@ -104,8 +104,10 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         }
 
         @Override
-        public FunctionExpressionName name() {
-            return FunctionExpressionName.with("test-concat-1");
+        public Optional<FunctionExpressionName> name() {
+            return Optional.of(
+                    FunctionExpressionName.with("test-concat-1")
+            );
         }
 
         @Override
@@ -134,8 +136,10 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         }
 
         @Override
-        public FunctionExpressionName name() {
-            return FunctionExpressionName.with("test-echo-2");
+        public Optional<FunctionExpressionName> name() {
+            return Optional.of(
+                    FunctionExpressionName.with("test-echo-2")
+            );
         }
 
         @Override
@@ -249,7 +253,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     @Test
     public void testEvaluateFunction() {
         this.evaluateAndCheck(
-                CONCAT.name(),
+                CONCAT.name()
+                        .get(),
                 Lists.of(
                         EXPRESSION_NUMBER_KIND.create(111),
                         EXPRESSION_NUMBER_KIND.create(222)
@@ -261,10 +266,12 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     @Test
     public void testEvaluateFunctionNestedFunctionNotConverted() {
         this.evaluateAndCheck(
-                CONCAT.name(),
+                CONCAT.name()
+                        .get(),
                 Lists.of(
                         Expression.function(
-                                ECHO.name(),
+                                ECHO.name()
+                                        .get(),
                                 Lists.of(
                                         Expression.value(EXPRESSION_NUMBER_KIND.create(111))
                                 )
@@ -301,7 +308,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     public void testEvaluateExpressionFunctionParametersConverted() {
         this.applyWithAndCheck(
                 Expression.function(
-                        CONCAT.name(),
+                        CONCAT.name()
+                                .get(),
                         Lists.of(
                                 Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
                                 Expression.value(EXPRESSION_NUMBER_KIND.create(222))
@@ -315,7 +323,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     public void testEvaluateExpressionFunctionParametersConverted2() {
         this.applyWithAndCheck(
                 Expression.function(
-                        CONCAT.name(),
+                        CONCAT.name()
+                                .get(),
                         Lists.of(
                                 Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
                                 Expression.add(
@@ -332,7 +341,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     public void testEvaluateExpressionFunctionParametersConverted3() {
         this.applyWithAndCheck(
                 Expression.function(
-                        CONCAT.name(),
+                        CONCAT.name()
+                                .get(),
                         Lists.of(
                                 Expression.add(
                                         Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
@@ -349,10 +359,12 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     public void testEvaluateExpressionFunctionParametersConvertedNestedFunctionParameterNotConverted() {
         this.applyWithAndCheck(
                 Expression.function(
-                        CONCAT.name(),
+                        CONCAT.name()
+                                .get(),
                         Lists.of(
                                 Expression.function(
-                                        ECHO.name(),
+                                        ECHO.name()
+                                                .get(),
                                         Lists.of(
                                                 Expression.value(EXPRESSION_NUMBER_KIND.create(111))
                                         )
@@ -367,18 +379,21 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     public void testEvaluateExpressionFunctionParametersConvertedNestedFunctionParameterNotConverted2() {
         this.applyWithAndCheck(
                 Expression.function(
-                        CONCAT.name(),
+                        CONCAT.name()
+                                .get(),
                         Lists.of(
                                 Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
                                 Expression.function(
-                                        ECHO.name(),
+                                        ECHO.name()
+                                                .get(),
                                         Lists.of(
                                                 Expression.value(EXPRESSION_NUMBER_KIND.create(222))
                                         )
                                 ),
                                 Expression.value(EXPRESSION_NUMBER_KIND.create(333)),
                                 Expression.function(
-                                        ECHO.name(),
+                                        ECHO.name()
+                                                .get(),
                                         Lists.of(
                                                 Expression.value(EXPRESSION_NUMBER_KIND.create(444))
                                         )
