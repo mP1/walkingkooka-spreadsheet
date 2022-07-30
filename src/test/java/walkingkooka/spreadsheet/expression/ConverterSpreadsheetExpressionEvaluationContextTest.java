@@ -160,11 +160,11 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> FUNCTIONS = (n) -> {
         Objects.requireNonNull(n, "name");
 
-        if(CONCAT.name().equals(n)) {
+        if (CONCAT.name().get().equals(n)) {
             return Cast.to(CONCAT);
         }
 
-        if(ECHO.name().equals(n)) {
+        if (ECHO.name().get().equals(n)) {
             return Cast.to(ECHO);
         }
 
