@@ -1547,22 +1547,22 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     // Function.........................................................................................................
 
     @Test
-    public void testFunctionOtherExpressionFails() {
-        this.parseFailAndCheck(this.functionParser(), "1+2");
+    public void testNamedFunctionOtherExpressionFails() {
+        this.parseFailAndCheck(this.namedFunctionParser(), "1+2");
     }
 
     @Test
-    public void testFunctionWithoutArguments() {
+    public void testNamedFunctionWithoutArguments() {
         final String text = "xyz()";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), closeParenthesis()), text);
+        final SpreadsheetNamedFunctionParserToken f = SpreadsheetParserToken.namedFunction(Lists.of(functionName("xyz"), openParenthesis(), closeParenthesis()), text);
 
-        this.functionParseAndCheck(text, f, text);
+        this.namedFunctionParseAndCheck(text, f, text);
     }
 
     @Test
-    public void testFunctionNameWithDotWithoutArguments() {
+    public void testNamedFunctionNameWithDotWithoutArguments() {
         final String text = "Error.Type()";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(
+        final SpreadsheetNamedFunctionParserToken f = SpreadsheetParserToken.namedFunction(
                 Lists.of(
                         functionName("Error.Type"),
                         openParenthesis(),
@@ -1571,15 +1571,15 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 text
         );
 
-        this.functionParseAndCheck(text, f, text);
+        this.namedFunctionParseAndCheck(text, f, text);
     }
 
     @Test
-    public void testFunctionWithoutArgumentsWhitespace() {
+    public void testNamedFunctionWithoutArgumentsWhitespace() {
         final String text = "xyz(  )";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), whitespace(), closeParenthesis()), text);
+        final SpreadsheetNamedFunctionParserToken f = SpreadsheetParserToken.namedFunction(Lists.of(functionName("xyz"), openParenthesis(), whitespace(), closeParenthesis()), text);
 
-        this.functionParseAndCheck(
+        this.namedFunctionParseAndCheck(
                 text,
                 f,
                 text,
@@ -1588,37 +1588,37 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testFunctionWithOneArgumentBigDecimal() {
-        this.testFunctionWithOneArgument();
+    public void testNamedFunctionWithOneArgumentBigDecimal() {
+        this.testNamedFunctionWithOneArgument();
     }
 
     @Test
-    public void testFunctionWithOneArgumentDouble() {
-        this.testFunctionWithOneArgument();
+    public void testNamedFunctionWithOneArgumentDouble() {
+        this.testNamedFunctionWithOneArgument();
     }
 
-    private void testFunctionWithOneArgument() {
+    private void testNamedFunctionWithOneArgument() {
         final String text = "xyz(123)";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(123), closeParenthesis()), text);
+        final SpreadsheetNamedFunctionParserToken f = SpreadsheetParserToken.namedFunction(Lists.of(functionName("xyz"), openParenthesis(), number(123), closeParenthesis()), text);
 
-        this.functionParseAndCheck(text, f, text);
+        this.namedFunctionParseAndCheck(text, f, text);
     }
 
     @Test
-    public void testFunctionWithOneArgument2BigDecimal() {
-        this.testFunctionWithOneArgument2();
+    public void testNamedFunctionWithOneArgument2BigDecimal() {
+        this.testNamedFunctionWithOneArgument2();
     }
 
     @Test
-    public void testFunctionWithOneArgument2Double() {
-        this.testFunctionWithOneArgument2();
+    public void testNamedFunctionWithOneArgument2Double() {
+        this.testNamedFunctionWithOneArgument2();
     }
 
-    private void testFunctionWithOneArgument2() {
+    private void testNamedFunctionWithOneArgument2() {
         final String text = "xyz(  123)";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), whitespace(), number(123), closeParenthesis()), text);
+        final SpreadsheetNamedFunctionParserToken f = SpreadsheetParserToken.namedFunction(Lists.of(functionName("xyz"), openParenthesis(), whitespace(), number(123), closeParenthesis()), text);
 
-        this.functionParseAndCheck(
+        this.namedFunctionParseAndCheck(
                 text,
                 f,
                 text,
@@ -1627,20 +1627,20 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testFunctionWithOneArgument3BigDecimal() {
-        this.testFunctionWithOneArgument3();
+    public void testNamedFunctionWithOneArgument3BigDecimal() {
+        this.testNamedFunctionWithOneArgument3();
     }
 
     @Test
-    public void testFunctionWithOneArgument3Double() {
-        this.testFunctionWithOneArgument3();
+    public void testNamedFunctionWithOneArgument3Double() {
+        this.testNamedFunctionWithOneArgument3();
     }
 
-    private void testFunctionWithOneArgument3() {
+    private void testNamedFunctionWithOneArgument3() {
         final String text = "xyz(123  )";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(123), whitespace(), closeParenthesis()), text);
+        final SpreadsheetNamedFunctionParserToken f = SpreadsheetParserToken.namedFunction(Lists.of(functionName("xyz"), openParenthesis(), number(123), whitespace(), closeParenthesis()), text);
 
-        this.functionParseAndCheck(
+        this.namedFunctionParseAndCheck(
                 text,
                 f,
                 text,
@@ -1649,20 +1649,20 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testFunctionWithOneArgument4BigDecimal() {
-        this.testFunctionWithOneArgument4();
+    public void testNamedFunctionWithOneArgument4BigDecimal() {
+        this.testNamedFunctionWithOneArgument4();
     }
 
     @Test
-    public void testFunctionWithOneArgument4Double() {
-        this.testFunctionWithOneArgument4();
+    public void testNamedFunctionWithOneArgument4Double() {
+        this.testNamedFunctionWithOneArgument4();
     }
 
-    private void testFunctionWithOneArgument4() {
+    private void testNamedFunctionWithOneArgument4() {
         final String text = "xyz(  123  )";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), whitespace(), number(123), whitespace(), closeParenthesis()), text);
+        final SpreadsheetNamedFunctionParserToken f = SpreadsheetParserToken.namedFunction(Lists.of(functionName("xyz"), openParenthesis(), whitespace(), number(123), whitespace(), closeParenthesis()), text);
 
-        this.functionParseAndCheck(
+        this.namedFunctionParseAndCheck(
                 text,
                 f,
                 text,
@@ -1671,20 +1671,20 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testFunctionWithTwoArgumentsBigDecimal() {
-        this.testFunctionWithTwoArguments();
+    public void testNamedFunctionWithTwoArgumentsBigDecimal() {
+        this.testNamedFunctionWithTwoArguments();
     }
 
     @Test
-    public void testFunctionWithTwoArgumentsDouble() {
-        this.testFunctionWithTwoArguments();
+    public void testNamedFunctionWithTwoArgumentsDouble() {
+        this.testNamedFunctionWithTwoArguments();
     }
 
-    private void testFunctionWithTwoArguments() {
+    private void testNamedFunctionWithTwoArguments() {
         final String text = "xyz(123;456)";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(123), valueSeparator(), number(456), closeParenthesis()), text);
+        final SpreadsheetNamedFunctionParserToken f = SpreadsheetParserToken.namedFunction(Lists.of(functionName("xyz"), openParenthesis(), number(123), valueSeparator(), number(456), closeParenthesis()), text);
 
-        this.functionParseAndCheck(
+        this.namedFunctionParseAndCheck(
                 text,
                 f,
                 text,
@@ -1693,20 +1693,20 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testFunctionWithFourArgumentsBigDecimal() {
-        this.testFunctionWithFourArguments();
+    public void testNamedFunctionWithFourArgumentsBigDecimal() {
+        this.testNamedFunctionWithFourArguments();
     }
 
     @Test
-    public void testFunctionWithFourArgumentsDouble() {
-        this.testFunctionWithFourArguments();
+    public void testNamedFunctionWithFourArgumentsDouble() {
+        this.testNamedFunctionWithFourArguments();
     }
 
-    private void testFunctionWithFourArguments() {
+    private void testNamedFunctionWithFourArguments() {
         final String text = "xyz(1;2;3;4)";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(1), valueSeparator(), number(2), valueSeparator(), number(3), valueSeparator(), number(4), closeParenthesis()), text);
+        final SpreadsheetNamedFunctionParserToken f = SpreadsheetParserToken.namedFunction(Lists.of(functionName("xyz"), openParenthesis(), number(1), valueSeparator(), number(2), valueSeparator(), number(3), valueSeparator(), number(4), closeParenthesis()), text);
 
-        this.functionParseAndCheck(
+        this.namedFunctionParseAndCheck(
                 text,
                 f,
                 text,
@@ -1715,59 +1715,59 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testFunctionWithinFunctionBigDecimal() {
-        this.testFunctionWithinFunction();
+    public void testNamedFunctionWithinFunctionBigDecimal() {
+        this.testNamedFunctionWithinFunction();
     }
 
     @Test
-    public void testFunctionWithinFunctionDouble() {
-        this.testFunctionWithinFunction();
+    public void testNamedFunctionWithinFunctionDouble() {
+        this.testNamedFunctionWithinFunction();
     }
 
-    private void testFunctionWithinFunction() {
+    private void testNamedFunctionWithinFunction() {
         final String yText = "y(123)";
-        final SpreadsheetFunctionParserToken y = SpreadsheetParserToken.function(Lists.of(functionName("y"), openParenthesis(), number(123), closeParenthesis()), yText);
+        final SpreadsheetNamedFunctionParserToken y = SpreadsheetParserToken.namedFunction(Lists.of(functionName("y"), openParenthesis(), number(123), closeParenthesis()), yText);
 
         final String xText = "x(" + yText + ")";
-        final SpreadsheetFunctionParserToken x = SpreadsheetParserToken.function(Lists.of(functionName("x"), openParenthesis(), y, closeParenthesis()), xText);
+        final SpreadsheetNamedFunctionParserToken x = SpreadsheetParserToken.namedFunction(Lists.of(functionName("x"), openParenthesis(), y, closeParenthesis()), xText);
 
-        this.functionParseAndCheck(xText, x, xText);
+        this.namedFunctionParseAndCheck(xText, x, xText);
     }
 
     @Test
-    public void testFunctionWithinFunctionWithinFunctionBigDecimal() {
-        this.testFunctionWithinFunctionWithinFunction();
+    public void testNamedFunctionWithinFunctionWithinFunctionBigDecimal() {
+        this.testNamedFunctionWithinFunctionWithinFunction();
     }
 
     @Test
-    public void testFunctionWithinFunctionWithinFunctionDouble() {
-        this.testFunctionWithinFunctionWithinFunction();
+    public void testNamedFunctionWithinFunctionWithinFunctionDouble() {
+        this.testNamedFunctionWithinFunctionWithinFunction();
     }
 
-    private void testFunctionWithinFunctionWithinFunction() {
+    private void testNamedFunctionWithinFunctionWithinFunction() {
         final String zText = "z(123)";
-        final SpreadsheetFunctionParserToken z = SpreadsheetParserToken.function(Lists.of(functionName("z"), openParenthesis(), number(123), closeParenthesis()), zText);
+        final SpreadsheetNamedFunctionParserToken z = SpreadsheetParserToken.namedFunction(Lists.of(functionName("z"), openParenthesis(), number(123), closeParenthesis()), zText);
 
         final String yText = "y(" + zText + ")";
-        final SpreadsheetFunctionParserToken y = SpreadsheetParserToken.function(Lists.of(functionName("y"), openParenthesis(), z, closeParenthesis()), yText);
+        final SpreadsheetNamedFunctionParserToken y = SpreadsheetParserToken.namedFunction(Lists.of(functionName("y"), openParenthesis(), z, closeParenthesis()), yText);
 
         final String xText = "x(" + yText + ")";
-        final SpreadsheetFunctionParserToken x = SpreadsheetParserToken.function(Lists.of(functionName("x"), openParenthesis(), y, closeParenthesis()), xText);
+        final SpreadsheetNamedFunctionParserToken x = SpreadsheetParserToken.namedFunction(Lists.of(functionName("x"), openParenthesis(), y, closeParenthesis()), xText);
 
-        this.functionParseAndCheck(xText, x, xText);
+        this.namedFunctionParseAndCheck(xText, x, xText);
     }
 
     @Test
-    public void testFunctionWithRangeArgumentBigDecimal() {
-        this.testFunctionWithRangeArgument();
+    public void testNamedFunctionWithRangeArgumentBigDecimal() {
+        this.testNamedFunctionWithRangeArgument();
     }
 
     @Test
-    public void testFunctionWithRangeArgumentDouble() {
-        this.testFunctionWithRangeArgument();
+    public void testNamedFunctionWithRangeArgumentDouble() {
+        this.testNamedFunctionWithRangeArgument();
     }
 
-    private void testFunctionWithRangeArgument() {
+    private void testNamedFunctionWithRangeArgument() {
         final SpreadsheetCellReferenceParserToken from = this.cell(0, "A", 0);
         final SpreadsheetCellReferenceParserToken to = this.cell(1, "B", 1);
 
@@ -1775,19 +1775,19 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String rangeText = range.text();
 
         final String text = "xyz(" + rangeText + ")";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), range, closeParenthesis()), text);
+        final SpreadsheetNamedFunctionParserToken f = SpreadsheetParserToken.namedFunction(Lists.of(functionName("xyz"), openParenthesis(), range, closeParenthesis()), text);
 
-        this.functionParseAndCheck(text, f, text);
+        this.namedFunctionParseAndCheck(text, f, text);
     }
 
     /**
-     * First parseCellReference the range using {@link SpreadsheetParsers#function()} and then repeat again with
+     * First parseCellReference the range using {@link SpreadsheetParsers#namedFunction()} and then repeat again with
      * {@link SpreadsheetParsers#expression()}. Both should give the same results.
      */
-    private void functionParseAndCheck(final String from,
-                                       final SpreadsheetFunctionParserToken expected,
-                                       final String text) {
-        this.functionParseAndCheck(
+    private void namedFunctionParseAndCheck(final String from,
+                                            final SpreadsheetNamedFunctionParserToken expected,
+                                            final String text) {
+        this.namedFunctionParseAndCheck(
                 from,
                 expected,
                 text,
@@ -1795,11 +1795,16 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
-    private void functionParseAndCheck(final String from,
-                                       final SpreadsheetFunctionParserToken expected,
-                                       final String text,
-                                       final String expressionToString) {
-        this.parseAndCheck(functionParser(), from, expected, text);
+    private void namedFunctionParseAndCheck(final String from,
+                                            final SpreadsheetNamedFunctionParserToken expected,
+                                            final String text,
+                                            final String expressionToString) {
+        this.parseAndCheck(
+                namedFunctionParser(),
+                from,
+                expected,
+                text
+        );
         this.parseExpressionAndCheck(
                 from,
                 expected,
@@ -1808,8 +1813,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
-    private Parser<SpreadsheetParserContext> functionParser() {
-        return SpreadsheetParsers.function();
+    private Parser<SpreadsheetParserContext> namedFunctionParser() {
+        return SpreadsheetParsers.namedFunction();
     }
 
     // Group ....................................................................................................

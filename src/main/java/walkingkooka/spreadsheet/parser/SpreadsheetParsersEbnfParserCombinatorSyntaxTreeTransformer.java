@@ -110,11 +110,11 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
             case "EXPRESSION":
                 transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::expression;
                 break;
-            case "FUNCTION":
-                transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::function;
-                break;
             case "GROUP":
                 transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::group;
+                break;
+            case "NAMED_FUNCTION":
+                transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::namedFunction;
                 break;
             case "NEGATIVE":
                 transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::negative;
@@ -157,14 +157,14 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
                 );
     }
 
-    private static ParserToken function(final ParserToken token,
-                                        final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.function(clean(token), token.text());
-    }
-
     private static ParserToken group(final ParserToken token,
                                      final SpreadsheetParserContext context) {
         return SpreadsheetParserToken.group(clean(token), token.text());
+    }
+
+    private static ParserToken namedFunction(final ParserToken token,
+                                             final SpreadsheetParserContext context) {
+        return SpreadsheetParserToken.namedFunction(clean(token), token.text());
     }
 
     private static ParserToken negative(final ParserToken token,

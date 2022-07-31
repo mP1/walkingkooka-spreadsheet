@@ -110,15 +110,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static final Parser<SpreadsheetParserContext> EXPRESSION_PARSER;
 
-    /**
-     * Returns a {@link Parser} that parsers expression invocations, starting with the name and parameters.
-     */
-    public static Parser<SpreadsheetParserContext> function() {
-        return FUNCTION_PARSER;
-    }
-
-    private static final Parser<SpreadsheetParserContext> FUNCTION_PARSER;
-
     private static void functions(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
         predefined.put(FUNCTION_NAME_IDENTIFIER, functionName());
         predefined.put(VALUE_SEPARATOR_SYMBOL_IDENTIFIER, SpreadsheetParsersValueSeparatorParser.INSTANCE);
@@ -164,6 +155,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     public static Parser<SpreadsheetParserContext> labelName() {
         return SpreadsheetLabelNameParser.INSTANCE;
     }
+
+    /**
+     * Returns a {@link Parser} that parsers expression invocations, starting with the name and parameters.
+     */
+    public static Parser<SpreadsheetParserContext> namedFunction() {
+        return NAMED_FUNCTION_PARSER;
+    }
+
+    private static final Parser<SpreadsheetParserContext> NAMED_FUNCTION_PARSER;
 
     /**
      * A {@link Parser} that returns a range which will include cell references or labels.
@@ -457,7 +457,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL"));
         EXPRESSION_PARSER = parsers.get(EbnfIdentifierName.with("EXPRESSION"));
-        FUNCTION_PARSER = parsers.get(EbnfIdentifierName.with("FUNCTION"));
+        NAMED_FUNCTION_PARSER = parsers.get(EbnfIdentifierName.with("NAMED_FUNCTION"));
         RANGE_PARSER = parsers.get(EbnfIdentifierName.with("RANGE"));
     }
 

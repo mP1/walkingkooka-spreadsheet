@@ -117,7 +117,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
                         ), CharSequences.quote(text).toString()
                 ),
                 SpreadsheetParserToken.parenthesisCloseSymbol(")", ")"));
-        return SpreadsheetParserToken.function(tokens, ParserToken.text(tokens));
+        return SpreadsheetParserToken.namedFunction(tokens, ParserToken.text(tokens));
     }
 
     @Override

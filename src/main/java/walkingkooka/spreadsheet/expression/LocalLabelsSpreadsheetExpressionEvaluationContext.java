@@ -201,7 +201,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     public boolean isPure(final FunctionExpressionName functionName) {
         this.failIfNamedValue(functionName);
 
-        // $functionName is not a named parameter let the wrapped context test the function for purity.
+        // $functionName is not a named parameter let the wrapped context test the namedFunction for purity.
         return this.context.isPure(functionName);
     }
 
@@ -209,7 +209,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         for (final LocalLabelsSpreadsheetExpressionEvaluationContextNameAndValue parameterAndValue : this.nameAndValues) {
             final SpreadsheetLabelName namedParameter = parameterAndValue.name;
             if (namedParameter.caseSensitivity().equals(namedParameter.value(), functionName.value())) {
-                throw new IllegalArgumentException("Function name " + functionName + " is a named value and not an actual function");
+                throw new IllegalArgumentException("Function name " + functionName + " is a named value and not an actual namedFunction");
             }
         }
     }
