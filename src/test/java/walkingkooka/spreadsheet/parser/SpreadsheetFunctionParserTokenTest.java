@@ -82,7 +82,7 @@ public final class SpreadsheetFunctionParserTokenTest extends SpreadsheetParentP
     @Test
     public void testToExpression() {
         this.toExpressionAndCheck(
-                Expression.function(
+                Expression.namedFunction(
                         FunctionExpressionName.with(FUNCTION),
                         Lists.of(
                                 Expression.value(

@@ -390,7 +390,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testEvaluateWithFunction() {
-        this.evaluateAndCheck(Expression.function(FunctionExpressionName.with("xyz"),
+        this.evaluateAndCheck(
+                Expression.namedFunction(
+                        FunctionExpressionName.with("xyz"),
                         Lists.of(this.expression(1), this.expression(2), this.expression(3))),
                 1L + 2 + 3);
     }
@@ -401,7 +403,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEvaluateWithFunctionContextLoadCell() {
         this.evaluateAndCheck(
-                Expression.function(
+                Expression.namedFunction(
                         FunctionExpressionName.with(TEST_CONTEXT_LOADCELL),
                         Lists.of(
                                 Expression.reference(
@@ -416,7 +418,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEvaluateWithFunctionContextServerUrl() {
         this.evaluateAndCheck(
-                Expression.function(
+                Expression.namedFunction(
                         FunctionExpressionName.with(TEST_CONTEXT_SERVER_URL),
                         Lists.empty()
                 ),
@@ -427,7 +429,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEvaluateWithFunctionContextSpreadsheetMetadata() {
         this.evaluateAndCheck(
-                Expression.function(
+                Expression.namedFunction(
                         FunctionExpressionName.with(TEST_CONTEXT_SPREADSHEET_METADATA),
                         Lists.empty()
                 ),
