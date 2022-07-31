@@ -156,20 +156,6 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFunctionParserToken token) {
-        return this.enter();
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFunctionParserToken token) {
-        final Expression function = Expression.namedFunction(
-                FunctionExpressionName.with(token.functionName().value()),
-                this.children);
-        this.exit();
-        this.add(function, token);
-    }
-
-    @Override
     protected Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
         return this.enter();
     }
@@ -227,6 +213,20 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     @Override
     protected void endVisit(final SpreadsheetMultiplicationParserToken token) {
         this.exitBinary(Expression::multiply, token);
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetNamedFunctionParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetNamedFunctionParserToken token) {
+        final Expression function = Expression.namedFunction(
+                FunctionExpressionName.with(token.functionName().value()),
+                this.children);
+        this.exit();
+        this.add(function, token);
     }
 
     @Override

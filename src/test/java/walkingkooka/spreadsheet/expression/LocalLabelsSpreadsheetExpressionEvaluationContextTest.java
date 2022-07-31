@@ -121,7 +121,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                 }
         );
         this.checkEquals(
-                "Function name Name1234 is a named value and not an actual function",
+                "Function name Name1234 is a named value and not an actual namedFunction",
                 thrown.getMessage()
         );
     }
@@ -135,7 +135,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                 }
         );
         this.checkEquals(
-                "Function name Name1234 is a named value and not an actual function",
+                "Function name Name1234 is a named value and not an actual namedFunction",
                 thrown.getMessage()
         );
     }

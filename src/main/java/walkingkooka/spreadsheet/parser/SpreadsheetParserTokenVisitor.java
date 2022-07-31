@@ -103,16 +103,6 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
-    // SpreadsheetFunctionParserToken....................................................................................
-
-    protected Visiting startVisit(final SpreadsheetFunctionParserToken token) {
-        return Visiting.CONTINUE;
-    }
-
-    protected void endVisit(final SpreadsheetFunctionParserToken token) {
-        // nop
-    }
-
     // SpreadsheetGreaterThanParserToken....................................................................................
 
     protected Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
@@ -170,6 +160,16 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
     }
 
     protected void endVisit(final SpreadsheetMultiplicationParserToken token) {
+        // nop
+    }
+
+    // SpreadsheetNamedFunctionParserToken....................................................................................
+
+    protected Visiting startVisit(final SpreadsheetNamedFunctionParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetNamedFunctionParserToken token) {
         // nop
     }
 

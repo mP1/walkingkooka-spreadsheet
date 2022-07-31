@@ -43,7 +43,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExpressionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetFunctionNameParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetFunctionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanParserToken;
@@ -65,6 +64,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMonthNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMultiplicationParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMultiplySymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetNamedFunctionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNegativeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsSymbolParserToken;
@@ -189,16 +189,6 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetFunctionParserToken token) {
-        return this.enter();
-    }
-
-    @Override
-    protected final void endVisit(final SpreadsheetFunctionParserToken token) {
-        this.exit(token, SpreadsheetParserToken::function);
-    }
-
-    @Override
     protected final Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
         return this.enter();
     }
@@ -256,6 +246,16 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     @Override
     protected final void endVisit(final SpreadsheetMultiplicationParserToken token) {
         this.exit(token, SpreadsheetParserToken::multiplication);
+    }
+
+    @Override
+    protected final Visiting startVisit(final SpreadsheetNamedFunctionParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected final void endVisit(final SpreadsheetNamedFunctionParserToken token) {
+        this.exit(token, SpreadsheetParserToken::namedFunction);
     }
 
     @Override

@@ -201,10 +201,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetFunctionParserToken}
+     * {@see SpreadsheetNamedFunctionParserToken}
      */
-    public static SpreadsheetFunctionParserToken function(final List<ParserToken> value, final String text) {
-        return SpreadsheetFunctionParserToken.with(value, text);
+    public static SpreadsheetNamedFunctionParserToken namedFunction(final List<ParserToken> value, final String text) {
+        return SpreadsheetNamedFunctionParserToken.with(value, text);
     }
 
     /**
@@ -693,13 +693,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetFunctionParserToken} returns true
-     */
-    public final boolean isFunction() {
-        return this instanceof SpreadsheetFunctionParserToken;
-    }
-
-    /**
      * Only {@link SpreadsheetFunctionNameParserToken} returns true
      */
     public final boolean isFunctionName() {
@@ -851,6 +844,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isMultiplySymbol() {
         return this instanceof SpreadsheetMultiplySymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetNamedFunctionParserToken} returns true
+     */
+    public final boolean isNamedFunction() {
+        return this instanceof SpreadsheetNamedFunctionParserToken;
     }
 
     /**
@@ -1874,13 +1874,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
-                SpreadsheetFunctionParserToken.class,
-                SpreadsheetParserToken::unmarshallFunction
+                SpreadsheetGroupParserToken.class,
+                SpreadsheetParserToken::unmarshallGroup
         );
 
         registerParentParserToken(
-                SpreadsheetGroupParserToken.class,
-                SpreadsheetParserToken::unmarshallGroup
+                SpreadsheetNamedFunctionParserToken.class,
+                SpreadsheetParserToken::unmarshallNamedFunction
         );
 
         registerParentParserToken(
@@ -2065,12 +2065,12 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetFunctionParserToken unmarshallFunction(final JsonNode node,
-                                                             final JsonNodeUnmarshallContext context) {
+    static SpreadsheetNamedFunctionParserToken unmarshallNamedFunction(final JsonNode node,
+                                                                       final JsonNodeUnmarshallContext context) {
         return unmarshallParentParserToken(
                 node,
                 context,
-                SpreadsheetParserToken::function
+                SpreadsheetParserToken::namedFunction
         );
     }
 
