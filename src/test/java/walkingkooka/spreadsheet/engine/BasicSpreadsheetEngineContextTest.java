@@ -391,10 +391,18 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEvaluateWithFunction() {
         this.evaluateAndCheck(
-                Expression.namedFunction(
-                        FunctionExpressionName.with("xyz"),
-                        Lists.of(this.expression(1), this.expression(2), this.expression(3))),
-                1L + 2 + 3);
+                Expression.call(
+                        Expression.namedFunction(
+                                FunctionExpressionName.with("xyz")
+                        ),
+                        Lists.of(
+                                this.expression(1),
+                                this.expression(2),
+                                this.expression(3)
+                        )
+                ),
+                1L + 2 + 3
+        );
     }
 
     private final static SpreadsheetCellReference LOAD_CELL_REFERENCE = SpreadsheetSelection.parseCell("Z99");
@@ -403,8 +411,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEvaluateWithFunctionContextLoadCell() {
         this.evaluateAndCheck(
-                Expression.namedFunction(
-                        FunctionExpressionName.with(TEST_CONTEXT_LOADCELL),
+                Expression.call(
+                        Expression.namedFunction(
+                                FunctionExpressionName.with(TEST_CONTEXT_LOADCELL)
+                        ),
                         Lists.of(
                                 Expression.reference(
                                         LOAD_CELL_REFERENCE
@@ -418,8 +428,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEvaluateWithFunctionContextServerUrl() {
         this.evaluateAndCheck(
-                Expression.namedFunction(
-                        FunctionExpressionName.with(TEST_CONTEXT_SERVER_URL),
+                Expression.call(
+                        Expression.namedFunction(
+                                FunctionExpressionName.with(TEST_CONTEXT_SERVER_URL)
+                        ),
                         Lists.empty()
                 ),
                 SERVER_URL
@@ -429,8 +441,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEvaluateWithFunctionContextSpreadsheetMetadata() {
         this.evaluateAndCheck(
-                Expression.namedFunction(
-                        FunctionExpressionName.with(TEST_CONTEXT_SPREADSHEET_METADATA),
+                Expression.call(
+                        Expression.namedFunction(
+                                FunctionExpressionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
+                        ),
                         Lists.empty()
                 ),
                 this.metadata()

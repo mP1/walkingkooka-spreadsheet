@@ -42,7 +42,6 @@ import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
-import walkingkooka.tree.expression.NamedFunctionExpression;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
@@ -269,11 +268,15 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                 CONCAT.name()
                         .get(),
                 Lists.of(
-                        Expression.namedFunction(
-                                ECHO.name()
-                                        .get(),
+                        Expression.call(
+                                Expression.namedFunction(
+                                        ECHO.name()
+                                                .get()
+                                ),
                                 Lists.of(
-                                        Expression.value(EXPRESSION_NUMBER_KIND.create(111))
+                                        Expression.value(
+                                                EXPRESSION_NUMBER_KIND.create(111)
+                                        )
                                 )
                         )
                 ),
@@ -306,14 +309,12 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     @Test
     public void testEvaluateExpressionFunctionParametersConverted() {
-        this.applyWithAndCheck(
-                Expression.namedFunction(
-                        CONCAT.name()
-                                .get(),
-                        Lists.of(
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(222))
-                        )
+        this.executeNamedFunctionAndCheck(
+                CONCAT.name()
+                        .get(),
+                Lists.of(
+                        Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
+                        Expression.value(EXPRESSION_NUMBER_KIND.create(222))
                 ),
                 "!!!111,!!!222"
         );
@@ -321,16 +322,14 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     @Test
     public void testEvaluateExpressionFunctionParametersConverted2() {
-        this.applyWithAndCheck(
-                Expression.namedFunction(
-                        CONCAT.name()
-                                .get(),
-                        Lists.of(
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
-                                Expression.add(
-                                        Expression.value(EXPRESSION_NUMBER_KIND.create(222)),
-                                        Expression.value(EXPRESSION_NUMBER_KIND.create(333))
-                                )
+        this.executeNamedFunctionAndCheck(
+                CONCAT.name()
+                        .get(),
+                Lists.of(
+                        Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
+                        Expression.add(
+                                Expression.value(EXPRESSION_NUMBER_KIND.create(222)),
+                                Expression.value(EXPRESSION_NUMBER_KIND.create(333))
                         )
                 ),
                 "!!!111,!!!555"
@@ -339,17 +338,15 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     @Test
     public void testEvaluateExpressionFunctionParametersConverted3() {
-        this.applyWithAndCheck(
-                Expression.namedFunction(
-                        CONCAT.name()
-                                .get(),
-                        Lists.of(
-                                Expression.add(
-                                        Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
-                                        Expression.value(EXPRESSION_NUMBER_KIND.create(222))
-                                ),
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(444))
-                        )
+        this.executeNamedFunctionAndCheck(
+                CONCAT.name()
+                        .get(),
+                Lists.of(
+                        Expression.add(
+                                Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
+                                Expression.value(EXPRESSION_NUMBER_KIND.create(222))
+                        ),
+                        Expression.value(EXPRESSION_NUMBER_KIND.create(444))
                 ),
                 "!!!333,!!!444"
         );
@@ -357,17 +354,17 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     @Test
     public void testEvaluateExpressionFunctionParametersConvertedNestedFunctionParameterNotConverted() {
-        this.applyWithAndCheck(
-                Expression.namedFunction(
-                        CONCAT.name()
-                                .get(),
-                        Lists.of(
+        this.executeNamedFunctionAndCheck(
+                CONCAT.name()
+                        .get(),
+                Lists.of(
+                        Expression.call(
                                 Expression.namedFunction(
                                         ECHO.name()
-                                                .get(),
-                                        Lists.of(
-                                                Expression.value(EXPRESSION_NUMBER_KIND.create(111))
-                                        )
+                                                .get()
+                                ),
+                                Lists.of(
+                                        Expression.value(EXPRESSION_NUMBER_KIND.create(111))
                                 )
                         )
                 ),
@@ -377,26 +374,30 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     @Test
     public void testEvaluateExpressionFunctionParametersConvertedNestedFunctionParameterNotConverted2() {
-        this.applyWithAndCheck(
-                Expression.namedFunction(
-                        CONCAT.name()
-                                .get(),
-                        Lists.of(
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
+        this.executeNamedFunctionAndCheck(
+                CONCAT.name()
+                        .get(),
+                Lists.of(
+                        Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
+                        Expression.call(
                                 Expression.namedFunction(
                                         ECHO.name()
-                                                .get(),
-                                        Lists.of(
-                                                Expression.value(EXPRESSION_NUMBER_KIND.create(222))
-                                        )
+                                                .get()
                                 ),
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(333)),
+                                Lists.of(
+                                        Expression.value(
+                                                EXPRESSION_NUMBER_KIND.create(222)
+                                        )
+                                )
+                        ),
+                        Expression.value(EXPRESSION_NUMBER_KIND.create(333)),
+                        Expression.call(
                                 Expression.namedFunction(
                                         ECHO.name()
-                                                .get(),
-                                        Lists.of(
-                                                Expression.value(EXPRESSION_NUMBER_KIND.create(444))
-                                        )
+                                                .get()
+                                ),
+                                Lists.of(
+                                        Expression.value(EXPRESSION_NUMBER_KIND.create(444))
                                 )
                         )
                 ),
@@ -404,15 +405,14 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         );
     }
 
-    private <T> void applyWithAndCheck(final NamedFunctionExpression function,
-                                       final T expected) {
+    private <T> void executeNamedFunctionAndCheck(final FunctionExpressionName functionName,
+                                                  final List<Expression> parameters,
+                                                  final T expected) {
         final ConverterSpreadsheetExpressionEvaluationContext context = this.createContext();
         final ExpressionFunction<T, ExpressionEvaluationContext> function2 =
                 Cast.to(
-                        context.function(function.name())
+                        context.function(functionName)
                 );
-
-        final List<?> parameters = function.value();
 
         this.checkEquals(
                 expected,
@@ -423,7 +423,10 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         ),
                         context
                 ),
-                () -> "" + function
+                () -> "" + Expression.call(
+                        Expression.namedFunction(functionName),
+                        parameters
+                )
         );
     }
 
