@@ -57,7 +57,7 @@ public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetPa
         final SpreadsheetNamedFunctionParserToken token = this.createToken(text, name, left, number, right);
         this.textAndCheck(token, text);
         this.checkValue(token, name, left, number, right);
-        this.checkFunction(token, this.functionName());
+        this.checkNamedFunction(token, this.functionName());
         this.checkParameters(token, number);
     }
 
@@ -75,15 +75,17 @@ public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetPa
         final SpreadsheetNamedFunctionParserToken token = this.createToken(text, name, left, whitespace1, number, whitespace2, right);
         this.textAndCheck(token, text);
         this.checkValue(token, name, left, whitespace1, number, whitespace2, right);
-        this.checkFunction(token, this.functionName());
+        this.checkNamedFunction(token, this.functionName());
         this.checkParameters(token, number);
     }
 
     @Test
     public void testToExpression() {
         this.toExpressionAndCheck(
-                Expression.namedFunction(
-                        FunctionExpressionName.with(FUNCTION),
+                Expression.call(
+                        Expression.namedFunction(
+                                FunctionExpressionName.with(FUNCTION)
+                        ),
                         Lists.of(
                                 Expression.value(
                                         this.expressionNumber(NUMBER1)
@@ -93,8 +95,13 @@ public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetPa
         );
     }
 
-    private void checkFunction(final SpreadsheetNamedFunctionParserToken function, final SpreadsheetFunctionName name) {
-        this.checkEquals(name, function.functionName(), "functionName");
+    private void checkNamedFunction(final SpreadsheetNamedFunctionParserToken function,
+                                    final SpreadsheetFunctionName name) {
+        this.checkEquals(
+                name,
+                function.functionName(),
+                "functionName"
+        );
     }
 
     private void checkParameters(final SpreadsheetNamedFunctionParserToken function, final SpreadsheetParserToken... parameters) {
