@@ -233,8 +233,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
-    public Object evaluate(final FunctionExpressionName name,
-                           final List<Object> parameters) {
+    public Object evaluateFunction(final FunctionExpressionName name,
+                                   final List<Object> parameters) {
         final ExpressionFunction<?, ExpressionEvaluationContext> function = this.function(name);
 
         return function

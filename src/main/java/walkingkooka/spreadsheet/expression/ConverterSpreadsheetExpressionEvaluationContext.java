@@ -244,11 +244,14 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
      * rather than delegating to the same method on the wrapped {@link SpreadsheetExpressionEvaluationContext}.
      */
     @Override
-    public Object evaluate(final FunctionExpressionName name,
-                           final List<Object> parameters) {
+    public Object evaluateFunction(final FunctionExpressionName name,
+                                   final List<Object> parameters) {
         this.scope++;
         try {
-            return this.context.evaluate(name, parameters);
+            return this.context.evaluateFunction(
+                    name,
+                    parameters
+            );
         } finally {
             this.scope--;
         }

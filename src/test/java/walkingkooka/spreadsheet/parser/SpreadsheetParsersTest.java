@@ -2496,8 +2496,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return new FakeExpressionEvaluationContext() {
 
             @Override
-            public Object evaluate(final FunctionExpressionName name,
-                                   final List<Object> parameters) {
+            public Object evaluateFunction(final FunctionExpressionName name,
+                                           final List<Object> parameters) {
                 final ExpressionFunction<?, ExpressionEvaluationContext> function = this.function(name);
 
                 return function.apply(

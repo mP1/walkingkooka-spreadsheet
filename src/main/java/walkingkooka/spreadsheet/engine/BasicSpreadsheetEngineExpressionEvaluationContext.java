@@ -101,8 +101,8 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     @Override
-    public Object evaluate(final FunctionExpressionName name,
-                           final List<Object> parameters) {
+    public Object evaluateFunction(final FunctionExpressionName name,
+                                   final List<Object> parameters) {
         throw new UnsupportedOperationException();
     }
 

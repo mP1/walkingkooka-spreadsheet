@@ -95,8 +95,8 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
             }
 
             @Override
-            public Object evaluate(final FunctionExpressionName name,
-                                   final List<Object> parameters) {
+            public Object evaluateFunction(final FunctionExpressionName name,
+                                           final List<Object> parameters) {
                 Objects.requireNonNull(name, "name");
                 Objects.requireNonNull(parameters, "parameters");
                 throw new UnknownExpressionFunctionException(name);
