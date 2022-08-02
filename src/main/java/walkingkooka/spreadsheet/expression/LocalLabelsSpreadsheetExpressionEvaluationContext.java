@@ -154,9 +154,9 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     @Override
-    public Object evaluate(final FunctionExpressionName functionExpressionName,
-                           final List<Object> parameters) {
-        return this.context.evaluate(
+    public Object evaluateFunction(final FunctionExpressionName functionExpressionName,
+                                   final List<Object> parameters) {
+        return this.context.evaluateFunction(
                 functionExpressionName,
                 parameters
         );
