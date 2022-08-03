@@ -41,12 +41,11 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetExpressionEvaluationContext} that wraps another delegating most method calls, except for a few
@@ -58,40 +57,21 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         UsesToStringBuilder {
 
     static SpreadsheetExpressionEvaluationContext with(
-            final Map<SpreadsheetLabelName, Object> nameAndValues,
+            final Function<SpreadsheetLabelName, Optional<Object>> labelToValues,
             final SpreadsheetExpressionEvaluationContext context) {
-        Objects.requireNonNull(nameAndValues, "nameAndValues");
+        Objects.requireNonNull(labelToValues, "labelToValues");
         Objects.requireNonNull(context, "context");
 
-        final int count = nameAndValues.size();
-        return 0 == count ?
-                context :
-                with0(count, nameAndValues, context);
-    }
-
-    private static LocalLabelsSpreadsheetExpressionEvaluationContext with0(final int count,
-                                                                           final Map<SpreadsheetLabelName, Object> nameAndValues,
-                                                                           final SpreadsheetExpressionEvaluationContext context) {
-        final LocalLabelsSpreadsheetExpressionEvaluationContextNameAndValue[] copy = new LocalLabelsSpreadsheetExpressionEvaluationContextNameAndValue[count];
-        int i = 0;
-        for (final Map.Entry<SpreadsheetLabelName, Object> nameAndValue : nameAndValues.entrySet()) {
-            copy[i] = LocalLabelsSpreadsheetExpressionEvaluationContextNameAndValue.with(
-                    nameAndValue.getKey(),
-                    nameAndValue.getValue()
-            );
-            i++;
-        }
-
         return new LocalLabelsSpreadsheetExpressionEvaluationContext(
-                copy,
+                labelToValues,
                 context
         );
     }
 
-    private LocalLabelsSpreadsheetExpressionEvaluationContext(final LocalLabelsSpreadsheetExpressionEvaluationContextNameAndValue[] nameAndValues,
+    private LocalLabelsSpreadsheetExpressionEvaluationContext(final Function<SpreadsheetLabelName, Optional<Object>> labelToValues,
                                                               final SpreadsheetExpressionEvaluationContext context) {
         super();
-        this.nameAndValues = nameAndValues;
+        this.labelToValues = labelToValues;
         this.context = context;
     }
 
@@ -184,18 +164,24 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
      */
     @Override
     public Optional<Object> reference(final ExpressionReference reference) {
-        final Optional<Object> found = this.findLocalLabel(reference)
-                .map(nv -> nv.value(this));
-        return found.isPresent() ?
-                found :
-                Optional.of(this.context.reference(reference)); // j2cl missing Optional#or
+        Objects.requireNonNull(reference, "reference");
+
+        return reference instanceof SpreadsheetLabelName ?
+                this.findLocalLabel((SpreadsheetLabelName) reference) :
+                Optional.empty();
     }
 
-    private Optional<LocalLabelsSpreadsheetExpressionEvaluationContextNameAndValue> findLocalLabel(final ExpressionReference reference) {
-        return Arrays.stream(this.nameAndValues)
-                .filter(nv -> nv.name.equals(reference))
-                .findFirst();
+    /**
+     * Finds the unevaluated value if the reference is a {@link SpreadsheetLabelName} otherwise returns {@link Optional#empty()}.
+     */
+    private Optional<Object> findLocalLabel(final SpreadsheetLabelName label) {
+        return this.labelToValues.apply(label);
     }
+
+    /**
+     * Provides the value for a given {@link SpreadsheetLabelName}.
+     */
+    private final Function<SpreadsheetLabelName, Optional<Object>> labelToValues;
 
     @Override
     public boolean isPure(final FunctionExpressionName functionName) {
@@ -206,11 +192,9 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     private void failIfParameterName(final FunctionExpressionName functionName) {
-        for (final LocalLabelsSpreadsheetExpressionEvaluationContextNameAndValue parameterAndValue : this.nameAndValues) {
-            final SpreadsheetLabelName namedParameter = parameterAndValue.name;
-            if (namedParameter.caseSensitivity().equals(namedParameter.value(), functionName.value())) {
-                throw new IllegalArgumentException("Function name " + functionName + " is a parameter and not an actual function");
-            }
+        final String text = functionName.value();
+        if (SpreadsheetSelection.isLabelText(text) && this.findLocalLabel(SpreadsheetSelection.labelName(text)).isPresent()) {
+            throw new IllegalArgumentException("Function name " + functionName + " is a parameter and not an actual function");
         }
     }
 
@@ -325,8 +309,9 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         return this.context.positiveSign();
     }
 
-    private final LocalLabelsSpreadsheetExpressionEvaluationContextNameAndValue[] nameAndValues;
-
+    /**
+     * The wrapped {@link SpreadsheetExpressionEvaluationContext}.
+     */
     private final SpreadsheetExpressionEvaluationContext context;
 
     @Override
@@ -336,7 +321,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
-        builder.value(this.nameAndValues);
+        builder.value(this.labelToValues);
         builder.value(this.context);
     }
 }

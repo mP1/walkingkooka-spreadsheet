@@ -19,15 +19,18 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.MathContext;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<LocalLabelsSpreadsheetExpressionEvaluationContext>,
@@ -47,6 +50,25 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     private final static char PERCENTAGE_SYMBOL = 'R';
     private final static char POSITIVE_SYMBOL = 'P';
 
+    private final Function<SpreadsheetLabelName, Optional<Object>> LABEL_TO_VALUES = new Function<>() {
+        @Override
+        public Optional<Object> apply(final SpreadsheetLabelName label) {
+            return Optional.ofNullable(this.map.get(label));
+        }
+
+        @Override
+        public String toString() {
+            return ToStringBuilder.empty()
+                    .value(this.map)
+                    .build();
+        }
+
+        private final Map<SpreadsheetLabelName, Object> map = Maps.of(
+                SpreadsheetSelection.labelName(NAME),
+                LOCAL_VALUE
+        );
+    };
+
     @Test
     public void testWithNullNamesAndValuesFails() {
         assertThrows(
@@ -63,21 +85,8 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         assertThrows(
                 NullPointerException.class,
                 () -> LocalLabelsSpreadsheetExpressionEvaluationContext.with(
-                        Maps.empty(),
+                        LABEL_TO_VALUES,
                         null
-                )
-        );
-    }
-
-    @Test
-    public void testWithEmptyDoesntWrap() {
-        final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
-
-        assertSame(
-                context,
-                LocalLabelsSpreadsheetExpressionEvaluationContext.with(
-                        Maps.empty(),
-                        context
                 )
         );
     }
@@ -173,13 +182,10 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
 
         this.toStringAndCheck(
                 LocalLabelsSpreadsheetExpressionEvaluationContext.with(
-                        Maps.of(
-                                SpreadsheetSelection.labelName(NAME),
-                                "abc"
-                        ),
+                        LABEL_TO_VALUES,
                         context
                 ),
-                "Name1234=\"abc\" " + context
+                "Name1234=\"abc123\" " + context
         );
     }
 
@@ -187,10 +193,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     public LocalLabelsSpreadsheetExpressionEvaluationContext createContext() {
         return Cast.to(
                 LocalLabelsSpreadsheetExpressionEvaluationContext.with(
-                        Maps.of(
-                                SpreadsheetSelection.labelName(NAME),
-                                LOCAL_VALUE
-                        ),
+                        LABEL_TO_VALUES,
                         new FakeSpreadsheetExpressionEvaluationContext() {
 
                             @Override

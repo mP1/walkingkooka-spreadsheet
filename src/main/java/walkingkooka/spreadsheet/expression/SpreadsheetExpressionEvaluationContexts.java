@@ -34,7 +34,6 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -81,9 +80,13 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     /**
      * {@see LocalLabelsSpreadsheetExpressionEvaluationContext}
      */
-    public static SpreadsheetExpressionEvaluationContext localLabels(final Map<SpreadsheetLabelName, Object> nameAndValues, final SpreadsheetExpressionEvaluationContext context) {
+    public static SpreadsheetExpressionEvaluationContext localLabels(final Function<SpreadsheetLabelName, Optional<Object>> labelToValues,
+                                                                     final SpreadsheetExpressionEvaluationContext context) {
 
-        return LocalLabelsSpreadsheetExpressionEvaluationContext.with(nameAndValues, context);
+        return LocalLabelsSpreadsheetExpressionEvaluationContext.with(
+                labelToValues,
+                context
+        );
     }
 
     /**
