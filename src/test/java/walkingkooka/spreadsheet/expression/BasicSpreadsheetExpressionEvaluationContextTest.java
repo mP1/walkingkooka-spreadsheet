@@ -345,12 +345,12 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Override
-    public void testEvaluateNullFunctionNameFails() {
+    public void testEvaluateFunctionNullFunctionNameFails() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void testEvaluateUnknownFunctionNameFails() {
+    public void testEvaluateFunctionUnknownFunctionNameFails() {
         throw new UnsupportedOperationException();
     }
 
