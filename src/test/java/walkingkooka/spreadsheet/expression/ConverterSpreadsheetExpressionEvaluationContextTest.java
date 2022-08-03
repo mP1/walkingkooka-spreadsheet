@@ -251,7 +251,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     @Test
     public void testEvaluateFunction() {
-        this.evaluateAndCheck(
+        this.evaluateFunctionAndCheck(
                 CONCAT.name()
                         .get(),
                 Lists.of(
@@ -264,7 +264,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     @Test
     public void testEvaluateFunctionNestedFunctionNotConverted() {
-        this.evaluateAndCheck(
+        this.evaluateFunctionAndCheck(
                 CONCAT.name()
                         .get(),
                 Lists.of(
