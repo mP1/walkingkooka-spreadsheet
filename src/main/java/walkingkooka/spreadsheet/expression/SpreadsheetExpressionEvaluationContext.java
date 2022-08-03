@@ -41,7 +41,7 @@ import java.util.function.Function;
 public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext, SpreadsheetConverterContext {
 
     @Override
-    default ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
+    default SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
         return SpreadsheetExpressionEvaluationContexts.localLabels(
                 Cast.to(scoped),
                 this
