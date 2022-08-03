@@ -33,6 +33,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A {@link ExpressionEvaluationContext} view of a {@link ExpressionNumberConverterContext}.
@@ -52,6 +53,11 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
     @Override
     public CaseSensitivity caseSensitivity() {
         return CaseSensitivity.INSENSITIVE;
+    }
+
+    @Override
+    public ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

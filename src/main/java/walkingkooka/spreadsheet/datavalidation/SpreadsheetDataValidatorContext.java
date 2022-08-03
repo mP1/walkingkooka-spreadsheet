@@ -21,10 +21,18 @@ import walkingkooka.Context;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.util.Optional;
+import java.util.function.Function;
+
 /**
  * The {@link Context} that accompanies each validation request.
  */
 public interface SpreadsheetDataValidatorContext extends ExpressionEvaluationContext {
+
+    @Override
+    default ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     default boolean isText(final Object value) {

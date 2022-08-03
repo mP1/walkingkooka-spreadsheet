@@ -33,6 +33,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Function;
 
 final class SpreadsheetNumberParsePatternsConverterExpressionEvaluationContext implements ExpressionEvaluationContext {
 
@@ -68,6 +69,11 @@ final class SpreadsheetNumberParsePatternsConverterExpressionEvaluationContext i
 
     @Override
     public Optional<Object> reference(final ExpressionReference expressionReference) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
         throw new UnsupportedOperationException();
     }
 
