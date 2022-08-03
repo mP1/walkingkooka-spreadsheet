@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
@@ -31,12 +32,21 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Enhances {@link ExpressionEvaluationContext} adding a few extra methods required by a spreadsheet during
  * expression execution.
  */
 public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext, SpreadsheetConverterContext {
+
+    @Override
+    default ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
+        return SpreadsheetExpressionEvaluationContexts.localLabels(
+                Cast.to(scoped),
+                this
+        );
+    }
 
     /**
      * Parses the {@link String expression} into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.

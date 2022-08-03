@@ -36,6 +36,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -62,6 +63,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     @Override
     public CaseSensitivity caseSensitivity() {
         return CaseSensitivity.INSENSITIVE;
+    }
+
+    @Override
+    public ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
