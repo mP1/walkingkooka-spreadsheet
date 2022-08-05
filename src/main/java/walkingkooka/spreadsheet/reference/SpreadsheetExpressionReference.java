@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 
 /**
  * Base class for all Spreadsheet {@link ExpressionReference}
@@ -36,6 +37,11 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
      * Converts this cell or range into a range. Cells will become a range of itself while range returns itself
      */
     public abstract SpreadsheetCellRange cellRange();
+
+    @Override
+    public boolean test(final ExpressionFunctionParameterName parameterName) {
+        return this.isLabelName() && this.toString().equalsIgnoreCase(parameterName.value());
+    }
 
     /**
      * Returns this {@link SpreadsheetExpressionReference} in relative form. This is a no-op for {@link SpreadsheetLabelName}.
