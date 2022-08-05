@@ -39,7 +39,7 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     public abstract SpreadsheetCellRange cellRange();
 
     @Override
-    public boolean test(final ExpressionFunctionParameterName parameterName) {
+    public final boolean testParameterName(final ExpressionFunctionParameterName parameterName) {
         return this.isLabelName() && this.toString().equalsIgnoreCase(parameterName.value());
     }
 
