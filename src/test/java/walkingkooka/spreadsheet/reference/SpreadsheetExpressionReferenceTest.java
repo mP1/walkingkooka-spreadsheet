@@ -20,12 +20,74 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<SpreadsheetExpressionReference>,
         JsonNodeMarshallingTesting<SpreadsheetExpressionReference> {
+
+    // testParameterName...............................................................................................
+
+    @Test
+    public void testTestParameterNameLabelEqualSameCase() {
+        final String label = "Label123";
+
+        this.testParameterNameAndCheck(
+                SpreadsheetSelection.labelName(label),
+                label,
+                true
+        );
+    }
+
+    @Test
+    public void testTestParameterNameLabelEqualDifferentCase() {
+        this.testParameterNameAndCheck(
+                SpreadsheetSelection.labelName("Label123"),
+                "LABEL123",
+                true
+        );
+    }
+
+    @Test
+    public void testTestParameterNameLabelDifferent() {
+        this.testParameterNameAndCheck(
+                SpreadsheetSelection.labelName("Label123"),
+                "different",
+                false
+        );
+    }
+
+    @Test
+    public void testTestParameterNameCell() {
+        this.testParameterNameAndCheck(
+                SpreadsheetSelection.parseCell("A1"),
+                "different",
+                false
+        );
+    }
+
+    @Test
+    public void testTestParameterNameCellRange() {
+        this.testParameterNameAndCheck(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                "different",
+                false
+        );
+    }
+
+    private void testParameterNameAndCheck(final SpreadsheetExpressionReference expressionReference,
+                                           final String parameterName,
+                                           final boolean expected) {
+        this.checkEquals(
+                expected,
+                expressionReference.testParameterName(
+                        ExpressionFunctionParameterName.with(parameterName)
+                ),
+                () -> expressionReference + " testParameterName(" + parameterName + ")"
+        );
+    }
 
     // unmarshall.....................................................................................................
 
