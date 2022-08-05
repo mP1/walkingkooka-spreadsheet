@@ -20,10 +20,11 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.StandardThrowableTesting;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.FakeExpressionReference;
 
 public final class SpreadsheetExpressionEvaluationReferenceExceptionTest implements StandardThrowableTesting<SpreadsheetExpressionEvaluationReferenceException> {
 
-    private final static ExpressionReference EXPRESSION_REFERENCE = new ExpressionReference() {
+    private final static ExpressionReference EXPRESSION_REFERENCE = new FakeExpressionReference() {
     };
 
     @Override

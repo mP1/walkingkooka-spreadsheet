@@ -25,6 +25,7 @@ import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.FakeExpressionReference;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
@@ -43,7 +44,7 @@ public final class SpreadsheetExpressionEvaluationContextsTest implements ClassT
 
     @Test
     public void testReferenceNotFoundExpressionReference() {
-        final ExpressionReference reference = new ExpressionReference() {
+        final ExpressionReference reference = new FakeExpressionReference() {
 
             @Override
             public String toString() {
