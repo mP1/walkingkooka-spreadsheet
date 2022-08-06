@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.CaseSensitivity;
@@ -250,7 +249,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Optional<Object> reference(final ExpressionReference reference) {
-        return this.references.apply((SpreadsheetExpressionReference) reference);
+        return this.references.apply(reference);
     }
 
     private final Function<ExpressionReference, Optional<Object>> references;
