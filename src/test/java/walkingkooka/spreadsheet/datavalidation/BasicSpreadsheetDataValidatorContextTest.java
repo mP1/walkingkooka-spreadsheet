@@ -30,7 +30,6 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.math.MathContext;
-import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -92,14 +91,6 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
             @Override
             public Object evaluate(final Expression expression) {
                 return expression.toValue(this);
-            }
-
-            @Override
-            public Object evaluateFunction(final FunctionExpressionName name,
-                                           final List<Object> parameters) {
-                Objects.requireNonNull(name, "name");
-                Objects.requireNonNull(parameters, "parameters");
-                throw new UnknownExpressionFunctionException(name);
             }
 
             @Override

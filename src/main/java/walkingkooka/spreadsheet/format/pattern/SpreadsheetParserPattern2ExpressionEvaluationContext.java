@@ -92,7 +92,7 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
     }
 
     @Override
-    public Object evaluateFunction(final FunctionExpressionName name,
+    public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
                                    final List<Object> parameters) {
         throw new UnsupportedOperationException();
     }

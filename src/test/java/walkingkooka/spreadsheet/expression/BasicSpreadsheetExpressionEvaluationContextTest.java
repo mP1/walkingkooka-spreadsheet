@@ -350,11 +350,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Override
-    public void testEvaluateFunctionUnknownFunctionNameFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testEvaluateFunctionNullParametersFails() {
         throw new UnsupportedOperationException();
     }

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
@@ -233,14 +234,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
-    public Object evaluateFunction(final FunctionExpressionName name,
+    public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
                                    final List<Object> parameters) {
-        final ExpressionFunction<?, ExpressionEvaluationContext> function = this.function(name);
-
         return function
                 .apply(
                         this.prepareParameters(function, parameters),
-                        this
+                        Cast.to(this)
                 );
     }
 
