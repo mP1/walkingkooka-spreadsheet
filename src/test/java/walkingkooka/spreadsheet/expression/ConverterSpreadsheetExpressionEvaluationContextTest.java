@@ -61,7 +61,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ConverterSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<ConverterSpreadsheetExpressionEvaluationContext> {
+public final class ConverterSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContext> {
 
     private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.DECIMAL128);
 
@@ -252,8 +252,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     @Test
     public void testEvaluateFunction() {
         this.evaluateFunctionAndCheck(
-                CONCAT.name()
-                        .get(),
+                CONCAT,
                 Lists.of(
                         EXPRESSION_NUMBER_KIND.create(111),
                         EXPRESSION_NUMBER_KIND.create(222)
@@ -265,8 +264,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     @Test
     public void testEvaluateFunctionNestedFunctionNotConverted() {
         this.evaluateFunctionAndCheck(
-                CONCAT.name()
-                        .get(),
+                CONCAT,
                 Lists.of(
                         Expression.call(
                                 Expression.namedFunction(
@@ -532,7 +530,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     // ClassTesting....................................................................................................
 
     @Override
-    public Class<ConverterSpreadsheetExpressionEvaluationContext> type() {
-        return ConverterSpreadsheetExpressionEvaluationContext.class;
+    public Class<SpreadsheetExpressionEvaluationContext> type() {
+        return Cast.to(ConverterSpreadsheetExpressionEvaluationContext.class);
     }
 }

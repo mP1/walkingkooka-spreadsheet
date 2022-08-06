@@ -21,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
@@ -2496,13 +2497,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return new FakeExpressionEvaluationContext() {
 
             @Override
-            public Object evaluateFunction(final FunctionExpressionName name,
+            public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
                                            final List<Object> parameters) {
-                final ExpressionFunction<?, ExpressionEvaluationContext> function = this.function(name);
-
                 return function.apply(
                         this.prepareParameters(function, parameters),
-                        this
+                        Cast.to(this)
                 );
             }
 

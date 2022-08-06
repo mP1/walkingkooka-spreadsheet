@@ -97,11 +97,6 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     }
 
     @Override
-    public void testEvaluateFunctionUnknownFunctionNameFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testFunctionUnknownFunctionNameFails() {
         throw new UnsupportedOperationException();
     }
