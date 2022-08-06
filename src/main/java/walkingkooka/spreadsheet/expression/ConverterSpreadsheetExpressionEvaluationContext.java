@@ -46,9 +46,7 @@ import java.util.Optional;
 
 /**
  * A {@link SpreadsheetExpressionEvaluationContext} that supports a custom {@link Converter} to be used to convert
- * *ONLY* parameter values when executing a {@link ExpressionFunction}. Note this is intended to be created by a
- * namedFunction wrapper and it will then prepare and execute the wrapped namedFunction. The wrapped {@link ExpressionFunction#kinds()}
- * should return an empty {@link java.util.Set} so parameters are not altered in any way before it is dispatched.
+ * *ONLY* parameter values when executing a {@link ExpressionFunction}.
  *
  * <br>
  * This is necessary because some functions do not need the default conversion of values to another using the format or
