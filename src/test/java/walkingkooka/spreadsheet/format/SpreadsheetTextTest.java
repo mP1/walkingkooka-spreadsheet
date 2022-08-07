@@ -164,22 +164,22 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     // json ............................................................................................................
 
     @Test
-    public void testFromJsonTextOnly() {
+    public void testUnmarshallTextOnly() {
         this.unmarshallAndCheck("{ \"text\":  \"1/1/2000\"}", SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, TEXT));
     }
 
     @Test
-    public void testFromJsonColorAndText() {
+    public void testUnmarshallColorAndText() {
         this.unmarshallAndCheck("{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}", SpreadsheetText.with(COLOR, TEXT));
     }
 
     @Test
-    public void testToJsonTextOnly() {
+    public void testMarshallTextOnly() {
         this.marshallAndCheck(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, TEXT), "{ \"text\":  \"1/1/2000\"}");
     }
 
     @Test
-    public void testToJsonColorAndText() {
+    public void testMarshallColorAndText() {
         this.marshallAndCheck(SpreadsheetText.with(COLOR, TEXT), "{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}");
     }
 

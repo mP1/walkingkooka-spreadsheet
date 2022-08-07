@@ -52,12 +52,12 @@ public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> i
     }
 
     @Test
-    public final void testToJson() {
+    public final void testMarshall() {
         this.marshallAndCheck(this.createId(123L), this.marshallContext().marshall(123L));
     }
 
     @Test
-    public final void testToJsonRoundtrip() {
+    public final void testMarshallRoundtrip() {
         this.marshallRoundTripTwiceAndCheck(this.createId(123L));
     }
 

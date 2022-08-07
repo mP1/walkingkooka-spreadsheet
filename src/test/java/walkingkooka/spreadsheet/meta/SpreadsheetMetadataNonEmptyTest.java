@@ -1948,7 +1948,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Test
-    public void testFromJsonInvalidCharacterValueFails() {
+    public void testUnmarshallInvalidCharacterValueFails() {
         this.unmarshallFails(
                 "{" +
                         "  \"decimal-separator\": \"d\"\n" +
@@ -1958,7 +1958,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testFromJsonWithDefaultSwap() {
+    public void testUnmarshallWithDefaultSwap() {
         this.unmarshallAndCheck(
                 "{\n" +
                         "    \"decimal-separator\": \",\",\n" +
@@ -1982,7 +1982,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
      * {@link walkingkooka.tree.json.marshall.JsonNodeContext} registered.
      */
     @Test
-    public void testFromJson() {
+    public void testUnmarshall() {
         final JsonNode json = JsonNode.parse("{\n" +
                 "  \"cell-character-width\": 0,\n" +
                 "  \"color-0\": \"#000000\",\n" +
