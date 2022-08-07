@@ -141,7 +141,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     }
 
     @Test
-    public void testToJson() {
+    public void testMarshall() {
         this.marshallAndCheck(
                 this.createObject(),
                 "{\n" +

@@ -36,12 +36,12 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
     }
 
     @Test
-    public void testToJsonRoundtrip() {
+    public void testMarshallRoundtrip() {
         this.marshallRoundTripTwiceAndCheck(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY);
     }
 
     @Test
-    public void testToJsonRoundtrip2() {
+    public void testMarshallRoundtrip2() {
         this.marshallRoundTripTwiceAndCheck(SpreadsheetEngineEvaluation.SKIP_EVALUATE);
     }
 

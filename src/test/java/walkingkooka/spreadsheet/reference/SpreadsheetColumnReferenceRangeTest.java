@@ -991,12 +991,12 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     // json.............................................................................................................
 
     @Test
-    public void testFromJson() {
+    public void testUnmarshall() {
         this.unmarshallAndCheck(JsonNode.string("B:D"), this.createSelection());
     }
 
     @Test
-    public void testToJson() {
+    public void testMarshall() {
         this.marshallAndCheck(this.createSelection(), JsonNode.string("B:D"));
     }
 
