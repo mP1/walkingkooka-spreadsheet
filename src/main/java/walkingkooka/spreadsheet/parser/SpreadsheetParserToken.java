@@ -1191,7 +1191,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 SpreadsheetSecondsParserToken.class,
                 SpreadsheetParserToken::unmarshallSeconds
         );
-        ;
 
         registerLeafParserToken(
                 SpreadsheetTextLiteralParserToken.class,
@@ -1807,6 +1806,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
+                SpreadsheetCellReferenceParserToken.class,
+                SpreadsheetParserToken::unmarshallCellReference
+        );
+
+        registerParentParserToken(
                 SpreadsheetDateParserToken.class,
                 SpreadsheetParserToken::unmarshallDate
         );
@@ -1827,6 +1831,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
+                SpreadsheetExpressionParserToken.class,
+                SpreadsheetParserToken::unmarshallExpression
+        );
+
+        registerParentParserToken(
                 SpreadsheetFunctionParametersParserToken.class,
                 SpreadsheetParserToken::unmarshallFunctionParameters
         );
@@ -1842,6 +1851,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
+                SpreadsheetGroupParserToken.class,
+                SpreadsheetParserToken::unmarshallGroup
+        );
+
+        registerParentParserToken(
                 SpreadsheetLessThanEqualsParserToken.class,
                 SpreadsheetParserToken::unmarshallLessThanEquals
         );
@@ -1854,6 +1868,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         registerParentParserToken(
                 SpreadsheetMultiplicationParserToken.class,
                 SpreadsheetParserToken::unmarshallMultiplication
+        );
+
+        registerParentParserToken(
+                SpreadsheetNamedFunctionParserToken.class,
+                SpreadsheetParserToken::unmarshallNamedFunction
+        );
+
+        registerParentParserToken(
+                SpreadsheetNegativeParserToken.class,
+                SpreadsheetParserToken::unmarshallNegative
         );
 
         registerParentParserToken(
@@ -1887,31 +1911,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
-                SpreadsheetCellReferenceParserToken.class,
-                SpreadsheetParserToken::unmarshallCellReference
-        );
-
-        registerParentParserToken(
-                SpreadsheetExpressionParserToken.class,
-                SpreadsheetParserToken::unmarshallExpression
-        );
-
-        registerParentParserToken(
-                SpreadsheetGroupParserToken.class,
-                SpreadsheetParserToken::unmarshallGroup
-        );
-
-        registerParentParserToken(
-                SpreadsheetNamedFunctionParserToken.class,
-                SpreadsheetParserToken::unmarshallNamedFunction
-        );
-
-        registerParentParserToken(
-                SpreadsheetNegativeParserToken.class,
-                SpreadsheetParserToken::unmarshallNegative
-        );
-
-        registerParentParserToken(
                 SpreadsheetTextParserToken.class,
                 SpreadsheetParserToken::unmarshallText
         );
@@ -1923,6 +1922,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::addition
+        );
+    }
+
+    static SpreadsheetCellReferenceParserToken unmarshallCellReference(final JsonNode node,
+                                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::cellReference
         );
     }
 
@@ -1971,6 +1979,14 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
+    static SpreadsheetExpressionParserToken unmarshallExpression(final JsonNode node,
+                                                                 final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::expression
+        );
+    }
 
     static SpreadsheetFunctionParametersParserToken unmarshallFunctionParameters(final JsonNode node,
                                                                                  final JsonNodeUnmarshallContext context) {
@@ -1999,6 +2015,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
+    static SpreadsheetGroupParserToken unmarshallGroup(final JsonNode node,
+                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::group
+        );
+    }
+
     static SpreadsheetLessThanEqualsParserToken unmarshallLessThanEquals(final JsonNode node,
                                                                          final JsonNodeUnmarshallContext context) {
         return unmarshallParentParserToken(
@@ -2023,6 +2048,24 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::multiplication
+        );
+    }
+
+    static SpreadsheetNamedFunctionParserToken unmarshallNamedFunction(final JsonNode node,
+                                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::namedFunction
+        );
+    }
+
+    static SpreadsheetNegativeParserToken unmarshallNegative(final JsonNode node,
+                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::negative
         );
     }
 
@@ -2077,51 +2120,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::time
-        );
-    }
-
-    static SpreadsheetCellReferenceParserToken unmarshallCellReference(final JsonNode node,
-                                                                       final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
-                node,
-                context,
-                SpreadsheetParserToken::cellReference
-        );
-    }
-
-    static SpreadsheetExpressionParserToken unmarshallExpression(final JsonNode node,
-                                                                 final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
-                node,
-                context,
-                SpreadsheetParserToken::expression
-        );
-    }
-
-    static SpreadsheetNamedFunctionParserToken unmarshallNamedFunction(final JsonNode node,
-                                                                       final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
-                node,
-                context,
-                SpreadsheetParserToken::namedFunction
-        );
-    }
-
-    static SpreadsheetGroupParserToken unmarshallGroup(final JsonNode node,
-                                                       final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
-                node,
-                context,
-                SpreadsheetParserToken::group
-        );
-    }
-
-    static SpreadsheetNegativeParserToken unmarshallNegative(final JsonNode node,
-                                                             final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
-                node,
-                context,
-                SpreadsheetParserToken::negative
         );
     }
 
