@@ -48,54 +48,75 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformColor(final ParserToken token,
                                               final SpreadsheetFormatParserContext context) {
-        return SpreadsheetFormatParserToken.color(clean0(token), token.text());
+        return SpreadsheetFormatParserToken.color(flat0(token), token.text());
     }
 
     private static ParserToken transformConditionEqual(final ParserToken token,
                                                        final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::equalsParserToken);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::equalsParserToken
+        );
     }
 
     private static final EbnfIdentifierName CONDITION_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_EQUAL");
 
     private static ParserToken transformConditionGreaterThan(final ParserToken token,
                                                              final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::greaterThan);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::greaterThan
+        );
     }
 
     private static final EbnfIdentifierName CONDITION_GREATER_THAN_IDENTIFIER = EbnfIdentifierName.with("CONDITION_GREATER_THAN");
 
     private static ParserToken transformConditionGreaterThanEqual(final ParserToken token,
                                                                   final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::greaterThanEquals);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::greaterThanEquals
+        );
     }
 
     private static final EbnfIdentifierName CONDITION_GREATER_THAN_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_GREATER_THAN_EQUAL");
 
     private static ParserToken transformConditionLessThan(final ParserToken token,
                                                           final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::lessThan);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::lessThan
+        );
     }
 
     private static final EbnfIdentifierName CONDITION_LESS_THAN_IDENTIFIER = EbnfIdentifierName.with("CONDITION_LESS_THAN");
 
     private static ParserToken transformConditionLessThanEqual(final ParserToken token,
                                                                final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::lessThanEquals);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::lessThanEquals
+        );
     }
 
     private static final EbnfIdentifierName CONDITION_LESS_THAN_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_LESS_THAN_EQUAL");
 
     private static ParserToken transformConditionNotEqual(final ParserToken token,
                                                           final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::notEquals);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::notEquals
+        );
     }
 
     private static final EbnfIdentifierName CONDITION_NOT_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_NOT_EQUAL");
 
     private static ParserToken transformDate(final ParserToken token,
                                              final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::date);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::date
+        );
     }
 
     private static final EbnfIdentifierName DATE_IDENTIFIER = EbnfIdentifierName.with("DATE");
@@ -103,7 +124,10 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformDateTime(final ParserToken token,
                                                  final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::dateTime);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::dateTime
+        );
     }
 
     private static final EbnfIdentifierName DATETIME_IDENTIFIER = EbnfIdentifierName.with("DATETIME");
@@ -116,34 +140,52 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformExpression(final ParserToken token,
                                                    final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::expression);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::expression
+        );
     }
 
     private static ParserToken transformFraction(final ParserToken token,
                                                  final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::fraction);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::fraction
+        );
     }
 
     private static final EbnfIdentifierName FRACTION_IDENTIFIER = EbnfIdentifierName.with("FRACTION");
 
     private static ParserToken transformGeneral(final ParserToken token,
                                                 final SpreadsheetFormatParserContext context) {
-        return SpreadsheetFormatParserToken.general(clean0(token), token.text());
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::general
+        );
     }
 
     private static ParserToken transformText(final ParserToken token,
                                              final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::text);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::text
+        );
     }
 
     private static ParserToken transformTime(final ParserToken token,
                                              final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::time);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::time
+        );
     }
 
     private static ParserToken transformNumber(final ParserToken token,
                                                final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::number);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::number
+        );
     }
 
     private static final EbnfIdentifierName NUMBER_IDENTIFIER = EbnfIdentifierName.with("NUMBER");
@@ -152,7 +194,10 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformBigDecimalExponent(final ParserToken token,
                                                            final SpreadsheetFormatParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::exponent);
+        return flat(
+                token,
+                SpreadsheetFormatParserToken::exponent
+        );
     }
 
     private static final EbnfIdentifierName NUMBER_EXPONENT_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("NUMBER_EXPONENT_SYMBOL");
@@ -160,12 +205,15 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
     private static final EbnfIdentifierName TIME_IDENTIFIER = EbnfIdentifierName.with("TIME");
     private static final EbnfIdentifierName TIME_LIST_IDENTIFIER = EbnfIdentifierName.with("TIME_LIST");
 
-    private static ParserToken clean(final ParserToken token,
-                                     final BiFunction<List<ParserToken>, String, ParserToken> factory) {
-        return factory.apply(clean0(token), token.text());
+    private static ParserToken flat(final ParserToken token,
+                                    final BiFunction<List<ParserToken>, String, ParserToken> factory) {
+        return factory.apply(
+                flat0(token),
+                token.text()
+        );
     }
 
-    private static List<ParserToken> clean0(final ParserToken token) {
+    private static List<ParserToken> flat0(final ParserToken token) {
         return token.cast(RepeatedOrSequenceParserToken.class)
                 .flat()
                 .value();
