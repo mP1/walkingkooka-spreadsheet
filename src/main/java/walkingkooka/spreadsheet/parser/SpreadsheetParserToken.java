@@ -215,6 +215,17 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetFunctionParametersParserToken}
+     */
+    public static SpreadsheetFunctionParametersParserToken functionParameters(final List<ParserToken> value,
+                                                                              final String text) {
+        return SpreadsheetFunctionParametersParserToken.with(
+                value,
+                text
+        );
+    }
+
+    /**
      * {@see SpreadsheetGreaterThanParserToken}
      */
     public static SpreadsheetGreaterThanParserToken greaterThan(final List<ParserToken> value, final String text) {
@@ -697,6 +708,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isFunctionName() {
         return this instanceof SpreadsheetFunctionNameParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetFunctionParametersParserToken} returns true
+     */
+    public final boolean isFunctionParameters() {
+        return this instanceof SpreadsheetFunctionParametersParserToken;
     }
 
     /**
@@ -1809,6 +1827,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
+                SpreadsheetFunctionParametersParserToken.class,
+                SpreadsheetParserToken::unmarshallFunctionParameters
+        );
+
+        registerParentParserToken(
                 SpreadsheetGreaterThanEqualsParserToken.class,
                 SpreadsheetParserToken::unmarshallGreaterThanEquals
         );
@@ -1945,6 +1968,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::equalsParserToken
+        );
+    }
+
+
+    static SpreadsheetFunctionParametersParserToken unmarshallFunctionParameters(final JsonNode node,
+                                                                                 final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::functionParameters
         );
     }
 

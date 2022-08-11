@@ -150,6 +150,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
+     * Returns a {@link Parser} that parsers expression invocations, starting with the name and parameters.
+     */
+    public static Parser<SpreadsheetParserContext> functionParameters() {
+        return FUNCTION_PARAMETERS_PARSER;
+    }
+
+    private static final Parser<SpreadsheetParserContext> FUNCTION_PARAMETERS_PARSER;
+
+    /**
      * {@see SpreadsheetLabelNameParser}
      */
     public static Parser<SpreadsheetParserContext> labelName() {
@@ -457,6 +466,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL"));
         EXPRESSION_PARSER = parsers.get(EbnfIdentifierName.with("EXPRESSION"));
+        FUNCTION_PARAMETERS_PARSER = parsers.get(EbnfIdentifierName.with("FUNCTION_PARAMETERS"));
         NAMED_FUNCTION_PARSER = parsers.get(EbnfIdentifierName.with("NAMED_FUNCTION"));
         RANGE_PARSER = parsers.get(EbnfIdentifierName.with("RANGE"));
     }
