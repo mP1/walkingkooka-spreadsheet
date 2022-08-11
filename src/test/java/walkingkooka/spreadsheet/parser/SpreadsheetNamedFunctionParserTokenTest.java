@@ -40,8 +40,14 @@ public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetPa
     @Test
     public void testWith() {
         final String text = FUNCTION + "(" + NUMBER1 + ")";
-        final SpreadsheetFunctionNameParserToken name = this.function();
-        final SpreadsheetNamedFunctionParserToken token = this.createToken(text, name, this.number1());
+        final SpreadsheetFunctionNameParserToken name = this.functionNameParserToken();
+        final SpreadsheetNamedFunctionParserToken token = this.createToken(
+                text,
+                name,
+                this.functionParameters(
+                        this.number1()
+                )
+        );
         this.textAndCheck(token, text);
     }
 
@@ -49,34 +55,22 @@ public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetPa
     public void testWithSymbols() {
         final String text = FUNCTION + "(" + NUMBER1 + ")";
 
-        final SpreadsheetFunctionNameParserToken name = this.function();
-        final SpreadsheetParenthesisOpenSymbolParserToken left = this.openParenthesisSymbol();
-        final SpreadsheetParserToken number = this.number1();
-        final SpreadsheetParenthesisCloseSymbolParserToken right = this.closeParenthesisSymbol();
+        final SpreadsheetFunctionNameParserToken name = this.functionNameParserToken();
+        final SpreadsheetFunctionParametersParserToken parameters = this.functionParameters(
+                this.openParenthesisSymbol(),
+                this.number1(),
+                this.closeParenthesisSymbol()
+        );
 
-        final SpreadsheetNamedFunctionParserToken token = this.createToken(text, name, left, number, right);
+        final SpreadsheetNamedFunctionParserToken token = this.createToken(
+                text,
+                name,
+                parameters
+        );
         this.textAndCheck(token, text);
-        this.checkValue(token, name, left, number, right);
-        this.checkNamedFunction(token, this.functionName());
-        this.checkParameters(token, number);
-    }
-
-    @Test
-    public void testWithSymbols2() {
-        final String text = FUNCTION + "( " + NUMBER1 + " )";
-
-        final SpreadsheetFunctionNameParserToken name = this.function();
-        final SpreadsheetParenthesisOpenSymbolParserToken left = this.openParenthesisSymbol();
-        final SpreadsheetWhitespaceParserToken whitespace1 = this.whitespace();
-        final SpreadsheetParserToken number = this.number1();
-        final SpreadsheetWhitespaceParserToken whitespace2 = this.whitespace();
-        final SpreadsheetParenthesisCloseSymbolParserToken right = this.closeParenthesisSymbol();
-
-        final SpreadsheetNamedFunctionParserToken token = this.createToken(text, name, left, whitespace1, number, whitespace2, right);
-        this.textAndCheck(token, text);
-        this.checkValue(token, name, left, whitespace1, number, whitespace2, right);
-        this.checkNamedFunction(token, this.functionName());
-        this.checkParameters(token, number);
+        this.checkValue(token, name, parameters);
+        this.checkFunctionName(token, this.functionName());
+        this.checkParameters(token, parameters);
     }
 
     @Test
@@ -95,8 +89,8 @@ public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetPa
         );
     }
 
-    private void checkNamedFunction(final SpreadsheetNamedFunctionParserToken function,
-                                    final SpreadsheetFunctionName name) {
+    private void checkFunctionName(final SpreadsheetNamedFunctionParserToken function,
+                                   final SpreadsheetFunctionName name) {
         this.checkEquals(
                 name,
                 function.functionName(),
@@ -104,12 +98,18 @@ public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetPa
         );
     }
 
-    private void checkParameters(final SpreadsheetNamedFunctionParserToken function, final SpreadsheetParserToken... parameters) {
-        this.checkEquals(Lists.of(parameters), function.parameters(), "parameters");
+    private void checkParameters(final SpreadsheetNamedFunctionParserToken function,
+                                 final SpreadsheetFunctionParametersParserToken parameters) {
+        this.checkEquals(
+                parameters,
+                function.parameters(),
+                "parameters"
+        );
     }
 
     @Override
-    SpreadsheetNamedFunctionParserToken createToken(final String text, final List<ParserToken> tokens) {
+    SpreadsheetNamedFunctionParserToken createToken(final String text,
+                                                    final List<ParserToken> tokens) {
         return SpreadsheetParserToken.namedFunction(tokens, text);
     }
 
@@ -120,15 +120,25 @@ public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetPa
 
     @Override
     List<ParserToken> tokens() {
-        return Lists.of(this.function(), this.openParenthesisSymbol(), this.number1(), this.closeParenthesisSymbol());
+        return Lists.of(
+                this.functionNameParserToken(),
+                this.functionParameters(
+                        this.openParenthesisSymbol(),
+                        this.number1(),
+                        this.closeParenthesisSymbol()
+                )
+        );
     }
 
-    private SpreadsheetFunctionNameParserToken function() {
-        return function(FUNCTION);
+    private SpreadsheetFunctionNameParserToken functionNameParserToken() {
+        return functionNameParserToken(FUNCTION);
     }
 
-    private SpreadsheetFunctionNameParserToken function(final String name) {
-        return SpreadsheetParserToken.functionName(this.functionName(name), name);
+    private SpreadsheetFunctionNameParserToken functionNameParserToken(final String name) {
+        return SpreadsheetParserToken.functionName(
+                SpreadsheetFunctionName.with(name),
+                name
+        );
     }
 
     private SpreadsheetFunctionName functionName() {
@@ -139,9 +149,23 @@ public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetPa
         return SpreadsheetFunctionName.with(name);
     }
 
+    private SpreadsheetFunctionParametersParserToken functionParameters(final SpreadsheetParserToken... tokens) {
+        return SpreadsheetParserToken.functionParameters(
+                Lists.of(
+                        tokens
+                ),
+                ParserToken.text(
+                        Lists.of(tokens)
+                )
+        );
+    }
+
     @Override
     public SpreadsheetNamedFunctionParserToken createDifferentToken() {
-        return this.createToken("avg()", this.function("avg"));
+        return this.createToken(
+                "avg()",
+                this.functionNameParserToken("avg")
+        );
     }
 
     @Override

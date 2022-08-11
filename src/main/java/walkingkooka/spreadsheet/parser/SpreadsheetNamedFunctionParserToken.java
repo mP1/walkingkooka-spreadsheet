@@ -44,8 +44,8 @@ public final class SpreadsheetNamedFunctionParserToken extends SpreadsheetParent
 
         final List<ParserToken> without = ParentParserToken.filterWithoutNoise(value);
         final int count = without.size();
-        if (count < 1) {
-            throw new IllegalArgumentException("Expected at least 1 tokens but got " + count + "=" + without);
+        if (2 != count) {
+            throw new IllegalArgumentException("Expected 2 tokens but got " + count + "=" + without);
         }
         final SpreadsheetParserToken name = without.get(0)
                 .cast(SpreadsheetParserToken.class);
@@ -53,8 +53,15 @@ public final class SpreadsheetNamedFunctionParserToken extends SpreadsheetParent
             throw new IllegalArgumentException("Function name missing from " + value);
         }
 
-        this.name = name.cast(SpreadsheetFunctionNameParserToken.class).value();
-        this.parameters = without.subList(1, without.size());
+        final SpreadsheetParserToken parameters = without.get(1)
+                .cast(SpreadsheetParserToken.class);
+        if (!parameters.isFunctionParameters()) {
+            throw new IllegalArgumentException("Function parameters missing from " + value);
+        }
+
+        this.name = name.cast(SpreadsheetFunctionNameParserToken.class)
+                .value();
+        this.parameters = parameters.cast(SpreadsheetFunctionParametersParserToken.class);
     }
 
     /**
@@ -66,11 +73,11 @@ public final class SpreadsheetNamedFunctionParserToken extends SpreadsheetParent
 
     private final SpreadsheetFunctionName name;
 
-    public List<ParserToken> parameters() {
+    public SpreadsheetFunctionParametersParserToken parameters() {
         return this.parameters;
     }
 
-    private final List<ParserToken> parameters;
+    private final SpreadsheetFunctionParametersParserToken parameters;
 
     // SpreadsheetParserTokenVisitor....................................................................................
 

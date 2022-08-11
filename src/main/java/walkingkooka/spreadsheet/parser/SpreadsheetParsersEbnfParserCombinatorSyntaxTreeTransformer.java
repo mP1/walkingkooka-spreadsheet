@@ -110,6 +110,9 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
             case "EXPRESSION":
                 transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::expression;
                 break;
+            case "FUNCTION_PARAMETERS":
+                transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::functionParameters;
+                break;
             case "GROUP":
                 transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::group;
                 break;
@@ -155,6 +158,14 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
                         token.cast(SequenceParserToken.class).value(),
                         token.text()
                 );
+    }
+
+    private static ParserToken functionParameters(final ParserToken token,
+                                                  final SpreadsheetParserContext context) {
+        return SpreadsheetParserToken.functionParameters(
+                clean(token),
+                token.text()
+        );
     }
 
     private static ParserToken group(final ParserToken token,

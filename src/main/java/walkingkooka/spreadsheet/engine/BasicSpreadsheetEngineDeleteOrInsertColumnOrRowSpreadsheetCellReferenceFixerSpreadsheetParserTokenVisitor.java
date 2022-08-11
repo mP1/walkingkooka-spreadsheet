@@ -107,7 +107,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
     private SpreadsheetParserToken cellReferenceDeleted(final SpreadsheetParserToken token) {
         final String text = token.text();
 
-        final List<ParserToken> tokens = Lists.of(SpreadsheetFormula.INVALID_CELL_REFERENCE_PARSER_TOKEN,
+        final List<ParserToken> functionParameterTokens = Lists.of(
                 SpreadsheetParserToken.parenthesisOpenSymbol("(", "("),
                 SpreadsheetParserToken.text(
                         Lists.<ParserToken>of( // J2clTranspiler: Error
@@ -116,8 +116,20 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
                                 SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"")
                         ), CharSequences.quote(text).toString()
                 ),
-                SpreadsheetParserToken.parenthesisCloseSymbol(")", ")"));
-        return SpreadsheetParserToken.namedFunction(tokens, ParserToken.text(tokens));
+                SpreadsheetParserToken.parenthesisCloseSymbol(")", ")")
+        );
+
+        final List<ParserToken> namedFunctionTokens = Lists.of(
+                SpreadsheetFormula.INVALID_CELL_REFERENCE_PARSER_TOKEN,
+                SpreadsheetParserToken.functionParameters(
+                        functionParameterTokens,
+                        ParserToken.text(functionParameterTokens)
+                )
+        );
+        return SpreadsheetParserToken.namedFunction(
+                namedFunctionTokens,
+                ParserToken.text(namedFunctionTokens)
+        );
     }
 
     @Override
