@@ -2126,7 +2126,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Helper that knows how to unmarshall a sub class of {@link SpreadsheetLeafParserToken}
+     * Helper that knows how to unmarshall a sub class of {@link SpreadsheetParentParserToken}
      */
     private static <T extends SpreadsheetParentParserToken> T unmarshallParentParserToken(final JsonNode node,
                                                                                           final JsonNodeUnmarshallContext context,
