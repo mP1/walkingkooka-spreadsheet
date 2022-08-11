@@ -139,9 +139,9 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
 
     private static ParserToken apostropheString(final ParserToken token,
                                                 final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.text(
-                clean(token),
-                token.text()
+        return flat(
+                token,
+                SpreadsheetParserToken::text
         );
     }
 
@@ -162,33 +162,53 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
 
     private static ParserToken functionParameters(final ParserToken token,
                                                   final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.functionParameters(
-                clean(token),
-                token.text()
+        return flat(
+                token,
+                SpreadsheetParserToken::functionParameters
         );
     }
 
     private static ParserToken group(final ParserToken token,
                                      final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.group(clean(token), token.text());
+        return flat(
+                token,
+                SpreadsheetParserToken::group
+        );
     }
 
     private static ParserToken namedFunction(final ParserToken token,
                                              final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.namedFunction(clean(token), token.text());
+        return flat(
+                token,
+                SpreadsheetParserToken::namedFunction
+        );
     }
 
     private static ParserToken negative(final ParserToken token,
                                         final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.negative(clean(token), token.text());
+        return flat(
+                token,
+                SpreadsheetParserToken::negative
+        );
     }
 
     private static ParserToken percentage(final ParserToken token,
                                           final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.number(clean(token), token.text());
+        return flat(
+                token,
+                SpreadsheetParserToken::number
+        );
     }
 
-    private static List<ParserToken> clean(final ParserToken token) {
+    private static ParserToken flat(final ParserToken token,
+                                    final BiFunction<List<ParserToken>, String, ParserToken> factory) {
+        return factory.apply(
+                flat0(token),
+                token.text()
+        );
+    }
+
+    private static List<ParserToken> flat0(final ParserToken token) {
         return token.cast(RepeatedOrSequenceParserToken.class)
                 .flat()
                 .value();
