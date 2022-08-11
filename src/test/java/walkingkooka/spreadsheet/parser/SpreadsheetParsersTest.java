@@ -2294,8 +2294,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.parseExpressionEvaluateAndCheck("((1+2))", ((1 + 2)));
     }
 
-// FIXME Spreadsheet parsing ignores everything after the first right parens.
-
     @Test
     public void testExpressionParenthesis2BigDecimal() {
         this.testExpressionParenthesis2();
