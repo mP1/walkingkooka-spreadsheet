@@ -201,13 +201,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetNamedFunctionParserToken}
-     */
-    public static SpreadsheetNamedFunctionParserToken namedFunction(final List<ParserToken> value, final String text) {
-        return SpreadsheetNamedFunctionParserToken.with(value, text);
-    }
-
-    /**
      * {@see SpreadsheetFunctionNameParserToken}
      */
     public static SpreadsheetFunctionNameParserToken functionName(final SpreadsheetFunctionName value, final String text) {
@@ -370,6 +363,17 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public static SpreadsheetMultiplySymbolParserToken multiplySymbol(final String value, final String text) {
         return SpreadsheetMultiplySymbolParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetNamedFunctionParserToken}
+     */
+    public static SpreadsheetNamedFunctionParserToken namedFunction(final List<ParserToken> value,
+                                                                    final String text) {
+        return SpreadsheetNamedFunctionParserToken.with(
+                value,
+                text
+        );
     }
 
     /**
