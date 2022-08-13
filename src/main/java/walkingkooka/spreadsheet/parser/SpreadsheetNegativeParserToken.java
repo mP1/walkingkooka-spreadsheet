@@ -16,6 +16,7 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -24,17 +25,34 @@ import java.util.List;
 /**
  * A wrapper around a numeric type that is also a percentage.
  */
-public final class SpreadsheetNegativeParserToken extends SpreadsheetUnaryParserToken {
+public final class SpreadsheetNegativeParserToken extends SpreadsheetParentParserToken {
 
     static SpreadsheetNegativeParserToken with(final List<ParserToken> value,
                                                final String text) {
-        return new SpreadsheetNegativeParserToken(copyAndCheckTokens(value), checkText(text));
+        return new SpreadsheetNegativeParserToken(
+                copyAndCheckTokens(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetNegativeParserToken(final List<ParserToken> value,
                                            final String text) {
         super(value, text);
+
+        final List<ParserToken> without = ParentParserToken.filterWithoutNoise(value);
+        final int count = without.size();
+        if (1 != count) {
+            throw new IllegalArgumentException("Expected 1 token but got " + count + "=" + without);
+        }
+        this.parameter = without.get(0)
+                .cast(SpreadsheetParserToken.class);
     }
+
+    public SpreadsheetParserToken parameter() {
+        return this.parameter;
+    }
+
+    private final SpreadsheetParserToken parameter;
 
     // SpreadsheetParserTokenVisitor....................................................................................
 

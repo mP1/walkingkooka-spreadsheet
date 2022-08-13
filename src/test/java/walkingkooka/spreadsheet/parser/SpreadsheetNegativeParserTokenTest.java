@@ -28,17 +28,34 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryParserTokenTestCase<SpreadsheetNegativeParserToken> {
+public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetNegativeParserToken> {
+
+    @Test
+    public void testWithMissingNonNoisyTokenFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createToken("", this.whitespace())
+        );
+    }
+
+    @Test
+    public void testWithMissingNonNoisyTokenFails2() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createToken("", this.whitespace(), this.whitespace())
+        );
+    }
 
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
-        final SpreadsheetUnaryParserToken unary = this.createToken();
+        final SpreadsheetNegativeParserToken negative = this.createToken();
         final SpreadsheetParserToken symbol = this.minusSymbol();
-        final SpreadsheetParserToken parameter = unary.parameter();
+        final SpreadsheetParserToken parameter = negative.parameter();
 
         new FakeSpreadsheetParserTokenVisitor() {
             @Override
@@ -56,7 +73,7 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
 
             @Override
             protected Visiting startVisit(final SpreadsheetNegativeParserToken t) {
-                assertSame(unary, t);
+                assertSame(negative, t);
                 b.append("3");
                 visited.add(t);
                 return Visiting.CONTINUE;
@@ -64,7 +81,7 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
 
             @Override
             protected void endVisit(final SpreadsheetNegativeParserToken t) {
-                assertSame(unary, t);
+                assertSame(negative, t);
                 b.append("4");
                 visited.add(t);
             }
@@ -101,12 +118,12 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
                 b.append("8");
                 visited.add(t);
             }
-        }.accept(unary);
+        }.accept(negative);
         this.checkEquals("81381728815628428", b.toString());
-        this.checkEquals(Lists.of(unary, unary, unary,
+        this.checkEquals(Lists.of(negative, negative, negative,
                         symbol, symbol, symbol, symbol, symbol,
                         parameter, parameter, parameter, parameter, parameter, parameter,
-                        unary, unary, unary),
+                        negative, negative, negative),
                 visited,
                 "visited");
     }
