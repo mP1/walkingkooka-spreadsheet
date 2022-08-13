@@ -275,6 +275,17 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetLambdaFunctionParserToken}
+     */
+    public static SpreadsheetLambdaFunctionParserToken lambdaFunction(final List<ParserToken> value,
+                                                                      final String text) {
+        return SpreadsheetLambdaFunctionParserToken.with(
+                value,
+                text
+        );
+    }
+
+    /**
      * {@see SpreadsheetLessThanParserToken}
      */
     public static SpreadsheetLessThanParserToken lessThan(final List<ParserToken> value, final String text) {
@@ -775,6 +786,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isLabelName() {
         return this instanceof SpreadsheetLabelNameParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetLambdaFunctionParserToken} returns true
+     */
+    public final boolean isLambdaFunction() {
+        return this instanceof SpreadsheetLambdaFunctionParserToken;
     }
 
     /**
@@ -1860,6 +1878,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
+                SpreadsheetLambdaFunctionParserToken.class,
+                SpreadsheetParserToken::unmarshallLambdaFunction
+        );
+
+        registerParentParserToken(
                 SpreadsheetLessThanEqualsParserToken.class,
                 SpreadsheetParserToken::unmarshallLessThanEquals
         );
@@ -2025,6 +2048,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::group
+        );
+    }
+
+    static SpreadsheetLambdaFunctionParserToken unmarshallLambdaFunction(final JsonNode node,
+                                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::lambdaFunction
         );
     }
 

@@ -1670,6 +1670,123 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
+    // LambdaFunction....................................................................................................
+
+    @Test
+    public void testLambdaFunctionOtherExpressionFails() {
+        this.parseFailAndCheck(
+                this.lambdaFunctionParser(),
+                "1+2"
+        );
+    }
+
+    @Test
+    public void testLambdaFunctionNameWithNumberParameter() {
+        final String text = "lambda(x;x+x)(1)";
+        final SpreadsheetLabelNameParserToken x = this.label("x");
+
+        final SpreadsheetLambdaFunctionParserToken lambda = lambdaFunction(
+                functionName("lambda"),
+                functionParameters(
+                        openParenthesis(),
+                        x,
+                        valueSeparator(),
+                        add(
+                                x,
+                                plus(),
+                                x
+                        ),
+                        closeParenthesis()
+                ),
+                functionParameters(
+                        openParenthesis(),
+                        number(1),
+                        closeParenthesis()
+                )
+        );
+
+        this.lambdaFunctionParseAndCheck(
+                text,
+                lambda,
+                text
+        );
+    }
+
+    @Test
+    public void testLambdaFunctionNameWithStringParameter() {
+        final String text = "lambda(x;x+x)(\"Hello\")";
+        final SpreadsheetLabelNameParserToken x = this.label("x");
+
+        final SpreadsheetLambdaFunctionParserToken lambda = lambdaFunction(
+                functionName("lambda"),
+                functionParameters(
+                        openParenthesis(),
+                        x,
+                        valueSeparator(),
+                        add(
+                                x,
+                                plus(),
+                                x
+                        ),
+                        closeParenthesis()
+                ),
+                functionParameters(
+                        openParenthesis(),
+                        SpreadsheetParserToken.text(
+                                Lists.of(
+                                        doubleQuotes(),
+                                        textLiteral("Hello"),
+                                        doubleQuotes()
+                                ),
+                                "\"Hello\""
+                        ),
+                        closeParenthesis()
+                )
+        );
+
+        this.lambdaFunctionParseAndCheck(
+                text,
+                lambda,
+                text
+        );
+    }
+
+    /**
+     * First parseCellReference the range using {@link SpreadsheetParsers#lambdaFunction()} and then repeat again with
+     * {@link SpreadsheetParsers#expression()}. Both should give the same results.
+     */
+    private void lambdaFunctionParseAndCheck(final String from,
+                                             final SpreadsheetLambdaFunctionParserToken expected,
+                                             final String text) {
+        this.lambdaFunctionParseAndCheck(
+                from,
+                expected,
+                text,
+                text
+        );
+    }
+
+    private void lambdaFunctionParseAndCheck(final String from,
+                                             final SpreadsheetLambdaFunctionParserToken expected,
+                                             final String text,
+                                             final String expressionToString) {
+        this.parseAndCheck(
+                lambdaFunctionParser(),
+                from,
+                expected,
+                text
+        );
+        this.parseExpressionAndCheck(
+                from,
+                expected,
+                text,
+                expressionToString
+        );
+    }
+
+    private Parser<SpreadsheetParserContext> lambdaFunctionParser() {
+        return SpreadsheetParsers.lambdaFunction();
+    }
 
     // NamedFunction....................................................................................................
 
@@ -2564,7 +2681,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetParserToken spreadsheetParserToken = token.cast(SpreadsheetParserToken.class);
 
         this.checkEquals(
-                expressionToString,
+                expressionToString.replace(';', ','),
                 spreadsheetParserToken.toExpression(
                                 ExpressionEvaluationContexts.basic(
                                         ExpressionNumberKind.DEFAULT,
@@ -2984,6 +3101,17 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParserToken.whitespace("  ", "  ");
     }
 
+    private SpreadsheetParserToken add(final SpreadsheetParserToken... tokens) {
+        return SpreadsheetParserToken.addition(
+                Lists.of(
+                        tokens
+                ),
+                ParserToken.text(
+                        Lists.of(tokens)
+                )
+        );
+    }
+
     private SpreadsheetParserToken between() {
         return SpreadsheetParserToken.betweenSymbol(":", ":");
     }
@@ -3017,6 +3145,17 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private SpreadsheetParserToken greaterThanEquals() {
         return SpreadsheetParserToken.greaterThanEqualsSymbol(">=", ">=");
+    }
+
+    private SpreadsheetLambdaFunctionParserToken lambdaFunction(final SpreadsheetParserToken... tokens) {
+        return SpreadsheetParserToken.lambdaFunction(
+                Lists.of(
+                        tokens
+                ),
+                ParserToken.text(
+                        Lists.of(tokens)
+                )
+        );
     }
 
     private SpreadsheetParserToken lessThan() {

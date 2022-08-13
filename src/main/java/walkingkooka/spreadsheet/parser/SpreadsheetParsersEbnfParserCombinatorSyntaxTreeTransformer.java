@@ -116,6 +116,9 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
             case "GROUP":
                 transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::group;
                 break;
+            case "LAMBDA_FUNCTION":
+                transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::lambdaFunction;
+                break;
             case "NAMED_FUNCTION":
                 transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::namedFunction;
                 break;
@@ -173,6 +176,14 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
         return flat(
                 token,
                 SpreadsheetParserToken::group
+        );
+    }
+
+    private static ParserToken lambdaFunction(final ParserToken token,
+                                              final SpreadsheetParserContext context) {
+        return flat(
+                token,
+                SpreadsheetParserToken::lambdaFunction
         );
     }
 
