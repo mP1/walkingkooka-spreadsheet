@@ -25,8 +25,11 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.visit.Visiting;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetNamedFunctionParserToken> {
 
@@ -71,6 +74,97 @@ public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetPa
         this.checkValue(token, name, parameters);
         this.checkFunctionName(token, this.functionName());
         this.checkParameters(token, parameters);
+    }
+
+    @Test
+    public void testAccept() {
+        final StringBuilder b = new StringBuilder();
+        final List<ParserToken> visited = Lists.array();
+
+        final SpreadsheetNamedFunctionParserToken namedFunction = this.createToken();
+        final SpreadsheetParserToken functionName = namedFunction.value()
+                .get(0)
+                .cast(SpreadsheetParserToken.class);
+        final SpreadsheetParserToken parameters = namedFunction.value()
+                .get(1)
+                .cast(SpreadsheetParserToken.class);
+
+        new FakeSpreadsheetParserTokenVisitor() {
+            @Override
+            protected Visiting startVisit(final SpreadsheetParserToken n) {
+                b.append("1");
+                visited.add(n);
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final SpreadsheetParserToken n) {
+                b.append("2");
+                visited.add(n);
+            }
+
+            @Override
+            protected Visiting startVisit(final SpreadsheetNamedFunctionParserToken t) {
+                assertSame(namedFunction, t);
+                b.append("3");
+                visited.add(t);
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final SpreadsheetNamedFunctionParserToken t) {
+                assertSame(namedFunction, t);
+                b.append("4");
+                visited.add(t);
+            }
+
+            @Override
+            protected Visiting startVisit(final SpreadsheetFunctionParametersParserToken t) {
+                b.append("5");
+                visited.add(t);
+                return Visiting.SKIP;
+            }
+
+            @Override
+            protected void visit(final SpreadsheetFunctionNameParserToken token) {
+                b.append("6");
+                visited.add(token);
+            }
+
+            @Override
+            protected void endVisit(final SpreadsheetFunctionParametersParserToken t) {
+                b.append("7");
+                visited.add(t);
+            }
+
+            @Override
+            protected Visiting startVisit(final ParserToken t) {
+                b.append("8");
+                visited.add(t);
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final ParserToken t) {
+                b.append("9");
+                visited.add(t);
+            }
+        }.accept(namedFunction);
+
+        this.checkEquals(
+                "81381629815729429",
+                b.toString()
+        );
+        this.checkEquals(
+                Lists.of(
+                        namedFunction, namedFunction, namedFunction,
+                        functionName, functionName, functionName, functionName, functionName,
+                        parameters, parameters, parameters, parameters, parameters, parameters,
+                        namedFunction, namedFunction, namedFunction
+                ),
+                visited,
+                "visited"
+        );
     }
 
     @Test
