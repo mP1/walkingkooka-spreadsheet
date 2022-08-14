@@ -168,6 +168,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * Returns a {@link Parser} that parsers expression invocations, starting with the name and parameters.
      */
+    public static Parser<SpreadsheetParserContext> lambdaFunction() {
+        return LAMBDA_FUNCTION;
+    }
+
+    private static final Parser<SpreadsheetParserContext> LAMBDA_FUNCTION;
+
+    /**
+     * Returns a {@link Parser} that parsers expression invocations, starting with the name and parameters.
+     */
     public static Parser<SpreadsheetParserContext> namedFunction() {
         return NAMED_FUNCTION_PARSER;
     }
@@ -293,6 +302,8 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         predefined.put(FORMULA_EQUALS_SYMBOL_IDENTIFIER, FORMULA_EQUALS_SYMBOL);
 
+        predefined.put(LAMBDA_FUNCTION_NAME_IDENTIFIER, LAMBDA_FUNCTION_NAME);
+
         predefined.put(PERCENT_SYMBOL_IDENTIFIER, PERCENT_SYMBOL);
 
         predefined.put(PARENTHESIS_OPEN_SYMBOL_IDENTIFIER, PARENTHESIS_OPEN_SYMBOL);
@@ -338,6 +349,12 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
             SpreadsheetParserToken::equalsSymbol,
             SpreadsheetEqualsSymbolParserToken.class
     );
+
+    private static final EbnfIdentifierName LAMBDA_FUNCTION_NAME_IDENTIFIER = EbnfIdentifierName.with("LAMBDA_FUNCTION_NAME");
+    private static final Parser<SpreadsheetParserContext> LAMBDA_FUNCTION_NAME = Parsers.<SpreadsheetParserContext>string("lambda", CaseSensitivity.INSENSITIVE)
+            .transform(SpreadsheetParsers::transformFunctionName)
+            .setToString(SpreadsheetFunctionName.class.getSimpleName())
+            .cast();
 
     private static final EbnfIdentifierName PERCENT_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PERCENT_SYMBOL");
     private static final EbnfIdentifierName PARENTHESIS_OPEN_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PARENTHESIS_OPEN_SYMBOL");
@@ -467,6 +484,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL"));
         EXPRESSION_PARSER = parsers.get(EbnfIdentifierName.with("EXPRESSION"));
         FUNCTION_PARAMETERS_PARSER = parsers.get(EbnfIdentifierName.with("FUNCTION_PARAMETERS"));
+        LAMBDA_FUNCTION = parsers.get(EbnfIdentifierName.with("LAMBDA_FUNCTION"));
         NAMED_FUNCTION_PARSER = parsers.get(EbnfIdentifierName.with("NAMED_FUNCTION"));
         RANGE_PARSER = parsers.get(EbnfIdentifierName.with("RANGE"));
     }

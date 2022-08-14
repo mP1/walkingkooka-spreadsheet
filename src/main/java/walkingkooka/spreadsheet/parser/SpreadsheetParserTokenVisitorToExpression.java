@@ -186,6 +186,34 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
+    protected Visiting startVisit(final SpreadsheetLambdaFunctionParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetLambdaFunctionParserToken token) {
+        final List<Expression> children = this.children;
+
+        final SpreadsheetFunctionParametersParserToken parametersTokens = token.parameters();
+        final int parameterCount = parametersTokens.parameters().size();
+
+        final Expression call = Expression.call(
+                Expression.call(
+                        Expression.namedFunction(
+                                FunctionExpressionName.with(
+                                        token.functionName().value()
+                                )
+                        ),
+                        children.subList(0, parameterCount)
+                ),
+                children.subList(parameterCount, children.size())
+        );
+
+        this.exit();
+        this.add(call, token);
+    }
+
+    @Override
     protected Visiting startVisit(final SpreadsheetLessThanParserToken token) {
         return this.enter();
     }
