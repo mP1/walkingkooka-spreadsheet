@@ -69,7 +69,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
                             () -> Optional.of(
                                     SpreadsheetErrorKind.REF.setMessage("Reference not found: " + reference)
                             )
-                    );
+                    ).orElse(null);
         } catch (final RuntimeException exception) {
             result = this.handleException(exception);
         }
