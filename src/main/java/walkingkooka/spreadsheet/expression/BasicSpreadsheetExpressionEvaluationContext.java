@@ -62,7 +62,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final AbsoluteUrl serverUrl,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
                                                             final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
-                                                            final Function<ExpressionReference, Optional<Object>> references,
+                                                            final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                             final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                                             final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(cell, "cell");
@@ -91,7 +91,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final AbsoluteUrl serverUrl,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
                                                         final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
-                                                        final Function<ExpressionReference, Optional<Object>> references,
+                                                        final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                         final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                                         final Supplier<LocalDateTime> now) {
         super();
@@ -248,11 +248,11 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
-    public Optional<Object> reference(final ExpressionReference reference) {
+    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
         return this.references.apply(reference);
     }
 
-    private final Function<ExpressionReference, Optional<Object>> references;
+    private final Function<ExpressionReference, Optional<Optional<Object>>> references;
 
     // Convert..........................................................................................................
 

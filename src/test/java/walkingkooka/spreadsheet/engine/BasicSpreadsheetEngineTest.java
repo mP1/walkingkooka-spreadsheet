@@ -10988,7 +10988,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 };
             }
 
-            private Function<ExpressionReference, Optional<Object>> references() {
+            private Function<ExpressionReference, Optional<Optional<Object>>> references() {
                 return (r -> {
                     if (r instanceof SpreadsheetExpressionReference) {
                         final SpreadsheetCellReference cell = this.resolveIfLabel((SpreadsheetExpressionReference) r)
@@ -11000,7 +11000,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this
                         );
                         return delta.cell(cell)
-                                .flatMap(c -> c.formula().value());
+                                .map(c -> c.formula().value());
                     }
                     return Optional.empty();
                 });

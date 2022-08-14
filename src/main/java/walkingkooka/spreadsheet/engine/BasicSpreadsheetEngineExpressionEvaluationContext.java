@@ -70,7 +70,7 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     @Override
-    public ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
+    public ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
         throw new UnsupportedOperationException();
     }
 
@@ -90,7 +90,7 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     @Override
-    public Optional<Object> reference(ExpressionReference expressionReference) {
+    public Optional<Optional<Object>> reference(ExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 

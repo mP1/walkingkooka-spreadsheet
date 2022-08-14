@@ -41,7 +41,7 @@ import java.util.function.Function;
 public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext, SpreadsheetConverterContext {
 
     @Override
-    default SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
+    default SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
         return SpreadsheetExpressionEvaluationContexts.localLabels(
                 Cast.to(scoped),
                 this
@@ -65,7 +65,11 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
         Object result;
         try {
             result = this.reference(reference)
-                    .orElseGet(() -> SpreadsheetErrorKind.REF.setMessage("Reference not found: " + reference));
+                    .orElseGet(
+                            () -> Optional.of(
+                                    SpreadsheetErrorKind.REF.setMessage("Reference not found: " + reference)
+                            )
+                    );
         } catch (final RuntimeException exception) {
             result = this.handleException(exception);
         }

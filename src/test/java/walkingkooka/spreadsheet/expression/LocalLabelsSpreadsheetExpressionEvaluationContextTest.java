@@ -164,7 +164,9 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         final LocalLabelsSpreadsheetExpressionEvaluationContext context = this.createContext();
 
         this.checkEquals(
-                Optional.of(LOCAL_VALUE),
+                Optional.of(
+                        Optional.of(LOCAL_VALUE)
+                ),
                 context.reference(SpreadsheetSelection.labelName(NAME))
         );
     }

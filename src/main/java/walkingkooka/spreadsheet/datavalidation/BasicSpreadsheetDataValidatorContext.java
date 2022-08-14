@@ -113,9 +113,9 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public Optional<Object> reference(final ExpressionReference reference) {
+    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
         return this.cellReference().equals(reference) ?
-                this.value :
+                Optional.of(this.value) :
                 this.context.reference(reference);
     }
 

@@ -60,7 +60,6 @@ import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -2931,11 +2930,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                     throw new IllegalArgumentException("Expected 1 parameter=" + parameters);
                 }
                 return this.convertOrFail(parameters.get(0), targetType);
-            }
-
-            @Override
-            public Optional<Object> reference(final ExpressionReference reference) {
-                throw new UnsupportedOperationException();
             }
 
             @Override

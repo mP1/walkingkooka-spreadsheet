@@ -29,7 +29,7 @@ import java.util.function.Function;
  * A {@link Function} which may be passed to {@link walkingkooka.tree.expression.ExpressionEvaluationContexts#basic}
  * and acts as a bridge resolving {@link ExpressionReference} to a {@link Expression}.
  */
-final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction implements Function<ExpressionReference, Optional<Object>> {
+final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction implements Function<ExpressionReference, Optional<Optional<Object>>> {
 
     /**
      * Factory that creates a new {@link SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction}
@@ -55,7 +55,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunct
     }
 
     @Override
-    public Optional<Object> apply(final ExpressionReference reference) {
+    public Optional<Optional<Object>> apply(final ExpressionReference reference) {
         Objects.requireNonNull(reference, "values");
 
         return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor.values(

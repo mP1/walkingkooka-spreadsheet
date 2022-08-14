@@ -75,7 +75,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         throw new UnsupportedOperationException();
     };
 
-    private final static Function<ExpressionReference, Optional<Object>> REFERENCES = (r) -> {
+    private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCES = (r) -> {
         throw new UnsupportedOperationException();
     };
 
@@ -200,7 +200,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final AbsoluteUrl serverUrl,
                            final SpreadsheetMetadata spreadsheetMetadata,
                            final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
-                           final Function<ExpressionReference, Optional<Object>> references,
+                           final Function<ExpressionReference, Optional<Optional<Object>>> references,
                            final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                            final Supplier<LocalDateTime> now) {
         assertThrows(

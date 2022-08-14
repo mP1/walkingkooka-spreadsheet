@@ -66,7 +66,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     @Override
-    public ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
+    public ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
         throw new UnsupportedOperationException();
     }
 
@@ -86,7 +86,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     @Override
-    public Optional<Object> reference(final ExpressionReference reference) {
+    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 

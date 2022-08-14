@@ -170,7 +170,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         throw new UnknownExpressionFunctionException(n);
     };
 
-    private final static Function<ExpressionReference, Optional<Object>> REFERENCES = (r) -> {
+    private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCES = (r) -> {
         Objects.requireNonNull(r, "reference");
         throw new UnsupportedOperationException();
     };
