@@ -30,7 +30,7 @@ import java.util.function.Function;
 public interface SpreadsheetDataValidatorContext extends ExpressionEvaluationContext {
 
     @Override
-    default ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
+    default ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
         throw new UnsupportedOperationException();
     }
 

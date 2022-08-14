@@ -39,9 +39,9 @@ import java.util.stream.Collectors;
  */
 final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static Optional<Object> values(final SpreadsheetExpressionReference reference,
-                                   final SpreadsheetEngine engine,
-                                   final SpreadsheetEngineContext context) {
+    static Optional<Optional<Object>> values(final SpreadsheetExpressionReference reference,
+                                             final SpreadsheetEngine engine,
+                                             final SpreadsheetEngineContext context) {
         final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor visitor =
                 new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor(engine, context);
         visitor.accept(reference);
@@ -71,10 +71,12 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunct
                 this.context
         );
 
-        this.value = extractValueOrNull(
-                reference,
-                loaded
-        );
+        final Optional<SpreadsheetCell> cell = loaded.cell(reference);
+
+        this.value = loaded.cell(reference)
+                .map(c -> c.formula()
+                        .value()
+                ).orElse(null);
     }
 
     @Override
@@ -96,10 +98,12 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunct
                 this.context
         );
 
-        this.value = Lists.immutable(
-                range.cellStream()
-                        .map(c -> this.extractValueOrNull(c, delta))
-                        .collect(Collectors.toList())
+        this.value = Optional.of(
+                Lists.immutable(
+                        range.cellStream()
+                                .map(c -> this.extractValueOrNull(c, delta))
+                                .collect(Collectors.toList())
+                )
         );
     }
 
@@ -109,17 +113,13 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunct
     private Object extractValueOrNull(final SpreadsheetCellReference reference,
                                       final SpreadsheetDelta delta) {
         return delta.cell(reference)
-                .map(this::extractValueOrNull0)
-                .orElse(null);
+                .map(c -> c.formula()
+                        .value()
+                        .orElse(null)
+                ).orElse(null);
     }
 
-    private Object extractValueOrNull0(final SpreadsheetCell cell) {
-        return cell.formula()
-                .value()
-                .orElse(null);
-    }
-
-    private Object value;
+    private Optional<Object> value;
 
     @Override
     public String toString() {

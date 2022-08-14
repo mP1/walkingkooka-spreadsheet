@@ -41,7 +41,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
         implements SpreadsheetSelectionVisitorTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor> {
 
     @Test
-    public void testCell() {
+    public void testCellNonNullValue() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
         final String value = "B2Value";
 
@@ -76,7 +76,71 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
                 },
                 SpreadsheetEngineContexts.fake(),
                 reference,
-                Optional.of(value)
+                Optional.of(
+                        Optional.of(value)
+                )
+        );
+    }
+
+    @Test
+    public void testCellNullValue() {
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+
+        this.valuesAndCheck(
+                new FakeSpreadsheetEngine() {
+                    @Override
+                    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
+                                                     final SpreadsheetEngineEvaluation evaluation,
+                                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                     final SpreadsheetEngineContext context) {
+                        checkEquals(
+                                reference,
+                                cell,
+                                "loadCell"
+                        );
+
+                        return SpreadsheetDelta.EMPTY
+                                .setCells(
+                                        Sets.of(
+                                                reference.setFormula(
+                                                        SpreadsheetFormula.EMPTY
+                                                                .setText("=1+2")
+                                                )
+                                        )
+                                );
+                    }
+                },
+                SpreadsheetEngineContexts.fake(),
+                reference,
+                Optional.of(
+                        Optional.empty()
+                )
+        );
+    }
+
+    @Test
+    public void testCellNotFound() {
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+
+        this.valuesAndCheck(
+                new FakeSpreadsheetEngine() {
+                    @Override
+                    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
+                                                     final SpreadsheetEngineEvaluation evaluation,
+                                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                     final SpreadsheetEngineContext context) {
+                        checkEquals(
+                                reference,
+                                cell,
+                                "loadCell"
+                        );
+
+                        return SpreadsheetDelta.EMPTY;
+                    }
+                },
+                SpreadsheetEngineContexts.fake(),
+                reference,
+                Optional.empty()
         );
     }
 
@@ -134,7 +198,9 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
                     }
                 },
                 label,
-                Optional.of(value)
+                Optional.of(
+                        Optional.of(value)
+                )
         );
     }
 
@@ -187,7 +253,9 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
                 SpreadsheetEngineContexts.fake(),
                 range,
                 Optional.of(
-                        Lists.of(b2Value, b3Value)
+                        Optional.of(
+                                Lists.of(b2Value, b3Value)
+                        )
                 )
         );
     }
@@ -241,11 +309,13 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
                 SpreadsheetEngineContexts.fake(),
                 range,
                 Optional.of(
-                        Lists.of(
-                                b2Value, // B2
-                                null, // B3
-                                null, // C2
-                                c3Value // C3
+                        Optional.of(
+                                Lists.of(
+                                        b2Value, // B2
+                                        null, // B3
+                                        null, // C2
+                                        c3Value // C3
+                                )
                         )
                 )
         );
@@ -254,7 +324,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
     private void valuesAndCheck(final SpreadsheetEngine engine,
                                 final SpreadsheetEngineContext context,
                                 final SpreadsheetExpressionReference reference,
-                                final Optional<Object> value) {
+                                final Optional<Optional<Object>> value) {
         this.checkEquals(
                 value,
                 SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionSpreadsheetSelectionVisitor.values(

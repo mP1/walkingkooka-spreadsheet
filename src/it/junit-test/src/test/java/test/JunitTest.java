@@ -251,7 +251,7 @@ public class JunitTest {
                 };
             }
 
-            private Function<ExpressionReference, Optional<Object>> references() {
+            private Function<ExpressionReference, Optional<Optional<Object>>> references() {
                 return SpreadsheetEngines.expressionEvaluationContextExpressionReferenceFunction(
                         engine,
                         this

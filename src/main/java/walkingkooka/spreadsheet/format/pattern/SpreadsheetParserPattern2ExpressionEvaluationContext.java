@@ -56,7 +56,7 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
     }
 
     @Override
-    public ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Object>> scoped) {
+    public ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
         throw new UnsupportedOperationException();
     }
 
@@ -76,7 +76,7 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
     }
 
     @Override
-    public Optional<Object> reference(final ExpressionReference expressionReference) {
+    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 

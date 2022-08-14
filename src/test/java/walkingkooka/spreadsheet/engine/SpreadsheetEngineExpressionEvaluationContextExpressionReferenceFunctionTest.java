@@ -26,7 +26,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunctionTest
-        implements FunctionTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction, ExpressionReference, Optional<Object>> {
+        implements FunctionTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunction, ExpressionReference, Optional<Optional<Object>>> {
 
     @Test
     public void testWithNullEngineFails() {

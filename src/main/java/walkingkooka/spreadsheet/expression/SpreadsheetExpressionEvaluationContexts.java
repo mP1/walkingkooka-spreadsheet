@@ -48,7 +48,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final AbsoluteUrl serverUrl,
                                                                final SpreadsheetMetadata spreadsheetMetadata,
                                                                final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
-                                                               final Function<ExpressionReference, Optional<Object>> references,
+                                                               final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                                final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                                                final Supplier<LocalDateTime> now) {
         return BasicSpreadsheetExpressionEvaluationContext.with(

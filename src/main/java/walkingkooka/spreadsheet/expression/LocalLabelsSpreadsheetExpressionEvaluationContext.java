@@ -163,7 +163,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
      * The reference could be a local named parameter check that first then ask the wrapped context.
      */
     @Override
-    public Optional<Object> reference(final ExpressionReference reference) {
+    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
         return reference instanceof SpreadsheetLabelName ?
@@ -174,8 +174,10 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     /**
      * Finds the unevaluated value if the reference is a {@link SpreadsheetLabelName} otherwise returns {@link Optional#empty()}.
      */
-    private Optional<Object> findLocalLabel(final SpreadsheetLabelName label) {
-        return this.labelToValues.apply(label);
+    private Optional<Optional<Object>> findLocalLabel(final SpreadsheetLabelName label) {
+        return Optional.of(
+                this.labelToValues.apply(label)
+        );
     }
 
     /**
