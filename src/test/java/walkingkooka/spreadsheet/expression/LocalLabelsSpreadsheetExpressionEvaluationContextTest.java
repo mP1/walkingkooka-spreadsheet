@@ -24,6 +24,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.MathContext;
@@ -37,6 +38,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         ToStringTesting<LocalLabelsSpreadsheetExpressionEvaluationContext> {
 
     private final static String NAME = "Name1234";
+    private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName(NAME);
 
     private final static String LOCAL_VALUE = "abc123";
 
@@ -50,10 +52,14 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     private final static char PERCENTAGE_SYMBOL = 'R';
     private final static char POSITIVE_SYMBOL = 'P';
 
-    private final Function<SpreadsheetLabelName, Optional<Object>> LABEL_TO_VALUES = new Function<>() {
+    private final Function<SpreadsheetLabelName, Optional<Optional<Object>>> LABEL_TO_VALUES = new Function<>() {
         @Override
-        public Optional<Object> apply(final SpreadsheetLabelName label) {
-            return Optional.ofNullable(this.map.get(label));
+        public Optional<Optional<Object>> apply(final SpreadsheetLabelName label) {
+            return this.map.containsKey(label) ?
+                    Optional.of(
+                            Optional.ofNullable(this.map.get(label))
+                    ) :
+                    Optional.empty();
         }
 
         @Override
@@ -64,7 +70,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         }
 
         private final Map<SpreadsheetLabelName, Object> map = Maps.of(
-                SpreadsheetSelection.labelName(NAME),
+                LABEL,
                 LOCAL_VALUE
         );
     };
@@ -141,6 +147,76 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         this.checkEquals(
                 "Function name Name1234 is a parameter and not an actual function",
                 thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testReferenceLocalLabelNonNullValue() {
+        this.referenceAndCheck(
+                LABEL_TO_VALUES,
+                LABEL,
+                Optional.of(
+                        Optional.of(LOCAL_VALUE)
+                )
+        );
+    }
+
+    @Test
+    public void testReferenceLocalLabelNullValue() {
+        this.referenceAndCheck(
+                (r) -> {
+                    this.checkEquals(LABEL, r);
+                    return Optional.of(Optional.empty());
+                },
+                LABEL,
+                Optional.of(
+                        Optional.empty()
+                )
+        );
+    }
+
+    @Test
+    public void testReferenceLocalLabelAbsent() {
+        final Optional<Optional<Object>> value = Optional.of(
+                Optional.of("abc123")
+        );
+
+        this.referenceAndCheck(
+                LocalLabelsSpreadsheetExpressionEvaluationContext.with(
+                        (r) -> Optional.empty(),
+                        new FakeSpreadsheetExpressionEvaluationContext() {
+                            @Override
+                            public Optional<Optional<Object>> reference(final ExpressionReference reference) {
+                                checkEquals(LABEL, reference, "reference");
+                                return value;
+                            }
+                        }
+                ),
+                LABEL,
+                value
+        );
+    }
+
+    private void referenceAndCheck(final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues,
+                                   final ExpressionReference reference,
+                                   final Object expected) {
+        this.referenceAndCheck(
+                LocalLabelsSpreadsheetExpressionEvaluationContext.with(
+                        labelToValues,
+                        SpreadsheetExpressionEvaluationContexts.fake()
+                ),
+                reference,
+                expected
+        );
+    }
+
+    private void referenceAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                   final ExpressionReference reference,
+                                   final Object expected) {
+        this.checkEquals(
+                expected,
+                context.reference(reference),
+                () -> "referenceOrFail " + reference
         );
     }
 

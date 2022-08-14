@@ -57,7 +57,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         UsesToStringBuilder {
 
     static SpreadsheetExpressionEvaluationContext with(
-            final Function<SpreadsheetLabelName, Optional<Object>> labelToValues,
+            final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues,
             final SpreadsheetExpressionEvaluationContext context) {
         Objects.requireNonNull(labelToValues, "labelToValues");
         Objects.requireNonNull(context, "context");
@@ -68,7 +68,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         );
     }
 
-    private LocalLabelsSpreadsheetExpressionEvaluationContext(final Function<SpreadsheetLabelName, Optional<Object>> labelToValues,
+    private LocalLabelsSpreadsheetExpressionEvaluationContext(final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues,
                                                               final SpreadsheetExpressionEvaluationContext context) {
         super();
         this.labelToValues = labelToValues;
@@ -166,24 +166,34 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
-        return reference instanceof SpreadsheetLabelName ?
-                this.findLocalLabel((SpreadsheetLabelName) reference) :
-                Optional.empty();
+        Optional<Optional<Object>> value = null;
+
+        if (reference instanceof SpreadsheetLabelName) {
+            value = this.findLocalLabel((SpreadsheetLabelName) reference);
+
+            if (!value.isPresent()) {
+                value = null;
+            }
+        }
+
+        if (null == value) {
+            value = this.context.reference(reference);
+        }
+
+        return value;
     }
 
     /**
      * Finds the unevaluated value if the reference is a {@link SpreadsheetLabelName} otherwise returns {@link Optional#empty()}.
      */
     private Optional<Optional<Object>> findLocalLabel(final SpreadsheetLabelName label) {
-        return Optional.of(
-                this.labelToValues.apply(label)
-        );
+        return this.labelToValues.apply(label);
     }
 
     /**
      * Provides the value for a given {@link SpreadsheetLabelName}.
      */
-    private final Function<SpreadsheetLabelName, Optional<Object>> labelToValues;
+    private final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues;
 
     @Override
     public boolean isPure(final FunctionExpressionName functionName) {

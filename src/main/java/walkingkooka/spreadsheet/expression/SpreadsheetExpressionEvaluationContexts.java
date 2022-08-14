@@ -80,7 +80,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     /**
      * {@see LocalLabelsSpreadsheetExpressionEvaluationContext}
      */
-    public static SpreadsheetExpressionEvaluationContext localLabels(final Function<SpreadsheetLabelName, Optional<Object>> labelToValues,
+    public static SpreadsheetExpressionEvaluationContext localLabels(final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues,
                                                                      final SpreadsheetExpressionEvaluationContext context) {
 
         return LocalLabelsSpreadsheetExpressionEvaluationContext.with(
