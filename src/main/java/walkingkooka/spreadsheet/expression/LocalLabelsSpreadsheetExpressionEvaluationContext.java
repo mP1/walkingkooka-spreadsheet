@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
@@ -136,10 +137,11 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     @Override
     public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
                                    final List<Object> parameters) {
-        return this.context.evaluateFunction(
-                function,
-                parameters
-        );
+        return function
+                .apply(
+                        this.prepareParameters(function, parameters),
+                        Cast.to(this)
+                );
     }
 
     @Override
