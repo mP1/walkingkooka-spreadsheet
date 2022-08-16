@@ -21,13 +21,21 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
+import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
 import java.math.MathContext;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -120,6 +128,60 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     @Override
     public void testResolveIfLabelNullSelectionFails() {
         throw new UnsupportedOperationException();
+    }
+
+    @Test
+    public void testEvaluateFunctionContextReferenceInheritedLabel() {
+        this.checkEquals(
+                LOCAL_VALUE,
+                this.createContext()
+                        .evaluateFunction(
+                                new FakeExpressionFunction<>() {
+
+                                    @Override
+                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                        return Lists.empty();
+                                    }
+
+                                    @Override
+                                    public Object apply(final List<Object> values,
+                                                        final ExpressionEvaluationContext context) {
+                                        return context.referenceOrFail(LABEL);
+                                    }
+                                },
+                                ExpressionFunction.NO_PARAMETER_VALUES
+                        )
+        );
+    }
+
+    @Test
+    public void testEvaluateFunctionParameterInheritedLabel() {
+        this.checkEquals(
+                LOCAL_VALUE,
+                this.createContext()
+                        .evaluateFunction(
+                                new FakeExpressionFunction<>() {
+
+                                    @Override
+                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                        return Lists.of(PARAMETER);
+                                    }
+
+                                    @Override
+                                    public Object apply(final List<Object> values,
+                                                        final ExpressionEvaluationContext context) {
+                                        return this.parameters(1)
+                                                .get(0)
+                                                .getOrFail(values, 0);
+                                    }
+
+                                    private final ExpressionFunctionParameter<String> PARAMETER = ExpressionFunctionParameter.STRING.setKinds(ExpressionFunctionParameterKind.EVALUATE_RESOLVE_REFERENCES);
+                                },
+                                Lists.of(
+                                        Expression.reference(LABEL)
+                                )
+                        )
+        );
     }
 
     @Test
