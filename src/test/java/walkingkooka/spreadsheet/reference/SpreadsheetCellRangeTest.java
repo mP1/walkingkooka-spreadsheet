@@ -2359,17 +2359,17 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     // JsonNodeMarshallingTesting...............................................................................................
 
     @Test
-    public void testJsonNodeUnmarshall() {
+    public void testUnmarshall() {
         this.unmarshallAndCheck(JsonNode.string("A1:A2"), SpreadsheetSelection.parseCellRange("A1:A2"));
     }
 
     @Test
-    public void testJsonNodeMarshall2() {
+    public void testMarshall2() {
         this.marshallAndCheck(SpreadsheetSelection.parseCellRange("A1:A2"), JsonNode.string("A1:A2"));
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtrip() {
+    public void testMarshallRoundtrip() {
         this.marshallRoundTripTwiceAndCheck(SpreadsheetSelection.parseCellRange("A1:A2"));
     }
 

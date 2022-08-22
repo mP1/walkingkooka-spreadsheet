@@ -136,7 +136,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallEmptyObjectFails() {
+    public void testUnmarshallEmptyObjectFails() {
         this.unmarshallFails(JsonNode.object());
     }
 

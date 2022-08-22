@@ -902,7 +902,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallString() {
+    public void testUnmarshallString() {
         this.unmarshallAndCheck(JsonNode.string("$A$1"),
                 SpreadsheetSelection.parseCell("$A$1"));
     }

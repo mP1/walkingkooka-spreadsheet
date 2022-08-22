@@ -74,24 +74,24 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
     // JsonNodeMarshallingTesting.................................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallWithoutId() {
+    public void testUnmarshallWithoutId() {
         this.unmarshallAndCheck(this.jsonNodeWithoutId(),
                 Group.with(Optional.empty(), this.name()));
     }
 
     @Test
-    public void testJsonNodeUnmarshallWithId() {
+    public void testUnmarshallWithId() {
         this.unmarshallAndCheck(this.jsonNodeWithId(),
                 Group.with(this.createId(), this.name()));
     }
 
     @Test
-    public void testJsonNodeMarshallWithoutId() {
+    public void testMarshallWithoutId() {
         this.marshallAndCheck(this.createIdentity().setId(Optional.empty()), this.jsonNodeWithoutId());
     }
 
     @Test
-    public void testJsonNodeMarshallWithId() {
+    public void testMarshallWithId() {
         this.marshallAndCheck(this.createObject(), this.jsonNodeWithId());
     }
 
@@ -110,7 +110,7 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtripTwice() {
+    public void testMarshallRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 

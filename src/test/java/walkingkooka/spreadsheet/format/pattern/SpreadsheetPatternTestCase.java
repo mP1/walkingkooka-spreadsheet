@@ -187,7 +187,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
     // JsonNodeTesting.................................................................................................
 
     @Test
-    public final void testJsonNodeUnmarshallInvalidPattern() {
+    public final void testUnmarshallInvalidPattern() {
         this.unmarshallFails(JsonNode.string("\"unclosed quoted text inside patterns"));
     }
 

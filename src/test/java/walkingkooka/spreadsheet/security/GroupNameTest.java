@@ -107,18 +107,18 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
     // marshall ......................................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallInvalidEmailFails() {
+    public void testUnmarshallInvalidEmailFails() {
         this.unmarshallFails(JsonNode.string("!"));
     }
 
     @Test
-    public void testJsonNodeUnmarshall() {
+    public void testUnmarshall() {
         final String value = "group123";
         this.unmarshallAndCheck(JsonNode.string(value), GroupName.with(value));
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtrip() {
+    public void testMarshallRoundtrip() {
         this.marshallRoundTripTwiceAndCheck(GroupName.with("group123"));
     }
 

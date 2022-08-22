@@ -106,12 +106,12 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallStringInvalidFails() {
+    public void testUnmarshallStringInvalidFails() {
         this.unmarshallFails(JsonNode.string(""));
     }
 
     @Test
-    public void testJsonNodeUnmarshallString() {
+    public void testUnmarshallString() {
         this.unmarshallAndCheck(
                 JsonNode.object()
                         .set(JsonPropertyName.with("kind"), JsonNode.string(KIND.name()))
@@ -124,7 +124,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     }
 
     @Test
-    public void testJsonNodeMarshall() {
+    public void testMarshall() {
         this.marshallAndCheck(
                 this.createObject(),
                 JsonNode.object()
@@ -134,7 +134,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtripTwice() {
+    public void testMarshallRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 

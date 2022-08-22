@@ -116,7 +116,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     // HasJsonNodeUnmarshallContext.....................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallContextAllRequiredPropertiesAbsentFails() {
+    public void testUnmarshallContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 SpreadsheetMetadata.EMPTY::jsonNodeUnmarshallContext

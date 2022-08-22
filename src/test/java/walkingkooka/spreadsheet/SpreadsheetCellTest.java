@@ -361,38 +361,38 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     // HasJsonNode.unmarshallLabelName.......................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallBooleanFails() {
+    public void testUnmarshallBooleanFails() {
         this.unmarshallFails(JsonNode.booleanNode(true));
     }
 
     @Test
-    public void testJsonNodeUnmarshallNumberFails() {
+    public void testUnmarshallNumberFails() {
         this.unmarshallFails(JsonNode.number(12));
     }
 
     @Test
-    public void testJsonNodeUnmarshallArrayFails() {
+    public void testUnmarshallArrayFails() {
         this.unmarshallFails(JsonNode.array());
     }
 
     @Test
-    public void testJsonNodeUnmarshallStringFails() {
+    public void testUnmarshallStringFails() {
         this.unmarshallFails(JsonNode.string("fails"));
     }
 
     @Test
-    public void testJsonNodeUnmarshallObjectEmptyFails() {
+    public void testUnmarshallObjectEmptyFails() {
         this.unmarshallFails(JsonNode.object());
     }
 
     @Test
-    public void testJsonNodeUnmarshallObjectReferenceMissingFails() {
+    public void testUnmarshallObjectReferenceMissingFails() {
         this.unmarshallFails(JsonNode.object()
                 .set(SpreadsheetCell.FORMULA_PROPERTY, this.marshallContext().marshall(formula())));
     }
 
     @Test
-    public void testJsonNodeUnmarshallObjectReferenceMissingFails2() {
+    public void testUnmarshallObjectReferenceMissingFails2() {
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallFails(JsonNode.object()
@@ -401,13 +401,13 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testJsonNodeUnmarshallObjectFormulaMissingFails() {
+    public void testUnmarshallObjectFormulaMissingFails() {
         this.unmarshallFails(JsonNode.object()
                 .set(JsonPropertyName.with(reference().toString()), JsonNode.object()));
     }
 
     @Test
-    public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndTextStyle() {
+    public void testUnmarshallObjectReferenceAndFormulaAndTextStyle() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         final JsonNodeMarshallContext context = this.marshallContext();
@@ -422,7 +422,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormat() {
+    public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormat() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         final JsonNodeMarshallContext context = this.marshallContext();
@@ -440,7 +440,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormattedCell() {
+    public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormattedCell() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         final JsonNodeMarshallContext context = this.marshallContext();
@@ -458,7 +458,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndFormatAndFormattedCell() {
+    public void testUnmarshallObjectReferenceAndFormulaAndFormatAndFormattedCell() {
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(JsonNode.object()
@@ -474,7 +474,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatAndFormattedCell() {
+    public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatAndFormattedCell() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         final JsonNodeMarshallContext context = this.marshallContext();
@@ -550,7 +550,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtripTwice() {
+    public void testMarshallRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 

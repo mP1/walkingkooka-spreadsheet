@@ -66,22 +66,22 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallInvalidStringFails() {
+    public void testUnmarshallInvalidStringFails() {
         this.unmarshallFails(JsonNode.string("\r123xyz"));
     }
 
     @Test
-    public void testJsonNodeUnmarshall() {
+    public void testUnmarshall() {
         this.unmarshallAndCheck(JsonNode.string(VALUE), SpreadsheetName.with(VALUE));
     }
 
     @Test
-    public void testJsonNodeMarshall() {
+    public void testMarshall() {
         this.marshallAndCheck(SpreadsheetName.with(VALUE), JsonNode.string(VALUE));
     }
 
     @Test
-    public void testJsonNodeMarshallJsonNodeUnmarshallRoundtrip() {
+    public void testMarshallJsonNodeUnmarshallRoundtrip() {
         this.marshallRoundTripTwiceAndCheck(SpreadsheetName.with(VALUE));
     }
 

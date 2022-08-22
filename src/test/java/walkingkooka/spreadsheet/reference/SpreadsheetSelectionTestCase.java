@@ -2129,7 +2129,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     // Json..............................................................................................................
 
     @Test
-    public final void testJsonNodeMarshall() {
+    public final void testMarshall() {
         final S selection = this.createSelection();
         this.marshallAndCheck(selection, JsonNode.string(selection.toString()));
     }

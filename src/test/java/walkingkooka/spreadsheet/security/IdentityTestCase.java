@@ -31,22 +31,22 @@ public abstract class IdentityTestCase<V extends Identity<I>, I extends Identity
     // JsonNodeMarshallingTesting...............................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallBooleanFails() {
+    public void testUnmarshallBooleanFails() {
         this.unmarshallFails(JsonNode.booleanNode(true));
     }
 
     @Test
-    public void testJsonNodeUnmarshallNumberFails() {
+    public void testUnmarshallNumberFails() {
         this.unmarshallFails(JsonNode.number(12));
     }
 
     @Test
-    public void testJsonNodeUnmarshallArrayFails() {
+    public void testUnmarshallArrayFails() {
         this.unmarshallFails(JsonNode.array());
     }
 
     @Test
-    public void testJsonNodeUnmarshallObjectFails() {
+    public void testUnmarshallObjectFails() {
         this.unmarshallFails(JsonNode.object());
     }
 }

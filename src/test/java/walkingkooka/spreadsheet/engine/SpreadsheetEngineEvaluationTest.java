@@ -31,7 +31,7 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallStringUnknownFails() {
+    public void testUnmarshallStringUnknownFails() {
         this.unmarshallFails(JsonNode.string("123"));
     }
 

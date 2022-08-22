@@ -146,18 +146,18 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallString() {
+    public void testUnmarshallString() {
         this.unmarshallAndCheck(JsonNode.string(PATTERN),
                 SpreadsheetCellFormat.with(PATTERN));
     }
 
     @Test
-    public void testJsonNodeMarshall() {
+    public void testMarshall() {
         this.marshallAndCheck(this.createObject(), JsonNode.string(PATTERN));
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtripTwice() {
+    public void testMarshallRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 

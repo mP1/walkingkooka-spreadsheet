@@ -996,8 +996,11 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testMarshall() {
-        this.marshallAndCheck(this.createSelection(), JsonNode.string("B:D"));
+    public void testMarshall2() {
+        this.marshallAndCheck(
+                this.createSelection(),
+                JsonNode.string("B:D")
+        );
     }
 
     @Test

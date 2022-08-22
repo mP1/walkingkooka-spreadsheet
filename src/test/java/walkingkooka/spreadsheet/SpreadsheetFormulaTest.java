@@ -494,39 +494,39 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallBooleanFails() {
+    public void testUnmarshallBooleanFails() {
         this.unmarshallFails(JsonNode.booleanNode(true));
     }
 
     @Test
-    public void testJsonNodeUnmarshallNumberFails() {
+    public void testUnmarshallNumberFails() {
         this.unmarshallFails(JsonNode.number(12));
     }
 
     @Test
-    public void testJsonNodeUnmarshallArrayFails() {
+    public void testUnmarshallArrayFails() {
         this.unmarshallFails(JsonNode.array());
     }
 
     @Test
-    public void testJsonNodeUnmarshallStringFails() {
+    public void testUnmarshallStringFails() {
         this.unmarshallFails(JsonNode.string("fails"));
     }
 
     @Test
-    public void testJsonNodeUnmarshallObjectEmptyFails() {
+    public void testUnmarshallObjectEmptyFails() {
         this.unmarshallFails(JsonNode.object());
     }
 
     @Test
-    public void testJsonNodeUnmarshallText() {
+    public void testUnmarshallText() {
         this.unmarshallAndCheck(JsonNode.object()
                         .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT)),
                 formula(TEXT));
     }
 
     @Test
-    public void testJsonNodeUnmarshallTextAndToken() {
+    public void testUnmarshallTextAndToken() {
         final Optional<SpreadsheetParserToken> token = this.token();
 
         this.unmarshallAndCheck(JsonNode.object()
@@ -538,7 +538,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testJsonNodeUnmarshallTextAndExpression() {
+    public void testUnmarshallTextAndExpression() {
         final Optional<Expression> expression = this.expression();
 
         this.unmarshallAndCheck(JsonNode.object()
@@ -550,7 +550,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testJsonNodeUnmarshallTextTokenAndExpression() {
+    public void testUnmarshallTextTokenAndExpression() {
         final Optional<SpreadsheetParserToken> token = this.token();
         final Optional<Expression> expression = this.expression();
 
@@ -565,7 +565,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testJsonNodeUnmarshallTextAndValue() {
+    public void testUnmarshallTextAndValue() {
         this.unmarshallAndCheck(JsonNode.object()
                         .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
                         .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.number(VALUE)),
@@ -575,13 +575,13 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // marshall.......................................................................................................
 
     @Test
-    public void testJsonNodeMarshallText() {
+    public void testMarshallText() {
         this.marshallAndCheck(formula(TEXT),
                 "{ \"text\": \"a+2\"}");
     }
 
     @Test
-    public void testJsonNodeMarshallTextAndToken() {
+    public void testMarshallTextAndToken() {
         this.marshallAndCheck(formula(TEXT)
                         .setToken(this.token()),
                 "{\n" +
@@ -603,7 +603,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testJsonNodeMarshallTextAndExpression() {
+    public void testMarshallTextAndExpression() {
         this.marshallAndCheck(formula(TEXT)
                         .setExpression(this.expression()),
                 "{\n" +
@@ -616,7 +616,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testJsonNodeMarshallTextTokenAndExpression() {
+    public void testMarshallTextTokenAndExpression() {
         this.marshallAndCheck(formula(TEXT)
                         .setToken(this.token())
                         .setExpression(this.expression()),
@@ -643,7 +643,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testJsonNodeMarshallTextAndValue() {
+    public void testMarshallTextAndValue() {
         this.marshallAndCheck(formula(TEXT)
                         .setValue(Optional.of(123L)),
                 JsonNode.object()
@@ -652,42 +652,42 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testJsonNodeMarshallTextAndValue2() {
+    public void testMarshallTextAndValue2() {
         this.marshallAndCheck(formula(TEXT)
                         .setValue(Optional.of("abc123")),
                 "{ \"text\": \"a+2\", \"value\": \"abc123\"}");
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtripTwice() {
+    public void testMarshallRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtripTextAndValue() {
+    public void testMarshallRoundtripTextAndValue() {
         this.marshallRoundTripTwiceAndCheck(formula(TEXT)
                 .setValue(Optional.of(123L)));
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtripTextValueAndExpression() {
+    public void testMarshallRoundtripTextValueAndExpression() {
         this.marshallRoundTripTwiceAndCheck(formula(TEXT)
                 .setValue(Optional.of(123L))
                 .setExpression(this.expression()));
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtripTextAndError() {
+    public void testMarshallRoundtripTextAndError() {
         this.marshallRoundTripTwiceAndCheck(
                 formula(TEXT)
-                    .setValue(
-                            Optional.of(
-                                    SpreadsheetError.with(
-                                            SpreadsheetErrorKind.VALUE,
-                                            "error message #1"
-                                    )
-                            )
-                    )
+                        .setValue(
+                                Optional.of(
+                                        SpreadsheetError.with(
+                                                SpreadsheetErrorKind.VALUE,
+                                                "error message #1"
+                                        )
+                                )
+                        )
         );
     }
 

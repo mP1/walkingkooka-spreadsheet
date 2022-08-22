@@ -1595,7 +1595,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // HasJsonNodeUnmarshallContext.......................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallContextSomeRequiredPropertiesAbsentFails() {
+    public void testUnmarshallContextSomeRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY
@@ -1609,7 +1609,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testJsonNodeUnmarshallContextSomeRequiredPropertiesAbsentFails2() {
+    public void testUnmarshallContextSomeRequiredPropertiesAbsentFails2() {
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
@@ -1620,7 +1620,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testJsonNodeUnmarshallContext() {
+    public void testUnmarshallContext() {
         final ExpressionNumberKind kind = ExpressionNumberKind.DOUBLE;
 
         final JsonNodeUnmarshallContext context = SpreadsheetMetadata.EMPTY
@@ -1633,7 +1633,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testJsonNodeUnmarshallContextUnmarshall() {
+    public void testUnmarshallContextUnmarshall() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
@@ -2055,7 +2055,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtrip() {
+    public void testMarshallRoundtrip() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
         properties.put(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 0);

@@ -64,24 +64,24 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
     // JsonNodeMarshallingTesting.................................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallWithoutId() {
+    public void testUnmarshallWithoutId() {
         this.unmarshallAndCheck(this.jsonNodeWithoutId(),
                 User.with(Optional.empty(), EMAIL));
     }
 
     @Test
-    public void testJsonNodeUnmarshallWithId() {
+    public void testUnmarshallWithId() {
         this.unmarshallAndCheck(this.jsonNodeWithId(),
                 User.with(this.createId(), EMAIL));
     }
 
     @Test
-    public void testJsonNodeMarshallWithoutId() {
+    public void testMarshallWithoutId() {
         this.marshallAndCheck(this.createIdentity().setId(Optional.empty()), this.jsonNodeWithoutId());
     }
 
     @Test
-    public void testJsonNodeMarshallWithId() {
+    public void testMarshallWithId() {
         this.marshallAndCheck(this.createObject(), this.jsonNodeWithId());
     }
 
@@ -100,7 +100,7 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtripTwice() {
+    public void testMarshallRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 

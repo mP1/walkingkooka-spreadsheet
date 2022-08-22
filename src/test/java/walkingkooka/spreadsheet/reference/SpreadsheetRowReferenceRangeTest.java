@@ -996,8 +996,11 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testMarshall() {
-        this.marshallAndCheck(this.createSelection(), JsonNode.string("2:4"));
+    public void testMarshall2() {
+        this.marshallAndCheck(
+                this.createSelection(),
+                JsonNode.string("2:4")
+        );
     }
 
     @Test

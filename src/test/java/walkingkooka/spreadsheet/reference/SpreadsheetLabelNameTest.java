@@ -398,7 +398,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallString() {
+    public void testUnmarshallString() {
         final String value = "LABEL123";
         this.unmarshallAndCheck(JsonNode.string(value),
                 SpreadsheetLabelName.with(value));

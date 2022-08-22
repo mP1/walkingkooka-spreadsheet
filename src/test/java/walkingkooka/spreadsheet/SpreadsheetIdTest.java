@@ -79,27 +79,27 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallInvalidStringFails() {
+    public void testUnmarshallInvalidStringFails() {
         this.unmarshallFails(JsonNode.string("123xyz"));
     }
 
     @Test
-    public void testJsonNodeUnmarshall() {
+    public void testUnmarshall() {
         this.unmarshallAndCheck(JsonNode.string("1f"), SpreadsheetId.with(0x1f));
     }
 
     @Test
-    public void testJsonNodeMarshall() {
+    public void testMarshall() {
         this.marshallAndCheck(SpreadsheetId.with(0x1f), JsonNode.string("1f"));
     }
 
     @Test
-    public void testJsonNodeMarshallJsonNodeUnmarshallRoundtrip() {
+    public void testMarshallJsonNodeUnmarshallRoundtrip() {
         this.marshallRoundTripTwiceAndCheck(SpreadsheetId.with(VALUE));
     }
 
     @Test
-    public void testJsonNodeMarshallJsonNodeUnmarshallRoundtrip2() {
+    public void testMarshallJsonNodeUnmarshallRoundtrip2() {
         this.marshallRoundTripTwiceAndCheck(SpreadsheetId.with(0xabcd));
     }
 
