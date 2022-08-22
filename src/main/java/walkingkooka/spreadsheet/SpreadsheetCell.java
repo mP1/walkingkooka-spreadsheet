@@ -390,11 +390,13 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
             }
         }
 
-        if (null == formula) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(FORMULA_PROPERTY, node);
-        }
-
-        return new SpreadsheetCell(reference, formula, style, Optional.ofNullable(format), Optional.ofNullable(formatted));
+        return new SpreadsheetCell(
+                reference,
+                formula,
+                style,
+                Optional.ofNullable(format),
+                Optional.ofNullable(formatted)
+        );
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
