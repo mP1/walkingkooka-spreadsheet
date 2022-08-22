@@ -230,7 +230,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     // HasJsonNodeMarshallContext.......................................................................................
 
     @Test
-    public void testJsonNodeMarshallContext() {
+    public void testMarshallContext() {
         final SpreadsheetMetadata metadata = this.createObject();
         final JsonNodeMarshallContext marshallContext = metadata.jsonNodeMarshallContext();
         final JsonNodeMarshallContext marshallContext2 = JsonNodeMarshallContexts.basic();

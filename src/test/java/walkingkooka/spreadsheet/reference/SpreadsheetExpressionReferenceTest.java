@@ -92,7 +92,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     // unmarshall.....................................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallWithCellReference() {
+    public void testUnmarshallWithCellReference() {
         final String reference = "A1";
         this.checkEquals(SpreadsheetSelection.parseCell(reference),
                 SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(reference), this.unmarshallContext())
@@ -100,7 +100,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     }
 
     @Test
-    public void testJsonNodeUnmarshallWithLabel() {
+    public void testUnmarshallWithLabel() {
         final String label = "label123";
         this.checkEquals(SpreadsheetSelection.labelName(label),
                 SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(label), this.unmarshallContext())

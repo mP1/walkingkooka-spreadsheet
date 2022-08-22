@@ -245,12 +245,12 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtripTwice() {
+    public void testMarshallRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(this.createJsonNodeMarshallingValue());
     }
 
     @Test
-    public void testJsonNodeUnmarshall() {
+    public void testUnmarshall() {
         this.unmarshallAndCheck(
                 JsonNode.string("B9:30:40"),
                 SpreadsheetViewport.with(
@@ -262,7 +262,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     @Test
-    public void testJsonNodeUnmarshall2() {
+    public void testUnmarshall2() {
         this.unmarshallAndCheck(
                 JsonNode.string("B9:30.5:40.5"),
                 SpreadsheetViewport.with(
@@ -274,7 +274,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     @Test
-    public void testJsonNodeUnmarshall3() {
+    public void testUnmarshall3() {
         this.unmarshallAndCheck(
                 JsonNode.string("$B$9:30:40"),
                 SpreadsheetViewport.with(
@@ -286,7 +286,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     @Test
-    public void testJsonNodeMarshall2() {
+    public void testMarshall2() {
         this.marshallAndCheck(
                 SpreadsheetViewport.with(
                         this.reference(),
@@ -298,7 +298,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     @Test
-    public void testJsonNodeMarshall3() {
+    public void testMarshall3() {
         this.marshallAndCheck(
                 SpreadsheetViewport.with(
                         this.reference(),
@@ -310,7 +310,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtrip() {
+    public void testMarshallRoundtrip() {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetViewport.with(
                         this.reference(),
@@ -321,7 +321,7 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     }
 
     @Test
-    public void testJsonNodeMarshallRoundtripLabel() {
+    public void testMarshallRoundtripLabel() {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetViewport.with(
                         this.label(),

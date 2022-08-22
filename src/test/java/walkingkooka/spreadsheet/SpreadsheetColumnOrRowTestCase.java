@@ -59,7 +59,7 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Test
-    public final void testJsonNodeUnmarshallStringFails() {
+    public final void testUnmarshallStringFails() {
         this.unmarshallFails(JsonNode.string("fails"));
     }
 

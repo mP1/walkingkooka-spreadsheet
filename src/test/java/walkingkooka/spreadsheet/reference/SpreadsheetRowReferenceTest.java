@@ -534,27 +534,27 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     // JsonNodeTesting..................................................................................................
 
     @Test
-    public void testJsonNodeUnmarshallStringInvalidFails() {
+    public void testUnmarshallStringInvalidFails() {
         this.unmarshallFails(JsonNode.string("!9"));
     }
 
     @Test
-    public void testJsonNodeUnmarshallStringAbsolute() {
+    public void testUnmarshallStringAbsolute() {
         this.unmarshallAndCheck(JsonNode.string("$1"), SpreadsheetReferenceKind.ABSOLUTE.row(0));
     }
 
     @Test
-    public void testJsonNodeUnmarshallStringAbsolute2() {
+    public void testUnmarshallStringAbsolute2() {
         this.unmarshallAndCheck(JsonNode.string("$2"), SpreadsheetReferenceKind.ABSOLUTE.row(1));
     }
 
     @Test
-    public void testJsonNodeUnmarshallStringRelative() {
+    public void testUnmarshallStringRelative() {
         this.unmarshallAndCheck(JsonNode.string("1"), SpreadsheetReferenceKind.RELATIVE.row(0));
     }
 
     @Test
-    public void testJsonNodeUnmarshallStringRelative2() {
+    public void testUnmarshallStringRelative2() {
         this.unmarshallAndCheck(JsonNode.string("2"), SpreadsheetReferenceKind.RELATIVE.row(1));
     }
 
