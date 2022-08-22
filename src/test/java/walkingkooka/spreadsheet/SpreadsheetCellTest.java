@@ -507,8 +507,9 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testMarshallWithTextStyle() {
-        final TextStyle boldAndItalics = this.boldAndItalics();
+    public void testMarshallWithStyle() {
+        final TextStyle italics = TextStyle.EMPTY
+                .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
 
         this.marshallAndCheck(
                 SpreadsheetCell.with(
@@ -516,10 +517,18 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                 SpreadsheetFormula.EMPTY
                                         .setText(FORMULA)
                         )
-                        .setStyle(boldAndItalics),
-                "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}, \"style\": " +
-                        this.marshallContext()
-                                .marshallWithType(boldAndItalics) + "}}");
+                        .setStyle(italics),
+                "{\n" +
+                        "  \"B21\": {\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"=1+2\"\n" +
+                        "    },\n" +
+                        "    \"style\": {\n" +
+                        "      \"font-style\": \"ITALIC\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
+        );
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -536,27 +545,38 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testMarshallWithTextStyleAndFormatted() {
+    public void testMarshallWithStyleAndFormatted() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.marshallAndCheck(this.createCell()
+        this.marshallAndCheck(
+                this.createCell()
                         .setStyle(boldAndItalics)
                         .setFormatted(this.formatted()),
-                "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}, \"style\": " + context.marshallWithType(boldAndItalics) +
+                "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}, \"style\": " + context.marshall(boldAndItalics) +
                         ", \"format\": " + context.marshall(this.format().get()) +
                         ", \"formatted\": " + context.marshallWithType(this.formatted().get()) +
-                        "}}");
+                        "}}"
+        );
     }
 
     @Test
-    public void testMarshallRoundtripTwice() {
+    public void testMarshallFormulaRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 
     @Test
-    public void testMarshallFormulaTextStyleFormatAndFormattedRoundtripTwice() {
+    public void testMarshallStyleRoundtripTwice() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetSelection.parseCell("A99")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+                        .setStyle(TextStyle.EMPTY.set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456")))
+        );
+    }
+
+    @Test
+    public void testMarshallFormulaStyleFormatAndFormattedRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetSelection.parseCell("A99")
                         .setFormula(SpreadsheetFormula.EMPTY.setText("=123.5"))
