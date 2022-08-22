@@ -44,6 +44,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
+import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -624,6 +625,51 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         cellReference,
                         formula(text)
                 )
+        );
+    }
+
+    @Test
+    public void testPatchSetStyle() {
+        final SpreadsheetCell cell = SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("A1"),
+                formula("=1")
+        );
+
+        final TextStyle style = TextStyle.EMPTY
+                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"));
+
+        this.patchAndCheck(
+                cell,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetCell.STYLE_PROPERTY,
+                                JsonNodeMarshallContexts.basic()
+                                        .marshall(style)
+                        ),
+                cell.setStyle(style)
+        );
+    }
+
+    @Test
+    public void testPatchSetStyle2() {
+        final SpreadsheetCell cell = SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("A1"),
+                formula("=1")
+        );
+
+        final TextStyle style = TextStyle.EMPTY
+                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"))
+                .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.LEFT);
+
+        this.patchAndCheck(
+                cell,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetCell.STYLE_PROPERTY,
+                                JsonNodeMarshallContexts.basic()
+                                        .marshall(style)
+                        ),
+                cell.setStyle(style)
         );
     }
 
