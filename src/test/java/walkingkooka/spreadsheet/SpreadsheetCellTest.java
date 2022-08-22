@@ -402,12 +402,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testUnmarshallObjectFormulaMissingFails() {
-        this.unmarshallFails(JsonNode.object()
-                .set(JsonPropertyName.with(reference().toString()), JsonNode.object()));
-    }
-
-    @Test
     public void testUnmarshallObjectReferenceAndFormulaAndTextStyle() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
@@ -588,6 +582,22 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                         TextNode.text("abc123")
                                 )
                         )
+        );
+    }
+
+    @Test
+    public void testUnmarshallWithStyle() {
+        this.unmarshallAndCheck(
+                "{\n" +
+                        "   \"A123\": {\n" +
+                        "      \"style\": {\n" +
+                        "          \"background-color\": \"#123456\"\n" +
+                        "      }\n" +
+                        "   }\n" +
+                        "}",
+                SpreadsheetSelection.parseCell("A123")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+                        .setStyle(TextStyle.EMPTY.set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456")))
         );
     }
 

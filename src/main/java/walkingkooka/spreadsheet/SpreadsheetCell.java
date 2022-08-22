@@ -364,7 +364,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     private static SpreadsheetCell unmarshall0(final SpreadsheetCellReference reference,
                                                final JsonNode node,
                                                final JsonNodeUnmarshallContext context) {
-        SpreadsheetFormula formula = null;
+        SpreadsheetFormula formula = SpreadsheetFormula.EMPTY;
         TextStyle style = TextStyle.EMPTY;
         SpreadsheetCellFormat format = null;
         TextNode formatted = null;
