@@ -237,10 +237,56 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
     // JsonNodeMarshallingTesting...............................................................................................
 
     @Test
-    public void testJsonNode() {
+    public void testMarshall2() {
         this.marshallAndCheck(
                 this.createJsonNodeMarshallingValue(),
                 "\"B9:50:30\""
+        );
+    }
+
+    @Test
+    public void testMarshall3() {
+        this.marshallAndCheck(
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        30,
+                        40
+                ),
+                JsonNode.string("B9:30:40")
+        );
+    }
+
+    @Test
+    public void testMarshall4() {
+        this.marshallAndCheck(
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        30.5,
+                        40.5
+                ),
+                JsonNode.string("B9:30.5:40.5")
+        );
+    }
+
+    @Test
+    public void testMarshallRoundtrip() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetViewport.with(
+                        this.reference(),
+                        30.5,
+                        40.5
+                )
+        );
+    }
+
+    @Test
+    public void testMarshallRoundtripLabel() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetViewport.with(
+                        this.label(),
+                        30.5,
+                        40.5
+                )
         );
     }
 
@@ -281,52 +327,6 @@ public final class SpreadsheetViewportTest implements ClassTesting2<SpreadsheetV
                         SpreadsheetSelection.parseCell("$B$9"),
                         30,
                         40
-                )
-        );
-    }
-
-    @Test
-    public void testMarshall2() {
-        this.marshallAndCheck(
-                SpreadsheetViewport.with(
-                        this.reference(),
-                        30,
-                        40
-                ),
-                JsonNode.string("B9:30:40")
-        );
-    }
-
-    @Test
-    public void testMarshall3() {
-        this.marshallAndCheck(
-                SpreadsheetViewport.with(
-                        this.reference(),
-                        30.5,
-                        40.5
-                ),
-                JsonNode.string("B9:30.5:40.5")
-        );
-    }
-
-    @Test
-    public void testMarshallRoundtrip() {
-        this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetViewport.with(
-                        this.reference(),
-                        30.5,
-                        40.5
-                )
-        );
-    }
-
-    @Test
-    public void testMarshallRoundtripLabel() {
-        this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetViewport.with(
-                        this.label(),
-                        30.5,
-                        40.5
                 )
         );
     }

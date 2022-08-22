@@ -496,7 +496,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Test
-    public void testJsonNode() {
+    public void testMarshallWithFormula() {
         this.marshallAndCheck(
                 SpreadsheetCell.with(
                         reference(COLUMN, ROW),
@@ -507,7 +507,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testJsonNodeWithTextStyle() {
+    public void testMarshallWithTextStyle() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         this.marshallAndCheck(
@@ -524,7 +524,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testJsonNodeWithFormatted() {
+    public void testMarshallWithFormatted() {
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.marshallAndCheck(this.createCell(),
@@ -536,7 +536,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testJsonNodeWithTextStyleAndFormatted() {
+    public void testMarshallWithTextStyleAndFormatted() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         final JsonNodeMarshallContext context = this.marshallContext();
