@@ -407,7 +407,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 .set(FORMULA_PROPERTY, context.marshall(this.formula));
 
         if (false == this.style.isEmpty()) {
-            object = object.set(STYLE_PROPERTY, context.marshallWithType(this.style));
+            object = object.set(STYLE_PROPERTY, context.marshall(this.style));
         }
         if (this.format.isPresent()) {
             object = object.set(FORMAT_PROPERTY, context.marshall(this.format.get()));

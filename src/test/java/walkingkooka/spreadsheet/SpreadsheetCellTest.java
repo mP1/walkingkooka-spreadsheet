@@ -555,6 +555,22 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 
+    @Test
+    public void testMarshallFormulaTextStyleFormatAndFormattedRoundtripTwice() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetSelection.parseCell("A99")
+                        .setFormula(SpreadsheetFormula.EMPTY.setText("=123.5"))
+                        .setStyle(TextStyle.EMPTY.set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456")))
+                        .setFormat(Optional.of(
+                                SpreadsheetCellFormat.with("##")
+                        )).setFormatted(
+                                Optional.of(
+                                        TextNode.text("abc123")
+                                )
+                        )
+        );
+    }
+
     // HateosResourceTesting............................................................................................
 
     @Test
