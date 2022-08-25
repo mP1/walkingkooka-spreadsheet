@@ -957,14 +957,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             );
         }
 
-        final SpreadsheetCell after = cell.setFormula(formula);
-
-        return cell.equals(after) ?
-                cell :
-                this.formatAndApplyStyle(
-                        after,
-                        context
-                );
+        // unconditionally restyle the value, because style or formatting might have changed.
+        return this.formatAndApplyStyle(
+                cell.setFormula(formula),
+                context
+        );
     }
 
     /**

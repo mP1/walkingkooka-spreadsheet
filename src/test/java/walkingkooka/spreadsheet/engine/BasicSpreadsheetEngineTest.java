@@ -1257,7 +1257,68 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowHeights(
                                 rowHeights("2")
                         )
+        );
+    }
+
+    @Test
+    public void testSaveCellSecondTimeWithDifferentStyle() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
+
+        final SpreadsheetCell cell = cellReference.setFormula(
+                SpreadsheetFormula.EMPTY
+                        .setText("=1+2")
+        );
+
+        final SpreadsheetCell cellWithValue = this.formattedCellWithValue(
+                cell,
+                number(1 + 2),
+                TextStyle.EMPTY
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        cellWithValue
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        )
+        );
+
+        final TextStyle newStyle = TextStyle.EMPTY
+                .set(
+                        TextStylePropertyName.COLOR,
+                        Color.parse("#123456")
                 );
+
+        this.saveCellAndCheck(
+                engine,
+                cellWithValue.setStyle(newStyle),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(
+                                                cell.setStyle(newStyle),
+                                                number(1 + 2),
+                                                newStyle
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        )
+        );
     }
 
     @Test
@@ -11120,17 +11181,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
      */
     private SpreadsheetCell formattedCellWithValue(final SpreadsheetCell cell,
                                                    final Object value) {
+        return this.formattedCellWithValue(
+                cell,
+                value,
+                this.style()
+        );
+    }
 
+    private SpreadsheetCell formattedCellWithValue(final SpreadsheetCell cell,
+                                                   final Object value,
+                                                   final TextStyle style) {
         final SpreadsheetText formattedText = this.metadata()
                 .formatter()
                 .format(value, SPREADSHEET_TEXT_FORMAT_CONTEXT)
                 .orElseThrow(() -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value)));
-        final Optional<TextNode> formattedCell = Optional.of(this.style()
-                .replace(formattedText.toTextNode())
-                .root());
+        final Optional<TextNode> formattedCell = Optional.of(
+                style.replace(formattedText.toTextNode())
+                        .root()
+        );
 
-        return cell.setFormula(this.parseFormula(cell.formula())
-                .setValue(Optional.of(value)))
+        return cell.setFormula(
+                        this.parseFormula(cell.formula()
+                        ).setValue(Optional.of(value)))
                 .setFormatted(formattedCell);
     }
 
