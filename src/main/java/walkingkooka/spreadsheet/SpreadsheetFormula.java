@@ -112,7 +112,7 @@ public final class SpreadsheetFormula implements HasText,
         checkText(text);
         return this.text.equals(text) ?
                 this :
-                text.equals("") ?
+                text.isEmpty() ?
                         EMPTY :
                         this.replace(
                                 text,
