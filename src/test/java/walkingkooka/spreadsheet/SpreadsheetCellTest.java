@@ -908,8 +908,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ValueExpression 1\n" +
-                        "        ValueExpression 2\n"
+                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n"
         );
     }
 
@@ -937,8 +937,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ValueExpression 1\n" +
-                        "        ValueExpression 2\n" +
+                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n"
         );
     }
@@ -974,8 +974,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ValueExpression 1\n" +
-                        "        ValueExpression 2\n" +
+                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: #VALUE! \"error message 1\"\n"
         );
     }
@@ -1003,8 +1003,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ValueExpression 1\n" +
-                        "        ValueExpression 2\n" +
+                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
@@ -1036,8 +1036,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ValueExpression 1\n" +
-                        "        ValueExpression 2\n" +
+                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
@@ -1071,8 +1071,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
-                        "        ValueExpression 1\n" +
-                        "        ValueExpression 2\n" +
+                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
