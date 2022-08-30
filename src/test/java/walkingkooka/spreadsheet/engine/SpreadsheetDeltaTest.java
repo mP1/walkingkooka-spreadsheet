@@ -405,17 +405,17 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchAllNoSelection() {
-        this.patchSelectionAndCheck(
-                SpreadsheetDelta.NO_SELECTION,
-                SpreadsheetDelta.NO_SELECTION
+    public void testPatchAllNoViewportSelection() {
+        this.patchViewportSelectionAndCheck(
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION
         );
     }
 
     @Test
-    public void testPatchAllSelection() {
-        this.patchSelectionAndCheck(
-                SpreadsheetDelta.NO_SELECTION,
+    public void testPatchAllViewportSelection() {
+        this.patchViewportSelectionAndCheck(
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseColumn("C")
                                 .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
@@ -423,24 +423,24 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    private void patchSelectionAndCheck(final Optional<SpreadsheetViewportSelection> before,
-                                        final Optional<SpreadsheetViewportSelection> after) {
+    private void patchViewportSelectionAndCheck(final Optional<SpreadsheetViewportSelection> before,
+                                                final Optional<SpreadsheetViewportSelection> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setSelection(after);
+                .setViewportSelection(after);
 
         this.patchAndCheck(
                 SpreadsheetDelta.EMPTY
-                        .setSelection(before),
+                        .setViewportSelection(before),
                 marshall(delta),
                 delta
         );
     }
 
     @Test
-    public void testPatchAllSelectionCleared() {
+    public void testPatchAllViewportSelectionCleared() {
         this.patchAndCheck(
                 SpreadsheetDelta.EMPTY
-                        .setSelection(
+                        .setViewportSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:B2")
                                                 .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
@@ -449,7 +449,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 ,
                 JsonNode.object()
                         .set(
-                                SpreadsheetDelta.SELECTION_PROPERTY,
+                                SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
                                 JsonNode.nullNode()
                         ),
                 SpreadsheetDelta.EMPTY
@@ -509,7 +509,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchAllCellsRemoved() {
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
-                .setSelection(
+                .setViewportSelection(
                         Optional.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
                                         .setAnchor(
@@ -761,15 +761,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchCellsNoSelection() {
         this.patchCellSelectionAndCheck(
-                SpreadsheetDelta.NO_SELECTION,
-                SpreadsheetDelta.NO_SELECTION
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION
         );
     }
 
     @Test
     public void testPatchCellsSelection() {
         this.patchCellSelectionAndCheck(
-                SpreadsheetDelta.NO_SELECTION,
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseColumn("C")
                                 .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
@@ -780,11 +780,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     private void patchCellSelectionAndCheck(final Optional<SpreadsheetViewportSelection> before,
                                             final Optional<SpreadsheetViewportSelection> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setSelection(after);
+                .setViewportSelection(after);
 
         this.patchCellsAndCheck(
                 SpreadsheetDelta.EMPTY
-                        .setSelection(before),
+                        .setViewportSelection(before),
                 marshall(delta),
                 delta
         );
@@ -794,7 +794,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchCellsSelectionCleared() {
         this.patchCellsAndCheck(
                 SpreadsheetDelta.EMPTY
-                        .setSelection(
+                        .setViewportSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:B2")
                                                 .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
@@ -803,7 +803,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 ,
                 JsonNode.object()
                         .set(
-                                SpreadsheetDelta.SELECTION_PROPERTY,
+                                SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
                                 JsonNode.nullNode()
                         ),
                 SpreadsheetDelta.EMPTY
@@ -874,7 +874,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchCellsCellsRemoved() {
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
-                .setSelection(
+                .setViewportSelection(
                         Optional.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
                                         .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
@@ -1023,15 +1023,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsNoSelection() {
         this.patchColumnSelectionAndCheck(
-                SpreadsheetDelta.NO_SELECTION,
-                SpreadsheetDelta.NO_SELECTION
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION
         );
     }
 
     @Test
     public void testPatchColumnsSelection() {
         this.patchColumnSelectionAndCheck(
-                SpreadsheetDelta.NO_SELECTION,
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseColumn("C")
                                 .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
@@ -1042,11 +1042,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     private void patchColumnSelectionAndCheck(final Optional<SpreadsheetViewportSelection> before,
                                               final Optional<SpreadsheetViewportSelection> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setSelection(after);
+                .setViewportSelection(after);
 
         this.patchColumnsAndCheck(
                 SpreadsheetDelta.EMPTY
-                        .setSelection(before),
+                        .setViewportSelection(before),
                 marshall(delta),
                 delta
         );
@@ -1056,7 +1056,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchColumnsSelectionCleared() {
         this.patchColumnsAndCheck(
                 SpreadsheetDelta.EMPTY
-                        .setSelection(
+                        .setViewportSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:B2")
                                                 .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
@@ -1065,7 +1065,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 ,
                 JsonNode.object()
                         .set(
-                                SpreadsheetDelta.SELECTION_PROPERTY,
+                                SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
                                 JsonNode.nullNode()
                         ),
                 SpreadsheetDelta.EMPTY
@@ -1157,7 +1157,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsCellsRemoved() {
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
-                .setSelection(
+                .setViewportSelection(
                         Optional.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
                                         .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
@@ -1304,15 +1304,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchRowsNoSelection() {
         this.patchRowSelectionAndCheck(
-                SpreadsheetDelta.NO_SELECTION,
-                SpreadsheetDelta.NO_SELECTION
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION
         );
     }
 
     @Test
     public void testPatchRowsSelection() {
         this.patchRowSelectionAndCheck(
-                SpreadsheetDelta.NO_SELECTION,
+                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseRow("3")
                                 .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
@@ -1323,11 +1323,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     private void patchRowSelectionAndCheck(final Optional<SpreadsheetViewportSelection> before,
                                            final Optional<SpreadsheetViewportSelection> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setSelection(after);
+                .setViewportSelection(after);
 
         this.patchRowsAndCheck(
                 SpreadsheetDelta.EMPTY
-                        .setSelection(before),
+                        .setViewportSelection(before),
                 marshall(delta),
                 delta
         );
@@ -1337,7 +1337,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchRowsSelectionCleared() {
         this.patchRowsAndCheck(
                 SpreadsheetDelta.EMPTY
-                        .setSelection(
+                        .setViewportSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:B2")
                                                 .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
@@ -1346,7 +1346,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 ,
                 JsonNode.object()
                         .set(
-                                SpreadsheetDelta.SELECTION_PROPERTY,
+                                SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
                                 JsonNode.nullNode()
                         ),
                 SpreadsheetDelta.EMPTY
@@ -1440,7 +1440,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchRowsCellsRemoved() {
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
-                .setSelection(
+                .setViewportSelection(
                         Optional.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
                                         .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)

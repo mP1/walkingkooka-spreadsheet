@@ -43,7 +43,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     /**
      * Factory that creates a new {@link SpreadsheetDeltaNonWindowed} without copying or filtering the cells.
      */
-    static SpreadsheetDeltaNonWindowed withNonWindowed(final Optional<SpreadsheetViewportSelection> selection,
+    static SpreadsheetDeltaNonWindowed withNonWindowed(final Optional<SpreadsheetViewportSelection> viewportSelection,
                                                        final Set<SpreadsheetCell> cells,
                                                        final Set<SpreadsheetColumn> columns,
                                                        final Set<SpreadsheetLabelMapping> labels,
@@ -54,7 +54,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                                        final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                        final Map<SpreadsheetRowReference, Double> rowHeights) {
         return new SpreadsheetDeltaNonWindowed(
-                selection,
+                viewportSelection,
                 cells,
                 columns,
                 labels,
@@ -67,7 +67,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
         );
     }
 
-    private SpreadsheetDeltaNonWindowed(final Optional<SpreadsheetViewportSelection> selection,
+    private SpreadsheetDeltaNonWindowed(final Optional<SpreadsheetViewportSelection> viewportSelection,
                                         final Set<SpreadsheetCell> cells,
                                         final Set<SpreadsheetColumn> columns,
                                         final Set<SpreadsheetLabelMapping> labels,
@@ -78,7 +78,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                         final Map<SpreadsheetColumnReference, Double> columnWidths,
                                         final Map<SpreadsheetRowReference, Double> rowHeights) {
         super(
-                selection,
+                viewportSelection,
                 cells,
                 columns,
                 labels,
@@ -92,9 +92,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    SpreadsheetDelta replaceSelection(final Optional<SpreadsheetViewportSelection> selection) {
+    SpreadsheetDelta replaceViewportSelection(final Optional<SpreadsheetViewportSelection> viewportSelection) {
         return new SpreadsheetDeltaNonWindowed(
-                selection,
+                viewportSelection,
                 this.cells,
                 this.columns,
                 this.labels,
@@ -111,7 +111,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     SpreadsheetDelta replaceCells(final Set<SpreadsheetCell> cells) {
         // cells have already been filtered by window
         return new SpreadsheetDeltaNonWindowed(
-                this.selection,
+                this.viewportSelection,
                 cells,
                 this.columns,
                 this.labels,
@@ -127,7 +127,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns) {
         return new SpreadsheetDeltaNonWindowed(
-                this.selection,
+                this.viewportSelection,
                 filterCells(
                         this.cells,
                         columns,
@@ -148,7 +148,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceLabels(final Set<SpreadsheetLabelMapping> labels) {
         return new SpreadsheetDeltaNonWindowed(
-                this.selection,
+                this.viewportSelection,
                 this.cells,
                 this.columns,
                 labels,
@@ -164,7 +164,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceRows(final Set<SpreadsheetRow> rows) {
         return new SpreadsheetDeltaNonWindowed(
-                this.selection,
+                this.viewportSelection,
                 filterCells(
                         this.cells,
                         null, // cells have already been filtered by hidden columns so SKIP
@@ -185,7 +185,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
         return new SpreadsheetDeltaNonWindowed(
-                this.selection,
+                this.viewportSelection,
                 this.cells,
                 this.columns,
                 this.labels,
@@ -201,7 +201,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns) {
         return new SpreadsheetDeltaNonWindowed(
-                this.selection,
+                this.viewportSelection,
                 this.cells,
                 this.columns,
                 this.labels,
@@ -217,7 +217,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
         return new SpreadsheetDeltaNonWindowed(
-                this.selection,
+                this.viewportSelection,
                 this.cells,
                 this.columns,
                 this.labels,
@@ -233,7 +233,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
         return new SpreadsheetDeltaNonWindowed(
-                this.selection,
+                this.viewportSelection,
                 this.cells,
                 this.columns,
                 this.labels,
@@ -249,7 +249,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     @Override
     SpreadsheetDelta replaceRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
         return new SpreadsheetDeltaNonWindowed(
-                this.selection,
+                this.viewportSelection,
                 this.cells,
                 this.columns,
                 this.labels,
