@@ -33,6 +33,14 @@ import java.util.Optional;
 
 /**
  * Represents a selection within a viewport. Non ranges must not have an anchor, while ranges must have an anchor.
+ * <br>
+ * <pre>
+ * {
+ *      "selection": "A1:B2",
+ *      "anchor": "TOP_LEFT",
+ *      "navigation": "DOWN"
+ * }
+ * </pre>
  */
 public final class SpreadsheetViewportSelection implements TreePrintable,
         UsesToStringBuilder {
