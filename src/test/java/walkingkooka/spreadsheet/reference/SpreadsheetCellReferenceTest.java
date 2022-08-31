@@ -201,6 +201,24 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // toCellRange.....................................................................................................
+
+    @Test
+    public void testToCellRange() {
+        this.toCellRangeAndCheck(
+                "A1",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testToCellRange2() {
+        this.toCellRangeAndCheck(
+                "B2",
+                "B2"
+        );
+    }
+
     // simplify.........................................................................................................
 
     @Test

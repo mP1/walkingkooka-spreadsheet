@@ -717,6 +717,18 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                 .replace("Range", " Range");
     }
 
+    /**
+     * A helper that converts any {@link SpreadsheetSelection} including labels to a {@link SpreadsheetCellRange}.
+     * <br>
+     * A {@link SpreadsheetCellReference} will become a range with a single cell, a column will become a range that includes all cells etc.
+     */
+    public final Optional<SpreadsheetCellRange> toCellRange(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange) {
+        return SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor.toCellRange(
+                this,
+                labelToCellRange
+        );
+    }
+
     // notFound.........................................................................................................
 
     /**

@@ -37,6 +37,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -146,6 +147,54 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.checkEquals(
                 expected,
                 selection.toCellOrFail()
+        );
+    }
+
+    // toCellRange.....................................................................................................
+
+    final void toCellRangeWithNullFunctionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection().toCellRange(null)
+        );
+    }
+
+    final void toCellRangeAndCheck(final String selection,
+                                   final String expected) {
+        this.toCellRangeAndCheck(
+                this.parseString(selection),
+                SpreadsheetSelection.parseCellRange(expected)
+        );
+    }
+
+    final void toCellRangeAndCheck(final SpreadsheetSelection selection,
+                                   final SpreadsheetCellRange expected) {
+        this.toCellRangeAndCheck(
+                selection,
+                (l) -> {
+                    throw new UnsupportedOperationException(l.toString());
+                },
+                expected
+        );
+    }
+
+    final void toCellRangeAndCheck(final SpreadsheetSelection selection,
+                                   final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange,
+                                   final SpreadsheetCellRange expected) {
+        this.toCellRangeAndCheck(
+                expected,
+                labelToCellRange,
+                Optional.of(expected)
+        );
+    }
+
+    final void toCellRangeAndCheck(final SpreadsheetSelection selection,
+                                   final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange,
+                                   final Optional<SpreadsheetCellRange> expected) {
+        this.checkEquals(
+                expected,
+                selection.toCellRange(labelToCellRange),
+                () -> selection + " toCellRange"
         );
     }
 
