@@ -996,6 +996,24 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // toCellRange.....................................................................................................
+
+    @Test
+    public void testToCellRange() {
+        this.toCellRangeAndCheck(
+                "A",
+                "A2"
+        );
+    }
+
+    @Test
+    public void testToCellRange2() {
+        this.toCellRangeAndCheck(
+                "B:C",
+                "C3"
+        );
+    }
+
     // json.............................................................................................................
 
     @Test

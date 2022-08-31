@@ -481,6 +481,24 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
+    // toCellRange.....................................................................................................
+
+    @Test
+    public void testToCellRange() {
+        this.toCellRangeAndCheck(
+                "A1:B2",
+                "A1:B2"
+        );
+    }
+
+    @Test
+    public void testToCellRange2() {
+        this.toCellRangeAndCheck(
+                "C3",
+                "C3"
+        );
+    }
+
     // test.............................................................................................................
 
     @Test
