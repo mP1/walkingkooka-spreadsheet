@@ -829,6 +829,17 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Patches the cells of this {@link SpreadsheetDelta}. Any attempt to patch other properties will result in a
      * {@link IllegalArgumentException}.
+     * <pre>
+     * {
+     *   "cells": {
+     *     "A1": {
+     *       "formula": {
+     *         "text": ""
+     *       }
+     *     }
+     *   }
+     * }
+     * </pre>
      */
     public SpreadsheetDelta patchCells(final JsonNode json,
                                        final JsonNodeUnmarshallContext context) {
@@ -845,6 +856,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Patches the given {@link SpreadsheetDelta} assuming only columns have been patched.
      * Note only some properties may be patched (viewportSelection, column and window) others will throw an exception as invalid.
      * Attempts to patch an unknown column will fail with an {@link IllegalArgumentException} being thrown.
+     * <pre>
+     * {
+     *   "columns": {
+     *     "Z": {
+     *       "hidden": false
+     *     }
+     *   }
+     * }
+     * </pre>
      */
     public SpreadsheetDelta patchColumns(final JsonNode json,
                                          final JsonNodeUnmarshallContext context) {
@@ -861,6 +881,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Patches the given {@link SpreadsheetDelta} assuming only rows have been patched.
      * Note only some properties may be patched (viewportSelection, row and window) others will throw an exception as invalid.
      * Attempts to patch an unknown row will fail with an {@link IllegalArgumentException} being thrown.
+     * <pre>
+     * {
+     *   "rows": {
+     *     "9": {
+     *       "hidden": false
+     *     }
+     *   }
+     * }
+     * </pre>
      */
     public SpreadsheetDelta patchRows(final JsonNode json,
                                       final JsonNodeUnmarshallContext context) {
