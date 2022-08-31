@@ -49,6 +49,14 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         IterableTesting<SpreadsheetCellRange, SpreadsheetCellReference>,
         PredicateTesting2<SpreadsheetCellRange, SpreadsheetCellReference> {
 
+    @Test
+    public void testAll() {
+        this.toStringAndCheck(
+                SpreadsheetCellRange.ALL,
+                "A1:XFD1048576"
+        );
+    }
+
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
     private final static int COLUMN2 = 20;
