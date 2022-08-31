@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -28,33 +29,30 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Accepts a {@link SpreadsheetLabelName} and returns a {@link SpreadsheetCellReference} or {@link Optional#empty()},
+ * Accepts a {@link SpreadsheetLabelName} and returns a {@link SpreadsheetCellReferenceOrRange} or {@link Optional#empty()},
  * using a {@link SpreadsheetLabelStore} to resolve labels.
  */
-final class SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    private final SpreadsheetLabelStore store;
-    private SpreadsheetCellReference reference = null;
-
-    static Optional<SpreadsheetCellReference> reference(final SpreadsheetExpressionReference reference,
-                                                        final SpreadsheetLabelStore store) {
+    static Optional<SpreadsheetCellReferenceOrRange> cellReferenceOrRange(final SpreadsheetExpressionReference reference,
+                                                                          final SpreadsheetLabelStore store) {
         Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(store, "store");
 
-        final SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor(store);
+        final SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor(store);
         visitor.accept(reference);
         return Optional.ofNullable(
-                visitor.reference
+                visitor.cellReferenceOrRange
         );
     }
 
-    SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor(final SpreadsheetLabelStore store) {
+    SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor(final SpreadsheetLabelStore store) {
         super();
         this.store = store;
     }
 
     protected void visit(final SpreadsheetCellReference reference) {
-        this.reference = reference;
+        this.cellReferenceOrRange = reference;
     }
 
     protected void visit(final SpreadsheetLabelName label) {
@@ -65,10 +63,14 @@ final class SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor extend
     }
 
     protected void visit(final SpreadsheetCellRange range) {
-        this.reference = range.begin();
+        this.cellReferenceOrRange = range;
     }
 
     public String toString() {
-        return String.valueOf(this.reference);
+        return String.valueOf(this.cellReferenceOrRange);
     }
+
+    private final SpreadsheetLabelStore store;
+
+    private SpreadsheetCellReferenceOrRange cellReferenceOrRange = null;
 }

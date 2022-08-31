@@ -185,7 +185,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     }
 
     @Test
-    default void testCellReferenceOrFail() {
+    default void testCellReferenceOrRangeOrFail() {
         final S store = this.createStore();
         boolean tested = false;
 
@@ -194,7 +194,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
             if (!store.load(label).isPresent()) {
                 assertThrows(
                         LoadStoreException.class,
-                        () -> store.cellReferenceOrFail(label),
+                        () -> store.cellReferenceOrRangeOrFail(label),
                         () -> "Unknown Label: " + label + " should have failed"
                 );
                 tested = true;

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -51,16 +52,19 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
     /**
      * Attempts to resolve the given label to a {@link SpreadsheetCellReference}.
      */
-    default Optional<SpreadsheetCellReference> cellReference(final SpreadsheetExpressionReference reference) {
-        return SpreadsheetLabelStoreCellReferenceSpreadsheetSelectionVisitor.reference(reference, this);
+    default Optional<SpreadsheetCellReferenceOrRange> cellReferenceOrRange(final SpreadsheetExpressionReference reference) {
+        return SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
+                reference,
+                this
+        );
     }
 
     /**
      * Attempts to resolve any labels to a {@link SpreadsheetCellReference} throwing an {@link IllegalArgumentException}
      * if any label resolution fails.
      */
-    default SpreadsheetCellReference cellReferenceOrFail(final SpreadsheetExpressionReference reference) {
-        return this.cellReference(reference)
+    default SpreadsheetCellReferenceOrRange cellReferenceOrRangeOrFail(final SpreadsheetExpressionReference reference) {
+        return this.cellReferenceOrRange(reference)
                 .orElseThrow(() -> this.notFound(reference));
     }
 }
