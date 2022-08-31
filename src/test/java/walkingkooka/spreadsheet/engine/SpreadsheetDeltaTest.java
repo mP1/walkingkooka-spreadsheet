@@ -750,7 +750,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchCellsColumnsEmptyObject() {
+    public void testPatchCellsWithEmptyObject() {
         this.patchCellsAndCheck(
                 SpreadsheetDelta.EMPTY,
                 JsonNode.object(),
@@ -1012,7 +1012,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchColumnsColumnsEmptyObject() {
+    public void testPatchColumnsWithEmptyObject() {
         this.patchColumnsAndCheck(
                 SpreadsheetDelta.EMPTY,
                 JsonNode.object(),
@@ -1293,7 +1293,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchRowsRowsEmptyObject() {
+    public void testPatchRowsWithEmptyObject() {
         this.patchRowsAndCheck(
                 SpreadsheetDelta.EMPTY,
                 JsonNode.object(),
