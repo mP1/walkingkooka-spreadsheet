@@ -54,6 +54,12 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         Iterable<SpreadsheetCellReference> {
 
     /**
+     * A {@link SpreadsheetColumnReferenceRange} that includes all cells.
+     */
+    public static final SpreadsheetCellRange ALL = SpreadsheetColumnReferenceRange.ALL
+            .setRowReferenceRange(SpreadsheetRowReferenceRange.ALL);
+
+    /**
      * Computes the range of the given cells.
      */
     public static SpreadsheetCellRange fromCells(final List<SpreadsheetCellReference> cells) {
