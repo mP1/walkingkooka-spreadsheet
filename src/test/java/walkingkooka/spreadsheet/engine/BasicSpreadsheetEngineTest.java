@@ -10923,7 +10923,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 if (selection.isLabelName()) {
                     return this.storeRepository()
                             .labels()
-                            .cellReferenceOrFail((SpreadsheetExpressionReference) selection);
+                            .cellReferenceOrRangeOrFail((SpreadsheetExpressionReference) selection);
                 }
                 return selection;
             }
