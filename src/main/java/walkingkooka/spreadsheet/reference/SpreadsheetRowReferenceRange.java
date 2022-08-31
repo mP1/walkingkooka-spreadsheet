@@ -36,6 +36,14 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
         implements Comparable<SpreadsheetRowReferenceRange> {
 
     /**
+     * A {@link SpreadsheetRowReferenceRange} that includes all rows.
+     */
+    public static final SpreadsheetRowReferenceRange ALL = SpreadsheetReferenceKind.RELATIVE.firstRow()
+            .rowRange(
+                    SpreadsheetReferenceKind.RELATIVE.lastRow()
+            );
+
+    /**
      * Factory that creates a {@link SpreadsheetRowReferenceRange}
      */
     static SpreadsheetRowReferenceRange with(final Range<SpreadsheetRowReference> range) {
