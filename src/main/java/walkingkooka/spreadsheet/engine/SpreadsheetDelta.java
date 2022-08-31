@@ -893,7 +893,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             switch (propertyNameString) {
                 case VIEWPORT_SELECTION_PROPERTY_STRING:
                     patched = patched.setViewportSelection(
-                            unmarshallSelection(propertyAndValue, context)
+                            unmarshallViewportSelection(propertyAndValue, context)
                     );
                     valid = true;
                     break;
@@ -1250,7 +1250,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             switch (name.value()) {
                 case VIEWPORT_SELECTION_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setViewportSelection(
-                            unmarshallSelection(
+                            unmarshallViewportSelection(
                                     child,
                                     context
                             )
@@ -1351,8 +1351,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return unmarshalled;
     }
 
-    private static Optional<SpreadsheetViewportSelection> unmarshallSelection(final JsonNode node,
-                                                                              final JsonNodeUnmarshallContext context) {
+    private static Optional<SpreadsheetViewportSelection> unmarshallViewportSelection(final JsonNode node,
+                                                                                      final JsonNodeUnmarshallContext context) {
         return Optional.ofNullable(
                 context.unmarshall(node, SpreadsheetViewportSelection.class)
         );
