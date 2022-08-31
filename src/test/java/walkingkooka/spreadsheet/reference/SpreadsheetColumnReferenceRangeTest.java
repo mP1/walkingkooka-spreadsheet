@@ -35,6 +35,14 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         implements IterableTesting<SpreadsheetColumnReferenceRange, SpreadsheetColumnReference> {
 
     @Test
+    public void testAll() {
+        this.toStringAndCheck(
+                SpreadsheetColumnReferenceRange.ALL,
+                "A:XFD"
+        );
+    }
+
+    @Test
     public void testWith() {
         final SpreadsheetColumnReference lower = SpreadsheetSelection.parseColumn("B");
         final SpreadsheetColumnReference upper = SpreadsheetSelection.parseColumn("D");
