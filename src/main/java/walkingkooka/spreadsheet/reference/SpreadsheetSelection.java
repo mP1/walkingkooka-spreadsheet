@@ -66,6 +66,21 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         UsesToStringBuilder {
 
     /**
+     * {@see SpreadsheetCellRange#ALL}
+     */
+    public final static SpreadsheetCellRange ALL_CELLS = SpreadsheetCellRange.ALL;
+
+    /**
+     * {@see SpreadsheetColumnReferenceRange#ALL}
+     */
+    public final static SpreadsheetColumnReferenceRange ALL_COLUMNS = SpreadsheetColumnReferenceRange.ALL;
+
+    /**
+     * {@see SpreadsheetRowReferenceRange#ALL}
+     */
+    public final static SpreadsheetRowReferenceRange ALL_ROWS = SpreadsheetRowReferenceRange.ALL;
+
+    /**
      * Separator by ranges between cells / columns/ rows.
      */
     public final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
