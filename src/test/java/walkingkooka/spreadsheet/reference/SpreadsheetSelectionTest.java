@@ -316,7 +316,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testParseColumnReferenceSingleton() {
         this.checkEquals(
                 SpreadsheetSelection.parseColumn("B")
-                        .columnRange(),
+                        .toColumnRange(),
                 SpreadsheetSelection.parseColumnRange("B")
         );
     }

@@ -441,12 +441,12 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testColumnRange() {
+    public void testToColumnRange() {
         final SpreadsheetColumnReference column = this.createSelection();
         this.checkEquals(
                 SpreadsheetColumnReferenceRange.with(Range.singleton(column)),
-                column.columnRange(),
-                () -> column + ".columnRange"
+                column.toColumnRange(),
+                () -> column + ".toColumnRange"
         );
     }
 
