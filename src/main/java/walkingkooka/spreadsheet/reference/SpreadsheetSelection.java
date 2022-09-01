@@ -717,6 +717,15 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                 .replace("Range", " Range");
     }
 
+    public final SpreadsheetCellRange toCellRangeOrFail() {
+        return this.toCellRange(LABEL_TO_CELL_RANGE_UOE)
+                .get(); // always works because Labels will throw UOE.
+    }
+
+    private static final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> LABEL_TO_CELL_RANGE_UOE = (l) -> {
+        throw new UnsupportedOperationException("Unexpected label " + l);
+    };
+
     /**
      * A helper that converts any {@link SpreadsheetSelection} including labels to a {@link SpreadsheetCellRange}.
      * <br>

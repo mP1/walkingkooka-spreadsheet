@@ -516,13 +516,6 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                 this;
     }
 
-    // SpreadsheetExpressionReference...................................................................................
-
-    @Override
-    public SpreadsheetCellRange cellRange() {
-        return this;
-    }
-
     // SpreadsheetSelection.............................................................................................
 
     @Override
