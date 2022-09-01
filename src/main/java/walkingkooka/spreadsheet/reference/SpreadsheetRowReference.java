@@ -220,7 +220,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     /**
      * Returns a {@link SpreadsheetRowReferenceRange} holding only this row.
      */
-    public SpreadsheetRowReferenceRange rowRange() {
+    public SpreadsheetRowReferenceRange toRowRange() {
         return SpreadsheetRowReferenceRange.with(Range.singleton(this));
     }
 

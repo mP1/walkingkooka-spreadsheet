@@ -529,13 +529,13 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testRowRange() {
+    public void testToRowRange() {
         final SpreadsheetRowReference row = this.createSelection();
 
         this.checkEquals(
                 SpreadsheetRowReferenceRange.with(Range.singleton(row)),
-                row.rowRange(),
-                () -> row + ".rowRange"
+                row.toRowRange(),
+                () -> row + ".toRowRange"
         );
     }
 
