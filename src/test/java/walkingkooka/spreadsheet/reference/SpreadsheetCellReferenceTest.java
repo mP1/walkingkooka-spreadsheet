@@ -618,7 +618,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    // cellRange.......................................................................................................
+    // toCellRange......................................................................................................
 
     @Test
     public void testToCellRangeOrFailAbsolute() {
