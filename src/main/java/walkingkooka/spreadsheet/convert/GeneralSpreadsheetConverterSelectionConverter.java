@@ -117,7 +117,7 @@ final class GeneralSpreadsheetConverterSelectionConverter implements Converter<S
     }
 
     private static SpreadsheetCellRange cellToCellRange(final SpreadsheetCellReference cell) {
-        return cell.cellRange();
+        return cell.toCellRangeOrFail();
     }
 
     private static SpreadsheetCellReference cellRangeToCell(final SpreadsheetCellRange range) {

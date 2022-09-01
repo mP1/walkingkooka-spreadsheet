@@ -33,11 +33,6 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
         super();
     }
 
-    /**
-     * Converts this cell or range into a range. Cells will become a range of itself while range returns itself
-     */
-    public abstract SpreadsheetCellRange cellRange();
-
     @Override
     public final boolean testParameterName(final ExpressionFunctionParameterName parameterName) {
         return this.isLabelName() &&

@@ -1143,13 +1143,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         return this.cell("C3", "6");
     }
 
-    // SpreadsheetExpressionReference...................................................................................
-
     @Test
-    public void testTestCellRange() {
+    public void testTestCellRangeOrFail() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("C3:Z99");
+
         assertSame(
-                range.cellRange(),
+                range.toCellRangeOrFail(),
                 range
         );
     }

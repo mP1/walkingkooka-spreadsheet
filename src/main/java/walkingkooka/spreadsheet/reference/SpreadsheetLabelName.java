@@ -140,11 +140,6 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
-    public SpreadsheetCellRange cellRange() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public SpreadsheetSelection simplify() {
         return this;
     }

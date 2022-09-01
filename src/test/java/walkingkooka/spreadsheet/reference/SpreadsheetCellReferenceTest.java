@@ -551,7 +551,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final int right = 3;
         final int bottom = 4;
 
-        this.cellRangeAndCheck(
+        this.toCellRangeOrFailAndCheck(
                 this.cell(left, top),
                 this.cell(right, bottom),
                 left, top,
@@ -566,7 +566,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final int right = 3;
         final int bottom = 4;
 
-        this.cellRangeAndCheck(
+        this.toCellRangeOrFailAndCheck(
                 this.cell(left, bottom),
                 this.cell(right, top),
                 left, top,
@@ -581,7 +581,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final int right = 3;
         final int bottom = 4;
 
-        this.cellRangeAndCheck(
+        this.toCellRangeOrFailAndCheck(
                 this.cell(right, top),
                 this.cell(left, bottom),
                 left, top,
@@ -589,12 +589,12 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    private void cellRangeAndCheck(final SpreadsheetCellReference cell,
-                                   final SpreadsheetCellReference other,
-                                   final int left,
-                                   final int top,
-                                   final int right,
-                                   final int bottom) {
+    private void toCellRangeOrFailAndCheck(final SpreadsheetCellReference cell,
+                                           final SpreadsheetCellReference other,
+                                           final int left,
+                                           final int top,
+                                           final int right,
+                                           final int bottom) {
         final Range<SpreadsheetCellReference> expected = Range.greaterThanEquals(
                 this.cell(left, top)
         ).and(
@@ -621,29 +621,29 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     // cellRange.......................................................................................................
 
     @Test
-    public void testCellRangeAbsolute() {
-        this.cellRangeAndCheck(
+    public void testToCellRangeOrFailAbsolute() {
+        this.toCellRangeOrFailAndCheck(
                 SpreadsheetSelection.parseCell("$B$2"),
                 SpreadsheetSelection.parseCellRange("$B$2")
         );
     }
 
     @Test
-    public void testCellRangeRelative() {
+    public void testToCellRangeOrFailRelative() {
         final String text = "C3";
 
-        this.cellRangeAndCheck(
+        this.toCellRangeOrFailAndCheck(
                 SpreadsheetSelection.parseCell(text),
                 SpreadsheetSelection.parseCellRange(text)
         );
     }
 
-    private void cellRangeAndCheck(final SpreadsheetCellReference reference,
-                                   final SpreadsheetCellRange range) {
+    private void toCellRangeOrFailAndCheck(final SpreadsheetCellReference reference,
+                                           final SpreadsheetCellRange range) {
         this.checkEquals(
                 range,
-                reference.cellRange(),
-                () -> reference + " cellRange()"
+                reference.toCellRangeOrFail(),
+                () -> reference + " toCellRangeOrFail()"
         );
     }
 
