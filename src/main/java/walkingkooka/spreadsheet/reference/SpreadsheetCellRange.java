@@ -75,7 +75,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                 range = with(Range.singleton(copy.get(0)));
                 break;
             default:
-                range = computeRangeFromManyCells(copy);
+                range = computeEnclosingRange(copy);
                 break;
         }
 
@@ -83,14 +83,14 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     @SuppressWarnings("lgtm[java/dereferenced-value-may-be-null]")
-    private static SpreadsheetCellRange computeRangeFromManyCells(final List<SpreadsheetCellReference> cells) {
+    private static SpreadsheetCellRange computeEnclosingRange(final List<SpreadsheetCellReference> cells) {
         SpreadsheetColumnReference left = null;
         SpreadsheetRowReference top = null;
 
         SpreadsheetColumnReference right = null;
         SpreadsheetRowReference bottom = null;
 
-        for (SpreadsheetCellReference cell : cells) {
+        for (final SpreadsheetCellReference cell : cells) {
             if (null == left) {
                 left = cell.column();
                 right = left;
