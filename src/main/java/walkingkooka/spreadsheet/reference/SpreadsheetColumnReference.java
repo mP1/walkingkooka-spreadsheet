@@ -250,7 +250,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     /**
      * Returns a {@link SpreadsheetColumnReferenceRange} holding only this column.
      */
-    public SpreadsheetColumnReferenceRange columnRange() {
+    public SpreadsheetColumnReferenceRange toColumnRange() {
         return this.columnRange(this);
     }
 
