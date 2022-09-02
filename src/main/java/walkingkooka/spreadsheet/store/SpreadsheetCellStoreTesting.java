@@ -28,6 +28,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> extends SpreadsheetStoreTesting<S, SpreadsheetCellReference, SpreadsheetCell> {
 
     @Test
+    default void testDeleteCellsNullCellRangeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> {
+                    this.createStore().deleteCells(null);
+                }
+        );
+    }
+
+    @Test
     default void testColumnNullColumnFails() {
         assertThrows(
                 NullPointerException.class,
