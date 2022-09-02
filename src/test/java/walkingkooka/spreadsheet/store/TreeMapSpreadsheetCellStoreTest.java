@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -33,6 +34,34 @@ import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<TreeMapSpreadsheetCellStore> {
+
+    @Test
+    public void testLoadCells() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        store.save(a1);
+
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        store.save(b2);
+
+        final SpreadsheetCell c3 = SpreadsheetSelection.parseCell("C3")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        store.save(c3);
+
+        final SpreadsheetCell d4 = SpreadsheetSelection.parseCell("D4")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        store.save(d4);
+
+        this.checkEquals(
+                Sets.of(
+                        b2, c3
+                ),
+                store.loadCells(SpreadsheetSelection.parseCellRange("B2:C3"))
+        );
+    }
 
     @Test
     public void testDeleteCells() {
