@@ -29,7 +29,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.store.StoreTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.FontWeight;
@@ -43,9 +42,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements StoreTesting<S, SpreadsheetCellReference, SpreadsheetCell>,
+public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements SpreadsheetCellStoreTesting<S>,
         TypeNameTesting<S> {
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DOUBLE;
@@ -154,11 +152,6 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @Test
-    public final void testRowNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().row(null));
-    }
-
-    @Test
     public final void testRow() {
         final S store = this.createStore();
 
@@ -191,11 +184,6 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
                         .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)),
                 a
         );
-    }
-
-    @Test
-    public final void testColumnNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().column(null));
     }
 
     @Test
