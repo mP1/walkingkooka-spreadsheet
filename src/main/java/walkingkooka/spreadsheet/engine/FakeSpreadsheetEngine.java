@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -39,10 +38,10 @@ import java.util.Set;
 public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
     @Override
-    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
-                                     final SpreadsheetEngineEvaluation evaluation,
-                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                     final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                      final SpreadsheetEngineEvaluation evaluation,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 

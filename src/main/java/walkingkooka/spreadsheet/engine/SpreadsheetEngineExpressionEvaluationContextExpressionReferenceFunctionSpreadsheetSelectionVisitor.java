@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -64,7 +63,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunct
     // a cell always returns an Optional of a scalar value
     @Override
     protected void visit(final SpreadsheetCellReference reference) {
-        final SpreadsheetDelta loaded = this.engine.loadCell(
+        final SpreadsheetDelta loaded = this.engine.loadCells(
                 reference,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SPREADSHEET_DELTA_PROPERTIES,
@@ -92,7 +91,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunct
     @Override
     protected void visit(final SpreadsheetCellRange range) {
         final SpreadsheetDelta delta = this.engine.loadCells(
-                Sets.of(range),
+                range,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SPREADSHEET_DELTA_PROPERTIES,
                 this.context

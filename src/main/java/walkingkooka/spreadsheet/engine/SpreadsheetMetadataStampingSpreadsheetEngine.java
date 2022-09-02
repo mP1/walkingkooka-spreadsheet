@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -64,13 +63,13 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
-                                     final SpreadsheetEngineEvaluation evaluation,
-                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                     final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                      final SpreadsheetEngineEvaluation evaluation,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                      final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.loadCell(
-                        cell,
+                () -> this.engine.loadCells(
+                        selection,
                         evaluation,
                         deltaProperties,
                         context
