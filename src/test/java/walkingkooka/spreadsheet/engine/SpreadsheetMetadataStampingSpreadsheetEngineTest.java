@@ -149,7 +149,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        engine.deleteCell(SpreadsheetSelection.parseCell("A1"), context);
+        engine.deleteCells(SpreadsheetSelection.parseCell("A1"), context);
 
         this.checkMetadataNotUpdated(context);
     }
@@ -165,7 +165,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
         context.storeRepository().metadatas().save(BEFORE);
 
-        engine.deleteCell(cell.reference(), context);
+        engine.deleteCells(cell.reference(), context);
 
         this.checkMetadataUpdated(context);
     }

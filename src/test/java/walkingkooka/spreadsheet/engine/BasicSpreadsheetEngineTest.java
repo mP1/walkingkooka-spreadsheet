@@ -2227,7 +2227,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // deleteCell....................................................................................................
 
     @Test
-    public void testDeleteCell() {
+    public void testDeleteCellsMatchingCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2251,7 +2251,90 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteCellWithCellReferences() {
+    public void testDeleteCellsMatchingCellRange() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        engine.saveCell(
+                this.cell(
+                        a1, "=111"
+                ),
+                context
+        );
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("A2");
+        engine.saveCell(
+                this.cell(
+                        a2,
+                        "=222"
+                ),
+                context
+        );
+
+        this.deleteCellAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setDeletedCells(
+                                Sets.of(a1, a2)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1,2")
+                        )
+        );
+    }
+
+    @Test
+    public void testDeleteCellsMatchingColumn() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        engine.saveCell(
+                this.cell(
+                        a1, "=111"
+                ),
+                context
+        );
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("A2");
+        engine.saveCell(
+                this.cell(
+                        a2,
+                        "=222"
+                ),
+                context
+        );
+
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
+        engine.saveCell(
+                this.cell(
+                        c3,
+                        "=333"
+                ),
+                context
+        );
+
+        this.deleteCellAndCheck(
+                engine,
+                SpreadsheetSelection.parseColumn("A"),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setDeletedCells(
+                                Sets.of(a1, a2)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1,2")
+                        )
+        );
+    }
+
+    @Test
+    public void testDeleteCellsWhereCellHasCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2285,7 +2368,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteCellWithCellReferrers() {
+    public void testDeleteCellsWhereCellHasCellReferrers() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
         final SpreadsheetCellReference b2Reference = SpreadsheetSelection.parseCell("$B$2");
@@ -2331,7 +2414,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteCellWithColumn() {
+    public void testDeleteCellsIncludesColumn() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 

@@ -218,15 +218,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * DELETE the cell, and updates all affected (referenced cells) returning all updated cells.
      */
     @Override
-    public SpreadsheetDelta deleteCell(final SpreadsheetCellReference reference,
-                                       final SpreadsheetEngineContext context) {
-        checkReference(reference);
+    public SpreadsheetDelta deleteCells(final SpreadsheetSelection selection,
+                                        final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(selection, "selection");
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
-            context.storeRepository()
-                    .cells()
-                    .delete(reference);
+            final SpreadsheetStoreRepository repository = context.storeRepository();
+            final Optional<SpreadsheetCellRange> cells = selection.toCellRange(
+                    repository.labels()::cellRange
+            );
+            if(cells.isPresent()) {
+                repository.cells().deleteCells(cells.get());
+            }
             return this.prepareDelta(changes, context);
         }
     }
@@ -1717,7 +1721,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(mapping, "mapping");
     }
 
-    private static void checkReference(final SpreadsheetCellReference reference) {
+    private static void checkReference(final SpreadsheetExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
     }
 

@@ -67,10 +67,10 @@ public interface SpreadsheetEngine {
                                final SpreadsheetEngineContext context);
 
     /**
-     * Deletes the cell, removing references and updates and returns all affected (referenced cells).
+     * Deletes the cellS, removing references and updates and returns all affected (referenced cells).
      */
-    SpreadsheetDelta deleteCell(final SpreadsheetCellReference cell,
-                                final SpreadsheetEngineContext context);
+    SpreadsheetDelta deleteCells(final SpreadsheetSelection cells,
+                                 final SpreadsheetEngineContext context);
 
     /**
      * Loads the given {@link SpreadsheetColumn}

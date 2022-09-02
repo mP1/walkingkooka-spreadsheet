@@ -21,6 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
 import java.util.Collection;
 import java.util.List;
@@ -48,7 +49,7 @@ final class BasicSpreadsheetEngineFillCells {
                          final SpreadsheetCellRange from,
                          final SpreadsheetCellRange to) {
         if (cells.isEmpty()) {
-            this.clear(to);
+            this.deleteCell(to);
         } else {
             final List<SpreadsheetCell> out = cells.stream()
                     .filter(c -> false == from.test(c.reference()))
@@ -59,13 +60,6 @@ final class BasicSpreadsheetEngineFillCells {
 
             this.fill(cells, from, to);
         }
-    }
-
-    /**
-     * Clears aka deletes all the cells in the given {@link SpreadsheetCellRange}
-     */
-    private void clear(final SpreadsheetCellRange to) {
-        to.cellStream().forEach(this::deleteCell);
     }
 
     /**
@@ -115,8 +109,11 @@ final class BasicSpreadsheetEngineFillCells {
         }
     }
 
-    private void deleteCell(final SpreadsheetCellReference reference) {
-        this.engine.deleteCell(reference, this.context);
+    private void deleteCell(final SpreadsheetExpressionReference reference) {
+        this.engine.deleteCells(
+                reference,
+                this.context
+        );
     }
 
     /**

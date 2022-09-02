@@ -115,10 +115,10 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetDelta deleteCell(final SpreadsheetCellReference cell,
-                                       final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta deleteCells(final SpreadsheetSelection cells,
+                                        final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.deleteCell(cell, context),
+                () -> this.engine.deleteCells(cells, context),
                 context
         );
     }

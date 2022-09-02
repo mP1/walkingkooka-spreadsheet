@@ -152,15 +152,26 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testDeleteCellNullCellFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteCell(null,
-                this.createContext()));
+    default void testDeleteCellsNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteCells(
+                                null,
+                                this.createContext()
+                        )
+        );
     }
 
     @Test
-    default void testDeleteCellNullContextFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteCell(CELL_REFERENCE,
-                null));
+    default void testDeleteCellsNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine().deleteCells(
+                        CELL_REFERENCE,
+                        null
+                )
+        );
     }
 
     @Test
@@ -807,12 +818,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void deleteCellAndCheck(final SpreadsheetEngine engine,
-                                    final SpreadsheetCellReference delete,
+                                    final SpreadsheetSelection delete,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetDelta delta) {
         checkEquals(
                 delta,
-                engine.deleteCell(delete, context),
+                engine.deleteCells(delete, context),
                 () -> "deleteCell " + delete
         );
     }
