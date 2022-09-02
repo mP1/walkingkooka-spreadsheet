@@ -48,13 +48,13 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
         this.valuesAndCheck(
                 new FakeSpreadsheetEngine() {
                     @Override
-                    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
-                                                     final SpreadsheetEngineEvaluation evaluation,
-                                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                                     final SpreadsheetEngineContext context) {
+                    public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                                      final SpreadsheetEngineEvaluation evaluation,
+                                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                      final SpreadsheetEngineContext context) {
                         checkEquals(
                                 reference,
-                                cell,
+                                selection,
                                 "loadCell"
                         );
 
@@ -89,13 +89,13 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
         this.valuesAndCheck(
                 new FakeSpreadsheetEngine() {
                     @Override
-                    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
-                                                     final SpreadsheetEngineEvaluation evaluation,
-                                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                                     final SpreadsheetEngineContext context) {
+                    public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                                      final SpreadsheetEngineEvaluation evaluation,
+                                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                      final SpreadsheetEngineContext context) {
                         checkEquals(
                                 reference,
-                                cell,
+                                selection,
                                 "loadCell"
                         );
 
@@ -125,13 +125,13 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
         this.valuesAndCheck(
                 new FakeSpreadsheetEngine() {
                     @Override
-                    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
-                                                     final SpreadsheetEngineEvaluation evaluation,
-                                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                                     final SpreadsheetEngineContext context) {
+                    public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                                      final SpreadsheetEngineEvaluation evaluation,
+                                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                      final SpreadsheetEngineContext context) {
                         checkEquals(
                                 reference,
-                                cell,
+                                selection,
                                 "loadCell"
                         );
 
@@ -153,10 +153,10 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
         this.valuesAndCheck(
                 new FakeSpreadsheetEngine() {
                     @Override
-                    public SpreadsheetDelta loadCell(final SpreadsheetCellReference c,
-                                                     final SpreadsheetEngineEvaluation evaluation,
-                                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                                     final SpreadsheetEngineContext context) {
+                    public SpreadsheetDelta loadCells(final SpreadsheetSelection c,
+                                                      final SpreadsheetEngineEvaluation evaluation,
+                                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                      final SpreadsheetEngineContext context) {
                         checkEquals(
                                 cell,
                                 c,
@@ -213,14 +213,14 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
         this.valuesAndCheck(
                 new FakeSpreadsheetEngine() {
                     @Override
-                    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
+                    public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
                                                       final SpreadsheetEngineEvaluation evaluation,
                                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                       final SpreadsheetEngineContext context) {
                         checkEquals(
-                                Sets.of(range),
-                                ranges,
-                                "loadCells ranges"
+                                range,
+                                selection,
+                                "loadCells"
                         );
 
                         return SpreadsheetDelta.EMPTY
@@ -269,14 +269,14 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
         this.valuesAndCheck(
                 new FakeSpreadsheetEngine() {
                     @Override
-                    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
+                    public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
                                                       final SpreadsheetEngineEvaluation evaluation,
                                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                       final SpreadsheetEngineContext context) {
                         checkEquals(
-                                Sets.of(range),
-                                ranges,
-                                "loadCells ranges"
+                                range,
+                                selection,
+                                "loadCells"
                         );
 
                         return SpreadsheetDelta.EMPTY

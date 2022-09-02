@@ -99,7 +99,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetEngineContext context = this.createContext();
 
         assertNotNull(
-                engine.loadCell(
+                engine.loadCells(
                         SpreadsheetSelection.parseCell("A1"),
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                         SpreadsheetDeltaProperties.ALL,
@@ -119,7 +119,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
         context.storeRepository().cells().save(cell);
 
-        final SpreadsheetDelta delta = engine.loadCell(
+        final SpreadsheetDelta delta = engine.loadCells(
                 cell.reference(),
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 SpreadsheetDeltaProperties.ALL,

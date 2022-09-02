@@ -49,10 +49,10 @@ public interface SpreadsheetEngine {
      * <li>If the cell was not found and labels are requested {@link SpreadsheetDeltaProperties#LABELS} any labels will be returned.</li>
      * </ul>
      */
-    SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
-                              final SpreadsheetEngineEvaluation evaluation,
-                              final Set<SpreadsheetDeltaProperties> deltaProperties,
-                              final SpreadsheetEngineContext context);
+    SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                               final SpreadsheetEngineEvaluation evaluation,
+                               final Set<SpreadsheetDeltaProperties> deltaProperties,
+                               final SpreadsheetEngineContext context);
 
     /**
      * Saves the cell, and updates all affected (referenced cells) returning all updated cells.

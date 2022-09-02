@@ -79,24 +79,25 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("LABEL123");
 
     @Test
-    default void testLoadCellNullCellFails() {
+    default void testLoadCellsNullSelectionFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createSpreadsheetEngine().loadCell(
-                        null,
-                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                        SpreadsheetDeltaProperties.ALL,
-                        this.createContext()
-                )
+                () -> this.createSpreadsheetEngine()
+                        .loadCells(
+                                (SpreadsheetSelection) null,
+                                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                                SpreadsheetDeltaProperties.ALL,
+                                this.createContext()
+                        )
         );
     }
 
     @Test
-    default void testLoadCellNullEvaluationFails() {
+    default void testLoadCellsNullEvaluationFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .loadCell(
+                        .loadCells(
                                 CELL_REFERENCE,
                                 null, // evaluation
                                 SpreadsheetDeltaProperties.ALL,
@@ -106,11 +107,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testLoadCellNullSpreadsheetDeltaPropertiesFails() {
+    default void testLoadCellsNullSpreadsheetDeltaPropertiesFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .loadCell(
+                        .loadCells(
                                 CELL_REFERENCE,
                                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                                 null,
@@ -120,11 +121,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testLoadCellNullContextFails() {
+    default void testLoadCellsNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .loadCell(
+                        .loadCells(
                                 CELL_REFERENCE,
                                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                                 SpreadsheetDeltaProperties.ALL,
@@ -580,7 +581,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                            final SpreadsheetCellReference reference,
                                            final SpreadsheetEngineEvaluation evaluation,
                                            final SpreadsheetEngineContext context) {
-        final SpreadsheetDelta delta = engine.loadCell(
+        final SpreadsheetDelta delta = engine.loadCells(
                 reference,
                 evaluation,
                 SpreadsheetDeltaProperties.ALL,
@@ -628,7 +629,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetCellReference reference,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context) {
-        final SpreadsheetDelta loaded = engine.loadCell(
+        final SpreadsheetDelta loaded = engine.loadCells(
                 reference,
                 evaluation,
                 SpreadsheetDeltaProperties.ALL,
@@ -763,7 +764,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                   final SpreadsheetDelta loaded) {
         this.checkEquals(
                 loaded,
-                engine.loadCell(
+                engine.loadCells(
                         reference,
                         evaluation,
                         deltaProperties,

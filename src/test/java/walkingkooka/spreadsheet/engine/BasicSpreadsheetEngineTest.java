@@ -249,15 +249,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
-    // loadCell.........................................................................................................
+    // loadCells........................................................................................................
 
     @Test
-    public void testLoadCellCellWhenEmpty() {
+    public void testLoadCellsCellWhenEmpty() {
         this.loadCellFailCheck(cellReference(1, 1), SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY);
     }
 
     @Test
-    public void testLoadCellUnknown() {
+    public void testLoadCellsWithMissingCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -267,8 +267,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.checkEquals(
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setLabels(SpreadsheetDelta.NO_LABELS),
-                engine.loadCell(
+                        .setDeletedCells(
+                                Sets.of(reference)
+                        ).setLabels(SpreadsheetDelta.NO_LABELS),
+                engine.loadCells(
                         reference,
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                         SpreadsheetDeltaProperties.ALL,
@@ -278,23 +280,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellUnknownWithLabel() {
+    public void testLoadCellsWithMissingCellWithLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        this.checkEquals(Optional.empty(), context.storeRepository().cells().load(LABEL_CELL));
-
-        final SpreadsheetLabelMapping labelMapping = context.storeRepository()
+        final SpreadsheetLabelMapping labelMapping = LABEL.mapping(LABEL_CELL);
+        context.storeRepository()
                 .labels()
-                .save(LABEL.mapping(LABEL_CELL));
+                .save(labelMapping);
 
         this.checkEquals(
                 SpreadsheetDelta.EMPTY
                         .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setLabels(
-                                Sets.of(labelMapping)
+                        .setDeletedCells(
+                                Sets.of(LABEL_CELL)
+                        ).setLabels(
+                                Sets.of(LABEL.mapping(LABEL_CELL))
                         ),
-                engine.loadCell(
+                engine.loadCells(
                         LABEL_CELL,
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                         SpreadsheetDeltaProperties.ALL,
@@ -304,7 +307,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellSkipEvaluate() {
+    public void testLoadCellsWithLabelToMissingCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        this.checkEquals(
+                Optional.empty(),
+                context.storeRepository()
+                        .cells()
+                        .load(LABEL_CELL)
+        );
+
+        final SpreadsheetLabelMapping labelMapping = context.storeRepository()
+                .labels()
+                .save(LABEL.mapping(LABEL_CELL));
+
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY
+                        .setCells(SpreadsheetDelta.NO_CELLS)
+                        .setDeletedCells(
+                                Sets.of(LABEL_CELL)
+                        )
+                        .setLabels(
+                                Sets.of(labelMapping)
+                        ),
+                engine.loadCells(
+                        LABEL,
+                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                        SpreadsheetDeltaProperties.ALL,
+                        context
+                )
+        );
+    }
+
+    @Test
+    public void testLoadCellsSkipEvaluate() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -323,18 +360,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellWithoutFormatPattern() {
+    public void testLoadCellsWithoutFormatPattern() {
         this.cellStoreSaveAndLoadCellAndCheck(SpreadsheetCell.NO_FORMAT, FORMATTED_PATTERN_SUFFIX);
     }
 
     @Test
-    public void testLoadCellWithFormatPattern() {
+    public void testLoadCellsWithFormatPattern() {
         this.cellStoreSaveAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(PATTERN)),
                 FORMATTED_PATTERN_SUFFIX);
     }
 
     @Test
-    public void testLoadCellWithFormatPatternAndFormatter() {
+    public void testLoadCellsWithFormatPatternAndFormatter() {
         final String pattern = "Custom";
         final String suffix = "CustomSuffix";
         this.cellStoreSaveAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(pattern)
@@ -362,7 +399,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellComputeIfNecessaryCachesCell() {
+    public void testLoadCellsComputeIfNecessaryCachesCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -389,7 +426,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellComputeIfNecessaryKeepsExpression() {
+    public void testLoadCellsComputeIfNecessaryKeepsExpression() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -422,7 +459,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellComputeIfNecessaryHonoursExpressionIsPure() {
+    public void testLoadCellsComputeIfNecessaryHonoursExpressionIsPure() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -464,7 +501,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellComputeIfNecessaryHonoursFunctionIsPure() {
+    public void testLoadCellsComputeIfNecessaryHonoursFunctionIsPure() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -516,7 +553,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellComputeIfNecessaryCachesCellWithInvalidFormulaAndErrorCached() {
+    public void testLoadCellsComputeIfNecessaryCachesCellWithInvalidFormulaAndErrorCached() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -546,7 +583,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellForceRecomputeIgnoresValue() {
+    public void testLoadCellsForceRecomputeIgnoresValue() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -578,7 +615,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellForceRecomputeIgnoresCache() {
+    public void testLoadCellsForceRecomputeIgnoresCache() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -603,7 +640,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellForceRecomputeIgnoresPreviousError() {
+    public void testLoadCellsForceRecomputeIgnoresPreviousError() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -631,7 +668,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellComputeThenSkipEvaluate() {
+    public void testLoadCellsComputeThenSkipEvaluate() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -653,7 +690,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellManyWithoutCrossCellReferences() {
+    public void testLoadCellsManyWithoutCrossCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -688,7 +725,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellWithCrossCellReferences() {
+    public void testLoadCellsWithCrossCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -727,7 +764,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellValueCellReferenceInvalidFails() {
+    public void testLoadCellsValueCellReferenceInvalidFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -744,7 +781,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellValueLabelInvalidFails() {
+    public void testLoadCellsValueLabelInvalidFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -761,7 +798,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellValueIsCellReference() {
+    public void testLoadCellsValueIsCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -791,7 +828,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellValueIsLabel() {
+    public void testLoadCellsValueIsLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -825,7 +862,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellWithConditionalFormattingRule() {
+    public void testLoadCellsWithConditionalFormattingRule() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -870,14 +907,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellSpreadsheetDeltaPropertiesCells() {
+    public void testLoadCellspreadsheetDeltaPropertiesCells() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS
         );
     }
 
     @Test
-    public void testLoadCellSpreadsheetDeltaPropertiesCellsLabel() {
+    public void testLoadCellspreadsheetDeltaPropertiesCellsLabel() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS,
                 SpreadsheetDeltaProperties.LABELS
@@ -885,7 +922,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellSpreadsheetDeltaPropertiesCellsColumnWidths() {
+    public void testLoadCellspreadsheetDeltaPropertiesCellsColumnWidths() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS,
                 SpreadsheetDeltaProperties.COLUMN_WIDTHS
@@ -893,7 +930,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellSpreadsheetDeltaPropertiesCellsRowHeights() {
+    public void testLoadCellspreadsheetDeltaPropertiesCellsRowHeights() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS,
                 SpreadsheetDeltaProperties.ROW_HEIGHTS
@@ -901,7 +938,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellSpreadsheetDeltaPropertiesAll() {
+    public void testLoadCellspreadsheetDeltaPropertiesAll() {
         this.loadCellAndCheck(SpreadsheetDeltaProperties.ALL);
     }
 
@@ -929,7 +966,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels()
                 .save(label);
 
-        final SpreadsheetDelta delta = engine.loadCell(
+        final SpreadsheetDelta delta = engine.loadCells(
                 cellReference,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 deltaProperties,
@@ -997,6 +1034,54 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ),
                 (c) -> style);
+    }
+
+    @Test
+    public void testLoadCellsWithCellRange() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetCell b2 = cellStore.save(
+                this.cell(
+                        SpreadsheetSelection.parseCell("B2"),
+                        "=22"
+                )
+        );
+
+        final SpreadsheetCell c3 = cellStore.save(
+                this.cell(
+                        SpreadsheetSelection.parseCell("c3"),
+                        "=33"
+                )
+        );
+
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCellWithValue(b2, EXPRESSION_NUMBER_KIND.create(22)),
+                                        this.formattedCellWithValue(c3, EXPRESSION_NUMBER_KIND.create(33))
+                                )
+                        ).setDeletedCells(
+                                Sets.of(
+                                        SpreadsheetSelection.parseCell("B3"),
+                                        SpreadsheetSelection.parseCell("C2")
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B,C")
+                        ).setRowHeights(
+                                rowHeights("2,3")
+                        ),
+                engine.loadCells(
+                        SpreadsheetSelection.parseCellRange("B2:C3"),
+                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                        SpreadsheetDeltaProperties.ALL,
+                        context
+                )
+        );
     }
 
     // saveCell....................................................................................................
@@ -11137,7 +11222,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     if (r instanceof SpreadsheetExpressionReference) {
                         final SpreadsheetCellReference cell = this.resolveIfLabel((SpreadsheetExpressionReference) r)
                                 .toCellOrFail();
-                        final SpreadsheetDelta delta = engine.loadCell(
+                        final SpreadsheetDelta delta = engine.loadCells(
                                 cell,
                                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                                 SpreadsheetDeltaProperties.ALL,

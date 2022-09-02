@@ -94,26 +94,53 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // LOAD CELL........................................................................................................
 
     /**
-     * Loads the cell honouring the {@link SpreadsheetEngineEvaluation} which may result in loading and evaluating other cells.
-     * Note if the cell was not found and labels are requested the labels will be loaded and present in the {@link SpreadsheetDelta}.
+     * Loads the selected {@link SpreadsheetSelection cells} honouring the {@link SpreadsheetEngineEvaluation} which may
+     * result in loading and evaluating other cells. Note if the cells were not found and labels are requested the
+     * labels will be loaded and present in the {@link SpreadsheetDelta}.
      */
     @Override
-    public SpreadsheetDelta loadCell(final SpreadsheetCellReference reference,
-                                     final SpreadsheetEngineEvaluation evaluation,
-                                     final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                     final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(reference, "reference");
-        checkEvaluation(evaluation);
+    public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                      final SpreadsheetEngineEvaluation evaluation,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                      final SpreadsheetEngineContext context) {
+        checkSelection(selection);
+        Objects.requireNonNull(evaluation, "evaluation");
         checkDeltaProperties(deltaProperties);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, deltaProperties, context)) {
-            final boolean loaded = this.loadCell0(
-                    reference,
-                    evaluation,
-                    changes,
-                    context
-            );
+        final Optional<SpreadsheetCellRange> cells = selection.toCellRange(context.storeRepository().labels()::cellRange);
+
+        return cells.isPresent() ?
+                this.loadCells0(
+                        cells.get(),
+                        evaluation,
+                        deltaProperties,
+                        context
+                ) :
+                SpreadsheetDelta.EMPTY;
+    }
+
+    private SpreadsheetDelta loadCells0(final SpreadsheetCellRange cellRange,
+                                        final SpreadsheetEngineEvaluation evaluation,
+                                        final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                        final SpreadsheetEngineContext context) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, deltaProperties, context)) {
+            final SpreadsheetStoreRepository repository = context.storeRepository();
+
+            final Set<SpreadsheetCellReference> loadedOrDeleted = Sets.sorted();
+
+            for (final SpreadsheetCell cell : repository.cells()
+                    .loadCells(cellRange)) {
+
+                final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(
+                        cell,
+                        evaluation,
+                        context
+                );
+                changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+
+                loadedOrDeleted.add(cell.reference());
+            }
 
             SpreadsheetDelta delta = this.prepareDelta(
                     changes,
@@ -121,10 +148,30 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             );
 
             // load any labels for the requested cell when it was NOT found and labels are requested.
-            if (deltaProperties.contains(SpreadsheetDeltaProperties.LABELS) && !loaded) {
-                delta = delta.setLabels(
-                        context.storeRepository().labels().labels(reference)
-                );
+            if (deltaProperties.contains(SpreadsheetDeltaProperties.LABELS)) {
+                final Set<SpreadsheetCellReference> deleted = delta.deletedCells();
+                loadedOrDeleted.addAll(deleted);
+
+                final Set<SpreadsheetCellReference> allDeleted = Sets.sorted();
+                allDeleted.addAll(deleted);
+
+                final Set<SpreadsheetLabelMapping> labels = Sets.sorted();
+                labels.addAll(delta.labels());
+
+                final SpreadsheetLabelStore labelStore = repository.labels();
+
+                for (final SpreadsheetCellReference cell : cellRange) {
+                    if (loadedOrDeleted.contains(cell)) {
+                        continue;
+                    }
+                    labels.addAll(
+                            labelStore.labels(cell)
+                    );
+                    allDeleted.add(cell);
+                }
+
+                delta = delta.setDeletedCells(allDeleted)
+                        .setLabels(labels);
             }
 
             return delta;
@@ -220,7 +267,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public SpreadsheetDelta deleteCells(final SpreadsheetSelection selection,
                                         final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(selection, "selection");
+        checkSelection(selection);
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
@@ -228,7 +275,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final Optional<SpreadsheetCellRange> cells = selection.toCellRange(
                     repository.labels()::cellRange
             );
-            if(cells.isPresent()) {
+            if (cells.isPresent()) {
                 repository.cells().deleteCells(cells.get());
             }
             return this.prepareDelta(changes, context);
@@ -1650,11 +1697,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return selection.isLabelName() ?
                 this.navigateWithNavigationLabel(
-                Cast.to(selection),
-                anchor,
-                navigation,
-                context
-        ) :
+                        Cast.to(selection),
+                        anchor,
+                        navigation,
+                        context
+                ) :
                 this.navigateWithNavigation0(
                         selection,
                         anchor,
@@ -1677,7 +1724,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         // if the original selection was a cell or range & after doing the navigation its the same restore the label.
         return after.map(
-            s -> s.selection().equalsIgnoreReferenceKind(cellOrRange) ?
+                s -> s.selection().equalsIgnoreReferenceKind(cellOrRange) ?
                         s.setSelection(label) :
                         s
         );
@@ -1721,16 +1768,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(mapping, "mapping");
     }
 
-    private static void checkReference(final SpreadsheetExpressionReference reference) {
-        Objects.requireNonNull(reference, "reference");
-    }
-
     private static void checkColumn(SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
     }
 
     private static void checkRow(SpreadsheetRowReference row) {
         Objects.requireNonNull(row, "row");
+    }
+
+    private static void checkSelection(final SpreadsheetSelection selection) {
+        Objects.requireNonNull(selection, "selection");
     }
 
     private static void checkEvaluation(final SpreadsheetEngineEvaluation evaluation) {
