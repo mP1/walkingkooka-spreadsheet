@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -32,6 +33,43 @@ import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<TreeMapSpreadsheetCellStore> {
+
+    @Test
+    public void testDeleteCells() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        store.save(
+                SpreadsheetSelection.parseCell("A1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+        store.save(
+                b2.setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+        store.save(
+                c3.setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        store.save(
+                SpreadsheetSelection.parseCell("D4")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        store.deleteCells(
+                SpreadsheetSelection.parseCellRange("B2:C3")
+        );
+
+        this.checkEquals(
+                2,
+                store.count()
+        );
+
+        this.loadFailCheck(store, b2);
+        this.loadFailCheck(store, c3);
+    }
 
     // maxColumnWidth...................................................................................................
 
