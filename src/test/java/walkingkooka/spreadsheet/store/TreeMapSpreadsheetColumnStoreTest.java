@@ -19,6 +19,8 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -26,6 +28,39 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import java.util.TreeMap;
 
 final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTestCase<TreeMapSpreadsheetColumnStore> {
+
+    @Test
+    public void testLoadColumns() {
+        final TreeMapSpreadsheetColumnStore store = this.createStore();
+
+        final SpreadsheetColumn a = SpreadsheetColumn.with(
+                SpreadsheetSelection.parseColumn("A")
+        );
+        store.save(a);
+
+        final SpreadsheetColumn b = SpreadsheetColumn.with(
+                SpreadsheetSelection.parseColumn("B")
+        );
+        store.save(b);
+
+        final SpreadsheetColumn c = SpreadsheetColumn.with(
+                SpreadsheetSelection.parseColumn("C")
+        );
+        store.save(c);
+
+        final SpreadsheetColumn d = SpreadsheetColumn.with(
+                SpreadsheetSelection.parseColumn("D")
+        );
+
+        store.save(d);
+
+        this.checkEquals(
+                Sets.of(
+                        b, c
+                ),
+                store.loadColumns(SpreadsheetSelection.parseColumnRange("B:C"))
+        );
+    }
 
     // leftSkipHidden...................................................................................................
 
