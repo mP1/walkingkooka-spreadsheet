@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -827,8 +828,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * Patches the cells of this {@link SpreadsheetDelta}. Any attempt to patch other properties will result in a
-     * {@link IllegalArgumentException}.
+     * Patches the cells or style of this {@link SpreadsheetDelta}.<br>
+     * Note the style will patch all cells.<br>
+     * Any attempt to patch other properties or both cells or style will result in a {@link IllegalArgumentException}.
      * <pre>
      * {
      *   "cells": {
@@ -840,12 +842,23 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      *   }
      * }
      * </pre>
+     * OR
+     * <pre>
+     * {
+     *   "style": {
+     *     "color": "#123456"
+     *   }
+     * }
+     * </pre>
      */
     public SpreadsheetDelta patchCells(final JsonNode json,
                                        final JsonNodeUnmarshallContext context) {
         return this.patch0(
                 json,
-                Predicates.is(SpreadsheetDelta.CELLS_PROPERTY_STRING),
+                Predicates.is(SpreadsheetDelta.CELLS_PROPERTY_STRING)
+                        .or(
+                                Predicates.is(SpreadsheetDelta.STYLE_PROPERTY_STRING)
+                        ),
                 context
         );
     }
@@ -912,6 +925,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         Set<SpreadsheetRow> rows = this.rows();
         Set<SpreadsheetCellRange> window = this.window();
 
+        boolean cellsPatched = false;
+        boolean stylePatched = false;
+
 
         for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
 
@@ -928,8 +944,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case CELLS_PROPERTY_STRING:
                     if (valid) {
+                        if (stylePatched) {
+                            patchCellsAndStyleFail();
+                        }
                         cells = patchCells0(propertyAndValue, context);
                     }
+                    cellsPatched = true;
                     break;
                 case COLUMNS_PROPERTY_STRING:
                     if (valid) {
@@ -940,6 +960,19 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     if (valid) {
                         rows = patchRows0(propertyAndValue, context);
                     }
+                    break;
+                case STYLE_PROPERTY_STRING:
+                    if (valid) {
+                        if (cellsPatched) {
+                            patchCellsAndStyleFail();
+                        }
+                        cells = patchStyle(
+                                cells,
+                                propertyAndValue,
+                                context
+                        );
+                    }
+                    stylePatched = true;
                     break;
                 case LABELS_PROPERTY_STRING:
                 case DELETED_CELLS_PROPERTY_STRING:
@@ -1076,10 +1109,33 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return patched;
     }
 
+    /**
+     * Traverses the cells, patching each with the provided {@link JsonNode style}.
+     */
+    private static Set<SpreadsheetCell> patchStyle(final Set<SpreadsheetCell> cells,
+                                                   final JsonNode style,
+                                                   final JsonNodeUnmarshallContext context) {
+        final Set<SpreadsheetCell> patched = Sets.sorted();
+        for (final SpreadsheetCell cell : cells) {
+            patched.add(
+                    cell.setStyle(
+                            cell.style()
+                                    .patch(style, context)
+                    )
+            );
+        }
+        return patched;
+    }
+
     private static void checkPatch(final JsonNode json,
                                    final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(json, "json");
         Objects.requireNonNull(context, "context");
+    }
+
+    // patching cells can only patch individual cells or a style for all selected cells but not both.
+    private static void patchCellsAndStyleFail() {
+        throw new IllegalArgumentException("Patch must not contain both " + CharSequences.quote(CELLS_PROPERTY_STRING) + " and " + CharSequences.quote(STYLE_PROPERTY_STRING));
     }
 
     // labels...........................................................................................................
@@ -1589,6 +1645,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String COLUMNS_PROPERTY_STRING = "columns";
     private final static String LABELS_PROPERTY_STRING = "labels";
     private final static String ROWS_PROPERTY_STRING = "rows";
+    private final static String STYLE_PROPERTY_STRING = "style"; // only used by patchCells
 
     private final static String DELETED_CELLS_PROPERTY_STRING = "deletedCells";
     private final static String DELETED_COLUMNS_PROPERTY_STRING = "deletedColumns";
@@ -1618,6 +1675,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     final static JsonPropertyName COLUMN_WIDTHS_PROPERTY = JsonPropertyName.with(COLUMN_WIDTHS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName ROW_HEIGHTS_PROPERTY = JsonPropertyName.with(ROW_HEIGHTS_PROPERTY_STRING);
+    // @VisibleForTesting
+    final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING); // only used by patchCells
     // @VisibleForTesting
     final static JsonPropertyName WINDOW_PROPERTY = JsonPropertyName.with(WINDOW_PROPERTY_STRING);
 
