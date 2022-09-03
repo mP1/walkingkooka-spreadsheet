@@ -19,14 +19,47 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetRowStoreTesting<S extends SpreadsheetRowStore> extends SpreadsheetColumnOrRowStoreTesting<S, SpreadsheetRowReference, SpreadsheetRow> {
+
+    @Test
+    default void testLoadRowsWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore().loadRows(null)
+        );
+    }
+
+    default void loadRowsAndCheck(final S store,
+                                  final SpreadsheetRowReferenceRange range,
+                                  final SpreadsheetRow... expected) {
+        this.loadRowsAndCheck(
+                store,
+                range,
+                Sets.of(expected)
+        );
+    }
+
+    default void loadRowsAndCheck(final S store,
+                                  final SpreadsheetRowReferenceRange range,
+                                  final Set<SpreadsheetRow> expected) {
+        this.checkEquals(
+                expected,
+                store.loadRows(range),
+                () -> "loadRows " + range
+        );
+    }
 
     @Test
     default void testUpSkipHiddenFirstRow() {

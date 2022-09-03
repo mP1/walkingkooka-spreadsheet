@@ -18,15 +18,37 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A store that contains {@link SpreadsheetRow} including some methods that for frequent queries.
  */
 public interface SpreadsheetRowStore extends SpreadsheetColumnOrRowStore<SpreadsheetRowReference, SpreadsheetRow> {
+
+    /**
+     * Attempts to load all the rows in the given {@link SpreadsheetRowReferenceRange}.
+     */
+    default Set<SpreadsheetRow> loadRows(final SpreadsheetRowReferenceRange range) {
+        Objects.requireNonNull(range, "ranges");
+
+        final Set<SpreadsheetRow> rows = Sets.sorted();
+
+        for (final SpreadsheetRowReference rowReference : range) {
+            final Optional<SpreadsheetRow> row = this.load(rowReference);
+            if (row.isPresent()) {
+                rows.add(row.get());
+            }
+        }
+
+        return Sets.readOnly(rows);
+    }
 
     /**
      * Returns the first row moving up from the given starting point that is not hidden.

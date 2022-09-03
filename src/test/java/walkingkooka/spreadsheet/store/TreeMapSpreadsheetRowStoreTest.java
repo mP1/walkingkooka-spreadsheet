@@ -20,6 +20,7 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -27,6 +28,39 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import java.util.TreeMap;
 
 final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<TreeMapSpreadsheetRowStore> {
+
+    @Test
+    public void testLoadRows() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+
+        final SpreadsheetRow row1 = SpreadsheetRow.with(
+                SpreadsheetSelection.parseRow("1")
+        );
+        store.save(row1);
+
+        final SpreadsheetRow row2 = SpreadsheetRow.with(
+                SpreadsheetSelection.parseRow("2")
+        );
+        store.save(row2);
+
+        final SpreadsheetRow row3 = SpreadsheetRow.with(
+                SpreadsheetSelection.parseRow("3")
+        );
+        store.save(row3);
+
+        final SpreadsheetRow row4 = SpreadsheetRow.with(
+                SpreadsheetSelection.parseRow("4")
+        );
+
+        store.save(row4);
+
+        this.loadRowsAndCheck(
+                store,
+                SpreadsheetSelection.parseRowRange("2:3"),
+                row2,
+                row3
+        );
+    }
 
     // upSkipHidden...................................................................................................
 
