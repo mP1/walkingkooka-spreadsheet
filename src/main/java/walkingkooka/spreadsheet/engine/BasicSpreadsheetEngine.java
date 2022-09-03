@@ -1077,11 +1077,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .formatter();
         final Optional<SpreadsheetCellFormat> maybeFormat = cell.format();
         if (maybeFormat.isPresent()) {
-            final SpreadsheetCellFormat format = this.parsePatternIfNecessary(maybeFormat.get(), context);
-            result = cell.setFormat(Optional.of(format));
-
-            formatter = format.formatter()
-                    .orElseThrow(() -> new SpreadsheetEngineException("Invalid cell format " + format));
+            formatter = context.parsePattern(
+                    maybeFormat.get()
+                            .pattern()
+            );
         }
 
         final SpreadsheetFormula formula = cell.formula();
@@ -1101,25 +1100,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         this.formatAndApplyStyleValueAbsent(result);
 
         return this.locateAndApplyConditionalFormattingRule(beforeConditionalRules, context);
-    }
-
-    /**
-     * Returns a {@link SpreadsheetCellFormat} parsing the pattern if necessary.
-     */
-    private SpreadsheetCellFormat parsePatternIfNecessary(final SpreadsheetCellFormat format,
-                                                          final SpreadsheetEngineContext context) {
-        final Optional<SpreadsheetFormatter> formatter = format.formatter();
-        return formatter.isPresent() ?
-                format :
-                this.parsePattern(format, context);
-    }
-
-    /**
-     * Returns an updated {@link SpreadsheetCellFormat} after parsing the pattern into a {@link SpreadsheetFormatter}.
-     */
-    private SpreadsheetCellFormat parsePattern(final SpreadsheetCellFormat format,
-                                               final SpreadsheetEngineContext context) {
-        return format.setFormatter(Optional.of(context.parsePattern(format.pattern())));
     }
 
     /**

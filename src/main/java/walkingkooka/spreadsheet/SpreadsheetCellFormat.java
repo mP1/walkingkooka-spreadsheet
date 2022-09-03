@@ -21,14 +21,12 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Holds the pattern and compiled formatter for a cell.
@@ -36,36 +34,24 @@ import java.util.Optional;
 public final class SpreadsheetCellFormat implements UsesToStringBuilder {
 
     /**
-     * A constant holding no formatter.
-     */
-    public final static Optional<SpreadsheetFormatter> NO_FORMATTER = Optional.empty();
-
-    /**
      * Creates a {@link SpreadsheetCellFormat}
      */
     public static SpreadsheetCellFormat with(final String pattern) {
         checkPattern(pattern);
 
-        return new SpreadsheetCellFormat(pattern, NO_FORMATTER);
+        return new SpreadsheetCellFormat(pattern);
     }
 
     private static void checkPattern(final String pattern) {
         Objects.requireNonNull(pattern, "pattern");
     }
 
-    static SpreadsheetCellFormat with(final String pattern,
-                                      final Optional<SpreadsheetFormatter> formatter) {
-        return new SpreadsheetCellFormat(pattern, formatter);
-    }
-
     /**
      * Private ctor use factory.
      */
-    private SpreadsheetCellFormat(final String pattern,
-                                  final Optional<SpreadsheetFormatter> formatter) {
+    private SpreadsheetCellFormat(final String pattern) {
         super();
         this.pattern = pattern;
-        this.formatter = formatter;
     }
 
     public String pattern() {
@@ -77,39 +63,10 @@ public final class SpreadsheetCellFormat implements UsesToStringBuilder {
 
         return this.pattern.equals(pattern) ?
                 this :
-                this.replace(pattern, NO_FORMATTER);
+                new SpreadsheetCellFormat(pattern);
     }
 
     private final String pattern;
-
-    // formatter...........................................................................
-
-    public Optional<SpreadsheetFormatter> formatter() {
-        return this.formatter;
-    }
-
-    public SpreadsheetCellFormat setFormatter(final Optional<SpreadsheetFormatter> formatter) {
-        Objects.requireNonNull(formatter, "formatter");
-
-        return this.formatter.equals(formatter) ?
-                this :
-                this.replace(this.pattern, formatter);
-    }
-
-    /**
-     * The cached or compiled form of the {@link #pattern}
-     */
-    private final Optional<SpreadsheetFormatter> formatter;
-
-    // replace.............................................................................
-
-    /**
-     * Factory that creates a new {@link SpreadsheetCellFormat}
-     */
-    private SpreadsheetCellFormat replace(final String pattern,
-                                          final Optional<SpreadsheetFormatter> formatter) {
-        return new SpreadsheetCellFormat(pattern, formatter);
-    }
 
     // JsonNodeContext .................................................................................................
 
@@ -138,7 +95,7 @@ public final class SpreadsheetCellFormat implements UsesToStringBuilder {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.pattern, this.formatter);
+        return Objects.hash(this.pattern);
     }
 
     @Override
@@ -149,8 +106,7 @@ public final class SpreadsheetCellFormat implements UsesToStringBuilder {
     }
 
     private boolean equals0(final SpreadsheetCellFormat other) {
-        return this.pattern.equals(other.pattern) &&
-                this.formatter.equals(other.formatter);
+        return this.pattern.equals(other.pattern);
     }
 
     @Override
@@ -163,6 +119,5 @@ public final class SpreadsheetCellFormat implements UsesToStringBuilder {
         builder.separator(" ");
         builder.enable(ToStringBuilderOption.QUOTE);
         builder.value(this.pattern);
-        builder.value(this.formatter);
     }
 }

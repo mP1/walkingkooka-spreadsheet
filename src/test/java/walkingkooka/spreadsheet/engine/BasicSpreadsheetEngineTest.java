@@ -370,15 +370,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 FORMATTED_PATTERN_SUFFIX);
     }
 
-    @Test
-    public void testLoadCellsWithFormatPatternAndFormatter() {
-        final String pattern = "Custom";
-        final String suffix = "CustomSuffix";
-        this.cellStoreSaveAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(pattern)
-                        .setFormatter(Optional.of(this.formatter(pattern, SpreadsheetText.WITHOUT_COLOR, suffix)))),
-                suffix);
-    }
-
     private void cellStoreSaveAndLoadCellAndCheck(final Optional<SpreadsheetCellFormat> format,
                                                   final String patternSuffix) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();

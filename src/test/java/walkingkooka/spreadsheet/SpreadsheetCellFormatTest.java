@@ -22,14 +22,10 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -41,24 +37,26 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
         ToStringTesting<SpreadsheetCellFormat> {
 
     private final static String PATTERN = "abc123";
-    private final static Optional<SpreadsheetFormatter> FORMATTER = Optional.of(SpreadsheetFormatters.fake());
 
     @Test
     public void testWithNullPatternFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetCellFormat.with(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetCellFormat.with(null)
+        );
     }
 
     @Test
     public void testWithEmptyPattern() {
         final String pattern = "";
         final SpreadsheetCellFormat format = SpreadsheetCellFormat.with(pattern);
-        this.check(format, pattern, SpreadsheetCellFormat.NO_FORMATTER);
+        this.check(format, pattern);
     }
 
     @Test
     public void testWith() {
         final SpreadsheetCellFormat format = SpreadsheetCellFormat.with(PATTERN);
-        this.check(format, PATTERN, SpreadsheetCellFormat.NO_FORMATTER);
+        this.check(format, PATTERN);
     }
 
     // setPattern...........................................................
@@ -75,50 +73,16 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSetPatternDifferentClearsFormatter() {
+    public void testSetPatternDifferent() {
         final String differentPattern = "different";
         final SpreadsheetCellFormat format = this.createObject();
         final SpreadsheetCellFormat different = format.setPattern(differentPattern);
         assertNotSame(format, different);
-        this.check(different, differentPattern, SpreadsheetCellFormat.NO_FORMATTER);
-    }
-
-    // setFormatter...........................................................
-
-    @SuppressWarnings("OptionalAssignedToNull")
-    @Test
-    public void testSetFormatterNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createObject().setFormatter(null));
-    }
-
-    @Test
-    public void testSetFormatterSame() {
-        final SpreadsheetCellFormat format = this.createObject();
-        assertSame(format, format.setFormatter(FORMATTER));
-    }
-
-    @Test
-    public void testSetFormatterDifferent() {
-        this.setFormatterDifferentAndCheck(Optional.of(SpreadsheetFormatters.general()));
-    }
-
-    @Test
-    public void testSetFormatterDifferentWithout() {
-        this.setFormatterDifferentAndCheck(SpreadsheetCellFormat.NO_FORMATTER);
-    }
-
-    private void setFormatterDifferentAndCheck(final Optional<SpreadsheetFormatter> differentFormatter) {
-        final SpreadsheetCellFormat format = this.createObject();
-        final SpreadsheetCellFormat different = format.setFormatter(differentFormatter);
-        assertNotSame(format, different);
-        this.check(different, PATTERN, differentFormatter);
     }
 
     private void check(final SpreadsheetCellFormat format,
-                       final String pattern,
-                       final Optional<SpreadsheetFormatter> formatter) {
+                       final String pattern) {
         this.checkEquals(pattern, format.pattern(), "pattern");
-        this.checkEquals(formatter, format.formatter(), "formatter");
     }
 
     // equals..................................................................................
@@ -129,18 +93,10 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testEqualsDifferentText() {
-        this.checkNotEquals(SpreadsheetCellFormat.with("different").setFormatter(FORMATTER));
-    }
-
-    @Test
-    public void testEqualsDifferentFormatter() {
-        this.checkNotEquals(SpreadsheetCellFormat.with(PATTERN).setFormatter(Optional.of(SpreadsheetFormatters.general())));
-    }
-
-    @Test
-    public void testEqualstDifferentNoFormatter() {
-        this.checkNotEquals(this.withoutFormatter());
+    public void testEqualsDifferentPattern() {
+        this.checkNotEquals(
+                SpreadsheetCellFormat.with("different")
+        );
     }
 
     // JsonNodeMarshallingTesting.......................................................................................
@@ -166,8 +122,10 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createObject(),
-                CharSequences.quote(PATTERN) + " " + FORMATTER.get());
+        this.toStringAndCheck(
+                this.createObject(),
+                CharSequences.quote(PATTERN).toString()
+        );
     }
 
     @Test
@@ -178,7 +136,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
 
     @Override
     public SpreadsheetCellFormat createObject() {
-        return SpreadsheetCellFormat.with(PATTERN, FORMATTER);
+        return SpreadsheetCellFormat.with(PATTERN);
     }
 
     private SpreadsheetCellFormat withoutFormatter() {
