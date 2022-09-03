@@ -26,7 +26,17 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore> extends SpreadsheetColumnOrRowStoreTesting<S, SpreadsheetColumnReference, SpreadsheetColumn> {
+
+    @Test
+    default void testSaveColumnsWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore().saveColumns(null)
+        );
+    }
 
     @Test
     default void testLeftSkipHiddenFirstColumn() {

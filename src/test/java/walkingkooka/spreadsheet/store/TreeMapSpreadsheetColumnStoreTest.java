@@ -62,6 +62,27 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         );
     }
 
+    @Test
+    public void testSaveColumns() {
+        final TreeMapSpreadsheetColumnStore store = this.createStore();
+
+        final SpreadsheetColumn a = SpreadsheetColumn.with(
+                SpreadsheetSelection.parseColumn("A")
+        );
+        final SpreadsheetColumn b = SpreadsheetColumn.with(
+                SpreadsheetSelection.parseColumn("B")
+        );
+
+        store.saveColumns(Sets.of(a, b));
+
+        this.checkEquals(
+                Sets.of(
+                        a, b
+                ),
+                store.loadColumns(SpreadsheetSelection.parseColumnRange("A:B"))
+        );
+    }
+
     // leftSkipHidden...................................................................................................
 
     @Test
