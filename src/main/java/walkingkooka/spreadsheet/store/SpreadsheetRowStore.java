@@ -51,6 +51,17 @@ public interface SpreadsheetRowStore extends SpreadsheetColumnOrRowStore<Spreads
     }
 
     /**
+     * Attempts to save all the rows.
+     */
+    default void saveRows(final Set<SpreadsheetRow> rows) {
+        Objects.requireNonNull(rows, "rows");
+
+        for (final SpreadsheetRow row : rows) {
+            this.save(row);
+        }
+    }
+
+    /**
      * Returns the first row moving up from the given starting point that is not hidden.
      * If all rows to the up are hidden, the original {@link SpreadsheetRowReference} is returned.
      * <br>

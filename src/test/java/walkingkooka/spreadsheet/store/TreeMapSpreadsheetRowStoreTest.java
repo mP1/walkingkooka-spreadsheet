@@ -20,6 +20,7 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -59,6 +60,32 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
                 SpreadsheetSelection.parseRowRange("2:3"),
                 row2,
                 row3
+        );
+    }
+
+    @Test
+    public void testSaveRows() {
+        final TreeMapSpreadsheetRowStore store = this.createStore();
+
+        final SpreadsheetRow row1 = SpreadsheetRow.with(
+                SpreadsheetSelection.parseRow("1")
+        );
+        final SpreadsheetRow row2 = SpreadsheetRow.with(
+                SpreadsheetSelection.parseRow("2")
+        );
+
+        store.saveRows(
+                Sets.of(
+                        row1,
+                        row2
+                )
+        );
+
+        this.loadRowsAndCheck(
+                store,
+                SpreadsheetSelection.parseRowRange("1:2"),
+                row1,
+                row2
         );
     }
 
