@@ -920,16 +920,72 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                     final JsonNodeUnmarshallContext context) {
         checkPatch(json, context);
 
+        boolean cellsPatched = false;
+        boolean formatPatched = false;
+        boolean stylePatched = false;
+
+        // two pass patch, first validate valid properties are being patched
+        // also want to verify not an invalid combo like cells and style, before actually patching.
+        for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
+
+            final JsonPropertyName propertyName = propertyAndValue.name();
+            final String propertyNameString = propertyName.value();
+            boolean valid = patchableProperties.test(propertyNameString);
+
+            switch (propertyNameString) {
+                case VIEWPORT_SELECTION_PROPERTY_STRING:
+                    valid = true;
+                    break;
+                case CELLS_PROPERTY_STRING:
+                    if (valid) {
+                        cellsPatched = true;
+                    }
+                    break;
+                case COLUMNS_PROPERTY_STRING:
+                    break;
+                case FORMAT_PROPERTY_STRING:
+                    formatPatched = true;
+                    break;
+                case ROWS_PROPERTY_STRING:
+                    break;
+                case STYLE_PROPERTY_STRING:
+                    stylePatched = true;
+                    break;
+                case LABELS_PROPERTY_STRING:
+                case DELETED_CELLS_PROPERTY_STRING:
+                case DELETED_COLUMNS_PROPERTY_STRING:
+                case DELETED_ROWS_PROPERTY_STRING:
+                case COLUMN_WIDTHS_PROPERTY_STRING:
+                case ROW_HEIGHTS_PROPERTY_STRING:
+                    valid = false;
+                    break;
+                case WINDOW_PROPERTY_STRING:
+                    valid = true;
+                    break;
+                default:
+                    Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
+                    break;
+            }
+
+            if (!valid) {
+                Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
+            }
+        }
+
+        if (cellsPatched && formatPatched) {
+            patchInvalidFail(CELLS_PROPERTY_STRING, FORMAT_PROPERTY_STRING);
+        }
+
+        if (cellsPatched && stylePatched) {
+            patchInvalidFail(CELLS_PROPERTY_STRING, STYLE_PROPERTY_STRING);
+        }
+
         SpreadsheetDelta patched = this;
 
         Set<SpreadsheetCell> cells = this.cells();
         Set<SpreadsheetColumn> columns = this.columns();
         Set<SpreadsheetRow> rows = this.rows();
         Set<SpreadsheetCellRange> window = this.window();
-
-        boolean cellsPatched = false;
-        boolean formattingPatched = false;
-        boolean stylePatched = false;
 
         for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
 
@@ -942,11 +998,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     patched = patched.setViewportSelection(
                             unmarshallViewportSelection(propertyAndValue, context)
                     );
-                    valid = true;
                     break;
                 case CELLS_PROPERTY_STRING:
                     if (valid) {
-                        if (formattingPatched) {
+                        if (formatPatched) {
                             patchInvalidFail(CELLS_PROPERTY_STRING, FORMAT_PROPERTY_STRING);
                         }
                         if (stylePatched) {
@@ -954,7 +1009,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                         }
                         cells = patchCells0(propertyAndValue, context);
                     }
-                    cellsPatched = true;
                     break;
                 case COLUMNS_PROPERTY_STRING:
                     if (valid) {
@@ -976,7 +1030,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                 context
                         );
                     }
-                    cellsPatched = true;
                     break;
                 case ROWS_PROPERTY_STRING:
                     if (valid) {
@@ -985,19 +1038,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case STYLE_PROPERTY_STRING:
                     if (valid) {
-                        if (cellsPatched) {
-                            patchInvalidFail(CELLS_PROPERTY_STRING, STYLE_PROPERTY_STRING);
-                        }
-                        if (formattingPatched) {
-                            patchInvalidFail(FORMAT_PROPERTY_STRING, STYLE_PROPERTY_STRING);
-                        }
                         cells = patchStyle(
                                 cells,
                                 propertyAndValue,
                                 context
                         );
                     }
-                    stylePatched = true;
                     break;
                 case LABELS_PROPERTY_STRING:
                 case DELETED_CELLS_PROPERTY_STRING:
@@ -1005,19 +1051,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case DELETED_ROWS_PROPERTY_STRING:
                 case COLUMN_WIDTHS_PROPERTY_STRING:
                 case ROW_HEIGHTS_PROPERTY_STRING:
-                    valid = false;
                     break;
                 case WINDOW_PROPERTY_STRING:
                     window = unmarshallWindow(propertyAndValue, context);
-                    valid = true;
                     break;
                 default:
-                    Patchable.unknownPropertyPresent(propertyName, propertyAndValue);
                     break;
-            }
-
-            if (!valid) {
-                Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
             }
         }
 
