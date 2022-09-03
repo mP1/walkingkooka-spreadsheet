@@ -1070,8 +1070,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private SpreadsheetCell formatAndApplyStyle(final SpreadsheetCell cell,
                                                 final SpreadsheetEngineContext context) {
-        SpreadsheetCell result = cell;
-
         // try and use the cells custom format otherwise use a default from the context.
         SpreadsheetFormatter formatter = context.metadata()
                 .formatter();
@@ -1087,19 +1085,22 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final Optional<Object> value = formula.value();
         final SpreadsheetCell beforeConditionalRules =
                 value.isPresent() && !formula.error().isPresent() ?
-                        result.setFormatted(
+                        cell.setFormatted(
                                 Optional.of(
                                         this.formatAndApplyStyle0(
                                                 value.get(),
                                                 formatter,
-                                                result.style(),
+                                                cell.style(),
                                                 context
                                         )
                                 )
                         ) :
-                        this.formatAndApplyStyleValueAbsent(result);
+                        this.formatAndApplyStyleValueAbsent(cell);
 
-        return this.locateAndApplyConditionalFormattingRule(beforeConditionalRules, context);
+        return this.locateAndApplyConditionalFormattingRule(
+                beforeConditionalRules,
+                context
+        );
     }
 
     /**
