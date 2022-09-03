@@ -17,15 +17,37 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A store that contains {@link SpreadsheetColumn} including some methods that for frequent queries.
  */
 public interface SpreadsheetColumnStore extends SpreadsheetColumnOrRowStore<SpreadsheetColumnReference, SpreadsheetColumn> {
+
+    /**
+     * Attempts to load all the columns in the given {@link SpreadsheetColumnReferenceRange}.
+     */
+    default Set<SpreadsheetColumn> loadColumns(final SpreadsheetColumnReferenceRange range) {
+        Objects.requireNonNull(range, "ranges");
+
+        final Set<SpreadsheetColumn> columns = Sets.sorted();
+
+        for (final SpreadsheetColumnReference columnReference : range) {
+            final Optional<SpreadsheetColumn> column = this.load(columnReference);
+            if (column.isPresent()) {
+                columns.add(column.get());
+            }
+        }
+
+        return Sets.readOnly(columns);
+    }
 
     /**
      * Returns the first column moving left from the given starting point that is not hidden.
