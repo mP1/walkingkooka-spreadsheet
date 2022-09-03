@@ -269,21 +269,6 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     }
 
     /**
-     * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}, and if the
-     * parse result is a label uses the provided expression to resolve the label into a {@link SpreadsheetCellReference}.
-     */
-    public static SpreadsheetCellReference parseCellOrLabelResolvingLabels(final String text,
-                                                                           final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell) {
-        checkText(text);
-        Objects.requireNonNull(labelToCell, "labelToCell");
-
-        final SpreadsheetExpressionReference cellOrLabel = parseCellOrLabel(text);
-        return cellOrLabel.isLabelName() ?
-                labelToCell.apply((SpreadsheetLabelName) cellOrLabel) :
-                (SpreadsheetCellReference) cellOrLabel;
-    }
-
-    /**
      * Parsers the text expecting a valid {@link SpreadsheetCell} or {@link SpreadsheetCellRange} or fails.
      * eg
      * <pre>
