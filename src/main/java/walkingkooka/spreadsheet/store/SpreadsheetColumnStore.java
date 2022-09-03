@@ -50,6 +50,17 @@ public interface SpreadsheetColumnStore extends SpreadsheetColumnOrRowStore<Spre
     }
 
     /**
+     * Attempts to save all the columns.
+     */
+    default void saveColumns(final Set<SpreadsheetColumn> columns) {
+        Objects.requireNonNull(columns, "columns");
+
+        for (final SpreadsheetColumn column : columns) {
+            this.save(column);
+        }
+    }
+
+    /**
      * Returns the first column moving left from the given starting point that is not hidden.
      * If all columns to the left are hidden, the original {@link SpreadsheetColumnReference}, if this is hidden an
      * {@link Optional#empty()}.
