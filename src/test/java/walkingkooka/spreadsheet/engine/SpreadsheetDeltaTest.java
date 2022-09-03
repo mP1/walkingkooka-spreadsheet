@@ -957,6 +957,32 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+
+    @Test
+    public void testPatchCellWithStyleAndFormatFails() {
+        final JsonNode patch = JsonNode.object()
+                .set(
+                        SpreadsheetDelta.FORMAT_PROPERTY,
+                        this.marshall(SpreadsheetCellFormat.with("@"))
+                ).set(
+                        SpreadsheetDelta.STYLE_PROPERTY,
+                        this.marshall(TextStyle.EMPTY)
+                );
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetDelta.EMPTY.patchCells(
+                        patch,
+                        this.createPatchContext()
+                )
+        );
+        this.checkEquals(
+                "Patch must not contain both \"format\" and \"style\"",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
     @Test
     public void testPatchCellsWithFormat() {
         final Optional<SpreadsheetCellFormat> beforeFormat = Optional.of(
