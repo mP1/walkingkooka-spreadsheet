@@ -19,16 +19,47 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore> extends SpreadsheetColumnOrRowStoreTesting<S, SpreadsheetColumnReference, SpreadsheetColumn> {
+
+    @Test
+    default void testLoadColumnsWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore().loadColumns(null)
+        );
+    }
+
+    default void loadColumnsAndCheck(final S store,
+                                     final SpreadsheetColumnReferenceRange range,
+                                     final SpreadsheetColumn... expected) {
+        this.loadColumnsAndCheck(
+                store,
+                range,
+                Sets.of(expected)
+        );
+    }
+
+    default void loadColumnsAndCheck(final S store,
+                                     final SpreadsheetColumnReferenceRange range,
+                                     final Set<SpreadsheetColumn> expected) {
+        this.checkEquals(
+                expected,
+                store.loadColumns(range),
+                () -> "loadColumns " + range
+        );
+    }
 
     @Test
     default void testSaveColumnsWithNullFails() {

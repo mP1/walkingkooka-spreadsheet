@@ -54,11 +54,11 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
 
         store.save(d);
 
-        this.checkEquals(
-                Sets.of(
-                        b, c
-                ),
-                store.loadColumns(SpreadsheetSelection.parseColumnRange("B:C"))
+        this.loadColumnsAndCheck(
+                store,
+                SpreadsheetSelection.parseColumnRange("B:C"),
+                b,
+                c
         );
     }
 
