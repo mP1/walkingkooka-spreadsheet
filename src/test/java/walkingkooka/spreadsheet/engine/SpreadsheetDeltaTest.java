@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.Color;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -44,6 +45,9 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
+import walkingkooka.tree.text.FontStyle;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.MathContext;
 import java.util.Optional;
@@ -920,6 +924,111 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchCellsAndCheck(
                 before,
                 marshall(after),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchCellAndStyleFails() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(a1)
+        );
+        final JsonNode patch = this.marshall(delta)
+                .objectOrFail()
+                .set(
+                        SpreadsheetDelta.STYLE_PROPERTY,
+                        this.marshall(TextStyle.EMPTY)
+                );
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetDelta.EMPTY.patchCells(
+                        patch,
+                        this.createPatchContext()
+                )
+        );
+        this.checkEquals(
+                "Patch must not contain both \"cells\" and \"style\"",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testPatchCellsWithStyle() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
+                .setFormula(SpreadsheetFormula.EMPTY);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, b2)
+                ).setWindow(
+                        SpreadsheetSelection.parseWindow("A1:A2")
+                );
+
+        final TextStyle style = TextStyle.EMPTY
+                .set(TextStylePropertyName.COLOR, Color.parse("#123456"));
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setStyle(style),
+                        b2.setStyle(style)
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.STYLE_PROPERTY,
+                                marshall(style)
+                        ),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchCellsWithStyleMerging() {
+        final TextStyle beforeStyle = TextStyle.EMPTY
+                .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setStyle(beforeStyle);
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setStyle(beforeStyle);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, b2)
+                ).setWindow(
+                        SpreadsheetSelection.parseWindow("A1:A2")
+                );
+
+        final TextStyle patchStyle = TextStyle.EMPTY
+                .set(TextStylePropertyName.COLOR, Color.parse("#123456"));
+
+        final TextStyle patchedStyle = beforeStyle.merge(patchStyle);
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setStyle(patchedStyle),
+                        b2.setStyle(patchedStyle)
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.STYLE_PROPERTY,
+                                marshall(patchStyle)
+                        ),
                 after
         );
     }
