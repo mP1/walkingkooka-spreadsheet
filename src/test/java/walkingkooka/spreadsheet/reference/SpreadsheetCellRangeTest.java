@@ -2205,7 +2205,7 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     public void testParseMissingBeginFails() {
         this.parseStringFails(
                 ":A2",
-                new IllegalArgumentException("Empty lower range in \":A2\"")
+                new IllegalArgumentException("Invalid character ':' at 0 in \":A2\"")
         );
     }
 
@@ -2221,7 +2221,7 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     public void testParseInvalidBeginFails() {
         this.parseStringFails(
                 "##:A2",
-                new IllegalArgumentException("Invalid character '#' at (1,1) \"##\" expected cell")
+                new IllegalArgumentException("Invalid character '#' at 0 in \"##:A2\"")
         );
     }
 
@@ -2229,7 +2229,7 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     public void testParseInvalidEndFails() {
         this.parseStringFails(
                 "A1:##",
-                new IllegalArgumentException("Invalid character '#' at (1,1) \"##\" expected cell")
+                new IllegalArgumentException("Invalid character '#' at 3 in \"A1:##\"")
         );
     }
 
