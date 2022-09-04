@@ -59,7 +59,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     /**
      * Parsers the text expecting a valid {@link SpreadsheetCellReference} or fails.
      */
-    static SpreadsheetCellReference parseCellReference0(final String text) {
+    static SpreadsheetCellReference parseCell0(final String text) {
         try {
             return PARSER.parse(TextCursors.charSequence(text),
                             SpreadsheetCellReferenceSpreadsheetParserContext.INSTANCE)

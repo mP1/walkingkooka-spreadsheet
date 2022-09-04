@@ -254,7 +254,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * Parsers the text expecting a valid {@link SpreadsheetCellReference} or fails.
      */
     public static SpreadsheetCellReference parseCell(final String text) {
-        return SpreadsheetCellReference.parseCellReference0(text);
+        return SpreadsheetCellReference.parseCell0(text);
     }
 
     /**
