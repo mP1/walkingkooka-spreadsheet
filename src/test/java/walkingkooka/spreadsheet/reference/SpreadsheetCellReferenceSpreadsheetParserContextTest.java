@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetReferenceSpreadsheetParserContextTest implements ClassTesting<SpreadsheetReferenceSpreadsheetParserContext> {
+public final class SpreadsheetCellReferenceSpreadsheetParserContextTest implements ClassTesting<SpreadsheetCellReferenceSpreadsheetParserContext> {
 
     @Override
-    public Class<SpreadsheetReferenceSpreadsheetParserContext> type() {
-        return SpreadsheetReferenceSpreadsheetParserContext.class;
+    public Class<SpreadsheetCellReferenceSpreadsheetParserContext> type() {
+        return SpreadsheetCellReferenceSpreadsheetParserContext.class;
     }
 
     @Override

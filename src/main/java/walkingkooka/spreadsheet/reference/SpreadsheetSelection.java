@@ -363,7 +363,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                                                                  final Parser<SpreadsheetParserContext> parser,
                                                                  final Class<T> type) {
         try {
-            return parser.parse(TextCursors.charSequence(text), SpreadsheetReferenceSpreadsheetParserContext.INSTANCE)
+            return parser.parse(TextCursors.charSequence(text), SpreadsheetCellReferenceSpreadsheetParserContext.INSTANCE)
                     .get()
                     .cast(type);
         } catch (final ParserException cause) {

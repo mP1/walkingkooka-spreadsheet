@@ -26,11 +26,11 @@ import java.math.MathContext;
  * A {@link SpreadsheetParserContext} that only implements {@link #mathContext()}, all other properties/methods
  * should never be called by {@link SpreadsheetCellReference} or {@link SpreadsheetColumnOrRowReference} parse method.
  */
-final class SpreadsheetReferenceSpreadsheetParserContext extends FakeSpreadsheetParserContext {
+final class SpreadsheetCellReferenceSpreadsheetParserContext extends FakeSpreadsheetParserContext {
 
-    final static SpreadsheetReferenceSpreadsheetParserContext INSTANCE = new SpreadsheetReferenceSpreadsheetParserContext();
+    final static SpreadsheetCellReferenceSpreadsheetParserContext INSTANCE = new SpreadsheetCellReferenceSpreadsheetParserContext();
 
-    private SpreadsheetReferenceSpreadsheetParserContext() {
+    private SpreadsheetCellReferenceSpreadsheetParserContext() {
         super();
     }
 
