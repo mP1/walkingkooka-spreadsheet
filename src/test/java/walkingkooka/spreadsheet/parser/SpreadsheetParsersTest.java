@@ -2281,7 +2281,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private String reporterMessage(final char c, final int column, final int row) {
-        return "Unrecognized character " + CharSequences.quoteIfChars(c) + " at (" + column + "," + row + ")";
+        return "Invalid character " + CharSequences.quoteIfChars(c) + " at (" + column + "," + row + ")";
     }
 
     @Test

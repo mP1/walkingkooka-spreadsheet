@@ -469,7 +469,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 () -> SpreadsheetSelection.parseCellOrCellRange("A@@@")
         );
         this.checkEquals(
-                "Unrecognized character 'A' at (1,1) \"A@@@\" expected (SpreadsheetColumnReference, SpreadsheetRowReference)",
+                "Invalid character 'A' at (1,1) \"A@@@\" expected (SpreadsheetColumnReference, SpreadsheetRowReference)",
                 thrown.getMessage(),
                 "message"
         );
