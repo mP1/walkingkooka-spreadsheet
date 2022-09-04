@@ -71,7 +71,8 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         }
     }
 
-    private static final Parser<SpreadsheetParserContext> PARSER = SpreadsheetParsers.columnAndRow()
+    // Used by SpreadsheetSelection
+    static final Parser<SpreadsheetParserContext> PARSER = SpreadsheetParsers.columnAndRow()
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .orReport(ParserReporters.basic());
 
