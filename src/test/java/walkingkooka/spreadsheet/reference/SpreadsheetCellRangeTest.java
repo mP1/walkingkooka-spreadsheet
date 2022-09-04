@@ -2221,7 +2221,7 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     public void testParseInvalidBeginFails() {
         this.parseStringFails(
                 "##:A2",
-                new IllegalArgumentException("Unrecognized character '#' at (1,1) \"##\" expected (SpreadsheetColumnReference, SpreadsheetRowReference)")
+                new IllegalArgumentException("Invalid character '#' at (1,1) \"##\" expected (SpreadsheetColumnReference, SpreadsheetRowReference)")
         );
     }
 
@@ -2229,7 +2229,7 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     public void testParseInvalidEndFails() {
         this.parseStringFails(
                 "A1:##",
-                new IllegalArgumentException("Unrecognized character '#' at (1,1) \"##\" expected (SpreadsheetColumnReference, SpreadsheetRowReference)")
+                new IllegalArgumentException("Invalid character '#' at (1,1) \"##\" expected (SpreadsheetColumnReference, SpreadsheetRowReference)")
         );
     }
 

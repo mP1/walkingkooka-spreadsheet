@@ -250,7 +250,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 formula.setValue(
                         Optional.of(
                                 SpreadsheetErrorKind.NAME.setMessage(
-                                        "Unrecognized character '9' at (1,1) \"99:12:00\" expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE"
+                                        "Invalid character '9' at (1,1) \"99:12:00\" expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE"
                                 )
                         )
                 )
