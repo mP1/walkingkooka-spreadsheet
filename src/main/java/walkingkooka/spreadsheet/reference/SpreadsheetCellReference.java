@@ -62,7 +62,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     static SpreadsheetCellReference parseCellReference0(final String text) {
         try {
             return PARSER.parse(TextCursors.charSequence(text),
-                            SpreadsheetReferenceSpreadsheetParserContext.INSTANCE)
+                            SpreadsheetCellReferenceSpreadsheetParserContext.INSTANCE)
                     .get()
                     .cast(SpreadsheetCellReferenceParserToken.class)
                     .cell();
