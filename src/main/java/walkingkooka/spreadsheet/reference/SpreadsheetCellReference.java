@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
@@ -61,8 +62,10 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
      */
     static SpreadsheetCellReference parseCell0(final String text) {
         try {
-            return PARSER.parse(TextCursors.charSequence(text),
-                            SpreadsheetCellReferenceSpreadsheetParserContext.INSTANCE)
+            return PARSER.parse(
+                            TextCursors.charSequence(text),
+                            SpreadsheetParserContexts.fake()
+                    )
                     .get()
                     .cast(SpreadsheetCellReferenceParserToken.class)
                     .cell();

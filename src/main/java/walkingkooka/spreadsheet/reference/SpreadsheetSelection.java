@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
@@ -366,7 +367,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
                                                                  final Parser<SpreadsheetParserContext> parser,
                                                                  final Class<T> type) {
         try {
-            return parser.parse(TextCursors.charSequence(text), SpreadsheetCellReferenceSpreadsheetParserContext.INSTANCE)
+            return parser.parse(TextCursors.charSequence(text), SpreadsheetParserContexts.fake())
                     .get()
                     .cast(type);
         } catch (final ParserException cause) {
@@ -396,7 +397,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
         checkText(text);
 
         final TextCursor cursor = TextCursors.charSequence(text);
-        final SpreadsheetParserContext context = SpreadsheetCellReferenceSpreadsheetParserContext.INSTANCE;
+        final SpreadsheetParserContext context = SpreadsheetParserContexts.fake();
 
         ParserToken lower = parser.parse(cursor, context)
                 .orElse(null);
