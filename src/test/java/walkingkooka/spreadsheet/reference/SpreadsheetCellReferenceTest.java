@@ -882,8 +882,9 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testParseCellReferenceRangeFails() {
-        this.parseStringFails("A1:B2",
-                new IllegalArgumentException("Invalid character ':' at (3,1) \"A1:B2\" expected (SpreadsheetColumnReference, SpreadsheetRowReference)")
+        this.parseStringFails(
+                "A1:B2",
+                new IllegalArgumentException("Invalid character ':' at (3,1) \"A1:B2\" expected cell")
         );
     }
 
