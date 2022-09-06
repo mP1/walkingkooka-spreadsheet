@@ -437,46 +437,129 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 text);
     }
 
-    // CELL & LABEL ......................................................................................................
+    // CELL,............................................................................................................
 
     @Test
-    public void testCellReferencesParserOtherExpressionFails() {
-        this.parseFailAndCheck(SpreadsheetParsers.cellReferences(), "1+2");
+    public void testCellParserWithColumnFails() {
+        this.parseFailAndCheck(
+                SpreadsheetParsers.cell(),
+                "A"
+        );
     }
 
     @Test
-    public void testCell() {
+    public void testCellParserWithLabelFails() {
+        this.parseThrows(
+                SpreadsheetParsers.cell(),
+                "LABEL123"
+        );
+    }
+
+    @Test
+    public void testCellParserWithCell() {
         final String text = "A1";
         final SpreadsheetCellReferenceParserToken cell = cell(0, "A", 0);
 
-        this.cellReferenceParseAndCheck(text, cell, text);
+        this.cellParseAndCheck(text, cell, text);
     }
 
     @Test
-    public void testCell2() {
+    public void testCellParserWithCell2() {
         final String text = "AA678";
         final SpreadsheetCellReferenceParserToken cell = this.cell(26, "AA", 678 - 1);
 
-        this.cellReferenceParseAndCheck(text, cell, text);
+        this.cellParseAndCheck(text, cell, text);
+    }
+
+    /**
+     * First parseCellReference the range using {@link SpreadsheetParsers#cell()}} and then repeat again with
+     * {@link SpreadsheetParsers#expression()}.
+     */
+    private void cellParseAndCheck(final String from,
+                                   final SpreadsheetParserToken expected,
+                                   final String text) {
+        this.parseAndCheck(
+                SpreadsheetParsers.cellOrCellRangeOrLabel(),
+                from,
+                expected,
+                text
+        );
+
+        this.cellOrCellRangeOrLabelParseAndCheck(
+                from,
+                expected,
+                text
+        );
+    }
+
+    // CELL, CELL RANGE & LABEL ........................................................................................
+
+    @Test
+    public void testCellOrCellRangeOrLabelParserWithExpressionFails() {
+        this.parseFailAndCheck(
+                SpreadsheetParsers.cellOrCellRangeOrLabel(),
+                "1+2"
+        );
     }
 
     @Test
-    public void testLabel() {
+    public void testCellOrCellRangeOrLabelParserWithCell() {
+        final String text = "A1";
+        final SpreadsheetCellReferenceParserToken cell = cell(0, "A", 0);
+
+        this.cellOrCellRangeOrLabelParseAndCheck(text, cell, text);
+    }
+
+    @Test
+    public void testCellOrCellRangeOrLabelParserWithCell2() {
+        final String text = "AA678";
+        final SpreadsheetCellReferenceParserToken cell = this.cell(26, "AA", 678 - 1);
+
+        this.cellOrCellRangeOrLabelParseAndCheck(text, cell, text);
+    }
+
+    @Test
+    public void testCellOrCellRangeOrLabelParserWithCellRange() {
+        final String text = "A1:B2";
+
+        final SpreadsheetCellRangeParserToken range = SpreadsheetParserToken.cellRange(
+                Lists.of(
+                        this.cell(0, "A", 0),
+                        between(),
+                        this.cell(1, "B", 1)
+                ),
+                text
+        );
+
+        this.cellOrCellRangeOrLabelParseAndCheck(
+                text,
+                range,
+                text
+        );
+    }
+
+    @Test
+    public void testCellOrCellRangeOrLabelParserWithLabel() {
         final String text = "Hello";
 
-        this.cellReferenceParseAndCheck(text,
+        this.cellOrCellRangeOrLabelParseAndCheck(text,
                 SpreadsheetParserToken.labelName(SpreadsheetSelection.labelName(text), text),
                 text);
     }
 
     /**
-     * First parseCellReference the range using {@link SpreadsheetParsers#cellReferences()}} and then repeat again with
+     * First parseCellReference the range using {@link SpreadsheetParsers#cellOrCellRangeOrLabel()}} and then repeat again with
      * {@link SpreadsheetParsers#expression()}.
      */
-    private void cellReferenceParseAndCheck(final String from,
-                                            final SpreadsheetParserToken expected,
-                                            final String text) {
-        this.parseAndCheck(SpreadsheetParsers.cellReferences(), from, expected, text);
+    private void cellOrCellRangeOrLabelParseAndCheck(final String from,
+                                                     final SpreadsheetParserToken expected,
+                                                     final String text) {
+        this.parseAndCheck(
+                SpreadsheetParsers.cellOrCellRangeOrLabel(),
+                from,
+                expected,
+                text
+        );
         this.parseExpressionAndCheck(from, expected, text);
     }
 
@@ -484,7 +567,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     @Test
     public void testRangeParserOtherExpressionFails() {
-        this.parseFailAndCheck(SpreadsheetParsers.range(), "1+2");
+        this.parseFailAndCheck(SpreadsheetParsers.cellRange(), "1+2");
     }
 
     @Test
@@ -551,7 +634,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     /**
-     * First parseCellReference the range using {@link SpreadsheetParsers#range()} and then repeat again with {@link SpreadsheetParsers#expression()}.
+     * First parseCellReference the range using {@link SpreadsheetParsers#cellRange()} and then repeat again with {@link SpreadsheetParsers#expression()}.
      */
     private void rangeParseAndCheck(final String from,
                                     final SpreadsheetCellRangeParserToken expected,
@@ -568,7 +651,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                     final SpreadsheetCellRangeParserToken expected,
                                     final String text,
                                     final String expressionToString) {
-        this.parseAndCheck(SpreadsheetParsers.range(), from, expected, text);
+        this.parseAndCheck(SpreadsheetParsers.cellRange(), from, expected, text);
         this.parseExpressionAndCheck(from, expected, text, expressionToString);
     }
 
