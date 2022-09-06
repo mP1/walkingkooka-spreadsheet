@@ -66,7 +66,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
                 INITIAL,
                 PART
         ) &&
-                !SpreadsheetSelection.isCellReferenceText(text);
+                !SpreadsheetSelection.isCellText(text);
     }
 
     /**
@@ -79,7 +79,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
             throw new InvalidTextLengthException("Label", name, 0, MAX_LENGTH);
         }
 
-        if (isCellReferenceText(name)) {
+        if (isCellText(name)) {
             throw new IllegalArgumentException("Label cannot be a valid cell reference=" + CharSequences.quote(name));
         }
 
