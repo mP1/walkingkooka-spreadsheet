@@ -101,7 +101,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     /**
      * Tests if the {@link String name} is a valid cell reference.
      */
-    public static boolean isCellReferenceText(final String text) {
+    public static boolean isCellText(final String text) {
         Objects.requireNonNull(text, "text");
 
         int mode = MODE_COLUMN_FIRST; // -1 too long or contains invalid char
@@ -242,7 +242,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
         switch (text.split(":").length) {
             case 1:
-                reference = isCellReferenceText(text) ?
+                reference = isCellText(text) ?
                         parseCell(text) :
                         labelName(text);
                 break;
@@ -269,7 +269,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     public static SpreadsheetExpressionReference parseCellOrLabel(final String text) {
         checkText(text);
 
-        return isCellReferenceText(text) ?
+        return isCellText(text) ?
                 parseCell(text) :
                 labelName(text);
     }
