@@ -25,10 +25,13 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -48,6 +51,7 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.patch.Patchable;
+import walkingkooka.tree.text.TextStyle;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -821,6 +825,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public SpreadsheetDelta patch(final JsonNode json,
                                   final JsonNodeUnmarshallContext context) {
         return this.patch0(
+                null,
                 json,
                 Predicates.always(),
                 context
@@ -851,9 +856,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    public SpreadsheetDelta patchCells(final JsonNode json,
+    public SpreadsheetDelta patchCells(final SpreadsheetCellReferenceOrRange cellReferenceOrRange,
+                                       final JsonNode json,
                                        final JsonNodeUnmarshallContext context) {
+        Objects.requireNonNull(cellReferenceOrRange, "cellReferenceOrRange");
+
         return this.patch0(
+                cellReferenceOrRange, // technically only required by patchFormat & patchStyle
                 json,
                 IS_CELL_OR_FORMAT_OR_STYLE,
                 context
@@ -886,6 +895,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public SpreadsheetDelta patchColumns(final JsonNode json,
                                          final JsonNodeUnmarshallContext context) {
         return this.patch0(
+                null, // dont care now will matter when patchColumns supports format&style
                 json,
                 Predicates.is(SpreadsheetDelta.COLUMNS_PROPERTY_STRING),
                 context
@@ -911,13 +921,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public SpreadsheetDelta patchRows(final JsonNode json,
                                       final JsonNodeUnmarshallContext context) {
         return this.patch0(
+                null, // dont care now will matter when patchRows supports format&style
                 json,
                 Predicates.is(SpreadsheetDelta.ROWS_PROPERTY_STRING),
                 context
         );
     }
 
-    private SpreadsheetDelta patch0(final JsonNode json,
+    private SpreadsheetDelta patch0(final SpreadsheetSelection selection,
+                                    final JsonNode json,
                                     final Predicate<String> patchableProperties,
                                     final JsonNodeUnmarshallContext context) {
         checkPatch(json, context);
@@ -1026,6 +1038,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             patchInvalidFail(FORMAT_PROPERTY_STRING, STYLE_PROPERTY_STRING);
                         }
                         cells = patchFormat(
+                                selection.toCellRangeOrFail(),
                                 cells,
                                 JsonNode.object()
                                         .set(FORMAT_PROPERTY, propertyAndValue),
@@ -1041,6 +1054,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case STYLE_PROPERTY_STRING:
                     if (valid) {
                         cells = patchStyle(
+                                selection.toCellRangeOrFail(),
                                 cells,
                                 propertyAndValue,
                                 context
@@ -1121,10 +1135,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Traverses the cells, patching each with the provided {@link JsonNode format}.
      */
-    private static Set<SpreadsheetCell> patchFormat(final Set<SpreadsheetCell> cells,
+    private static Set<SpreadsheetCell> patchFormat(final SpreadsheetCellRange cellRange,
+                                                    final Set<SpreadsheetCell> cells,
                                                     final JsonNode format,
                                                     final JsonNodeUnmarshallContext context) {
         final Set<SpreadsheetCell> patched = Sets.sorted();
+        final Set<SpreadsheetCellReference> patchedCellReferences = Sets.sorted();
+
         for (final SpreadsheetCell cell : cells) {
             patched.add(
                     cell.patch(
@@ -1132,7 +1149,29 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             context
                     )
             );
+
+            patchedCellReferences.add(cell.reference());
         }
+
+        if (patched.size() < cellRange.count()) {
+            final Optional<SpreadsheetCellFormat> spreadsheetCellFormat = Optional.of(
+                    context.unmarshall(
+                            format.objectOrFail()
+                                    .getOrFail(FORMAT_PROPERTY),
+                            SpreadsheetCellFormat.class
+                    )
+            );
+
+            for (final SpreadsheetCellReference possible : cellRange) {
+                if (!patchedCellReferences.contains(possible)) {
+                    patched.add(
+                            possible.setFormula(SpreadsheetFormula.EMPTY)
+                                    .setFormat(spreadsheetCellFormat)
+                    );
+                }
+            }
+        }
+
         return patched;
     }
 
@@ -1196,10 +1235,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Traverses the cells, patching each with the provided {@link JsonNode style}.
      */
-    private static Set<SpreadsheetCell> patchStyle(final Set<SpreadsheetCell> cells,
+    private static Set<SpreadsheetCell> patchStyle(final SpreadsheetCellRange cellRange,
+                                                   final Set<SpreadsheetCell> cells,
                                                    final JsonNode style,
                                                    final JsonNodeUnmarshallContext context) {
         final Set<SpreadsheetCell> patched = Sets.sorted();
+        final Set<SpreadsheetCellReference> patchedCellReferences = Sets.sorted();
+
         for (final SpreadsheetCell cell : cells) {
             patched.add(
                     cell.setStyle(
@@ -1207,7 +1249,26 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                     .patch(style, context)
                     )
             );
+
+            patchedCellReferences.add(cell.reference());
         }
+
+        if (patched.size() < cellRange.count()) {
+            final TextStyle textStyle = context.unmarshall(
+                    style,
+                    TextStyle.class
+            );
+
+            for (final SpreadsheetCellReference possible : cellRange) {
+                if (!patchedCellReferences.contains(possible)) {
+                    patched.add(
+                            possible.setFormula(SpreadsheetFormula.EMPTY)
+                                    .setStyle(textStyle)
+                    );
+                }
+            }
+        }
+
         return patched;
     }
 
