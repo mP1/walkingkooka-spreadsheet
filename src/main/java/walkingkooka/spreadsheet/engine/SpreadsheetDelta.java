@@ -855,15 +855,17 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                        final JsonNodeUnmarshallContext context) {
         return this.patch0(
                 json,
-                Predicates.is(SpreadsheetDelta.CELLS_PROPERTY_STRING)
-                        .or(
-                                Predicates.is(SpreadsheetDelta.FORMAT_PROPERTY_STRING)
-                        ).or(
-                                Predicates.is(SpreadsheetDelta.STYLE_PROPERTY_STRING)
-                        ),
+                IS_CELL_OR_FORMAT_OR_STYLE,
                 context
         );
     }
+
+    private final static Predicate<String> IS_CELL_OR_FORMAT_OR_STYLE = Predicates.is(SpreadsheetDelta.CELLS_PROPERTY_STRING)
+            .or(
+                    Predicates.is(SpreadsheetDelta.FORMAT_PROPERTY_STRING)
+            ).or(
+                    Predicates.is(SpreadsheetDelta.STYLE_PROPERTY_STRING)
+            );
 
     // PatchColumns.....................................................................................................
 
