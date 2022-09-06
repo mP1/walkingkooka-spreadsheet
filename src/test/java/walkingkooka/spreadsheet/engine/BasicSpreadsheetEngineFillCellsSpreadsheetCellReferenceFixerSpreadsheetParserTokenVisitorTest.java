@@ -38,7 +38,7 @@ public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerS
 
     @Test
     public void testZeroZeroOffset() {
-        final SpreadsheetParserToken token = SpreadsheetParsers.cellReferences()
+        final SpreadsheetParserToken token = SpreadsheetParsers.cellOrCellRangeOrLabel()
                 .parse(TextCursors.charSequence("$A$1"), SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
                         DecimalNumberContexts.american(MathContext.DECIMAL32),
                         EXPRESSION_NUMBER_KIND,

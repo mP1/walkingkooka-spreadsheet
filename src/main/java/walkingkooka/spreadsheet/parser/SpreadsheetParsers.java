@@ -54,21 +54,44 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     public static final CharacterConstant RANGE_SEPARATOR = CharacterConstant.with(':');
 
     /**
-     * A {@link Parser} that returns a cell reference token of some sort.
+     * A parser that knows how to parse a cell reference, but not cell-range or label.
      */
-    public static Parser<SpreadsheetParserContext> cellReferences() {
-        return CELL_REFERENCES_PARSER;
+    public static Parser<SpreadsheetParserContext> cell() {
+        return CELL;
     }
 
-    private final static Parser<SpreadsheetParserContext> CELL_REFERENCES_PARSER;
+    private static final Parser<SpreadsheetParserContext> CELL = column()
+            .builder()
+            .required(row())
+            .build()
+            .transform(SpreadsheetParsers::transformCell)
+            .setToString("cell");
 
-    private static void cellReferences(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
-        predefined.put(COLUMN_ROW_IDENTIFIER, columnAndRow());
+    private static ParserToken transformCell(final ParserToken token,
+                                             final SpreadsheetParserContext context) {
+        return SpreadsheetParserToken.cellReference(
+                token.cast(SequenceParserToken.class)
+                        .value(),
+                token.text()
+        );
+    }
+
+    /**
+     * A {@link Parser} that returns a cell reference token of some sort.
+     */
+    public static Parser<SpreadsheetParserContext> cellOrCellRangeOrLabel() {
+        return CELL_OR_CELL_RANGE_OR_LABEL_PARSER;
+    }
+
+    private final static Parser<SpreadsheetParserContext> CELL_OR_CELL_RANGE_OR_LABEL_PARSER;
+
+    private static void cellOrCellRangeOrLabel(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
+        predefined.put(CELL_IDENTIFIER, CELL);
         predefined.put(LABEL_NAME_IDENTIFIER, labelName());
         predefined.put(BETWEEN_SYMBOL_IDENTIFIER, BETWEEN_SYMBOL);
     }
 
-    private static final EbnfIdentifierName COLUMN_ROW_IDENTIFIER = EbnfIdentifierName.with("COLUMN_ROW");
+    private static final EbnfIdentifierName CELL_IDENTIFIER = EbnfIdentifierName.with("CELL");
     private static final EbnfIdentifierName LABEL_NAME_IDENTIFIER = EbnfIdentifierName.with("LABEL_NAME");
     private static final EbnfIdentifierName BETWEEN_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("BETWEEN_SYMBOL");
 
@@ -76,30 +99,21 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
             SpreadsheetParserToken::betweenSymbol,
             SpreadsheetBetweenSymbolParserToken.class);
 
+
+    /**
+     * A {@link Parser} that returns a range but not cell reference or labels.
+     */
+    public static Parser<SpreadsheetParserContext> cellRange() {
+        return CELL_RANGE_PARSER;
+    }
+
+    private final static Parser<SpreadsheetParserContext> CELL_RANGE_PARSER;
+
     /**
      * {@see SpreadsheetColumnReferenceParser}
      */
     public static Parser<SpreadsheetParserContext> column() {
         return SpreadsheetColumnReferenceParser.INSTANCE;
-    }
-
-    /**
-     * {@see SpreadsheetColumnReferenceParser}
-     */
-    public static Parser<SpreadsheetParserContext> columnAndRow() {
-        return COLUMN_AND_ROW;
-    }
-
-    private static final Parser<SpreadsheetParserContext> COLUMN_AND_ROW = column()
-            .builder()
-            .required(row())
-            .build()
-            .transform(SpreadsheetParsers::transformColumnAndRow)
-            .setToString("cell");
-
-    private static ParserToken transformColumnAndRow(final ParserToken token,
-                                                     final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.cellReference(token.cast(SequenceParserToken.class).value(), token.text());
     }
 
     /**
@@ -183,15 +197,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     private static final Parser<SpreadsheetParserContext> NAMED_FUNCTION_PARSER;
-
-    /**
-     * A {@link Parser} that returns a range which will include cell references or labels.
-     */
-    public static Parser<SpreadsheetParserContext> range() {
-        return RANGE_PARSER;
-    }
-
-    private final static Parser<SpreadsheetParserContext> RANGE_PARSER;
 
     /**
      * {@see SpreadsheetRowReferenceParser}
@@ -457,7 +462,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> resolveParsers(final Parser<SpreadsheetParserContext> value) {
         final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined = Maps.sorted();
 
-        cellReferences(predefined);
+        cellOrCellRangeOrLabel(predefined);
         conditions(predefined);
         functions(predefined);
         math(predefined);
@@ -482,12 +487,12 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     static {
         final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(Parsers.fake());
 
-        CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL"));
+        CELL_OR_CELL_RANGE_OR_LABEL_PARSER = parsers.get(EbnfIdentifierName.with("CELL_OR_CELL_RANGE_OR_LABEL"));
+        CELL_RANGE_PARSER = parsers.get(EbnfIdentifierName.with("CELL_RANGE"));
         EXPRESSION_PARSER = parsers.get(EbnfIdentifierName.with("EXPRESSION"));
         FUNCTION_PARAMETERS_PARSER = parsers.get(EbnfIdentifierName.with("FUNCTION_PARAMETERS"));
         LAMBDA_FUNCTION = parsers.get(EbnfIdentifierName.with("LAMBDA_FUNCTION"));
         NAMED_FUNCTION_PARSER = parsers.get(EbnfIdentifierName.with("NAMED_FUNCTION"));
-        RANGE_PARSER = parsers.get(EbnfIdentifierName.with("RANGE"));
     }
 
     private static Parser<SpreadsheetParserContext> symbol(final char c,

@@ -302,7 +302,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     public static SpreadsheetCellRange parseCellRange(final String text) {
         return parseRange(
                 text,
-                SpreadsheetParsers.columnAndRow(),
+                SpreadsheetParsers.cell(),
                 (t) -> t.cast(SpreadsheetCellReferenceParserToken.class).cell(),
                 SpreadsheetCellRange::with
         );
