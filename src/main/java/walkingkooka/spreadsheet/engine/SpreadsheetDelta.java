@@ -1043,7 +1043,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                 JsonNode.object()
                                         .set(FORMAT_PROPERTY, propertyAndValue),
                                 context
-                        );
+                        ); // lgtm [java/dereferenced-value-may-be-null]
                     }
                     break;
                 case ROWS_PROPERTY_STRING:
@@ -1058,7 +1058,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                 cells,
                                 propertyAndValue,
                                 context
-                        );
+                        ); // lgtm [java/dereferenced-value-may-be-null]
                     }
                     break;
                 case LABELS_PROPERTY_STRING:
