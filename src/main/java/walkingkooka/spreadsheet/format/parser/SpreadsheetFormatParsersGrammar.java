@@ -22,6 +22,6 @@ import walkingkooka.resource.TextResourceAware;
 /**
  * Holds the parser grammar.
  */
-@TextResourceAware(normalizeSpace = true)
+@TextResourceAware(normalizeSpace = false)
 public interface SpreadsheetFormatParsersGrammar {
 }
