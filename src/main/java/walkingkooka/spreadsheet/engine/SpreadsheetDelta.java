@@ -928,18 +928,27 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
+    // two pass patch, first validate valid properties are being patched
+    // also want to verify not an invalid combo like cells and style, before actually patching.
     private SpreadsheetDelta patch0(final SpreadsheetSelection selection,
                                     final JsonNode json,
                                     final Predicate<String> patchableProperties,
                                     final JsonNodeUnmarshallContext context) {
         checkPatch(json, context);
+        patchValidate(json, patchableProperties);
+        return patchApply(
+                selection,
+                json,
+                context
+        );
+    }
 
+    private static void patchValidate(final JsonNode json,
+                                      final Predicate<String> patchableProperties) {
         boolean cellsPatched = false;
         boolean formatPatched = false;
         boolean stylePatched = false;
 
-        // two pass patch, first validate valid properties are being patched
-        // also want to verify not an invalid combo like cells and style, before actually patching.
         for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
 
             final JsonPropertyName propertyName = propertyAndValue.name();
@@ -994,6 +1003,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             patchInvalidFail(CELLS_PROPERTY_STRING, STYLE_PROPERTY_STRING);
         }
 
+        if (formatPatched && stylePatched) {
+            patchInvalidFail(FORMAT_PROPERTY_STRING, STYLE_PROPERTY_STRING);
+        }
+    }
+
+    @SuppressWarnings("lgtm[java/dereferenced-value-may-be-null]")
+    private SpreadsheetDelta patchApply(final SpreadsheetSelection selection,
+                                        final JsonNode json,
+                                        final JsonNodeUnmarshallContext context) {
         SpreadsheetDelta patched = this;
 
         Set<SpreadsheetCell> cells = this.cells();
@@ -1005,7 +1023,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
             final JsonPropertyName propertyName = propertyAndValue.name();
             final String propertyNameString = propertyName.value();
-            boolean valid = patchableProperties.test(propertyNameString);
 
             switch (propertyNameString) {
                 case VIEWPORT_SELECTION_PROPERTY_STRING:
@@ -1014,52 +1031,30 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case CELLS_PROPERTY_STRING:
-                    if (valid) {
-                        if (formatPatched) {
-                            patchInvalidFail(CELLS_PROPERTY_STRING, FORMAT_PROPERTY_STRING);
-                        }
-                        if (stylePatched) {
-                            patchInvalidFail(CELLS_PROPERTY_STRING, STYLE_PROPERTY_STRING);
-                        }
-                        cells = patchCells0(propertyAndValue, context);
-                    }
+                    cells = patchCells0(propertyAndValue, context);
                     break;
                 case COLUMNS_PROPERTY_STRING:
-                    if (valid) {
-                        columns = patchColumns0(propertyAndValue, context);
-                    }
+                    columns = patchColumns0(propertyAndValue, context);
                     break;
                 case FORMAT_PROPERTY_STRING:
-                    if (valid) {
-                        if (cellsPatched) {
-                            patchInvalidFail(CELLS_PROPERTY_STRING, FORMAT_PROPERTY_STRING);
-                        }
-                        if (stylePatched) {
-                            patchInvalidFail(FORMAT_PROPERTY_STRING, STYLE_PROPERTY_STRING);
-                        }
-                        cells = patchFormat(
-                                selection.toCellRangeOrFail(),
-                                cells,
-                                JsonNode.object()
-                                        .set(FORMAT_PROPERTY, propertyAndValue),
-                                context
-                        ); // lgtm [java/dereferenced-value-may-be-null]
-                    }
+                    cells = patchFormat(
+                            selection.toCellRangeOrFail(),
+                            cells,
+                            JsonNode.object()
+                                    .set(FORMAT_PROPERTY, propertyAndValue),
+                            context
+                    );
                     break;
                 case ROWS_PROPERTY_STRING:
-                    if (valid) {
-                        rows = patchRows0(propertyAndValue, context);
-                    }
+                    rows = patchRows0(propertyAndValue, context);
                     break;
                 case STYLE_PROPERTY_STRING:
-                    if (valid) {
-                        cells = patchStyle(
-                                selection.toCellRangeOrFail(),
-                                cells,
-                                propertyAndValue,
-                                context
-                        ); // lgtm [java/dereferenced-value-may-be-null]
-                    }
+                    cells = patchStyle(
+                            selection.toCellRangeOrFail(),
+                            cells,
+                            propertyAndValue,
+                            context
+                    );
                     break;
                 case LABELS_PROPERTY_STRING:
                 case DELETED_CELLS_PROPERTY_STRING:
