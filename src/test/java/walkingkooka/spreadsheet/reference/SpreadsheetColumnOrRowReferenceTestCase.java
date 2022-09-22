@@ -86,7 +86,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.checkValue(reference, value);
         this.checkKind(reference, REFERENCE_KIND);
 
-        assertNotSame(value, this.createReference(value));
+        assertNotSame(reference, this.createReference(value));
     }
 
     // isAll............................................................................................................
