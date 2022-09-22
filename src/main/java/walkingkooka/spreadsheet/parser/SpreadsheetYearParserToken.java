@@ -24,7 +24,6 @@ import java.util.Objects;
 public final class SpreadsheetYearParserToken extends SpreadsheetNonSymbolParserToken<Integer> {
 
     static SpreadsheetYearParserToken with(final int value, final String text) {
-        checkValue(value);
         Objects.requireNonNull(text, "text");
 
         return new SpreadsheetYearParserToken(value, text);
