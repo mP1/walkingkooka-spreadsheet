@@ -24,7 +24,6 @@ import java.util.Objects;
 public final class SpreadsheetDayNumberParserToken extends SpreadsheetNonSymbolParserToken<Integer> {
 
     static SpreadsheetDayNumberParserToken with(final int value, final String text) {
-        checkValue(value);
         Objects.requireNonNull(text, "text");
 
         return new SpreadsheetDayNumberParserToken(value, text);

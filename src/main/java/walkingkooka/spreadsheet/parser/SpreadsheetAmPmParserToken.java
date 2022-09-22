@@ -24,7 +24,6 @@ import java.util.Objects;
 public final class SpreadsheetAmPmParserToken extends SpreadsheetNonSymbolParserToken<Integer> {
 
     static SpreadsheetAmPmParserToken with(final int value, final String text) {
-        checkValue(value);
         Objects.requireNonNull(text, "text");
 
         return new SpreadsheetAmPmParserToken(value, text);

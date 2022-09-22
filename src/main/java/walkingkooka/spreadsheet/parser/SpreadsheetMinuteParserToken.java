@@ -24,7 +24,6 @@ import java.util.Objects;
 public final class SpreadsheetMinuteParserToken extends SpreadsheetNonSymbolParserToken<Integer> {
 
     static SpreadsheetMinuteParserToken with(final int value, final String text) {
-        checkValue(value);
         Objects.requireNonNull(text, "text");
 
         return new SpreadsheetMinuteParserToken(value, text);
