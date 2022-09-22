@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
 final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
     /**
-     * Factory that creates a {@link SpreadsheetMetadataNonEmpty} from a {@link Map<SpreadsheetMetadataPropertyName, Object>}.
+     * Factory that creates a {@link SpreadsheetMetadataNonEmpty} from a {@link Map}.
      */
     static SpreadsheetMetadataNonEmpty with(final Map<SpreadsheetMetadataPropertyName<?>, Object> properties,
                                             final SpreadsheetMetadata defaults) {
