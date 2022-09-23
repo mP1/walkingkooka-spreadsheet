@@ -1268,6 +1268,44 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    @Test
+    public void testPatchCellsWithStyleNullClears() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY);
+
+        final TextStyle style = TextStyle.EMPTY
+                .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                a1.setStyle(style),
+                                a2.setStyle(style)
+                        )
+                ).setWindow(
+                        SpreadsheetSelection.parseWindow("A1:A2")
+                );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1, a2
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.STYLE_PROPERTY,
+                                JsonNode.nullNode() // clears previous style (font-style=italics)
+                        ),
+                after
+        );
+    }
+
     private void patchCellsAndCheck(final SpreadsheetDelta before,
                                     final SpreadsheetCellReferenceOrRange cellReferenceOrRange,
                                     final JsonNode patch,
