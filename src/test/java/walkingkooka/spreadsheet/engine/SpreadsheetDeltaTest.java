@@ -1084,6 +1084,43 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchCellsWithFormatNullClears() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY);
+
+        final Optional<SpreadsheetCellFormat> format = Optional.of(
+                SpreadsheetCellFormat.with("@before")
+        );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                a1.setFormat(format),
+                                a2.setFormat(format)
+                        )
+                );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1, a2
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.FORMAT_PROPERTY,
+                                JsonNode.nullNode()
+                        ),
+                after
+        );
+    }
+
+    @Test
     public void testPatchCellsWithFormatAndWindow() {
         final Optional<SpreadsheetCellFormat> beforeFormat = Optional.of(
                 SpreadsheetCellFormat.with("@before")
