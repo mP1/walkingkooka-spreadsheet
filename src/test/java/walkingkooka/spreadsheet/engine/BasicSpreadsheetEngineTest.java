@@ -11240,7 +11240,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetFormatter parsePattern(final String pattern) {
+            public SpreadsheetFormatter parseFormatPattern(final String pattern) {
                 if (PATTERN_COLOR.equals(pattern)) {
                     return formatter(pattern, COLOR, FORMATTED_PATTERN_SUFFIX);
                 }

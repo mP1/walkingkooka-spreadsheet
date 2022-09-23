@@ -61,7 +61,7 @@ public interface SpreadsheetEngineContext extends Context, ExpressionPurityConte
     /**
      * Accepts a pattern and returns the equivalent {@link SpreadsheetFormatter}.
      */
-    SpreadsheetFormatter parsePattern(final String pattern);
+    SpreadsheetFormatter parseFormatPattern(final String pattern);
 
     /**
      * Formats the given value using the provided formatter.

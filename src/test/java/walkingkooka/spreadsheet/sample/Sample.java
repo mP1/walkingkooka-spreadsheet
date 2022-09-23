@@ -247,7 +247,7 @@ public final class Sample {
             }
 
             @Override
-            public SpreadsheetFormatter parsePattern(final String pattern) {
+            public SpreadsheetFormatter parseFormatPattern(final String pattern) {
                 final SpreadsheetFormatExpressionParserToken token = SpreadsheetFormatParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
