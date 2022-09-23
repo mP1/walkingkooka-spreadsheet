@@ -452,13 +452,20 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testParsePattern() {
+    public void testParseFormatPattern() {
         // DecimalNumberContext returns 'D' for the decimal point character and 'M' for minus sign
 
-        this.parsePatternAndCheck("####.#",
+        this.parseFormatPatternAndCheck(
+                "####.#",
                 BigDecimal.valueOf(-123.456),
                 this.spreadsheetFormatContext(),
-                Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, MINUS + "123" + DECIMAL + "5")));
+                Optional.of(
+                        SpreadsheetText.with(
+                                SpreadsheetText.WITHOUT_COLOR,
+                                MINUS + "123" + DECIMAL + "5"
+                        )
+                )
+        );
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatContext() {
@@ -527,7 +534,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testFormat() {
         this.formatAndCheck(
                 BigDecimal.valueOf(-123.45),
-                this.createContext().parsePattern("#.#\"Abc123\""),
+                this.createContext().parseFormatPattern("#.#\"Abc123\""),
                 Optional.of(
                         SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, MINUS + "123" + DECIMAL + "5Abc123")
                 )

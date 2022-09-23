@@ -66,7 +66,7 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public SpreadsheetFormatter parsePattern(final String pattern) {
+    public SpreadsheetFormatter parseFormatPattern(final String pattern) {
         Objects.requireNonNull(pattern, "pattern");
         throw new UnsupportedOperationException();
     }

@@ -1075,7 +1075,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .formatter();
         final Optional<SpreadsheetCellFormat> maybeFormat = cell.format();
         if (maybeFormat.isPresent()) {
-            formatter = context.parsePattern(
+            formatter = context.parseFormatPattern(
                     maybeFormat.get()
                             .pattern()
             );

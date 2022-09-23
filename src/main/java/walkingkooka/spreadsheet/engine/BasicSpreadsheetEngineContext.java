@@ -223,7 +223,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // parsing and formatting text......................................................................................
 
     @Override
-    public SpreadsheetFormatter parsePattern(final String pattern) {
+    public SpreadsheetFormatter parseFormatPattern(final String pattern) {
         return SpreadsheetFormatParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
