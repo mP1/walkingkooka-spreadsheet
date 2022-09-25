@@ -22,7 +22,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -32,6 +31,7 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -1073,12 +1073,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         // try and use the cells custom format otherwise use a default from the context.
         SpreadsheetFormatter formatter = context.metadata()
                 .formatter();
-        final Optional<SpreadsheetCellFormat> maybeFormat = cell.format();
+        final Optional<SpreadsheetFormatPattern<?>> maybeFormat = cell.formatPattern();
         if (maybeFormat.isPresent()) {
-            formatter = context.parseFormatPattern(
-                    maybeFormat.get()
-                            .pattern()
-            );
+            formatter = maybeFormat.get()
+                    .formatter();
         }
 
         final SpreadsheetFormula formula = cell.formula();

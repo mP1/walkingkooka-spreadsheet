@@ -24,10 +24,11 @@ import walkingkooka.color.Color;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
@@ -951,7 +952,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchCellAndFormatFails() {
+    public void testPatchCellAndFormatPatternFails() {
         final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(
@@ -960,8 +961,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final JsonNode patch = this.marshall(delta)
                 .objectOrFail()
                 .set(
-                        SpreadsheetDelta.FORMAT_PROPERTY,
-                        this.marshall(SpreadsheetCellFormat.with("@"))
+                        SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                        this.marshall(
+                                SpreadsheetPattern.parseTextFormatPattern("@")
+                        )
                 );
 
         final IllegalArgumentException thrown = assertThrows(
@@ -973,19 +976,20 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
         );
         this.checkEquals(
-                "Patch must not contain both \"cells\" and \"format\"",
+                "Patch must not contain both \"cells\" and \"format-pattern\"",
                 thrown.getMessage(),
                 "message"
         );
     }
 
-
     @Test
-    public void testPatchCellWithStyleAndFormatFails() {
+    public void testPatchCellWithStyleAndFormatPatternFails() {
         final JsonNode patch = JsonNode.object()
                 .set(
-                        SpreadsheetDelta.FORMAT_PROPERTY,
-                        this.marshall(SpreadsheetCellFormat.with("@"))
+                        SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                        this.marshall(
+                                SpreadsheetPattern.parseTextFormatPattern("@")
+                        )
                 ).set(
                         SpreadsheetDelta.STYLE_PROPERTY,
                         this.marshall(TextStyle.EMPTY)
@@ -1000,35 +1004,35 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
         );
         this.checkEquals(
-                "Patch must not contain both \"format\" and \"style\"",
+                "Patch must not contain both \"format-pattern\" and \"style\"",
                 thrown.getMessage(),
                 "message"
         );
     }
 
     @Test
-    public void testPatchCellsWithFormatWithMissingCells() {
-        final Optional<SpreadsheetCellFormat> beforeFormat = Optional.of(
-                SpreadsheetCellFormat.with("@before")
+    public void testPatchCellsWithFormatPatternWithMissingCells() {
+        final Optional<SpreadsheetFormatPattern<?>> beforeFormat = Optional.of(
+                SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
                 .setFormula(SpreadsheetFormula.EMPTY)
-                .setFormat(beforeFormat);
+                .setFormatPattern(beforeFormat);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(a1)
                 );
 
-        final SpreadsheetCellFormat format = SpreadsheetCellFormat.with("@patched");
+        final SpreadsheetFormatPattern<?> formatPattern = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"");
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(
-                        a1.setFormat(Optional.of(format)),
+                        a1.setFormatPattern(Optional.of(formatPattern)),
                         SpreadsheetSelection.parseCell("A2")
                                 .setFormula(SpreadsheetFormula.EMPTY)
-                                .setFormat(Optional.of(format))
+                                .setFormatPattern(Optional.of(formatPattern))
                 )
         );
 
@@ -1037,37 +1041,37 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 JsonNode.object()
                         .set(
-                                SpreadsheetDelta.FORMAT_PROPERTY,
-                                marshall(format)
+                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                                marshallWithType(formatPattern)
                         ),
                 after
         );
     }
 
     @Test
-    public void testPatchCellsWithFormat() {
-        final Optional<SpreadsheetCellFormat> beforeFormat = Optional.of(
-                SpreadsheetCellFormat.with("@before")
+    public void testPatchCellsWithFormatPattern() {
+        final Optional<SpreadsheetFormatPattern<?>> beforeFormat = Optional.of(
+                SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
                 .setFormula(SpreadsheetFormula.EMPTY)
-                .setFormat(beforeFormat);
+                .setFormatPattern(beforeFormat);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(SpreadsheetFormula.EMPTY)
-                .setFormat(beforeFormat);
+                .setFormatPattern(beforeFormat);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(a1, a2)
                 );
 
-        final SpreadsheetCellFormat format = SpreadsheetCellFormat.with("@patched");
+        final SpreadsheetFormatPattern<?> formatPattern = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"");
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(
-                        a1.setFormat(Optional.of(format)),
-                        a2.setFormat(Optional.of(format))
+                        a1.setFormatPattern(Optional.of(formatPattern)),
+                        a2.setFormatPattern(Optional.of(formatPattern))
                 )
         );
 
@@ -1076,29 +1080,29 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 JsonNode.object()
                         .set(
-                                SpreadsheetDelta.FORMAT_PROPERTY,
-                                marshall(format)
+                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                                marshallWithType(formatPattern)
                         ),
                 after
         );
     }
 
     @Test
-    public void testPatchCellsWithFormatNullClears() {
+    public void testPatchCellsWithFormatPatternNullClears() {
         final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(SpreadsheetFormula.EMPTY);
 
-        final Optional<SpreadsheetCellFormat> format = Optional.of(
-                SpreadsheetCellFormat.with("@before")
+        final Optional<SpreadsheetFormatPattern<?>> format = Optional.of(
+                SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
         );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(
-                                a1.setFormat(format),
-                                a2.setFormat(format)
+                                a1.setFormatPattern(format),
+                                a2.setFormatPattern(format)
                         )
                 );
 
@@ -1113,7 +1117,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 JsonNode.object()
                         .set(
-                                SpreadsheetDelta.FORMAT_PROPERTY,
+                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
                                 JsonNode.nullNode()
                         ),
                 after
@@ -1121,17 +1125,17 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchCellsWithFormatAndWindow() {
-        final Optional<SpreadsheetCellFormat> beforeFormat = Optional.of(
-                SpreadsheetCellFormat.with("@before")
+    public void testPatchCellsWithFormatPatternAndWindow() {
+        final Optional<SpreadsheetFormatPattern<?>> beforeFormat = Optional.of(
+                SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
                 .setFormula(SpreadsheetFormula.EMPTY)
-                .setFormat(beforeFormat);
+                .setFormatPattern(beforeFormat);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(SpreadsheetFormula.EMPTY)
-                .setFormat(beforeFormat);
+                .setFormatPattern(beforeFormat);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
                 .setCells(
@@ -1140,12 +1144,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetSelection.parseWindow("A1:A2")
                 );
 
-        final SpreadsheetCellFormat format = SpreadsheetCellFormat.with("@patched");
+        final SpreadsheetFormatPattern<?> formatPattern = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"");
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(
-                        a1.setFormat(Optional.of(format)),
-                        a2.setFormat(Optional.of(format))
+                        a1.setFormatPattern(Optional.of(formatPattern)),
+                        a2.setFormatPattern(Optional.of(formatPattern))
                 )
         );
 
@@ -1154,8 +1158,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 JsonNode.object()
                         .set(
-                                SpreadsheetDelta.FORMAT_PROPERTY,
-                                marshall(format)
+                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                                marshallWithType(formatPattern)
                         ),
                 after
         );
@@ -1927,6 +1931,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     private JsonNode marshall(final Object object) {
         return JsonNodeMarshallContexts.basic()
                 .marshall(object);
+    }
+
+    private JsonNode marshallWithType(final Object object) {
+        return JsonNodeMarshallContexts.basic()
+                .marshallWithType(object);
     }
 
     @Override

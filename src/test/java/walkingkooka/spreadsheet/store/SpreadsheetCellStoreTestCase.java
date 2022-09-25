@@ -23,8 +23,8 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -332,7 +332,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
                         this.formula()
                 )
                 .setStyle(this.style())
-                .setFormat(this.format())
+                .setFormatPattern(this.formatPattern())
                 .setFormatted(this.formatted());
     }
 
@@ -391,8 +391,8 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @SuppressWarnings("SameReturnValue")
-    private Optional<SpreadsheetCellFormat> format() {
-        return SpreadsheetCell.NO_FORMAT;
+    private Optional<SpreadsheetFormatPattern<?>> formatPattern() {
+        return SpreadsheetCell.NO_FORMAT_PATTERN;
     }
 
     @SuppressWarnings("SameReturnValue")

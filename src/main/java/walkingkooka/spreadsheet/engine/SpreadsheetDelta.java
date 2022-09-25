@@ -25,10 +25,10 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
@@ -871,7 +871,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private final static Predicate<String> IS_CELL_OR_FORMAT_OR_STYLE = Predicates.is(SpreadsheetDelta.CELLS_PROPERTY_STRING)
             .or(
-                    Predicates.is(SpreadsheetDelta.FORMAT_PROPERTY_STRING)
+                    Predicates.is(SpreadsheetDelta.FORMAT_PATTERN_PROPERTY_STRING)
             ).or(
                     Predicates.is(SpreadsheetDelta.STYLE_PROPERTY_STRING)
             );
@@ -966,7 +966,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case COLUMNS_PROPERTY_STRING:
                     break;
-                case FORMAT_PROPERTY_STRING:
+                case FORMAT_PATTERN_PROPERTY_STRING:
                     formatPatched = true;
                     break;
                 case ROWS_PROPERTY_STRING:
@@ -996,7 +996,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         if (cellsPatched && formatPatched) {
-            patchInvalidFail(CELLS_PROPERTY_STRING, FORMAT_PROPERTY_STRING);
+            patchInvalidFail(CELLS_PROPERTY_STRING, FORMAT_PATTERN_PROPERTY_STRING);
         }
 
         if (cellsPatched && stylePatched) {
@@ -1004,7 +1004,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         if (formatPatched && stylePatched) {
-            patchInvalidFail(FORMAT_PROPERTY_STRING, STYLE_PROPERTY_STRING);
+            patchInvalidFail(FORMAT_PATTERN_PROPERTY_STRING, STYLE_PROPERTY_STRING);
         }
     }
 
@@ -1036,12 +1036,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case COLUMNS_PROPERTY_STRING:
                     columns = patchColumns0(propertyAndValue, context);
                     break;
-                case FORMAT_PROPERTY_STRING:
+                case FORMAT_PATTERN_PROPERTY_STRING:
                     cells = patchFormat(
                             selection.toCellRangeOrFail(),
                             cells,
                             JsonNode.object()
-                                    .set(FORMAT_PROPERTY, propertyAndValue),
+                                    .set(FORMAT_PATTERN_PROPERTY, propertyAndValue),
                             context
                     );
                     break;
@@ -1149,11 +1149,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         if (patched.size() < cellRange.count()) {
-            final Optional<SpreadsheetCellFormat> spreadsheetCellFormat = Optional.of(
-                    context.unmarshall(
+            final Optional<SpreadsheetFormatPattern<?>> formatPattern = Optional.of(
+                    context.unmarshallWithType(
                             format.objectOrFail()
-                                    .getOrFail(FORMAT_PROPERTY),
-                            SpreadsheetCellFormat.class
+                                    .getOrFail(FORMAT_PATTERN_PROPERTY)
                     )
             );
 
@@ -1161,7 +1160,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 if (!patchedCellReferences.contains(possible)) {
                     patched.add(
                             possible.setFormula(SpreadsheetFormula.EMPTY)
-                                    .setFormat(spreadsheetCellFormat)
+                                    .setFormatPattern(formatPattern)
                     );
                 }
             }
@@ -1784,7 +1783,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String VIEWPORT_SELECTION_PROPERTY_STRING = "viewportSelection";
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String COLUMNS_PROPERTY_STRING = "columns";
-    private final static String FORMAT_PROPERTY_STRING = "format";
+    private final static String FORMAT_PATTERN_PROPERTY_STRING = "format-pattern";
     private final static String LABELS_PROPERTY_STRING = "labels";
     private final static String ROWS_PROPERTY_STRING = "rows";
     private final static String STYLE_PROPERTY_STRING = "style"; // only used by patchCells
@@ -1804,7 +1803,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // @VisibleForTesting
     final static JsonPropertyName COLUMNS_PROPERTY = JsonPropertyName.with(COLUMNS_PROPERTY_STRING);
     // @VisibleForTesting
-    final static JsonPropertyName FORMAT_PROPERTY = JsonPropertyName.with(FORMAT_PROPERTY_STRING);
+    final static JsonPropertyName FORMAT_PATTERN_PROPERTY = JsonPropertyName.with(FORMAT_PATTERN_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName LABELS_PROPERTY = JsonPropertyName.with(LABELS_PROPERTY_STRING);
     // @VisibleForTesting
