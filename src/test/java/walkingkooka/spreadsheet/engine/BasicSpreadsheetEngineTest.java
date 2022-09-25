@@ -29,7 +29,6 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -44,7 +43,9 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatException;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -140,8 +141,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
 
-    private final static String PATTERN = "$text+" + FORMATTED_PATTERN_SUFFIX;
-    private final static String PATTERN_COLOR = "$text+" + FORMATTED_PATTERN_SUFFIX + "+" + COLOR.get();
+    private final static String PATTERN = "$\"text\"+\"" + FORMATTED_PATTERN_SUFFIX + "\"";
+    private final static String PATTERN_COLOR = "$text+\"" + FORMATTED_PATTERN_SUFFIX + "\"+" + COLOR.get();
     private final static String PATTERN_FORMAT_FAIL = "<none>";
 
     private final static String DATE_PATTERN = "yyyy/mm/dd";
@@ -361,16 +362,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadCellsWithoutFormatPattern() {
-        this.cellStoreSaveAndLoadCellAndCheck(SpreadsheetCell.NO_FORMAT, FORMATTED_PATTERN_SUFFIX);
+        this.cellStoreSaveAndLoadCellAndCheck(
+                SpreadsheetCell.NO_FORMAT_PATTERN,
+                FORMATTED_PATTERN_SUFFIX
+        );
     }
 
     @Test
     public void testLoadCellsWithFormatPattern() {
-        this.cellStoreSaveAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(PATTERN)),
-                FORMATTED_PATTERN_SUFFIX);
+        this.cellStoreSaveAndLoadCellAndCheck(
+                Optional.of(
+                        SpreadsheetPattern.parseNumberFormatPattern("# \"" + FORMATTED_PATTERN_SUFFIX + "\"")
+                ),
+                FORMATTED_PATTERN_SUFFIX
+        );
     }
 
-    private void cellStoreSaveAndLoadCellAndCheck(final Optional<SpreadsheetCellFormat> format,
+    private void cellStoreSaveAndLoadCellAndCheck(final Optional<SpreadsheetFormatPattern<?>> formatPattern,
                                                   final String patternSuffix) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -379,7 +387,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         context.storeRepository()
                 .cells()
                 .save(this.cell(cellReference, "=1+2")
-                        .setFormat(format));
+                        .setFormatPattern(formatPattern));
 
         this.loadCellAndCheckFormatted2(engine,
                 cellReference,
@@ -11520,7 +11528,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private SpreadsheetMetadata metadata() {
-        final String suffix = " " + '"' + FORMATTED_PATTERN_SUFFIX + '"';
+        final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
 
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
