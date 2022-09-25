@@ -56,6 +56,13 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
                 v -> v instanceof LocalDate);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Override
+    String printTreeTypeName() {
+        return "date-format-pattern";
+    }
+
     // Object...........................................................................................................
 
     @Override

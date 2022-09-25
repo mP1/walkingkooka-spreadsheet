@@ -22,6 +22,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
 
 /**
  * Holds a single {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
@@ -57,6 +59,15 @@ public abstract class SpreadsheetFormatPattern<T extends SpreadsheetFormatParser
      * Factory that lazily creates a {@link SpreadsheetFormatter}
      */
     abstract SpreadsheetFormatter createFormatter();
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    final void printTreeValue(final IndentingPrinter printer) {
+        printer.println(
+                CharSequences.quoteAndEscape(this.value().text())
+        );
+    }
 
     // Object...........................................................................................................
 

@@ -409,6 +409,17 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         };
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                this.createPattern(),
+                "time-format-pattern\n" +
+                        "  \"hh:mm:ss.000 A/P \\\"text-literal\\\" \\\\!\"\n"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

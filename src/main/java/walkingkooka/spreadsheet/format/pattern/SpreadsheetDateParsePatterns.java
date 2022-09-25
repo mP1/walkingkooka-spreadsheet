@@ -77,6 +77,13 @@ public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns
         return SpreadsheetParserToken.date(token, text);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Override
+    String printTreeTypeName() {
+        return "date-parse-patterns";
+    }
+
     // Object...........................................................................................................
 
     @Override

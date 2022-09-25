@@ -460,6 +460,17 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         };
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                this.createPattern(),
+                "number-format-pattern\n" +
+                        "  \"$ ###,##0.00 \\\"text-literal\\\" \\\\!\"\n"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
