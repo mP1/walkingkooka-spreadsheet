@@ -33,11 +33,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -58,7 +54,6 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -244,18 +239,6 @@ public final class Sample {
                         engine,
                         this
                 );
-            }
-
-            @Override
-            public SpreadsheetFormatter parseFormatPattern(final String pattern) {
-                final SpreadsheetFormatExpressionParserToken token = SpreadsheetFormatParsers.expression()
-                        .orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
-                        .get()
-                        .cast(SpreadsheetFormatExpressionParserToken.class);
-                return SpreadsheetFormatters.expression(token, (v) -> {
-                    throw new UnsupportedOperationException();
-                });
             }
 
             @Override

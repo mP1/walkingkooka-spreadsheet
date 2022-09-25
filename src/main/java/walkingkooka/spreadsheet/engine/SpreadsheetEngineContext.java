@@ -59,11 +59,6 @@ public interface SpreadsheetEngineContext extends Context, ExpressionPurityConte
     Object evaluate(final Expression node, final Optional<SpreadsheetCell> cell);
 
     /**
-     * Accepts a pattern and returns the equivalent {@link SpreadsheetFormatter}.
-     */
-    SpreadsheetFormatter parseFormatPattern(final String pattern);
-
-    /**
      * Formats the given value using the provided formatter.
      */
     Optional<SpreadsheetText> format(final Object value,

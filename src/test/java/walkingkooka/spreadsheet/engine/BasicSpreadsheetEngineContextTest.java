@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -451,23 +452,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    @Test
-    public void testParseFormatPattern() {
-        // DecimalNumberContext returns 'D' for the decimal point character and 'M' for minus sign
-
-        this.parseFormatPatternAndCheck(
-                "####.#",
-                BigDecimal.valueOf(-123.456),
-                this.spreadsheetFormatContext(),
-                Optional.of(
-                        SpreadsheetText.with(
-                                SpreadsheetText.WITHOUT_COLOR,
-                                MINUS + "123" + DECIMAL + "5"
-                        )
-                )
-        );
-    }
-
     private SpreadsheetFormatterContext spreadsheetFormatContext() {
         final DecimalNumberContext decimalNumberContext = this.decimalNumberContext();
 
@@ -534,7 +518,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testFormat() {
         this.formatAndCheck(
                 BigDecimal.valueOf(-123.45),
-                this.createContext().parseFormatPattern("#.#\"Abc123\""),
+                SpreadsheetPattern.parseNumberFormatPattern("#.#\"Abc123\"").formatter(),
                 Optional.of(
                         SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, MINUS + "123" + DECIMAL + "5Abc123")
                 )
