@@ -27,11 +27,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -41,7 +37,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -219,17 +214,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     }
 
     private final Supplier<LocalDateTime> now;
-
-    // parsing and formatting text......................................................................................
-
-    @Override
-    public SpreadsheetFormatter parseFormatPattern(final String pattern) {
-        return SpreadsheetFormatParsers.expression()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
-                .map(t -> SpreadsheetFormatters.expression(t.cast(SpreadsheetFormatExpressionParserToken.class), this.fractioner))
-                .get();
-    }
 
     /**
      * Used to convert a number into a fraction within expressions.

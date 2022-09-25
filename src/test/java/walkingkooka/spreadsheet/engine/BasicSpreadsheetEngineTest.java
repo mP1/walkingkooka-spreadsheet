@@ -11248,32 +11248,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetFormatter parseFormatPattern(final String pattern) {
-                if (PATTERN_COLOR.equals(pattern)) {
-                    return formatter(pattern, COLOR, FORMATTED_PATTERN_SUFFIX);
-                }
-                if (PATTERN.equals(pattern)) {
-                    return formatter(pattern, SpreadsheetText.WITHOUT_COLOR, FORMATTED_PATTERN_SUFFIX);
-                }
-                if (PATTERN_FORMAT_FAIL.equals(pattern)) {
-                    return new SpreadsheetFormatter() {
-                        @Override
-                        public boolean canFormat(final Object value,
-                                                 final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-                            return true;
-                        }
-
-                        @Override
-                        public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-                            return Optional.empty();
-                        }
-                    };
-                }
-
-                throw new AssertionError("Unknown pattern=" + pattern + " expected one of " + PATTERN_FORMAT_FAIL + "|" + PATTERN + "|" + PATTERN_COLOR);
-            }
-
-            @Override
             public Optional<SpreadsheetText> format(final Object value,
                                                     final SpreadsheetFormatter formatter) {
                 assertFalse(value instanceof Optional, () -> "Value must not be optional" + value);

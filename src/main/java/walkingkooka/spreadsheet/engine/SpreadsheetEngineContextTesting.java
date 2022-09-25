@@ -18,12 +18,10 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.ContextTesting;
 import walkingkooka.locale.HasLocaleTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -185,38 +183,6 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 context.evaluate(expression, cell),
                 () -> "evaluate " + expression + cell.map(c -> " " + c).orElse("") + " with context " + context
         );
-    }
-
-    // parseFormat......................................................................................................
-
-    @Test
-    default void testParseFormatPatternNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createContext().parseFormatPattern(null)
-        );
-    }
-
-    default void parseFormatPatternAndCheck(final String pattern,
-                                            final Object value,
-                                            final SpreadsheetFormatterContext spreadsheetFormatContext,
-                                            final Optional<SpreadsheetText> expected) {
-        this.parseFormatPatternAndCheck(this.createContext(),
-                pattern,
-                value,
-                spreadsheetFormatContext,
-                expected);
-    }
-
-    default void parseFormatPatternAndCheck(final SpreadsheetEngineContext context,
-                                            final String pattern,
-                                            final Object value,
-                                            final SpreadsheetFormatterContext spreadsheetFormatContext,
-                                            final Optional<SpreadsheetText> expected) {
-        final SpreadsheetFormatter formatter = context.parseFormatPattern(pattern);
-        this.checkEquals(expected,
-                formatter.format(Cast.to(value), spreadsheetFormatContext),
-                () -> "parseFormatPattern " + pattern + " " + formatter + " then format " + CharSequences.quoteIfChars(value));
     }
 
     // format...........................................................................................................
