@@ -516,6 +516,18 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 LocalTime.of(11, 58, 59));
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetPattern.parseTimeParsePatterns("hhmm;hhmmss"),
+                "time-parse-patterns\n" +
+                        "  hhmm\n" +
+                        "  hhmmss\n"
+        );
+    }
+
     // helpers..........................................................................................................
 
     @Override

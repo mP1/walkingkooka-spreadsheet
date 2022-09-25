@@ -28,6 +28,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.cursor.parser.ParserTesting;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
@@ -40,6 +41,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
         IsMethodTesting<P>,
         ParserTesting,
         ParseStringTesting<P>,
+        TreePrintableTesting,
         ToStringTesting<P> {
 
     SpreadsheetPatternTestCase() {

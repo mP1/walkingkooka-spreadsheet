@@ -54,6 +54,13 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
         return SpreadsheetFormatters.dateTime(SpreadsheetFormatParserToken.dateTime(time.value(), time.text()), v -> v instanceof LocalTime);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Override
+    String printTreeTypeName() {
+        return "time-format-pattern";
+    }
+
     // Object...........................................................................................................
 
     @Override

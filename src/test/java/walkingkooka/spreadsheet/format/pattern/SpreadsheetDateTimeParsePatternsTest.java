@@ -441,6 +441,18 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 LocalDateTime.of(2000, 12, 31, 11, 58, 59));
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetPattern.parseDateTimeParsePatterns("ddmmyyhhmmss;yymmdd"),
+                "date-time-parse-patterns\n" +
+                        "  ddmmyyhhmmss\n" +
+                        "  yymmdd\n"
+        );
+    }
+
     // helpers.........................................................................................................
 
     @Override

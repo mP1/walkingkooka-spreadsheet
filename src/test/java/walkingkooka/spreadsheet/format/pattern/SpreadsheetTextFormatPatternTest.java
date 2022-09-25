@@ -334,6 +334,17 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         };
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                this.createPattern(),
+                "text-format-pattern\n" +
+                        "  \"\\\"text-literal\\\" @*_\"\n"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

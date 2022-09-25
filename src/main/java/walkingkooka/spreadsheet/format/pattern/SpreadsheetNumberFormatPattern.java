@@ -53,6 +53,13 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         return SpreadsheetFormatters.number(this.value);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Override
+    String printTreeTypeName() {
+        return "number-format-pattern";
+    }
+
     // Object...........................................................................................................
 
     @Override

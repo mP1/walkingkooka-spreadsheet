@@ -38,6 +38,8 @@ import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -57,7 +59,7 @@ import java.util.function.Function;
 /**
  * Holds a tokens that may be used to parse or format values along with helpers.
  */
-abstract public class SpreadsheetPattern<V> implements Value<V> {
+abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
 
     /**
      * Factory that creates a {@link SpreadsheetDateFormatPattern} from the given token.
@@ -712,6 +714,20 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
     public final boolean isTime() {
         return this instanceof SpreadsheetTimeFormatPattern || this instanceof SpreadsheetTimeParsePatterns;
     }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public final void printTree(final IndentingPrinter printer) {
+        printer.println(this.printTreeTypeName());
+        printer.indent();
+        this.printTreeValue(printer);
+        printer.outdent();
+    }
+
+    abstract String printTreeTypeName();
+
+    abstract void printTreeValue(final IndentingPrinter printer);
 
     // Object...........................................................................................................
 

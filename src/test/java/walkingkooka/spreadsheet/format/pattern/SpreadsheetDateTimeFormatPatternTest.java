@@ -775,6 +775,17 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         };
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                this.createPattern(),
+                "date-time-format-pattern\n" +
+                        "  \"dd/mm/yyyy hh:mm:ss.000 A/P \\\"text-literal\\\" \\\\!\"\n"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

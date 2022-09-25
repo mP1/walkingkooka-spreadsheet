@@ -444,6 +444,17 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         };
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                this.createPattern(),
+                "date-format-pattern\n" +
+                        "  \"ddmmyyyy \\\"text-literal\\\" \\\\!\"\n"
+        );
+    }
+
     // helpers..........................................................................................................
 
     @Override

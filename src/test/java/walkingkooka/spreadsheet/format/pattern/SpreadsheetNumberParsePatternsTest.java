@@ -373,6 +373,18 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetPattern.parseNumberParsePatterns("##.##;##"),
+                "number-parse-patterns\n" +
+                        "  ##.##\n" +
+                        "  ##\n"
+        );
+    }
+
     // helpers.........................................................................................................
 
     @Override

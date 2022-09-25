@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.util.List;
@@ -45,6 +46,15 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
      */
     SpreadsheetParsePatterns(final List<T> tokens) {
         super(Lists.immutable(tokens));
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    final void printTreeValue(final IndentingPrinter printer) {
+        for (final T token : this.value()) {
+            printer.println(token.text());
+        }
     }
 
     // Object...........................................................................................................

@@ -77,6 +77,13 @@ public final class SpreadsheetTimeParsePatterns extends SpreadsheetParsePatterns
         return SpreadsheetParserToken.time(token, text);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Override
+    String printTreeTypeName() {
+        return "time-parse-patterns";
+    }
+
     // Object...........................................................................................................
 
     @Override
