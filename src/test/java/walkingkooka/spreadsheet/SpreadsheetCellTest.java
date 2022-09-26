@@ -1449,14 +1449,15 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                 this.formula()
                         )
                         .setFormatPattern(this.formatPattern()),
-                REFERENCE + "=" + this.formula() + " @@");
+                REFERENCE + "=" + this.formula() + " \"@@\""
+        );
     }
 
     @Test
     public void testToStringWithoutError() {
         this.toStringAndCheck(
                 this.createCell(),
-                REFERENCE + "=" + this.formula() + " dd/mm/yyyy @@ \"formatted-text\""
+                REFERENCE + "=" + this.formula() + " \"dd/mm/yyyy\" \"@@\" \"formatted-text\""
         );
     }
 

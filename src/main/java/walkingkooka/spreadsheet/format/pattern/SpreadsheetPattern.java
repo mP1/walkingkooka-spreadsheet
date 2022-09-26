@@ -750,6 +750,22 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
         return this.value.equals(other.value);
     }
 
+    /**
+     * Attempts to reconstruct an equivalent but not exact pattern representation of the given tokens. The actual
+     * optional whitespace and separator tokens are not present only the individual patterns.
+     */
+    @Override
+    public final String toString() {
+        return CharSequences.quoteAndEscape(
+                this.toStringPlain()
+        ).toString();
+    }
+
+    /**
+     * Returns the text without quotes or escaping of the tokens within this pattern.
+     */
+    abstract String toStringPlain();
+
     // JsonNodeContext..................................................................................................
 
     /**
@@ -847,7 +863,9 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonNode.string(this.toString());
+        return JsonNode.string(
+                this.toStringPlain()
+        );
     }
 
     static {

@@ -110,7 +110,10 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     @Test
     public void testParserToString2() {
         final String pattern = "hh:mm:ss";
-        this.toStringAndCheck(SpreadsheetTimeParsePatterns.parseTimeParsePatterns(pattern).parser(), pattern);
+        this.toStringAndCheck(
+                SpreadsheetTimeParsePatterns.parseTimeParsePatterns(pattern).parser(),
+                '"' + pattern + '"'
+        );
     }
 
     @Test

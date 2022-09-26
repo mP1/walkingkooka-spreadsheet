@@ -27,6 +27,7 @@ import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -197,7 +198,10 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
 
     @Test
     public final void testToString() {
-        this.toStringAndCheck(this.createPattern(), this.patternText());
+        this.toStringAndCheck(
+                this.createPattern(),
+                CharSequences.quoteIfChars(this.patternText()).toString()
+        );
     }
 
     // helpers..........................................................................................................

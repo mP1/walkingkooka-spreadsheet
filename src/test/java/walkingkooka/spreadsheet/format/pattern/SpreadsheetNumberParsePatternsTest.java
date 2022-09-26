@@ -385,6 +385,16 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
         );
     }
 
+    // ToString........................................................................................................
+
+    @Test
+    public void testToString2() {
+        this.toStringAndCheck(
+                this.createPattern("#.##"),
+                "\"#.##\""
+        );
+    }
+
     // helpers.........................................................................................................
 
     @Override
