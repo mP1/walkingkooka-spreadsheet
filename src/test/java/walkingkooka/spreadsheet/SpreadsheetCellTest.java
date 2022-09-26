@@ -90,7 +90,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkReference(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
-        this.checkFormat(cell);
+        this.checkFormatPattern(cell);
         this.checkFormatted(cell);
     }
 
@@ -103,7 +103,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkReference(cell, reference.toRelative());
         this.checkFormula(cell);
         this.checkTextStyle(cell);
-        this.checkFormat(cell, SpreadsheetCell.NO_FORMAT_PATTERN);
+        this.checkFormatPattern(cell, SpreadsheetCell.NO_FORMAT_PATTERN);
         this.checkFormatted(cell, SpreadsheetCell.NO_FORMATTED_CELL);
     }
 
@@ -113,7 +113,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkReference(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
-        this.checkNoFormat(cell);
+        this.checkNoFormatPattern(cell);
         this.checkNoFormatted(cell);
     }
 
@@ -137,7 +137,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         )
         );
         this.checkTextStyle(cell);
-        this.checkNoFormat(cell);
+        this.checkNoFormatPattern(cell);
         this.checkNoFormatted(cell);
     }
 
@@ -191,7 +191,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkReference(different, REFERENCE);
         this.checkFormula(different, differentFormula);
         this.checkTextStyle(different);
-        this.checkFormat(different);
+        this.checkFormatPattern(different);
         this.checkNoFormatted(different); // clear formatted because of formula / value change.
     }
 
@@ -212,7 +212,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .setValue(Optional.of(SpreadsheetErrorKind.VALUE))
         );
         this.checkTextStyle(different);
-        this.checkFormat(different);
+        this.checkFormatPattern(different);
         this.checkNoFormatted(different); // clear formatted because of formula / value change.
     }
 
@@ -239,7 +239,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkReference(different, REFERENCE);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different, differentTextStyle);
-        this.checkFormat(different);
+        this.checkFormatPattern(different);
         this.checkNoFormatted(different); // clear formatted because of text properties change
     }
 
@@ -260,16 +260,16 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testSetFormatPatternDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetFormatPattern<?>> differentFormat = Optional.of(
+        final Optional<SpreadsheetFormatPattern<?>> differentFormatPattern = Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
         );
-        final SpreadsheetCell different = cell.setFormatPattern(differentFormat);
+        final SpreadsheetCell different = cell.setFormatPattern(differentFormatPattern);
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
-        this.checkFormat(different, differentFormat);
+        this.checkFormatPattern(different, differentFormatPattern);
         this.checkNoFormatted(different); // clear formatted because of format change
     }
 
@@ -282,7 +282,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkReference(different);
         this.checkFormula(different);
         this.checkTextStyle(different);
-        this.checkFormat(different);
+        this.checkFormatPattern(different);
         this.checkNoFormatted(different);
     }
 
@@ -310,7 +310,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkReference(different, REFERENCE);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
-        this.checkFormat(different, this.formatPattern());
+        this.checkFormatPattern(different, this.formatPattern());
         this.checkFormatted(different, differentFormatted);
     }
 
@@ -323,7 +323,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkReference(different);
         this.checkFormula(different);
         this.checkTextStyle(different);
-        this.checkNoFormat(different);
+        this.checkNoFormatPattern(different);
         this.checkFormatted(different);
     }
 
@@ -351,7 +351,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testCompareDifferentFormat() {
+    public void testCompareDifferentFormatPattern() {
         this.compareToAndCheckEquals(this.createComparable()
                 .setFormatPattern(
                         Optional.of(
@@ -423,7 +423,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormat() {
+    public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatPattern() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         final JsonNodeMarshallContext context = this.marshallContext();
@@ -576,7 +576,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testMarshallFormulaStyleFormatAndFormattedRoundtripTwice() {
+    public void testMarshallFormulaStyleFormatPatternAndFormattedRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetSelection.parseCell("A99")
                         .setFormula(SpreadsheetFormula.EMPTY.setText("=123.5"))
@@ -1056,7 +1056,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleFormatFormatted() {
+    public void testTreePrintableFormulaTokenExpressionValueStyleFormatPatternFormatted() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                                 SpreadsheetSelection.parseCell("$A$1"),
@@ -1253,18 +1253,19 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
     }
 
-    private void checkNoFormat(final SpreadsheetCell cell) {
-        this.checkFormat(
+    private void checkNoFormatPattern(final SpreadsheetCell cell) {
+        this.checkFormatPattern(
                 cell,
                 SpreadsheetCell.NO_FORMAT_PATTERN
         );
     }
 
-    private void checkFormat(final SpreadsheetCell cell) {
-        this.checkFormat(cell, this.formatPattern());
+    private void checkFormatPattern(final SpreadsheetCell cell) {
+        this.checkFormatPattern(cell, this.formatPattern());
     }
 
-    private void checkFormat(final SpreadsheetCell cell, final Optional<SpreadsheetFormatPattern<?>> formatPattern) {
+    private void checkFormatPattern(final SpreadsheetCell cell,
+                                    final Optional<SpreadsheetFormatPattern<?>> formatPattern) {
         this.checkEquals(
                 formatPattern,
                 cell.formatPattern(),
