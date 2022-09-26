@@ -1132,7 +1132,83 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleFormat() {
+    public void testTreePrintableFormulaTokenExpressionValueStyleParsePatterns() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                                SpreadsheetSelection.parseCell("$A$1"),
+                                formula(FORMULA_TEXT)
+                                        .setToken(token())
+                                        .setExpression(expression())
+                                        .setValue(Optional.of(3))
+                        ).setStyle(this.boldAndItalics())
+                        .setParsePatterns(this.parsePatterns()),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text: \"=1+2\"\n" +
+                        "    token:\n" +
+                        "      SpreadsheetExpression\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetAddition\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "    expression:\n" +
+                        "      AddExpression\n" +
+                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "    value: 3 (java.lang.Integer)\n" +
+                        "  TextStyle\n" +
+                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
+                        "  parsePatterns:\n" +
+                        "    date-time-parse-patterns\n" +
+                        "      dd/mm/yyyy\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableFormulaTokenExpressionValueStyleParsePatternsFormatPattern() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                                SpreadsheetSelection.parseCell("$A$1"),
+                                formula(FORMULA_TEXT)
+                                        .setToken(token())
+                                        .setExpression(expression())
+                                        .setValue(Optional.of(3))
+                        ).setStyle(this.boldAndItalics())
+                        .setParsePatterns(this.parsePatterns())
+                        .setFormatPattern(this.formatPattern()),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text: \"=1+2\"\n" +
+                        "    token:\n" +
+                        "      SpreadsheetExpression\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetAddition\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "          SpreadsheetNumber\n" +
+                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "    expression:\n" +
+                        "      AddExpression\n" +
+                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "    value: 3 (java.lang.Integer)\n" +
+                        "  TextStyle\n" +
+                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
+                        "  parsePatterns:\n" +
+                        "    date-time-parse-patterns\n" +
+                        "      dd/mm/yyyy\n" +
+                        "  formatPattern:\n" +
+                        "    text-format-pattern\n" +
+                        "      \"@@\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableFormulaTokenExpressionValueStyleFormatPattern() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                                 SpreadsheetSelection.parseCell("$A$1"),
