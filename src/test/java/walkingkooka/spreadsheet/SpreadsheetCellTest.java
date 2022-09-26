@@ -27,6 +27,7 @@ import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -88,6 +89,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final SpreadsheetCell cell = this.createCell();
 
         this.checkReference(cell);
+        this.checkParsePatterns(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
         this.checkFormatPattern(cell);
@@ -101,16 +103,19 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 formula(FORMULA));
 
         this.checkReference(cell, reference.toRelative());
+        this.checkNoParsePatterns(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
-        this.checkFormatPattern(cell, SpreadsheetCell.NO_FORMAT_PATTERN);
+        this.checkNoFormatPattern(cell);
         this.checkFormatted(cell, SpreadsheetCell.NO_FORMATTED_CELL);
     }
 
     @Test
     public void testWithFormula() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
+
         this.checkReference(cell);
+        this.checkNoParsePatterns(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
         this.checkNoFormatPattern(cell);
@@ -128,6 +133,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
 
         this.checkReference(cell);
+        this.checkNoParsePatterns(cell);
         this.checkFormula(
                 cell,
                 SpreadsheetFormula.EMPTY.setText("=1+2")
@@ -165,7 +171,62 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormula(different, this.formula());
 
         this.checkReference(cell);
+        this.checkEquals(
+                cell.parsePatterns(),
+                different.parsePatterns(),
+                "parsePatterns"
+        );
         this.checkFormula(cell);
+        this.checkEquals(
+                cell.formatPattern(),
+                different.formatPattern(),
+                "formatPattern"
+        );
+    }
+
+    // SetParsePatterns.....................................................................................................
+
+    @SuppressWarnings("OptionalAssignedToNull")
+    @Test
+    public void testSetParsePatternsNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createCell().setParsePatterns(null));
+    }
+
+    @Test
+    public void testSetParsePatternsSame() {
+        final SpreadsheetCell cell = this.createCell();
+        assertSame(cell, cell.setParsePatterns(cell.parsePatterns()));
+    }
+
+    @Test
+    public void testSetParsePatternsDifferent() {
+        final SpreadsheetCell cell = this.createCell();
+        final Optional<SpreadsheetParsePatterns<?>> differentParsePatterns = Optional.of(
+                SpreadsheetPattern.parseNumberParsePatterns("\"different-pattern\"")
+        );
+        final SpreadsheetCell different = cell.setParsePatterns(differentParsePatterns);
+        assertNotSame(cell, different);
+
+        this.checkReference(different, REFERENCE);
+        this.checkParsePatterns(different, differentParsePatterns);
+        this.checkFormula(different, this.formula());
+        this.checkTextStyle(different);
+        this.checkFormatPattern(different);
+        this.checkNoFormatted(different); // clear formatted because of format change
+    }
+
+    @Test
+    public void testSetParsePatternsWhenWithout() {
+        final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
+        final SpreadsheetCell different = cell.setParsePatterns(this.parsePatterns());
+        assertNotSame(cell, different);
+
+        this.checkReference(different);
+        this.checkParsePatterns(different);
+        this.checkFormula(different);
+        this.checkTextStyle(different);
+        this.checkNoFormatPattern(different);
+        this.checkNoFormatted(different);
     }
 
     // SetFormula.....................................................................................................
@@ -189,6 +250,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
+        this.checkParsePatterns(different);
         this.checkFormula(different, differentFormula);
         this.checkTextStyle(different);
         this.checkFormatPattern(different);
@@ -206,6 +268,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
+        this.checkParsePatterns(different);
         this.checkFormula(
                 different,
                 SpreadsheetFormula.EMPTY
@@ -237,6 +300,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
+        this.checkParsePatterns(different);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different, differentTextStyle);
         this.checkFormatPattern(different);
@@ -267,6 +331,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
+        this.checkParsePatterns(different);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
         this.checkFormatPattern(different, differentFormatPattern);
@@ -280,13 +345,14 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertNotSame(cell, different);
 
         this.checkReference(different);
+        this.checkNoParsePatterns(different);
         this.checkFormula(different);
         this.checkTextStyle(different);
         this.checkFormatPattern(different);
         this.checkNoFormatted(different);
     }
 
-    // SetFormatPatternted.....................................................................................................
+    // SetFormatted.....................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
@@ -328,6 +394,18 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     // equals .............................................................................................
+
+    @Test
+    public void testCompareDifferentParsePatterns() {
+        this.compareToAndCheckEquals(
+                this.createComparable()
+                        .setParsePatterns(
+                                Optional.of(
+                                        SpreadsheetPattern.parseNumberParsePatterns("\"different-pattern\"")
+                                )
+                        )
+        );
+    }
 
     @Test
     public void testCompareDifferentFormulaEquals() {
@@ -536,11 +614,28 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testMarshallWithFormatted() {
         final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.marshallAndCheck(this.createCell(),
-                "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}" +
-                        ", \"format-pattern\": " + context.marshallWithType(this.formatPattern().get()) +
-                        ", \"formatted\": " + context.marshallWithType(this.formatted().get()) +
-                        "}}");
+        this.marshallAndCheck(
+                this.createCell(),
+                "{\n" +
+                        "  \"B21\": {\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"=1+2\"\n" +
+                        "    },\n" +
+                        "    \"parse-patterns\": {\n" +
+                        "      \"type\": \"spreadsheet-date-time-parse-patterns\",\n" +
+                        "      \"value\": \"dd/mm/yyyy\"\n" +
+                        "    },\n" +
+                        "    \"format-pattern\": {\n" +
+                        "      \"type\": \"spreadsheet-text-format-pattern\",\n" +
+                        "      \"value\": \"@@\"\n" +
+                        "    },\n" +
+                        "    \"formatted\": {\n" +
+                        "      \"type\": \"text\",\n" +
+                        "      \"value\": \"formatted-text\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
+        );
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -548,16 +643,33 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testMarshallWithStyleAndFormatted() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         this.marshallAndCheck(
                 this.createCell()
                         .setStyle(boldAndItalics)
                         .setFormatted(this.formatted()),
-                "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}, \"style\": " + context.marshall(boldAndItalics) +
-                        ", \"format-pattern\": " + context.marshallWithType(this.formatPattern().get()) +
-                        ", \"formatted\": " + context.marshallWithType(this.formatted().get()) +
-                        "}}"
+                "{\n" +
+                        "  \"B21\": {\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"=1+2\"\n" +
+                        "    },\n" +
+                        "    \"style\": {\n" +
+                        "      \"font-style\": \"ITALIC\",\n" +
+                        "      \"font-weight\": \"bold\"\n" +
+                        "    },\n" +
+                        "    \"parse-patterns\": {\n" +
+                        "      \"type\": \"spreadsheet-date-time-parse-patterns\",\n" +
+                        "      \"value\": \"dd/mm/yyyy\"\n" +
+                        "    },\n" +
+                        "    \"format-pattern\": {\n" +
+                        "      \"type\": \"spreadsheet-text-format-pattern\",\n" +
+                        "      \"value\": \"@@\"\n" +
+                        "    },\n" +
+                        "    \"formatted\": {\n" +
+                        "      \"type\": \"text\",\n" +
+                        "      \"value\": \"formatted-text\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
         );
     }
 
@@ -1175,7 +1287,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testToStringWithoutError() {
         this.toStringAndCheck(
                 this.createCell(),
-                REFERENCE + "=" + this.formula() + " @@ \"formatted-text\""
+                REFERENCE + "=" + this.formula() + " dd/mm/yyyy @@ \"formatted-text\""
         );
     }
 
@@ -1189,8 +1301,11 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private SpreadsheetCell createComparable(final int column, final int row, final String formula) {
-        return SpreadsheetCell.with(reference(column, row),
-                        formula(formula))
+        return SpreadsheetCell.with(
+                        reference(column, row),
+                        formula(formula)
+                )
+                .setParsePatterns(this.parsePatterns())
                 .setFormatPattern(this.formatPattern())
                 .setFormatted(this.formatted());
     }
@@ -1216,6 +1331,35 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     private void checkReference(final SpreadsheetCell cell, final SpreadsheetCellReference reference) {
         this.checkEquals(reference, cell.reference(), "reference");
+    }
+
+    private Optional<SpreadsheetParsePatterns<?>> parsePatterns() {
+        return Optional.of(
+                SpreadsheetPattern.parseDateTimeParsePatterns("dd/mm/yyyy")
+        );
+    }
+
+    private void checkNoParsePatterns(final SpreadsheetCell cell) {
+        this.checkParsePatterns(
+                cell,
+                SpreadsheetCell.NO_PARSE_PATTERNS
+        );
+    }
+
+    private void checkParsePatterns(final SpreadsheetCell cell) {
+        this.checkParsePatterns(
+                cell,
+                this.parsePatterns()
+        );
+    }
+
+    private void checkParsePatterns(final SpreadsheetCell cell,
+                                    final Optional<SpreadsheetParsePatterns<?>> parsePatterns) {
+        this.checkEquals(
+                parsePatterns,
+                cell.parsePatterns(),
+                "parsePatterns"
+        );
     }
 
     private SpreadsheetFormula formula() {
