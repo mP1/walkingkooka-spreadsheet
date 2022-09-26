@@ -345,6 +345,14 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testToString2() {
+        this.toStringAndCheck(
+                this.createPattern("@\" Hello\""),
+                "\"@\\\" Hello\\\"\""
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

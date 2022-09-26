@@ -72,7 +72,7 @@ public abstract class SpreadsheetFormatPattern<T extends SpreadsheetFormatParser
     // Object...........................................................................................................
 
     @Override
-    public final String toString() {
+    final String toStringPlain() {
         return this.value.toString();
     }
 }

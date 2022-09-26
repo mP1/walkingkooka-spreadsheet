@@ -61,12 +61,8 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
 
     private final static String SEPARATOR = ";";
 
-    /**
-     * Attempts to reconstruct an equivalent but not exact pattern representation of the given tokens. The actual
-     * optional whitespace and separator tokens are not present only the individual patterns.
-     */
     @Override
-    public final String toString() {
+    final String toStringPlain() {
         return this.value.stream()
                 .map(Object::toString)
                 .collect(Collectors.joining(SEPARATOR));
