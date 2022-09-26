@@ -290,18 +290,18 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
-    public void testSetFormatPatterntedNullFails() {
+    public void testSetFormattedNullFails() {
         assertThrows(NullPointerException.class, () -> this.createCell().setFormatted(null));
     }
 
     @Test
-    public void testSetFormatPatterntedSame() {
+    public void testSetFormattedSame() {
         final SpreadsheetCell cell = this.createCell();
         assertSame(cell, cell.setFormatted(cell.formatted()));
     }
 
     @Test
-    public void testSetFormatPatterntedDifferent() {
+    public void testSetFormattedDifferent() {
         final SpreadsheetCell cell = this.createCell();
         final Optional<TextNode> differentFormatted = Optional.of(TextNode.text("different"));
         final SpreadsheetCell different = cell.setFormatted(differentFormatted);
@@ -315,7 +315,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testSetFormatPatterntedWhenWithout() {
+    public void testSetFormattedWhenWithout() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
         final SpreadsheetCell different = cell.setFormatted(this.formatted());
         assertNotSame(cell, different);
