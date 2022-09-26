@@ -212,12 +212,16 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         return this.parsePatterns;
     }
 
+    /**
+     * Returns a {@link SpreadsheetCell} with the given {@link SpreadsheetParsePatterns}. If the formula has a token or
+     * expression they will be cleared.
+     */
     public SpreadsheetCell setParsePatterns(final Optional<SpreadsheetParsePatterns<?>> parsePatterns) {
         Objects.requireNonNull(parsePatterns, "parsePatterns");
 
         return this.parsePatterns.equals(parsePatterns) ?
                 this :
-                this.replace(this.reference, this.formula, this.style, parsePatterns, this.formatPattern, NO_FORMATTED_CELL);
+                this.replace(this.reference, this.formula.setToken(SpreadsheetFormula.NO_TOKEN), this.style, parsePatterns, this.formatPattern, NO_FORMATTED_CELL);
     }
 
     /**
