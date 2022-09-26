@@ -216,6 +216,38 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
+    public void testSetParsePatternsDifferentClearsFormulaTokenAndExpression() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText("'A");
+
+        final SpreadsheetCell cell = this.createCell()
+                .setFormula(
+                        formula.setToken(
+                                Optional.of(
+                                        SpreadsheetParserToken.text(
+                                                Lists.of(
+                                                        SpreadsheetParserToken.textLiteral("'A", "'A")
+                                                ),
+                                                "'A"
+                                        )
+                                )
+                        )
+                );
+        final Optional<SpreadsheetParsePatterns<?>> differentParsePatterns = Optional.of(
+                SpreadsheetPattern.parseNumberParsePatterns("\"different-pattern\"")
+        );
+        final SpreadsheetCell different = cell.setParsePatterns(differentParsePatterns);
+        assertNotSame(cell, different);
+
+        this.checkReference(different, REFERENCE);
+        this.checkParsePatterns(different, differentParsePatterns);
+        this.checkFormula(different, formula);
+        this.checkTextStyle(different);
+        this.checkFormatPattern(different);
+        this.checkNoFormatted(different); // clear formatted because of format change
+    }
+
+    @Test
     public void testSetParsePatternsWhenWithout() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
         final SpreadsheetCell different = cell.setParsePatterns(this.parsePatterns());
@@ -533,6 +565,39 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
                         .setFormatted(formatted()));
+    }
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Test
+    public void testUnmarshallObjectReferenceAndFormulaAndParsePattern() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        final SpreadsheetFormula formula = this.formula()
+                .setToken(
+                        Optional.of(
+                                SpreadsheetParserToken.text(
+                                        Lists.of(
+                                                SpreadsheetParserToken.textLiteral("'A", "'A")
+                                        ),
+                                        "'A"
+                                )
+                        )
+                );
+
+        this.unmarshallAndCheck(
+                JsonNode.object()
+                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
+                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula))
+                                .set(SpreadsheetCell.PARSE_PATTERNS_PROPERTY, context.marshallWithType(this.parsePatterns().get()))
+                                .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get()))
+                        ),
+                reference()
+                        .setFormula(SpreadsheetFormula.EMPTY)
+                        .setParsePatterns(this.parsePatterns())
+                        .setFormula(formula)
+                        .setFormatted(formatted())
+                        .setFormatted(formatted())
+        );
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -1134,14 +1199,16 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testTreePrintableFormulaTokenExpressionValueStyleParsePatterns() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                                SpreadsheetSelection.parseCell("$A$1"),
-                                formula(FORMULA_TEXT)
-                                        .setToken(token())
-                                        .setExpression(expression())
+                SpreadsheetSelection.parseCell("$A$1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+                        .setStyle(this.boldAndItalics())
+                        .setParsePatterns(this.parsePatterns())
+                        .setFormula(
+                                this.formula(FORMULA_TEXT)
+                                        .setToken(this.token())
+                                        .setExpression(this.expression())
                                         .setValue(Optional.of(3))
-                        ).setStyle(this.boldAndItalics())
-                        .setParsePatterns(this.parsePatterns()),
+                        ),
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    text: \"=1+2\"\n" +
@@ -1170,15 +1237,17 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testTreePrintableFormulaTokenExpressionValueStyleParsePatternsFormatPattern() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                                SpreadsheetSelection.parseCell("$A$1"),
-                                formula(FORMULA_TEXT)
-                                        .setToken(token())
-                                        .setExpression(expression())
-                                        .setValue(Optional.of(3))
-                        ).setStyle(this.boldAndItalics())
+                SpreadsheetSelection.parseCell("$A$1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+                        .setStyle(this.boldAndItalics())
                         .setParsePatterns(this.parsePatterns())
-                        .setFormatPattern(this.formatPattern()),
+                        .setFormatPattern(this.formatPattern())
+                        .setFormula(
+                                this.formula(FORMULA_TEXT)
+                                        .setToken(this.token())
+                                        .setExpression(this.expression())
+                                        .setValue(Optional.of(3))
+                        ),
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    text: \"=1+2\"\n" +
