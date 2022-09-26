@@ -199,6 +199,30 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
+    public void testSetParsePatternsSameDoesntClearFormulaToken() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
+                .setText("'A");
+
+        final SpreadsheetCell cell = this.createCell()
+                .setFormula(
+                        formula.setToken(
+                                Optional.of(
+                                        SpreadsheetParserToken.text(
+                                                Lists.of(
+                                                        SpreadsheetParserToken.textLiteral("'A", "'A")
+                                                ),
+                                                "'A"
+                                        )
+                                )
+                        )
+                );
+        assertSame(
+                cell,
+                cell.setParsePatterns(cell.parsePatterns())
+        );
+    }
+
+    @Test
     public void testSetParsePatternsDifferent() {
         final SpreadsheetCell cell = this.createCell();
         final Optional<SpreadsheetParsePatterns<?>> differentParsePatterns = Optional.of(
