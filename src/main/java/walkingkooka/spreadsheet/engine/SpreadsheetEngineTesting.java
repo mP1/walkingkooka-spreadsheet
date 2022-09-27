@@ -740,19 +740,22 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 context
         );
         final SpreadsheetFormula formula = cell.formula();
-        final Optional<SpreadsheetError> error = formula.error();
+        final Optional<SpreadsheetError> maybeError = formula.error();
 
         this.checkNotEquals(
                 SpreadsheetFormula.NO_ERROR,
-                error,
+                maybeError,
                 () -> "formula missing error=" + formula
         );
 
+        final SpreadsheetError error = maybeError.get();
+        final String errorText = error.value();
         assertTrue(
-                error.get()
-                        .value()
-                        .contains(errorContains),
-                () -> "Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains)
+                errorText.contains(errorContains),
+                () -> "Error message " +
+                        CharSequences.quoteAndEscape(errorText) +
+                        " missing " +
+                        CharSequences.quoteAndEscape(errorContains)
         );
     }
 
