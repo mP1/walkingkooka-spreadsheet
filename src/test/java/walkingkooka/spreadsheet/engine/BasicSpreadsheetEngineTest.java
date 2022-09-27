@@ -906,14 +906,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellspreadsheetDeltaPropertiesCells() {
+    public void testLoadCellSpreadsheetDeltaPropertiesCells() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS
         );
     }
 
     @Test
-    public void testLoadCellspreadsheetDeltaPropertiesCellsLabel() {
+    public void testLoadCellSpreadsheetDeltaPropertiesCellsLabel() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS,
                 SpreadsheetDeltaProperties.LABELS
@@ -921,7 +921,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellspreadsheetDeltaPropertiesCellsColumnWidths() {
+    public void testLoadCellSpreadsheetDeltaPropertiesCellsColumnWidths() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS,
                 SpreadsheetDeltaProperties.COLUMN_WIDTHS
@@ -929,7 +929,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellspreadsheetDeltaPropertiesCellsRowHeights() {
+    public void testLoadCellSpreadsheetDeltaPropertiesCellsRowHeights() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS,
                 SpreadsheetDeltaProperties.ROW_HEIGHTS
@@ -937,7 +937,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellspreadsheetDeltaPropertiesAll() {
+    public void testLoadCellSpreadsheetDeltaPropertiesAll() {
         this.loadCellAndCheck(SpreadsheetDeltaProperties.ALL);
     }
 
