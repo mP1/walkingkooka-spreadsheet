@@ -425,6 +425,62 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellsParsePatternFails() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
+        context.storeRepository()
+                .cells()
+                .save(
+                        this.cell(
+                                cellReference,
+                                "=1+2"
+                        ).setParsePatterns(
+                                Optional.of(
+                                        SpreadsheetPattern.parseNumberParsePatterns("#")
+                                )
+                        )
+                );
+
+        this.loadCellAndCheckError(
+                engine,
+                cellReference,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                context,
+                "Invalid character '=' at (1,1) \"=1+2\" expected \"#\""
+        );
+    }
+
+    @Test
+    public void testLoadCellsParsePattern() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
+        context.storeRepository()
+                .cells()
+                .save(
+                        this.cell(
+                                cellReference,
+                                "123"
+                        ).setParsePatterns(
+                                Optional.of(
+                                        SpreadsheetPattern.parseNumberParsePatterns("$#;#")
+                                )
+                        )
+                );
+
+        this.loadCellAndCheckValue(
+                engine,
+                cellReference,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                context,
+                number(123)
+        );
+    }
+
+    @Test
     public void testLoadCellsComputeIfNecessaryKeepsExpression() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
