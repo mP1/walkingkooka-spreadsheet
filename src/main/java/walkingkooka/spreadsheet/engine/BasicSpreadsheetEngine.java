@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -57,7 +58,9 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
@@ -926,8 +929,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 SpreadsheetParserToken token = formula.token()
                         .orElse(null);
                 if (null == token) {
-                    token = context.parseFormula(
-                            TextCursors.charSequence(text)
+                    token = parseFormula(
+                            cell,
+                            context,
+                            text
                     );
                 }
                 if (null != token) {
@@ -955,7 +960,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return formula;
     }
-
     /**
      * This {@link SpreadsheetParserToken} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
      */
@@ -975,6 +979,36 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     final static Optional<Expression> EMPTY_EXPRESSION = Optional.of(
             Expression.value("")
     );
+
+    /**
+     * If a {@link SpreadsheetCell#parsePatterns()} is present use that to parse the formula text otherwise delegate
+     * to {@link SpreadsheetEngineContext#parseFormula(TextCursor)}.
+     * <br>
+     * This means if a {@link SpreadsheetParsePatterns} is present it can only contain a value such as date, number etc
+     * and never an expression.
+     */
+    private SpreadsheetParserToken parseFormula(final SpreadsheetCell cell,
+                                                final SpreadsheetEngineContext context,
+                                                final String text) {
+        final Optional<SpreadsheetParsePatterns<?>> maybeParsePatterns = cell.parsePatterns();
+        final TextCursor textCursor = TextCursors.charSequence(text);
+
+        final SpreadsheetParserToken token;
+        if (maybeParsePatterns.isPresent()) {
+            token = maybeParsePatterns.get()
+                    .parser()
+                    .orFailIfCursorNotEmpty(ParserReporters.basic())
+                    .parse(
+                            textCursor,
+                            context.metadata()
+                                    .parserContext(context::now)
+                    ).get()
+                    .cast(SpreadsheetParserToken.class);
+        } else {
+            token = context.parseFormula(textCursor);
+        }
+        return token;
+    }
 
     // EVAL .........................................................................................................
 
