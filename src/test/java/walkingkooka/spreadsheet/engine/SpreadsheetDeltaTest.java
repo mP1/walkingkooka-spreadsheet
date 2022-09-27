@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -983,7 +984,68 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchCellWithStyleAndFormatPatternFails() {
+    public void testPatchCellAndParsePatternsFails() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(a1)
+        );
+        final JsonNode patch = this.marshall(delta)
+                .objectOrFail()
+                .set(
+                        SpreadsheetDelta.PARSE_PATTERNS_PROPERTY,
+                        this.marshall(
+                                SpreadsheetPattern.parseDateParsePatterns("dd/mm/yyyy")
+                        )
+                );
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetDelta.EMPTY.patchCells(
+                        a1.reference(),
+                        patch,
+                        this.createPatchContext()
+                )
+        );
+        this.checkEquals(
+                "Patch must not contain both \"cells\" and \"parse-patterns\"",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testPatchCellFormatPatternAndParsePatternsFails() {
+        final JsonNode patch = JsonNode.object()
+                .set(
+                        SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                        this.marshall(
+                                SpreadsheetPattern.parseTextFormatPattern("@")
+                        )
+                ).set(
+                        SpreadsheetDelta.PARSE_PATTERNS_PROPERTY,
+                        this.marshall(
+                                SpreadsheetPattern.parseDateParsePatterns("dd/mm/yyyy")
+                        )
+                );
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetDelta.EMPTY.patchCells(
+                        SpreadsheetSelection.parseCellOrCellRange("Z99"),
+                        patch,
+                        this.createPatchContext()
+                )
+        );
+        this.checkEquals(
+                "Patch must not contain both \"format-pattern\" and \"parse-patterns\"",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testPatchCellWithFormatPatternAndStyleFails() {
         final JsonNode patch = JsonNode.object()
                 .set(
                         SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
@@ -1005,6 +1067,34 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
         this.checkEquals(
                 "Patch must not contain both \"format-pattern\" and \"style\"",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testPatchCellWithParsePatternsAndStyleFails() {
+        final JsonNode patch = JsonNode.object()
+                .set(
+                        SpreadsheetDelta.PARSE_PATTERNS_PROPERTY,
+                        this.marshall(
+                                SpreadsheetPattern.parseDateParsePatterns("dd/mm/yyyy")
+                        )
+                ).set(
+                        SpreadsheetDelta.STYLE_PROPERTY,
+                        this.marshall(TextStyle.EMPTY)
+                );
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetDelta.EMPTY.patchCells(
+                        SpreadsheetSelection.parseCellOrCellRange("Z99"),
+                        patch,
+                        this.createPatchContext()
+                )
+        );
+        this.checkEquals(
+                "Patch must not contain both \"parse-patterns\" and \"style\"",
                 thrown.getMessage(),
                 "message"
         );
@@ -1160,6 +1250,83 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         .set(
                                 SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
                                 marshallWithType(formatPattern)
+                        ),
+                after
+        );
+    }
+
+
+    @Test
+    public void testPatchCellsWithParsePatterns() {
+        final Optional<SpreadsheetParsePatterns<?>> beforeFormat = Optional.of(
+                SpreadsheetPattern.parseNumberParsePatterns("\"before\"")
+        );
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setParsePatterns(beforeFormat);
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setParsePatterns(beforeFormat);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, a2)
+                );
+
+        final SpreadsheetParsePatterns<?> parsePatterns = SpreadsheetPattern.parseNumberParsePatterns("\"patched\"");
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setParsePatterns(Optional.of(parsePatterns)),
+                        a2.setParsePatterns(Optional.of(parsePatterns))
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.PARSE_PATTERNS_PROPERTY,
+                                marshallWithType(parsePatterns)
+                        ),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchCellsWithParsePatternsNullClears() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY);
+
+        final Optional<SpreadsheetParsePatterns<?>> format = Optional.of(
+                SpreadsheetPattern.parseNumberParsePatterns("#\"should be cleared\"")
+        );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                a1.setParsePatterns(format),
+                                a2.setParsePatterns(format)
+                        )
+                );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1, a2
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.PARSE_PATTERNS_PROPERTY,
+                                JsonNode.nullNode()
                         ),
                 after
         );
