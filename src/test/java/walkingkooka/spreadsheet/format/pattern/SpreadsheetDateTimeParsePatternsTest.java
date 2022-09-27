@@ -448,8 +448,8 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
         this.treePrintAndCheck(
                 SpreadsheetPattern.parseDateTimeParsePatterns("ddmmyyhhmmss;yymmdd"),
                 "date-time-parse-patterns\n" +
-                        "  ddmmyyhhmmss\n" +
-                        "  yymmdd\n"
+                        "  \"ddmmyyhhmmss\"\n" +
+                        "  \"yymmdd\"\n"
         );
     }
 

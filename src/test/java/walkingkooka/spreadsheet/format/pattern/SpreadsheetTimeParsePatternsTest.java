@@ -526,8 +526,8 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
         this.treePrintAndCheck(
                 SpreadsheetPattern.parseTimeParsePatterns("hhmm;hhmmss"),
                 "time-parse-patterns\n" +
-                        "  hhmm\n" +
-                        "  hhmmss\n"
+                        "  \"hhmm\"\n" +
+                        "  \"hhmmss\"\n"
         );
     }
 
