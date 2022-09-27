@@ -380,8 +380,8 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
         this.treePrintAndCheck(
                 SpreadsheetPattern.parseNumberParsePatterns("##.##;##"),
                 "number-parse-patterns\n" +
-                        "  ##.##\n" +
-                        "  ##\n"
+                        "  \"##.##\"\n" +
+                        "  \"##\"\n"
         );
     }
 

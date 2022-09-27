@@ -1254,7 +1254,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
                         "  parsePatterns:\n" +
                         "    date-time-parse-patterns\n" +
-                        "      dd/mm/yyyy\n"
+                        "      \"dd/mm/yyyy\"\n"
         );
     }
 
@@ -1293,7 +1293,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
                         "  parsePatterns:\n" +
                         "    date-time-parse-patterns\n" +
-                        "      dd/mm/yyyy\n" +
+                        "      \"dd/mm/yyyy\"\n" +
                         "  formatPattern:\n" +
                         "    text-format-pattern\n" +
                         "      \"@@\"\n"
