@@ -946,7 +946,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private static void patchValidate(final JsonNode json,
                                       final Predicate<String> patchableProperties) {
         boolean cellsPatched = false;
-        boolean formatPatched = false;
+        boolean formatPatternPatched = false;
         boolean stylePatched = false;
 
         for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
@@ -967,7 +967,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case COLUMNS_PROPERTY_STRING:
                     break;
                 case FORMAT_PATTERN_PROPERTY_STRING:
-                    formatPatched = true;
+                    formatPatternPatched = true;
                     break;
                 case ROWS_PROPERTY_STRING:
                     break;
@@ -995,7 +995,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             }
         }
 
-        if (cellsPatched && formatPatched) {
+        if (cellsPatched && formatPatternPatched) {
             patchInvalidFail(CELLS_PROPERTY_STRING, FORMAT_PATTERN_PROPERTY_STRING);
         }
 
@@ -1003,7 +1003,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             patchInvalidFail(CELLS_PROPERTY_STRING, STYLE_PROPERTY_STRING);
         }
 
-        if (formatPatched && stylePatched) {
+        if (formatPatternPatched && stylePatched) {
             patchInvalidFail(FORMAT_PATTERN_PROPERTY_STRING, STYLE_PROPERTY_STRING);
         }
     }
