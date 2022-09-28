@@ -105,12 +105,15 @@ public final class SpreadsheetFormula implements HasText,
 
     @Override
     public String text() {
-        return this.text;
+        final String text = this.text;
+        return null != text ?
+                text :
+                this.token.get().text();
     }
 
     public SpreadsheetFormula setText(final String text) {
         checkText(text);
-        return this.text.equals(text) ?
+        return this.text().equals(text) ?
                 this :
                 text.isEmpty() ?
                         EMPTY :
@@ -152,7 +155,7 @@ public final class SpreadsheetFormula implements HasText,
         return this.token.equals(token) ?
                 this :
                 this.replace(
-                        this.text,
+                        token.isPresent() ? null : this.text(), // no need to keep text if token is present.
                         token,
                         NO_EXPRESSION,
                         NO_VALUE
@@ -307,34 +310,36 @@ public final class SpreadsheetFormula implements HasText,
         printer.println("Formula");
         printer.indent();
 
-        printer.println("text: " + CharSequences.quoteAndEscape(this.text()));
+        final String text = this.text;
+        if (null != text) {
+            printer.println("text: " + CharSequences.quoteAndEscape(text));
+        } else {
+            this.printTree0(
+                    "token",
+                    this.token(),
+                    printer
+            );
 
-        this.printTree0(
-                "token",
-                this.token(),
-                printer
-        );
+            this.printTree0(
+                    "expression",
+                    this.expression(),
+                    printer
+            );
 
-        this.printTree0(
-                "expression",
-                this.expression(),
-                printer
-        );
+            final Optional<Object> possibleValue = this.value();
+            if (possibleValue.isPresent()) {
+                final Object value = possibleValue.get();
 
+                printer.print("value: ");
+                if (value instanceof TreePrintable) {
 
-        final Optional<Object> possibleValue = this.value();
-        if (possibleValue.isPresent()) {
-            final Object value = possibleValue.get();
-
-            printer.print("value: ");
-            if (value instanceof TreePrintable) {
-
-                final TreePrintable treePrintable = Cast.to(value);
-                printer.indent();
-                treePrintable.printTree(printer);
-                printer.outdent();
-            } else {
-                printer.println(CharSequences.quoteIfChars(value) + " (" + value.getClass().getName() + ")");
+                    final TreePrintable treePrintable = Cast.to(value);
+                    printer.indent();
+                    treePrintable.printTree(printer);
+                    printer.outdent();
+                } else {
+                    printer.println(CharSequences.quoteIfChars(value) + " (" + value.getClass().getName() + ")");
+                }
             }
         }
 
@@ -392,25 +397,33 @@ public final class SpreadsheetFormula implements HasText,
             }
         }
 
+        SpreadsheetFormula formula = EMPTY;
         if (null == text) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT_PROPERTY, node);
+            if (null == token && null == expression) {
+                JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT_PROPERTY, node);
+            }
+        } else {
+            formula = EMPTY.setText(text);
         }
 
-        return new SpreadsheetFormula(
-                text,
-                Optional.ofNullable(token),
-                Optional.ofNullable(expression),
-                Optional.ofNullable(value)
-        );
+        return formula.setToken(Optional.ofNullable(token))
+                .setExpression(Optional.ofNullable(expression))
+                .setValue(Optional.ofNullable(value));
     }
 
     /**
-     * Creates an object with potentially text, value and error but not the expression.
+     * Creates an JSON object with all the components of this formula.
      */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         JsonObject object = JsonNode.object();
 
-        object = object.set(TEXT_PROPERTY, JsonNode.string(this.text));
+        final String text = this.text;
+        if (null != text) {
+            object = object.set(
+                    TEXT_PROPERTY,
+                    JsonNode.string(text)
+            );
+        }
 
         final Optional<SpreadsheetParserToken> token = this.token;
         if (token.isPresent()) {
@@ -471,7 +484,7 @@ public final class SpreadsheetFormula implements HasText,
     }
 
     private boolean equals0(final SpreadsheetFormula other) {
-        return this.text.equals(other.text) &&
+        return Objects.equals(this.text, other.text) && // text could be null when token is present
                 this.token.equals(other.token) &&
                 this.expression.equals(other.expression) &&
                 this.value.equals(other.value);
@@ -485,7 +498,7 @@ public final class SpreadsheetFormula implements HasText,
     @Override
     public void buildToString(final ToStringBuilder builder) {
         builder.disable(ToStringBuilderOption.QUOTE);
-        builder.value(this.text);
+        builder.value(this.text());
 
         if (this.value.isPresent()) {
             builder.surroundValues("(=", ")")

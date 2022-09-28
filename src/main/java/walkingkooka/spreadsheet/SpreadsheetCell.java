@@ -221,7 +221,21 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
 
         return this.parsePatterns.equals(parsePatterns) ?
                 this :
-                this.replace(this.reference, this.formula.setToken(SpreadsheetFormula.NO_TOKEN), this.style, parsePatterns, this.formatPattern, NO_FORMATTED_CELL);
+                this.setParsePatterns0(parsePatterns);
+    }
+
+    private SpreadsheetCell setParsePatterns0(final Optional<SpreadsheetParsePatterns<?>> parsePatterns) {
+        final SpreadsheetFormula formula = this.formula;
+
+        return this.replace(
+                this.reference,
+                formula.setToken(SpreadsheetFormula.NO_TOKEN)
+                        .setText(formula.text()),
+                this.style,
+                parsePatterns,
+                this.formatPattern,
+                NO_FORMATTED_CELL
+        );
     }
 
     /**
