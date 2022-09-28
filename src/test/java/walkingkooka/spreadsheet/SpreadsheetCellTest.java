@@ -1081,7 +1081,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 ),
                 "Cell A1\n" +
                         "  Formula\n" +
-                        "    text: \"=1+2\"\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
@@ -1105,7 +1104,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 ),
                 "Cell A1\n" +
                         "  Formula\n" +
-                        "    text: \"=1+2\"\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
@@ -1134,7 +1132,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 ),
                 "Cell A1\n" +
                         "  Formula\n" +
-                        "    text: \"=1+2\"\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
@@ -1171,7 +1168,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 ),
                 "Cell A1\n" +
                         "  Formula\n" +
-                        "    text: \"=1+2\"\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
@@ -1200,7 +1196,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 ).setStyle(this.boldAndItalics()),
                 "Cell A1\n" +
                         "  Formula\n" +
-                        "    text: \"=1+2\"\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
@@ -1235,7 +1230,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         ),
                 "Cell A1\n" +
                         "  Formula\n" +
-                        "    text: \"=1+2\"\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
@@ -1274,7 +1268,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         ),
                 "Cell A1\n" +
                         "  Formula\n" +
-                        "    text: \"=1+2\"\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
@@ -1313,7 +1306,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .setFormatPattern(formatPattern()),
                 "Cell A1\n" +
                         "  Formula\n" +
-                        "    text: \"=1+2\"\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
@@ -1350,7 +1342,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .setFormatted(formatted()),
                 "Cell A1\n" +
                         "  Formula\n" +
-                        "    text: \"=1+2\"\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
