@@ -112,9 +112,10 @@ public final class EnumJavaScriptSourceTool {
         for (final TextStylePropertyName<?> property : TextStylePropertyName.values()) {
             final Optional<Class<Enum<?>>> maybeEnumType = property.enumType();
             if (maybeEnumType.isPresent()) {
+                final Class<Enum<?>> enumType = maybeEnumType.get();
+
                 generateEnums(
-                        maybeEnumType.get(),
-                        "textStyle",
+                        enumType,
                         dest
                 );
             }
