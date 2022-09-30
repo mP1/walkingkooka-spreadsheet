@@ -22,7 +22,6 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
@@ -341,11 +340,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> targetType,
                                          final SpreadsheetConverterContext context) {
-        // errors are a special type we dont want to try and convert them and report them inside a ConversionException which loses the error.
-        if (value instanceof SpreadsheetError) {
-            throw new SpreadsheetErrorConversionException((SpreadsheetError) value);
-        }
-
         // special case if targetType = Object just return value.
         return this.canConvert(value, targetType, context) ?
                 Object.class == targetType ?
