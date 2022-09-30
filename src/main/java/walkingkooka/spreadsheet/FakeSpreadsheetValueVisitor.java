@@ -125,6 +125,11 @@ public class FakeSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
     }
 
     @Override
+    protected void visit(final SpreadsheetError error) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visit(final SpreadsheetLabelName value) {
         throw new UnsupportedOperationException();
     }
