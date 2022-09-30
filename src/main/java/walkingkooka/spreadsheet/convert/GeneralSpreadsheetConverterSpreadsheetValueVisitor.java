@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -151,6 +153,12 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor extends Spreadshe
     @Override
     protected void visit(final SpreadsheetColumnReference value) {
         this.converter(this.mapping.selection);
+    }
+
+    // errors are a special type we dont want to try and convert them and report them inside a ConversionException which loses the error.
+    @Override
+    protected void visit(final SpreadsheetError error) {
+        throw new SpreadsheetErrorConversionException(error);
     }
 
     @Override
