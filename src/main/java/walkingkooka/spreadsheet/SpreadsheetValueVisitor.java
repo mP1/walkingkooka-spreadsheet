@@ -79,6 +79,10 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
                     this.visit((LocalTime) value);
                     break;
                 }
+                if (value instanceof SpreadsheetError) {
+                    this.visit((SpreadsheetError) value);
+                    break;
+                }
                 if (value instanceof SpreadsheetSelection) {
                     this.selectionVisitor.accept((SpreadsheetSelection) value);
                     break;
@@ -164,6 +168,10 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
     }
 
     protected void visit(final SpreadsheetColumnReference value) {
+        // nop
+    }
+
+    protected void visit(final SpreadsheetError error) {
         // nop
     }
 

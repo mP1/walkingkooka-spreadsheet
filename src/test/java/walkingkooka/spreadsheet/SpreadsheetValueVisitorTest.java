@@ -770,6 +770,41 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     }
 
     @Test
+    public void testAcceptSpreadsheetError() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetError value = SpreadsheetErrorKind.VALUE.setMessage("Bad value!");
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2");
+            }
+
+            @Override
+            protected void visit(final SpreadsheetError v) {
+                assertSame(value, v);
+                b.append("3");
+            }
+        }.accept(value);
+
+        this.checkEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptSpreadsheetError2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(SpreadsheetErrorKind.VALUE.setMessage("Bad value!"));
+    }
+
+    @Test
     public void testAcceptString() {
         final StringBuilder b = new StringBuilder();
         final String value = "abc123";
