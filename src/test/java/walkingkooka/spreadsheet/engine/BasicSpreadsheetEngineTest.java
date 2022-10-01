@@ -261,7 +261,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testLoadCellsWithFormulaWithInvalidValueFails() {
         this.loadCellFails(
                 "1.X",
-                SpreadsheetErrorKind.NAME.setMessage("Invalid character '1' at (1,1) \"1.X\" expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE")
+                SpreadsheetErrorKind.ERROR.setMessage("Invalid character '1' at (1,1) \"1.X\" expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE")
         );
     }
 
@@ -269,7 +269,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testLoadCellsWithFormulaExpressionErrorFails() {
         this.loadCellFails(
                 "=1+",
-                SpreadsheetErrorKind.NAME.setMessage(
+                SpreadsheetErrorKind.ERROR.setMessage(
                         "End of text at (4,1) \"=1+\" expected BINARY_SUB_EXPRESSION"
                 )
         );

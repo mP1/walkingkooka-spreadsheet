@@ -166,9 +166,9 @@ public enum SpreadsheetErrorKind implements HasText {
                 break;
             }
 
-            // #NAME? 	Text in the formula is not recognized
+            // #ERROR! 	Text in the formula is not recognized
             if (cause instanceof ParserException) {
-                kind = NAME;
+                kind = ERROR;
                 break;
             }
 
