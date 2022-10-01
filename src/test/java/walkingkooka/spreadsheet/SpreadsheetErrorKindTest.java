@@ -190,7 +190,7 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
     public void testTranslateParserException() {
         this.translateAndCheck(
                 new ParserException(MESSAGE),
-                SpreadsheetErrorKind.NAME
+                SpreadsheetErrorKind.ERROR
         );
     }
 
