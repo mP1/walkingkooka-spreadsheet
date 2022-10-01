@@ -31,6 +31,7 @@ import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.HasExpressionReference;
+import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.Objects;
 
@@ -169,6 +170,12 @@ public enum SpreadsheetErrorKind implements HasText {
             // #ERROR! 	Text in the formula is not recognized
             if (cause instanceof ParserException) {
                 kind = ERROR;
+                break;
+            }
+
+            // unknown function name
+            if (cause instanceof UnknownExpressionFunctionException) {
+                kind = NAME;
                 break;
             }
 
