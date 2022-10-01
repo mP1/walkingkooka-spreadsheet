@@ -129,13 +129,14 @@ final class BasicSpreadsheetEngineFillCells {
         final SpreadsheetEngineContext context = this.context;
 
         // possibly fix references, and then parse the formula and evaluate etc.
-        final SpreadsheetCell save = updatedReference.setFormula(engine.parseFormulaIfNecessary(
+        final SpreadsheetCell save = engine.parseFormulaIfNecessary(
                 updatedReference,
                 token -> BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(
                         token,
                         xOffset,
-                        yOffset),
-                context)
+                        yOffset
+                ),
+                context
         );
         this.engine.maybeParseAndEvaluateAndFormat(save,
                 SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,

@@ -318,7 +318,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 error,
-                errorMessage, // formatted text
+                error.kind().text(), // formatted text
                 errorMessage
         );
     }
@@ -699,7 +699,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.checkFormattedText(
                 second,
-                "End of text at (6,1) \"=1+2+\" expected BINARY_SUB_EXPRESSION"
+                "#ERROR"
         );
     }
 
@@ -11501,10 +11501,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetCell formattedCellWithError(final SpreadsheetCell cell,
                                                    final SpreadsheetErrorKind errorKind,
                                                    final String errorMessage) {
-        final Optional<TextNode> formattedCell = Optional.of(this.style()
-                .replace(TextNode.text(errorMessage))
-                .root());
-
         return cell.setFormula(
                         this.parseFormula(cell.formula())
                                 .setValue(
@@ -11515,7 +11511,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                 )
-                .setFormatted(formattedCell);
+                .setFormatted(
+                        Optional.of(
+                                TextNode.text(errorKind.text())
+                        )
+                );
     }
 
     /**

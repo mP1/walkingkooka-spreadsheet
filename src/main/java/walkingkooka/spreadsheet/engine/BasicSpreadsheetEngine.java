@@ -886,24 +886,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                  final SpreadsheetEngineEvaluation evaluation,
                                                  final SpreadsheetEngineContext context) {
-        final SpreadsheetFormula formula = this.parseFormulaIfNecessary(
+        final SpreadsheetCell afterParse = this.parseFormulaIfNecessary(
                 cell,
                 Function.identity(),
                 context
         );
 
-        // formula parse error ?
-        final Optional<SpreadsheetError> maybeError = formula.error();
-
-        return maybeError.isPresent() ?
-                this.formatAndApplyStyle(
-                        cell.setFormula(formula),
-                        context
-                ) :
+        return afterParse.formula().error().isPresent() ?
+                afterParse :
                 this.evaluateAndStyle(
-                        cell.setFormula(
-                                formula
-                        ),
+                        afterParse,
                         evaluation,
                         context
                 );
@@ -914,9 +906,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Parsers the formula for this cell, and sets its expression or error if parsing fails.
      */
-    SpreadsheetFormula parseFormulaIfNecessary(final SpreadsheetCell cell,
-                                               final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed,
-                                               final SpreadsheetEngineContext context) {
+    SpreadsheetCell parseFormulaIfNecessary(final SpreadsheetCell cell,
+                                            final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed,
+                                            final SpreadsheetEngineContext context) {
+        SpreadsheetCell result = cell;
         SpreadsheetFormula formula = cell.formula();
 
         try {
@@ -953,12 +946,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 }
             }
 
+            result = cell.setFormula(
+                    formula
+            );
+
         } catch (final Exception failed) {
-            // parsing or token to expression failed set the error message
-            formula = this.setError(formula, failed);
+            result = this.setError(
+                    failed,
+                    cell.setFormula(formula)
+            );
         }
 
-        return formula;
+        return result;
     }
     /**
      * This {@link SpreadsheetParserToken} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
@@ -1019,6 +1018,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                              final SpreadsheetEngineEvaluation evaluation,
                                              final SpreadsheetEngineContext context) {
         SpreadsheetFormula formula = cell.formula();
+        SpreadsheetCell result;
 
         try {
             // ask enum to dispatch
@@ -1035,17 +1035,44 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
             }
 
+            final Optional<SpreadsheetError> maybeError = formula.error();
+            result = maybeError.isPresent() ?
+                    this.setError(maybeError.get(), cell) :
+                    this.formatAndApplyStyle(
+                            cell.setFormula(formula),
+                            context
+                    );
         } catch (final Exception cause) {
-            formula = this.setError(
-                    cell.formula(),
-                    cause
+            result = this.setError(
+                    cause,
+                    cell
             );
         }
 
-        // unconditionally restyle the value, because style or formatting might have changed.
-        return this.formatAndApplyStyle(
-                cell.setFormula(formula),
-                context
+        return result;
+    }
+
+    private SpreadsheetCell setError(final Throwable cause,
+                                     final SpreadsheetCell cell) {
+        return this.setError(
+                SpreadsheetErrorKind.translate(cause),
+                cell
+        );
+    }
+
+    private SpreadsheetCell setError(final SpreadsheetError error,
+                                     final SpreadsheetCell cell) {
+        return cell.setFormula(
+                cell.formula()
+                        .setValue(
+                                Optional.of(
+                                        error
+                                )
+                        )
+        ).setFormatted(
+                Optional.of(
+                        TextNode.text(error.kind().text())
+                )
         );
     }
 
@@ -1079,20 +1106,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 context.evaluate(
                         expression,
                         Optional.of(cell)
-                )
-        );
-    }
-
-    // ERROR HANDLING..............................................................................................
-
-    /**
-     * Updates the formula value after translating the {@link Throwable}.
-     */
-    private SpreadsheetFormula setError(final SpreadsheetFormula formula,
-                                        final Throwable cause) {
-        return formula.setValue(
-                Optional.of(
-                        SpreadsheetErrorKind.translate(cause)
                 )
         );
     }
