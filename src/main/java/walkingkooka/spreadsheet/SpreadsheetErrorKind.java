@@ -134,7 +134,7 @@ public enum SpreadsheetErrorKind implements HasText {
 
             // REF!
             if (cause instanceof HasExpressionReference) {
-                kind = REF;
+                kind = NAME;
                 break;
             }
 
