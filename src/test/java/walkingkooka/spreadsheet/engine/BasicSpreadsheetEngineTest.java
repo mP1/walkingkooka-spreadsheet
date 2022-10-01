@@ -279,7 +279,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testLoadCellsWithFormulaWithInvalidLabelFails() {
         this.loadCellFails(
                 "=UnknownLabel",
-                SpreadsheetErrorKind.REF.setMessage("Unknown Label: UnknownLabel")
+                SpreadsheetErrorKind.NAME.setMessage("Unknown Label: UnknownLabel")
         );
     }
 
@@ -1614,7 +1614,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1 = this.cell("a1", "=1+" + unknown);
         final SpreadsheetCell a1Formatted = this.formattedCellWithError(
                 a1,
-                SpreadsheetErrorKind.REF,
+                SpreadsheetErrorKind.NAME,
                 "Unknown Label: " + unknown
         );
         this.saveCellAndCheck(
@@ -3466,7 +3466,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCellWithError(
                                                 a,
                                                 "=1+InvalidCellReference(\"" + b + "\")",
-                                                SpreadsheetErrorKind.REF,
+                                                SpreadsheetErrorKind.NAME,
                                                 "Invalid cell reference: " + b
                                         )
                                 )
@@ -3994,7 +3994,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCellWithError(
                                                 a,
                                                 "=1+InvalidCellReference(\"" + b + "\")",
-                                                SpreadsheetErrorKind.REF,
+                                                SpreadsheetErrorKind.NAME,
                                                 "Invalid cell reference: $A$6"
                                         )
                                 )
@@ -4016,7 +4016,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
                 SpreadsheetError.with(
-                        SpreadsheetErrorKind.REF,
+                        SpreadsheetErrorKind.NAME,
                         "Invalid cell reference: " + b
                 )
         ); // reference should have been fixed.
@@ -4348,7 +4348,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         formattedCellWithError(
                                                 a,
                                                 "=1+0+" + LABEL,
-                                                SpreadsheetErrorKind.REF,
+                                                SpreadsheetErrorKind.NAME,
                                                 "Unknown Label: " + LABEL
                                         )
                                 )
@@ -4371,7 +4371,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 "=1+0+" + LABEL,
                 SpreadsheetError.with(
-                        SpreadsheetErrorKind.REF,
+                        SpreadsheetErrorKind.NAME,
                         "Unknown Label: " + LABEL
                 )
         );
@@ -4866,7 +4866,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCellWithError(
                                                 a,
                                                 "=1+InvalidCellReference(\"" + b + "\")",
-                                                SpreadsheetErrorKind.REF,
+                                                SpreadsheetErrorKind.NAME,
                                                 "Invalid cell reference: $E$1"
                                         )
                                 )
@@ -4888,7 +4888,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
                 SpreadsheetError.with(
-                        SpreadsheetErrorKind.REF,
+                        SpreadsheetErrorKind.NAME,
                         "Invalid cell reference: " + b
                 )
         ); // reference should have been fixed.
@@ -5213,7 +5213,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCellWithError(
                                                 "$A$1",
                                                 "=1+0+" + LABEL,
-                                                SpreadsheetErrorKind.REF,
+                                                SpreadsheetErrorKind.NAME,
                                                 "Unknown Label: " + LABEL
                                         )
                                 )
@@ -5236,7 +5236,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 "=1+0+" + LABEL,
                 SpreadsheetError.with(
-                        SpreadsheetErrorKind.REF,
+                        SpreadsheetErrorKind.NAME,
                         "Unknown Label: " + LABEL
                 )
         );
@@ -8824,7 +8824,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCellWithError(
                                                 "A1",
                                                 "=" + label + "+1",
-                                                SpreadsheetErrorKind.REF,
+                                                SpreadsheetErrorKind.NAME,
                                                 "Unknown Label: " + label
                                         )
                                 )
@@ -8878,7 +8878,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCellWithError(
                                                 "A1",
                                                 "=" + label + "+1",
-                                                SpreadsheetErrorKind.REF,
+                                                SpreadsheetErrorKind.NAME,
                                                 "Unknown Label: " + label
                                         )
                                 )
@@ -8937,7 +8937,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCellWithError(
                                                 "A1",
                                                 "=" + label + "+1",
-                                                SpreadsheetErrorKind.REF,
+                                                SpreadsheetErrorKind.NAME,
                                                 "Unknown Label: " + label
                                         )
                                 )

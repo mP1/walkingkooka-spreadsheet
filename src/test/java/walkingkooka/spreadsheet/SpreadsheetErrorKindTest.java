@@ -113,7 +113,7 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
                         MESSAGE,
                         SpreadsheetSelection.parseCell("A1")
                 ),
-                SpreadsheetErrorKind.REF
+                SpreadsheetErrorKind.NAME
         );
     }
 
@@ -124,7 +124,7 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
                         MESSAGE,
                         SpreadsheetSelection.parseCell("B2")
                 ),
-                SpreadsheetErrorKind.REF
+                SpreadsheetErrorKind.NAME
         );
     }
 
