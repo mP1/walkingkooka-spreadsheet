@@ -717,15 +717,15 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                                       final SpreadsheetEngineContext context,
                                                       final Object value,
                                                       final String text) {
-        final SpreadsheetCell cell = this.loadCellAndCheckValue(
+        return this.loadCellAndCheck(
                 engine,
                 reference,
                 evaluation,
                 context,
-                value
+                value,
+                text,
+                null
         );
-        this.checkFormattedText(cell, text);
-        return cell;
     }
 
     default void loadCellAndCheckError(final SpreadsheetEngine engine,
@@ -757,6 +757,47 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         " missing " +
                         CharSequences.quoteAndEscape(errorContains)
         );
+    }
+
+    default SpreadsheetCell loadCellAndCheck(final SpreadsheetEngine engine,
+                                             final SpreadsheetCellReference reference,
+                                             final SpreadsheetEngineEvaluation evaluation,
+                                             final SpreadsheetEngineContext context,
+                                             final Object value,
+                                             final String text,
+                                             final String errorContains) {
+        final SpreadsheetCell cell = this.loadCellAndCheckValue(
+                engine,
+                reference,
+                evaluation,
+                context,
+                value
+        );
+
+        this.checkFormattedText(cell, text);
+
+        if (null != errorContains) {
+            final SpreadsheetFormula formula = cell.formula();
+            final Optional<SpreadsheetError> maybeError = formula.error();
+
+            this.checkNotEquals(
+                    SpreadsheetFormula.NO_ERROR,
+                    maybeError,
+                    () -> "formula missing error=" + formula
+            );
+
+            final SpreadsheetError error = maybeError.get();
+            final String errorText = error.value();
+            assertTrue(
+                    errorText.contains(errorContains),
+                    () -> "Error message " +
+                            CharSequences.quoteAndEscape(errorText) +
+                            " missing " +
+                            CharSequences.quoteAndEscape(errorContains)
+            );
+        }
+
+        return cell;
     }
 
     default void loadCellAndCheck(final SpreadsheetEngine engine,

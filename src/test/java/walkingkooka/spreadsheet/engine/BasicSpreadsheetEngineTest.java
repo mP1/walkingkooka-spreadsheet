@@ -258,6 +258,72 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellsWithFormulaWithInvalidValueFails() {
+        this.loadCellFails(
+                "1.X",
+                SpreadsheetErrorKind.NAME.setMessage("Invalid character '1' at (1,1) \"1.X\" expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE")
+        );
+    }
+
+    @Test
+    public void testLoadCellsWithFormulaExpressionErrorFails() {
+        this.loadCellFails(
+                "=1+",
+                SpreadsheetErrorKind.NAME.setMessage(
+                        "End of text at (4,1) \"=1+\" expected BINARY_SUB_EXPRESSION"
+                )
+        );
+    }
+
+    @Test
+    public void testLoadCellsWithFormulaWithInvalidLabelFails() {
+        this.loadCellFails(
+                "=UnknownLabel",
+                SpreadsheetErrorKind.REF.setMessage("Unknown Label: UnknownLabel")
+        );
+    }
+
+    @Test
+    public void testLoadCellsWithDivideByZeroFails() {
+        this.loadCellFails(
+                "=1/0",
+                SpreadsheetErrorKind.DIV0.setMessage("Division by zero")
+        );
+    }
+
+    @Test
+    public void testLoadCellsWithUnknownFunctionFails() {
+        this.loadCellFails(
+                "=unknownFunction()",
+                SpreadsheetErrorKind.VALUE.setMessage("Unknown namedFunction \"unknownFunction\"")
+        );
+    }
+
+    private void loadCellFails(final String formulaText,
+                               final SpreadsheetError error) {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+
+        context.storeRepository()
+                .cells()
+                .save(a1.setFormula(SpreadsheetFormula.EMPTY.setText(formulaText)));
+
+        final String errorMessage = error.value();
+
+        this.loadCellAndCheck(
+                engine,
+                a1,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                error,
+                errorMessage, // formatted text
+                errorMessage
+        );
+    }
+
+    @Test
     public void testLoadCellsWithMissingCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
