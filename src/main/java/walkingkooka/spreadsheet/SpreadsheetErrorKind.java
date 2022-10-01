@@ -55,6 +55,8 @@ public enum SpreadsheetErrorKind implements HasText {
 
     NA("#N/A", 7),
 
+    ERROR("#ERROR", 8),
+
     SPILL("#SPILL!", 9),
 
     CALC("#CALC!", 14);
