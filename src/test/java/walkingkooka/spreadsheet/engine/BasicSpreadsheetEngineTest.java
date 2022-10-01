@@ -295,7 +295,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testLoadCellsWithUnknownFunctionFails() {
         this.loadCellFails(
                 "=unknownFunction()",
-                SpreadsheetErrorKind.VALUE.setMessage("Unknown namedFunction \"unknownFunction\"")
+                SpreadsheetErrorKind.VALUE.setMessage("Unknown function \"unknownFunction\"")
         );
     }
 
