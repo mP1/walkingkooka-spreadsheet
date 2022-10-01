@@ -149,11 +149,11 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     private void fixExpressionReferences(final SpreadsheetCell cell,
                                          final SpreadsheetEngineContext context) {
-        final SpreadsheetCell fixed = cell.setFormula(
-                this.engine.parseFormulaIfNecessary(
-                        cell,
-                        this::fixCellReferencesWithinExpression,
-                        context));
+        final SpreadsheetCell fixed = this.engine.parseFormulaIfNecessary(
+                cell,
+                this::fixCellReferencesWithinExpression,
+                context
+        );
         if (!cell.equals(fixed)) {
             this.saveCell(fixed);
         }
