@@ -27,6 +27,8 @@ import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -207,6 +209,15 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
         this.translateAndCheck(
                 new IllegalArgumentException(MESSAGE),
                 SpreadsheetErrorKind.VALUE
+        );
+    }
+
+    @Test
+    public void testTranslateUnknownExpressionFunctionException() {
+        this.translateAndCheck(
+                new UnknownExpressionFunctionException(FunctionExpressionName.with("Label123")),
+                SpreadsheetErrorKind.NAME,
+                "Unknown function \"Label123\""
         );
     }
 
