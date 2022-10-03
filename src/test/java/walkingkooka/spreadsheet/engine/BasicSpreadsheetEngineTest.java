@@ -1441,10 +1441,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setText("=1+2")
                         .setValue(
                                 Optional.of(
-                                        SpreadsheetError.with(
-                                                SpreadsheetErrorKind.VALUE,
-                                                "error!"
-                                        )
+                                        SpreadsheetErrorKind.VALUE.setMessage("error!")
                                 )
                         )
         );
@@ -4015,10 +4012,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
-                SpreadsheetError.with(
-                        SpreadsheetErrorKind.NAME,
-                        "Invalid cell reference: " + b
-                )
+                SpreadsheetErrorKind.NAME.setMessage("Invalid cell reference: " + b)
         ); // reference should have been fixed.
     }
 
@@ -4370,10 +4364,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + LABEL,
-                SpreadsheetError.with(
-                        SpreadsheetErrorKind.NAME,
-                        "Unknown Label: " + LABEL
-                )
+                SpreadsheetErrorKind.NAME.setMessage("Unknown Label: " + LABEL)
         );
     }
 
@@ -4887,10 +4878,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
-                SpreadsheetError.with(
-                        SpreadsheetErrorKind.NAME,
-                        "Invalid cell reference: " + b
-                )
+                SpreadsheetErrorKind.NAME.setMessage("Invalid cell reference: " + b)
         ); // reference should have been fixed.
     }
 
@@ -5235,10 +5223,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + LABEL,
-                SpreadsheetError.with(
-                        SpreadsheetErrorKind.NAME,
-                        "Unknown Label: " + LABEL
-                )
+                SpreadsheetErrorKind.NAME.setMessage("Unknown Label: " + LABEL)
         );
     }
 
@@ -11570,8 +11555,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             } catch (final Exception fail) {
                 parsedFormula = parsedFormula.setValue(
                         Optional.of(
-                                SpreadsheetError.with(
-                                        SpreadsheetErrorKind.VALUE,
+                                SpreadsheetErrorKind.VALUE.setMessage(
                                         fail.getMessage()
                                 )
                         )
