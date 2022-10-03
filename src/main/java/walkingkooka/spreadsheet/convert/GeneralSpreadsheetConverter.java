@@ -315,12 +315,32 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
     public boolean canConvert(final Object value,
                               final Class<?> targetType,
                               final SpreadsheetConverterContext context) {
-        return (null != value && value.getClass() == targetType) ||
-                isSupportedType(targetType) &&
-                        false == (value instanceof LocalTime && targetType == LocalDate.class) &&
-                        false == (value instanceof LocalDate && targetType == LocalTime.class) ||
+        return isNonNullAndValueIsType(value, targetType) ||
+                isSupportedValueAndType(value, targetType) ||
                 GeneralSpreadsheetConverterSelectionConverter.INSTANCE.canConvert(value, targetType, context) ||
                 GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter.INSTANCE.canConvert(value, targetType, context);
+    }
+
+    private static boolean isNonNullAndValueIsType(final Object value,
+                                                   final Class<?> targetType) {
+        return null != value && value.getClass() == targetType;
+    }
+
+    private static boolean isSupportedValueAndType(final Object value,
+                                                   final Class<?> targetType) {
+        return isSupportedType(targetType) &&
+                false == isDateToTime(value, targetType) &&
+                false == isTimeToDate(value, targetType);
+    }
+
+    private static boolean isDateToTime(final Object value,
+                                        final Class<?> targetType) {
+        return value instanceof LocalTime && targetType == LocalDate.class;
+    }
+
+    private static boolean isTimeToDate(final Object value,
+                                        final Class<?> targetType) {
+        return value instanceof LocalTime && targetType == LocalDate.class;
     }
 
     private static boolean isSupportedType(final Class<?> type) {
