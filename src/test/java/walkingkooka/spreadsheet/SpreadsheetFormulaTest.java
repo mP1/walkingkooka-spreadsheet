@@ -690,10 +690,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 formula(TEXT)
                         .setValue(
                                 Optional.of(
-                                        SpreadsheetError.with(
-                                                SpreadsheetErrorKind.VALUE,
-                                                "error message #1"
-                                        )
+                                        SpreadsheetErrorKind.VALUE.setMessage("error message #1")
                                 )
                         )
         );
@@ -853,10 +850,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     private Optional<Object> error(final String error) {
         return Optional.of(
-                SpreadsheetError.with(
-                        SpreadsheetErrorKind.VALUE,
-                        error
-                )
+                SpreadsheetErrorKind.VALUE.setMessage(error)
         );
     }
 

@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -289,10 +288,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         )
                 ).setValue(
                         Optional.of(
-                                SpreadsheetError.with(
-                                        SpreadsheetErrorKind.VALUE,
-                                        "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
-                                )
+                                SpreadsheetErrorKind.VALUE.setMessage("Invalid value for DayOfMonth (valid values 1 - 28/31): 99")
                         )
                 )
         );

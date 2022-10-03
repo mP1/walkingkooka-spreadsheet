@@ -1158,10 +1158,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                 .setExpression(expression())
                                 .setValue(
                                         Optional.of(
-                                                SpreadsheetError.with(
-                                                        SpreadsheetErrorKind.VALUE,
-                                                        "error message 1"
-                                                )
+                                                SpreadsheetErrorKind.VALUE.setMessage("error message 1")
                                         )
                                 )
 
