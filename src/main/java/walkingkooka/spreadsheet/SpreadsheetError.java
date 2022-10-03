@@ -18,40 +18,50 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.Value;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * An error for an individual cell or formula which may be a parsing or execution error.
  */
-public final class SpreadsheetError implements Value<String>,
+public final class SpreadsheetError implements Value<Optional<?>>,
         TreePrintable,
-        HasSpreadsheetErrorKind {
+        HasSpreadsheetErrorKind,
+        UsesToStringBuilder {
 
     public static SpreadsheetError with(final SpreadsheetErrorKind kind,
-                                        final String message) {
+                                        final String message,
+                                        final Optional<?> value) {
         Objects.requireNonNull(kind, "kind");
-        Objects.requireNonNull(message, "Message");
+        Objects.requireNonNull(message, "message");
+        Objects.requireNonNull(value, "value");
 
         return new SpreadsheetError(
                 kind,
-                message
+                message,
+                value
         );
     }
 
     private SpreadsheetError(final SpreadsheetErrorKind kind,
-                             final String message) {
+                             final String message,
+                             final Optional<?> value) {
         this.kind = kind;
         this.message = message;
+        this.value = value;
     }
 
     public SpreadsheetErrorKind kind() {
@@ -60,15 +70,21 @@ public final class SpreadsheetError implements Value<String>,
 
     private final SpreadsheetErrorKind kind;
 
-    @Override
-    public String value() {
-        return this.message;
-    }
-
     /**
      * The error message text.
      */
+    public String message() {
+        return this.message;
+    }
+
     private final String message;
+
+    @Override
+    public Optional<?> value() {
+        return this.value;
+    }
+
+    private final Optional<?> value;
 
     // HasSpreadsheetErrorKind ........................................................................................
 
@@ -81,9 +97,19 @@ public final class SpreadsheetError implements Value<String>,
 
     @Override
     public void printTree(final IndentingPrinter printer) {
-        printer.println(
-                this.kind() + " " + CharSequences.quoteAndEscape(this.value())
-        );
+        printer.println(this.kind().text());
+
+        printer.indent();
+        printer.println(CharSequences.quoteAndEscape(this.message()));
+
+        final Object value = this.value()
+                .orElse(null);
+
+        if (null != value) {
+            TreePrintable.printTreeOrToString(value, printer);
+        }
+
+        printer.outdent();
     }
 
     // Object...........................................................................................................
@@ -92,7 +118,8 @@ public final class SpreadsheetError implements Value<String>,
     public int hashCode() {
         return Objects.hash(
                 this.kind,
-                this.message
+                this.message,
+                this.value
         );
     }
 
@@ -105,12 +132,20 @@ public final class SpreadsheetError implements Value<String>,
 
     private boolean equals0(final SpreadsheetError error) {
         return this.kind == error.kind &&
-                this.message.equals(error.message);
+                this.message.equals(error.message) &&
+                this.value.equals(error.value);
+    }
+
+    @Override
+    public void buildToString(final ToStringBuilder builder) {
+        builder.value(this.kind)
+                .value(this.message)
+                .value(this.value);
     }
 
     @Override
     public String toString() {
-        return this.kind + " " + CharSequences.quoteAndEscape(this.message);
+        return ToStringBuilder.buildFrom(this);
     }
 
     // JsonNodeContext..................................................................................................
@@ -119,6 +154,7 @@ public final class SpreadsheetError implements Value<String>,
                                        final JsonNodeUnmarshallContext context) {
         SpreadsheetErrorKind kind = null;
         String message = null;
+        Object value = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -128,6 +164,9 @@ public final class SpreadsheetError implements Value<String>,
                     break;
                 case MESSAGE_PROPERTY_STRING:
                     message = child.stringOrFail();
+                    break;
+                case VALUE_PROPERTY_STRING:
+                    value = context.unmarshallWithType(child);
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
@@ -144,23 +183,37 @@ public final class SpreadsheetError implements Value<String>,
 
         return new SpreadsheetError(
                 kind,
-                message
+                message,
+                Optional.ofNullable(value)
         );
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonNode.object()
+        JsonObject json = JsonNode.object()
                 .set(KIND_PROPERTY, JsonNode.string(this.kind.name()))
                 .set(MESSAGE_PROPERTY, JsonNode.string(this.message));
+
+        final Object value = this.value()
+                .orElse(null);
+        if (null != value) {
+            json = json.set(
+                    VALUE_PROPERTY,
+                    context.marshallWithType(value)
+            );
+        }
+
+        return json;
     }
 
     private final static String KIND_PROPERTY_STRING = "kind";
     private final static String MESSAGE_PROPERTY_STRING = "message";
+    private final static String VALUE_PROPERTY_STRING = "value";
 
     // @VisibleForTesting
 
     final static JsonPropertyName KIND_PROPERTY = JsonPropertyName.with(KIND_PROPERTY_STRING);
     final static JsonPropertyName MESSAGE_PROPERTY = JsonPropertyName.with(MESSAGE_PROPERTY_STRING);
+    final static JsonPropertyName VALUE_PROPERTY = JsonPropertyName.with(VALUE_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register(

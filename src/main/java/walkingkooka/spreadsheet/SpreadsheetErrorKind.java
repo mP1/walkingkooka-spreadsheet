@@ -34,6 +34,7 @@ import walkingkooka.tree.expression.HasExpressionReference;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The type of {@link SpreadsheetError}.
@@ -85,7 +86,19 @@ public enum SpreadsheetErrorKind implements HasText {
     private final int value;
 
     public SpreadsheetError setMessage(final String message) {
-        return SpreadsheetError.with(this, message);
+        return this.setMessageAndValue(
+                message,
+                null
+        );
+    }
+
+    public SpreadsheetError setMessageAndValue(final String message,
+                                               final Object value) {
+        return SpreadsheetError.with(
+                this,
+                message,
+                Optional.ofNullable(value)
+        );
     }
 
     @Override
@@ -124,17 +137,26 @@ public enum SpreadsheetErrorKind implements HasText {
     private static SpreadsheetError translate2(final Throwable cause) {
         final SpreadsheetErrorKind kind;
         String message = cause.getMessage();
+        Object value = null;
 
         do {
             if (cause instanceof HasSpreadsheetErrorKind) {
                 final HasSpreadsheetErrorKind has = (HasSpreadsheetErrorKind) cause;
                 kind = has.spreadsheetErrorKind();
+
+                if (cause instanceof HasExpressionReference) {
+                    final HasExpressionReference hasExpressionReference = (HasExpressionReference) cause;
+                    value = hasExpressionReference.expressionReference();
+                }
                 break;
             }
 
             // REF!
             if (cause instanceof HasExpressionReference) {
                 kind = NAME;
+
+                final HasExpressionReference has = (HasExpressionReference) cause;
+                value = has.expressionReference();
                 break;
             }
 
@@ -157,6 +179,7 @@ public enum SpreadsheetErrorKind implements HasText {
 
                 final ConversionException conversionException = (ConversionException) cause;
                 message = "Cannot convert " + CharSequences.quoteIfChars(conversionException.value()) + " to " + conversionException.type().getSimpleName();
+                value = conversionException.value();
                 break;
             }
 
@@ -176,15 +199,18 @@ public enum SpreadsheetErrorKind implements HasText {
             // unknown function name
             if (cause instanceof UnknownExpressionFunctionException) {
                 kind = NAME;
+
+                final UnknownExpressionFunctionException unknown = (UnknownExpressionFunctionException) cause;
+                value = unknown.name();
                 break;
             }
 
             kind = VALUE;
         } while (false);
 
-        return SpreadsheetError.with(
-                kind,
-                CharSequences.nullToEmpty(message).toString()
+        return kind.setMessageAndValue(
+                CharSequences.nullToEmpty(message).toString(),
+                value
         );
     }
 }

@@ -382,7 +382,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
-                        "  value: #VALUE! \"Message #1\"\n"
+                        "  value: #VALUE!\n" +
+                        "      \"Message #1\"\n"
         );
     }
 

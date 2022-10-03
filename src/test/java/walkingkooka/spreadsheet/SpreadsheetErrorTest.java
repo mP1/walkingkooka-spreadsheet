@@ -24,9 +24,10 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -38,27 +39,40 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
     private final static SpreadsheetErrorKind KIND = SpreadsheetErrorKind.NA;
     private final static String MESSAGE = "message #1";
+    private final static Optional<?> VALUE = Optional.of(
+            123
+    );
+
+    @Test
+    public void testWithNullMessageFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetError.with(KIND, null, VALUE)
+        );
+    }
 
     @Test
     public void testWithNullValueFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetError.with(KIND, null)
+                () -> SpreadsheetError.with(KIND, MESSAGE, null)
         );
     }
 
     @Test
     public void testWith() {
-        final SpreadsheetError error = SpreadsheetError.with(KIND, MESSAGE);
+        final SpreadsheetError error = SpreadsheetError.with(KIND, MESSAGE, VALUE);
         this.checkKind(error, KIND);
-        this.checkValue(error, MESSAGE);
+        this.checkMessage(error, MESSAGE);
+        this.checkValue(error, VALUE);
     }
 
     @Test
     public void testWithEmptyMessage() {
-        final SpreadsheetError error = SpreadsheetError.with(KIND, "");
+        final SpreadsheetError error = SpreadsheetError.with(KIND, "", VALUE);
         this.checkKind(error, KIND);
-        this.checkValue(error, "");
+        this.checkMessage(error, "");
+        this.checkValue(error, VALUE);
     }
 
     // TreePrintable...................................................................................................
@@ -67,7 +81,9 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     public void testTreePrint() {
         this.treePrintAndCheck(
                 this.createObject(),
-                "#N/A \"message #1\"\n"
+                "#N/A\n" +
+                        "  \"message #1\"\n" +
+                        "  123"
         );
     }
 
@@ -78,7 +94,30 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.checkNotEquals(
                 SpreadsheetError.with(
                         SpreadsheetErrorKind.NAME,
-                        MESSAGE
+                        MESSAGE,
+                        VALUE
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentMessage() {
+        this.checkNotEquals(
+                SpreadsheetError.with(
+                        KIND,
+                        "different",
+                        VALUE
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsMessageDifferentCase() {
+        this.checkNotEquals(
+                SpreadsheetError.with(
+                        KIND,
+                        MESSAGE.toUpperCase(),
+                        VALUE
                 )
         );
     }
@@ -87,18 +126,9 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     public void testEqualsDifferentValue() {
         this.checkNotEquals(
                 SpreadsheetError.with(
-                        KIND,
-                        "different"
-                )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentCase() {
-        this.checkNotEquals(
-                SpreadsheetError.with(
-                        KIND,
-                        MESSAGE.toUpperCase()
+                        SpreadsheetErrorKind.NAME,
+                        MESSAGE,
+                        Optional.of("different-value")
                 )
         );
     }
@@ -114,11 +144,13 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     public void testUnmarshallString() {
         this.unmarshallAndCheck(
                 JsonNode.object()
-                        .set(JsonPropertyName.with("kind"), JsonNode.string(KIND.name()))
-                        .set(JsonPropertyName.with("message"), JsonNode.string(MESSAGE)),
+                        .set(SpreadsheetError.KIND_PROPERTY, JsonNode.string(KIND.name()))
+                        .set(SpreadsheetError.MESSAGE_PROPERTY, JsonNode.string(MESSAGE))
+                        .set(SpreadsheetError.VALUE_PROPERTY, this.marshallContext().marshallWithType(VALUE.get())),
                 SpreadsheetError.with(
                         KIND,
-                        MESSAGE
+                        MESSAGE,
+                        VALUE
                 )
         );
     }
@@ -130,6 +162,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
                 JsonNode.object()
                         .set(SpreadsheetError.KIND_PROPERTY, JsonNode.string(KIND.name()))
                         .set(SpreadsheetError.MESSAGE_PROPERTY, JsonNode.string(MESSAGE))
+                        .set(SpreadsheetError.VALUE_PROPERTY, this.marshallContext().marshallWithType(VALUE.get()))
         );
     }
 
@@ -144,7 +177,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     public void testToString() {
         this.toStringAndCheck(
                 this.createObject(),
-                KIND + " \"" + MESSAGE + "\""
+                KIND + " \"" + MESSAGE + "\" " + VALUE.get()
         );
     }
 
@@ -152,7 +185,8 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     public SpreadsheetError createObject() {
         return SpreadsheetError.with(
                 KIND,
-                MESSAGE
+                MESSAGE,
+                VALUE
         );
     }
 
@@ -171,12 +205,21 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         );
     }
 
+    private void checkMessage(final SpreadsheetError error,
+                              final String message) {
+        this.checkEquals(
+                message,
+                error.message(),
+                "message"
+        );
+    }
+
     private void checkValue(final SpreadsheetError error,
-                            final String value) {
+                            final Optional<?> value) {
         this.checkEquals(
                 value,
                 error.value(),
-                "error"
+                "value"
         );
     }
 
