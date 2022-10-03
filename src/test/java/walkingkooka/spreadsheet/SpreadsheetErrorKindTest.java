@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceLoadStoreException;
 import walkingkooka.text.cursor.parser.ParserException;
@@ -29,6 +30,8 @@ import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -108,23 +111,31 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
 
     @Test
     public void testTranslateHasExpressionReferenceException() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A1");
+
         this.translateAndCheck(
                 new ExpressionEvaluationReferenceException(
                         MESSAGE,
-                        SpreadsheetSelection.parseCell("A1")
+                        cell
                 ),
-                SpreadsheetErrorKind.NAME
+                SpreadsheetErrorKind.NAME,
+                MESSAGE,
+                cell
         );
     }
 
     @Test
     public void testTranslateHasExpressionReferenceException2() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
+
         this.translateAndCheck(
                 new SpreadsheetExpressionReferenceLoadStoreException(
                         MESSAGE,
-                        SpreadsheetSelection.parseCell("B2")
+                        cell
                 ),
-                SpreadsheetErrorKind.NAME
+                SpreadsheetErrorKind.NAME,
+                MESSAGE,
+                cell
         );
     }
 
@@ -184,7 +195,8 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
                         ExpressionNumber.class
                 ),
                 SpreadsheetErrorKind.VALUE,
-                "Cannot convert \"abc\" to ExpressionNumber"
+                "Cannot convert \"abc\" to ExpressionNumber",
+                "abc"
         );
     }
 
@@ -214,10 +226,13 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
 
     @Test
     public void testTranslateUnknownExpressionFunctionException() {
+        final FunctionExpressionName badFunction = FunctionExpressionName.with("badFunction");
+
         this.translateAndCheck(
-                new UnknownExpressionFunctionException(FunctionExpressionName.with("Label123")),
+                new UnknownExpressionFunctionException(badFunction),
                 SpreadsheetErrorKind.NAME,
-                "Unknown function \"Label123\""
+                "Unknown function \"badFunction\"",
+                badFunction
         );
     }
 
@@ -249,14 +264,43 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
 
     private void translateAndCheck(final Throwable cause,
                                    final SpreadsheetErrorKind kind) {
-        this.translateAndCheck(cause, kind, MESSAGE);
+        this.translateAndCheck0(
+                cause,
+                kind,
+                MESSAGE,
+                Optional.empty()
+        );
     }
 
     private void translateAndCheck(final Throwable cause,
                                    final SpreadsheetErrorKind kind,
                                    final String message) {
+        this.translateAndCheck0(
+                cause,
+                kind,
+                message,
+                Optional.empty()
+        );
+    }
+
+    private void translateAndCheck(final Throwable cause,
+                                   final SpreadsheetErrorKind kind,
+                                   final String message,
+                                   final Object value) {
+        this.translateAndCheck0(
+                cause,
+                kind,
+                message,
+                Optional.of(value)
+        );
+    }
+
+    private void translateAndCheck0(final Throwable cause,
+                                    final SpreadsheetErrorKind kind,
+                                    final String message,
+                                    final Optional<?> value) {
         this.checkEquals(
-                kind.setMessage(message),
+                kind.setMessageAndValue(message, value.orElse(null)),
                 SpreadsheetErrorKind.translate(cause),
                 () -> "translate " + cause
         );
@@ -272,7 +316,8 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
             final SpreadsheetError error = kind.setMessage(message);
 
             this.checkEquals(kind, error.kind(), "kind");
-            this.checkEquals(message, error.value(), "message");
+            this.checkEquals(message, error.message(), "message");
+            this.checkEquals(Optional.empty(), error.value(), "value");
         }
     }
 

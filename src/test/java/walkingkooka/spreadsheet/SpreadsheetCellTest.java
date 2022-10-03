@@ -1177,7 +1177,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    value: #VALUE! \"error message 1\"\n"
+                        "    value: #VALUE!\n" +
+                        "        \"error message 1\"\n"
         );
     }
 

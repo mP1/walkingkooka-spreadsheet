@@ -1218,7 +1218,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         .replace(
                                                 TextNode.text(
                                                         error.get()
-                                                                .value()
+                                                                .message()
                                                 )
                                         )
                         )

@@ -749,7 +749,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
 
         final SpreadsheetError error = maybeError.get();
-        final String errorText = error.value();
+        final String errorText = error.message();
         assertTrue(
                 errorText.contains(errorContains),
                 () -> "Error message " +
@@ -787,7 +787,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             );
 
             final SpreadsheetError error = maybeError.get();
-            final String errorText = error.value();
+            final String errorText = error.message();
             assertTrue(
                     errorText.contains(errorContains),
                     () -> "Error message " +
