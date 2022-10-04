@@ -22,8 +22,7 @@ import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest extends GeneralSpreadsheetConverterTestCase<SpreadsheetSelectionToSpreadsheetSelectionConverter>
-        implements ConverterTesting2<SpreadsheetSelectionToSpreadsheetSelectionConverter, SpreadsheetConverterContext> {
+public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest implements ConverterTesting2<SpreadsheetSelectionToSpreadsheetSelectionConverter, SpreadsheetConverterContext> {
 
     @Test
     public void testCellToSpreadsheetSelection() {

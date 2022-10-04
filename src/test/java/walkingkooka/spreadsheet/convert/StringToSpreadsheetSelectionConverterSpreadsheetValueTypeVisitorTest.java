@@ -17,11 +17,10 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitorTesting;
 
-public final class ToSpreadsheetValueTypeVisitorTest extends GeneralSpreadsheetConverterTestCase<StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor>
-        implements SpreadsheetValueTypeVisitorTesting<StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor> {
-
+public final class StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisitorTesting<StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor> {
 
     @Override
     public StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor createVisitor() {
@@ -31,8 +30,22 @@ public final class ToSpreadsheetValueTypeVisitorTest extends GeneralSpreadsheetC
         );
     }
 
+    // TypeNameTesting..................................................................................................
+
+    @Override
+    public String typeNamePrefix() {
+        return StringToSpreadsheetSelectionConverter.class.getSimpleName();
+    }
+
+    // ClassTesting.....................................................................................................
+
     @Override
     public Class<StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor> type() {
         return StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor.class;
+    }
+
+    @Override
+    public final JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
