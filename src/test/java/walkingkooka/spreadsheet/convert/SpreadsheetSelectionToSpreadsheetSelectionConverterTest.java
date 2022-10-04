@@ -22,8 +22,8 @@ import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class GeneralSpreadsheetConverterSelectionConverterTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterSelectionConverter>
-        implements ConverterTesting2<GeneralSpreadsheetConverterSelectionConverter, SpreadsheetConverterContext> {
+public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest extends GeneralSpreadsheetConverterTestCase<SpreadsheetSelectionToSpreadsheetSelectionConverter>
+        implements ConverterTesting2<SpreadsheetSelectionToSpreadsheetSelectionConverter, SpreadsheetConverterContext> {
 
     @Test
     public void testCellToSpreadsheetSelection() {
@@ -74,8 +74,8 @@ public final class GeneralSpreadsheetConverterSelectionConverterTest extends Gen
     }
 
     @Override
-    public GeneralSpreadsheetConverterSelectionConverter createConverter() {
-        return GeneralSpreadsheetConverterSelectionConverter.INSTANCE;
+    public SpreadsheetSelectionToSpreadsheetSelectionConverter createConverter() {
+        return SpreadsheetSelectionToSpreadsheetSelectionConverter.INSTANCE;
     }
 
     @Override
@@ -84,7 +84,7 @@ public final class GeneralSpreadsheetConverterSelectionConverterTest extends Gen
     }
 
     @Override
-    public Class<GeneralSpreadsheetConverterSelectionConverter> type() {
-        return GeneralSpreadsheetConverterSelectionConverter.class;
+    public Class<SpreadsheetSelectionToSpreadsheetSelectionConverter> type() {
+        return SpreadsheetSelectionToSpreadsheetSelectionConverter.class;
     }
 }
