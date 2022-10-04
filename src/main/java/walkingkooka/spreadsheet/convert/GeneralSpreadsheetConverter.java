@@ -192,7 +192,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                         )
                 ),
                 fromCharacterOrString(
-                        GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter.INSTANCE
+                        SpreadsheetConverters.stringToSelection()
                 ), // selection
                 fromCharacterOrString(
                         toCharacterOrString(
@@ -318,7 +318,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         return isNonNullAndValueIsInstanceofType(value, targetType) ||
                 isSupportedValueAndType(value, targetType) ||
                 GeneralSpreadsheetConverterSelectionConverter.INSTANCE.canConvert(value, targetType, context) ||
-                GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter.INSTANCE.canConvert(value, targetType, context);
+                StringToSpreadsheetSelectionConverter.INSTANCE.canConvert(value, targetType, context);
     }
 
     private static boolean isNonNullAndValueIsInstanceofType(final Object value,

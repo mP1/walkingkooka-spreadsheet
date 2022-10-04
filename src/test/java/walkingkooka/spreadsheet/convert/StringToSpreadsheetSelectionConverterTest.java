@@ -26,8 +26,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.function.Function;
 
-public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter>
-        implements ConverterTesting2<GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter, SpreadsheetConverterContext> {
+public final class StringToSpreadsheetSelectionConverterTest extends GeneralSpreadsheetConverterTestCase<StringToSpreadsheetSelectionConverter>
+        implements ConverterTesting2<StringToSpreadsheetSelectionConverter, SpreadsheetConverterContext> {
 
     @Test
     public void testStringToCell() {
@@ -173,8 +173,8 @@ public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverte
     }
 
     @Override
-    public GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter createConverter() {
-        return GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter.INSTANCE;
+    public StringToSpreadsheetSelectionConverter createConverter() {
+        return StringToSpreadsheetSelectionConverter.INSTANCE;
     }
 
     @Override
@@ -206,7 +206,7 @@ public final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverte
     }
 
     @Override
-    public Class<GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter> type() {
-        return GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter.class;
+    public Class<StringToSpreadsheetSelectionConverter> type() {
+        return StringToSpreadsheetSelectionConverter.class;
     }
 }
