@@ -26,8 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.function.Function;
 
-public final class StringToSpreadsheetSelectionConverterTest extends GeneralSpreadsheetConverterTestCase<StringToSpreadsheetSelectionConverter>
-        implements ConverterTesting2<StringToSpreadsheetSelectionConverter, SpreadsheetConverterContext> {
+public final class StringToSpreadsheetSelectionConverterTest implements ConverterTesting2<StringToSpreadsheetSelectionConverter, SpreadsheetConverterContext> {
 
     @Test
     public void testStringToCell() {
