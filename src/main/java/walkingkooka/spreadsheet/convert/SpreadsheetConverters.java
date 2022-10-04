@@ -46,10 +46,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
-     * {@see UnformattedNumberSpreadsheetConverter}
+     * {@see SpreadsheetErrorConverter}
      */
-    public static Converter<SpreadsheetConverterContext> errorToString() {
-        return SpreadsheetErrorToStringConverter.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> error() {
+        return SpreadsheetErrorConverter.INSTANCE;
     }
 
     /**

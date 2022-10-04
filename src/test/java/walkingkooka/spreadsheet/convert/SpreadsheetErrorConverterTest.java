@@ -19,9 +19,13 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterTesting2;
+import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.tree.expression.ExpressionNumber;
 
-public final class SpreadsheetErrorToStringConverterTest implements ConverterTesting2<SpreadsheetErrorToStringConverter, SpreadsheetConverterContext> {
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public final class SpreadsheetErrorConverterTest implements ConverterTesting2<SpreadsheetErrorConverter, SpreadsheetConverterContext> {
 
     @Test
     public void testNonErrorFails() {
@@ -34,7 +38,19 @@ public final class SpreadsheetErrorToStringConverterTest implements ConverterTes
     }
 
     @Test
-    public void testErrorError() {
+    public void testErrorToNumberThrows() {
+        assertThrows(
+                SpreadsheetErrorConversionException.class,
+                () -> SpreadsheetErrorConverter.INSTANCE.convert(
+                        SpreadsheetErrorKind.ERROR.setMessage("Ignored"),
+                        ExpressionNumber.class,
+                        this.createContext()
+                )
+        );
+    }
+
+    @Test
+    public void testErrorErrorToString() {
         final SpreadsheetErrorKind kind = SpreadsheetErrorKind.ERROR;
 
         this.convertAndCheck(
@@ -45,7 +61,7 @@ public final class SpreadsheetErrorToStringConverterTest implements ConverterTes
     }
 
     @Test
-    public void testErrorDiv0() {
+    public void testErrorDiv0ToString() {
         final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
 
         this.convertAndCheck(
@@ -58,14 +74,14 @@ public final class SpreadsheetErrorToStringConverterTest implements ConverterTes
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetErrorToStringConverter.INSTANCE,
-                "SpreadsheetError->String"
+                SpreadsheetErrorConverter.INSTANCE,
+                "SpreadsheetError"
         );
     }
 
     @Override
-    public SpreadsheetErrorToStringConverter createConverter() {
-        return SpreadsheetErrorToStringConverter.INSTANCE;
+    public SpreadsheetErrorConverter createConverter() {
+        return SpreadsheetErrorConverter.INSTANCE;
     }
 
     @Override
@@ -74,7 +90,7 @@ public final class SpreadsheetErrorToStringConverterTest implements ConverterTes
     }
 
     @Override
-    public Class<SpreadsheetErrorToStringConverter> type() {
-        return SpreadsheetErrorToStringConverter.class;
+    public Class<SpreadsheetErrorConverter> type() {
+        return SpreadsheetErrorConverter.class;
     }
 }
