@@ -42,7 +42,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class FormatPatternConverterTest implements ConverterTesting2<FormatPatternConverter, SpreadsheetConverterContext> {
+public final class StringToFormatPatternConverterTest implements ConverterTesting2<StringToFormatPatternConverter, SpreadsheetConverterContext> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -54,7 +54,7 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     public void testWithNullPatternFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> FormatPatternConverter.with(null)
+                () -> StringToFormatPatternConverter.with(null)
         );
     }
 
@@ -62,7 +62,7 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     public void testWithEmptyPatternFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> FormatPatternConverter.with("")
+                () -> StringToFormatPatternConverter.with("")
         );
     }
 
@@ -71,7 +71,7 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     @Test
     public void testBooleanFalse() {
         this.convertAndCheck(
-                FormatPatternConverter.with("$000.000"),
+                StringToFormatPatternConverter.with("$000.000"),
                 false,
                 String.class,
                 this.createContext(),
@@ -82,7 +82,7 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     @Test
     public void testBooleanTrue() {
         this.convertAndCheck(
-                FormatPatternConverter.with("$000.000"),
+                StringToFormatPatternConverter.with("$000.000"),
                 true,
                 String.class,
                 this.createContext(),
@@ -152,7 +152,7 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
 
     private void convertNumberAndCheck(final Number number) {
         this.convertAndCheck(
-                FormatPatternConverter.with("$000.000"),
+                StringToFormatPatternConverter.with("$000.000"),
                 number,
                 String.class,
                 this.createContext(),
@@ -165,7 +165,7 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     @Test
     public void testLocalDate() {
         this.convertAndCheck(
-                FormatPatternConverter.with("yyyy mm dd"),
+                StringToFormatPatternConverter.with("yyyy mm dd"),
                 LocalDate.of(1999, 12, 31),
                 String.class,
                 this.createContext(),
@@ -176,7 +176,7 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     @Test
     public void testLocalDateTime() {
         this.convertAndCheck(
-                FormatPatternConverter.with("yyyy mm dd hh mm ss"),
+                StringToFormatPatternConverter.with("yyyy mm dd hh mm ss"),
                 LocalDateTime.of(1999, 12, 31, 12, 58, 59),
                 String.class,
                 this.createContext(),
@@ -187,7 +187,7 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     @Test
     public void testLocalTime() {
         this.convertAndCheck(
-                FormatPatternConverter.with("ss mm hh"),
+                StringToFormatPatternConverter.with("ss mm hh"),
                 LocalTime.of(12, 58, 59),
                 String.class,
                 this.createContext(),
@@ -267,8 +267,8 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     }
 
     @Override
-    public FormatPatternConverter createConverter() {
-        return FormatPatternConverter.with("!");
+    public StringToFormatPatternConverter createConverter() {
+        return StringToFormatPatternConverter.with("!");
     }
 
     @Override
@@ -303,7 +303,7 @@ public final class FormatPatternConverterTest implements ConverterTesting2<Forma
     }
 
     @Override
-    public Class<FormatPatternConverter> type() {
-        return FormatPatternConverter.class;
+    public Class<StringToFormatPatternConverter> type() {
+        return StringToFormatPatternConverter.class;
     }
 }
