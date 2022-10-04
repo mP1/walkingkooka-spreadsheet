@@ -25,6 +25,8 @@ import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
@@ -544,6 +546,32 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 selection,
                 String.class,
                 selection.toString()
+        );
+    }
+
+    // error ...........................................................................................................
+
+    @Test
+    public void testSpreadsheetErrorToNumber() {
+        assertThrows(
+                SpreadsheetErrorConversionException.class,
+                () -> this.createConverter()
+                        .convert(
+                                SpreadsheetErrorKind.ERROR.setMessage("Ignored"),
+                                ExpressionNumber.class,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetErrorToString() {
+        final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
+
+        this.convertAndCheck(
+                kind.setMessage("Message is ignored"),
+                String.class,
+                kind.text()
         );
     }
 

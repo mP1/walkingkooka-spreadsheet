@@ -155,11 +155,12 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor extends Spreadshe
         this.converter(this.mapping.selection);
     }
 
-    // errors are a special type we dont want to try and convert them and report them inside a ConversionException which loses the error.
     @Override
     protected void visit(final SpreadsheetError error) {
-        throw new SpreadsheetErrorConversionException(error);
+        this.converter = ERROR;
     }
+
+    private final static Converter<SpreadsheetConverterContext> ERROR = SpreadsheetConverters.error();
 
     @Override
     protected void visit(final SpreadsheetLabelName value) {

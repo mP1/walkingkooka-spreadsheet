@@ -352,8 +352,8 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 LocalTime.class == type ||
                 ExpressionNumber.isClass(type) ||
                 Number.class == type ||
-                String.class == type ||
-                SpreadsheetError.class == type;
+                SpreadsheetError.class == type ||
+                String.class == type;
     }
 
     @Override
