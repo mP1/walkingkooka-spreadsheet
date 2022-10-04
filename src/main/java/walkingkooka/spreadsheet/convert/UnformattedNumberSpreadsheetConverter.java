@@ -17,22 +17,19 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 /**
  * A {@link Converter} that only supports converting values to {@link String}. Numbers are formatted to {@link String}
  * using a simple pattern, ignoring any number format pattern.
  */
-final class UnformattedNumberSpreadsheetConverter<C extends ExpressionNumberConverterContext> implements Converter<C> {
+final class UnformattedNumberSpreadsheetConverter implements Converter<SpreadsheetConverterContext> {
 
-    static <C extends ExpressionNumberConverterContext> UnformattedNumberSpreadsheetConverter<C> instance() {
-        return Cast.to(INSTANCE);
-    }
-
-    private final static UnformattedNumberSpreadsheetConverter<?> INSTANCE = new UnformattedNumberSpreadsheetConverter<>();
+    /**
+     * Singleton
+     */
+    final static UnformattedNumberSpreadsheetConverter INSTANCE = new UnformattedNumberSpreadsheetConverter();
 
     private UnformattedNumberSpreadsheetConverter() {
         super();
@@ -41,14 +38,14 @@ final class UnformattedNumberSpreadsheetConverter<C extends ExpressionNumberConv
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type,
-                              final C context) {
+                              final SpreadsheetConverterContext context) {
         return String.class == type;
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type,
-                                         final C context) {
+                                         final SpreadsheetConverterContext context) {
         return this.canConvert(value, type, context) ?
                 this.successfulConversion(
                         UnformattedNumberSpreadsheetConverterSpreadsheetValueVisitor.convertToString(
