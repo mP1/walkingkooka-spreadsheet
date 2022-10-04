@@ -315,14 +315,14 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
     public boolean canConvert(final Object value,
                               final Class<?> targetType,
                               final SpreadsheetConverterContext context) {
-        return isNonNullAndValueIsType(value, targetType) ||
+        return isNonNullAndValueIsInstanceofType(value, targetType) ||
                 isSupportedValueAndType(value, targetType) ||
                 GeneralSpreadsheetConverterSelectionConverter.INSTANCE.canConvert(value, targetType, context) ||
                 GeneralSpreadsheetConverterStringSpreadsheetSelectionConverter.INSTANCE.canConvert(value, targetType, context);
     }
 
-    private static boolean isNonNullAndValueIsType(final Object value,
-                                                   final Class<?> targetType) {
+    private static boolean isNonNullAndValueIsInstanceofType(final Object value,
+                                                             final Class<?> targetType) {
         return null != value && value.getClass() == targetType;
     }
 
