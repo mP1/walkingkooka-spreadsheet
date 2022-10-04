@@ -27,15 +27,15 @@ import walkingkooka.text.CharSequences;
  * <br>
  * This {@link Converter} exists to support functions like text where the user provides a value and a pattern.
  */
-final class FormatPatternConverter implements Converter<SpreadsheetConverterContext> {
+final class StringToFormatPatternConverter implements Converter<SpreadsheetConverterContext> {
 
-    static FormatPatternConverter with(final String pattern) {
+    static StringToFormatPatternConverter with(final String pattern) {
         CharSequences.failIfNullOrEmpty(pattern, "pattern");
 
-        return new FormatPatternConverter(pattern);
+        return new StringToFormatPatternConverter(pattern);
     }
 
-    private FormatPatternConverter(final String pattern) {
+    private StringToFormatPatternConverter(final String pattern) {
         this.pattern = pattern;
     }
 
@@ -60,7 +60,7 @@ final class FormatPatternConverter implements Converter<SpreadsheetConverterCont
 
     private String formatUsingPattern(final Object value,
                                       final SpreadsheetConverterContext context) {
-        return FormatPatternConverterSpreadsheetValueVisitor.format(
+        return StringToFormatPatternConverterSpreadsheetValueVisitor.format(
                 value,
                 this.pattern,
                 context

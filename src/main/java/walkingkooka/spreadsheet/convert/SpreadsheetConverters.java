@@ -53,13 +53,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see FormatPatternConverter}
-     */
-    public static Converter<SpreadsheetConverterContext> formatPattern(final String pattern) {
-        return FormatPatternConverter.with(pattern);
-    }
-
-    /**
      * {@see GeneralSpreadsheetConverter}
      */
     public static Converter<SpreadsheetConverterContext> general(final SpreadsheetFormatter dateFormatter,
@@ -82,6 +75,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 timeFormatter,
                 timeParser,
                 dateOffset);
+    }
+
+    /**
+     * {@see StringToFormatPatternConverter}
+     */
+    public static Converter<SpreadsheetConverterContext> stringToFormatPattern(final String pattern) {
+        return StringToFormatPatternConverter.with(pattern);
     }
 
     /**

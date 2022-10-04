@@ -20,15 +20,15 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
 
-public final class FormatPatternConverterSpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<FormatPatternConverterSpreadsheetValueVisitor> {
+public final class StringToFormatPatternConverterSpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<StringToFormatPatternConverterSpreadsheetValueVisitor> {
     @Override
-    public FormatPatternConverterSpreadsheetValueVisitor createVisitor() {
-        return new FormatPatternConverterSpreadsheetValueVisitor(null, null);
+    public StringToFormatPatternConverterSpreadsheetValueVisitor createVisitor() {
+        return new StringToFormatPatternConverterSpreadsheetValueVisitor(null, null);
     }
 
     @Override
-    public Class<FormatPatternConverterSpreadsheetValueVisitor> type() {
-        return FormatPatternConverterSpreadsheetValueVisitor.class;
+    public Class<StringToFormatPatternConverterSpreadsheetValueVisitor> type() {
+        return StringToFormatPatternConverterSpreadsheetValueVisitor.class;
     }
 
     @Override
@@ -38,6 +38,6 @@ public final class FormatPatternConverterSpreadsheetValueVisitorTest implements 
 
     @Override
     public String typeNamePrefix() {
-        return FormatPatternConverter.class.getSimpleName();
+        return StringToFormatPatternConverter.class.getSimpleName();
     }
 }

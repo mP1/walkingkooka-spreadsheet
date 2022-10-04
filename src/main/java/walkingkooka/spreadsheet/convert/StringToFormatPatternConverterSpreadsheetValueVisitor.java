@@ -49,12 +49,12 @@ import java.util.Optional;
  * <br>
  * Note it is possible for this fail if the pattern is invalid and parsing of the pattern fails.
  */
-final class FormatPatternConverterSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
+final class StringToFormatPatternConverterSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
     static String format(final Object value,
                          final String pattern,
                          final SpreadsheetConverterContext context) {
-        final FormatPatternConverterSpreadsheetValueVisitor visitor = new FormatPatternConverterSpreadsheetValueVisitor(
+        final StringToFormatPatternConverterSpreadsheetValueVisitor visitor = new StringToFormatPatternConverterSpreadsheetValueVisitor(
                 pattern,
                 context
         );
@@ -63,8 +63,8 @@ final class FormatPatternConverterSpreadsheetValueVisitor extends SpreadsheetVal
     }
 
     // VisibleForTesting
-    FormatPatternConverterSpreadsheetValueVisitor(final String pattern,
-                                                  final SpreadsheetConverterContext context) {
+    StringToFormatPatternConverterSpreadsheetValueVisitor(final String pattern,
+                                                          final SpreadsheetConverterContext context) {
         super();
         this.pattern = pattern;
         this.context = context;
