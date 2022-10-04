@@ -78,6 +78,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see StringToSpreadsheetSelectionConverter}
+     */
+    public static Converter<SpreadsheetConverterContext> stringToSelection() {
+        return StringToSpreadsheetSelectionConverter.INSTANCE;
+    }
+
+    /**
      * {@see StringToFormatPatternConverter}
      */
     public static Converter<SpreadsheetConverterContext> stringToFormatPattern(final String pattern) {

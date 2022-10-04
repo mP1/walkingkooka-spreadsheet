@@ -26,12 +26,12 @@ import java.util.function.Function;
 /**
  * A {@link SpreadsheetValueTypeVisitor} which accepts the {@link String} and calls the right parse method on {@link SpreadsheetSelection}.
  */
-final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
+final class StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
 
     static <S extends SpreadsheetSelection> S parse(final String string,
                                                     final Class<S> selectionType,
                                                     final SpreadsheetConverterContext context) {
-        final GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor visitor = new GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(
+        final StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor visitor = new StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(
                 string,
                 context
         );
@@ -39,8 +39,8 @@ final class GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpread
         return Cast.to(visitor.selection);
     }
 
-    GeneralSpreadsheetConverterStringSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(final String string,
-                                                                                              final SpreadsheetConverterContext context) {
+    StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(final String string,
+                                                                     final SpreadsheetConverterContext context) {
         super();
         this.string = string;
         this.context = context;
