@@ -37,9 +37,9 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatException;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -128,7 +128,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -174,6 +173,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Converters.collection(
                         Lists.of(
                                 Converters.simple(),
+                                Cast.to(SpreadsheetConverters.error()),
                                 Converters.localDateLocalDateTime(),
                                 Converters.localTimeLocalDateTime(),
                                 Converters.numberNumber(),
@@ -324,7 +324,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 error,
-                error.kind().text(), // formatted text
+                error.kind().text() + " " + FORMATTED_PATTERN_SUFFIX, // formatted text
                 errorMessage
         );
     }
@@ -705,7 +705,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.checkFormattedText(
                 second,
-                "#ERROR"
+                "#ERROR " + FORMATTED_PATTERN_SUFFIX
         );
     }
 
@@ -878,9 +878,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        formattedCellWithValue(a, "=1+2+BasicSpreadsheetEngineTestValue()", number(100 + 3)),
-                                        formattedCellWithValue(b, "=3+4+" + a, number(3 + 4 + 103)),
-                                        formattedCellWithValue(c, "=5+6+" + a, number(5 + 6 + 103))
+                                        formattedCell(a, "=1+2+BasicSpreadsheetEngineTestValue()", number(100 + 3)),
+                                        formattedCell(b, "=3+4+" + a, number(3 + 4 + 103)),
+                                        formattedCell(c, "=5+6+" + a, number(5 + 6 + 103))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B,C,D")
@@ -1189,8 +1189,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(b2, EXPRESSION_NUMBER_KIND.create(22)),
-                                        this.formattedCellWithValue(c3, EXPRESSION_NUMBER_KIND.create(33))
+                                        this.formattedCell(b2, EXPRESSION_NUMBER_KIND.create(22)),
+                                        this.formattedCell(c3, EXPRESSION_NUMBER_KIND.create(33))
                                 )
                         ).setDeletedCells(
                                 Sets.of(
@@ -1219,7 +1219,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, "");
+        final SpreadsheetCell a1Formatted = this.formattedCell(a1, "");
         this.saveCellAndCheck(
                 engine,
                 a1,
@@ -1250,7 +1250,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, "");
+        final SpreadsheetCell a1Formatted = this.formattedCell(a1, "");
         this.saveCellAndCheck(
                 engine,
                 a1,
@@ -1321,7 +1321,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", formula);
-        final SpreadsheetCell a1Formatted = this.formattedCellWithError(
+        final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
                 error
         );
@@ -1358,7 +1358,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "=1+2");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, number(3));
+        final SpreadsheetCell a1Formatted = this.formattedCell(a1, number(3));
         this.saveCellAndCheck(
                 engine,
                 a1,
@@ -1396,7 +1396,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
 
         final SpreadsheetCell a1 = this.cell("a1", "=$B$2+99");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithError(
+        final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
                 SpreadsheetErrorKind.REF.setMessageAndValue(
                         "Unknown Cell: $B$2",
@@ -1458,7 +1458,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(cell, number(1 + 2))
+                                        this.formattedCell(cell, number(1 + 2))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -1480,7 +1480,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setText("=1+2")
         );
 
-        final SpreadsheetCell cellWithValue = this.formattedCellWithValue(
+        final SpreadsheetCell cellWithValue = this.formattedCell(
                 cell,
                 number(1 + 2),
                 TextStyle.EMPTY
@@ -1515,7 +1515,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(
+                                        this.formattedCell(
                                                 cell.setStyle(newStyle),
                                                 number(1 + 2),
                                                 newStyle
@@ -1540,7 +1540,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
 
         final SpreadsheetCell a1 = this.cell("$A$1", "=1+2");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, number(3));
+        final SpreadsheetCell a1Formatted = this.formattedCell(a1, number(3));
 
         this.saveCellAndCheck(
                 engine,
@@ -1557,7 +1557,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetCell b2 = this.cell("$B$2", "=3+4");
-        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(b2, number(7));
+        final SpreadsheetCell b2Formatted = this.formattedCell(b2, number(7));
 
         this.saveCellAndCheck(
                 engine,
@@ -1576,7 +1576,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 );
 
         final SpreadsheetCell c3 = this.cell("$C$3", "=5+6");
-        final SpreadsheetCell c3Formatted = this.formattedCellWithValue(c3, number(11));
+        final SpreadsheetCell c3Formatted = this.formattedCell(c3, number(11));
 
         this.saveCellAndCheck(
                 engine,
@@ -1614,7 +1614,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName unknown = SpreadsheetSelection.labelName("LABELXYZ");
 
         final SpreadsheetCell a1 = this.cell("a1", "=1+" + unknown);
-        final SpreadsheetCell a1Formatted = this.formattedCellWithError(
+        final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
                 SpreadsheetErrorKind.NAME.setMessageAndValue(
                         "Unknown Label: " + unknown,
@@ -1668,7 +1668,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(b2, number(5 + 3))
+                                        this.formattedCell(b2, number(5 + 3))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -1707,9 +1707,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a1, number(1 + 10)),
-                                        this.formattedCellWithValue(b2, number(5 + 1 + 10)),
-                                        this.formattedCellWithValue(c3, number(10))
+                                        this.formattedCell(a1, number(1 + 10)),
+                                        this.formattedCell(b2, number(5 + 1 + 10)),
+                                        this.formattedCell(c3, number(10))
                                 )
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
@@ -1728,7 +1728,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(a1, context);
 
         final SpreadsheetCell b2 = this.cell("$B$2", "=5+$A$1");
-        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(b2, number(5 + 1 + 2));
+        final SpreadsheetCell b2Formatted = this.formattedCell(b2, number(5 + 1 + 2));
 
         this.saveCellAndCheck(
                 engine,
@@ -1780,8 +1780,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a1, number(1 + 2 + 5)),
-                                        this.formattedCellWithValue(b2, number(1 + 2))
+                                        this.formattedCell(a1, number(1 + 2 + 5)),
+                                        this.formattedCell(b2, number(1 + 2))
                                 )
                         ).setColumnWidths(
                                 columnWidths("A,B")
@@ -1820,7 +1820,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(b2, number(5 + 10))
+                                        this.formattedCell(b2, number(5 + 10))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -1862,8 +1862,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                this.formattedCellWithValue(a1, number(10 + 5)),
-                                this.formattedCellWithValue(b2, number(5))
+                                this.formattedCell(a1, number(10 + 5)),
+                                this.formattedCell(b2, number(5))
                         )
                 ).setLabels(
                         Sets.of(
@@ -1898,7 +1898,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a1, number(40 + 30))
+                                        this.formattedCell(a1, number(40 + 30))
                                 )
                         ).setColumnWidths(
                                 columnWidths("A")
@@ -1947,7 +1947,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a1, number(40 + 20))
+                                        this.formattedCell(a1, number(40 + 20))
                                 )
                         ).setColumnWidths(
                                 columnWidths("A")
@@ -2001,7 +2001,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a1, number(40 + 20 + 30))
+                                        this.formattedCell(a1, number(40 + 20 + 30))
                                 )
                         ).setColumnWidths(
                                 columnWidths("A")
@@ -2152,7 +2152,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", formula);
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+        final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
                 value
         );
@@ -2181,7 +2181,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "'Hello");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+        final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
                 "Hello"
         );
@@ -2232,13 +2232,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "=1+2");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+        final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
                 number(3)
         );
 
         final SpreadsheetCell b2 = this.cell("b2", "=4+5");
-        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(
+        final SpreadsheetCell b2Formatted = this.formattedCell(
                 b2,
                 number(9)
         );
@@ -2282,13 +2282,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "=100");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+        final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
                 number(100)
         );
 
         final SpreadsheetCell b2 = this.cell("b2", "=a1+2");
-        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(
+        final SpreadsheetCell b2Formatted = this.formattedCell(
                 b2,
                 number(100 + 2)
         );
@@ -2332,13 +2332,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "=b2+1");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+        final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
                 number(1000 + 1)
         );
 
         final SpreadsheetCell b2 = this.cell("b2", "=1000");
-        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(
+        final SpreadsheetCell b2Formatted = this.formattedCell(
                 b2,
                 number(1000)
         );
@@ -2382,19 +2382,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "=b2+100");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+        final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
                 number(1000 + 100)
         );
 
         final SpreadsheetCell b2 = this.cell("b2", "=1000");
-        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(
+        final SpreadsheetCell b2Formatted = this.formattedCell(
                 b2,
                 number(1000)
         );
 
         final SpreadsheetCell c3 = this.cell("c3", "=a1+1");
-        final SpreadsheetCell c3Formatted = this.formattedCellWithValue(
+        final SpreadsheetCell c3Formatted = this.formattedCell(
                 c3,
                 number(1000 + 100 + 1)
         );
@@ -2596,7 +2596,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(
+                                        this.formattedCell(
                                                 a1,
                                                 SpreadsheetErrorKind.REF.setMessageAndValue(
                                                         "Unknown Cell: $B$2",
@@ -2732,7 +2732,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(
+                                        this.formattedCell(
                                                 a1,
                                                 SpreadsheetErrorKind.REF.setMessageAndValue(
                                                         "Unknown Label: " + labelB2,
@@ -3034,7 +3034,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("b3", "=5+6", number(5 + 6))
+                                        this.formattedCell("b3", "=5+6", number(5 + 6))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b, c)
@@ -3189,7 +3189,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("b3", formula, value)
+                                        this.formattedCell("b3", formula, value)
                                 )
                         ).setDeletedCells(
                                 Sets.of(b, c)
@@ -3227,8 +3227,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("B3", "=5+6", number(5 + 6)),
-                                        this.formattedCellWithValue("Y99", "=7+8", number(7 + 8))
+                                        this.formattedCell("B3", "=5+6", number(5 + 6)),
+                                        this.formattedCell("Y99", "=7+8", number(7 + 8))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b, c, d)
@@ -3267,7 +3267,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(b.addColumn(-1), "=2+0+" + LABEL, number(2 + 99))
+                                        this.formattedCell(b.addColumn(-1), "=2+0+" + LABEL, number(2 + 99))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -3315,10 +3315,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+" + LABEL, number(1 + 99 + 0)),
-                                        this.formattedCellWithValue(c.addColumn(-count), "=3+0", number(3 + 0)),
-                                        this.formattedCellWithValue(d.addColumn(-count), "=4+" + LABEL, number(4 + 99 + 0)),
-                                        this.formattedCellWithValue(e.addColumn(-count), "=99+0", number(99 + 0))
+                                        this.formattedCell(a, "=1+" + LABEL, number(1 + 99 + 0)),
+                                        this.formattedCell(c.addColumn(-count), "=3+0", number(3 + 0)),
+                                        this.formattedCell(d.addColumn(-count), "=4+" + LABEL, number(4 + 99 + 0)),
+                                        this.formattedCell(e.addColumn(-count), "=99+0", number(99 + 0))
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -3393,9 +3393,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+" + d.addColumn(-count), number(1 + 4)),
-                                        this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
-                                        this.formattedCellWithValue(e.addColumn(-count), "=5+" + b, number(5 + 2))
+                                        this.formattedCell(a, "=1+" + d.addColumn(-count), number(1 + 4)),
+                                        this.formattedCell(d.addColumn(-count), "=4", number(4)),
+                                        this.formattedCell(e.addColumn(-count), "=5+" + b, number(5 + 2))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d, e)
@@ -3435,9 +3435,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+" + d.addColumn(-count), number(1 + 4)),
-                                        this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
-                                        this.formattedCellWithValue(e.addColumn(-count), "=5+" + b, number(5 + 2))
+                                        this.formattedCell(a, "=1+" + d.addColumn(-count), number(1 + 4)),
+                                        this.formattedCell(d.addColumn(-count), "=4", number(4)),
+                                        this.formattedCell(e.addColumn(-count), "=5+" + b, number(5 + 2))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d, e)
@@ -3471,7 +3471,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(
+                                        this.formattedCell(
                                                 a,
                                                 "=1+InvalidCellReference(\"" + b + "\")",
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
@@ -3520,9 +3520,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
-                                        this.formattedCellWithValue(e.addColumn(-count), "=5", number(5)),
-                                        this.formattedCellWithValue(f.addColumn(-count), "=6", number(6))
+                                        this.formattedCell(d.addColumn(-count), "=4", number(4)),
+                                        this.formattedCell(e.addColumn(-count), "=5", number(5)),
+                                        this.formattedCell(f.addColumn(-count), "=6", number(6))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b, c, d, e, f)
@@ -3738,7 +3738,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(c.addRow(-1), "=5+6", number(5 + 6))
+                                        this.formattedCell(c.addRow(-1), "=5+6", number(5 + 6))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c)
@@ -3783,8 +3783,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(c.addRow(-count), "=5+6", number(5 + 6)),
-                                        this.formattedCellWithValue(d.addRow(-count), "=7+8", number(7 + 8))
+                                        this.formattedCell(c.addRow(-count), "=5+6", number(5 + 6)),
+                                        this.formattedCell(d.addRow(-count), "=7+8", number(7 + 8))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d)
@@ -3828,7 +3828,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(d.addRow(-count), "=7+8", number(7 + 8))
+                                        this.formattedCell(d.addRow(-count), "=7+8", number(7 + 8))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b, c, d)
@@ -3886,7 +3886,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$4", "=99+0", number(99 + 0))
+                                        this.formattedCell("$A$4", "=99+0", number(99 + 0))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c)
@@ -3948,8 +3948,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(Sets.of(
-                                this.formattedCellWithValue(a, "=1+0+" + LABEL, number(1 + 0 + 2 + 0)),
-                                this.formattedCellWithValue(b.addRow(-count), "=2+0", number(2 + 0)))
+                                this.formattedCell(a, "=1+0+" + LABEL, number(1 + 0 + 2 + 0)),
+                                this.formattedCell(b.addRow(-count), "=2+0", number(2 + 0)))
                         ).setLabels(
                                 Sets.of(
                                         LABEL.mapping(SpreadsheetSelection.parseCell("$A$4"))
@@ -4001,7 +4001,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(
+                                        this.formattedCell(
                                                 a,
                                                 "=1+InvalidCellReference(\"" + b + "\")",
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
@@ -4060,9 +4060,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$1", "=1+$I$13", number(1 + 4)),
-                                        this.formattedCellWithValue("$I$13", "=4", number(4)),
-                                        this.formattedCellWithValue("$J$14", "=5+$A$2", number(5 + 2))
+                                        this.formattedCell("$A$1", "=1+$I$13", number(1 + 4)),
+                                        this.formattedCell("$I$13", "=4", number(4)),
+                                        this.formattedCell("$J$14", "=5+$A$2", number(5 + 2))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d, e)
@@ -4130,9 +4130,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$1", "=1+$I$12", number(1 + 4)),
-                                        this.formattedCellWithValue("$I$12", "=4", number(4)),
-                                        this.formattedCellWithValue("$J$13", "=5+$A$2", number(5 + 2))
+                                        this.formattedCell("$A$1", "=1+$I$12", number(1 + 4)),
+                                        this.formattedCell("$I$12", "=4", number(4)),
+                                        this.formattedCell("$J$13", "=5+$A$2", number(5 + 2))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d, e)
@@ -4300,7 +4300,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(d.addRow(-count), "=20+0", number(20 + 0))
+                                        this.formattedCell(d.addRow(-count), "=20+0", number(20 + 0))
                                 )
                         ).setDeletedCells(
                                 Sets.of(d)
@@ -4357,7 +4357,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        formattedCellWithError(
+                                        formattedCell(
                                                 a,
                                                 "=1+0+" + LABEL,
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
@@ -4421,8 +4421,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+0+" + LABEL, number(1 + 0 + 20 + 0)),
-                                        this.formattedCellWithValue(d.addRow(-count), "=20+0", number(20 + 0))
+                                        this.formattedCell(a, "=1+0+" + LABEL, number(1 + 0 + 20 + 0)),
+                                        this.formattedCell(d.addRow(-count), "=20+0", number(20 + 0))
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -4591,7 +4591,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$B$1", "=5+6", number(5 + 6))
+                                        this.formattedCell("$B$1", "=5+6", number(5 + 6))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c)
@@ -4644,8 +4644,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$B$1", "=5+6", number(5 + 6)),
-                                        this.formattedCellWithValue("$I$2", "=7+8", number(7 + 8))
+                                        this.formattedCell("$B$1", "=5+6", number(5 + 6)),
+                                        this.formattedCell("$I$2", "=7+8", number(7 + 8))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d)
@@ -4703,7 +4703,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$H$2", "=7+8", number(7 + 8))
+                                        this.formattedCell("$H$2", "=7+8", number(7 + 8))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b, c, d)
@@ -4760,7 +4760,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$D$1", "=99+0", number(99 + 0))
+                                        this.formattedCell("$D$1", "=99+0", number(99 + 0))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c)
@@ -4823,8 +4823,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$1", "=1+0+" + LABEL, number(1 + 0 + 2 + 0)),
-                                        this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0))
+                                        this.formattedCell("$A$1", "=1+0+" + LABEL, number(1 + 0 + 2 + 0)),
+                                        this.formattedCell("$C$1", "=2+0", number(2 + 0))
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -4877,7 +4877,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(
+                                        this.formattedCell(
                                                 a,
                                                 "=1+InvalidCellReference(\"" + b + "\")",
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
@@ -4936,9 +4936,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$1", "=1+$M$9", number(1 + 4)),
-                                        this.formattedCellWithValue("$M$9", "=4", number(4)),
-                                        this.formattedCellWithValue("$N$10", "=5+" + b, number(5 + 2))
+                                        this.formattedCell("$A$1", "=1+$M$9", number(1 + 4)),
+                                        this.formattedCell("$M$9", "=4", number(4)),
+                                        this.formattedCell("$N$10", "=5+" + b, number(5 + 2))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d, e)
@@ -5009,9 +5009,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$1", "=1+$L$9", number(1 + 4)),
-                                        this.formattedCellWithValue("$L$9", "=4", number(4)),
-                                        this.formattedCellWithValue("$M$10", "=5+$B$1", number(5 + 2))
+                                        this.formattedCell("$A$1", "=1+$L$9", number(1 + 4)),
+                                        this.formattedCell("$L$9", "=4", number(4)),
+                                        this.formattedCell("$M$10", "=5+$B$1", number(5 + 2))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d, e)
@@ -5176,7 +5176,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0))
+                                        this.formattedCell(d.addColumn(-count), "=20+0", number(20 + 0))
                                 )
                         ).setDeletedCells(
                                 Sets.of(d)
@@ -5226,7 +5226,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(
+                                        this.formattedCell(
                                                 "$A$1",
                                                 "=1+0+" + LABEL,
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
@@ -5290,8 +5290,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+0+" + LABEL, number(1 + 0 + 20 + 0)),
-                                        this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0)))
+                                        this.formattedCell(a, "=1+0+" + LABEL, number(1 + 0 + 20 + 0)),
+                                        this.formattedCell(d.addColumn(-count), "=20+0", number(20 + 0)))
                         ).setLabels(
                                 Sets.of(
                                         LABEL.mapping(
@@ -5465,8 +5465,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$C$1", "=3+4", number(3 + 4)),
-                                        this.formattedCellWithValue("$D$1", "=5+6", number(5 + 6))
+                                        this.formattedCell("$C$1", "=3+4", number(3 + 4)),
+                                        this.formattedCell("$D$1", "=5+6", number(5 + 6))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -5509,8 +5509,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$C$1", "=3+4", number(3 + 4)),
-                                        this.formattedCellWithValue("$D$1", "=5+6", number(5 + 6))
+                                        this.formattedCell("$C$1", "=3+4", number(3 + 4)),
+                                        this.formattedCell("$D$1", "=5+6", number(5 + 6))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -5570,7 +5570,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$F$4", "=2+" + LABEL, number(2 + 100))
+                                        this.formattedCell("$F$4", "=2+" + LABEL, number(2 + 100))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -5629,10 +5629,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+" + LABEL, number(1 + 99 + 0)),
-                                        this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0)),
-                                        this.formattedCellWithValue("$D$1", "=3+0+" + LABEL, number(3 + 0 + 99 + 0)),
-                                        this.formattedCellWithValue("$O$9", "=99+0", number(99 + 0))
+                                        this.formattedCell(a, "=1+" + LABEL, number(1 + 99 + 0)),
+                                        this.formattedCell("$C$1", "=2+0", number(2 + 0)),
+                                        this.formattedCell("$D$1", "=3+0+" + LABEL, number(3 + 0 + 99 + 0)),
+                                        this.formattedCell("$O$9", "=99+0", number(99 + 0))
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -5706,7 +5706,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$G$6", "=2+0+" + LABEL, number(2 + 0 + 99 + 0))
+                                        this.formattedCell("$G$6", "=2+0+" + LABEL, number(2 + 0 + 99 + 0))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -5766,8 +5766,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+" + LABEL, number(1 + 99 + 0)),
-                                        this.formattedCellWithValue("$P$1", "=99+0", number(99 + 0))
+                                        this.formattedCell(a, "=1+" + LABEL, number(1 + 99 + 0)),
+                                        this.formattedCell("$P$1", "=99+0", number(99 + 0))
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -5827,9 +5827,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$1", "=1+0+$O$9", number(1 + 0 + 4 + 0 + 2 + 0)),
-                                        this.formattedCellWithValue("$L$1", "=3+0", number(3 + 0)),
-                                        this.formattedCellWithValue("$O$9", "=4+0+" + b, number(4 + 0 + 2 + 0))
+                                        this.formattedCell("$A$1", "=1+0+$O$9", number(1 + 0 + 4 + 0 + 2 + 0)),
+                                        this.formattedCell("$L$1", "=3+0", number(3 + 0)),
+                                        this.formattedCell("$O$9", "=4+0+" + b, number(4 + 0 + 2 + 0))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d)
@@ -5894,9 +5894,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$1", "=1+0+$P$9", number(1 + 0 + 4 + 0 + 2 + 0)),
-                                        this.formattedCellWithValue("$M$1", "=3+0", number(3 + 0)),
-                                        this.formattedCellWithValue("$P$9", "=4+0+" + b, number(4 + 0 + 2 + 0))
+                                        this.formattedCell("$A$1", "=1+0+$P$9", number(1 + 0 + 4 + 0 + 2 + 0)),
+                                        this.formattedCell("$M$1", "=3+0", number(3 + 0)),
+                                        this.formattedCell("$P$9", "=4+0+" + b, number(4 + 0 + 2 + 0))
                                 )
                         )
                         .setDeletedCells(
@@ -5964,10 +5964,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$P$1", "=2+0", number(2 + 0)),
-                                        this.formattedCellWithValue("$Q$1", "=3+0", number(3 + 0)),
-                                        this.formattedCellWithValue("$R$3", "=4+0", number(4 + 0)),
-                                        this.formattedCellWithValue("$Z$4", "=5+0", number(5 + 0))
+                                        this.formattedCell("$P$1", "=2+0", number(2 + 0)),
+                                        this.formattedCell("$Q$1", "=3+0", number(3 + 0)),
+                                        this.formattedCell("$R$3", "=4+0", number(4 + 0)),
+                                        this.formattedCell("$Z$4", "=5+0", number(5 + 0))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b, c, d, e)
@@ -6044,7 +6044,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("C1", "", "")
+                                        this.formattedCell("C1", "", "")
                                 )
                         ).setColumns(
                                 Sets.of(c)
@@ -6092,7 +6092,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("C1", "", "")
+                                        this.formattedCell("C1", "", "")
                                 )
                         ).setRows(
                                 Sets.of(row2)
@@ -6163,8 +6163,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$3", "=3+4", number(3 + 4)),
-                                        this.formattedCellWithValue("$A$4", "=5+6", number(5 + 6))
+                                        this.formattedCell("$A$3", "=3+4", number(3 + 4)),
+                                        this.formattedCell("$A$4", "=5+6", number(5 + 6))
                                 )
                         )
                         .setDeletedCells(
@@ -6224,8 +6224,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$3", "=3+4", number(3 + 4)),
-                                        this.formattedCellWithValue("$A$4", "=5+6", number(5 + 6))
+                                        this.formattedCell("$A$3", "=3+4", number(3 + 4)),
+                                        this.formattedCell("$A$4", "=5+6", number(5 + 6))
                                 )
                         ).setDeletedCells(
                                 Sets.of(
@@ -6287,7 +6287,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$D$6", "=2+" + LABEL, number(2 + 100))
+                                        this.formattedCell("$D$6", "=2+" + LABEL, number(2 + 100))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -6346,10 +6346,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$1", "=1+" + LABEL, number(1 + 99 + 0)),
-                                        this.formattedCellWithValue("$A$3", "=2+0", number(2 + 0)),
-                                        this.formattedCellWithValue("$A$4", "=3+0+" + LABEL, number(3 + 0 + 99)),
-                                        this.formattedCellWithValue("$I$15", "=99+0", number(99 + 0)) // $b insert
+                                        this.formattedCell("$A$1", "=1+" + LABEL, number(1 + 99 + 0)),
+                                        this.formattedCell("$A$3", "=2+0", number(2 + 0)),
+                                        this.formattedCell("$A$4", "=3+0+" + LABEL, number(3 + 0 + 99)),
+                                        this.formattedCell("$I$15", "=99+0", number(99 + 0)) // $b insert
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -6424,7 +6424,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$F$7", "=2+0+" + LABEL, number(2 + 0 + 99 + 0)) // $b insert
+                                        this.formattedCell("$F$7", "=2+0+" + LABEL, number(2 + 0 + 99 + 0)) // $b insert
                                 )
                         ).setDeletedCells(
                                 Sets.of(b)
@@ -6484,8 +6484,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+" + LABEL, number(1 + 99 + 0)),
-                                        this.formattedCellWithValue("$A$16", "=99+0", number(99 + 0))// $b insert
+                                        this.formattedCell(a, "=1+" + LABEL, number(1 + 99 + 0)),
+                                        this.formattedCell("$A$16", "=99+0", number(99 + 0))// $b insert
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -6545,9 +6545,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$1", "=1+0+$I$15", number(3 + 4)),
-                                        this.formattedCellWithValue("$A$12", "=3+0", number(3 + 0)),
-                                        this.formattedCellWithValue("$I$15", "=4+0+" + b, number(4 + 0 + 2 + 0))// $c insert
+                                        this.formattedCell("$A$1", "=1+0+$I$15", number(3 + 4)),
+                                        this.formattedCell("$A$12", "=3+0", number(3 + 0)),
+                                        this.formattedCell("$I$15", "=4+0+" + b, number(4 + 0 + 2 + 0))// $c insert
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d)
@@ -6612,9 +6612,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$1", "=1+0+$I$16", number(1 + 0 + 4 + 0 + 2 + 0)),
-                                        this.formattedCellWithValue("$A$13", "=3+0", number(3 + 0)),
-                                        this.formattedCellWithValue("$I$16", "=4+0+" + b, number(4 + 0 + 2 + 0))  // $c insert
+                                        this.formattedCell("$A$1", "=1+0+$I$16", number(1 + 0 + 4 + 0 + 2 + 0)),
+                                        this.formattedCell("$A$13", "=3+0", number(3 + 0)),
+                                        this.formattedCell("$I$16", "=4+0+" + b, number(4 + 0 + 2 + 0))  // $c insert
                                 )
                         ).setDeletedCells(
                                 Sets.of(c, d)
@@ -6682,10 +6682,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("$A$16", "=2+0", number(2 + 0)),
-                                        this.formattedCellWithValue("$A$17", "=3+0", number(3 + 0)),
-                                        this.formattedCellWithValue("$C$18", "=4+0", number(4 + 0)),
-                                        this.formattedCellWithValue("$D$26", "=5+0", number(5 + 0))
+                                        this.formattedCell("$A$16", "=2+0", number(2 + 0)),
+                                        this.formattedCell("$A$17", "=3+0", number(3 + 0)),
+                                        this.formattedCell("$C$18", "=4+0", number(4 + 0)),
+                                        this.formattedCell("$D$26", "=5+0", number(5 + 0))
                                 )
                         ).setDeletedCells(
                                 Sets.of(b, c, d, e)
@@ -6757,7 +6757,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("A2", "", "")
+                                        this.formattedCell("A2", "", "")
                                 )
                         ).setColumns(
                                 Sets.of(a)
@@ -6808,7 +6808,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("A2", "", "")
+                                        this.formattedCell("A2", "", "")
                                 )
                         ).setRows(
                                 Sets.of(row2)
@@ -7025,7 +7025,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(
+                                        this.formattedCell(
                                                 z9,
                                                 SpreadsheetErrorKind.DIV0.setMessage("Division by zero")
                                         )
@@ -7063,8 +7063,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(b2, this.expressionNumberKind().create(2)),
-                                        this.formattedCellWithValue(c3, this.expressionNumberKind().create(3))
+                                        this.formattedCell(b2, this.expressionNumberKind().create(2)),
+                                        this.formattedCell(c3, this.expressionNumberKind().create(3))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B,C")
@@ -7099,8 +7099,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(b2, this.expressionNumberKind().create(4)),
-                                        this.formattedCellWithValue(c3, this.expressionNumberKind().create(2))
+                                        this.formattedCell(b2, this.expressionNumberKind().create(4)),
+                                        this.formattedCell(c3, this.expressionNumberKind().create(2))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B,C")
@@ -7138,9 +7138,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a1, this.expressionNumberKind().create(1 + 10 + 100)),
-                                        this.formattedCellWithValue(b2, this.expressionNumberKind().create(1 + 10)),
-                                        this.formattedCellWithValue(c3, this.expressionNumberKind().one())
+                                        this.formattedCell(a1, this.expressionNumberKind().create(1 + 10 + 100)),
+                                        this.formattedCell(b2, this.expressionNumberKind().create(1 + 10)),
+                                        this.formattedCell(c3, this.expressionNumberKind().one())
                                 )
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
@@ -7178,9 +7178,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a1, this.expressionNumberKind().create(1 + 100)),
-                                        this.formattedCellWithValue(b2, this.expressionNumberKind().create(1 + 100 + 10)),
-                                        this.formattedCellWithValue(c3, this.expressionNumberKind().one())
+                                        this.formattedCell(a1, this.expressionNumberKind().create(1 + 100)),
+                                        this.formattedCell(b2, this.expressionNumberKind().create(1 + 100 + 10)),
+                                        this.formattedCell(c3, this.expressionNumberKind().one())
                                 )
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
@@ -7222,8 +7222,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(c3, this.expressionNumberKind().one()),
-                                        this.formattedCellWithValue(d4, this.expressionNumberKind().create(2))
+                                        this.formattedCell(c3, this.expressionNumberKind().one()),
+                                        this.formattedCell(d4, this.expressionNumberKind().create(2))
                                 )
                         )
                         .setWindow(range)
@@ -7359,7 +7359,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(c3, this.expressionNumberKind().one())
+                                        this.formattedCell(c3, this.expressionNumberKind().one())
                                 )
                         )
                         .setColumnWidths(
@@ -7423,7 +7423,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(
+                                        this.formattedCell(
                                                 c3,
                                                 this.expressionNumberKind().create(3)
                                         )
@@ -7490,10 +7490,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                this.formattedCellWithValue(
-                                        c3,
-                                        this.expressionNumberKind().create(3)
-                                )
+                                        this.formattedCell(
+                                                c3,
+                                                this.expressionNumberKind().create(3)
+                                        )
                                 )
                         ).setRows(
                                 Sets.of(
@@ -7591,7 +7591,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(b, "=2+0", number(2))
+                                        this.formattedCell(b, "=2+0", number(2))
                                 )
                         ).setColumnWidths(
                                 columnWidths("K")
@@ -7686,7 +7686,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(c, "=3+0", number(3))
+                                        this.formattedCell(c, "=3+0", number(3))
                                 )
                         ).setColumnWidths(
                                 columnWidths("K")
@@ -7720,8 +7720,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+0", number(1)),
-                                        this.formattedCellWithValue(b, "=2+0", number(2))
+                                        this.formattedCell(a, "=1+0", number(1)),
+                                        this.formattedCell(b, "=2+0", number(2))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B,C")
@@ -7741,7 +7741,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+0", number(1))
+                                        this.formattedCell(a, "=1+0", number(1))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -7759,7 +7759,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(b, "=2+0", number(2))
+                                        this.formattedCell(b, "=2+0", number(2))
                                 )
                         ).setColumnWidths(
                                 columnWidths("C")
@@ -7798,8 +7798,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+0", number(1)),
-                                        this.formattedCellWithValue(b, "=2+0", number(2))
+                                        this.formattedCell(a, "=1+0", number(1)),
+                                        this.formattedCell(b, "=2+0", number(2))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B,C")
@@ -7819,7 +7819,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+0", number(1))
+                                        this.formattedCell(a, "=1+0", number(1))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -7837,7 +7837,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(b, "=2+0", number(2))
+                                        this.formattedCell(b, "=2+0", number(2))
                                 )
                         ).setColumnWidths(
                                 columnWidths("C")
@@ -7914,7 +7914,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+0", number(1))
+                                        this.formattedCell(a, "=1+0", number(1))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -7932,7 +7932,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(c, "=3+0", number(3))
+                                        this.formattedCell(c, "=3+0", number(3))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -7989,7 +7989,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(c, "=3+0", number(3))
+                                        this.formattedCell(c, "=3+0", number(3))
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -8151,7 +8151,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(d, formulaText, expected)
+                                        this.formattedCell(d, formulaText, expected)
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE")
@@ -8194,8 +8194,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(d, "=1+0", number(1 + 0)),
-                                        this.formattedCellWithValue(d.add(1, 1), "=2+0", number(2 + 0))
+                                        this.formattedCell(d, "=1+0", number(1 + 0)),
+                                        this.formattedCell(d.add(1, 1), "=2+0", number(2 + 0))
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE,AF")
@@ -8238,8 +8238,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(d, "=1+0", number(1 + 0)),
-                                        this.formattedCellWithValue(d.add(1, 1), "=2+0", number(2 + 0))
+                                        this.formattedCell(d, "=1+0", number(1 + 0)),
+                                        this.formattedCell(d.add(1, 1), "=2+0", number(2 + 0))
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE,AF")
@@ -8282,8 +8282,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(d, "=1+0", number(1 + 0)),
-                                        this.formattedCellWithValue(d.add(1, 1), "=2+0", number(2 + 0))
+                                        this.formattedCell(d, "=1+0", number(1 + 0)),
+                                        this.formattedCell(d.add(1, 1), "=2+0", number(2 + 0))
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE,AF")
@@ -8326,12 +8326,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(d, "=1+0", number(1 + 0)),
-                                        this.formattedCellWithValue(d.add(1, 1), "=2+0", number(2 + 0)),
-                                        this.formattedCellWithValue(d.add(2, 0), "=1+0", number(1 + 0)),
-                                        this.formattedCellWithValue(d.add(3, 1), "=2+0", number(2 + 0)),
-                                        this.formattedCellWithValue(d.add(4, 0), "=1+0", number(1 + 0)),
-                                        this.formattedCellWithValue(d.add(5, 1), "=2+0", number(2 + 0))
+                                        this.formattedCell(d, "=1+0", number(1 + 0)),
+                                        this.formattedCell(d.add(1, 1), "=2+0", number(2 + 0)),
+                                        this.formattedCell(d.add(2, 0), "=1+0", number(1 + 0)),
+                                        this.formattedCell(d.add(3, 1), "=2+0", number(2 + 0)),
+                                        this.formattedCell(d.add(4, 0), "=1+0", number(1 + 0)),
+                                        this.formattedCell(d.add(5, 1), "=2+0", number(2 + 0))
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE,AF,AG,AH,AI,AJ")
@@ -8374,12 +8374,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(d, "=1+0", number(1 + 0)),
-                                        this.formattedCellWithValue(d.add(1, 1), "=2+0", number(2 + 0)),
-                                        this.formattedCellWithValue(d.addRow(2), "=1+0", number(1 + 0)),
-                                        this.formattedCellWithValue(d.add(1, 3), "=2+0", number(2 + 0)),
-                                        this.formattedCellWithValue(d.addRow(4), "=1+0", number(1 + 0)),
-                                        this.formattedCellWithValue(d.add(1, 5), "=2+0", number(2 + 0))
+                                        this.formattedCell(d, "=1+0", number(1 + 0)),
+                                        this.formattedCell(d.add(1, 1), "=2+0", number(2 + 0)),
+                                        this.formattedCell(d.addRow(2), "=1+0", number(1 + 0)),
+                                        this.formattedCell(d.add(1, 3), "=2+0", number(2 + 0)),
+                                        this.formattedCell(d.addRow(4), "=1+0", number(1 + 0)),
+                                        this.formattedCell(d.add(1, 5), "=2+0", number(2 + 0))
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE,AF")
@@ -8419,8 +8419,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(a, "=1+0", number(1 + 0)),
-                                        this.formattedCellWithValue(d, "=" + a, number(1 + 0))
+                                        this.formattedCell(a, "=1+0", number(1 + 0)),
+                                        this.formattedCell(d, "=" + a, number(1 + 0))
                                 )
                         ).setColumnWidths(
                                 columnWidths("K,AE")
@@ -8455,8 +8455,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("E5", "=2", number(2 + 0)),
-                                        this.formattedCellWithValue("F6", "=3+E5", number(3 + 2))
+                                        this.formattedCell("E5", "=2", number(2 + 0)),
+                                        this.formattedCell("F6", "=3+E5", number(3 + 2))
                                 )
                         ).setColumnWidths(
                                 columnWidths("E,F")
@@ -8493,8 +8493,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(cellA.reference(), "=10+" + c, number(10 + 2 + 0)), // external reference to copied
-                                        this.formattedCellWithValue(c, "=2+0", number(2 + 0))
+                                        this.formattedCell(cellA.reference(), "=10+" + c, number(10 + 2 + 0)), // external reference to copied
+                                        this.formattedCell(c, "=2+0", number(2 + 0))
                                 )
                         ).setColumnWidths(
                                 columnWidths("A,C")
@@ -8540,7 +8540,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(
+                                        this.formattedCell(
                                                 this.cell(c3, ""),
                                                 ""
                                         )
@@ -8592,7 +8592,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue(
+                                        this.formattedCell(
                                                 this.cell(c3, ""),
                                                 ""
                                         )
@@ -8703,7 +8703,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("A1", "=" + label + "+1", number(99 + 1))
+                                        this.formattedCell("A1", "=" + label + "+1", number(99 + 1))
                                 )
                         ).setColumnWidths(
                                 columnWidths("A")
@@ -8743,7 +8743,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("A1", "=" + label + "+1", number(99 + 1))
+                                        this.formattedCell("A1", "=" + label + "+1", number(99 + 1))
                                 )
                         ).setColumns(
                                 Sets.of(a)
@@ -8785,7 +8785,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithValue("A1", "=" + label + "+1", number(99 + 1))
+                                        this.formattedCell("A1", "=" + label + "+1", number(99 + 1))
                                 )
                         ).setRows(
                                 Sets.of(row1)
@@ -8838,7 +8838,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(
+                                        this.formattedCell(
                                                 "A1",
                                                 "=" + label + "+1",
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
@@ -8894,7 +8894,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(
+                                        this.formattedCell(
                                                 "A1",
                                                 "=" + label + "+1",
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
@@ -8955,7 +8955,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCellWithError(
+                                        this.formattedCell(
                                                 "A1",
                                                 "=" + label + "+1",
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
@@ -11408,33 +11408,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private Object value;
 
-    private SpreadsheetFormatter formatter(final String pattern,
-                                           final Optional<Color> color,
-                                           final String suffix) {
-        return new SpreadsheetFormatter() {
-
-            @Override
-            public boolean canFormat(final Object value,
-                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-                return value instanceof BigDecimal;
-            }
-
-            @Override
-            public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-                assertNotNull(value, "value");
-                assertSame(SPREADSHEET_TEXT_FORMAT_CONTEXT, context, "Wrong SpreadsheetFormatterContext passed");
-
-                return Optional.of(SpreadsheetText.with(color, value + " " + suffix));
-            }
-
-            @Override
-            public String toString() {
-                return pattern;
-            }
-        };
-    }
-
     private SpreadsheetCell loadCellAndCheckFormatted2(final SpreadsheetEngine engine,
                                                        final SpreadsheetCellReference reference,
                                                        final SpreadsheetEngineEvaluation evaluation,
@@ -11446,37 +11419,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return cell;
     }
 
-    private SpreadsheetCell formattedCellWithValue(final String reference,
-                                                   final String formulaText,
-                                                   final Object value) {
-        return this.formattedCellWithValue(SpreadsheetSelection.parseCell(reference),
+    private SpreadsheetCell formattedCell(final String reference,
+                                          final String formulaText,
+                                          final Object value) {
+        return this.formattedCell(
+                SpreadsheetSelection.parseCell(reference),
                 formulaText,
-                value);
+                value
+        );
     }
 
-    private SpreadsheetCell formattedCellWithValue(final SpreadsheetCellReference reference,
-                                                   final String formulaText,
-                                                   final Object value) {
-        return this.formattedCellWithValue(this.cell(reference, formulaText),
-                value);
+    private SpreadsheetCell formattedCell(final SpreadsheetCellReference reference,
+                                          final String formulaText,
+                                          final Object value) {
+        return this.formattedCell(
+                this.cell(reference, formulaText),
+                value
+        );
     }
 
     /**
      * Makes a {@link SpreadsheetCell} updating the formula expression and expected value and then formats the cell adding styling etc,
      * mimicking the very actions that happen during evaluation.
      */
-    private SpreadsheetCell formattedCellWithValue(final SpreadsheetCell cell,
-                                                   final Object value) {
-        return this.formattedCellWithValue(
+    private SpreadsheetCell formattedCell(final SpreadsheetCell cell,
+                                          final Object value) {
+        return this.formattedCell(
                 cell,
                 value,
                 this.style()
         );
     }
 
-    private SpreadsheetCell formattedCellWithValue(final SpreadsheetCell cell,
-                                                   final Object value,
-                                                   final TextStyle style) {
+    private SpreadsheetCell formattedCell(final SpreadsheetCell cell,
+                                          final Object value,
+                                          final TextStyle style) {
         final SpreadsheetText formattedText = this.metadata()
                 .formatter()
                 .format(value, SPREADSHEET_TEXT_FORMAT_CONTEXT)
@@ -11490,49 +11467,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.parseFormula(cell.formula()
                         ).setValue(Optional.of(value)))
                 .setFormatted(formattedCell);
-    }
-
-    private SpreadsheetCell formattedCellWithError(final String reference,
-                                                   final String formulaText,
-                                                   final SpreadsheetError error) {
-        return this.formattedCellWithError(
-                SpreadsheetSelection.parseCell(reference),
-                formulaText,
-                error
-        );
-    }
-
-    private SpreadsheetCell formattedCellWithError(final SpreadsheetCellReference reference,
-                                                   final String formulaText,
-                                                   final SpreadsheetError error) {
-        return this.formattedCellWithError(
-                this.cell(
-                        reference,
-                        formulaText
-                ),
-                error
-        );
-    }
-
-    /**
-     * Makes a {@link SpreadsheetCell} updating the formula expression and setting the error and formatted cell and style.
-     */
-    private SpreadsheetCell formattedCellWithError(final SpreadsheetCell cell,
-                                                   final SpreadsheetError error) {
-        return cell.setFormula(
-                        this.parseFormula(cell.formula())
-                                .setValue(
-                                        Optional.of(error)
-                                )
-                )
-                .setFormatted(
-                        Optional.of(
-                                TextNode.text(
-                                        error.kind()
-                                                .text()
-                                )
-                        )
-                );
     }
 
     /**
