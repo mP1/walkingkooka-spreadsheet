@@ -168,7 +168,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 null, // date
                 null, // date-time
                 null, // number
-                GeneralSpreadsheetConverterSelectionConverter.INSTANCE, // selection
+                SELECTION_TO_SELECTION, // selection
                 Converters.objectString(), // string
                 null // time
         );
@@ -317,7 +317,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                               final SpreadsheetConverterContext context) {
         return isNonNullAndValueIsInstanceofType(value, targetType) ||
                 isSupportedValueAndType(value, targetType) ||
-                GeneralSpreadsheetConverterSelectionConverter.INSTANCE.canConvert(value, targetType, context) ||
+                SELECTION_TO_SELECTION.canConvert(value, targetType, context) ||
                 StringToSpreadsheetSelectionConverter.INSTANCE.canConvert(value, targetType, context);
     }
 
@@ -409,6 +409,11 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
     }
 
     private final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>>> mapping;
+
+    /**
+     * Singleton
+     */
+    private final static Converter<SpreadsheetConverterContext> SELECTION_TO_SELECTION = SpreadsheetConverters.selectionToSelection();
 
     // toString.........................................................................................................
 

@@ -28,18 +28,18 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 /**
  * A {@link Converter} that only handles the following selection to selection conversions.
  * <ul>
- *     <li>{@link walkingkooka.spreadsheet.reference.SpreadsheetCellRange} to {@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference}</li>
- *     <li>{@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference} to {@link walkingkooka.spreadsheet.reference.SpreadsheetCellRange}</li>
+ *     <li>{@link SpreadsheetCellRange} to {@link SpreadsheetCellReference}</li>
+ *     <li>{@link SpreadsheetCellReference} to {@link SpreadsheetCellRange}</li>
  * </ul>
  */
-final class GeneralSpreadsheetConverterSelectionConverter implements Converter<SpreadsheetConverterContext> {
+final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Converter<SpreadsheetConverterContext> {
 
     /**
      * Singleton
      */
-    final static GeneralSpreadsheetConverterSelectionConverter INSTANCE = new GeneralSpreadsheetConverterSelectionConverter();
+    final static SpreadsheetSelectionToSpreadsheetSelectionConverter INSTANCE = new SpreadsheetSelectionToSpreadsheetSelectionConverter();
 
-    private GeneralSpreadsheetConverterSelectionConverter() {
+    private SpreadsheetSelectionToSpreadsheetSelectionConverter() {
         super();
     }
 
