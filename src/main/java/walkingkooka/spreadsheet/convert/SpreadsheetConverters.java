@@ -88,7 +88,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * {@see UnformattedNumberSpreadsheetConverter}
      */
     public static Converter<SpreadsheetConverterContext> unformattedNumber() {
-        return UnformattedNumberSpreadsheetConverter.instance();
+        return UnformattedNumberSpreadsheetConverter.INSTANCE;
     }
 
     /**

@@ -28,7 +28,6 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
@@ -44,8 +43,8 @@ import java.time.LocalTime;
 import java.util.Locale;
 import java.util.function.Function;
 
-public final class UnformattedNumberSpreadsheetConverterTest implements ConverterTesting2<UnformattedNumberSpreadsheetConverter<ExpressionNumberConverterContext>, ExpressionNumberConverterContext>,
-        ToStringTesting<UnformattedNumberSpreadsheetConverter<ExpressionNumberConverterContext>> {
+public final class UnformattedNumberSpreadsheetConverterTest implements ConverterTesting2<UnformattedNumberSpreadsheetConverter, SpreadsheetConverterContext>,
+        ToStringTesting<UnformattedNumberSpreadsheetConverter> {
 
     private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
         throw new UnsupportedOperationException();
@@ -189,8 +188,8 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Override
-    public UnformattedNumberSpreadsheetConverter<ExpressionNumberConverterContext> createConverter() {
-        return UnformattedNumberSpreadsheetConverter.instance();
+    public UnformattedNumberSpreadsheetConverter createConverter() {
+        return UnformattedNumberSpreadsheetConverter.INSTANCE;
     }
 
     @Override
@@ -243,7 +242,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Override
-    public Class<UnformattedNumberSpreadsheetConverter<ExpressionNumberConverterContext>> type() {
-        return Cast.to(UnformattedNumberSpreadsheetConverter.class);
+    public Class<UnformattedNumberSpreadsheetConverter> type() {
+        return UnformattedNumberSpreadsheetConverter.class;
     }
 }
