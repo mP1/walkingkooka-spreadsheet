@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
@@ -29,7 +30,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
  * This basically returns the {@link SpreadsheetErrorKind#text()}, giving text like <code>#ERROR</code>.
  * All other types ill throw a {@link SpreadsheetErrorConversionException}.
  */
-final class SpreadsheetErrorConverter implements Converter<SpreadsheetConverterContext> {
+final class SpreadsheetErrorConverter implements Converter<ConverterContext> {
 
     /**
      * Singleton
@@ -45,14 +46,14 @@ final class SpreadsheetErrorConverter implements Converter<SpreadsheetConverterC
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type,
-                              final SpreadsheetConverterContext context) {
+                              final ConverterContext context) {
         return value instanceof SpreadsheetError;
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type,
-                                         final SpreadsheetConverterContext context) {
+                                         final ConverterContext context) {
         return this.canConvert(value, type, context) ?
                 this.convertSpreadsheetError(
                         (SpreadsheetError) value,
