@@ -17,8 +17,10 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -32,11 +34,11 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     /**
      * A basic {@link Converter} that supports number -> number, date -> datetime, time -> datetime.
      */
-    public static Converter<SpreadsheetConverterContext> basic() {
-        return CONVERTER;
+    public static <C extends ConverterContext> Converter<C> basic() {
+        return Cast.to(CONVERTER);
     }
 
-    private final static Converter<SpreadsheetConverterContext> CONVERTER = Converters.collection(
+    private final static Converter<ConverterContext> CONVERTER = Converters.collection(
             Lists.of(
                     Converters.simple(),
                     Converters.numberNumber(),
