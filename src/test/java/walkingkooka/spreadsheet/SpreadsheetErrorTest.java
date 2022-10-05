@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -73,6 +74,58 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.checkKind(error, KIND);
         this.checkMessage(error, "");
         this.checkValue(error, VALUE);
+    }
+
+    // isMissingCell....................................................................................................
+
+    @Test
+    public void testIsMissingCellDIV0() {
+        this.isMissingCellAndCheck(
+                SpreadsheetErrorKind.DIV0.setMessage("Ignored"),
+                false
+        );
+    }
+
+    @Test
+    public void testIsMissingCellDIV0WithValue() {
+        this.isMissingCellAndCheck(
+                SpreadsheetErrorKind.DIV0.setMessageAndValue(
+                        "Ignored",
+                        1
+                ),
+                false
+        );
+    }
+
+    @Test
+    public void testIsMissingCellNAMEWithCellReference() {
+        this.isMissingCellAndCheck(
+                SpreadsheetErrorKind.NAME.setMessageAndValue(
+                        "Ignored",
+                        SpreadsheetSelection.parseCell("A1")
+                ),
+                true
+        );
+    }
+
+    @Test
+    public void testIsMissingCellNAMEWithLabel() {
+        this.isMissingCellAndCheck(
+                SpreadsheetErrorKind.NAME.setMessageAndValue(
+                        "Ignored",
+                        SpreadsheetSelection.labelName("Label123")
+                ),
+                false
+        );
+    }
+
+    private void isMissingCellAndCheck(final SpreadsheetError error,
+                                       final boolean is) {
+        this.checkEquals(
+                is,
+                error.isMissingCell(),
+                () -> error + ".isMissingCell()"
+        );
     }
 
     // TreePrintable...................................................................................................
