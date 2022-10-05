@@ -140,10 +140,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
 
-    private final static String PATTERN = "$\"text\"+\"" + FORMATTED_PATTERN_SUFFIX + "\"";
-    private final static String PATTERN_COLOR = "$text+\"" + FORMATTED_PATTERN_SUFFIX + "\"+" + COLOR.get();
-    private final static String PATTERN_FORMAT_FAIL = "<none>";
-
     private final static String DATE_PATTERN = "yyyy/mm/dd";
     private final static String TIME_PATTERN = "hh:mm";
     private final static String DATETIME_PATTERN = DATE_PATTERN + " " + TIME_PATTERN;
