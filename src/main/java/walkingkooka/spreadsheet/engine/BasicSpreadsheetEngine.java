@@ -66,7 +66,6 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextNode;
-import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Collection;
@@ -953,7 +952,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         } catch (final Exception failed) {
             result = this.setError(
                     failed,
-                    cell.setFormula(formula)
+                    cell.setFormula(formula),
+                    context
             );
         }
 
@@ -1018,34 +1018,34 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                              final SpreadsheetEngineEvaluation evaluation,
                                              final SpreadsheetEngineContext context) {
         SpreadsheetFormula formula = cell.formula();
-        SpreadsheetCell result;
+        SpreadsheetCell result = cell;
 
         try {
             // ask enum to dispatch
             final Optional<Expression> maybeExpression = formula.expression();
             if (maybeExpression.isPresent()) {
-                formula = formula.setValue(
-                        evaluation.evaluate(
-                                this,
-                                maybeExpression.get(),
-                                formula,
-                                cell,
-                                context
+                result = cell.setFormula(
+                        formula.setValue(
+                                evaluation.evaluate(
+                                        this,
+                                        maybeExpression.get(),
+                                        formula,
+                                        cell,
+                                        context
+                                )
                         )
                 );
             }
 
-            final Optional<SpreadsheetError> maybeError = formula.error();
-            result = maybeError.isPresent() ?
-                    this.setError(maybeError.get(), cell) :
-                    this.formatAndApplyStyle(
-                            cell.setFormula(formula),
-                            context
-                    );
+            result = this.formatAndApplyStyle(
+                    result,
+                    context
+            );
         } catch (final Exception cause) {
             result = this.setError(
                     cause,
-                    cell
+                    cell,
+                    context
             );
         }
 
@@ -1053,26 +1053,28 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     private SpreadsheetCell setError(final Throwable cause,
-                                     final SpreadsheetCell cell) {
+                                     final SpreadsheetCell cell,
+                                     final SpreadsheetEngineContext context) {
         return this.setError(
                 SpreadsheetErrorKind.translate(cause),
-                cell
+                cell,
+                context
         );
     }
 
     private SpreadsheetCell setError(final SpreadsheetError error,
-                                     final SpreadsheetCell cell) {
-        return cell.setFormula(
-                cell.formula()
-                        .setValue(
-                                Optional.of(
-                                        error
+                                     final SpreadsheetCell cell,
+                                     final SpreadsheetEngineContext context) {
+        return this.formatAndApplyStyle(
+                cell.setFormula(
+                        cell.formula()
+                                .setValue(
+                                        Optional.of(
+                                                error
+                                        )
                                 )
-                        )
-        ).setFormatted(
-                Optional.of(
-                        TextNode.text(error.kind().text())
-                )
+                ),
+                context
         );
     }
 
@@ -1118,46 +1120,33 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetCell formatAndApplyStyle(final SpreadsheetCell cell,
                                                 final SpreadsheetEngineContext context) {
         // try and use the cells custom format otherwise use a default from the context.
-        SpreadsheetFormatter formatter = context.metadata()
-                .formatter();
+        final SpreadsheetFormatter formatter;
         final Optional<SpreadsheetFormatPattern<?>> maybeFormat = cell.formatPattern();
         if (maybeFormat.isPresent()) {
             formatter = maybeFormat.get()
                     .formatter();
+        } else {
+            formatter = context.metadata()
+                    .formatter();
         }
 
         final SpreadsheetFormula formula = cell.formula();
-        final Optional<Object> value = formula.value();
-        final SpreadsheetCell beforeConditionalRules =
-                value.isPresent() && !formula.error().isPresent() ?
-                        cell.setFormatted(
-                                Optional.of(
-                                        this.formatAndApplyStyle0(
-                                                value.get(),
-                                                formatter,
-                                                cell.style(),
-                                                context
-                                        )
-                                )
-                        ) :
-                        this.formatAndApplyStyleValueAbsent(cell);
+        final Object value = formula.value()
+                .orElse("");
 
         return this.locateAndApplyConditionalFormattingRule(
-                beforeConditionalRules,
+                cell.setFormatted(
+                        Optional.of(
+                                context.format(value, formatter)
+                                        .map(
+                                                f -> cell.style()
+                                                        .replace(f.toTextNode())
+                                        )
+                                        .orElse(EMPTY_TEXT_NODE)
+                        )
+                ),
                 context
         );
-    }
-
-    /**
-     * Uses the formatter to format the value, merging the style and returns an updated {@link TextNode}.
-     */
-    private TextNode formatAndApplyStyle0(final Object value,
-                                          final SpreadsheetFormatter formatter,
-                                          final TextStyle style,
-                                          final SpreadsheetEngineContext context) {
-        return context.format(value, formatter)
-                .map(f -> style.replace(f.toTextNode()))
-                .orElse(EMPTY_TEXT_NODE);
     }
 
     private final static TextNode EMPTY_TEXT_NODE = TextNode.text("");
@@ -1199,31 +1188,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
         }
         return result;
-    }
-
-    // FORMAT ERROR ....................................................................................................
-
-    /**
-     * Handles apply style to the error if present or defaulting to empty {@link String}.
-     * The error becomes the text and no formatting or color is applied.
-     */
-    private SpreadsheetCell formatAndApplyStyleValueAbsent(final SpreadsheetCell cell) {
-        final Optional<SpreadsheetError> error = cell.formula()
-                .error();
-
-        return error.isPresent() ?
-                cell.setFormatted(
-                        Optional.of(
-                                cell.style()
-                                        .replace(
-                                                TextNode.text(
-                                                        error.get()
-                                                                .message()
-                                                )
-                                        )
-                        )
-                ) :
-                cell;
     }
 
     // max..............................................................................................................
