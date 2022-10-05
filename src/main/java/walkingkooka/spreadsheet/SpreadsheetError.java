@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.Value;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -85,6 +86,16 @@ public final class SpreadsheetError implements Value<Optional<?>>,
     }
 
     private final Optional<?> value;
+
+    /**
+     * Only returns true if the {@link #kind} == {@link SpreadsheetErrorKind#NAME} and {@link #value()} is a {@link SpreadsheetCellReference}.
+     * <br>
+     * This is necessary to support formulas with references to empty/missing cells which will be given a value of zero.
+     */
+    public boolean isMissingCell() {
+        return this.kind() == SpreadsheetErrorKind.NAME &&
+                this.value().orElse(null) instanceof SpreadsheetCellReference;
+    }
 
     // HasSpreadsheetErrorKind ........................................................................................
 
