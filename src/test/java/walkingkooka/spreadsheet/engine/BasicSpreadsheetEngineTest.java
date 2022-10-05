@@ -173,7 +173,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Converters.collection(
                         Lists.of(
                                 Converters.simple(),
-                                Cast.to(SpreadsheetConverters.error()),
+                                SpreadsheetConverters.error(),
                                 Converters.localDateLocalDateTime(),
                                 Converters.localTimeLocalDateTime(),
                                 Converters.numberNumber(),

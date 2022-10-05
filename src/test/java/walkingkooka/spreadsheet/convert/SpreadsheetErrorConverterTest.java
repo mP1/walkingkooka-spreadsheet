@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
@@ -25,7 +27,7 @@ import walkingkooka.tree.expression.ExpressionNumber;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetErrorConverterTest implements ConverterTesting2<SpreadsheetErrorConverter, SpreadsheetConverterContext> {
+public final class SpreadsheetErrorConverterTest implements ConverterTesting2<SpreadsheetErrorConverter, ConverterContext> {
 
     @Test
     public void testNonErrorFails() {
@@ -85,8 +87,8 @@ public final class SpreadsheetErrorConverterTest implements ConverterTesting2<Sp
     }
 
     @Override
-    public SpreadsheetConverterContext createContext() {
-        return SpreadsheetConverterContexts.fake();
+    public ConverterContext createContext() {
+        return ConverterContexts.fake();
     }
 
     @Override
