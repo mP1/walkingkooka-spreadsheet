@@ -43,6 +43,6 @@ public final class SpreadsheetExpressionEvaluationReferenceException extends Exp
 
     @Override
     public SpreadsheetErrorKind spreadsheetErrorKind() {
-        return SpreadsheetErrorKind.REF;
+        return SpreadsheetErrorKind.NAME;
     }
 }

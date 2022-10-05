@@ -92,7 +92,7 @@ public final class SpreadsheetExpressionEvaluationContextsTest implements ClassT
         );
 
         assertSame(
-                SpreadsheetErrorKind.REF,
+                SpreadsheetErrorKind.NAME,
                 created.spreadsheetErrorKind(),
                 created::getMessage
         );

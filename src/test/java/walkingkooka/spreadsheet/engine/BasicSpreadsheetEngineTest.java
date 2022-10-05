@@ -1394,7 +1394,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1 = this.cell("a1", "=$B$2+99");
         final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
-                SpreadsheetErrorKind.REF.setMessageAndValue(
+                SpreadsheetErrorKind.NAME.setMessageAndValue(
                         "Unknown Cell: $B$2",
                         SpreadsheetSelection.parseCell("$B$2")
                 )
@@ -2594,7 +2594,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a1,
-                                                SpreadsheetErrorKind.REF.setMessageAndValue(
+                                                SpreadsheetErrorKind.NAME.setMessageAndValue(
                                                         "Unknown Cell: $B$2",
                                                         SpreadsheetSelection.parseCell("$B$2")
                                                 )
@@ -2730,7 +2730,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a1,
-                                                SpreadsheetErrorKind.REF.setMessageAndValue(
+                                                SpreadsheetErrorKind.NAME.setMessageAndValue(
                                                         "Unknown Label: " + labelB2,
                                                         labelB2
                                                 )
