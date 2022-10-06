@@ -209,7 +209,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 ).resolveIfLabel(SpreadsheetLabelName.labelName("UnknownLabel123"))
         );
         this.checkEquals(
-                "Unknown Label: UnknownLabel123",
+                "Label not found: UnknownLabel123",
                 thrown.getMessage(),
                 "message"
         );

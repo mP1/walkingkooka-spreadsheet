@@ -276,7 +276,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellFails(
                 "=UnknownLabel",
                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                        "Unknown Label: UnknownLabel",
+                        "Label not found: UnknownLabel",
                         SpreadsheetSelection.labelName("UnknownLabel")
                 )
         );
@@ -900,7 +900,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "Unknown Cell");
+                "Cell not found");
     }
 
     @Test
@@ -917,7 +917,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "Unknown Label");
+                "Label not found");
     }
 
     @Test
@@ -1395,7 +1395,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                        "Unknown Cell: $B$2",
+                        "Cell not found: $B$2",
                         SpreadsheetSelection.parseCell("$B$2")
                 )
         );
@@ -1613,7 +1613,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                        "Unknown Label: " + unknown,
+                        "Label not found: " + unknown,
                         unknown
                 )
         );
@@ -2595,7 +2595,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCell(
                                                 a1,
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Unknown Cell: $B$2",
+                                                        "Cell not found: $B$2",
                                                         SpreadsheetSelection.parseCell("$B$2")
                                                 )
                                         )
@@ -2731,7 +2731,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCell(
                                                 a1,
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Unknown Label: " + labelB2,
+                                                        "Label not found: " + labelB2,
                                                         labelB2
                                                 )
                                         )
@@ -4357,7 +4357,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 a,
                                                 "=1+0+" + LABEL,
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Unknown Label: " + LABEL,
+                                                        "Label not found: " + LABEL,
                                                         LABEL
                                                 )
                                         )
@@ -4381,7 +4381,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 "=1+0+" + LABEL,
                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                        "Unknown Label: " + LABEL,
+                        "Label not found: " + LABEL,
                         LABEL
                 )
         );
@@ -5226,7 +5226,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 "$A$1",
                                                 "=1+0+" + LABEL,
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Unknown Label: " + LABEL,
+                                                        "Label not found: " + LABEL,
                                                         LABEL
                                                 )
                                         )
@@ -5250,7 +5250,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 "=1+0+" + LABEL,
                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                        "Unknown Label: " + LABEL,
+                        "Label not found: " + LABEL,
                         LABEL
                 )
         );
@@ -8838,7 +8838,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 "A1",
                                                 "=" + label + "+1",
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Unknown Label: " + label,
+                                                        "Label not found: " + label,
                                                         label
                                                 )
                                         )
@@ -8894,7 +8894,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 "A1",
                                                 "=" + label + "+1",
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Unknown Label: " + label,
+                                                        "Label not found: " + label,
                                                         label
                                                 )
                                         )
@@ -8955,7 +8955,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 "A1",
                                                 "=" + label + "+1",
                                                 SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Unknown Label: " + label,
+                                                        "Label not found: " + label,
                                                         label
                                                 )
                                         )
