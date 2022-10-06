@@ -683,7 +683,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testNotFound() {
         this.checkEquals(
-                "Unknown Cell: Z99",
+                "Cell not found: Z99",
                 SpreadsheetSelection.parseCell("Z99").notFound()
         );
     }

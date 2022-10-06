@@ -800,7 +800,7 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
      * This can then be used to report load failures etc.
      */
     public final String notFound() {
-        return "Unknown " + this.textLabel() + ": " + this;
+        return this.textLabel() + " not found: " + this;
     }
 
     // SpreadsheetSelectionVisitor......................................................................................
