@@ -68,7 +68,8 @@ public final class SpreadsheetExpressionEvaluationContextsTest implements ClassT
     public void testReferenceNotFoundCellRange() {
         this.referenceNotFoundAndCheck(
                 SpreadsheetSelection.parseCellRange("B2:C3"),
-                "Cell Range not found: B2:C3");
+                "Cell Range not found: B2:C3"
+        );
     }
 
 
@@ -76,7 +77,8 @@ public final class SpreadsheetExpressionEvaluationContextsTest implements ClassT
     public void testReferenceNotFoundLabel() {
         this.referenceNotFoundAndCheck(
                 SpreadsheetSelection.labelName("Label123"),
-                "Label not found: Label123");
+                "Label not found: Label123"
+        );
     }
 
     private void referenceNotFoundAndCheck(final ExpressionReference reference,
