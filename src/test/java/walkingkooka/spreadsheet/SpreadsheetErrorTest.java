@@ -22,6 +22,8 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -74,6 +76,28 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.checkKind(error, KIND);
         this.checkMessage(error, "");
         this.checkValue(error, VALUE);
+    }
+
+    // notFound........................................................................................................
+
+    @Test
+    public void testNotFoundWithCell() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A99");
+
+        final SpreadsheetError error = SpreadsheetError.notFound(cell);
+        this.checkKind(error, SpreadsheetErrorKind.NAME);
+        this.checkMessage(error, "Cell not found: A99");
+        this.checkValue(error, Optional.of(cell));
+    }
+
+    @Test
+    public void testNotFoundWithLabel() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        final SpreadsheetError error = SpreadsheetError.notFound(label);
+        this.checkKind(error, SpreadsheetErrorKind.NAME);
+        this.checkMessage(error, "Label not found: Label123");
+        this.checkValue(error, Optional.of(label));
     }
 
     // isMissingCell....................................................................................................

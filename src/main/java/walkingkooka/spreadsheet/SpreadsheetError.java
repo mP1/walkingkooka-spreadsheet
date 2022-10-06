@@ -22,6 +22,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.Value;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -43,6 +44,21 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         HasSpreadsheetErrorKind,
         UsesToStringBuilder {
 
+    /**
+     * Creates a {@link SpreadsheetError} reporting that a cell or label was not found.
+     */
+    public static SpreadsheetError notFound(final SpreadsheetExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        return SpreadsheetErrorKind.NAME.setMessageAndValue(
+                reference.textLabel() + " not found: " + reference,
+                reference
+        );
+    }
+
+    /**
+     * Generic factory that creates a new {@link SpreadsheetError} with the provided details.
+     */
     public static SpreadsheetError with(final SpreadsheetErrorKind kind,
                                         final String message,
                                         final Optional<?> value) {
