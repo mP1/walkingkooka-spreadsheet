@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -83,7 +83,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
                     }
                 },
                 label,
-                SpreadsheetErrorKind.REF.setMessage("Reference not found: " + label)
+                SpreadsheetError.notFound(label)
         );
     }
 

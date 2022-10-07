@@ -20,11 +20,13 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
@@ -59,7 +61,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
     }
 
     /**
-     * If the {@link ExpressionReference} cannot be found returns a {@link SpreadsheetErrorKind#REF} with a message.
+     * If the {@link ExpressionReference} cannot be found returns a {@link SpreadsheetErrorKind#NAME} with a message.
      */
     default Object referenceOrFail(final ExpressionReference reference) {
         Object result;
@@ -67,7 +69,9 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
             result = this.reference(reference)
                     .orElseGet(
                             () -> Optional.of(
-                                    SpreadsheetErrorKind.REF.setMessage("Reference not found: " + reference)
+                                    SpreadsheetError.notFound(
+                                            (SpreadsheetExpressionReference) reference
+                                    )
                             )
                     ).orElse(null);
         } catch (final RuntimeException exception) {
