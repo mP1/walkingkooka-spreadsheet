@@ -23,7 +23,13 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -264,6 +270,73 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.checkExpression(different, differentExpression);
         this.checkValueAbsent(different);
         this.checkErrorAbsent(different);
+    }
+
+    // replaceErrorWithValueIfPossible......................................................................................
+
+    @Test
+    public void testReplaceErrorWithValueIfPossibleWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.EMPTY
+                        .replaceErrorWithValueIfPossible(null)
+        );
+    }
+
+    @Test
+    public void testReplaceErrorWithValueIfPossibleWithMissingCellBecomesZero() {
+        final ExpressionNumberKind kind = ExpressionNumberKind.BIG_DECIMAL;
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
+
+
+        this.replaceErrorWithValueIfPossibleAndCheck(
+                formula.setValue(
+                        Optional.of(
+                                SpreadsheetError.notFound(SpreadsheetSelection.parseCell("A1"))
+                        )
+                ),
+                new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public SpreadsheetMetadata metadata() {
+                        return SpreadsheetMetadata.EMPTY.defaults()
+                                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, kind);
+                    }
+                },
+                formula.setValue(
+                        Optional.of(
+                                kind.zero()
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceErrorWithValueIfPossibleWithNotMissingCell() {
+        this.replaceErrorWithValueIfPossibleAndCheck(
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of(
+                                "abc"
+                        )
+                )
+        );
+    }
+
+    private void replaceErrorWithValueIfPossibleAndCheck(final SpreadsheetFormula formula) {
+        this.replaceErrorWithValueIfPossibleAndCheck(
+                formula,
+                SpreadsheetEngineContexts.fake(),
+                formula
+        );
+    }
+
+    private void replaceErrorWithValueIfPossibleAndCheck(final SpreadsheetFormula formula,
+                                                         final SpreadsheetEngineContext context,
+                                                         final Object expected) {
+        this.checkEquals(
+                expected,
+                formula.replaceErrorWithValueIfPossible(context),
+                () -> formula + " replaceErrorWithValueIfPossible"
+        );
     }
 
     // clear.......................................................................................................
