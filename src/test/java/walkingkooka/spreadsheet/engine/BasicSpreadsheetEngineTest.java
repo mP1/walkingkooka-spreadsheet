@@ -165,15 +165,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             return this.converter.convert(value, target, this);
         }
 
-        private final Converter<SpreadsheetFormatterContext> converter = ExpressionNumber.fromConverter(
-                Converters.collection(
-                        Lists.of(
-                                Converters.simple(),
-                                SpreadsheetConverters.error(),
-                                Converters.localDateLocalDateTime(),
-                                Converters.localTimeLocalDateTime(),
-                                Converters.numberNumber(),
-                                Converters.objectString()
+        // TODO convert error -> number (ExpressionNumber) then that to BigDecimal. needs chaining.
+
+        private final Converter<SpreadsheetFormatterContext> converter = Converters.collection(
+                Lists.of(
+//                        SpreadsheetConverters.error()
+//                                .cast(SpreadsheetFormatterContext.class)
+                        ExpressionNumber.fromConverter(
+                                Converters.collection(
+                                        Lists.of(
+                                                Converters.simple(),
+                                                SpreadsheetConverters.error()
+                                                        .cast(SpreadsheetFormatterContext.class),
+                                                Converters.localDateLocalDateTime(),
+                                                Converters.localTimeLocalDateTime(),
+                                                Converters.numberNumber(),
+                                                Converters.objectString()
+                                        )
+                                )
                         )
                 )
         );
@@ -181,6 +190,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         @Override
         public char decimalSeparator() {
             return '.';
+        }
+
+        @Override
+        public ExpressionNumberKind expressionNumberKind() {
+            return EXPRESSION_NUMBER_KIND;
         }
 
         @Override
@@ -323,32 +337,56 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithMissingCell() {
+    public void testLoadCellsWithCellFormulaEqMissingCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("K99");
-        this.checkEquals(Optional.empty(), context.storeRepository().cells().load(reference));
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
 
-        this.checkEquals(
-                SpreadsheetDelta.EMPTY
-                        .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setDeletedCells(
-                                Sets.of(reference)
-                        ).setLabels(SpreadsheetDelta.NO_LABELS),
-                engine.loadCells(
-                        reference,
-                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                        SpreadsheetDeltaProperties.ALL,
-                        context
-                )
+        context.storeRepository()
+                .cells()
+                .save(a1.setFormula(SpreadsheetFormula.EMPTY.setText("=Z99")));
+
+        this.loadCellAndCheckFormatted(
+                engine,
+                a1,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                context.metadata()
+                        .expressionNumberKind()
+                        .zero(),
+                " " + FORMATTED_PATTERN_SUFFIX
         );
     }
 
     @Test
-    public void testLoadCellsWithMissingCellWithLabel() {
+    public void testLoadCellsWithCellFormulaWithMissingCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+
+        context.storeRepository()
+                .cells()
+                .save(a1.setFormula(SpreadsheetFormula.EMPTY.setText("=2+Z99")));
+
+        this.loadCellAndCheckFormatted(
+                engine,
+                a1,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                context.metadata()
+                        .expressionNumberKind()
+                        .create(2),
+                "2 " + FORMATTED_PATTERN_SUFFIX
+        );
+    }
+
+    @Test
+    public void testLoadCellsWithCellFormulaEqUnknownLabel() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
 
         final SpreadsheetLabelMapping labelMapping = LABEL.mapping(LABEL_CELL);
         context.storeRepository()
@@ -765,14 +803,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("A1");
-        final Set<SpreadsheetCell> saved = engine.saveCell(this.cell(a, "=1+$B$2"), context)
+        final SpreadsheetCell unsaved = this.cell(a, "=1+$B$2");
+        final Set<SpreadsheetCell> saved = engine.saveCell(
+                        unsaved,
+                        context)
                 .cells();
 
-        final SpreadsheetCell withError = saved.iterator().next();
-        this.checkNotEquals(
-                SpreadsheetFormula.NO_VALUE,
-                withError.formula().error(),
-                () -> "cell should have error because B2 reference is unknown=" + withError
+        this.checkEquals(
+                this.formattedCell(
+                        unsaved,
+                        EXPRESSION_NUMBER_KIND.one()
+                ),
+                saved.iterator().next()
         );
 
         final SpreadsheetCellReference b = this.cellReference("B2");
@@ -881,23 +923,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 rowHeights("2")
                         )
         );
-    }
-
-    @Test
-    public void testLoadCellsValueCellReferenceInvalidFails() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
-        context.storeRepository()
-                .cells()
-                .save(this.cell(a, "=X99"));
-
-        this.loadCellAndCheckError(engine,
-                a,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "Cell not found");
     }
 
     @Test
@@ -1391,9 +1416,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1 = this.cell("a1", "=$B$2+99");
         final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
-                SpreadsheetError.notFound(
-                        SpreadsheetSelection.parseCell("$B$2")
-                )
+                this.number(99)
         );
 
         this.saveCellAndCheck(
@@ -2587,10 +2610,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a1,
-                                                SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Cell not found: $B$2",
-                                                        SpreadsheetSelection.parseCell("$B$2")
-                                                )
+                                                this.number(1) // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
                                         )
                                 )
                         ).setDeletedCells(
@@ -3463,10 +3483,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCell(
                                                 a,
                                                 "=1+InvalidCellReference(\"" + b + "\")",
-                                                SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Invalid cell reference: " + b,
-                                                        b
-                                                )
+                                                this.number(1)// https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
                                         )
                                 )
                         ).setDeletedCells(
@@ -3993,10 +4010,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCell(
                                                 a,
                                                 "=1+InvalidCellReference(\"" + b + "\")",
-                                                SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Invalid cell reference: $A$6",
-                                                        SpreadsheetSelection.parseCell("$A$6")
-                                                )
+                                                this.number(1) // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
                                         )
                                 )
                         ).setDeletedCells(
@@ -4016,10 +4030,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
-                SpreadsheetErrorKind.NAME.setMessageAndValue(
-                        "Invalid cell reference: " + b,
-                        b
-                )
+                this.number(1) // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
         ); // reference should have been fixed.
     }
 
@@ -4869,10 +4880,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCell(
                                                 a,
                                                 "=1+InvalidCellReference(\"" + b + "\")",
-                                                SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Invalid cell reference: $E$1",
-                                                        SpreadsheetSelection.parseCell("$E$1")
-                                                )
+                                                this.number(1) // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
                                         )
                                 )
                         ).setDeletedCells(
@@ -4892,10 +4900,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+InvalidCellReference(\"" + b + "\")",
-                SpreadsheetErrorKind.NAME.setMessageAndValue(
-                        "Invalid cell reference: " + b,
-                        b
-                )
+                this.number(1) // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
         ); // reference should have been fixed.
     }
 

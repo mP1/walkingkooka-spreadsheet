@@ -1033,7 +1033,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         cell,
                                         context
                                 )
-                        )
+                        ).replaceErrorWithValueIfPossible(context)
                 );
             }
 
@@ -1070,7 +1070,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         cell.formula()
                                 .setValue(
                                         Optional.of(
-                                                error
+                                                error.replaceWithValueIfPossible(context)
                                         )
                                 )
                 ),
@@ -1130,7 +1130,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .formatter();
         }
 
-        final SpreadsheetFormula formula = cell.formula();
+        final SpreadsheetFormula formula = cell
+                .formula();
         final Object value = formula.value()
                 .orElse("");
 

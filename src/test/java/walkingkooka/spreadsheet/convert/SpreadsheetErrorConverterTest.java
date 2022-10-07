@@ -18,16 +18,20 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.convert.ConverterContext;
-import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetErrorConverterTest implements ConverterTesting2<SpreadsheetErrorConverter, ConverterContext> {
+public final class SpreadsheetErrorConverterTest implements ConverterTesting2<SpreadsheetErrorConverter, SpreadsheetConverterContext> {
 
     @Test
     public void testNonErrorFails() {
@@ -40,7 +44,7 @@ public final class SpreadsheetErrorConverterTest implements ConverterTesting2<Sp
     }
 
     @Test
-    public void testErrorToNumberThrows() {
+    public void testErrorToExpressionNumber() {
         assertThrows(
                 SpreadsheetErrorConversionException.class,
                 () -> SpreadsheetErrorConverter.INSTANCE.convert(
@@ -74,6 +78,48 @@ public final class SpreadsheetErrorConverterTest implements ConverterTesting2<Sp
     }
 
     @Test
+    public void testNameLabelToExpressionNumberFails() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        assertThrows(
+                SpreadsheetErrorConversionException.class,
+                () -> this.convert(
+                        SpreadsheetError.notFound(label),
+                        ExpressionNumber.class
+                )
+        );
+    }
+
+    @Test
+    public void testErrorNotFoundToBigDecimal() {
+        this.convertAndCheck(
+                SpreadsheetError.notFound(SpreadsheetSelection.parseCell("A1")),
+                BigDecimal.class,
+                BigDecimal.ZERO
+        );
+    }
+
+    @Test
+    public void testErrorNotFoundToExpressionNumber() {
+        this.convertAndCheck(
+                SpreadsheetError.notFound(SpreadsheetSelection.parseCell("A1")),
+                ExpressionNumber.class,
+                EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testErrorNameToString() {
+        final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
+
+        this.convertAndCheck(
+                kind.setMessage("Message will be ignored2"),
+                String.class,
+                kind.text()
+        );
+    }
+
+    @Test
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetErrorConverter.INSTANCE,
@@ -87,9 +133,16 @@ public final class SpreadsheetErrorConverterTest implements ConverterTesting2<Sp
     }
 
     @Override
-    public ConverterContext createContext() {
-        return ConverterContexts.fake();
+    public SpreadsheetConverterContext createContext() {
+        return new FakeSpreadsheetConverterContext() {
+            @Override
+            public ExpressionNumberKind expressionNumberKind() {
+                return EXPRESSION_NUMBER_KIND;
+            }
+        };
     }
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     @Override
     public Class<SpreadsheetErrorConverter> type() {

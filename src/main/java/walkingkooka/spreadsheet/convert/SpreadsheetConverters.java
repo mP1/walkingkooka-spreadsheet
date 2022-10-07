@@ -50,8 +50,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetErrorConverter}
      */
-    public static <C extends ConverterContext> Converter<C> error() {
-        return Cast.to(SpreadsheetErrorConverter.INSTANCE);
+    public static Converter<SpreadsheetConverterContext> error() {
+        return SpreadsheetErrorConverter.INSTANCE;
     }
 
     /**
