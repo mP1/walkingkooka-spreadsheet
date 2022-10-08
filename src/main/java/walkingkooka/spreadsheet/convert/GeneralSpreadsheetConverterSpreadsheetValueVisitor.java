@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -160,7 +159,7 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor extends Spreadshe
         this.converter = ERROR;
     }
 
-    private final static Converter<SpreadsheetConverterContext> ERROR = SpreadsheetConverters.error();
+    private final static Converter<SpreadsheetConverterContext> ERROR = SpreadsheetConverters.errorToNumber();
 
     @Override
     protected void visit(final SpreadsheetLabelName value) {
