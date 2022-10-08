@@ -165,17 +165,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             return this.converter.convert(value, target, this);
         }
 
-        // TODO convert error -> number (ExpressionNumber) then that to BigDecimal. needs chaining.
-
         private final Converter<SpreadsheetFormatterContext> converter = Converters.collection(
                 Lists.of(
-//                        SpreadsheetConverters.error()
-//                                .cast(SpreadsheetFormatterContext.class)
                         ExpressionNumber.fromConverter(
                                 Converters.collection(
                                         Lists.of(
                                                 Converters.simple(),
-                                                SpreadsheetConverters.error()
+                                                SpreadsheetConverters.errorToString()
+                                                        .cast(SpreadsheetFormatterContext.class),
+                                                SpreadsheetConverters.errorToNumber()
                                                         .cast(SpreadsheetFormatterContext.class),
                                                 Converters.localDateLocalDateTime(),
                                                 Converters.localTimeLocalDateTime(),

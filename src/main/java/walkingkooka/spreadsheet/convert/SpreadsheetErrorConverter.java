@@ -19,42 +19,40 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.Converters;
-import walkingkooka.math.Maths;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
-import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.tree.expression.ExpressionNumber;
 
 /**
- * A {@link Converter} that can convert {@link SpreadsheetError} to a {@link String} value.
- * This basically returns the {@link SpreadsheetErrorKind#text()}, giving text like <code>#ERROR</code>.
- * All other types ill throw a {@link SpreadsheetErrorConversionException}.
+ * Base class for converters that convert {@link SpreadsheetError} to some other value or type.
  */
-final class SpreadsheetErrorConverter implements Converter<SpreadsheetConverterContext> {
-
-    /**
-     * Singleton
-     */
-    final static SpreadsheetErrorConverter INSTANCE = new SpreadsheetErrorConverter();
+abstract class SpreadsheetErrorConverter<C extends ConverterContext> implements Converter<C> {
 
     /**
      * Private ctor use singleton.
      */
-    private SpreadsheetErrorConverter() {
+    SpreadsheetErrorConverter() {
     }
 
     @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type,
-                              final SpreadsheetConverterContext context) {
-        return value instanceof SpreadsheetError;
+    public final boolean canConvert(final Object value,
+                                    final Class<?> type,
+                                    final C context) {
+        return value instanceof SpreadsheetError &&
+                this.canConvertSpreadsheetError(
+                        (SpreadsheetError) value,
+                        type,
+                        context
+                );
     }
+
+    abstract boolean canConvertSpreadsheetError(final SpreadsheetError error,
+                                                final Class<?> type,
+                                                final C context);
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type,
-                                         final SpreadsheetConverterContext context) {
+                                         final C context) {
         return this.canConvert(value, type, context) ?
                 this.convertSpreadsheetError(
                         (SpreadsheetError) value,
@@ -64,48 +62,14 @@ final class SpreadsheetErrorConverter implements Converter<SpreadsheetConverterC
                 this.failConversion(value, type);
     }
 
-    private <T> Either<T, String> convertSpreadsheetError(final SpreadsheetError error,
-                                                          final Class<T> type,
-                                                          final SpreadsheetConverterContext context) {
-        Either<T, String> converted = null;
-
-        if (String.class == type) {
-            converted = this.successfulConversion(
-                    error.kind()
-                            .text(),
-                    type
-            );
-        } else {
-            if (error.isMissingCell()) {
-                if (Maths.isNumberClass(type)) {
-                    converted = NUMBER_TO_NUMBER.convert(
-                            0,
-                            type,
-                            context
-                    );
-                } else {
-                    if (ExpressionNumber.isClass(type)) { // also matches Number so must do Maths.isNumberClass first
-                        converted = this.successfulConversion(
-                                context.expressionNumberKind()
-                                        .zero(),
-                                type
-                        );
-                    }
-                }
-            }
-
-            if (null == converted) {
-                throw new SpreadsheetErrorConversionException(error);
-            }
-        }
-
-        return converted;
-    }
-
-    private final static Converter<SpreadsheetConverterContext> NUMBER_TO_NUMBER = Converters.numberNumber();
+    abstract <T> Either<T, String> convertSpreadsheetError(final SpreadsheetError error,
+                                                           final Class<T> type,
+                                                           final C context);
 
     @Override
-    public String toString() {
-        return SpreadsheetError.class.getSimpleName();
+    public final String toString() {
+        return SpreadsheetError.class.getSimpleName() + "->" + this.toStringType();
     }
+
+    abstract String toStringType();
 }

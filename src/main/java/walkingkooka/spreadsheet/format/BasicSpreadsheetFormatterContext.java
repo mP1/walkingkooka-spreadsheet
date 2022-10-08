@@ -19,9 +19,12 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -69,6 +72,15 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         this.nameToColor = nameToColor;
         this.cellCharacterWidth = cellCharacterWidth;
 
+        // necessary because TextSpreadsheetFormatter needs SpreadsheetErrors to be converted to String.
+        this.converter = Converters.collection(
+                Lists.of(
+                        SpreadsheetConverters.errorToString()
+                                .cast(SpreadsheetConverterContext.class),
+                        context.converter()
+                )
+        );
+
         this.context = context;
 
         this.defaultSpreadsheetFormatter = defaultSpreadsheetFormatter;
@@ -102,19 +114,31 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type) {
-        return this.context.canConvert(value, type);
+        return this.converter()
+                .canConvert(
+                        value,
+                        type,
+                        this
+                );
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
-        return this.context.convert(value, type);
+        return this.converter()
+                .convert(
+                        value,
+                        type,
+                        this
+                );
     }
 
     @Override
     public Converter<SpreadsheetConverterContext> converter() {
-        return this.context.converter();
+        return this.converter;
     }
+
+    private final Converter<SpreadsheetConverterContext> converter;
 
     // defaultFormatText.................................................................................................
 

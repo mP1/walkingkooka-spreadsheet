@@ -48,10 +48,17 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
-     * {@see SpreadsheetErrorConverter}
+     * {@see SpreadsheetErrorToNumberConverter}
      */
-    public static Converter<SpreadsheetConverterContext> error() {
-        return SpreadsheetErrorConverter.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> errorToNumber() {
+        return SpreadsheetErrorToNumberConverter.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetErrorToStringConverter}
+     */
+    public static Converter<ConverterContext> errorToString() {
+        return SpreadsheetErrorToStringConverter.INSTANCE;
     }
 
     /**

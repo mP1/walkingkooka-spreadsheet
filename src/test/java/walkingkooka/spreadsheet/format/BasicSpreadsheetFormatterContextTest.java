@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -25,9 +26,13 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -46,8 +51,16 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static Locale LOCALE = Locale.CANADA_FRENCH;
 
-    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
-        throw new UnsupportedOperationException();
+    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = new Function<>() {
+        @Override
+        public SpreadsheetSelection apply(SpreadsheetSelection selection) {
+            throw new UnsupportedOperationException();
+        };
+
+        @Override
+        public String toString() {
+            return "RESOLVE_IF_LABEL";
+        }
     };
 
     @Test
@@ -149,13 +162,43 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     @Test
-    public void testConvert() {
-        this.convertAndCheck(1, Boolean.class, Boolean.TRUE);
+    public void testConvertNumberOneToBoolean() {
+        this.convertAndCheck(
+                1,
+                Boolean.class,
+                Boolean.TRUE
+        );
     }
 
     @Test
-    public void testConvert2() {
-        this.convertAndCheck(0, Boolean.class, Boolean.FALSE);
+    public void testConvertNumberZeroToBoolean() {
+        this.convertAndCheck(
+                0,
+                Boolean.class,
+                Boolean.FALSE
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetErrorMissingCellToNumber() {
+        this.convertAndCheck(
+                SpreadsheetError.notFound(
+                        SpreadsheetSelection.parseCell("Z99")
+                ),
+                ExpressionNumber.class,
+                EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetErrorToString() {
+        final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
+
+        this.convertAndCheck(
+                kind.setMessage("Message is ignored!"),
+                String.class,
+                kind.text()
+        );
     }
 
     @Test
@@ -173,7 +216,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean " + RESOLVE_IF_LABEL + " locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE"
+                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean | SpreadsheetError->Number RESOLVE_IF_LABEL locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE"
         );
     }
 
@@ -236,12 +279,22 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
             public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                 return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, new DecimalFormat("000.000").format(value)));
             }
+
+            @Override
+            public String toString() {
+                return BasicSpreadsheetFormatterContextTest.class.getSimpleName() + ".defaultSpreadsheetFormatter()";
+            }
         };
     }
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
-                Converters.truthyNumberBoolean(),
+                Converters.collection(
+                        Lists.of(
+                                Converters.truthyNumberBoolean(),
+                                SpreadsheetConverters.errorToNumber()
+                        )
+                ),
                 RESOLVE_IF_LABEL,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
