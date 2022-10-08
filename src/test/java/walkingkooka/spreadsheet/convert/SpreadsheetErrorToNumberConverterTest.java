@@ -21,16 +21,12 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorToNumberConverterTest implements ConverterTesting2<SpreadsheetErrorToNumberConverter, SpreadsheetConverterContext> {
 
@@ -46,36 +42,25 @@ public final class SpreadsheetErrorToNumberConverterTest implements ConverterTes
 
     @Test
     public void testErrorToExpressionNumber() {
-        assertThrows(
-                SpreadsheetErrorConversionException.class,
-                () -> SpreadsheetErrorToNumberConverter.INSTANCE.convert(
-                        SpreadsheetErrorKind.ERROR.setMessage("Ignored"),
-                        ExpressionNumber.class,
-                        this.createContext()
-                )
+        this.convertFails(
+                SpreadsheetErrorKind.ERROR.setMessage("Message will be ignored"),
+                ExpressionNumber.class
         );
     }
 
     @Test
     public void testErrorErrorToString() {
-        final SpreadsheetErrorKind kind = SpreadsheetErrorKind.ERROR;
-
         this.convertFails(
-                kind.setMessage("Message will be ignored"),
+                SpreadsheetErrorKind.ERROR.setMessage("Message will be ignored"),
                 String.class
         );
     }
 
     @Test
-    public void testNameLabelToExpressionNumberFails() {
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
-
-        assertThrows(
-                SpreadsheetErrorConversionException.class,
-                () -> this.convert(
-                        SpreadsheetError.notFound(label),
-                        ExpressionNumber.class
-                )
+    public void testNameLabelToExpressionNumber() {
+        this.convertFails(
+                SpreadsheetSelection.labelName("Label123"),
+                ExpressionNumber.class
         );
     }
 

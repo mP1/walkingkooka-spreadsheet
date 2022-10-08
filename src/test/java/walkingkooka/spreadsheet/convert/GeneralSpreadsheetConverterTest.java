@@ -566,11 +566,12 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testSpreadsheetErrorToString() {
-        final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
-
-        this.convertFails(
-                kind.setMessage("Message is ignored"),
-                String.class
+        assertThrows(
+                SpreadsheetErrorConversionException.class,
+                () -> this.convert(
+                        SpreadsheetErrorKind.DIV0.setMessage("Message is ignored"),
+                        String.class
+                )
         );
     }
 
