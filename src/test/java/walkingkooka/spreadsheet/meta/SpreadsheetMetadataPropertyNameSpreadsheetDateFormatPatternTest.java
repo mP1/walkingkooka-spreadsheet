@@ -75,6 +75,14 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPatternTe
                         new FakeConverter<>() {
 
                             @Override
+                            public boolean canConvert(final Object value,
+                                                      final Class<?> type,
+                                                      final SpreadsheetConverterContext context) {
+                                return value instanceof LocalDate &&
+                                        LocalDateTime.class == type;
+                            }
+
+                            @Override
                             public <T> Either<T, String> convert(final Object value,
                                                                  final Class<T> type,
                                                                  final SpreadsheetConverterContext context) {

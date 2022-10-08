@@ -80,6 +80,13 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern
                         new FakeConverter<>() {
 
                             @Override
+                            public boolean canConvert(final Object value,
+                                                      final Class<?> type,
+                                                      final SpreadsheetConverterContext context) {
+                                return type.isInstance(value);
+                            }
+
+                            @Override
                             public <T> Either<T, String> convert(final Object value,
                                                                  final Class<T> type,
                                                                  final SpreadsheetConverterContext context) {
