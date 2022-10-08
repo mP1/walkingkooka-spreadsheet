@@ -22,6 +22,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
+/**
+ * A {@link walkingkooka.convert.ConverterContext} that includes a few extra operations that are needed in a Spreadsheet context.
+ */
 public interface SpreadsheetConverterContext extends ExpressionNumberConverterContext, HasConverter<SpreadsheetConverterContext> {
 
     /**
