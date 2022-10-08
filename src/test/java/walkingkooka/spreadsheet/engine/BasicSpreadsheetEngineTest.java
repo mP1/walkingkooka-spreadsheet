@@ -175,6 +175,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                         .cast(SpreadsheetFormatterContext.class),
                                                 SpreadsheetConverters.errorToNumber()
                                                         .cast(SpreadsheetFormatterContext.class),
+                                                SpreadsheetConverters.errorThrowing()
+                                                        .cast(SpreadsheetFormatterContext.class),
                                                 Converters.localDateLocalDateTime(),
                                                 Converters.localTimeLocalDateTime(),
                                                 Converters.numberNumber(),

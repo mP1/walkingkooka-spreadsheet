@@ -22,7 +22,6 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.Maths;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.tree.expression.ExpressionNumber;
 
@@ -47,38 +46,25 @@ final class SpreadsheetErrorToNumberConverter extends SpreadsheetErrorConverter<
     boolean canConvertSpreadsheetError(final SpreadsheetError error,
                                        final Class<?> type,
                                        final SpreadsheetConverterContext context) {
-        return ExpressionNumber.isClass(type);
+        return ExpressionNumber.isClass(type) &&
+                error.isMissingCell();
     }
 
     @Override
     <T> Either<T, String> convertSpreadsheetError(final SpreadsheetError error,
                                                   final Class<T> type,
                                                   final SpreadsheetConverterContext context) {
-        Either<T, String> converted = null;
-
-        if (error.isMissingCell()) {
-            if (Maths.isNumberClass(type)) {
-                converted = NUMBER_TO_NUMBER.convert(
+        return Maths.isNumberClass(type) ?
+                NUMBER_TO_NUMBER.convert(
                         0,
                         type,
                         context
+                ) :
+                this.successfulConversion(
+                        context.expressionNumberKind()
+                                .zero(),
+                        type
                 );
-            } else {
-                if (ExpressionNumber.isClass(type)) { // also matches Number so must do Maths.isNumberClass first
-                    converted = this.successfulConversion(
-                            context.expressionNumberKind()
-                                    .zero(),
-                            type
-                    );
-                }
-            }
-        }
-
-        if (null == converted) {
-            throw new SpreadsheetErrorConversionException(error);
-        }
-
-        return converted;
     }
 
     private final static Converter<SpreadsheetConverterContext> NUMBER_TO_NUMBER = Converters.numberNumber();
