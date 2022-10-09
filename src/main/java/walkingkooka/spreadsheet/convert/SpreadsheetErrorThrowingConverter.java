@@ -21,10 +21,10 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
+import walkingkooka.spreadsheet.SpreadsheetErrorException;
 
 /**
- * A {@link Converter} that throws {@link SpreadsheetErrorConversionException} with any given {@link SpreadsheetError}.
+ * A {@link Converter} that throws {@link SpreadsheetErrorException} with any given {@link SpreadsheetError}.
  * This is necessary so that functions which try and convert a {@link SpreadsheetError} fail early and eventually
  * return this {@link SpreadsheetError}.
  */
@@ -52,7 +52,7 @@ final class SpreadsheetErrorThrowingConverter extends SpreadsheetErrorConverter<
     <T> Either<T, String> convertSpreadsheetError(final SpreadsheetError error,
                                                   final Class<T> type,
                                                   final ConverterContext context) {
-        throw new SpreadsheetErrorConversionException(error);
+        throw new SpreadsheetErrorException(error);
     }
 
     @Override

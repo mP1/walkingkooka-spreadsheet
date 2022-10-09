@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
-import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
+import walkingkooka.spreadsheet.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.tree.expression.ExpressionNumber;
 
@@ -41,7 +41,7 @@ public final class SpreadsheetErrorThrowingConverterTest implements ConverterTes
     @Test
     public void testThrows() {
         assertThrows(
-                SpreadsheetErrorConversionException.class,
+                SpreadsheetErrorException.class,
                 () -> SpreadsheetErrorThrowingConverter.INSTANCE.convert(
                         SpreadsheetErrorKind.ERROR.setMessage("Ignored"),
                         ExpressionNumber.class,

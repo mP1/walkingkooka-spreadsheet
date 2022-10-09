@@ -25,7 +25,7 @@ import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.spreadsheet.SpreadsheetErrorConversionException;
+import walkingkooka.spreadsheet.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
@@ -554,7 +554,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetErrorToNumber() {
         assertThrows(
-                SpreadsheetErrorConversionException.class,
+                SpreadsheetErrorException.class,
                 () -> this.createConverter()
                         .convert(
                                 SpreadsheetErrorKind.ERROR.setMessage("Ignored"),
@@ -567,7 +567,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetErrorToString() {
         assertThrows(
-                SpreadsheetErrorConversionException.class,
+                SpreadsheetErrorException.class,
                 () -> this.convert(
                         SpreadsheetErrorKind.DIV0.setMessage("Message is ignored"),
                         String.class
