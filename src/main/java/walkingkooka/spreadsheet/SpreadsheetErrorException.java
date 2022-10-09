@@ -17,25 +17,22 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.convert.ConversionException;
-
 import java.util.Objects;
 
 /**
- * This exception is thrown by SpreadsheetConverter when it is requested
- * to convert a {@link SpreadsheetError} to some other type.
+ * An {@link RuntimeException} that holds a {@link SpreadsheetError}
  * <br>
  * This behaviour guarantees that any formula or expression with an error will fail with the first {@link SpreadsheetError}.
  */
-public final class SpreadsheetErrorConversionException extends ConversionException implements HasSpreadsheetError {
+public final class SpreadsheetErrorException extends RuntimeException implements HasSpreadsheetError {
 
     private static final long serialVersionUID = 1L;
 
-    protected SpreadsheetErrorConversionException() {
+    protected SpreadsheetErrorException() {
         super();
     }
 
-    public SpreadsheetErrorConversionException(final SpreadsheetError error) {
+    public SpreadsheetErrorException(final SpreadsheetError error) {
         super();
         this.error = Objects.requireNonNull(error, "error");
     }

@@ -53,7 +53,7 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
 
         this.checkEquals(
                 error,
-                SpreadsheetErrorKind.translate(new SpreadsheetErrorConversionException(error))
+                SpreadsheetErrorKind.translate(new SpreadsheetErrorException(error))
         );
     }
 

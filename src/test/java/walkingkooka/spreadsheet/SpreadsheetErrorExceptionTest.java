@@ -23,7 +23,7 @@ import walkingkooka.reflect.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetErrorConversionExceptionTest implements ClassTesting<SpreadsheetErrorConversionException> {
+public final class SpreadsheetErrorExceptionTest implements ClassTesting<SpreadsheetErrorException> {
 
     private final static SpreadsheetError ERROR = SpreadsheetErrorKind.DIV0.setMessage("Hello");
 
@@ -31,13 +31,13 @@ public final class SpreadsheetErrorConversionExceptionTest implements ClassTesti
     public void testNewNullSpreadsheetErrorFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> new SpreadsheetErrorConversionException(null)
+                () -> new SpreadsheetErrorException(null)
         );
     }
 
     @Test
     public void testNew() {
-        final SpreadsheetErrorConversionException exception = new SpreadsheetErrorConversionException(ERROR);
+        final SpreadsheetErrorException exception = new SpreadsheetErrorException(ERROR);
         this.checkEquals(
                 ERROR,
                 exception.spreadsheetError(),
@@ -46,8 +46,8 @@ public final class SpreadsheetErrorConversionExceptionTest implements ClassTesti
     }
 
     @Override
-    public Class<SpreadsheetErrorConversionException> type() {
-        return SpreadsheetErrorConversionException.class;
+    public Class<SpreadsheetErrorException> type() {
+        return SpreadsheetErrorException.class;
     }
 
     @Override
