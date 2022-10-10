@@ -457,13 +457,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                SpreadsheetError.with(
-                        SpreadsheetErrorKind.NAME_STRING,
-                        "Cell not found: A2",
-                        Optional.of(
-                                SpreadsheetSelection.parseCell("A2")
-                        )
-                ),
+                SpreadsheetError.notFound(
+                        SpreadsheetSelection.parseCell("A2")
+                ).setNameString(),
                 "#NAME? " + FORMATTED_PATTERN_SUFFIX
         );
     }
