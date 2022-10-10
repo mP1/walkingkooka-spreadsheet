@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
+import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -54,6 +55,18 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         return SpreadsheetErrorKind.NAME.setMessageAndValue(
                 reference.notFound(),
                 reference
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetError} reporting that a cell or label was not found.
+     */
+    public static SpreadsheetError functionNotFound(final FunctionExpressionName function) {
+        Objects.requireNonNull(function, "function");
+
+        return SpreadsheetErrorKind.NAME.setMessageAndValue(
+                function.notFoundText(),
+                function
         );
     }
 
