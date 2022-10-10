@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.HasSpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
@@ -1055,8 +1056,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetCell setError(final Throwable cause,
                                      final SpreadsheetCell cell,
                                      final SpreadsheetEngineContext context) {
+        final SpreadsheetError error;
+        if (cause instanceof HasSpreadsheetError) {
+            final HasSpreadsheetError has = (HasSpreadsheetError) cause;
+            error = has.spreadsheetError();
+        } else {
+            error = SpreadsheetErrorKind.translate(cause);
+        }
+
+
         return this.setError(
-                SpreadsheetErrorKind.translate(cause),
+                error,
                 cell,
                 context
         );

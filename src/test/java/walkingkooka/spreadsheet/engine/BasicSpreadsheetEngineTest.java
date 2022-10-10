@@ -411,6 +411,64 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellsWithCellFormulaWithFunctionMissingCellReferenceNumberParameter() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+
+        context.storeRepository()
+                .cells()
+                .save(
+                        a1.setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("=BasicSpreadsheetEngineTestNumberParameter(A2)")
+                        )
+                );
+
+        this.loadCellAndCheckFormatted(
+                engine,
+                a1,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                EXPRESSION_NUMBER_KIND.zero(),
+                " " + FORMATTED_PATTERN_SUFFIX
+        );
+    }
+
+    @Test
+    public void testLoadCellsWithCellFormulaWithFunctionMissingCellReferenceStringParameter() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+
+        context.storeRepository()
+                .cells()
+                .save(
+                        a1.setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("=BasicSpreadsheetEngineTestStringParameter(A2)")
+                        )
+                );
+
+        this.loadCellAndCheckFormatted(
+                engine,
+                a1,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                SpreadsheetError.with(
+                        SpreadsheetErrorKind.NAME_STRING,
+                        "Cell not found: A2",
+                        Optional.of(
+                                SpreadsheetSelection.parseCell("A2")
+                        )
+                ),
+                "#NAME? " + FORMATTED_PATTERN_SUFFIX
+        );
+    }
+
+    @Test
     public void testLoadCellsWithLabelToMissingCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -11298,6 +11356,56 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                     .variable(Object.class)
                                                     .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
                                     );
+                                }
+                            };
+                        case "BasicSpreadsheetEngineTestNumberParameter":
+                            return new FakeExpressionFunction<>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final ExpressionEvaluationContext context) {
+                                    return NUMBER.getOrFail(
+                                            parameters,
+                                            0
+                                    );
+                                }
+
+                                private final ExpressionFunctionParameter<ExpressionNumber> NUMBER = ExpressionFunctionParameterName.with("parameters")
+                                        .required(ExpressionNumber.class)
+                                        .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
+
+                                @Override
+                                public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                    return Lists.of(NUMBER);
+                                }
+
+                                @Override
+                                public boolean isPure(final ExpressionPurityContext context) {
+                                    return false;
+                                }
+                            };
+                        case "BasicSpreadsheetEngineTestStringParameter":
+                            return new FakeExpressionFunction<>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final ExpressionEvaluationContext context) {
+                                    return STRING.getOrFail(
+                                            parameters,
+                                            0
+                                    );
+                                }
+
+                                private final ExpressionFunctionParameter<String> STRING = ExpressionFunctionParameterName.with("parameters")
+                                        .required(String.class)
+                                        .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
+
+                                @Override
+                                public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                    return Lists.of(STRING);
+                                }
+
+                                @Override
+                                public boolean isPure(final ExpressionPurityContext context) {
+                                    return false;
                                 }
                             };
                         case "BasicSpreadsheetEngineTestSum":
