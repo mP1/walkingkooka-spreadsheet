@@ -22,7 +22,6 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorException;
-import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 
 /**
  * A {@link Converter} that throws {@link SpreadsheetErrorException} with any given {@link SpreadsheetError}.
@@ -55,11 +54,7 @@ final class SpreadsheetErrorThrowingConverter extends SpreadsheetErrorConverter<
                                                   final ConverterContext context) {
         throw new SpreadsheetErrorException(
                 error.isMissingCell() ?
-                        SpreadsheetError.with(
-                                SpreadsheetErrorKind.NAME_STRING,
-                                error.message(),
-                                error.value()
-                        ) :
+                        error.setNameString() :
                         error
         );
     }
