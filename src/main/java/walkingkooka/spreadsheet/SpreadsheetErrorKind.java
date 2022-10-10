@@ -51,7 +51,16 @@ public enum SpreadsheetErrorKind implements HasText {
 
     REF("#REF!", 4),
 
+    /**
+     * A <code>!NAME</code> representing a missing cell or label reference that may be converted to a ZERO.
+     */
     NAME("#NAME?", 5),
+
+    /**
+     * A <code>!NAME</code> representing a missing cell or label reference that was converted to a {@link String}.
+     * During formatting as text it will not be converted to a value of zero.
+     */
+    NAME_STRING("#NAME?", 5),
 
     NUM("#NUM!", 6),
 
@@ -112,16 +121,14 @@ public enum SpreadsheetErrorKind implements HasText {
     public static SpreadsheetError translate(final Throwable cause) {
         Objects.requireNonNull(cause, "cause");
 
-        return cause instanceof HasSpreadsheetError ?
-                translate0((HasSpreadsheetError) cause) :
-                translate1(cause);
+        if (cause instanceof HasSpreadsheetError) {
+            throw (RuntimeException) cause;
+        }
+
+        return translate0(cause);
     }
 
-    private static SpreadsheetError translate0(final HasSpreadsheetError has) {
-        return has.spreadsheetError();
-    }
-
-    private static SpreadsheetError translate1(final Throwable cause) {
+    private static SpreadsheetError translate0(final Throwable cause) {
         Throwable translate = cause;
 
         if (cause instanceof ExpressionEvaluationException) {
@@ -131,10 +138,10 @@ public enum SpreadsheetErrorKind implements HasText {
             }
         }
 
-        return translate2(translate);
+        return translate1(translate);
     }
 
-    private static SpreadsheetError translate2(final Throwable cause) {
+    private static SpreadsheetError translate1(final Throwable cause) {
         final SpreadsheetErrorKind kind;
         String message = cause.getMessage();
         Object value = null;
