@@ -289,7 +289,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testLoadCellsWithFormulaWithInvalidLabelFails() {
         this.loadCellFails(
                 "=UnknownLabel",
-                SpreadsheetError.notFound(SpreadsheetSelection.labelName("UnknownLabel"))
+                SpreadsheetError.selectionNotFound(SpreadsheetSelection.labelName("UnknownLabel"))
         );
     }
 
@@ -457,7 +457,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                SpreadsheetError.notFound(
+                SpreadsheetError.selectionNotFound(
                         SpreadsheetSelection.parseCell("A2")
                 ).setNameString(),
                 "#NAME? " + FORMATTED_PATTERN_SUFFIX
@@ -1685,7 +1685,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1 = this.cell("a1", "=1+" + unknown);
         final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
-                SpreadsheetError.notFound(unknown)
+                SpreadsheetError.selectionNotFound(unknown)
         );
         this.saveCellAndCheck(
                 engine,
@@ -8889,7 +8889,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCell(
                                                 "A1",
                                                 "=" + label + "+1",
-                                                SpreadsheetError.notFound(label)
+                                                SpreadsheetError.selectionNotFound(label)
                                         )
                                 )
                         ).setColumnWidths(
@@ -8942,7 +8942,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCell(
                                                 "A1",
                                                 "=" + label + "+1",
-                                                SpreadsheetError.notFound(label)
+                                                SpreadsheetError.selectionNotFound(label)
                                         )
                                 )
                         ).setColumns(
@@ -9000,7 +9000,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCell(
                                                 "A1",
                                                 "=" + label + "+1",
-                                                SpreadsheetError.notFound(label)
+                                                SpreadsheetError.selectionNotFound(label)
                                         )
                                 )
                         ).setRows(

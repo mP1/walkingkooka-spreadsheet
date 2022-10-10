@@ -182,7 +182,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     @Test
     public void testConvertSpreadsheetErrorMissingCellToNumber() {
         this.convertAndCheck(
-                SpreadsheetError.notFound(
+                SpreadsheetError.selectionNotFound(
                         SpreadsheetSelection.parseCell("Z99")
                 ),
                 ExpressionNumber.class,

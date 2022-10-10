@@ -80,23 +80,23 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.checkValue(error, VALUE);
     }
 
-    // notFound........................................................................................................
+    // selectionNotFound................................................................................................
 
     @Test
-    public void testNotFoundWithCell() {
+    public void testSelectionNotFoundWithCell() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A99");
 
-        final SpreadsheetError error = SpreadsheetError.notFound(cell);
+        final SpreadsheetError error = SpreadsheetError.selectionNotFound(cell);
         this.checkKind(error, SpreadsheetErrorKind.NAME);
         this.checkMessage(error, "Cell not found: A99");
         this.checkValue(error, Optional.of(cell));
     }
 
     @Test
-    public void testNotFoundWithLabel() {
+    public void testSelectionNotFoundWithLabel() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
-        final SpreadsheetError error = SpreadsheetError.notFound(label);
+        final SpreadsheetError error = SpreadsheetError.selectionNotFound(label);
         this.checkKind(error, SpreadsheetErrorKind.NAME);
         this.checkMessage(error, "Label not found: Label123");
         this.checkValue(error, Optional.of(label));
@@ -198,7 +198,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
     @Test
     public void testSetNameString() {
-        final SpreadsheetError error = SpreadsheetError.notFound(
+        final SpreadsheetError error = SpreadsheetError.selectionNotFound(
                 SpreadsheetSelection.parseCell("A1")
         );
 

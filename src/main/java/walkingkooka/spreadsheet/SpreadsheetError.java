@@ -49,7 +49,7 @@ public final class SpreadsheetError implements Value<Optional<?>>,
     /**
      * Creates a {@link SpreadsheetError} reporting that a cell or label was not found.
      */
-    public static SpreadsheetError notFound(final SpreadsheetExpressionReference reference) {
+    public static SpreadsheetError selectionNotFound(final SpreadsheetExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
         return SpreadsheetErrorKind.NAME.setMessageAndValue(

@@ -83,7 +83,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
                     }
                 },
                 label,
-                SpreadsheetError.notFound(label)
+                SpreadsheetError.selectionNotFound(label)
         );
     }
 
