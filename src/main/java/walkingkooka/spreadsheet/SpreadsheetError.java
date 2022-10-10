@@ -152,7 +152,7 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         }
 
         return new SpreadsheetError(
-                SpreadsheetErrorKind.NAME,
+                SpreadsheetErrorKind.NAME_STRING,
                 this.message,
                 this.value
         );
