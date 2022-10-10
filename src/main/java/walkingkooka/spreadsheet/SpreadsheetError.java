@@ -127,6 +127,37 @@ public final class SpreadsheetError implements Value<Optional<?>>,
                 this.value().orElse(null) instanceof SpreadsheetCellReference;
     }
 
+    // setNameString...................................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetError} with {@link SpreadsheetErrorKind#NAME_STRING} signifying it was not possible
+     * to convert a #NAME to a {@link String} value.
+     */
+    public SpreadsheetError setNameString() {
+        final SpreadsheetErrorKind kind = this.kind;
+        return kind == SpreadsheetErrorKind.NAME_STRING ?
+                this :
+                this.setNameString0();
+    }
+
+    private SpreadsheetError setNameString0() {
+        final SpreadsheetErrorKind kind = this.kind;
+        if (kind != SpreadsheetErrorKind.NAME) {
+            throw new IllegalStateException(
+                    "SpreadsheetError.kind is not " +
+                            SpreadsheetErrorKind.NAME +
+                            " but is " +
+                            kind
+            );
+        }
+
+        return new SpreadsheetError(
+                SpreadsheetErrorKind.NAME,
+                this.message,
+                this.value
+        );
+    }
+
     // HasSpreadsheetErrorKind ........................................................................................
 
     @Override

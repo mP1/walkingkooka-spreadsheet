@@ -32,6 +32,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetError>,
@@ -149,6 +150,52 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
                 is,
                 error.isMissingCell(),
                 () -> error + ".isMissingCell()"
+        );
+    }
+
+    // setNameString....................................................................................................
+
+    @Test
+    public void testSetNameStringNonNAMEFails() {
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetErrorKind.DIV0.setMessage("Divide by zero!!!")
+                        .setNameString()
+        );
+
+        this.checkEquals(
+                "SpreadsheetError.kind is not #NAME? but is #DIV/0!",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testSetNameStringNAME_STRING() {
+        final SpreadsheetError error = SpreadsheetErrorKind.NAME_STRING.setMessageAndValue(
+                "AAA",
+                SpreadsheetSelection.parseCell("A1")
+        );
+
+        assertSame(
+                error,
+                error.setNameString()
+        );
+    }
+
+    @Test
+    public void testSetNameString() {
+        final SpreadsheetError error = SpreadsheetError.notFound(
+                SpreadsheetSelection.parseCell("A1")
+        );
+
+        this.checkEquals(
+                SpreadsheetErrorKind.NAME_STRING.setMessageAndValue(
+                        error.message(),
+                        error.value().get()
+                ),
+                error.setNameString(),
+                () -> error + ".setNameString"
         );
     }
 
