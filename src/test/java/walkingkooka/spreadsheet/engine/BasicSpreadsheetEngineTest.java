@@ -2796,10 +2796,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a1,
-                                                SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Label not found: " + labelB2,
-                                                        labelB2
-                                                )
+                                                SpreadsheetError.selectionNotFound(labelB2)
                                         )
                                 )
                         ).setDeletedCells(
@@ -4413,10 +4410,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         formattedCell(
                                                 a,
                                                 "=1+0+" + LABEL,
-                                                SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Label not found: " + LABEL,
-                                                        LABEL
-                                                )
+                                                SpreadsheetError.selectionNotFound(LABEL)
                                         )
                                 )
                         ).setDeletedCells(
@@ -4437,10 +4431,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + LABEL,
-                SpreadsheetErrorKind.NAME.setMessageAndValue(
-                        "Label not found: " + LABEL,
-                        LABEL
-                )
+                SpreadsheetError.selectionNotFound(LABEL)
         );
     }
 
@@ -5276,10 +5267,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formattedCell(
                                                 "$A$1",
                                                 "=1+0+" + LABEL,
-                                                SpreadsheetErrorKind.NAME.setMessageAndValue(
-                                                        "Label not found: " + LABEL,
-                                                        LABEL
-                                                )
+                                                SpreadsheetError.selectionNotFound(LABEL)
                                         )
                                 )
                         ).setDeletedCells(
@@ -5300,10 +5288,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + LABEL,
-                SpreadsheetErrorKind.NAME.setMessageAndValue(
-                        "Label not found: " + LABEL,
-                        LABEL
-                )
+                SpreadsheetError.selectionNotFound(LABEL)
         );
     }
 
