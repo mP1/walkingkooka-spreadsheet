@@ -69,7 +69,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
             result = this.reference(reference)
                     .orElseGet(
                             () -> Optional.of(
-                                    SpreadsheetError.notFound(
+                                    SpreadsheetError.selectionNotFound(
                                             (SpreadsheetExpressionReference) reference
                                     )
                             )

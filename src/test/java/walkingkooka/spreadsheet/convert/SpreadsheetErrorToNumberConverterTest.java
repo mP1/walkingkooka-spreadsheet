@@ -67,7 +67,7 @@ public final class SpreadsheetErrorToNumberConverterTest implements ConverterTes
     @Test
     public void testErrorNotFoundToBigDecimal() {
         this.convertAndCheck(
-                SpreadsheetError.notFound(SpreadsheetSelection.parseCell("A1")),
+                SpreadsheetError.selectionNotFound(SpreadsheetSelection.parseCell("A1")),
                 BigDecimal.class,
                 BigDecimal.ZERO
         );
@@ -76,7 +76,7 @@ public final class SpreadsheetErrorToNumberConverterTest implements ConverterTes
     @Test
     public void testErrorNotFoundToExpressionNumber() {
         this.convertAndCheck(
-                SpreadsheetError.notFound(SpreadsheetSelection.parseCell("A1")),
+                SpreadsheetError.selectionNotFound(SpreadsheetSelection.parseCell("A1")),
                 ExpressionNumber.class,
                 EXPRESSION_NUMBER_KIND.zero()
         );
