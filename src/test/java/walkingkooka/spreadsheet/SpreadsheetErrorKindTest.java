@@ -312,6 +312,24 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
         );
     }
 
+    // toError............................................................................................................
+
+    @Test
+    public void testToError() {
+        for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
+            final SpreadsheetError error = kind.toError();
+
+            this.checkEquals(
+                    SpreadsheetError.with(
+                            kind,
+                            "",
+                            Optional.empty()
+                    ),
+                    error
+            );
+        }
+    }
+
     // setMessage......................................................................................................
 
     @Test
