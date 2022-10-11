@@ -24,6 +24,7 @@ import walkingkooka.Value;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -45,6 +46,18 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         TreePrintable,
         HasSpreadsheetErrorKind,
         UsesToStringBuilder {
+
+    /**
+     * Creates a {@link SpreadsheetError} reporting that a cell was deleted.
+     */
+    public static SpreadsheetError selectionDeleted(final SpreadsheetSelection selection) {
+        Objects.requireNonNull(selection, "selection");
+
+        return SpreadsheetErrorKind.REF.setMessageAndValue(
+                selection.deleteText(),
+                selection
+        );
+    }
 
     /**
      * Creates a {@link SpreadsheetError} reporting that a cell or label was not found.
