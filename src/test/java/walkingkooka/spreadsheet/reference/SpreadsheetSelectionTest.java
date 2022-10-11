@@ -678,6 +678,24 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    // deletedText.......................................................................................................
+
+    @Test
+    public void testDeletedTextCell() {
+        this.checkEquals(
+                "Cell deleted: Z99",
+                SpreadsheetSelection.parseCell("Z99").deleteText()
+        );
+    }
+
+    @Test
+    public void testDeletedTextColumn() {
+        this.checkEquals(
+                "Column deleted: Z",
+                SpreadsheetSelection.parseColumn("Z").deleteText()
+        );
+    }
+
     // notFound.........................................................................................................
 
     @Test
