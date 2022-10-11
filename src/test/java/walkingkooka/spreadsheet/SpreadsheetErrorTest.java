@@ -326,8 +326,26 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     }
 
     @Test
-    public void testMarshallRoundtripTwice() {
-        this.marshallRoundTripTwiceAndCheck(this.createObject());
+    public void testMarshallRoundtripKindMessageValue() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetError.selectionNotFound(
+                        SpreadsheetSelection.parseCell("A1")
+                )
+        );
+    }
+
+    @Test
+    public void testMarshallRoundtripKindMessage() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetErrorKind.DIV0.setMessage("Divide by zero")
+        );
+    }
+
+    @Test
+    public void testMarshallRoundtripOnlyKind() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetErrorKind.ERROR.toError()
+        );
     }
 
     // toString...............................................................................................
