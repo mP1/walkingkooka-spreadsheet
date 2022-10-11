@@ -176,6 +176,8 @@ public enum SpreadsheetErrorKind implements HasText {
         String message = cause.getMessage();
         Object value = null;
 
+        SpreadsheetError error = null;
+
         do {
             if (cause instanceof HasSpreadsheetErrorKind) {
                 final HasSpreadsheetErrorKind has = (HasSpreadsheetErrorKind) cause;
@@ -238,16 +240,20 @@ public enum SpreadsheetErrorKind implements HasText {
                 kind = NAME;
 
                 final UnknownExpressionFunctionException unknown = (UnknownExpressionFunctionException) cause;
-                value = unknown.name();
+                error = SpreadsheetError.functionNotFound(
+                        unknown.name()
+                );
                 break;
             }
 
             kind = VALUE;
         } while (false);
 
-        return kind.setMessageAndValue(
-                CharSequences.nullToEmpty(message).toString(),
-                value
-        );
+        return null != error ?
+                error :
+                kind.setMessageAndValue(
+                        CharSequences.nullToEmpty(message).toString(),
+                        value
+                );
     }
 }

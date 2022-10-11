@@ -237,7 +237,7 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
         this.translateAndCheck(
                 new UnknownExpressionFunctionException(badFunction),
                 SpreadsheetErrorKind.NAME,
-                "Unknown function \"badFunction\"",
+                SpreadsheetError.functionNotFound(badFunction).message(),
                 badFunction
         );
     }
