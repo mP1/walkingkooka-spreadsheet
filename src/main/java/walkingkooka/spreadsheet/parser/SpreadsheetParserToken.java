@@ -18,6 +18,7 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -184,6 +185,14 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public static SpreadsheetEqualsSymbolParserToken equalsSymbol(final String value, final String text) {
         return SpreadsheetEqualsSymbolParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetErrorParserToken}
+     */
+    public static SpreadsheetErrorParserToken error(final SpreadsheetError value,
+                                                    final String text) {
+        return SpreadsheetErrorParserToken.with(value, text);
     }
 
     /**
@@ -705,6 +714,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetEqualsSymbolParserToken} returns true
+     */
+    public final boolean isError() {
+        return this instanceof SpreadsheetErrorParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetExponentSymbolParserToken} returns true
      */
     public final boolean isExponentSymbol() {
@@ -1160,6 +1176,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetErrorParserToken.class,
+                SpreadsheetParserToken::unmarshallError
+        );
+
+        registerLeafParserToken(
                 SpreadsheetFunctionNameParserToken.class,
                 SpreadsheetParserToken::unmarshallFunctionName
         );
@@ -1282,6 +1303,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 String.class,
                 context,
                 SpreadsheetParserToken::digits
+        );
+    }
+
+    static SpreadsheetErrorParserToken unmarshallError(final JsonNode node,
+                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                SpreadsheetError.class,
+                context,
+                SpreadsheetParserToken::error
         );
     }
 

@@ -354,6 +354,11 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     // ignore all SymbolParserTokens, dont bother to collect them.
 
     @Override
+    protected void visit(final SpreadsheetErrorParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visit(final SpreadsheetLabelNameParserToken token) {
         this.addReference(token.value(), token);
     }
