@@ -796,6 +796,18 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
     // notFound.........................................................................................................
 
     /**
+     * Constructs a human pretty message that a {@link SpreadsheetSelection} was deleted.
+     * <br>
+     * This is used with a {@link walkingkooka.spreadsheet.SpreadsheetErrorKind#REF} to create a {@link walkingkooka.spreadsheet.SpreadsheetError}
+     * when a cell is deleted.
+     */
+    public final String deleteText() {
+        return this.textLabel() + " deleted: " + this;
+    }
+
+    // notFound.........................................................................................................
+
+    /**
      * Constructs a human pretty message that a {@link SpreadsheetSelection} could not be found.
      * This can then be used to report load failures etc.
      */
