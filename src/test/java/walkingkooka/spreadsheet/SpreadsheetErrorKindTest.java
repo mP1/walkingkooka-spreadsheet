@@ -345,6 +345,32 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
         }
     }
 
+    // withValue........................................................................................................
+
+    @Test
+    public void testWithValueUnknownValueFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetErrorKind.withValue(9999)
+        );
+
+        this.checkEquals(
+                "Unknown value=9999",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testWithValue() {
+        for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
+            this.checkEquals(
+                    kind,
+                    SpreadsheetErrorKind.withValue(kind.value())
+            );
+        }
+    }
+
     // ClassTesting......................................................................................................
 
     @Override
