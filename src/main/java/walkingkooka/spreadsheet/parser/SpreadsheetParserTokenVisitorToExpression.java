@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -355,8 +356,27 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
 
     @Override
     protected void visit(final SpreadsheetErrorParserToken token) {
-        throw new UnsupportedOperationException();
+        this.add(
+                Expression.call(
+                        Expression.namedFunction(ERROR),
+                        Lists.of(
+                                Expression.value(
+                                        this.context.expressionNumberKind()
+                                                .create(
+                                                        token.value()
+                                                                .kind()
+                                                                .value()
+                                                )
+                                )
+                        )
+                ),
+                token
+        );
     }
+
+    private final static FunctionExpressionName ERROR = SpreadsheetExpressionFunctions.error()
+            .name()
+            .get();
 
     @Override
     protected void visit(final SpreadsheetLabelNameParserToken token) {
