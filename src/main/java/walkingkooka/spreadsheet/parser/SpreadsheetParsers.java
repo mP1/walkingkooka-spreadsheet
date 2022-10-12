@@ -21,6 +21,8 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.text.CaseSensitivity;
@@ -39,9 +41,11 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierName;
 import walkingkooka.text.cursor.parser.ebnf.EbnfParserContexts;
 import walkingkooka.text.cursor.parser.ebnf.EbnfParserToken;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 /**
  * Numerous {@link Parser parsers} that parse individual components of a formula or an entire formula.
@@ -114,6 +118,38 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      */
     public static Parser<SpreadsheetParserContext> column() {
         return SpreadsheetColumnReferenceParser.INSTANCE;
+    }
+
+    /**
+     * Returns a {@link Parser} that errors such as <code>#REF!</code>.
+     */
+    public static Parser<SpreadsheetParserContext> error() {
+        return ERROR_PARSER;
+    }
+
+    private static final Parser<SpreadsheetParserContext> ERROR_PARSER = errorParser();
+
+    private static Parser<SpreadsheetParserContext> errorParser() {
+        return Parsers.alternatives(
+                Arrays.stream(SpreadsheetErrorKind.values())
+                        .map(SpreadsheetParsers::errorToParser)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    /**
+     * Creates a {@link Parser} that matches the {@link SpreadsheetErrorKind#text()} and returns a {@link SpreadsheetParserToken#error(SpreadsheetError, String)}.
+     */
+    private static Parser<SpreadsheetParserContext> errorToParser(final SpreadsheetErrorKind kind) {
+        final String text = kind.text();
+        final SpreadsheetError error = kind.toError();
+        final SpreadsheetParserToken token = SpreadsheetParserToken.error(error, text);
+
+        return Parsers.string(
+                        text,
+                        CaseSensitivity.SENSITIVE
+                ).transform((p, c) -> token)
+                .cast();
     }
 
     /**
