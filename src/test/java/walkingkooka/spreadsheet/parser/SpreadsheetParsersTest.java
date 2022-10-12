@@ -32,6 +32,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -653,6 +654,43 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                     final String expressionToString) {
         this.parseAndCheck(SpreadsheetParsers.cellRange(), from, expected, text);
         this.parseExpressionAndCheck(from, expected, text, expressionToString);
+    }
+
+    // error...........................................................................................................
+
+    @Test
+    public void testErrorDiv0() {
+        this.errorParseAndCheck(SpreadsheetErrorKind.DIV0);
+    }
+
+    @Test
+    public void testErrorName() {
+        this.errorParseAndCheck(SpreadsheetErrorKind.NAME);
+    }
+
+    @Test
+    public void testErrorRef() {
+        this.errorParseAndCheck(SpreadsheetErrorKind.REF);
+    }
+
+    private void errorParseAndCheck(final SpreadsheetErrorKind kind) {
+        this.errorParseAndCheck(
+                kind.text(),
+                SpreadsheetParserToken.error(
+                        kind.toError(),
+                        kind.text()
+                )
+        );
+    }
+
+    private void errorParseAndCheck(final String from,
+                                    final SpreadsheetErrorParserToken expected) {
+        this.parseAndCheck(
+                SpreadsheetParsers.error(),
+                from,
+                expected,
+                from
+        );
     }
 
     // Expression cell..................................................................................................
