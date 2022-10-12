@@ -45,7 +45,7 @@ public final class StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisi
     }
 
     @Override
-    public final JavaVisibility typeVisibility() {
+    public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
