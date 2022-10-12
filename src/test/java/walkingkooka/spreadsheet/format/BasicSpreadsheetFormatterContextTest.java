@@ -55,7 +55,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         @Override
         public SpreadsheetSelection apply(SpreadsheetSelection selection) {
             throw new UnsupportedOperationException();
-        };
+        }
 
         @Override
         public String toString() {
