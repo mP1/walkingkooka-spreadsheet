@@ -132,7 +132,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static Parser<SpreadsheetParserContext> errorParser() {
         return Parsers.alternatives(
                 Arrays.stream(SpreadsheetErrorKind.values())
-                        .map(SpreadsheetParsers::errorToParser)
+                        .map(SpreadsheetParsers::errorParser0)
                         .collect(Collectors.toList())
         );
     }
@@ -140,7 +140,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * Creates a {@link Parser} that matches the {@link SpreadsheetErrorKind#text()} and returns a {@link SpreadsheetParserToken#error(SpreadsheetError, String)}.
      */
-    private static Parser<SpreadsheetParserContext> errorToParser(final SpreadsheetErrorKind kind) {
+    private static Parser<SpreadsheetParserContext> errorParser0(final SpreadsheetErrorKind kind) {
         final String text = kind.text();
         final SpreadsheetError error = kind.toError();
         final SpreadsheetParserToken token = SpreadsheetParserToken.error(error, text);
