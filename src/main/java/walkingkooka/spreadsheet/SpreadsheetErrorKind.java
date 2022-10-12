@@ -33,6 +33,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.HasExpressionReference;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -262,5 +263,12 @@ public enum SpreadsheetErrorKind implements HasText {
                         CharSequences.nullToEmpty(message).toString(),
                         value
                 );
+    }
+
+    public static SpreadsheetErrorKind withValue(final int value) {
+        return Arrays.stream(values())
+                .filter(k -> k.value == value)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unknown value=" + value));
     }
 }
