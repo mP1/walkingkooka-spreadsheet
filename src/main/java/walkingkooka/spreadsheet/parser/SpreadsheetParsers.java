@@ -342,6 +342,8 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         predefined.put(APOSTROPHE_SYMBOL_IDENTIFIER, APOSTROPHE_SYMBOL);
         predefined.put(STRING_IDENTIFIER, STRING);
 
+        predefined.put(ERROR_IDENTIFIER, error());
+
         predefined.put(FORMULA_EQUALS_SYMBOL_IDENTIFIER, FORMULA_EQUALS_SYMBOL);
 
         predefined.put(LAMBDA_FUNCTION_NAME_IDENTIFIER, LAMBDA_FUNCTION_NAME);
@@ -384,6 +386,8 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                 token.text()
         );
     }
+
+    private static final EbnfIdentifierName ERROR_IDENTIFIER = EbnfIdentifierName.with("ERROR");
 
     private static final EbnfIdentifierName FORMULA_EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("FORMULA_EQUALS_SYMBOL");
     private static final Parser<SpreadsheetParserContext> FORMULA_EQUALS_SYMBOL = symbol(
