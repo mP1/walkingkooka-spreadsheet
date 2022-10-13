@@ -364,6 +364,10 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
     @Test
     public void testWithValue() {
         for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
+            if (SpreadsheetErrorKind.NAME_STRING == kind) {
+                continue;
+            }
+
             this.checkEquals(
                     kind,
                     SpreadsheetErrorKind.withValue(kind.value())
