@@ -127,16 +127,7 @@ public final class SpreadsheetParserTokenVisitorToExpressionTest extends Spreads
                         error,
                         error.kind().text()
                 ),
-                Expression.call(
-                        Expression.namedFunction(
-                                FunctionExpressionName.with("error")
-                        ),
-                        Lists.of(
-                                Expression.value(
-                                        EXPRESSION_NUMBER_KIND.create(error.kind().value())
-                                )
-                        )
-                )
+                Expression.value(error)
         );
     }
 
