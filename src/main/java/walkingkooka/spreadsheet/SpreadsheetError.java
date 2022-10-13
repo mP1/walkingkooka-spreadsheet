@@ -198,7 +198,11 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         printer.println(this.kind().text());
 
         printer.indent();
-        printer.println(CharSequences.quoteAndEscape(this.message()));
+
+        final String message = this.message();
+        if (!message.isEmpty()) {
+            printer.println(CharSequences.quoteAndEscape(this.message()));
+        }
 
         final Object value = this.value()
                 .orElse(null);
