@@ -17,12 +17,10 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -82,15 +80,8 @@ public final class SpreadsheetErrorParserTokenTest extends SpreadsheetNonSymbolP
     public void testToExpression() {
         this.toExpressionAndCheck(
                 this.createToken(),
-                Expression.call(
-                        Expression.namedFunction(
-                                FunctionExpressionName.with("error")
-                        ),
-                        Lists.of(
-                                Expression.value(
-                                        EXPRESSION_NUMBER_KIND.create(4) // #REF
-                                )
-                        )
+                Expression.value(
+                        SpreadsheetErrorKind.REF.toError()
                 )
         );
     }

@@ -839,8 +839,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         SpreadsheetErrorKind.DIV0.toError(),
                         text
                 ),
-                text,
-                "error(2)"
+                text
         );
     }
 
@@ -854,8 +853,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         SpreadsheetErrorKind.REF.toError(),
                         text
                 ),
-                text,
-                "error(4)"
+                text
         );
     }
 
@@ -878,8 +876,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         ),
                         text
                 ),
-                text,
-                "error(4)+456"
+                text
         );
     }
 
