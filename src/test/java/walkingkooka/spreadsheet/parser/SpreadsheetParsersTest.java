@@ -827,6 +827,62 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
+    // Error............................................................................................................
+
+    @Test
+    public void testExpressionErrorDiv() {
+        final String text = "#DIV/0!";
+
+        this.parseExpressionAndCheck(
+                text,
+                SpreadsheetParserToken.error(
+                        SpreadsheetErrorKind.DIV0.toError(),
+                        text
+                ),
+                text,
+                "error(2)"
+        );
+    }
+
+    @Test
+    public void testExpressionErrorRef() {
+        final String text = "#REF!";
+
+        this.parseExpressionAndCheck(
+                text,
+                SpreadsheetParserToken.error(
+                        SpreadsheetErrorKind.REF.toError(),
+                        text
+                ),
+                text,
+                "error(4)"
+        );
+    }
+
+    @Test
+    public void testExpressionAdditionLeftErrorRef() {
+        final SpreadsheetParserToken left = SpreadsheetParserToken.error(
+                SpreadsheetErrorKind.REF.toError(),
+                "#REF!"
+        );
+        final SpreadsheetParserToken right = number(456);
+        final String text = "#REF!+456";
+
+        this.parseExpressionAndCheck(
+                text,
+                SpreadsheetParserToken.addition(
+                        Lists.of(
+                                left,
+                                plus(),
+                                right
+                        ),
+                        text
+                ),
+                text,
+                "error(4)+456"
+        );
+    }
+
     // Negative........................................................................................................
 
     @Test
