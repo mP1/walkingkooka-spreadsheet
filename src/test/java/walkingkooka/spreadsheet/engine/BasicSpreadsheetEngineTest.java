@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -90,7 +91,6 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
-import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionPurityContext;
@@ -3532,8 +3532,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a,
-                                                "=1+InvalidCellReference(\"" + b + "\")",
-                                                this.number(1)// https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
+                                                "=1+#REF!",
+                                                SpreadsheetError.selectionDeleted()
                                         )
                                 )
                         ).setDeletedCells(
@@ -4059,8 +4059,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a,
-                                                "=1+InvalidCellReference(\"" + b + "\")",
-                                                this.number(1) // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
+                                                "=1+#REF!",
+                                                SpreadsheetError.selectionDeleted()
                                         )
                                 )
                         ).setDeletedCells(
@@ -4079,8 +4079,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=1+InvalidCellReference(\"" + b + "\")",
-                this.number(1) // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
+                "=1+#REF!",
+                SpreadsheetError.selectionDeleted()
         ); // reference should have been fixed.
     }
 
@@ -4923,8 +4923,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a,
-                                                "=1+InvalidCellReference(\"" + b + "\")",
-                                                this.number(1) // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
+                                                "=1+#REF!",
+                                                SpreadsheetError.selectionDeleted()
                                         )
                                 )
                         ).setDeletedCells(
@@ -4943,8 +4943,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=1+InvalidCellReference(\"" + b + "\")",
-                this.number(1) // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
+                "=1+#REF!",
+                SpreadsheetError.selectionDeleted()
         ); // reference should have been fixed.
     }
 
@@ -11316,28 +11316,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions() {
                 return (name) -> {
                     switch (name.value()) {
-                        case "InvalidCellReference":
-                            return new FakeExpressionFunction<>() {
-                                @Override
-                                public Object apply(final List<Object> parameters,
-                                                    final ExpressionEvaluationContext context) {
-                                    final String reference = Cast.to(parameters.get(0));
-
-                                    throw new ExpressionEvaluationReferenceException(
-                                            "Invalid cell reference: " + reference,
-                                            SpreadsheetSelection.parseCell(reference)
-                                    );
-                                }
-
-                                @Override
-                                public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                    return Lists.of(
-                                            ExpressionFunctionParameterName.with("parameters")
-                                                    .variable(Object.class)
-                                                    .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
-                                    );
-                                }
-                            };
                         case "BasicSpreadsheetEngineTestNumberParameter":
                             return new FakeExpressionFunction<>() {
                                 @Override

@@ -22,7 +22,6 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
@@ -69,16 +68,6 @@ public final class SpreadsheetFormula implements HasText,
      * No value constant.
      */
     public final static Optional<Object> NO_VALUE = Optional.empty();
-
-    /**
-     * A expression that replaces cell references with expressions that become invalid due to a deleted row or column.
-     */
-    public final static SpreadsheetFunctionName INVALID_CELL_REFERENCE = SpreadsheetFunctionName.with("InvalidCellReference");
-
-    /**
-     * A {@link SpreadsheetParserToken} that holds the {@link #INVALID_CELL_REFERENCE} expression name.
-     */
-    public final static SpreadsheetParserToken INVALID_CELL_REFERENCE_PARSER_TOKEN = SpreadsheetParserToken.functionName(INVALID_CELL_REFERENCE, INVALID_CELL_REFERENCE.toString());
 
     /**
      * A formula with no text, token, expression, value or error.

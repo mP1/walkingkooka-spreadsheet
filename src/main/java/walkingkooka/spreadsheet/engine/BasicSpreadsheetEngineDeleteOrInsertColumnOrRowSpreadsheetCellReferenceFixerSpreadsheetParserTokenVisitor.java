@@ -17,15 +17,13 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParentParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitor;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -89,48 +87,24 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
                                                                            final BiFunction<List<ParserToken>, String, PP> factory) {
         final boolean invalidCellReference = this.invalidCellReference;
         this.invalidCellReference = false;
+
         return invalidCellReference ?
-                this.cellReferenceDeleted(parent) :
+                REF_ERROR :
                 factory.apply(children, ParserToken.text(children));
     }
 
     /**
      * When true, the parent {@link SpreadsheetParserToken} which should be a {@link SpreadsheetCellReferenceParserToken}
-     * will be replaced by {@link #cellReferenceDeleted(SpreadsheetParserToken)}.
+     * will be replaced by a <code>#REF!</code>.
      */
     private boolean invalidCellReference = false;
 
-    /**
-     * Returns a expression that when executed will report that the original cell reference was deleted.
-     * The replaced token will appear to be invocation of a expression with the reference in quotes.
-     */
-    private SpreadsheetParserToken cellReferenceDeleted(final SpreadsheetParserToken token) {
-        final String text = token.text();
-
-        final List<ParserToken> functionParameterTokens = Lists.of(
-                SpreadsheetParserToken.parenthesisOpenSymbol("(", "("),
-                SpreadsheetParserToken.text(
-                        Lists.<ParserToken>of( // J2clTranspiler: Error
-                                SpreadsheetParserToken.doubleQuoteSymbol("\"", "\""),
-                                SpreadsheetParserToken.textLiteral(text, text),
-                                SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"")
-                        ), CharSequences.quote(text).toString()
-                ),
-                SpreadsheetParserToken.parenthesisCloseSymbol(")", ")")
-        );
-
-        final List<ParserToken> namedFunctionTokens = Lists.of(
-                SpreadsheetFormula.INVALID_CELL_REFERENCE_PARSER_TOKEN,
-                SpreadsheetParserToken.functionParameters(
-                        functionParameterTokens,
-                        ParserToken.text(functionParameterTokens)
-                )
-        );
-        return SpreadsheetParserToken.namedFunction(
-                namedFunctionTokens,
-                ParserToken.text(namedFunctionTokens)
-        );
-    }
+    private final static SpreadsheetParserToken REF_ERROR = SpreadsheetParserToken.error(
+            SpreadsheetError.selectionDeleted(),
+            SpreadsheetError.selectionDeleted()
+                    .kind()
+                    .text()
+    );
 
     @Override
     void leaf(final Optional<? extends SpreadsheetParserToken> token) {
