@@ -237,6 +237,14 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     // TreePrintable...................................................................................................
 
     @Test
+    public void testTreePrintOnlyKind() {
+        this.treePrintAndCheck(
+                SpreadsheetErrorKind.NA.toError(),
+                "#N/A\n"
+        );
+    }
+
+    @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
                 this.createObject(),
