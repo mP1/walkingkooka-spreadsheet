@@ -24,12 +24,14 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ErrorExpressionFunctionTest implements ExpressionFunctionTesting<ErrorExpressionFunction, SpreadsheetError, SpreadsheetExpressionEvaluationContext>,
+public final class ErrorExpressionFunctionTest implements ExpressionFunctionTesting<ErrorExpressionFunction, SpreadsheetError, ExpressionEvaluationContext>,
         ClassTesting2<ErrorExpressionFunction>,
         TypeNameTesting<ErrorExpressionFunction> {
 
@@ -75,7 +77,7 @@ public final class ErrorExpressionFunctionTest implements ExpressionFunctionTest
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext createContext() {
-        return SpreadsheetExpressionEvaluationContexts.fake();
+    public ExpressionEvaluationContext createContext() {
+        return ExpressionEvaluationContexts.fake();
     }
 }

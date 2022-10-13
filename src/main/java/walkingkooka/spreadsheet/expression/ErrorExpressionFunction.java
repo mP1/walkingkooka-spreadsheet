@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -34,7 +35,7 @@ import java.util.Optional;
  * A function that exists only to implement expressions with errors like #REF! which when executed will return a {@link SpreadsheetError}
  * with the given {@link SpreadsheetErrorKind#value()}
  */
-final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetError, SpreadsheetExpressionEvaluationContext> {
+final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetError, ExpressionEvaluationContext> {
 
     /**
      * Singleton
@@ -73,7 +74,7 @@ final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetErr
 
     @Override
     public SpreadsheetError apply(final List<Object> parameters,
-                                  final SpreadsheetExpressionEvaluationContext context) {
+                                  final ExpressionEvaluationContext context) {
         this.checkParameterCount(parameters);
         return SpreadsheetErrorKind.withValue(
                 ERROR_VALUE.getOrFail(parameters, 0)

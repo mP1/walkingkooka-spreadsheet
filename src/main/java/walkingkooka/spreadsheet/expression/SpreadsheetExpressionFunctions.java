@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 public final class SpreadsheetExpressionFunctions implements PublicStaticHelper {
@@ -26,7 +27,7 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     /**
      * {@link ErrorExpressionFunction}
      */
-    public static ExpressionFunction<SpreadsheetError, SpreadsheetExpressionEvaluationContext> error() {
+    public static ExpressionFunction<SpreadsheetError, ExpressionEvaluationContext> error() {
         return ErrorExpressionFunction.INSTANCE;
     }
 
