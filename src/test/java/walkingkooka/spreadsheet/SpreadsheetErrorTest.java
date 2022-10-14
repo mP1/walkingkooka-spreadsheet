@@ -83,23 +83,11 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     // selectionDeleted................................................................................................
 
     @Test
-    public void testSelectionDeletedWithCell() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A99");
-
-        final SpreadsheetError error = SpreadsheetError.selectionDeleted(cell);
+    public void testSelectionDeleted() {
+        final SpreadsheetError error = SpreadsheetError.selectionDeleted();
         this.checkKind(error, SpreadsheetErrorKind.REF);
-        this.checkMessage(error, "Cell deleted: A99");
-        this.checkValue(error, Optional.of(cell));
-    }
-
-    @Test
-    public void testSelectionDeletedWithLabel() {
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
-
-        final SpreadsheetError error = SpreadsheetError.selectionDeleted(label);
-        this.checkKind(error, SpreadsheetErrorKind.REF);
-        this.checkMessage(error, "Label deleted: Label123");
-        this.checkValue(error, Optional.of(label));
+        this.checkMessage(error, "");
+        this.checkValue(error, SpreadsheetError.NO_VALUE);
     }
 
     // selectionNotFound................................................................................................
