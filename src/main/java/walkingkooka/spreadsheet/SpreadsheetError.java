@@ -47,6 +47,8 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         HasSpreadsheetErrorKind,
         UsesToStringBuilder {
 
+    public static final Optional<?> NO_VALUE = Optional.empty();
+
     /**
      * Creates a {@link SpreadsheetError} reporting that a cell was deleted.
      */
