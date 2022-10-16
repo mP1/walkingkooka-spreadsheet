@@ -46,6 +46,7 @@ import java.util.function.BiFunction;
  * Parsers that know how to parse formatting patterns<br>.
  * <a href="https://support.office.com/en-us/article/number-format-codes-5026bbd6-04bc-48cd-bf33-80f18b4eae68>Formatting</a>
  * <a href="https://support.google.com/docs/answer/56470?p=drive_custom_numbers&visit_id=637014719918429541-764379239&rd=1"</a>
+ * <a href="https://support.google.com/drive/?p=drive_custom_numbers">Custom number</a>
  */
 public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
