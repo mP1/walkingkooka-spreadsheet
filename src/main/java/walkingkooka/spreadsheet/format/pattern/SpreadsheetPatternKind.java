@@ -39,10 +39,12 @@ public enum SpreadsheetPatternKind {
 
     TIME_PARSE_PATTERNS;
 
-    private SpreadsheetPatternKind() {
-        this.typeName = this.name()
-                .toLowerCase()
-                .replace('_', '-');
+    SpreadsheetPatternKind() {
+        this.typeName =
+                "spreadsheet-" +
+                        this.name()
+                                .toLowerCase()
+                                .replace('_', '-');
     }
 
     /**
