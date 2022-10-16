@@ -22,6 +22,8 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetPatternKindTest implements ClassTesting<SpreadsheetPatternKind> {
 
     @Test
@@ -71,6 +73,37 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
                 kind.typeName(),
                 () -> kind.toString()
         );
+    }
+
+    @Test
+    public void testFromTypeNameFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPatternKind.fromTypeName("???")
+        );
+    }
+
+    @Test
+    public void testFromTypeName() {
+        this.checkEquals(
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
+                SpreadsheetPatternKind.fromTypeName(
+                        SpreadsheetPatternKind.TEXT_FORMAT_PATTERN.typeName()
+                )
+        );
+    }
+
+    @Test
+    public void testFromTypeNameAll() {
+        for (final SpreadsheetPatternKind kind : SpreadsheetPatternKind.values()) {
+
+            this.checkEquals(
+                    kind,
+                    SpreadsheetPatternKind.fromTypeName(
+                            kind.typeName()
+                    )
+            );
+        }
     }
 
     @Override
