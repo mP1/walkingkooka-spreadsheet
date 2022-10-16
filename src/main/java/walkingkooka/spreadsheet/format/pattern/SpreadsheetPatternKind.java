@@ -17,6 +17,11 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.text.CharSequences;
+
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * The different types of {@link SpreadsheetPattern}.
  */
@@ -55,4 +60,17 @@ public enum SpreadsheetPatternKind {
     }
 
     private final String typeName;
+
+    /**
+     * Tries to find the matching {@link SpreadsheetPatternKind} given its {@link SpreadsheetPatternKind#typeName()}
+     */
+    public static SpreadsheetPatternKind fromTypeName(final String typeName) {
+        Objects.requireNonNull(typeName, "typeName");
+
+        return Arrays.stream(values())
+                .filter(e -> e.typeName().equals(typeName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unknown typeName " + CharSequences.quoteAndEscape(typeName)));
+
+    }
 }
