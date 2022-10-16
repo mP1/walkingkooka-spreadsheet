@@ -25,10 +25,12 @@ import java.util.List;
  */
 public final class SpreadsheetApostropheSymbolParserToken extends SpreadsheetSymbolParserToken {
 
-    static SpreadsheetApostropheSymbolParserToken with(final String value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetApostropheSymbolParserToken(value, text);
+    static SpreadsheetApostropheSymbolParserToken with(final String value,
+                                                       final String text) {
+        return new SpreadsheetApostropheSymbolParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetApostropheSymbolParserToken(final String value, final String text) {

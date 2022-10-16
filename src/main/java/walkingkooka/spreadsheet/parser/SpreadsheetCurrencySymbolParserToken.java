@@ -25,10 +25,12 @@ import java.util.List;
  */
 public final class SpreadsheetCurrencySymbolParserToken extends SpreadsheetSymbolParserToken {
 
-    static SpreadsheetCurrencySymbolParserToken with(final String value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetCurrencySymbolParserToken(value, text);
+    static SpreadsheetCurrencySymbolParserToken with(final String value,
+                                                     final String text) {
+        return new SpreadsheetCurrencySymbolParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetCurrencySymbolParserToken(final String value, final String text) {

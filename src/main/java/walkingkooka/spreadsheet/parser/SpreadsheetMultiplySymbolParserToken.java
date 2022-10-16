@@ -25,10 +25,12 @@ import java.util.List;
  */
 public final class SpreadsheetMultiplySymbolParserToken extends SpreadsheetSymbolParserToken {
 
-    static SpreadsheetMultiplySymbolParserToken with(final String value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetMultiplySymbolParserToken(value, text);
+    static SpreadsheetMultiplySymbolParserToken with(final String value,
+                                                     final String text) {
+        return new SpreadsheetMultiplySymbolParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetMultiplySymbolParserToken(final String value, final String text) {

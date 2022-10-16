@@ -547,8 +547,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     static String checkText(final String text) {
-        CharSequences.failIfNullOrEmpty(text, "text");
-        return text;
+        return CharSequences.failIfNullOrEmpty(text, "text");
     }
 
     /**

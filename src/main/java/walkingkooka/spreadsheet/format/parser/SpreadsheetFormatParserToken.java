@@ -428,8 +428,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     static String checkTextNotEmpty(final String text) {
-        CharSequences.failIfNullOrEmpty(text, "text");
-        return text;
+        return CharSequences.failIfNullOrEmpty(text, "text");
     }
 
     static String checkTextNotEmptyOrWhitespace(final String text) {

@@ -25,10 +25,12 @@ import java.util.List;
  */
 public final class SpreadsheetDoubleQuoteSymbolParserToken extends SpreadsheetSymbolParserToken {
 
-    static SpreadsheetDoubleQuoteSymbolParserToken with(final String value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetDoubleQuoteSymbolParserToken(value, text);
+    static SpreadsheetDoubleQuoteSymbolParserToken with(final String value,
+                                                        final String text) {
+        return new SpreadsheetDoubleQuoteSymbolParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetDoubleQuoteSymbolParserToken(final String value, final String text) {
