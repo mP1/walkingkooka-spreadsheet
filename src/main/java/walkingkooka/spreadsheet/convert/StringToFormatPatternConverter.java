@@ -30,9 +30,9 @@ import walkingkooka.text.CharSequences;
 final class StringToFormatPatternConverter implements Converter<SpreadsheetConverterContext> {
 
     static StringToFormatPatternConverter with(final String pattern) {
-        CharSequences.failIfNullOrEmpty(pattern, "pattern");
-
-        return new StringToFormatPatternConverter(pattern);
+        return new StringToFormatPatternConverter(
+                CharSequences.failIfNullOrEmpty(pattern, "pattern")
+        );
     }
 
     private StringToFormatPatternConverter(final String pattern) {

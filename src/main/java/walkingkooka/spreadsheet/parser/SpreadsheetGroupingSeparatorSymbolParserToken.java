@@ -25,10 +25,12 @@ import java.util.List;
  */
 public final class SpreadsheetGroupingSeparatorSymbolParserToken extends SpreadsheetSymbolParserToken {
 
-    static SpreadsheetGroupingSeparatorSymbolParserToken with(final String value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetGroupingSeparatorSymbolParserToken(value, text);
+    static SpreadsheetGroupingSeparatorSymbolParserToken with(final String value,
+                                                              final String text) {
+        return new SpreadsheetGroupingSeparatorSymbolParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetGroupingSeparatorSymbolParserToken(final String value, final String text) {

@@ -25,10 +25,12 @@ import java.util.List;
  */
 public final class SpreadsheetExponentSymbolParserToken extends SpreadsheetSymbolParserToken {
 
-    static SpreadsheetExponentSymbolParserToken with(final String value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetExponentSymbolParserToken(value, text);
+    static SpreadsheetExponentSymbolParserToken with(final String value,
+                                                     final String text) {
+        return new SpreadsheetExponentSymbolParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetExponentSymbolParserToken(final String value, final String text) {

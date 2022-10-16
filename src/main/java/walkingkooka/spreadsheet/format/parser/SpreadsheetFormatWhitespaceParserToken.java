@@ -16,18 +16,16 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.text.CharSequences;
-
 /**
  * Holds whitespace
  */
 public final class SpreadsheetFormatWhitespaceParserToken extends SpreadsheetFormatSymbolParserToken {
 
     static SpreadsheetFormatWhitespaceParserToken with(final String value, final String text) {
-        checkValue(value);
-        CharSequences.failIfNullOrEmpty(text, "text");
-
-        return new SpreadsheetFormatWhitespaceParserToken(value, text);
+        return new SpreadsheetFormatWhitespaceParserToken(
+                checkValue(value),
+                checkTextNotEmpty(text)
+        );
     }
 
     private SpreadsheetFormatWhitespaceParserToken(final String value, final String text) {

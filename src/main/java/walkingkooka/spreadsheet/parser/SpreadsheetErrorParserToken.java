@@ -26,9 +26,10 @@ public final class SpreadsheetErrorParserToken extends SpreadsheetNonSymbolParse
 
     static SpreadsheetErrorParserToken with(final SpreadsheetError value,
                                             final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetErrorParserToken(value, text);
+        return new SpreadsheetErrorParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetErrorParserToken(final SpreadsheetError value,

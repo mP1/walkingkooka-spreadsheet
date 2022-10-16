@@ -16,18 +16,16 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.text.CharSequences;
-
 /**
  * Holds literal text.
  */
 public final class SpreadsheetFormatTextLiteralParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
 
     static SpreadsheetFormatTextLiteralParserToken with(final String value, final String text) {
-        checkValue(value);
-        CharSequences.failIfNullOrEmpty(text, "text");
-
-        return new SpreadsheetFormatTextLiteralParserToken(value, text);
+        return new SpreadsheetFormatTextLiteralParserToken(
+                checkValue(value),
+                checkTextNotEmpty(text)
+        );
     }
 
     private SpreadsheetFormatTextLiteralParserToken(final String value, final String text) {

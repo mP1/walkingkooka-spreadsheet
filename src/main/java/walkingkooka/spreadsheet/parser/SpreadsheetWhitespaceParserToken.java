@@ -16,7 +16,6 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -27,10 +26,10 @@ import java.util.List;
 public final class SpreadsheetWhitespaceParserToken extends SpreadsheetSymbolParserToken {
 
     static SpreadsheetWhitespaceParserToken with(final String value, final String text) {
-        checkValue(value);
-        CharSequences.failIfNullOrEmpty(text, "text");
-
-        return new SpreadsheetWhitespaceParserToken(value, text);
+        return new SpreadsheetWhitespaceParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetWhitespaceParserToken(final String value, final String text) {

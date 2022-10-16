@@ -25,10 +25,12 @@ import java.util.List;
  */
 public final class SpreadsheetPowerSymbolParserToken extends SpreadsheetSymbolParserToken {
 
-    static SpreadsheetPowerSymbolParserToken with(final String value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetPowerSymbolParserToken(value, text);
+    static SpreadsheetPowerSymbolParserToken with(final String value,
+                                                  final String text) {
+        return new SpreadsheetPowerSymbolParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetPowerSymbolParserToken(final String value, final String text) {

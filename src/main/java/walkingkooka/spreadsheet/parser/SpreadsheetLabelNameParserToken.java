@@ -23,10 +23,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
  */
 public final class SpreadsheetLabelNameParserToken extends SpreadsheetNonSymbolParserToken<SpreadsheetLabelName> implements SpreadsheetReferenceParserToken {
 
-    static SpreadsheetLabelNameParserToken with(final SpreadsheetLabelName value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetLabelNameParserToken(value, text);
+    static SpreadsheetLabelNameParserToken with(final SpreadsheetLabelName value,
+                                                final String text) {
+        return new SpreadsheetLabelNameParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetLabelNameParserToken(final SpreadsheetLabelName value, final String text) {

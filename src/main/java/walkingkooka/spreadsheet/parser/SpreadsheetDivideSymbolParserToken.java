@@ -25,10 +25,12 @@ import java.util.List;
  */
 public final class SpreadsheetDivideSymbolParserToken extends SpreadsheetSymbolParserToken {
 
-    static SpreadsheetDivideSymbolParserToken with(final String value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetDivideSymbolParserToken(value, text);
+    static SpreadsheetDivideSymbolParserToken with(final String value,
+                                                   final String text) {
+        return new SpreadsheetDivideSymbolParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetDivideSymbolParserToken(final String value, final String text) {

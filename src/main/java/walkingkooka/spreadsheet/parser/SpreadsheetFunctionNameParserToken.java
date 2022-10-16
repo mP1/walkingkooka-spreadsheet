@@ -23,10 +23,12 @@ import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
  */
 public final class SpreadsheetFunctionNameParserToken extends SpreadsheetNonSymbolParserToken<SpreadsheetFunctionName> {
 
-    static SpreadsheetFunctionNameParserToken with(final SpreadsheetFunctionName value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetFunctionNameParserToken(value, text);
+    static SpreadsheetFunctionNameParserToken with(final SpreadsheetFunctionName value,
+                                                   final String text) {
+        return new SpreadsheetFunctionNameParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetFunctionNameParserToken(final SpreadsheetFunctionName value, final String text) {

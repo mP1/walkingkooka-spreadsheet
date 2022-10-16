@@ -23,10 +23,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
  */
 public final class SpreadsheetColumnReferenceParserToken extends SpreadsheetNonSymbolParserToken<SpreadsheetColumnReference> {
 
-    static SpreadsheetColumnReferenceParserToken with(final SpreadsheetColumnReference value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetColumnReferenceParserToken(value, text);
+    static SpreadsheetColumnReferenceParserToken with(final SpreadsheetColumnReference value,
+                                                      final String text) {
+        return new SpreadsheetColumnReferenceParserToken(
+                checkValue(value),
+                checkText(text)
+        );
     }
 
     private SpreadsheetColumnReferenceParserToken(final SpreadsheetColumnReference value, final String text) {
