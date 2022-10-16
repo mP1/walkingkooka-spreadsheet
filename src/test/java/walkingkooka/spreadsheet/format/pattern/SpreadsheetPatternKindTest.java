@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
 
 public final class SpreadsheetPatternKindTest implements ClassTesting<SpreadsheetPatternKind> {
 
@@ -27,7 +28,7 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     public void testDateTimeFormat() {
         this.typeNameAndCheck(
                 SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN,
-                "date-time-format-pattern"
+                SpreadsheetDateTimeFormatPattern.class
         );
     }
 
@@ -35,7 +36,7 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     public void testDateTimeParse() {
         this.typeNameAndCheck(
                 SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERNS,
-                "date-time-parse-patterns"
+                SpreadsheetDateTimeParsePatterns.class
         );
     }
 
@@ -43,7 +44,7 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     public void testTextFormat() {
         this.typeNameAndCheck(
                 SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
-                "text-format-pattern"
+                SpreadsheetTextFormatPattern.class
         );
     }
 
@@ -51,7 +52,7 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     public void testTimeFormat() {
         this.typeNameAndCheck(
                 SpreadsheetPatternKind.TIME_FORMAT_PATTERN,
-                "time-format-pattern"
+                SpreadsheetTimeFormatPattern.class
         );
     }
 
@@ -59,14 +60,14 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     public void testTimeParse() {
         this.typeNameAndCheck(
                 SpreadsheetPatternKind.TIME_PARSE_PATTERNS,
-                "time-parse-patterns"
+                SpreadsheetTimeParsePatterns.class
         );
     }
 
     private void typeNameAndCheck(final SpreadsheetPatternKind kind,
-                                  final String expected) {
+                                  final Class<? extends SpreadsheetPattern> expected) {
         this.checkEquals(
-                expected,
+                JsonNodeContext.computeTypeName(expected),
                 kind.typeName(),
                 () -> kind.toString()
         );
