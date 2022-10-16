@@ -773,9 +773,9 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      */
     static SpreadsheetDateFormatPattern unmarshallDateFormatPattern(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
-        checkNode(node);
-
-        return parseDateFormatPattern(node.stringOrFail());
+        return parseDateFormatPattern(
+                checkString(node)
+        );
     }
 
     /**
@@ -783,9 +783,9 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      */
     static SpreadsheetDateParsePatterns unmarshallDateParsePatterns(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
-        checkNode(node);
-
-        return parseDateParsePatterns(node.stringOrFail());
+        return parseDateParsePatterns(
+                checkString(node)
+        );
     }
 
     /**
@@ -793,9 +793,9 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      */
     static SpreadsheetDateTimeFormatPattern unmarshallDateTimeFormatPattern(final JsonNode node,
                                                                             final JsonNodeUnmarshallContext context) {
-        checkNode(node);
-
-        return parseDateTimeFormatPattern(node.stringOrFail());
+        return parseDateTimeFormatPattern(
+                checkString(node)
+        );
     }
 
     /**
@@ -803,9 +803,9 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      */
     static SpreadsheetDateTimeParsePatterns unmarshallDateTimeParsePatterns(final JsonNode node,
                                                                             final JsonNodeUnmarshallContext context) {
-        checkNode(node);
-
-        return parseDateTimeParsePatterns(node.stringOrFail());
+        return parseDateTimeParsePatterns(
+                checkString(node)
+        );
     }
 
     /**
@@ -813,9 +813,9 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      */
     static SpreadsheetNumberFormatPattern unmarshallNumberFormatPattern(final JsonNode node,
                                                                         final JsonNodeUnmarshallContext context) {
-        checkNode(node);
-
-        return parseNumberFormatPattern(node.stringOrFail());
+        return parseNumberFormatPattern(
+                checkString(node)
+        );
     }
 
     /**
@@ -823,9 +823,9 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      */
     static SpreadsheetNumberParsePatterns unmarshallNumberParsePatterns(final JsonNode node,
                                                                         final JsonNodeUnmarshallContext context) {
-        checkNode(node);
-
-        return parseNumberParsePatterns(node.stringOrFail());
+        return parseNumberParsePatterns(
+                checkString(node)
+        );
     }
 
     /**
@@ -833,9 +833,9 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      */
     static SpreadsheetTextFormatPattern unmarshallTextFormatPattern(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
-        checkNode(node);
-
-        return parseTextFormatPattern(node.stringOrFail());
+        return parseTextFormatPattern(
+                checkString(node)
+        );
     }
 
     /**
@@ -843,9 +843,9 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      */
     static SpreadsheetTimeFormatPattern unmarshallTimeFormatPattern(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
-        checkNode(node);
-
-        return parseTimeFormatPattern(node.stringOrFail());
+        return parseTimeFormatPattern(
+                checkString(node)
+        );
     }
 
     /**
@@ -853,13 +853,15 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      */
     static SpreadsheetTimeParsePatterns unmarshallTimeParsePatterns(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
-        checkNode(node);
-
-        return parseTimeParsePatterns(node.stringOrFail());
+        return parseTimeParsePatterns(
+                checkString(node)
+        );
     }
 
-    private static void checkNode(final JsonNode node) {
+    private static String checkString(final JsonNode node) {
         Objects.requireNonNull(node, "node");
+
+        return node.stringOrFail();
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
