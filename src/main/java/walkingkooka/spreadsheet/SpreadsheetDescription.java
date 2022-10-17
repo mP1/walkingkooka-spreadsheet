@@ -28,9 +28,9 @@ import walkingkooka.text.Whitespace;
 public final class SpreadsheetDescription implements Value<String> {
 
     public static SpreadsheetDescription with(final String message) {
-        Whitespace.failIfNullOrEmptyOrWhitespace(message, "message");
-
-        return new SpreadsheetDescription(message);
+        return new SpreadsheetDescription(
+                Whitespace.failIfNullOrEmptyOrWhitespace(message, "message")
+        );
     }
 
     private SpreadsheetDescription(final String message) {
