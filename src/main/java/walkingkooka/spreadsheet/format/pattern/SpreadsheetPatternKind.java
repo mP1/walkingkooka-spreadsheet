@@ -28,7 +28,7 @@ import java.util.Objects;
 public enum SpreadsheetPatternKind {
     DATE_FORMAT_PATTERN,
 
-    DATE_PARSE_PATTERN,
+    DATE_PARSE_PATTERNS,
 
     DATE_TIME_FORMAT_PATTERN,
 
