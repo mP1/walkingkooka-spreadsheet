@@ -113,7 +113,25 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
 
     @Override
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
-        text.append(context.ampm(value.getHour()));
+        final String tokenText = token.text();
+        final String ampm = this.context.ampm(this.value.getHour());
+
+        final String text;
+
+        switch (tokenText.length()) {
+            case 1:
+                text = ampm.substring(0, 1);
+                break;
+            default:
+                text = ampm;
+                break;
+        }
+
+        this.text.append(
+                Character.isLowerCase(tokenText.charAt(0)) ?
+                        text.toLowerCase() :
+                        text.toUpperCase()
+        );
     }
 
     @Override

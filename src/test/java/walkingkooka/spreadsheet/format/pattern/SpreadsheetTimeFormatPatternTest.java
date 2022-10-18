@@ -249,7 +249,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "hmmma/p",
                 LocalTime.of(12, 58, 59),
-                "1258QAM"
+                "1258qam"
         );
     }
 
@@ -258,7 +258,16 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "hmmma/p",
                 LocalTime.of(23, 58, 59),
-                "1158RPM"
+                "1158rpm"
+        );
+    }
+
+    @Test
+    public void testFormatterHMmmABigP() {
+        this.formatAndCheck2(
+                "hmmma/P",
+                LocalTime.of(12, 58, 59),
+                "1258qam"
         );
     }
 
@@ -267,7 +276,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "hmmmam/pm",
                 LocalTime.of(12, 58, 59),
-                "1258QAM"
+                "1258qam"
         );
     }
 
@@ -276,7 +285,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "hmmmam/pm",
                 LocalTime.of(23, 58, 59),
-                "1158RPM"
+                "1158rpm"
         );
     }
 
