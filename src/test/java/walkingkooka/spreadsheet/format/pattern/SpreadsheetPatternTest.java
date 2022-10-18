@@ -107,7 +107,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.localePatternFormatAndCheck(
                 SpreadsheetPattern.dateTimeFormatPatternLocale(EN_AU),
                 LocalDateTime.of(2000, 12, 31, 12, 58),
-                "Sunday, 31 December 2000 at 12:58:00 pm"
+                "Sunday, 31 December 2000 at 12:58:00 PM"
         );
     }
 
@@ -116,7 +116,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.localePatternFormatAndCheck(
                 SpreadsheetPattern.timeFormatPatternLocale(EN_AU),
                 LocalTime.of(12, 58, 59),
-                "12:58:59 pm"
+                "12:58:59 PM"
         );
     }
 

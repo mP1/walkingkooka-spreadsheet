@@ -492,36 +492,54 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
-    public void testFormatterHMmmAp() {
+    public void testFormatterHMmmap12() {
         this.formatAndCheck4(
                 "hmmma/p",
                 LocalTime.of(12, 58, 59),
-                "1258QAM"
+                "1258qam"
         );
     }
 
     @Test
-    public void testFormatterHMmmAp2() {
+    public void testFormatterHMmmap23() {
         this.formatAndCheck4(
                 "hmmma/p",
                 LocalTime.of(23, 58, 59),
-                "1158RPM"
+                "1158rpm"
         );
     }
 
     @Test
-    public void testFormatterHMmmAmpm() {
+    public void testFormatterHMmmAmpm12Lower() {
         this.formatAndCheck4(
                 "hmmmam/pm",
+                LocalTime.of(12, 58, 59),
+                "1258qam"
+        );
+    }
+
+    @Test
+    public void testFormatterHMmmAmpm23Lower() {
+        this.formatAndCheck4(
+                "hmmmam/pm",
+                LocalTime.of(23, 58, 59),
+                "1158rpm"
+        );
+    }
+
+    @Test
+    public void testFormatterHMmmAmpm12Upper() {
+        this.formatAndCheck4(
+                "hmmmAM/PM",
                 LocalTime.of(12, 58, 59),
                 "1258QAM"
         );
     }
 
     @Test
-    public void testFormatterHMmmAmpm2() {
+    public void testFormatterHMmmAmpm23Upper() {
         this.formatAndCheck4(
-                "hmmmam/pm",
+                "hmmmAM/PM",
                 LocalTime.of(23, 58, 59),
                 "1158RPM"
         );
@@ -627,45 +645,72 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
-    public void testFormatterFormatASlashP() {
+    public void testFormatterFormatASlashPLower() {
         this.formatAndCheck4(
                 "a/p",
+                LocalTime.of(12, 58, 59, 123456789),
+                "qam"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatASlashPLowerPM() {
+        this.formatAndCheck4(
+                "a/p",
+                LocalTime.of(23, 58, 59, 123456789),
+                "rpm"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatAmpmLower() {
+        this.formatAndCheck4(
+                "am/pm",
+                LocalTime.of(12, 58, 59, 123456789),
+                "qam"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatAmpmUpper() {
+        this.formatAndCheck4(
+                "AM/PM",
                 LocalTime.of(12, 58, 59, 123456789),
                 "QAM"
         );
     }
 
     @Test
-    public void testFormatterFormatA2() {
+    public void testFormatterFormatAmpm2Lower() {
         this.formatAndCheck4(
-                "a/p",
+                "am/pm",
+                LocalTime.of(23, 58, 59, 123456789),
+                "rpm"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatAmpm2Upper() {
+        this.formatAndCheck4(
+                "AM/PM",
                 LocalTime.of(23, 58, 59, 123456789),
                 "RPM"
         );
     }
 
     @Test
-    public void testFormatterFormatAmpm() {
-        this.formatAndCheck4(
-                "am/pm",
-                LocalTime.of(12, 58, 59, 123456789),
-                "QAM"
-        );
-    }
-
-    @Test
-    public void testFormatterFormatAmpm2() {
-        this.formatAndCheck4(
-                "am/pm",
-                LocalTime.of(23, 58, 59, 123456789),
-                "RPM"
-        );
-    }
-
-    @Test
-    public void testFormatterFormatHhmmAm() {
+    public void testFormatterFormatHhmmAmLower() {
         this.formatAndCheck4(
                 "hhmma/p",
+                LocalTime.of(12, 58, 59, 123456789),
+                "1258qam"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatHhmmAmUpper() {
+        this.formatAndCheck4(
+                "hhmmA/P",
                 LocalTime.of(12, 58, 59, 123456789),
                 "1258QAM"
         );
