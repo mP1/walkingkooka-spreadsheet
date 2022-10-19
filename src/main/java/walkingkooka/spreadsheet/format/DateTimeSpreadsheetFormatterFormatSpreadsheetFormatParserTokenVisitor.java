@@ -119,7 +119,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
         final String text;
 
         switch (tokenText.length()) {
-            case 1:
+            case 3: // A/P or a/p
                 text = ampm.substring(0, 1);
                 break;
             default:
