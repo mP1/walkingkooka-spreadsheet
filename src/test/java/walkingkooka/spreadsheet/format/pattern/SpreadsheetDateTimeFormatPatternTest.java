@@ -496,7 +496,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck4(
                 "hmmma/p",
                 LocalTime.of(12, 58, 59),
-                "1258qam"
+                "1258q"
         );
     }
 
@@ -505,7 +505,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck4(
                 "hmmma/p",
                 LocalTime.of(23, 58, 59),
-                "1158rpm"
+                "1158r"
         );
     }
 
@@ -649,7 +649,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck4(
                 "a/p",
                 LocalTime.of(12, 58, 59, 123456789),
-                "qam"
+                "q"
         );
     }
 
@@ -658,7 +658,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck4(
                 "a/p",
                 LocalTime.of(23, 58, 59, 123456789),
-                "rpm"
+                "r"
         );
     }
 
@@ -672,7 +672,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
-    public void testFormatterFormatAmpmUpper() {
+    public void testFormatterFormat12AMPM() {
         this.formatAndCheck4(
                 "AM/PM",
                 LocalTime.of(12, 58, 59, 123456789),
@@ -681,7 +681,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
-    public void testFormatterFormatAmpm2Lower() {
+    public void testFormatterFormat23ampm() {
         this.formatAndCheck4(
                 "am/pm",
                 LocalTime.of(23, 58, 59, 123456789),
@@ -690,7 +690,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
-    public void testFormatterFormatAmpm2Upper() {
+    public void testFormatterFormat23AMPM() {
         this.formatAndCheck4(
                 "AM/PM",
                 LocalTime.of(23, 58, 59, 123456789),
@@ -699,20 +699,20 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
-    public void testFormatterFormatHhmmAmLower() {
+    public void testFormatterFormat12hmmap() {
         this.formatAndCheck4(
                 "hhmma/p",
                 LocalTime.of(12, 58, 59, 123456789),
-                "1258qam"
+                "1258q"
         );
     }
 
     @Test
-    public void testFormatterFormatHhmmAmUpper() {
+    public void testFormatterFormat12hhmmAP() {
         this.formatAndCheck4(
                 "hhmmA/P",
                 LocalTime.of(12, 58, 59, 123456789),
-                "1258QAM"
+                "1258Q"
         );
     }
 
