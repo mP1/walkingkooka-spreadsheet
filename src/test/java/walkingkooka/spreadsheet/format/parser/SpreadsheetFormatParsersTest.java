@@ -118,22 +118,54 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testColorName() {
-        this.colorParseAndCheck(bracketOpenSymbol(), red(), bracketCloseSymbol());
+        this.colorParseAndCheck(
+                bracketOpenSymbol(),
+                red(),
+                bracketCloseSymbol()
+        );
     }
 
     @Test
     public void testColorNameWhitespace() {
-        this.colorParseAndCheck(bracketOpenSymbol(), red(), whitespace(), bracketCloseSymbol());
+        this.colorParseAndCheck(
+                bracketOpenSymbol(),
+                red(),
+                whitespace(),
+                bracketCloseSymbol()
+        );
     }
 
     @Test
     public void testColorNumber() {
-        this.colorParseAndCheck(bracketOpenSymbol(), colorLiteral(), whitespace(), colorNumberFive(), bracketCloseSymbol());
+        this.colorParseAndCheck(
+                bracketOpenSymbol(),
+                colorLiteral(),
+                colorNumberFive(),
+                bracketCloseSymbol()
+        );
     }
 
     @Test
-    public void testColorNumberWhitespace() {
-        this.colorParseAndCheck(bracketOpenSymbol(), colorLiteral(), whitespace(), colorNumberFive(), whitespace(), bracketCloseSymbol());
+    public void testColorWhitespaceNumber() {
+        this.colorParseAndCheck(
+                bracketOpenSymbol(),
+                colorLiteral(),
+                whitespace(),
+                colorNumberFive(),
+                bracketCloseSymbol()
+        );
+    }
+
+    @Test
+    public void testColorWhitespaceNumberWhitespace() {
+        this.colorParseAndCheck(
+                bracketOpenSymbol(),
+                colorLiteral(),
+                whitespace(),
+                colorNumberFive(),
+                whitespace(),
+                bracketCloseSymbol()
+        );
     }
 
     private void colorParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
