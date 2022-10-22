@@ -66,7 +66,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
     public void testColorNameAndTextFormatted() {
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);
-        this.parseFormatAndCheck0(
+        this.formatAndCheck(
                 "[RED]",
                 text,
                 new TestSpreadsheetFormatterContext() {
@@ -83,7 +83,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
     public void testColorNameAndTextFormattedAbsent() {
         final String text = "abc123";
         final Optional<Color> color = Optional.empty();
-        this.parseFormatAndCheck0(
+        this.formatAndCheck(
                 "[RED]",
                 text,
                 new TestSpreadsheetFormatterContext() {
@@ -100,7 +100,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
     public void testColorNumberAndTextFormatted() {
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);
-        this.parseFormatAndCheck0(
+        this.formatAndCheck(
                 "[COLOR 15]",
                 text,
                 new TestSpreadsheetFormatterContext() {
@@ -118,7 +118,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);
 
-        this.parseFormatAndCheck0(
+        this.formatAndCheck(
                 ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 2]"),
                         ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 1]"),
                                 new SpreadsheetFormatter() {
@@ -151,7 +151,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
     public void testColorNumberAndTextFormattedAbsent() {
         final String text = "abc123";
         final Optional<Color> color = Optional.empty();
-        this.parseFormatAndCheck0(
+        this.formatAndCheck(
                 "[COLOR 15]",
                 text,
                 new TestSpreadsheetFormatterContext() {
@@ -164,18 +164,28 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                 SpreadsheetText.with(color, text + text));
     }
 
-    private void parseFormatAndCheck0(final String pattern,
-                                      final String value,
-                                      final SpreadsheetFormatterContext context,
-                                      final SpreadsheetText formattedText) {
-        this.parseFormatAndCheck0(this.createFormatter(pattern), value, context, formattedText);
+    private void formatAndCheck(final String pattern,
+                                final String value,
+                                final SpreadsheetFormatterContext context,
+                                final SpreadsheetText formattedText) {
+        this.formatAndCheck(
+                this.createFormatter(pattern),
+                value,
+                context,
+                formattedText
+        );
     }
 
-    private void parseFormatAndCheck0(final ColorSpreadsheetFormatter formatter,
-                                      final String value,
-                                      final SpreadsheetFormatterContext context,
-                                      final SpreadsheetText formattedText) {
-        this.formatAndCheck(formatter, value, context, Optional.of(formattedText));
+    private void formatAndCheck(final ColorSpreadsheetFormatter formatter,
+                                final String value,
+                                final SpreadsheetFormatterContext context,
+                                final SpreadsheetText formattedText) {
+        this.formatAndCheck(
+                formatter,
+                value,
+                context,
+                Optional.of(formattedText)
+        );
     }
 
     @Test
