@@ -105,12 +105,12 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         this.formatAndCheck(
                 this.createPattern(pattern).formatter(),
                 value,
-                this.formatterContext(),
+                this.createContext(),
                 expected
         );
     }
 
-    abstract SpreadsheetFormatterContext formatterContext();
+    abstract SpreadsheetFormatterContext createContext();
 
     // Parse............................................................................................................
 
