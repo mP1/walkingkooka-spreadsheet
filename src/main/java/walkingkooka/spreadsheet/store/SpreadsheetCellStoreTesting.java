@@ -31,10 +31,8 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     default void testLoadCellsNullCellRangeFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    this.createStore()
-                            .loadCells(null);
-                }
+                () -> this.createStore()
+                        .loadCells(null)
         );
     }
 
@@ -42,9 +40,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     default void testDeleteCellsNullCellRangeFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    this.createStore().deleteCells(null);
-                }
+                () -> this.createStore().deleteCells(null)
         );
     }
 
@@ -52,9 +48,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     default void testColumnNullColumnFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    this.createStore().column(null);
-                }
+                () -> this.createStore().column(null)
         );
     }
 
@@ -62,9 +56,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     default void testRowNullRowFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    this.createStore().row(null);
-                }
+                () -> this.createStore().row(null)
         );
     }
 
@@ -72,9 +64,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     default void testMaxColumnWidthNullColumnFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    this.createStore().maxColumnWidth(null);
-                }
+                () -> this.createStore().maxColumnWidth(null)
         );
     }
 
@@ -82,9 +72,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     default void testMaxRowHeightNullRowFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    this.createStore().maxRowHeight(null);
-                }
+                () -> this.createStore().maxRowHeight(null)
         );
     }
 }
