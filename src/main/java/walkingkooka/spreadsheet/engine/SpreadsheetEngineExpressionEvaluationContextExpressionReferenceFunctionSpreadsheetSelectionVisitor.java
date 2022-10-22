@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -69,8 +68,6 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceFunct
                 SPREADSHEET_DELTA_PROPERTIES,
                 this.context
         );
-
-        final Optional<SpreadsheetCell> cell = loaded.cell(reference);
 
         this.value = loaded.cell(reference)
                 .map(c -> c.formula()

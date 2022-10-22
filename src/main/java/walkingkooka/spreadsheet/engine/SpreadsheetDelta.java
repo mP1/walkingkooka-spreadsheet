@@ -1092,7 +1092,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case ROW_HEIGHTS_PROPERTY_STRING:
                     break;
                 case WINDOW_PROPERTY_STRING:
-                    window = unmarshallWindow(propertyAndValue, context);
+                    window = unmarshallWindow(propertyAndValue);
                     break;
                 default:
                     break;
@@ -1632,8 +1632,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case WINDOW_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setWindow(
                             unmarshallWindow(
-                                    child,
-                                    context
+                                    child
                             )
                     );
                     break;
@@ -1684,8 +1683,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return cells;
     }
 
-    private static Set<SpreadsheetCellRange> unmarshallWindow(final JsonNode json,
-                                                              final JsonNodeUnmarshallContext context) {
+    private static Set<SpreadsheetCellRange> unmarshallWindow(final JsonNode json) {
         return json.isNull() ?
                 NO_WINDOW :
                 SpreadsheetSelection.parseWindow(json.stringOrFail());

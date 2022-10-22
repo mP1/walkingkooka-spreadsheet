@@ -701,8 +701,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testMarshallWithFormatted() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         this.marshallAndCheck(
                 this.createCell(),
                 "{\n" +
