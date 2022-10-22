@@ -26,17 +26,33 @@ import walkingkooka.text.CaseSensitivity;
 final public class SpreadsheetColorNameTest implements ClassTesting2<SpreadsheetColorName>,
         NameTesting2<SpreadsheetColorName, SpreadsheetColorName> {
 
+    @Test
+    public void testEqualsDifferentCase() {
+        this.checkEquals(
+                SpreadsheetColorName.with("RED"),
+                SpreadsheetColorName.with("red")
+        );
+    }
+
     // Comparator ......................................................................................................
 
     @Test
-    public void testSort() {
+    public void testSort2() {
         final SpreadsheetColorName red = SpreadsheetColorName.with("red");
         final SpreadsheetColorName blue = SpreadsheetColorName.with("blue");
         final SpreadsheetColorName green = SpreadsheetColorName.with("green");
-        final SpreadsheetColorName yellow = SpreadsheetColorName.with("yellow");
+        final SpreadsheetColorName yellow = SpreadsheetColorName.with("YELLOW");
 
-        this.compareToArraySortAndCheck(yellow, green, red, blue,
-                blue, green, red, yellow);
+        this.compareToArraySortAndCheck(
+                yellow,
+                green,
+                red,
+                blue,
+                blue,
+                green,
+                red,
+                yellow
+        );
     }
 
     @Override
@@ -46,7 +62,7 @@ final public class SpreadsheetColorNameTest implements ClassTesting2<Spreadsheet
 
     @Override
     public CaseSensitivity caseSensitivity() {
-        return CaseSensitivity.SENSITIVE;
+        return CaseSensitivity.INSENSITIVE;
     }
 
     @Override
