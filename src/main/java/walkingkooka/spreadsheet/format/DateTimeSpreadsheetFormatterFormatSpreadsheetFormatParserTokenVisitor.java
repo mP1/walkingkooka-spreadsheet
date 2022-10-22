@@ -17,7 +17,10 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
@@ -30,6 +33,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParser
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * A {@link SpreadsheetFormatParserTokenVisitor} that is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)} to
@@ -50,7 +54,10 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
                 twelveHourTime,
                 millisecondDecimals);
         visitor.accept(token);
-        return SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, visitor.text.toString());
+        return SpreadsheetText.with(
+                visitor.color,
+                visitor.text.toString()
+        );
     }
 
     /**
@@ -133,6 +140,22 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
                         text.toUpperCase()
         );
     }
+
+    @Override
+    protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+        this.color = this.context.colorName(
+                token.colorName()
+        );
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
+        this.color = this.context.colorNumber(
+                token.value()
+        );
+    }
+
+    private Optional<Color> color = SpreadsheetText.WITHOUT_COLOR;
 
     @Override
     protected void visit(final SpreadsheetFormatDayParserToken token) {
