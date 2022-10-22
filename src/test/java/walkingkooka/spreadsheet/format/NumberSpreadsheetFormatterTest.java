@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -35,6 +36,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -43,6 +45,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<NumberSpreadsheetFormatter,
         SpreadsheetFormatNumberParserToken> {
+
+    private final static Color RED = Color.parse("#FF0000");
 
     @Test
     public void testCanConvertBigDecimalFails() {
@@ -1366,6 +1370,34 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
         );
     }
 
+    @Test
+    public void testFormatIncludesColorName() {
+        this.parseFormatAndCheck(
+                "[RED]#",
+                "3",
+                SpreadsheetText.with(
+                        Optional.of(
+                                RED
+                        ),
+                        "3"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatIncludesColorNumber() {
+        this.parseFormatAndCheck(
+                "[color44]#",
+                "4",
+                SpreadsheetText.with(
+                        Optional.of(
+                                RED
+                        ),
+                        "4"
+                )
+        );
+    }
+
     //toString .........................................................................................................
 
     @Test
@@ -1405,6 +1437,17 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
                 value,
                 this.createContext(roundingMode),
                 SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text)
+        );
+    }
+
+    private void parseFormatAndCheck(final String pattern,
+                                     final String value,
+                                     final SpreadsheetText text) {
+        this.parseFormatAndCheck0(
+                pattern,
+                value,
+                this.createContext(),
+                text
         );
     }
 
@@ -1555,6 +1598,30 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
             @Override
             public char positiveSign() {
                 return 'P';
+            }
+
+            @Override
+            public Optional<Color> colorName(final SpreadsheetColorName name) {
+                checkEquals(
+                        SpreadsheetColorName.with("red"),
+                        name,
+                        "colorName"
+                );
+                return Optional.of(
+                        RED
+                );
+            }
+
+            @Override
+            public Optional<Color> colorNumber(final int number) {
+                checkEquals(
+                        44,
+                        number,
+                        "colorNumber"
+                );
+                return Optional.of(
+                        RED
+                );
             }
         };
     }

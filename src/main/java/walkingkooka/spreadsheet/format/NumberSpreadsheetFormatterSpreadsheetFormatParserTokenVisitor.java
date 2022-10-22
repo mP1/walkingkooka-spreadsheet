@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDecimalPointParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
@@ -67,6 +69,19 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
         this.digitMode.exponent(token, this);
         return super.startVisit(token);
     }
+
+    @Override
+    protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+        this.color = token.colorName();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
+        this.color = token.value();
+    }
+
+    // the color name or color number
+    Object color = null;
 
     @Override
     protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
