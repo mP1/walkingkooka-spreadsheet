@@ -149,82 +149,108 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
 
     // canFormat........................................................................................................
 
-    default void canFormatAndCheck(final Object value, final boolean expected) {
-        this.canFormatAndCheck(this.createFormatter(),
+    default void canFormatAndCheck(final Object value,
+                                   final boolean expected) {
+        this.canFormatAndCheck(
+                this.createFormatter(),
                 value,
-                expected);
+                expected
+        );
     }
 
     default void canFormatAndCheck(final SpreadsheetFormatter formatter,
                                    final Object value,
                                    final boolean expected) {
-        this.canFormatAndCheck(formatter,
+        this.canFormatAndCheck(
+                formatter,
                 value,
                 this.createContext(),
-                expected);
+                expected
+        );
     }
 
     default void canFormatAndCheck(final SpreadsheetFormatter formatter,
                                    final Object value,
                                    final SpreadsheetFormatterContext context,
                                    final boolean expected) {
-        this.checkEquals(expected,
+        this.checkEquals(
+                expected,
                 formatter.canFormat(value, context),
-                () -> formatter + " canFormat " + CharSequences.quoteIfChars(value) + " (" + value.getClass() + ")");
+                () -> formatter + " canFormat " + CharSequences.quoteIfChars(value) + " (" + value.getClass() + ")"
+        );
     }
 
     // format...........................................................................................................
 
     default void formatAndCheck(final Object value,
                                 final String text) {
-        this.formatAndCheck(this.createFormatter(),
+        this.formatAndCheck(
                 value,
-                text);
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        text
+                )
+        );
     }
 
     default void formatAndCheck(final Object value,
                                 final SpreadsheetText text) {
-        this.formatAndCheck(this.createFormatter(),
+        this.formatAndCheck(
+                this.createFormatter(),
                 value,
-                text);
+                text
+        );
     }
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final String text) {
-        this.formatAndCheck(formatter,
+        this.formatAndCheck(
+                formatter,
                 value,
-                this.createContext(),
-                text);
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        text
+                )
+        );
     }
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final SpreadsheetText text) {
-        this.formatAndCheck(formatter,
+        this.formatAndCheck(
+                formatter,
                 value,
                 this.createContext(),
-                text);
+                text
+        );
     }
 
     // format fail and check
 
     default void formatFailAndCheck(final Object value) {
-        this.formatFailAndCheck(value, this.createContext());
+        this.formatFailAndCheck(
+                value,
+                this.createContext()
+        );
     }
 
     default void formatFailAndCheck(final Object value,
                                     final SpreadsheetFormatterContext context) {
-        this.formatFailAndCheck(this.createFormatter(),
+        this.formatFailAndCheck(
+                this.createFormatter(),
                 value,
-                context);
+                context
+        );
     }
 
     default void formatFailAndCheck(final SpreadsheetFormatter formatter,
                                     final Object value) {
-        this.formatFailAndCheck(formatter,
+        this.formatFailAndCheck(
+                formatter,
                 value,
-                this.createContext());
+                this.createContext()
+        );
     }
 
     // TypeNameTesting .................................................................................................

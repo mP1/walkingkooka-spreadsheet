@@ -36,7 +36,6 @@ public interface SpreadsheetFormatterTesting extends Testing {
                 () -> formatter + " canFormat " + CharSequences.quoteIfChars(value));
     }
 
-
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
@@ -51,31 +50,35 @@ public interface SpreadsheetFormatterTesting extends Testing {
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
                                 final SpreadsheetText text) {
-        this.formatAndCheck(formatter,
+        this.formatAndCheck(
+                formatter,
                 value,
                 context,
-                Optional.of(text));
+                Optional.of(text)
+        );
     }
 
-    // format fail and check
+    // format fail and check............................................................................................
 
     default void formatFailAndCheck(final SpreadsheetFormatter formatter,
                                     final Object value,
                                     final SpreadsheetFormatterContext context) {
-        this.formatAndCheck(formatter,
+        this.formatAndCheck(
+                formatter,
                 value,
                 context,
-                Optional.empty());
+                Optional.empty()
+        );
     }
-
-    // general format and check
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
                                 final Optional<SpreadsheetText> text) {
-        this.checkEquals(text,
+        this.checkEquals(
+                text,
                 formatter.format(value, context),
-                () -> formatter + " " + CharSequences.quoteIfChars(value));
+                () -> formatter + " " + CharSequences.quoteIfChars(value)
+        );
     }
 }
