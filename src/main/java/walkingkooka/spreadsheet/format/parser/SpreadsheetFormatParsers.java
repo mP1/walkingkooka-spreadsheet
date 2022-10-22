@@ -544,9 +544,19 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private static Parser<SpreadsheetFormatParserContext> literal(final String any,
                                                                   final EbnfIdentifierName name) {
         return Parsers.character(CharPredicates.any(any))
-                .transform(((characterParserToken, parserContext) -> SpreadsheetFormatParserToken.textLiteral(characterParserToken.cast(CharacterParserToken.class).value().toString(), characterParserToken.text())))
+                .transform(SpreadsheetFormatParsers::literalTransform)
                 .setToString(name.toString())
                 .cast();
+    }
+
+    private static SpreadsheetFormatParserToken literalTransform(final ParserToken token,
+                                                                 final ParserContext context) {
+        return SpreadsheetFormatParserToken.textLiteral(
+                token.cast(CharacterParserToken.class)
+                        .value()
+                        .toString(),
+                token.text()
+        );
     }
 
     /**
@@ -555,9 +565,17 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private static Parser<SpreadsheetFormatParserContext> repeatingSymbol(final char c,
                                                                           final BiFunction<String, String, ParserToken> factory,
                                                                           final Class<? extends SpreadsheetFormatLeafParserToken<?>> tokenClass) {
-        return Parsers.stringCharPredicate(CaseSensitivity.INSENSITIVE.charPredicate(c), 1, Integer.MAX_VALUE)
-                .transform((stringParserToken, context) -> factory.apply(stringParserToken.cast(StringParserToken.class).value(), stringParserToken.text()))
-                .setToString(snakeCaseParserClassSimpleName(tokenClass))
+        return Parsers.stringCharPredicate(
+                        CaseSensitivity.INSENSITIVE.charPredicate(c),
+                        1,
+                        Integer.MAX_VALUE
+                ).transform(
+                        (stringParserToken, context) ->
+                                factory.apply(stringParserToken.cast(StringParserToken.class)
+                                                .value(),
+                                        stringParserToken.text()
+                                )
+                ).setToString(snakeCaseParserClassSimpleName(tokenClass))
                 .cast();
     }
 
@@ -568,17 +586,32 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                                  final BiFunction<String, String, ParserToken> factory,
                                                                  final Class<? extends SpreadsheetFormatLeafParserToken<?>> tokenClass) {
         return Parsers.character(CaseSensitivity.SENSITIVE.charPredicate(c))
-                .transform((characterParserToken, context) -> factory.apply(characterParserToken.cast(CharacterParserToken.class).value().toString(), characterParserToken.text()))
-                .setToString(snakeCaseParserClassSimpleName(tokenClass))
+                .transform(
+                        (characterParserToken, context) ->
+                                factory.apply(
+                                        characterParserToken.cast(CharacterParserToken.class)
+                                                .value()
+                                                .toString(),
+                                        characterParserToken.text()
+                                )
+                ).setToString(snakeCaseParserClassSimpleName(tokenClass))
                 .cast();
     }
 
     private static Parser<SpreadsheetFormatParserContext> symbol(final String text,
                                                                  final BiFunction<String, String, ParserToken> factory,
                                                                  final Class<? extends SpreadsheetFormatLeafParserToken<?>> tokenClass) {
-        return Parsers.string(text, CaseSensitivity.INSENSITIVE)
-                .transform((stringParserToken, context) -> factory.apply(stringParserToken.cast(StringParserToken.class).value(), stringParserToken.text()))
-                .setToString(snakeCaseParserClassSimpleName(tokenClass))
+        return Parsers.string(
+                        text,
+                        CaseSensitivity.INSENSITIVE
+                ).transform(
+                        (stringParserToken, context) ->
+                                factory.apply(
+                                        stringParserToken.cast(StringParserToken.class)
+                                                .value(),
+                                        stringParserToken.text()
+                                )
+                ).setToString(snakeCaseParserClassSimpleName(tokenClass))
                 .cast();
     }
 
@@ -588,9 +621,19 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private static Parser<SpreadsheetFormatParserContext> escapeStarOrUnderline(final char initial,
                                                                                 final BiFunction<Character, String, ParserToken> factory,
                                                                                 final Class<? extends SpreadsheetFormatLeafParserToken<?>> tokenClass) {
-        return Parsers.stringInitialAndPartCharPredicate(CharPredicates.is(initial), CharPredicates.always(), 2, 2)
-                .transform((stringParserToken, context) -> factory.apply(stringParserToken.cast(StringParserToken.class).value().charAt(1), stringParserToken.text()))
-                .setToString(snakeCaseParserClassSimpleName(tokenClass))
+        return Parsers.stringInitialAndPartCharPredicate(
+                        CharPredicates.is(initial),
+                        CharPredicates.always(),
+                        2,
+                        2
+                ).transform(
+                        (stringParserToken, context) ->
+                                factory.apply(stringParserToken.cast(StringParserToken.class)
+                                                .value()
+                                                .charAt(1),
+                                        stringParserToken.text()
+                                )
+                ).setToString(snakeCaseParserClassSimpleName(tokenClass))
                 .cast();
     }
 
@@ -598,11 +641,12 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Converts the type simple name into snake case dropping the <pre>SpreadsheetFormat</pre> and trailing <pre>Symbol</pre>
      * and <pre>ParserToken</pre>
      */
+    // https://github.com/mP1/walkingkooka/issues/2551
     // VisibleForTesting.
     static String snakeCaseParserClassSimpleName(final Class<?> type) {
         String simpleName = CharSequences.subSequence(type.getSimpleName(),
-                "SpreadsheetFormat".length(),
-                -(ParserToken.class.getSimpleName().length()))
+                        "SpreadsheetFormat".length(),
+                        -(ParserToken.class.getSimpleName().length()))
                 .toString();
         if (simpleName.endsWith("Symbol")) {
             simpleName = CharSequences.subSequence(simpleName, 0, -"Symbol".length()).toString();
