@@ -418,7 +418,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     }
 
     @Override
-    SpreadsheetFormatterContext formatterContext() {
+    SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override

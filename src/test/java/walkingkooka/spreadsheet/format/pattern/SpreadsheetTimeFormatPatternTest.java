@@ -398,7 +398,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Override
-    SpreadsheetFormatterContext formatterContext() {
+    SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override

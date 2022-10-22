@@ -305,7 +305,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Override
-    SpreadsheetFormatterContext formatterContext() {
+    SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
