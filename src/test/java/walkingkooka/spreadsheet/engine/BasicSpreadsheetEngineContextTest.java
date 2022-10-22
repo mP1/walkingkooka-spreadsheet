@@ -19,12 +19,9 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
@@ -34,8 +31,6 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -450,68 +445,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 ),
                 this.metadata()
         );
-    }
-
-    private SpreadsheetFormatterContext spreadsheetFormatContext() {
-        final DecimalNumberContext decimalNumberContext = this.decimalNumberContext();
-
-        return new FakeSpreadsheetFormatterContext() {
-
-            @Override
-            public boolean canConvert(final Object value,
-                                      final Class<?> target) {
-                try {
-                    this.convert(value, target);
-                    return true;
-                } catch (final Exception failed) {
-                    return false;
-                }
-            }
-
-            @Override
-            public <T> Either<T, String> convert(final Object value,
-                                                 final Class<T> target) {
-                return Converters.numberNumber()
-                        .convert(value,
-                                target,
-                                ConverterContexts.fake());
-            }
-
-            @Override
-            public String currencySymbol() {
-                return decimalNumberContext.currencySymbol();
-            }
-
-            @Override
-            public char decimalSeparator() {
-                return decimalNumberContext.decimalSeparator();
-            }
-
-            @Override
-            public String exponentSymbol() {
-                return decimalNumberContext.exponentSymbol();
-            }
-
-            @Override
-            public char groupingSeparator() {
-                return decimalNumberContext.groupingSeparator();
-            }
-
-            @Override
-            public char negativeSign() {
-                return decimalNumberContext.negativeSign();
-            }
-
-            @Override
-            public char positiveSign() {
-                return decimalNumberContext.positiveSign();
-            }
-
-            @Override
-            public MathContext mathContext() {
-                return decimalNumberContext.mathContext();
-            }
-        };
     }
 
     @Test

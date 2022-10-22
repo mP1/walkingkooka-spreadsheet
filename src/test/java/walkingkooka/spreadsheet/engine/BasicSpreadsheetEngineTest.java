@@ -137,8 +137,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static String FORMATTED_PATTERN_SUFFIX = "FORMATTED_PATTERN_SUFFIX";
 
-    private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
-
     private final static String DATE_PATTERN = "yyyy/mm/dd";
     private final static String TIME_PATTERN = "hh:mm";
     private final static String DATETIME_PATTERN = DATE_PATTERN + " " + TIME_PATTERN;

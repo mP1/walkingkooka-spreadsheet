@@ -42,8 +42,7 @@ final class SpreadsheetErrorToStringConverter extends SpreadsheetErrorConverter<
 
     @Override
     boolean canConvertSpreadsheetError(final SpreadsheetError error,
-                                       final Class<?> type,
-                                       final ConverterContext context) {
+                                       final Class<?> type) {
         return String.class == type;
     }
 

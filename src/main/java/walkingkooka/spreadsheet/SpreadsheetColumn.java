@@ -100,8 +100,7 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
 
             column = unmarshall0(
                     SpreadsheetSelection.parseColumn(name.value()),
-                    child,
-                    context
+                    child
             );
         }
 
@@ -113,8 +112,7 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
     }
 
     private static SpreadsheetColumn unmarshall0(final SpreadsheetColumnReference reference,
-                                                 final JsonNode node,
-                                                 final JsonNodeUnmarshallContext context) {
+                                                 final JsonNode node) {
         Boolean hidden = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
