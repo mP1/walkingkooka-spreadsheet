@@ -18,14 +18,15 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetErrorConverterTest implements ClassTesting<SpreadsheetErrorConverter> {
+public final class SpreadsheetErrorConverterTest implements ClassTesting<SpreadsheetErrorConverter<?>> {
 
     @Override
-    public Class<SpreadsheetErrorConverter> type() {
-        return SpreadsheetErrorConverter.class;
+    public Class<SpreadsheetErrorConverter<?>> type() {
+        return Cast.to(SpreadsheetErrorConverter.class);
     }
 
     @Override

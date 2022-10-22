@@ -67,7 +67,7 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     }
 
     private void typeNameAndCheck(final SpreadsheetPatternKind kind,
-                                  final Class<? extends SpreadsheetPattern> expected) {
+                                  final Class<? extends SpreadsheetPattern<?>> expected) {
         this.checkEquals(
                 JsonNodeContext.computeTypeName(expected),
                 kind.typeName(),
