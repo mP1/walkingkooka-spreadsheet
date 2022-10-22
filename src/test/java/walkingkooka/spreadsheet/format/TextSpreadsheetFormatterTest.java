@@ -19,14 +19,19 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 
+import java.util.Optional;
+
 public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<TextSpreadsheetFormatter, SpreadsheetFormatTextParserToken> {
 
     private final static String TEXT = "Abc123";
+
+    private final static Color RED = Color.parse("#FF0000");
 
     @Test
     public void testPlaceholder() {
@@ -74,6 +79,36 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
                 TEXT + "B");
     }
 
+    @Test
+    public void testColorNameAndTextPlaceholder() {
+        this.parseFormatAndCheck(
+                "[RED]@",
+                TEXT,
+                new TestSpreadsheetFormatterContext() {
+
+                },
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        TEXT
+                )
+        );
+    }
+
+    @Test
+    public void testColorNumberAndTextPlaceholder() {
+        this.parseFormatAndCheck(
+                "[color44]@",
+                TEXT,
+                new TestSpreadsheetFormatterContext() {
+
+                },
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        TEXT
+                )
+        );
+    }
+
     private void parseFormatAndCheck(final String pattern,
                                      final String value,
                                      final String text) {
@@ -84,13 +119,13 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
                                      final String value,
                                      final SpreadsheetFormatterContext context,
                                      final String text) {
-        this.parseFormatAndCheck0(pattern, value, context, SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
+        this.parseFormatAndCheck(pattern, value, context, SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
     }
 
-    private void parseFormatAndCheck0(final String pattern,
-                                      final String value,
-                                      final SpreadsheetFormatterContext context,
-                                      final SpreadsheetText text) {
+    private void parseFormatAndCheck(final String pattern,
+                                     final String value,
+                                     final SpreadsheetFormatterContext context,
+                                     final SpreadsheetText text) {
         this.formatAndCheck(this.createFormatter(pattern), value, context, text);
     }
 
@@ -126,7 +161,7 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
         return new TestSpreadsheetFormatterContext();
     }
 
-    static class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
+    class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
 
         TestSpreadsheetFormatterContext() {
             super();
@@ -149,6 +184,30 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
                             value,
                             target
                     );
+        }
+
+        @Override
+        public Optional<Color> colorName(final SpreadsheetColorName name) {
+            checkEquals(
+                    SpreadsheetColorName.with("red"),
+                    name,
+                    "colorName"
+            );
+            return Optional.of(
+                    RED
+            );
+        }
+
+        @Override
+        public Optional<Color> colorNumber(final int number) {
+            checkEquals(
+                    44,
+                    number,
+                    "colorNumber"
+            );
+            return Optional.of(
+                    RED
+            );
         }
     }
 

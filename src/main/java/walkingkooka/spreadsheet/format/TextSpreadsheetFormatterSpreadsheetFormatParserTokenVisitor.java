@@ -17,6 +17,9 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
@@ -25,6 +28,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParser
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextPlaceholderParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatUnderscoreParserToken;
+
+import java.util.Optional;
 
 /**
  * A {@link SpreadsheetFormatParserTokenVisitor} is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)}
@@ -38,7 +43,10 @@ final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends 
     static SpreadsheetText format(final SpreadsheetFormatTextParserToken token, final String value, final SpreadsheetFormatterContext context) {
         final TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor(value, context);
         visitor.accept(token);
-        return SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, visitor.text.toString());
+        return SpreadsheetText.with(
+                visitor.color,
+                visitor.text.toString()
+        );
     }
 
     /**
@@ -48,6 +56,20 @@ final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends 
         super();
         this.context = context;
         this.value = value;
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+        this.color = this.context.colorName(
+                token.colorName()
+        );
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
+        this.color = this.context.colorNumber(
+                token.value()
+        );
     }
 
     @Override
@@ -101,6 +123,8 @@ final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends 
      * Aggregates the formatted output text.
      */
     private final StringBuilder text = new StringBuilder();
+
+    private Optional<Color> color = SpreadsheetText.WITHOUT_COLOR;
 
     @Override
     public String toString() {
