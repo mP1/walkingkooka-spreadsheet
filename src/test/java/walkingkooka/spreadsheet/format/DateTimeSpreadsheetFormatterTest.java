@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
@@ -32,6 +33,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.Temporal;
 import java.util.Locale;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -39,6 +41,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<
         DateTimeSpreadsheetFormatter,
         SpreadsheetFormatDateTimeParserToken> {
+
+    private final static Color RED = Color.parse("#FF0000");
 
     // with.............................................................................................................
 
@@ -686,8 +690,46 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
     @Test
     public void testDate() {
-        this.formatAndCheck(this.createFormatter("yyyy/mm/dd"),
+        this.parseFormatAndCheck(
+                "yyyy/mm/dd",
                 LocalDate.of(2000, 12, 31),
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        "2000/12/31"
+                )
+        );
+    }
+
+    @Test
+    public void testDateIncludesColorName() {
+        this.parseFormatAndCheck(
+                "[RED]yyyy/mm/dd",
+                LocalDate.of(2000, 12, 31),
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "2000/12/31"
+                )
+        );
+    }
+
+    @Test
+    public void testDateIncludesColorNumber() {
+        this.parseFormatAndCheck(
+                "[color44]yyyy/mm/dd",
+                LocalDate.of(2000, 12, 31),
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "2000/12/31"
+                )
+        );
+    }
+
+    private void parseFormatAndCheck(final String pattern,
+                                     final LocalDate value,
+                                     final SpreadsheetText text) {
+        this.parseFormatAndCheck(
+                pattern,
+                value,
                 new TestSpreadsheetFormatterContext() {
 
                     @Override
@@ -697,12 +739,22 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                     }
 
                     @Override
-                    public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                        checkEquals(LocalDateTime.class, target, "target");
-                        return Converters.localDateLocalDateTime().convert(value, target, ConverterContexts.fake());
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        checkEquals(
+                                LocalDateTime.class,
+                                target,
+                                "target"
+                        );
+                        return Converters.localDateLocalDateTime()
+                                .convert(
+                                        value,
+                                        target,
+                                        ConverterContexts.fake()
+                                );
                     }
                 },
-                "2000/12/31"
+                text
         );
     }
 
@@ -710,8 +762,36 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
     @Test
     public void testTime() {
-        this.formatAndCheck(this.createFormatter("hh/mm/ss"),
+        this.parseFormatAndCheck(
+                "hh/mm/ss",
                 LocalTime.of(12, 58, 59),
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        "12/58/59"
+                )
+        );
+    }
+
+    @Test
+    public void testTimeWithColorName() {
+        this.parseFormatAndCheck(
+                "[RED]hh/mm/ss",
+                LocalTime.of(12, 58, 59),
+                SpreadsheetText.with(
+                        Optional.of(
+                                RED
+                        ),
+                        "12/58/59"
+                )
+        );
+    }
+
+    private void parseFormatAndCheck(final String pattern,
+                                     final LocalTime value,
+                                     final SpreadsheetText text) {
+        this.parseFormatAndCheck(
+                pattern,
+                value,
                 new TestSpreadsheetFormatterContext() {
 
                     @Override
@@ -721,8 +801,13 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                     }
 
                     @Override
-                    public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                        checkEquals(LocalDateTime.class, target, "target");
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        checkEquals(
+                                LocalDateTime.class,
+                                target,
+                                "target"
+                        );
 
                         return this.successfulConversion(
                                 target.cast(
@@ -735,7 +820,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                         );
                     }
                 },
-                "12/58/59"
+                text
         );
     }
 
@@ -770,10 +855,24 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                                      final String value,
                                      final SpreadsheetFormatterContext context,
                                      final SpreadsheetText text) {
-        this.formatAndCheck(this.createFormatter(pattern),
+        this.parseFormatAndCheck(
+                pattern,
                 this.parseLocalDateTime(value),
                 context,
-                text);
+                text
+        );
+    }
+
+    private void parseFormatAndCheck(final String pattern,
+                                     final Temporal value,
+                                     final SpreadsheetFormatterContext context,
+                                     final SpreadsheetText text) {
+        this.formatAndCheck(
+                this.createFormatter(pattern),
+                value,
+                context,
+                text
+        );
     }
 
     @Override
@@ -833,6 +932,30 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
             return this.successfulConversion(
                     target.cast(value),
                     target
+            );
+        }
+
+        @Override
+        public Optional<Color> colorName(final SpreadsheetColorName name) {
+            checkEquals(
+                    SpreadsheetColorName.with("red"),
+                    name,
+                    "colorName"
+            );
+            return Optional.of(
+                    RED
+            );
+        }
+
+        @Override
+        public Optional<Color> colorNumber(final int number) {
+            checkEquals(
+                    44,
+                    number,
+                    "colorNumber"
+            );
+            return Optional.of(
+                    RED
             );
         }
     }
