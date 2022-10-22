@@ -39,7 +39,6 @@ import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
