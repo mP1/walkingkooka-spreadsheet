@@ -18,9 +18,6 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBracketCloseSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBracketOpenSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
@@ -29,16 +26,10 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDecimalPointParse
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanEqualsSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanEqualsSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthOrMinuteParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNotEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
@@ -88,21 +79,6 @@ final class SpreadsheetTextFormatPatternSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
-        this.failInvalid(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
-        this.failInvalid(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatConditionNumberParserToken token) {
-        this.failInvalid(token);
-    }
-
-    @Override
     protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
         this.failInvalid(token);
     }
@@ -133,11 +109,6 @@ final class SpreadsheetTextFormatPatternSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatEqualsSymbolParserToken token) {
-        this.failInvalid(token);
-    }
-
-    @Override
     protected void visit(final SpreadsheetFormatExponentSymbolParserToken token) {
         this.failInvalid(token);
     }
@@ -148,37 +119,12 @@ final class SpreadsheetTextFormatPatternSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGreaterThanEqualsSymbolParserToken token) {
-        this.failInvalid(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatGreaterThanSymbolParserToken token) {
-        this.failInvalid(token);
-    }
-
-    @Override
     protected void visit(final SpreadsheetFormatHourParserToken token) {
         this.failInvalid(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatLessThanEqualsSymbolParserToken token) {
-        this.failInvalid(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatLessThanSymbolParserToken token) {
-        this.failInvalid(token);
-    }
-
-    @Override
     protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
-        this.failInvalid(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatNotEqualsSymbolParserToken token) {
         this.failInvalid(token);
     }
 

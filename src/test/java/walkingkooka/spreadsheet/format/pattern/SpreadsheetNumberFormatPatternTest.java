@@ -19,10 +19,13 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -35,6 +38,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
 import java.util.List;
+import java.util.Optional;
 
 public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetNumberFormatPattern,
         SpreadsheetFormatNumberParserToken,
@@ -417,6 +421,30 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
                 "before n1x2");
     }
 
+    @Test
+    public void testFormatterFormatIncludesColorName() {
+        this.formatAndCheck2(
+                "[red]#",
+                -123.0,
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "n123"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatterFormatIncludesColorNumber() {
+        this.formatAndCheck2(
+                "[color44]#",
+                -123.0,
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "n123"
+                )
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -456,6 +484,30 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
             @Override
             public MathContext mathContext() {
                 return MathContext.UNLIMITED;
+            }
+
+            @Override
+            public Optional<Color> colorName(final SpreadsheetColorName name) {
+                checkEquals(
+                        SpreadsheetColorName.with("red"),
+                        name,
+                        "colorName"
+                );
+                return Optional.of(
+                        RED
+                );
+            }
+
+            @Override
+            public Optional<Color> colorNumber(final int number) {
+                checkEquals(
+                        44,
+                        number,
+                        "colorNumber"
+                );
+                return Optional.of(
+                        RED
+                );
             }
         };
     }

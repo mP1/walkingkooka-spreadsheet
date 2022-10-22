@@ -19,10 +19,13 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -35,6 +38,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetTimeFormatPattern,
         SpreadsheetFormatTimeParserToken,
@@ -397,6 +401,30 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testFormatterFormatIncludesColorName() {
+        this.formatAndCheck2(
+                "[red]hhmmss",
+                LocalTime.of(12, 58, 59),
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "125859"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatterFormatIncludesColorNumber() {
+        this.formatAndCheck2(
+                "[color44]hhmmss",
+                LocalTime.of(12, 58, 59),
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "125859"
+                )
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -423,6 +451,30 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             @Override
             public char decimalSeparator() {
                 return 'D';
+            }
+
+            @Override
+            public Optional<Color> colorName(final SpreadsheetColorName name) {
+                checkEquals(
+                        SpreadsheetColorName.with("red"),
+                        name,
+                        "colorName"
+                );
+                return Optional.of(
+                        RED
+                );
+            }
+
+            @Override
+            public Optional<Color> colorNumber(final int number) {
+                checkEquals(
+                        44,
+                        number,
+                        "colorNumber"
+                );
+                return Optional.of(
+                        RED
+                );
             }
         };
     }

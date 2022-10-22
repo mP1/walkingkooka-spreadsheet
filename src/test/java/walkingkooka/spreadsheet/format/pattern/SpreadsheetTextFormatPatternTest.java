@@ -20,8 +20,11 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -33,6 +36,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
+import java.util.Optional;
 
 public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetTextFormatPattern,
         SpreadsheetFormatTextParserToken,
@@ -304,6 +308,30 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testFormatterFormatIncludesColorName() {
+        this.formatAndCheck2(
+                "[red]@@",
+                "Hello",
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "HelloHello"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatterFormatIncludesColorNumber() {
+        this.formatAndCheck2(
+                "[color44]@@",
+                "Hello",
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "HelloHello"
+                )
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -330,6 +358,30 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
             @Override
             public int cellCharacterWidth() {
                 return 2;
+            }
+
+            @Override
+            public Optional<Color> colorName(final SpreadsheetColorName name) {
+                checkEquals(
+                        SpreadsheetColorName.with("red"),
+                        name,
+                        "colorName"
+                );
+                return Optional.of(
+                        RED
+                );
+            }
+
+            @Override
+            public Optional<Color> colorNumber(final int number) {
+                checkEquals(
+                        44,
+                        number,
+                        "colorNumber"
+                );
+                return Optional.of(
+                        RED
+                );
             }
         };
     }

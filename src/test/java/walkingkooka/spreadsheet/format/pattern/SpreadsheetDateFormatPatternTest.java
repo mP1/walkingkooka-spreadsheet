@@ -19,12 +19,15 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -39,6 +42,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateFormatPattern,
         SpreadsheetFormatDateParserToken,
@@ -371,6 +375,30 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testFormatterFormatIncludesColorName() {
+        this.formatAndCheck2(
+                "[red]yyyymmdd",
+                LocalDate.of(2000, 12, 31),
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "20001231"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatterFormatIncludesColorNumber() {
+        this.formatAndCheck2(
+                "[color44]yyyymmdd",
+                LocalDate.of(2000, 12, 31),
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "20001231"
+                )
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -439,6 +467,30 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
                         1900,
                         20,
                         LocalDateTime::now
+                );
+            }
+
+            @Override
+            public Optional<Color> colorName(final SpreadsheetColorName name) {
+                checkEquals(
+                        SpreadsheetColorName.with("red"),
+                        name,
+                        "colorName"
+                );
+                return Optional.of(
+                        RED
+                );
+            }
+
+            @Override
+            public Optional<Color> colorNumber(final int number) {
+                checkEquals(
+                        44,
+                        number,
+                        "colorNumber"
+                );
+                return Optional.of(
+                        RED
                 );
             }
         };
