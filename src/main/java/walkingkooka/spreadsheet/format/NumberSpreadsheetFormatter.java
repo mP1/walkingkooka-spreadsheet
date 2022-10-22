@@ -50,6 +50,8 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
         final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor =
                 NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.analyze(token);
 
+        this.color = visitor.color;
+
         this.components = visitor.components;
         this.normalOrScientific = visitor.normalOrScientific;
 
@@ -68,11 +70,43 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     }
 
     @Override
-    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
-        return Optional.of(SpreadsheetText.with(
-                SpreadsheetText.WITHOUT_COLOR,
-                this.format1(this.normalOrScientific.context(context.convertOrFail(value, BigDecimal.class), this, context))));
+    Optional<SpreadsheetText> format0(final Object value,
+                                      final SpreadsheetFormatterContext context) {
+        return Optional.of(
+                SpreadsheetText.with(
+                        this.color(context),
+                        this.format1(
+                                this.normalOrScientific.context(
+                                        context.convertOrFail(value, BigDecimal.class),
+                                        this,
+                                        context
+                                )
+                        )
+                )
+        );
     }
+
+    private Optional<Color> color(final SpreadsheetFormatterContext context) {
+        Object colorNameOrNumber = this.color;
+        Optional<Color> color = SpreadsheetText.WITHOUT_COLOR;
+
+        if (colorNameOrNumber instanceof Integer) {
+            color = context.colorNumber(
+                    (Integer) colorNameOrNumber
+            );
+        } else {
+            if (colorNameOrNumber instanceof SpreadsheetColorName) {
+                color = context.colorName(
+                        (SpreadsheetColorName) colorNameOrNumber
+                );
+            }
+        }
+
+        return color;
+    }
+
+    // the color name or number
+    private final Object color;
 
     /**
      * Executes each of the format components eventually resulting in a {@link String}.
