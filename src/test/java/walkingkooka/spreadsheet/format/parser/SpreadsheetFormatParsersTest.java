@@ -1898,10 +1898,65 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberParseAndCheck(conditionNotEquals(), digit());
     }
 
+    @Test
+    public void testNumberTokenEqualsConditionFails() {
+        this.numberParseFails(
+                digit(),
+                conditionEquals()
+        );
+    }
+
+    @Test
+    public void testNumberTokenLessThanConditionFails() {
+        this.numberParseFails(
+                digit(),
+                conditionLessThan()
+        );
+    }
+
+    @Test
+    public void testNumberTokenLessThanEqualsConditionFails() {
+        this.numberParseFails(
+                digit(),
+                conditionLessThanEquals()
+        );
+    }
+
+    @Test
+    public void testNumberTokenGreaterThanConditionFails() {
+        this.numberParseFails(
+                digit(),
+                conditionGreaterThan()
+        );
+    }
+
+    @Test
+    public void testNumberTokenGreaterThanEqualsConditionFails() {
+        this.numberParseFails(
+                digit(),
+                conditionGreaterThanEquals()
+        );
+    }
+
+    @Test
+    public void testNumberTokenNotEqualsConditionFails() {
+        this.numberParseFails(
+                digit(),
+                conditionNotEquals()
+        );
+    }
+
     // number helpers...
 
     private void numberParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
         this.parseAndCheck2(this.numberParser(), SpreadsheetFormatParserToken::number, tokens);
+    }
+
+    private void numberParseFails(final SpreadsheetFormatParserToken... tokens) {
+        this.parseFailAndCheck2(
+                this.numberParser(),
+                tokens
+        );
     }
 
     private void numberParseThrows(final SpreadsheetFormatParserToken... tokens) {
