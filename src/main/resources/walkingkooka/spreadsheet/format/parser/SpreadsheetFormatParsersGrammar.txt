@@ -72,22 +72,22 @@ CONDITION_NOT_EQUAL           = BRACKET_OPEN,
 
 
 (* date ..............................................................................................................*)
-DATE                          = [{ DAY | MONTH_MINUTE | YEAR | DATE_DATETIME_TIME }];
+DATE                          = [ CONDITION ], [{ DAY | MONTH_MINUTE | YEAR | DATE_DATETIME_TIME }];
 
 
 
 (* date/time .........................................................................................................*)
-DATETIME                      = [{ DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
+DATETIME                      = [ CONDITION ], [{ DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
 
 
 
 (* time ..............................................................................................................*)
-TIME                          = [{ HOUR | MONTH_MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
+TIME                          = [ CONDITION ], [{ HOUR | MONTH_MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
 
 
 
 (* date, datetime, time ..............................................................................................*)
-DATE_DATETIME_TIME            = COLOR | CONDITION | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED;
+DATE_DATETIME_TIME            = COLOR | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED;
 
 
 (* seconds decimal zeroes.............................................................................................*)

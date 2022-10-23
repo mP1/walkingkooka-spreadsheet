@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserTesting2;
@@ -931,43 +934,71 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testDateConditionNotEqualsDay() {
-        this.dateParseAndCheck(conditionNotEquals(), day());
+        this.dateParseAndCheck(
+                conditionNotEquals(),
+                day()
+        );
     }
 
     @Test
-    public void testDayDateConditionEquals() {
-        this.dateParseAndCheck(day(), conditionEquals());
+    public void testDayDateConditionEqualsFails() {
+        this.dateParseFails(
+                day(),
+                conditionEquals()
+        );
     }
 
     @Test
-    public void testDateDayConditionGreaterThan() {
-        this.dateParseAndCheck(day(), conditionGreaterThan());
+    public void testDateDayConditionGreaterThanFails() {
+        this.dateParseFails(
+                day(),
+                conditionGreaterThan()
+        );
     }
 
     @Test
-    public void testDateDayConditionGreaterThanEquals() {
-        this.dateParseAndCheck(day(), conditionGreaterThanEquals());
+    public void testDateDayConditionGreaterThanEqualsFails() {
+        this.dateParseFails(
+                day(),
+                conditionGreaterThanEquals()
+        );
     }
 
     @Test
-    public void testDateDayConditionLessThan() {
-        this.dateParseAndCheck(day(), conditionLessThan());
+    public void testDateDayConditionLessThanFails() {
+        this.dateParseFails(
+                day(),
+                conditionLessThan()
+        );
     }
 
     @Test
-    public void testDateDayConditionLessThanEquals() {
-        this.dateParseAndCheck(day(), conditionLessThanEquals());
+    public void testDateDayConditionLessThanEqualsFails() {
+        this.dateParseFails(
+                day(),
+                conditionLessThanEquals()
+        );
     }
 
     @Test
-    public void testDateDayConditionNotEquals() {
-        this.dateParseAndCheck(day(), conditionNotEquals());
+    public void testDateDayConditionNotEqualsFails() {
+        this.dateParseFails(
+                day(),
+                conditionNotEquals()
+        );
     }
 
     // date helpers....
 
     private void dateParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
         this.parseAndCheck2(this.dateParser(), SpreadsheetFormatParserToken::date, tokens);
+    }
+
+    private void dateParseFails(final SpreadsheetFormatParserToken... tokens) {
+        this.parseFailAndCheck2(
+                this.dateParser(),
+                tokens
+        );
     }
 
     private void dateParseThrows(final SpreadsheetFormatParserToken... tokens) {
@@ -3330,39 +3361,64 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testHourTimeConditionEquals() {
-        this.timeParseAndCheck(hour(), conditionEquals());
+    public void testTimeHourConditionEqualsFails() {
+        this.timeParseFails(
+                hour(),
+                conditionEquals()
+        );
     }
 
     @Test
-    public void testTimeHourConditionGreaterThan() {
-        this.timeParseAndCheck(hour(), conditionGreaterThan());
+    public void testTimeHourConditionGreaterThanFails() {
+        this.timeParseFails(
+                hour(),
+                conditionGreaterThan()
+        );
     }
 
     @Test
-    public void testTimeHourConditionGreaterThanEquals() {
-        this.timeParseAndCheck(hour(), conditionGreaterThanEquals());
+    public void testTimeHourConditionGreaterThanEqualsFails() {
+        this.timeParseFails(
+                hour(),
+                conditionGreaterThanEquals()
+        );
     }
 
     @Test
-    public void testTimeHourConditionLessThan() {
-        this.timeParseAndCheck(hour(), conditionLessThan());
+    public void testTimeHourConditionLessThanFails() {
+        this.timeParseFails(
+                hour(),
+                conditionLessThan()
+        );
     }
 
     @Test
-    public void testTimeHourConditionLessThanEquals() {
-        this.timeParseAndCheck(hour(), conditionLessThanEquals());
+    public void testTimeHourConditionLessThanEqualsFails() {
+        this.timeParseFails(
+                hour(),
+                conditionLessThanEquals()
+        );
     }
 
     @Test
-    public void testTimeHourConditionNotEquals() {
-        this.timeParseAndCheck(hour(), conditionNotEquals());
+    public void testTimeHourConditionNotEqualsFails() {
+        this.timeParseFails(
+                hour(),
+                conditionNotEquals()
+        );
     }
 
     // time helpers...
 
     private void timeParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
         this.parseAndCheck2(this.timeParser(), SpreadsheetFormatParserToken::time, tokens);
+    }
+
+    private void timeParseFails(final SpreadsheetFormatParserToken... tokens) {
+        this.parseFailAndCheck2(
+                this.timeParser(),
+                tokens
+        );
     }
 
     private void timeParseThrows(final SpreadsheetFormatParserToken... tokens) {
@@ -3611,67 +3667,110 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateTimeDayConditionEquals() {
-        this.dateTimeParseAndCheck(day(), conditionEquals());
+    public void testDateTimeDayConditionFails() {
+        this.dateTimeParseFails(
+                day(),
+                conditionEquals()
+        );
     }
 
     @Test
-    public void testDateTimeDayConditionGreaterThan() {
-        this.dateTimeParseAndCheck(day(), conditionGreaterThan());
+    public void testDateTimeDayConditionGreaterThanFails() {
+        this.dateTimeParseFails(
+                day(),
+                conditionGreaterThan()
+        );
     }
 
     @Test
-    public void testDateTimeDayConditionGreaterThanEquals() {
-        this.dateTimeParseAndCheck(day(), conditionGreaterThanEquals());
+    public void testDateTimeDayConditionGreaterThanEqualsFails() {
+        this.dateTimeParseFails(
+                day(),
+                conditionGreaterThanEquals()
+        );
     }
 
     @Test
-    public void testDateTimeDayConditionLessThan() {
-        this.dateTimeParseAndCheck(day(), conditionLessThan());
+    public void testDateTimeDayConditionLessThanFails() {
+        this.dateTimeParseFails(
+                day(),
+                conditionLessThan()
+        );
     }
 
     @Test
-    public void testDateTimeDayConditionLessThanEquals() {
-        this.dateTimeParseAndCheck(day(), conditionLessThanEquals());
+    public void testDateTimeDayConditionLessThanEqualsFails() {
+        this.dateTimeParseFails(
+                day(),
+                conditionLessThanEquals()
+        );
     }
 
     @Test
-    public void testDateTimeDayConditionNotEquals() {
-        this.dateTimeParseAndCheck(day(), conditionNotEquals());
+    public void testDateTimeDayConditionNotEqualsFails() {
+        this.dateTimeParseFails(
+                day(),
+                conditionNotEquals()
+        );
     }
 
     @Test
-    public void testDateTimeHourConditionEquals() {
-        this.dateTimeParseAndCheck(hour(), conditionEquals());
+    public void testDateTimeHourConditionEqualsFails() {
+        this.dateTimeParseFails(
+                hour(),
+                conditionEquals()
+        );
     }
 
     @Test
-    public void testDateTimeHourConditionGreaterThan() {
-        this.dateTimeParseAndCheck(hour(), conditionGreaterThan());
+    public void testDateTimeHourConditionGreaterThanFails() {
+        this.dateTimeParseFails(
+                hour(),
+                conditionGreaterThan()
+        );
     }
 
     @Test
-    public void testDateTimeHourConditionGreaterThanEquals() {
-        this.dateTimeParseAndCheck(hour(), conditionGreaterThanEquals());
+    public void testDateTimeHourConditionGreaterThanEqualsFails() {
+        this.dateTimeParseFails(
+                hour(),
+                conditionGreaterThanEquals()
+        );
     }
 
     @Test
-    public void testDateTimeHourConditionLessThan() {
-        this.dateTimeParseAndCheck(hour(), conditionLessThan());
+    public void testDateTimeHourConditionLessThanFails() {
+        this.dateTimeParseFails(
+                hour(),
+                conditionLessThan()
+        );
     }
 
     @Test
-    public void testDateTimeHourConditionLessThanEquals() {
-        this.dateTimeParseAndCheck(hour(), conditionLessThanEquals());
+    public void testDateTimeHourConditionLessThanEqualsFails() {
+        this.dateTimeParseFails(
+                hour(),
+                conditionLessThanEquals()
+        );
     }
 
     @Test
-    public void testDateTimeHourConditionNotEquals() {
-        this.dateTimeParseAndCheck(hour(), conditionNotEquals());
+    public void testDateTimeHourConditionNotEqualsFails() {
+        this.dateTimeParseFails(
+                hour(),
+                conditionNotEquals()
+        );
     }
 
     private void dateTimeParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
         this.parseAndCheck2(this.dateTimeParser(), SpreadsheetFormatParserToken::dateTime, tokens);
+    }
+
+    private void dateTimeParseFails(final SpreadsheetFormatParserToken... tokens) {
+        this.parseFailAndCheck2(
+                this.dateTimeParser(),
+                tokens
+        );
     }
 
     private Parser<SpreadsheetFormatParserContext> dateTimeParser() {
@@ -3979,6 +4078,27 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 textLower,
                 factory.apply(lower, textLower),
                 textLower);
+    }
+
+    private void parseFailAndCheck2(final Parser<SpreadsheetFormatParserContext> parser,
+                                    final SpreadsheetFormatParserToken... tokens) {
+        // https://github.com/mP1/walkingkooka-spreadsheet/issues/2626
+        final TextCursor cursor = TextCursors.charSequence(
+                ParserToken.text(
+                        Lists.of(tokens)
+                )
+        );
+        final TextCursorSavePoint start = cursor.save();
+
+        this.parse(
+                parser,
+                cursor,
+                this.createContext()
+        );
+        this.checkNotEquals(
+                "",
+                start.textBetween().toString()
+        );
     }
 
     private void parseThrows2(final Parser<SpreadsheetFormatParserContext> parser,
