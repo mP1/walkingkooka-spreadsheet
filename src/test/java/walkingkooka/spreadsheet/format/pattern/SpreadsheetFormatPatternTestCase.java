@@ -20,8 +20,10 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -34,6 +36,8 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         T extends SpreadsheetFormatParentParserToken,
         V> extends SpreadsheetPatternTestCase<P, T>
         implements SpreadsheetFormatterTesting {
+
+    final static Color RED = Color.parse("#FF0000");
 
     SpreadsheetFormatPatternTestCase() {
         super();
@@ -102,6 +106,19 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     final void formatAndCheck2(final String pattern,
                                final V value,
                                final String expected) {
+        this.formatAndCheck2(
+                pattern,
+                value,
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        expected
+                )
+        );
+    }
+
+    final void formatAndCheck2(final String pattern,
+                               final V value,
+                               final SpreadsheetText expected) {
         this.formatAndCheck(
                 this.createPattern(pattern).formatter(),
                 value,

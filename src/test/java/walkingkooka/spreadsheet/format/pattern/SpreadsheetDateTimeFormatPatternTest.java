@@ -19,13 +19,16 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -42,6 +45,7 @@ import java.time.LocalTime;
 import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateTimeFormatPattern,
         SpreadsheetFormatDateTimeParserToken,
@@ -735,6 +739,30 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         );
     }
 
+    @Test
+    public void testFormatterFormatIncludesColorName() {
+        this.formatAndCheck2(
+                "[red]yyyymmddhhmmss",
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59),
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "20001231125859"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatterFormatIncludesColorNumber() {
+        this.formatAndCheck2(
+                "[color44]yyyymmddhhmmss",
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59),
+                SpreadsheetText.with(
+                        Optional.of(RED),
+                        "20001231125859"
+                )
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -816,6 +844,30 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             @Override
             public char decimalSeparator() {
                 return 'd';
+            }
+
+            @Override
+            public Optional<Color> colorName(final SpreadsheetColorName name) {
+                checkEquals(
+                        SpreadsheetColorName.with("red"),
+                        name,
+                        "colorName"
+                );
+                return Optional.of(
+                        RED
+                );
+            }
+
+            @Override
+            public Optional<Color> colorNumber(final int number) {
+                checkEquals(
+                        44,
+                        number,
+                        "colorNumber"
+                );
+                return Optional.of(
+                        RED
+                );
             }
         };
     }
