@@ -134,7 +134,7 @@ GENERAL_COLOR_WHITESPACE      = WHITESPACE | COLOR;
 
 
 (* text .................................................................................*)
-TEXT                          = TEXT_WITH_STAR | TEXT_WITHOUT_STAR;
+TEXT                          = [CONDITION], {TEXT_WITH_STAR | TEXT_WITHOUT_STAR};
 
 TEXT_WITH_STAR                = [{ TEXT_COMPONENT }],
                                 STAR,
