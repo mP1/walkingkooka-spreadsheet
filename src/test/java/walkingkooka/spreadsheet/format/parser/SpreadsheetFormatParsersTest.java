@@ -2710,12 +2710,19 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testTextStarStarFails() {
-        this.textParseThrows(star(), star2());
+        this.textParseFails(
+                star(),
+                star2()
+        );
     }
 
     @Test
     public void testTextStarTextPlaceholderStarFails() {
-        this.textParseThrows(star(), textPlaceholder(), star2());
+        this.textParseFails(
+                star(),
+                textPlaceholder(),
+                star2()
+        );
     }
 
     // text literals
@@ -2835,8 +2842,111 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.textParseAndCheck(quotedText(), color());
     }
 
+    @Test
+    public void testTextConditionNotEqualsTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionNotEquals(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTextConditionEqualsTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionEquals(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTextConditionGreaterThanTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionGreaterThan(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTextConditionGreaterThanEqualsTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionGreaterThanEquals(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTextConditionLessThanTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionLessThan(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTextConditionLessThanEqualsTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionLessThanEquals(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testDayTextConditionEqualsFails() {
+        this.textParseFails(
+                textPlaceholder(),
+                conditionEquals()
+        );
+    }
+
+    @Test
+    public void testTextPlaceholderConditionGreaterThanFails() {
+        this.textParseFails(
+                textPlaceholder(),
+                conditionGreaterThan()
+        );
+    }
+
+    @Test
+    public void testTextPlaceholderConditionGreaterThanEqualsFails() {
+        this.textParseFails(
+                textPlaceholder(),
+                conditionGreaterThanEquals()
+        );
+    }
+
+    @Test
+    public void testTextPlaceholderConditionLessThanFails() {
+        this.textParseFails(
+                textPlaceholder(),
+                conditionLessThan()
+        );
+    }
+
+    @Test
+    public void testTextPlaceholderConditionLessThanEqualsFails() {
+        this.textParseFails(
+                textPlaceholder(),
+                conditionLessThanEquals()
+        );
+    }
+
+    @Test
+    public void testTextPlaceholderConditionNotEqualsFails() {
+        this.textParseFails(
+                textPlaceholder(),
+                conditionNotEquals()
+        );
+    }
+
     private void textParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
         this.parseAndCheck2(this.textParser(), SpreadsheetFormatParserToken::text, tokens);
+    }
+
+    private void textParseFails(final SpreadsheetFormatParserToken... tokens) {
+        this.parseFailAndCheck2(
+                this.textParser(),
+                tokens
+        );
     }
 
     private void textParseThrows(final SpreadsheetFormatParserToken... tokens) {
