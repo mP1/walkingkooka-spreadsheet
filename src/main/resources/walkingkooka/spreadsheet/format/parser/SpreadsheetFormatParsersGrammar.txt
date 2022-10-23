@@ -111,14 +111,16 @@ FRACTION_DIGIT                = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
 
 
 (* NUMBER .............................................................................................................*)
-NUMBER                        = [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_EXPONENT | NUMBER_OR_LITERAL | PERCENTAGE }];
+NUMBER                        = [CONDITION], { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_EXPONENT | NUMBER_OR_LITERAL | PERCENTAGE | QUOTED };
 
 NUMBER_EXPONENT               = NUMBER_EXPONENT_SYMBOL,
                                 [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_OR_LITERAL }];
 NUMBER_EXPONENT_SYMBOL        = ( 'E+' | 'e+' | 'E-' | 'e-' );
 
-NUMBER_OR_LITERAL             = COLOR | CONDITION | CURRENCY | ESCAPE | NUMBER_LITERAL | PERCENTAGE | QUOTED;
 NUMBER_DIGIT                  = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
+
+NUMBER_OR_LITERAL             = { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_DIGIT | NUMBER_LITERAL | QUOTED };
+
 
 
 

@@ -1867,36 +1867,6 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberParseAndCheck(conditionNotEquals(), digit());
     }
 
-    @Test
-    public void testNumberNumberConditionEquals() {
-        this.numberParseAndCheck(digit(), conditionEquals());
-    }
-
-    @Test
-    public void testNumberNumberConditionGreaterThan() {
-        this.numberParseAndCheck(digit(), conditionGreaterThan());
-    }
-
-    @Test
-    public void testNumberNumberConditionGreaterThanEquals() {
-        this.numberParseAndCheck(digit(), conditionGreaterThanEquals());
-    }
-
-    @Test
-    public void testNumberNumberConditionLessThan() {
-        this.numberParseAndCheck(digit(), conditionLessThan());
-    }
-
-    @Test
-    public void testNumberNumberConditionLessThanEquals() {
-        this.numberParseAndCheck(digit(), conditionLessThanEquals());
-    }
-
-    @Test
-    public void testNumberNumberConditionNotEquals() {
-        this.numberParseAndCheck(digit(), conditionNotEquals());
-    }
-
     // number helpers...
 
     private void numberParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
