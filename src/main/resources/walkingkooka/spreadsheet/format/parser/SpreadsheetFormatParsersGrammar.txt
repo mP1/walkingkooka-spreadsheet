@@ -1,14 +1,3 @@
-(* expression .........................................................................................................*)
-EXPRESSION                    = [ EXPRESSION_COMPONENT ],
-                                [ EXPRESSION_SEPARATOR, [ EXPRESSION_COMPONENT ],
-                                [ EXPRESSION_SEPARATOR, [ EXPRESSION_COMPONENT ],
-                                [ EXPRESSION_SEPARATOR, [ (GENERAL | TEXT) ]]
-                                ]];
-
-EXPRESSION_COMPONENT          = GENERAL | FRACTION | NUMBER | DATETIME;
-
-
-
 (* color ..............................................................................................................*)
 COLOR                         = BRACKET_OPEN,
                                 ( COLOR_AND_NUMBER | COLOR_NAME ),
