@@ -138,14 +138,6 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
         return SpreadsheetFormatParserToken.exponentSymbol(token.cast(StringParserToken.class).value(), token.text());
     }
 
-    private static ParserToken transformExpression(final ParserToken token,
-                                                   final SpreadsheetFormatParserContext context) {
-        return flat(
-                token,
-                SpreadsheetFormatParserToken::expression
-        );
-    }
-
     private static ParserToken transformFraction(final ParserToken token,
                                                  final SpreadsheetFormatParserContext context) {
         return flat(
