@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -60,6 +61,11 @@ import java.util.function.Function;
  * Holds a tokens that may be used to parse or format values along with helpers.
  */
 abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
+
+    /**
+     * The separator character between multiple patterns.
+     */
+    public static final CharacterConstant SEPARATOR = CharacterConstant.with(';');
 
     /**
      * Factory that creates a {@link SpreadsheetDateFormatPattern} from the given token.
@@ -392,7 +398,10 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
         }
 
         return patternParser.apply(
-                String.join(";", patterns)
+                String.join(
+                        SEPARATOR.string(),
+                        patterns
+                )
         );
     }
 
