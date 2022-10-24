@@ -153,6 +153,10 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
         return SpreadsheetFormatParserToken.second("s", "s");
     }
 
+    final SpreadsheetFormatParserToken textLiteral() {
+        return SpreadsheetFormatParserToken.textLiteral("@", "@");
+    }
+
     final SpreadsheetFormatParserToken thousands() {
         return SpreadsheetFormatParserToken.thousands(",", ",");
     }

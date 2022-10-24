@@ -23,7 +23,6 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
@@ -75,14 +74,6 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     public static SpreadsheetFormatter dateTime(final SpreadsheetFormatDateTimeParserToken token,
                                                 final Predicate<Object> typeTester) {
         return DateTimeSpreadsheetFormatter.with(token, typeTester);
-    }
-
-    /**
-     * {@see ExpressionSpreadsheetFormatter}
-     */
-    public static SpreadsheetFormatter expression(final SpreadsheetFormatExpressionParserToken token,
-                                                  final Function<BigDecimal, Fraction> fractioner) {
-        return ExpressionSpreadsheetFormatter.with(token, fractioner);
     }
 
     /**

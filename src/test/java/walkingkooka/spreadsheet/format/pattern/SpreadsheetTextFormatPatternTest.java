@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -45,16 +46,6 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     @Test
     public void testWithAmpmFails() {
         this.withInvalidCharacterFails(this.ampm());
-    }
-
-    @Test
-    public void testWithBracketCloseFails() {
-        this.withInvalidCharacterFails(this.bracketClose());
-    }
-
-    @Test
-    public void testWithBracketOpenFails() {
-        this.withInvalidCharacterFails(this.bracketOpen());
     }
 
     @Test
@@ -78,7 +69,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
-    public void testWithDEcimalPointFails() {
+    public void testWithDecimalPointFails() {
         this.withInvalidCharacterFails(this.decimalPoint());
     }
 
@@ -98,11 +89,6 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
-    public void testWithEqualsSymbolFails() {
-        this.withInvalidCharacterFails(this.equalsSymbol());
-    }
-
-    @Test
     public void testWithExponentSymbolFails() {
         this.withInvalidCharacterFails(this.exponentSymbol());
     }
@@ -113,38 +99,13 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
-    public void testWithGreaterThanSymbolFails() {
-        this.withInvalidCharacterFails(this.greaterThanSymbol());
-    }
-
-    @Test
-    public void testWithGreaterThanEqualsSymbolFails() {
-        this.withInvalidCharacterFails(this.greaterThanEqualsSymbol());
-    }
-
-    @Test
     public void testWithHourSymbolFails() {
         this.withInvalidCharacterFails(this.hour());
     }
 
     @Test
-    public void testWithLessThanSymbolFails() {
-        this.withInvalidCharacterFails(this.lessThanSymbol());
-    }
-
-    @Test
-    public void testWithLessThanEqualsSymbolFails() {
-        this.withInvalidCharacterFails(this.lessThanEqualsSymbol());
-    }
-
-    @Test
     public void testWithMonthOrMinuteSymbolFails() {
         this.withInvalidCharacterFails(this.monthOrMinute());
-    }
-
-    @Test
-    public void testWithNotEqualsSymbolFails() {
-        this.withInvalidCharacterFails(this.notEqualsSymbol());
     }
 
     @Test
@@ -205,15 +166,16 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
-    public void testParseAtSignAtStign() {
+    public void testParseAtSignAtSign() {
         final String text = "@@";
+
         this.parseStringAndCheck(
                 text,
                 SpreadsheetTextFormatPattern.with(
                         SpreadsheetFormatParserToken.text(
                                 Lists.of(
-                                        SpreadsheetFormatParserToken.textPlaceholder("@", "@"),
-                                        SpreadsheetFormatParserToken.textPlaceholder("@", "@")
+                                        textLiteral(),
+                                        textLiteral()
                                 ),
                                 text
                         )

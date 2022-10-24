@@ -246,19 +246,6 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     /**
      * Returns a {@link Parser} that given text returns a {@link SpreadsheetFormatParserToken}.
      */
-    public static Parser<SpreadsheetFormatParserContext> expression() {
-        return EXPRESSION_PARSER;
-    }
-
-    private final static Parser<SpreadsheetFormatParserContext> EXPRESSION_PARSER;
-
-    static final EbnfIdentifierName EXPRESSION_IDENTIFIER = EbnfIdentifierName.with("EXPRESSION");
-
-    // expression...............................................................................................................
-
-    /**
-     * Returns a {@link Parser} that given text returns a {@link SpreadsheetFormatParserToken}.
-     */
     public static Parser<SpreadsheetFormatParserContext> expressionSeparator() {
         return EXPRESSION_SEPARATOR_SYMBOL_PARSER.cast();
     }
@@ -529,7 +516,6 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             CONDITION_PARSER = parsers.get(EbnfIdentifierName.with("CONDITION")).cast();
             DATE_PARSER = parsers.get(EbnfIdentifierName.with("DATE")).cast();
             DATETIME_PARSER = parsers.get(EbnfIdentifierName.with("DATETIME")).cast();
-            EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER).cast();
             FRACTION_PARSER = parsers.get(EbnfIdentifierName.with("FRACTION")).cast();
             GENERAL_PARSER = parsers.get(GENERAL_IDENTIFIER).cast();
             NUMBER_PARSER = parsers.get(EbnfIdentifierName.with("NUMBER")).cast();
