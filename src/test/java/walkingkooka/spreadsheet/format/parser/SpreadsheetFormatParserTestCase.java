@@ -287,7 +287,14 @@ public abstract class SpreadsheetFormatParserTestCase {
     }
 
     static SpreadsheetFormatParserToken textLiteral(final char c) {
-        return SpreadsheetFormatParserToken.textLiteral("" + c, "" + c);
+        return textLiteral("" + c);
+    }
+
+    static SpreadsheetFormatParserToken textLiteral(final String text) {
+        return SpreadsheetFormatParserToken.textLiteral(
+                text,
+                text
+        );
     }
 
     static SpreadsheetFormatParserToken thousands() {

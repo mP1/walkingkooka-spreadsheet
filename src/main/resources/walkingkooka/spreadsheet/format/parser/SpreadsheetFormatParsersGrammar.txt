@@ -135,6 +135,6 @@ TEXT_WITH_STAR                = [{ TEXT_COMPONENT }],
 
 TEXT_WITHOUT_STAR             = [{ TEXT_COMPONENT }];
 
-TEXT_COMPONENT                = COLOR | DATETIME_TEXT_LITERAL | ESCAPE | QUOTED | TEXT_PLACEHOLDER | UNDERSCORE;
+TEXT_COMPONENT                = COLOR | TEXT_CHARACTER | ESCAPE | QUOTED | TEXT_PLACEHOLDER | UNDERSCORE;
 
-
+TEXT_CHARACTER                = { ' ' | '<' | '>' | '=' | '!' | '$' | '-' | '+' | '(' | ')' | '%' | '#' | '&' | '/' | ',' | ':' };
