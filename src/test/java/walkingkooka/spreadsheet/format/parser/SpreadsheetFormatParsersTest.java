@@ -2665,11 +2665,6 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // text........................................................................................................
 
     @Test
-    public void testTextTextDigitFails() {
-        this.textParseThrows(digit());
-    }
-
-    @Test
     public void testTextTextDigitZeroFails() {
         this.textParseThrows(digitZero());
     }
@@ -2729,42 +2724,98 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // text literals
 
     @Test
-    public void testTextTextLiteralDollar() {
-        this.textParseAndCheck(textLiteralDollar());
+    public void testTextDollar() {
+        this.textParseAndCheck(
+                textLiteralDollar()
+        );
     }
 
     @Test
-    public void testTextTextLiteralMinusSign() {
-        this.textParseAndCheck(textLiteralMinus());
+    public void testTextMinusSign() {
+        this.textParseAndCheck(
+                textLiteralMinus()
+        );
     }
 
     @Test
-    public void testTextTextLiteralPlusSign() {
-        this.textParseAndCheck(textLiteralPlus());
+    public void testTextPlusSign() {
+        this.textParseAndCheck(
+                textLiteralPlus()
+        );
     }
 
     @Test
-    public void testTextTextLiteralSlash() {
-        this.textParseAndCheck(textLiteralSlash());
+    public void testTextSlash() {
+        this.textParseAndCheck(
+                textLiteralSlash()
+        );
     }
 
     @Test
-    public void testTextTextLiteralOpenParens() {
-        this.textParseAndCheck(textLiteralOpenParens());
+    public void testTextOpenParens() {
+        this.textParseAndCheck(
+                textLiteralOpenParens()
+        );
     }
 
     @Test
-    public void testTextTextLiteralCloseParens() {
-        this.textParseAndCheck(textLiteralCloseParens());
+    public void testTextCloseParens() {
+        this.textParseAndCheck(
+                textLiteralCloseParens()
+        );
     }
 
     @Test
-    public void testTextTextLiteralColon() {
-        this.textParseAndCheck(textLiteralColon());
+    public void testTextColon() {
+        this.textParseAndCheck(
+                textLiteral(':')
+        );
     }
 
     @Test
-    public void testTextTextLiteralSpace() {
+    public void testTextEqualsSign() {
+        this.textParseAndCheck(
+                textLiteral('=')
+        );
+    }
+
+    @Test
+    public void testTextGreaterThanEquals() {
+        this.textParseAndCheck(
+                textLiteral('>')
+        );
+    }
+
+    @Test
+    public void testTextGreaterThanEqualsSign() {
+        this.textParseAndCheck(
+                textLiteral(">=")
+        );
+    }
+
+    @Test
+    public void testTextLessThan() {
+        this.textParseAndCheck(
+                textLiteral('<')
+        );
+    }
+
+    @Test
+    public void testTextLessThanEqualsSign() {
+        this.textParseAndCheck(
+                textLiteral("<=")
+        );
+    }
+
+    @Test
+    public void testTextNotEqualsSign() {
+        this.textParseAndCheck(
+                textLiteral("!=")
+        );
+    }
+
+    @Test
+    public void testTextSpace() {
         this.textParseAndCheck(textLiteralSpace());
     }
 
@@ -2796,36 +2847,6 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTextUnderscoreUnderscore() {
         this.textParseAndCheck(underscore(), underscore2());
-    }
-
-    @Test
-    public void testTextEqualsFails() {
-        this.textParseThrows(equalsSymbol());
-    }
-
-    @Test
-    public void testTextGreaterThanFails() {
-        this.textParseThrows(greaterThan());
-    }
-
-    @Test
-    public void testTextGreaterThanEqualsFails() {
-        this.textParseThrows(greaterThanEquals());
-    }
-
-    @Test
-    public void testTextLessThanFails() {
-        this.textParseThrows(lessThan());
-    }
-
-    @Test
-    public void testTextLessThanEqualsFails() {
-        this.textParseThrows(lessThanEquals());
-    }
-
-    @Test
-    public void testTextNotEqualsFails() {
-        this.textParseThrows(notEquals());
     }
 
     @Test
