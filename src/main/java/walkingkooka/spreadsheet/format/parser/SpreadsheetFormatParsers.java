@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format.parser;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -265,7 +264,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     }
 
     private static final Parser<SpreadsheetFormatParserContext> EXPRESSION_SEPARATOR_SYMBOL_PARSER = symbol(
-            SpreadsheetPattern.SEPARATOR.character(),
+            ';', // cant call SpreadsheetPattern.SEPARATOR.character() because will NPE,
             SpreadsheetFormatParserToken::separatorSymbol,
             SpreadsheetFormatSeparatorSymbolParserToken.class
     );
