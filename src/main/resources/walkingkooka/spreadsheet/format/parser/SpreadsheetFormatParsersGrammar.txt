@@ -1,4 +1,4 @@
-(* expression .........................................................................*)
+(* expression .........................................................................................................*)
 EXPRESSION                    = [ EXPRESSION_COMPONENT ],
                                 [ EXPRESSION_SEPARATOR, [ EXPRESSION_COMPONENT ],
                                 [ EXPRESSION_SEPARATOR, [ EXPRESSION_COMPONENT ],
@@ -9,7 +9,7 @@ EXPRESSION_COMPONENT          = GENERAL | FRACTION | NUMBER | DATETIME;
 
 
 
-(* color .................................................................................*)
+(* color ..............................................................................................................*)
 COLOR                         = BRACKET_OPEN,
                                 ( COLOR_AND_NUMBER | COLOR_NAME ),
                                 [ WHITESPACE ],
@@ -17,9 +17,13 @@ COLOR                         = BRACKET_OPEN,
 
 
 
-(* condition .................................................................................*)
-CONDITION                     = CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN |
-                                CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL;
+(* condition ..........................................................................................................*)
+CONDITION                     = CONDITION_EQUAL |
+                                CONDITION_GREATER_THAN_EQUAL |
+                                CONDITION_GREATER_THAN |
+                                CONDITION_LESS_THAN_EQUAL |
+                                CONDITION_LESS_THAN |
+                                CONDITION_NOT_EQUAL;
 
 CONDITION_EQUAL               = BRACKET_OPEN,
                                 [ WHITESPACE ],
@@ -133,7 +137,7 @@ GENERAL_COLOR_WHITESPACE      = WHITESPACE | COLOR;
 
 
 
-(* text .................................................................................*)
+(* text ..............................................................................................................*)
 TEXT                          = [CONDITION], {TEXT_WITH_STAR | TEXT_WITHOUT_STAR};
 
 TEXT_WITH_STAR                = [{ TEXT_COMPONENT }],
