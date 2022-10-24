@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.parser;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -263,9 +264,11 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         return EXPRESSION_SEPARATOR_SYMBOL_PARSER.cast();
     }
 
-    private static final Parser<SpreadsheetFormatParserContext> EXPRESSION_SEPARATOR_SYMBOL_PARSER = symbol(';',
+    private static final Parser<SpreadsheetFormatParserContext> EXPRESSION_SEPARATOR_SYMBOL_PARSER = symbol(
+            SpreadsheetPattern.SEPARATOR.character(),
             SpreadsheetFormatParserToken::separatorSymbol,
-            SpreadsheetFormatSeparatorSymbolParserToken.class);
+            SpreadsheetFormatSeparatorSymbolParserToken.class
+    );
 
     private static final EbnfIdentifierName EXPRESSION_SEPARATOR_IDENTIFIER = EbnfIdentifierName.with("EXPRESSION_SEPARATOR");
 
