@@ -143,15 +143,29 @@ NUMBER_COMPONENT              = { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NU
 
 
 
-(* text ..............................................................................................................*)
-TEXT                          = [CONDITION], {TEXT_WITH_STAR | TEXT_WITHOUT_STAR};
+(* text format, note the last pattern may not have a condition........................................................*)
+TEXT_FORMAT                   = [{ [ CONDITION ], TEXT, PATTERN_SEPARATOR }],
+                                TEXT;
 
-TEXT_WITH_STAR                = [{ TEXT_COMPONENT }],
-                                STAR,
-                                [{ TEXT_COMPONENT }];
 
-TEXT_WITHOUT_STAR             = [{ TEXT_COMPONENT }];
 
-TEXT_COMPONENT                = COLOR | TEXT_CHARACTER | ESCAPE | QUOTED | TEXT_PLACEHOLDER | UNDERSCORE;
+(* text without color/condition used in parse patterns, some magic placeholder tokens are not valid like STAR.........*)
+TEXT_PARSE                    = TEXT_CHARACTER | ESCAPE | QUOTED | UNDERSCORE;
 
-TEXT_CHARACTER                = { ' ' | '<' | '>' | '=' | '!' | '$' | '-' | '+' | '(' | ')' | '%' | '#' | '&' | '/' | ',' | ':' };
+
+
+(* text WITH color but NO condition used by the last format patterns..................................................*)
+TEXT                           = TEXT_COLOR_WITH_STAR | TEXT_COLOR_WITHOUT_STAR;
+
+
+
+(* text common........................................................................................................*)
+TEXT_COLOR_WITH_STAR           = [{ TEXT_COLOR_COMPONENT }],
+                                 STAR,
+                                 [{ TEXT_COLOR_COMPONENT }];
+
+TEXT_COLOR_WITHOUT_STAR        = [{ TEXT_COLOR_COMPONENT }];
+
+TEXT_COLOR_COMPONENT           = COLOR | TEXT_CHARACTER | ESCAPE | QUOTED | TEXT_PLACEHOLDER | UNDERSCORE;
+
+TEXT_CHARACTER                 = { ' ' | '<' | '>' | '=' | '!' | '$' | '-' | '+' | '(' | ')' | '%' | '#' | '&' | '/' | ',' | ':' };

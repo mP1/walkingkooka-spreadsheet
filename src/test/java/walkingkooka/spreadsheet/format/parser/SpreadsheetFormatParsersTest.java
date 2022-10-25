@@ -33,6 +33,7 @@ import walkingkooka.text.cursor.parser.Parsers;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -2862,7 +2863,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testTextStarStarFails() {
-        this.textParseFails(
+        this.textParseThrows(
                 star(),
                 star2()
         );
@@ -2870,7 +2871,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testTextStarTextPlaceholderStarFails() {
-        this.textParseFails(
+        this.textParseThrows(
                 star(),
                 textPlaceholder(),
                 star2()
@@ -3021,56 +3022,56 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTextConditionNotEqualsTextPlaceholder() {
-        this.textParseAndCheck(
+    public void testTextConditionNotEqualsTextPlaceholderFails() {
+        this.textParseThrows(
                 conditionNotEquals(),
                 textPlaceholder()
         );
     }
 
     @Test
-    public void testTextConditionEqualsTextPlaceholder() {
-        this.textParseAndCheck(
+    public void testTextConditionEqualsTextPlaceholderFails() {
+        this.textParseThrows(
                 conditionEquals(),
                 textPlaceholder()
         );
     }
 
     @Test
-    public void testTextConditionGreaterThanTextPlaceholder() {
-        this.textParseAndCheck(
+    public void testTextConditionGreaterThanTextPlaceholderFails() {
+        this.textParseThrows(
                 conditionGreaterThan(),
                 textPlaceholder()
         );
     }
 
     @Test
-    public void testTextConditionGreaterThanEqualsTextPlaceholder() {
-        this.textParseAndCheck(
+    public void testTextConditionGreaterThanEqualsTextPlaceholderFails() {
+        this.textParseThrows(
                 conditionGreaterThanEquals(),
                 textPlaceholder()
         );
     }
 
     @Test
-    public void testTextConditionLessThanTextPlaceholder() {
-        this.textParseAndCheck(
+    public void testTextConditionLessThanTextPlaceholderFails() {
+        this.textParseThrows(
                 conditionLessThan(),
                 textPlaceholder()
         );
     }
 
     @Test
-    public void testTextConditionLessThanEqualsTextPlaceholder() {
-        this.textParseAndCheck(
+    public void testTextConditionLessThanEqualsTextPlaceholderFails() {
+        this.textParseThrows(
                 conditionLessThanEquals(),
                 textPlaceholder()
         );
     }
 
     @Test
-    public void testDayTextConditionEqualsFails() {
-        this.textParseFails(
+    public void testTextConditionEqualsFails() {
+        this.textParseThrows(
                 textPlaceholder(),
                 conditionEquals()
         );
@@ -3078,7 +3079,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testTextPlaceholderConditionGreaterThanFails() {
-        this.textParseFails(
+        this.textParseThrows(
                 textPlaceholder(),
                 conditionGreaterThan()
         );
@@ -3086,7 +3087,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testTextPlaceholderConditionGreaterThanEqualsFails() {
-        this.textParseFails(
+        this.textParseThrows(
                 textPlaceholder(),
                 conditionGreaterThanEquals()
         );
@@ -3094,7 +3095,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testTextPlaceholderConditionLessThanFails() {
-        this.textParseFails(
+        this.textParseThrows(
                 textPlaceholder(),
                 conditionLessThan()
         );
@@ -3102,7 +3103,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testTextPlaceholderConditionLessThanEqualsFails() {
-        this.textParseFails(
+        this.textParseThrows(
                 textPlaceholder(),
                 conditionLessThanEquals()
         );
@@ -3110,25 +3111,109 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testTextPlaceholderConditionNotEqualsFails() {
-        this.textParseFails(
+        this.textParseThrows(
                 textPlaceholder(),
                 conditionNotEquals()
         );
     }
 
-    private void textParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(this.textParser(), SpreadsheetFormatParserToken::text, tokens);
+    // multiple patterns................................................................................................
+
+    @Test
+    public void testTextConditionNotEqualsTextPlaceholderPatternSeparatorTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionNotEquals(),
+                textPlaceholder(),
+                separator(),
+                textPlaceholder()
+        );
     }
 
-    private void textParseFails(final SpreadsheetFormatParserToken... tokens) {
-        this.parseFailAndCheck2(
+    @Test
+    public void testTextConditionEqualsTextPlaceholderPatternSeparatorTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionEquals(),
+                textPlaceholder(),
+                separator(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTextConditionGreaterThanTextPlaceholderPatternSeparatorTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionGreaterThan(),
+                textPlaceholder(),
+                separator(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTextConditionGreaterThanEqualsTextPlaceholderPatternSeparatorTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionGreaterThanEquals(),
+                textPlaceholder(),
+                separator(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTextConditionLessThanTextPlaceholderPatternSeparatorTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionLessThan(),
+                textPlaceholder(),
+                separator(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTextConditionLessThanEqualsTextPlaceholderPatternSeparatorTextPlaceholder() {
+        this.textParseAndCheck(
+                conditionLessThanEquals(),
+                textPlaceholder(),
+                separator(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTextPatternSeparatorPattern() {
+        this.textParseAndCheck(
+                textPlaceholder(),
+                separator(),
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTextColorPatternSeparatorColorPattern() {
+        this.textParseAndCheck(
+                color(),
+                textPlaceholder(),
+                separator(),
+                color(),
+                textPlaceholder()
+        );
+    }
+
+    // text helpers......................................................................................................
+
+    private void textParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
+        this.parseAndCheck2(
                 this.textParser(),
+                SpreadsheetFormatParserToken::text,
                 tokens
         );
     }
 
     private void textParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(this.textParser(), tokens);
+        this.parseThrows2(
+                this.textParser(),
+                tokens
+        );
     }
 
     private Parser<SpreadsheetFormatParserContext> textParser() {
@@ -4285,6 +4370,30 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
         this.checkNotEquals(
                 "",
+                start.textBetween().toString()
+        );
+    }
+
+    private void parseFailAndCheck3(final Parser<SpreadsheetFormatParserContext> parser,
+                                    final SpreadsheetFormatParserToken... tokens) {
+        // https://github.com/mP1/walkingkooka-spreadsheet/issues/2626
+        final String text = ParserToken.text(
+                Lists.of(tokens)
+        );
+        final TextCursor cursor = TextCursors.charSequence(text);
+        final TextCursorSavePoint start = cursor.save();
+
+        this.checkEquals(
+                Optional.empty(),
+                this.parse(
+                        parser,
+                        cursor,
+                        this.createContext()
+                )
+        );
+
+        this.checkEquals(
+                text,
                 start.textBetween().toString()
         );
     }
