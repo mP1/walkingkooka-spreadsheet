@@ -103,6 +103,15 @@ FRACTION_DIGIT                = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
 
 
 
+(* general ...........................................................................................................*)
+GENERAL                       = [{ GENERAL_COLOR_WHITESPACE }],
+                                GENERAL_SYMBOL,
+                                [{ GENERAL_COLOR_WHITESPACE }];
+
+GENERAL_COLOR_WHITESPACE      = WHITESPACE | COLOR;
+
+
+
 (* NUMBER .............................................................................................................*)
 NUMBER                        = [CONDITION],
                                  GENERAL_OR_NUMBER;
@@ -119,15 +128,6 @@ NUMBER_DIGIT                  = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
 
 NUMBER_OR_LITERAL             = { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_DIGIT | NUMBER_LITERAL | QUOTED };
 
-
-
-
-(* general ...........................................................................................................*)
-GENERAL                       = [{ GENERAL_COLOR_WHITESPACE }],
-                                GENERAL_SYMBOL,
-                                [{ GENERAL_COLOR_WHITESPACE }];
-
-GENERAL_COLOR_WHITESPACE      = WHITESPACE | COLOR;
 
 
 
