@@ -69,7 +69,7 @@ DATE                          = [ CONDITION ],
                                 GENERAL_OR_DATE;
 
 GENERAL_OR_DATE               = GENERAL |
-                                [{ DAY | MONTH_MINUTE | YEAR | DATE_DATETIME_TIME }];
+                                [{ DAY | MONTH_MINUTE | YEAR | DATETIME_COMPONENT }];
 
 
 
@@ -78,7 +78,7 @@ DATETIME                      = [ CONDITION ],
                                 GENERAL_OR_DATETIME;
 
 GENERAL_OR_DATETIME           = GENERAL |
-                                [{ DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
+                                [{ DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATETIME_COMPONENT }];
 
 
 
@@ -87,12 +87,12 @@ TIME                          = [ CONDITION ],
                                 GENERAL_OR_TIME;
 
 GENERAL_OR_TIME               = GENERAL |
-                                [{ HOUR | MONTH_MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
+                                [{ HOUR | MONTH_MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATETIME_COMPONENT }];
 
 
 
 (* date, datetime, time ..............................................................................................*)
-DATE_DATETIME_TIME            = COLOR | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED;
+DATETIME_COMPONENT            = COLOR | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED;
 
 
 (* seconds decimal zeroes.............................................................................................*)
@@ -129,16 +129,16 @@ NUMBER                        = [CONDITION],
                                  GENERAL_OR_NUMBER;
 
 GENERAL_OR_NUMBER             = GENERAL |
-                                { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_EXPONENT | NUMBER_OR_LITERAL | PERCENTAGE | QUOTED };
+                                { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_EXPONENT | NUMBER_COMPONENT | PERCENTAGE | QUOTED };
 
 
 NUMBER_EXPONENT               = NUMBER_EXPONENT_SYMBOL,
-                                [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_OR_LITERAL }];
+                                [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_COMPONENT }];
 NUMBER_EXPONENT_SYMBOL        = ( 'E+' | 'e+' | 'E-' | 'e-' );
 
 NUMBER_DIGIT                  = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
 
-NUMBER_OR_LITERAL             = { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_DIGIT | NUMBER_LITERAL | QUOTED };
+NUMBER_COMPONENT              = { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_DIGIT | NUMBER_LITERAL | QUOTED };
 
 
 
