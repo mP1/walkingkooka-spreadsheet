@@ -393,6 +393,73 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // date........................................................................................................
 
     @Test
+    public void testDateGeneral() {
+        this.dateParseAndCheck(
+                general()
+        );
+    }
+
+    @Test
+    public void testDateWhitespaceGeneral() {
+        this.dateParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateGeneralWhitespace() {
+        this.dateParseAndCheck(
+                general(
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateWhitespaceGeneralWhitespace() {
+        this.dateParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateColorGeneral() {
+        this.dateParseAndCheck(
+                general(
+                        color(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateColorWhitespaceGeneral() {
+        this.dateParseAndCheck(
+                general(
+                        color(),
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateColorEscaped() {
+        this.dateParseAndCheck(
+                color(),
+                escape()
+        );
+    }
+
+    @Test
     public void testDateTextDigitFails() {
         this.dateParseThrows(digit());
     }
@@ -420,11 +487,6 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateTextPlaceholderFails() {
         this.dateParseThrows(textPlaceholder());
-    }
-
-    @Test
-    public void testDateGeneralFails() {
-        this.dateParseThrows(generalSymbol());
     }
 
     @Test
@@ -3106,8 +3168,70 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeGeneralFails() {
-        this.timeParseThrows(generalSymbol());
+    public void testTimeGeneral() {
+        this.timeParseAndCheck(
+                general()
+        );
+    }
+
+    @Test
+    public void testTimeWhitespaceGeneral() {
+        this.timeParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeGeneralWhitespace() {
+        this.timeParseAndCheck(
+                general(
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeWhitespaceGeneralWhitespace() {
+        this.timeParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeColorGeneral() {
+        this.timeParseAndCheck(
+                general(
+                        color(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeColorWhitespaceGeneral() {
+        this.timeParseAndCheck(
+                general(
+                        color(),
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeColorEscaped() {
+        this.timeParseAndCheck(
+                color(),
+                escape()
+        );
     }
 
     @Test
@@ -3710,14 +3834,74 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         return SpreadsheetFormatParsers.time();
     }
 
-    // dateAndTime......................................................................................................
+    // dateTime.........................................................................................................
 
     @Test
-    public void testDateTimeGeneralFails() {
-        this.parseThrows2(this.dateTimeParser(), generalSymbol());
+    public void testDateTimeGeneral() {
+        this.dateTimeParseAndCheck(
+                general()
+        );
     }
 
-    // literals only....................................................................................................
+    @Test
+    public void testDateTimeWhitespaceGeneral() {
+        this.dateTimeParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeGeneralWhitespace() {
+        this.dateTimeParseAndCheck(
+                general(
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeWhitespaceGeneralWhitespace() {
+        this.dateTimeParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeColorGeneral() {
+        this.dateTimeParseAndCheck(
+                general(
+                        color(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeColorWhitespaceGeneral() {
+        this.dateTimeParseAndCheck(
+                general(
+                        color(),
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeColorEscaped() {
+        this.dateTimeParseAndCheck(
+                color(),
+                escape()
+        );
+    }
 
     @Test
     public void testDateTimeEscaped() {
