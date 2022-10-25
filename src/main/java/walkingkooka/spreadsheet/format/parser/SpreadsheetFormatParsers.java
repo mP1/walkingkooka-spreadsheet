@@ -241,26 +241,6 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             SpreadsheetFormatParserToken::monthOrMinute,
             SpreadsheetFormatMonthOrMinuteParserToken.class);
 
-    // expression...............................................................................................................
-
-    /**
-     * Returns a {@link Parser} that given text returns a {@link SpreadsheetFormatParserToken}.
-     */
-    public static Parser<SpreadsheetFormatParserContext> expressionSeparator() {
-        return EXPRESSION_SEPARATOR_SYMBOL_PARSER.cast();
-    }
-
-    private static final Parser<SpreadsheetFormatParserContext> EXPRESSION_SEPARATOR_SYMBOL_PARSER = symbol(
-            ';', // cant call SpreadsheetPattern.SEPARATOR.character() because will NPE,
-            SpreadsheetFormatParserToken::separatorSymbol,
-            SpreadsheetFormatSeparatorSymbolParserToken.class
-    );
-
-    private static final EbnfIdentifierName EXPRESSION_SEPARATOR_IDENTIFIER = EbnfIdentifierName.with("EXPRESSION_SEPARATOR");
-
-    private static void expressionSeparator(final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined) {
-        predefined.put(EXPRESSION_SEPARATOR_IDENTIFIER, EXPRESSION_SEPARATOR_SYMBOL_PARSER);
-    }
     // general ..........................................................................................................
 
     /**
@@ -361,6 +341,27 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             SpreadsheetFormatParserToken::thousands,
             SpreadsheetFormatThousandsParserToken.class);
     private static final EbnfIdentifierName THOUSANDS_IDENTIFIER = EbnfIdentifierName.with("THOUSANDS");
+
+    // pattern..........................................................................................................
+
+    /**
+     * Returns a {@link Parser} that given text returns a {@link SpreadsheetFormatParserToken}.
+     */
+    public static Parser<SpreadsheetFormatParserContext> patternSeparator() {
+        return PATTERN_SEPARATOR_SYMBOL_PARSER.cast();
+    }
+
+    private static final Parser<SpreadsheetFormatParserContext> PATTERN_SEPARATOR_SYMBOL_PARSER = symbol(
+            ';', // cant call SpreadsheetPattern.SEPARATOR.character() because will NPE,
+            SpreadsheetFormatParserToken::separatorSymbol,
+            SpreadsheetFormatSeparatorSymbolParserToken.class
+    );
+
+    private static final EbnfIdentifierName PATTERN_SEPARATOR_IDENTIFIER = EbnfIdentifierName.with("PATTERN_SEPARATOR");
+
+    private static void patternSeparator(final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined) {
+        predefined.put(PATTERN_SEPARATOR_IDENTIFIER, PATTERN_SEPARATOR_SYMBOL_PARSER);
+    }
 
     // text..............................................................................................................
 
@@ -492,7 +493,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
             final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined = Maps.sorted();
 
-            expressionSeparator(predefined);
+            patternSeparator(predefined);
             color(predefined);
             condition(predefined);
             date(predefined);
