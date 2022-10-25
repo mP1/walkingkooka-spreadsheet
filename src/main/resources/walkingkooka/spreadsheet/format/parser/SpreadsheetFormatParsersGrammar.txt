@@ -65,17 +65,29 @@ CONDITION_NOT_EQUAL           = BRACKET_OPEN,
 
 
 (* date ..............................................................................................................*)
-DATE                          = [ CONDITION ], [{ DAY | MONTH_MINUTE | YEAR | DATE_DATETIME_TIME }];
+DATE                          = [ CONDITION ],
+                                GENERAL_OR_DATE;
+
+GENERAL_OR_DATE               = GENERAL |
+                                [{ DAY | MONTH_MINUTE | YEAR | DATE_DATETIME_TIME }];
 
 
 
 (* date/time .........................................................................................................*)
-DATETIME                      = [ CONDITION ], [{ DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
+DATETIME                      = [ CONDITION ],
+                                GENERAL_OR_DATETIME;
+
+GENERAL_OR_DATETIME           = GENERAL |
+                                [{ DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
 
 
 
 (* time ..............................................................................................................*)
-TIME                          = [ CONDITION ], [{ HOUR | MONTH_MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
+TIME                          = [ CONDITION ],
+                                GENERAL_OR_TIME;
+
+GENERAL_OR_TIME               = GENERAL |
+                                [{ HOUR | MONTH_MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
 
 
 
