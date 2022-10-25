@@ -104,7 +104,12 @@ FRACTION_DIGIT                = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
 
 
 (* NUMBER .............................................................................................................*)
-NUMBER                        = [CONDITION], { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_EXPONENT | NUMBER_OR_LITERAL | PERCENTAGE | QUOTED };
+NUMBER                        = [CONDITION],
+                                 GENERAL_OR_NUMBER;
+
+GENERAL_OR_NUMBER             = GENERAL |
+                                { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_EXPONENT | NUMBER_OR_LITERAL | PERCENTAGE | QUOTED };
+
 
 NUMBER_EXPONENT               = NUMBER_EXPONENT_SYMBOL,
                                 [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_OR_LITERAL }];
