@@ -1072,9 +1072,103 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberParseThrows(digit(), fractionSymbol());
     }
 
+    // general.........................................................................................................
+
     @Test
-    public void testNumberGeneralFails() {
-        this.numberParseThrows(generalSymbol());
+    public void testNumberGeneral() {
+        this.numberParseAndCheck(
+                general()
+        );
+    }
+
+    @Test
+    public void testNumberGeneralWhitespace() {
+        this.numberParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testNumberWhitespaceGeneralWhitespace() {
+        this.numberParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testNumberColorGeneral() {
+        this.numberParseAndCheck(
+                general(
+                        color(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testNumberColorWhitespaceGeneral() {
+        this.numberParseAndCheck(
+                general(
+                        color(),
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testNumberConditionEqualsGeneral() {
+        this.numberParseAndCheck(
+                conditionEquals(),
+                general()
+        );
+    }
+
+    @Test
+    public void testNumberConditionGreaterThanGeneral() {
+        this.numberParseAndCheck(
+                conditionGreaterThan(),
+                general()
+        );
+    }
+
+    @Test
+    public void testNumberConditionGreaterThanEqualsGeneral() {
+        this.numberParseAndCheck(
+                conditionGreaterThanEquals(),
+                general()
+        );
+    }
+
+    @Test
+    public void testNumberConditionLessThanGeneral() {
+        this.numberParseAndCheck(
+                conditionLessThan(),
+                general()
+        );
+    }
+
+    @Test
+    public void testNumberConditionLessThanEqualsGeneral() {
+        this.numberParseAndCheck(
+                conditionLessThanEquals(),
+                general()
+        );
+    }
+
+    @Test
+    public void testNumberConditionNotEqualsGeneral() {
+        this.numberParseAndCheck(
+                conditionNotEquals(),
+                general()
+        );
     }
 
     // literals only...........................................................................

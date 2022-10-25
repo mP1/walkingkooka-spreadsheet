@@ -163,8 +163,18 @@ public abstract class SpreadsheetFormatParserTestCase {
     }
 
     static SpreadsheetFormatParserToken general() {
-        final List<ParserToken> tokens = Lists.of(generalSymbol());
-        return SpreadsheetFormatParserToken.general(tokens, ParserToken.text(tokens));
+        return general(
+                generalSymbol()
+        );
+    }
+
+    static SpreadsheetFormatParserToken general(final SpreadsheetFormatParserToken... tokens) {
+        final List<ParserToken> tokensList = Lists.of(tokens);
+
+        return SpreadsheetFormatParserToken.general(
+                tokensList,
+                ParserToken.text(tokensList)
+        );
     }
 
     static SpreadsheetFormatParserToken generalSymbol() {
