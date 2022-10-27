@@ -570,9 +570,11 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      * Creates a new {@link SpreadsheetTextFormatPattern} after checking the value is valid.
      */
     public static SpreadsheetTextFormatPattern parseTextFormatPattern(final String text) {
-        return parsePattern(text,
+        return parsePattern(
+                text,
                 TEXT_FORMAT_PARSER,
-                SpreadsheetPattern::transformText);
+                SpreadsheetPattern::transformText
+        );
     }
 
     private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER = formatParser(SpreadsheetFormatParsers.text().cast());

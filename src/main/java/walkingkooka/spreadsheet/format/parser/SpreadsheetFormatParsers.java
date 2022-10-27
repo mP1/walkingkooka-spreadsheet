@@ -369,11 +369,11 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Returns a {@link Parser} that returns a text format expression as {@link SpreadsheetFormatParserToken tokens}.
      */
     public static Parser<SpreadsheetFormatParserContext> text() {
-        return TEXT_PARSER;
+        return TEXT_FORMAT_PARSER;
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TEXT_PARSER;
-    static final EbnfIdentifierName TEXT_IDENTIFIER = EbnfIdentifierName.with("TEXT");
+    private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER;
+    static final EbnfIdentifierName TEXT_FORMAT_IDENTIFIER = EbnfIdentifierName.with("TEXT_FORMAT");
 
     private static void text(final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined) {
         predefined.put(QUOTED_IDENTIFIER, QUOTED);
@@ -520,7 +520,9 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             FRACTION_PARSER = parsers.get(EbnfIdentifierName.with("FRACTION")).cast();
             GENERAL_PARSER = parsers.get(GENERAL_IDENTIFIER).cast();
             NUMBER_PARSER = parsers.get(EbnfIdentifierName.with("NUMBER")).cast();
-            TEXT_PARSER = parsers.get(TEXT_IDENTIFIER).cast();
+            TEXT_FORMAT_PARSER = parsers.get(TEXT_FORMAT_IDENTIFIER)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic())
+                    .cast();
             TIME_PARSER = parsers.get(EbnfIdentifierName.with("TIME")).cast();
 
         } catch (final SpreadsheetFormatParserException rethrow) {
