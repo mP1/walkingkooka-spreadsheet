@@ -513,17 +513,16 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                     .combinator(predefined, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
 
 
-            COLOR_PARSER = parsers.get(COLOR_IDENTIFIER).cast();
-            CONDITION_PARSER = parsers.get(EbnfIdentifierName.with("CONDITION")).cast();
-            DATE_PARSER = parsers.get(EbnfIdentifierName.with("DATE")).cast();
-            DATETIME_PARSER = parsers.get(EbnfIdentifierName.with("DATETIME")).cast();
-            FRACTION_PARSER = parsers.get(EbnfIdentifierName.with("FRACTION")).cast();
-            GENERAL_PARSER = parsers.get(GENERAL_IDENTIFIER).cast();
-            NUMBER_PARSER = parsers.get(EbnfIdentifierName.with("NUMBER")).cast();
+            COLOR_PARSER = parsers.get(COLOR_IDENTIFIER);
+            CONDITION_PARSER = parsers.get(EbnfIdentifierName.with("CONDITION"));
+            DATE_PARSER = parsers.get(EbnfIdentifierName.with("DATE"));
+            DATETIME_PARSER = parsers.get(EbnfIdentifierName.with("DATETIME"));
+            FRACTION_PARSER = parsers.get(EbnfIdentifierName.with("FRACTION"));
+            GENERAL_PARSER = parsers.get(GENERAL_IDENTIFIER);
+            NUMBER_PARSER = parsers.get(EbnfIdentifierName.with("NUMBER"));
             TEXT_FORMAT_PARSER = parsers.get(TEXT_FORMAT_IDENTIFIER)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic())
-                    .cast();
-            TIME_PARSER = parsers.get(EbnfIdentifierName.with("TIME")).cast();
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+            TIME_PARSER = parsers.get(EbnfIdentifierName.with("TIME"));
 
         } catch (final SpreadsheetFormatParserException rethrow) {
             throw rethrow;
