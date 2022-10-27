@@ -577,7 +577,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER = formatParser(SpreadsheetFormatParsers.text().cast());
+    private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER = SpreadsheetFormatParsers.text();
 
     /**
      * Transforms the tokens into a {@link SpreadsheetTextFormatPattern}
