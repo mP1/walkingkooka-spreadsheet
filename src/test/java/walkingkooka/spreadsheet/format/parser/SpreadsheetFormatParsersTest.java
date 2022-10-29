@@ -3180,8 +3180,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTextPatternSeparatorPattern() {
-        this.textParseAndCheck(
+    public void testTextPatternSeparatorPatternFails() {
+        this.textParseThrows(
                 textPlaceholder(),
                 separator(),
                 textPlaceholder()
@@ -3189,8 +3189,9 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTextColorPatternSeparatorColorPattern() {
+    public void testTextConditionColorPatternSeparatorColorPattern() {
         this.textParseAndCheck(
+                conditionEquals(),
                 color(),
                 textPlaceholder(),
                 separator(),
@@ -3199,11 +3200,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
+    @Test
+    public void testTextPatternSeparator() {
+        this.textParseAndCheck(
+                textPlaceholder(),
+                separator()
+        );
+    }
+
+    @Test
+    public void testTextPatternSeparatorPatternSeparatorFails() {
+        this.textParseThrows(
+                textPlaceholder(),
+                separator(),
+                textPlaceholder(),
+                separator()
+        );
+    }
+
+    @Test
+    public void testTextConditionPatternSeparatorPatternSeparator() {
+        this.textParseAndCheck(
+                conditionEquals(),
+                textPlaceholder(),
+                separator(),
+                textPlaceholder(),
+                separator()
+        );
+    }
+
     // text helpers......................................................................................................
 
     private void textParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
         this.parseAndCheck2(
-                this.textParser(),
+                SpreadsheetFormatParsers.text(),
                 SpreadsheetFormatParserToken::text,
                 tokens
         );
@@ -3211,13 +3241,9 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     private void textParseThrows(final SpreadsheetFormatParserToken... tokens) {
         this.parseThrows2(
-                this.textParser(),
+                SpreadsheetFormatParsers.text(),
                 tokens
         );
-    }
-
-    private Parser<SpreadsheetFormatParserContext> textParser() {
-        return SpreadsheetFormatParsers.text();
     }
 
     // time........................................................................................................
