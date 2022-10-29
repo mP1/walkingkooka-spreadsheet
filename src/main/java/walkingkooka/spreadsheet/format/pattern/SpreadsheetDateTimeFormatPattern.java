@@ -17,11 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-
-import java.time.LocalDateTime;
 
 /**
  * Holds a valid {@link SpreadsheetDateTimeFormatPattern}.
@@ -43,16 +39,6 @@ public final class SpreadsheetDateTimeFormatPattern extends SpreadsheetFormatPat
      */
     private SpreadsheetDateTimeFormatPattern(final SpreadsheetFormatDateTimeParserToken token) {
         super(token);
-    }
-
-    // HasSpreadsheetFormatter..........................................................................................
-
-    /**
-     * Factory that lazily creates a {@link SpreadsheetFormatter}
-     */
-    @Override
-    SpreadsheetFormatter createFormatter() {
-        return SpreadsheetFormatters.dateTime(this.value, v -> v instanceof LocalDateTime);
     }
 
     // TreePrintable....................................................................................................
