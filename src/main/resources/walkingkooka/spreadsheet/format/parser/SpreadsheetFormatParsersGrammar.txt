@@ -144,8 +144,9 @@ NUMBER_COMPONENT              = { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NU
 
 
 (* text format, note the last pattern may not have a condition........................................................*)
-TEXT_FORMAT                   = [{ [ CONDITION ], TEXT, PATTERN_SEPARATOR }],
-                                TEXT;
+TEXT_FORMAT                   = [{ CONDITION, TEXT, PATTERN_SEPARATOR }],
+                                TEXT,
+                                [ PATTERN_SEPARATOR ];
 
 
 
