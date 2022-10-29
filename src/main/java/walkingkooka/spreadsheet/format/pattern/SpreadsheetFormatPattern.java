@@ -58,7 +58,9 @@ public abstract class SpreadsheetFormatPattern<T extends SpreadsheetFormatParser
     /**
      * Factory that lazily creates a {@link SpreadsheetFormatter}
      */
-    abstract SpreadsheetFormatter createFormatter();
+    final SpreadsheetFormatter createFormatter() {
+        return SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor.createFormatter(this.value);
+    }
 
     // TreePrintable....................................................................................................
 

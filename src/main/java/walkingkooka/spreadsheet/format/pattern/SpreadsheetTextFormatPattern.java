@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 
 /**
@@ -41,16 +39,6 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
      */
     private SpreadsheetTextFormatPattern(final SpreadsheetFormatTextParserToken token) {
         super(token);
-    }
-
-    // HasSpreadsheetFormatter..........................................................................................
-
-    /**
-     * Factory that lazily creates a {@link SpreadsheetFormatter}
-     */
-    @Override
-    SpreadsheetFormatter createFormatter() {
-        return SpreadsheetFormatters.text(this.value);
     }
 
     // TreePrintable....................................................................................................
