@@ -40,7 +40,8 @@ abstract public class SpreadsheetFormatConditionParserToken extends SpreadsheetF
             throw new IllegalArgumentException("Expected 1 token but got " + count + "=" + without);
         }
 
-        final Optional<SpreadsheetFormatParserToken> bigDecimal = without.stream()
+        final Optional<SpreadsheetFormatParserToken> bigDecimal = value.stream()
+                .filter(t -> t instanceof SpreadsheetFormatParserToken)
                 .map(t -> t.cast(SpreadsheetFormatParserToken.class))
                 .filter(SpreadsheetFormatParserToken::isConditionNumber)
                 .findFirst();

@@ -35,7 +35,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.function.Predicate;
 
-public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>, V>
+public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V>
         implements ClassTesting2<P>,
         HashCodeEqualsDefinedTesting2<P>,
         JsonNodeMarshallingTesting<P>,

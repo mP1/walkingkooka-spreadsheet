@@ -20,14 +20,12 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -35,23 +33,19 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Base class for any class that creates a {@link Parser} from a {@link DateTimeFormatter}.
  */
-abstract class SpreadsheetParsePatterns2<F extends SpreadsheetFormatParserToken,
-        P extends SpreadsheetParserToken,
-        V> extends SpreadsheetParsePatterns<F> {
+abstract class SpreadsheetParsePatterns2<V> extends SpreadsheetParsePatterns {
 
     // ctor.............................................................................................................
 
     /**
      * Package private ctor use factory
      */
-    SpreadsheetParsePatterns2(final List<F> tokens) {
-        super(tokens);
+    SpreadsheetParsePatterns2(final ParserToken token) {
+        super(token);
     }
 
     // HasConverter.....................................................................................................
@@ -108,32 +102,6 @@ abstract class SpreadsheetParsePatterns2<F extends SpreadsheetFormatParserToken,
      */
     @Override
     final Parser<SpreadsheetParserContext> createParser() {
-        return Parsers.alternatives(
-                IntStream.range(0, this.value().size())
-                        .mapToObj(this::createParser0)
-                        .collect(Collectors.toList())
-        ).transform(this::parserTransform)
-                .setToString(this.toString())
-                .cast();
+        return SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor.toParser(this.value());
     }
-
-    private Parser<SpreadsheetParserContext> createParser0(final int i) {
-        return SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor.toParser(
-                this.value().get(i)
-        );
-    }
-
-    /**
-     * This transformer which transform the {@link SequenceParserToken} into a {@link SpreadsheetParserToken} etc..
-     */
-    private P parserTransform(final ParserToken token,
-                              final SpreadsheetParserContext context) {
-        return this.parserTransform0(
-                token.cast(SequenceParserToken.class).value(),
-                token.text()
-        );
-    }
-
-    abstract P parserTransform0(final List<ParserToken> token,
-                                final String text);
 }

@@ -398,8 +398,8 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
     // helpers.........................................................................................................
 
     @Override
-    SpreadsheetNumberParsePatterns createPattern(final List<SpreadsheetFormatNumberParserToken> tokens) {
-        return SpreadsheetNumberParsePatterns.withTokens(tokens);
+    SpreadsheetNumberParsePatterns createPattern(final ParserToken token) {
+        return SpreadsheetNumberParsePatterns.with(token);
     }
 
     @Override

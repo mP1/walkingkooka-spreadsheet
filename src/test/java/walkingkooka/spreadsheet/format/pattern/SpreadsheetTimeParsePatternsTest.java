@@ -534,8 +534,8 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     // helpers..........................................................................................................
 
     @Override
-    SpreadsheetTimeParsePatterns createPattern(final List<SpreadsheetFormatTimeParserToken> tokens) {
-        return SpreadsheetTimeParsePatterns.withTokens(tokens);
+    SpreadsheetTimeParsePatterns createPattern(final ParserToken token) {
+        return SpreadsheetTimeParsePatterns.with(token);
     }
 
     @Override

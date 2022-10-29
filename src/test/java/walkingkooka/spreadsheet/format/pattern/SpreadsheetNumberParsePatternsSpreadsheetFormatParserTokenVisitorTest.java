@@ -25,21 +25,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 public final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor,
         SpreadsheetFormatNumberParserToken> {
 
-    @Test
-    public void testToString() {
-        final SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor();
-
-        final SpreadsheetFormatNumberParserToken token = SpreadsheetFormatParserToken.number(Lists.of(
-                SpreadsheetFormatParserToken.digitZero("0", "0"),
-                SpreadsheetFormatParserToken.decimalPoint(".", "."),
-                SpreadsheetFormatParserToken.digitZero("0", "0")
-        ), "?0.0");
-
-        visitor.accept(token);
-
-        this.toStringAndCheck(visitor, "?0.0");
-    }
-
     @Override
     public SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor createVisitor() {
         return new SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor();

@@ -55,7 +55,7 @@ import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern<?>>,
+public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern>,
         SpreadsheetFormatterTesting {
 
 
@@ -120,7 +120,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    private <T> void localePatternFormatAndCheck(final SpreadsheetFormatPattern<?> formatPattern,
+    private <T> void localePatternFormatAndCheck(final SpreadsheetFormatPattern formatPattern,
                                                  final T value,
                                                  final String formattedText) {
         this.formatAndCheck(
@@ -384,7 +384,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    private <T> void localePatternParseAndCheck(final SpreadsheetParsePatterns<?> pattern,
+    private <T> void localePatternParseAndCheck(final SpreadsheetParsePatterns pattern,
                                                 final String text,
                                                 final BiFunction<ParserToken, ExpressionEvaluationContext, T> tokenToValue,
                                                 final T expected) {
@@ -558,7 +558,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     // Class............................................................................................................
 
     @Override
-    public Class<SpreadsheetPattern<?>> type() {
+    public Class<SpreadsheetPattern> type() {
         return Cast.to(SpreadsheetPattern.class);
     }
 

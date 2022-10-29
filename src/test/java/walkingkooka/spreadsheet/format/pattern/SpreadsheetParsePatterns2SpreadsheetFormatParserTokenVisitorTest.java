@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
+import walkingkooka.text.cursor.parser.SequenceParserToken;
 
 public final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitorTest
         extends SpreadsheetParsePatterns2TestCase<SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor>
@@ -49,7 +50,11 @@ public final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitorT
     }
 
     private SpreadsheetFormatParserToken parserToken(final String pattern) {
-        return SpreadsheetParsePatterns.parseDateParsePatterns(pattern).value().get(0);
+        final SpreadsheetParsePatterns date = SpreadsheetParsePatterns.parseDateParsePatterns(pattern);
+        final SequenceParserToken sequenceParserToken = (SequenceParserToken) date.value();
+        return sequenceParserToken.value()
+                .get(0)
+                .cast(SpreadsheetFormatParserToken.class);
     }
 
     @Override

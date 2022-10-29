@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Cast;
 
-public final class SpreadsheetParsePatterns2Test extends SpreadsheetParsePatterns2TestCase<SpreadsheetParsePatterns2<?, ?, ?>> {
+public final class SpreadsheetParsePatterns2Test extends SpreadsheetParsePatterns2TestCase<SpreadsheetParsePatterns2<?>> {
 
     @Override
-    public Class<SpreadsheetParsePatterns2<?, ?, ?>> type() {
+    public Class<SpreadsheetParsePatterns2<?>> type() {
         return Cast.to(SpreadsheetParsePatterns2.class);
     }
 }

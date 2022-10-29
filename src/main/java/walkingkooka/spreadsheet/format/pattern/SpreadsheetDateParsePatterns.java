@@ -17,47 +17,31 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * Holds a valid {@link SpreadsheetDateParsePatterns}.
  */
-public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns2<SpreadsheetFormatDateParserToken,
-        SpreadsheetDateParserToken,
-        LocalDate> {
+public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns2<LocalDate> {
 
     /**
-     * Factory that creates a {@link SpreadsheetDateParsePatterns} from the given tokens.
+     * Factory that creates a {@link ParserToken} from the given tokens.
      */
-    static SpreadsheetDateParsePatterns withToken(final ParserToken token) {
+    static SpreadsheetDateParsePatterns with(final ParserToken token) {
         final SpreadsheetDateParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDateParsePatternsSpreadsheetFormatParserTokenVisitor.with();
         visitor.startAccept(token);
-        return new SpreadsheetDateParsePatterns(visitor.tokens());
-    }
-
-    /**
-     * Factory that creates a {@link SpreadsheetDateParsePatterns} from the given tokens.
-     */
-    static SpreadsheetDateParsePatterns withTokens(final List<SpreadsheetFormatDateParserToken> tokens) {
-        check(tokens);
-
-        final SpreadsheetDateParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDateParsePatternsSpreadsheetFormatParserTokenVisitor.with();
-        tokens.forEach(visitor::startAccept);
-        return new SpreadsheetDateParsePatterns(visitor.tokens());
+        return new SpreadsheetDateParsePatterns(token);
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetDateParsePatterns(final List<SpreadsheetFormatDateParserToken> tokens) {
-        super(tokens);
+    private SpreadsheetDateParsePatterns(final ParserToken token) {
+        super(token);
     }
 
     @Override
@@ -68,13 +52,9 @@ public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns
     @Override
     LocalDate converterTransformer0(final ParserToken token,
                                     final ExpressionEvaluationContext context) {
-        return token.cast(SpreadsheetDateParserToken.class).toLocalDate(context);
-    }
-
-    @Override
-    SpreadsheetDateParserToken parserTransform0(final List<ParserToken> token,
-                                                final String text) {
-        return SpreadsheetParserToken.date(token, text);
+        return token.cast(
+                SpreadsheetDateParserToken.class
+        ).toLocalDate(context);
     }
 
     // TreePrintable....................................................................................................

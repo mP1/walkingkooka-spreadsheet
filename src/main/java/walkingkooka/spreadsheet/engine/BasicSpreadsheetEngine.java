@@ -990,7 +990,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetParserToken parseFormula(final SpreadsheetCell cell,
                                                 final SpreadsheetEngineContext context,
                                                 final String text) {
-        final Optional<SpreadsheetParsePatterns<?>> maybeParsePatterns = cell.parsePatterns();
+        final Optional<SpreadsheetParsePatterns> maybeParsePatterns = cell.parsePatterns();
         final TextCursor textCursor = TextCursors.charSequence(text);
 
         final SpreadsheetParserToken token;
@@ -1131,7 +1131,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                 final SpreadsheetEngineContext context) {
         // try and use the cells custom format otherwise use a default from the context.
         final SpreadsheetFormatter formatter;
-        final Optional<SpreadsheetFormatPattern<?>> maybeFormat = cell.formatPattern();
+        final Optional<SpreadsheetFormatPattern> maybeFormat = cell.formatPattern();
         if (maybeFormat.isPresent()) {
             formatter = maybeFormat.get()
                     .formatter();

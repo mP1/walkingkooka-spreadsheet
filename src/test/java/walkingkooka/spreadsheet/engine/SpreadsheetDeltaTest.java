@@ -1102,7 +1102,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithFormatPatternWithMissingCells() {
-        final Optional<SpreadsheetFormatPattern<?>> beforeFormat = Optional.of(
+        final Optional<SpreadsheetFormatPattern> beforeFormat = Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
         );
 
@@ -1115,7 +1115,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Sets.of(a1)
                 );
 
-        final SpreadsheetFormatPattern<?> formatPattern = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"");
+        final SpreadsheetFormatPattern formatPattern = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"");
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(
@@ -1140,7 +1140,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithFormatPattern() {
-        final Optional<SpreadsheetFormatPattern<?>> beforeFormat = Optional.of(
+        final Optional<SpreadsheetFormatPattern> beforeFormat = Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
         );
 
@@ -1156,7 +1156,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Sets.of(a1, a2)
                 );
 
-        final SpreadsheetFormatPattern<?> formatPattern = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"");
+        final SpreadsheetFormatPattern formatPattern = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"");
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(
@@ -1184,7 +1184,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(SpreadsheetFormula.EMPTY);
 
-        final Optional<SpreadsheetFormatPattern<?>> format = Optional.of(
+        final Optional<SpreadsheetFormatPattern> format = Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
         );
 
@@ -1216,7 +1216,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithFormatPatternAndWindow() {
-        final Optional<SpreadsheetFormatPattern<?>> beforeFormat = Optional.of(
+        final Optional<SpreadsheetFormatPattern> beforeFormat = Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
         );
 
@@ -1234,7 +1234,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetSelection.parseWindow("A1:A2")
                 );
 
-        final SpreadsheetFormatPattern<?> formatPattern = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"");
+        final SpreadsheetFormatPattern formatPattern = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"");
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(
@@ -1258,7 +1258,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithParsePatterns() {
-        final Optional<SpreadsheetParsePatterns<?>> beforeFormat = Optional.of(
+        final Optional<SpreadsheetParsePatterns> beforeFormat = Optional.of(
                 SpreadsheetPattern.parseNumberParsePatterns("\"before\"")
         );
 
@@ -1274,7 +1274,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Sets.of(a1, a2)
                 );
 
-        final SpreadsheetParsePatterns<?> parsePatterns = SpreadsheetPattern.parseNumberParsePatterns("\"patched\"");
+        final SpreadsheetParsePatterns parsePatterns = SpreadsheetPattern.parseNumberParsePatterns("\"patched\"");
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(
@@ -1302,7 +1302,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(SpreadsheetFormula.EMPTY);
 
-        final Optional<SpreadsheetParsePatterns<?>> format = Optional.of(
+        final Optional<SpreadsheetParsePatterns> format = Optional.of(
                 SpreadsheetPattern.parseNumberParsePatterns("#\"should be cleared\"")
         );
 

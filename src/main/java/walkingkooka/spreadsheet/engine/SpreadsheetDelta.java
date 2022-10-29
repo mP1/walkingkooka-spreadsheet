@@ -1177,7 +1177,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         if (patched.size() < cellRange.count()) {
-            final Optional<SpreadsheetFormatPattern<?>> formatPattern = Optional.of(
+            final Optional<SpreadsheetFormatPattern> formatPattern = Optional.of(
                     context.unmarshallWithType(
                             format.objectOrFail()
                                     .getOrFail(FORMAT_PATTERN_PROPERTY)
@@ -1219,7 +1219,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         if (patched.size() < cellRange.count()) {
-            final Optional<SpreadsheetParsePatterns<?>> parsePatterns = Optional.of(
+            final Optional<SpreadsheetParsePatterns> parsePatterns = Optional.of(
                     context.unmarshallWithType(
                             pattern.objectOrFail()
                                     .getOrFail(PARSE_PATTERNS_PROPERTY)

@@ -25,26 +25,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 public final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor,
         SpreadsheetFormatDateTimeParserToken> {
 
-    @Test
-    public void testToString() {
-        final SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor();
-
-        final SpreadsheetFormatDateTimeParserToken token = SpreadsheetFormatParserToken.dateTime(Lists.of(
-                SpreadsheetFormatParserToken.day("d", "d"),
-                SpreadsheetFormatParserToken.monthOrMinute("m", "m"),
-                SpreadsheetFormatParserToken.year("yyyy", "yyyy"),
-                SpreadsheetFormatParserToken.hour("h", "h"),
-                SpreadsheetFormatParserToken.monthOrMinute("m", "m"),
-                SpreadsheetFormatParserToken.second("s", "s"),
-                SpreadsheetFormatParserToken.decimalPoint(".", "."),
-                SpreadsheetFormatParserToken.digitZero("0", "0")
-        ), "dmyyyyhms.0");
-
-        visitor.accept(token);
-
-        this.toStringAndCheck(visitor, "dmyyyyhms.0");
-    }
-
     @Override
     public SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor createVisitor() {
         return new SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor();
