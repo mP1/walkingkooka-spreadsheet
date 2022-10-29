@@ -48,7 +48,7 @@ public final class SpreadsheetFormatTextParserToken extends SpreadsheetFormatPar
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override
-    public void accept(SpreadsheetFormatParserTokenVisitor visitor) {
+    public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         if (Visiting.CONTINUE == visitor.startVisit(this)) {
             this.acceptValues(visitor);
         }
@@ -61,5 +61,4 @@ public final class SpreadsheetFormatTextParserToken extends SpreadsheetFormatPar
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetFormatTextParserToken;
     }
-
 }
