@@ -45,7 +45,7 @@ public final class SpreadsheetFormatExponentParserToken extends SpreadsheetForma
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override
-    public void accept(SpreadsheetFormatParserTokenVisitor visitor) {
+    public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         if (Visiting.CONTINUE == visitor.startVisit(this)) {
             this.acceptValues(visitor);
         }
