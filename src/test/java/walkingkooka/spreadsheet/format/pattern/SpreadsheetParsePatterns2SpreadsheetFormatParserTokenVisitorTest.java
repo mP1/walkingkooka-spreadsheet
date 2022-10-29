@@ -38,10 +38,14 @@ public final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitorT
     @Test
     public void testToString() {
         final SpreadsheetFormatParserToken token = this.parserToken("yyyymmdd");
-        final SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor(token);
+
+        final SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
 
-        this.toStringAndCheck(visitor, token.toString());
+        this.toStringAndCheck(
+                visitor,
+                "[yyyymmdd]"
+        );
     }
 
     private SpreadsheetFormatParserToken parserToken(final String pattern) {
@@ -50,7 +54,7 @@ public final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitorT
 
     @Override
     public SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor(null);
+        return new SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor();
     }
 
     // ClassTesting.....................................................................................................

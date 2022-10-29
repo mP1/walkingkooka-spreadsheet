@@ -18,12 +18,16 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Value;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDecimalPointParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthOrMinuteParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -34,6 +38,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolPa
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatStarParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextPlaceholderParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatUnderscoreParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
@@ -58,6 +63,7 @@ import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.SequenceParserBuilder;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.StringParserToken;
+import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -69,30 +75,88 @@ import java.util.function.BiFunction;
 final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     /**
-     * Creates a {@link Parser} which will return a {@link walkingkooka.text.cursor.parser.SequenceParserToken}, which
-     * will need to be transformed into either a {@link walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken},
-     * {@link walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken} or {@link walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken}.
+     * Creates a {@link Parser} for each of the individual date/datetime/time individual patterns.
      */
-    static Parser<SpreadsheetParserContext> toParser(final SpreadsheetFormatParserToken token) {
-        final SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor(token);
+    static Parser<SpreadsheetParserContext> toParser(final ParserToken token) {
+        final SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
         visitor.appendDecimalSeparatorMillisecondsIfNecessary();
 
-        final Parser<SpreadsheetParserContext> parser = visitor.sequenceParserBuilder.build();
-        return parser.transform(SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor::flat)
+        return Parsers.alternatives(visitor.parsers)
                 .andEmptyTextCursor()
-                .setToString(parser.toString());
+                .setToString(token.toString());
     }
 
-    private static ParserToken flat(final ParserToken token, final SpreadsheetParserContext context) {
-        return token.cast(SequenceParserToken.class).flat();
+    private static ParserToken flat(final ParserToken token,
+                                    final SpreadsheetParserContext context) {
+        return token.cast(SequenceParserToken.class)
+                .flat();
     }
 
-    SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor(final SpreadsheetFormatParserToken token) {
+    SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor() {
         super();
-        this.token = token;
-        this.milliseconds = 0;
     }
+
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
+        return this.startParser();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
+        return this.startParser();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatGeneralParserToken token) {
+        return this.startParser();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
+        return this.startParser();
+    }
+
+    private Visiting startParser() {
+        this.sequenceParserBuilder = Parsers.sequenceParserBuilder();
+        this.milliseconds = 0;
+        return Visiting.CONTINUE;
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatDateParserToken token) {
+        this.endParser(token);
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
+        this.endParser(token);
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatGeneralParserToken token) {
+        this.endParser(token);
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatTimeParserToken token) {
+        this.endParser(token);
+    }
+
+    private void endParser(final SpreadsheetFormatParserToken token) {
+        this.appendDecimalSeparatorMillisecondsIfNecessary();
+
+        this.parsers.add(
+                this.sequenceParserBuilder.build()
+                        .transform(
+                                SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor::flat
+                        ).andEmptyTextCursor()
+                        .setToString(token.text())
+        );
+    }
+
+    private List<Parser<SpreadsheetParserContext>> parsers = Lists.array();
 
     // symbols within a date/datetime/time..............................................................................
 
@@ -479,7 +543,7 @@ final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends
     /**
      * Multiple parsers for each of the components in the pattern.
      */
-    private final SequenceParserBuilder<SpreadsheetParserContext> sequenceParserBuilder = Parsers.sequenceParserBuilder();
+    private SequenceParserBuilder<SpreadsheetParserContext> sequenceParserBuilder;
 
     private void failInvalid(final SpreadsheetFormatParserToken token) {
         throw new IllegalStateException("Invalid token " + token);
@@ -487,8 +551,6 @@ final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends
 
     @Override
     public String toString() {
-        return this.token.toString();
+        return this.parsers.toString();
     }
-
-    private final SpreadsheetFormatParserToken token;
 }
