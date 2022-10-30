@@ -17,17 +17,17 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
+import walkingkooka.text.cursor.parser.ParserToken;
 
 /**
  * Holds a valid {@link SpreadsheetDateFormatPattern}.
  */
-public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern<SpreadsheetFormatDateParserToken> {
+public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern {
 
     /**
-     * Factory that creates a {@link SpreadsheetDateFormatPattern} from the given token.
+     * Factory that creates a {@link ParserToken} from the given token.
      */
-    static SpreadsheetDateFormatPattern with(final SpreadsheetFormatDateParserToken token) {
+    static SpreadsheetDateFormatPattern with(final ParserToken token) {
         SpreadsheetDateFormatPatternSpreadsheetFormatParserTokenVisitor.with()
                 .startAccept(token);
 
@@ -37,7 +37,7 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
     /**
      * Private ctor use factory
      */
-    private SpreadsheetDateFormatPattern(final SpreadsheetFormatDateParserToken token) {
+    private SpreadsheetDateFormatPattern(final ParserToken token) {
         super(token);
     }
 

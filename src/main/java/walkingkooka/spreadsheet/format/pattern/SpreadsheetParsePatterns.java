@@ -17,26 +17,18 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
- * Holds a a {@link List} of {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
+ * Holds a {@link ParserToken} typically a date/dateime/time and possibly color or conditions.
  */
-public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParserToken> extends SpreadsheetPattern<List<T>>
+public abstract class SpreadsheetParsePatterns extends SpreadsheetPattern
         implements HasConverter<ExpressionNumberConverterContext>,
         HasParser<SpreadsheetParserContext> {
 
@@ -45,30 +37,8 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
     /**
      * Package private ctor use factory
      */
-    SpreadsheetParsePatterns(final List<T> tokens) {
-        super(Lists.immutable(tokens));
-    }
-
-    // TreePrintable....................................................................................................
-
-    @Override
-    final void printTreeValue(final IndentingPrinter printer) {
-        for (final T token : this.value()) {
-            printer.println(
-                    CharSequences.quoteAndEscape(token.text())
-            );
-        }
-    }
-
-    // Object...........................................................................................................
-
-    private final static String SEPARATOR = ";";
-
-    @Override
-    final String toStringPlain() {
-        return this.value.stream()
-                .map(Object::toString)
-                .collect(Collectors.joining(SEPARATOR));
+    SpreadsheetParsePatterns(final ParserToken token) {
+        super(token);
     }
 
     // HasConverter........................................................................................................

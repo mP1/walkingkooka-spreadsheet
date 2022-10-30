@@ -48,6 +48,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.ParserTokens;
+import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -57,7 +59,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetParsePatterns<T>,
+public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetParsePatterns,
         T extends SpreadsheetFormatParentParserToken,
         SPT extends SpreadsheetParentParserToken,
         V> extends SpreadsheetPatternTestCase<P, List<T>>
@@ -83,21 +85,30 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     @Test
     public final void testWithNullParserTokenFails() {
-        assertThrows(NullPointerException.class, () -> createPattern((List<T>) null));
-    }
-
-    @Test
-    public final void testWithNullEmptyParserTokenFails() {
-        assertThrows(IllegalArgumentException.class, () -> createPattern(Lists.empty()));
+        assertThrows(
+                NullPointerException.class,
+                () -> createPattern((ParserToken) null)
+        );
     }
 
     @Test
     public final void testWith() {
-        final List<T> tokens = Lists.of(this.parseFormatParserToken(this.patternText()),
-                this.parseFormatParserToken("\"text-literal-2\""));
+        final List<ParserToken> tokens = Lists.of(
+                this.parseFormatParserToken(this.patternText()),
+                this.parseFormatParserToken("\"text-literal-2\"")
+        );
 
-        final P patterns = this.createPattern(tokens);
-        this.checkEquals(patterns.value(), tokens, "value");
+        final SequenceParserToken sequenceParserToken = ParserTokens.sequence(
+                tokens,
+                ParserToken.text(tokens)
+        );
+
+        final P patterns = this.createPattern(sequenceParserToken);
+        this.checkEquals(
+                patterns.value(),
+                sequenceParserToken,
+                "value"
+        );
     }
 
     @Test
@@ -137,9 +148,18 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     @Test
     public final void testWithEscape() {
-        final List<T> tokens = Lists.of(this.createFormatParserToken(Lists.of(SpreadsheetFormatParserToken.escape('\t', "\\t"))));
-        final P patterns = this.createPattern(tokens);
-        this.checkEquals(patterns.value(), tokens, "value");
+        final ParserToken token = this.createFormatParserToken(
+                Lists.of(
+                        SpreadsheetFormatParserToken.escape('\t', "\\t")
+                )
+        );
+        final P patterns = this.createPattern(token);
+
+        this.checkEquals(
+                patterns.value(),
+                token,
+                "value"
+        );
     }
 
     @Test
@@ -189,9 +209,23 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     @Test
     public final void testWithWhitespace() {
-        final List<T> tokens = Lists.of(this.createFormatParserToken(Lists.of(whitespace())));
-        final P patterns = this.createPattern(tokens);
-        this.checkEquals(patterns.value(), tokens, "value");
+        final ParserToken token = this.createFormatParserToken(
+                Lists.of(
+                        whitespace()
+                )
+        );
+        final SequenceParserToken sequenceParserToken = ParserTokens.sequence(
+                Lists.of(token),
+                token.text()
+        );
+
+        final P patterns = this.createPattern(sequenceParserToken);
+
+        this.checkEquals(
+                patterns.value(),
+                sequenceParserToken,
+                "value"
+        );
     }
 
     final void withInvalidCharacterFails(final ParserToken token) {
@@ -205,7 +239,10 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
         final T parent = this.createFormatParserToken(tokens, patternText2);
 
-        final InvalidCharacterException thrown = assertThrows(InvalidCharacterException.class, () -> this.createPattern(Lists.of(parent)));
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> this.createPattern(parent)
+        );
         this.checkEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
     }
 
@@ -216,16 +253,35 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         final T first = this.parseFormatParserToken(this.patternText());
         final T second = this.parseFormatParserToken("\"text-literal-2\"");
 
-        this.marshallRoundTripTwiceAndCheck(this.createPattern(Lists.of(first, second)));
+        final List<ParserToken> tokens = Lists.of(
+                first,
+                second
+        );
+
+        this.marshallRoundTripTwiceAndCheck(
+                this.createPattern(
+                        ParserTokens.sequence(
+                                tokens,
+                                ParserToken.text(tokens)
+                        )
+                )
+        );
     }
 
     // helpers..........................................................................................................
 
     final P createPattern(final String pattern) {
-        return this.createPattern(Lists.of(this.parseFormatParserToken(pattern)));
+        return this.createPattern(
+                ParserTokens.sequence(
+                        Lists.of(
+                                this.parseFormatParserToken(pattern)
+                        ),
+                        pattern
+                )
+        );
     }
 
-    abstract P createPattern(final List<T> tokens);
+    abstract P createPattern(final ParserToken token);
 
     abstract T parseFormatParserToken(final String text);
 
@@ -246,8 +302,12 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     public final void testParseString() {
         final String patternText = this.patternText();
 
-        this.parseStringAndCheck(patternText,
-                this.createPattern(Lists.of(this.parseFormatParserToken(patternText))));
+        this.parseStringAndCheck(
+                patternText,
+                this.createPattern(
+                        this.parseFormatParserToken(patternText)
+                )
+        );
     }
 
     @Test
@@ -255,8 +315,20 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         final String patternText = "\"text-literal-123\"";
         final String patternText2 = this.patternText();
 
-        this.parseStringAndCheck(patternText + ";" + patternText2,
-                this.createPattern(Lists.of(parseFormatParserToken(patternText), parseFormatParserToken(patternText2))));
+        final List<ParserToken> tokens = Lists.of(
+                this.parseFormatParserToken(patternText),
+                this.parseFormatParserToken(patternText2)
+        );
+
+        this.parseStringAndCheck(
+                patternText + ";" + patternText2,
+                this.createPattern(
+                        ParserTokens.sequence(
+                                tokens,
+                                ParserToken.text(tokens)
+                        )
+                )
+        );
     }
 
     @Override

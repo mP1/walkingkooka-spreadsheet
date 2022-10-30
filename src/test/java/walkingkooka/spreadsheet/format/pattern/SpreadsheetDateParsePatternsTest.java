@@ -372,8 +372,8 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
     // helpers..........................................................................................................
 
     @Override
-    SpreadsheetDateParsePatterns createPattern(final List<SpreadsheetFormatDateParserToken> tokens) {
-        return SpreadsheetDateParsePatterns.withTokens(tokens);
+    SpreadsheetDateParsePatterns createPattern(final ParserToken token) {
+        return SpreadsheetDateParsePatterns.with(token);
     }
 
     @Override

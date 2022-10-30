@@ -28,74 +28,110 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.ParserTokens;
+import walkingkooka.text.printer.TreePrintableTesting;
 
-import java.util.List;
 import java.util.function.Function;
 
-public final class SpreadsheetParsePatternsTest implements ClassTesting2<SpreadsheetParsePatterns<?>> {
-
-    @Test
-    public void testWithDate() {
-        final List<SpreadsheetFormatDateParserToken> tokens = Lists.of(this.dmyy(), this.ddmmyyyy());
-        this.checkEquals(tokens, SpreadsheetParsePatterns.dateParse(tokens).value());
-    }
-
-    @Test
-    public void testWithDateTime() {
-        final List<SpreadsheetFormatDateTimeParserToken> tokens = Lists.of(this.hhmmyyyy(), this.yyyymmhh());
-        this.checkEquals(tokens, SpreadsheetParsePatterns.dateTimeParsePatterns(tokens).value());
-    }
-
-    @Test
-    public void testWithNumber() {
-        final List<SpreadsheetFormatNumberParserToken> tokens = Lists.of(this.number(), this.money());
-        this.checkEquals(tokens, SpreadsheetParsePatterns.numberParsePatterns(tokens).value());
-    }
-
-    @Test
-    public void testWithTime() {
-        final List<SpreadsheetFormatTimeParserToken> tokens = Lists.of(this.hhmm(), this.hhmmss());
-        this.checkEquals(tokens, SpreadsheetParsePatterns.timeParsePatterns(tokens).value());
-    }
+public final class SpreadsheetParsePatternsTest implements ClassTesting2<SpreadsheetParsePatterns>, TreePrintableTesting {
 
     @Test
     public void testParseDate() {
-        this.parseAndCheck("dmyy;ddmmyyyy",
+        this.parseAndCheck(
+                "dmyy",
                 SpreadsheetParsePatterns::parseDateParsePatterns,
-                this.dmyy(), this.ddmmyyyy());
+                this.dmyy()
+        );
+    }
+
+    @Test
+    public void testParseDateTwoPatterns() {
+        this.parseAndCheck(
+                "dmyy;ddmmyyyy",
+                SpreadsheetParsePatterns::parseDateParsePatterns,
+                this.dmyy(),
+                this.separator(),
+                this.ddmmyyyy()
+        );
     }
 
     @Test
     public void testParseDateTime() {
-        this.parseAndCheck("hhmmyyyy;yyyymmhh",
+        this.parseAndCheck(
+                "hhmmyyyy",
                 SpreadsheetParsePatterns::parseDateTimeParsePatterns,
-                this.hhmmyyyy(), this.yyyymmhh());
+                this.hhmmyyyy()
+        );
+    }
+
+    @Test
+    public void testParseDateTimeTwoPatterns() {
+        this.parseAndCheck(
+                "hhmmyyyy;yyyymmhh",
+                SpreadsheetParsePatterns::parseDateTimeParsePatterns,
+                this.hhmmyyyy(),
+                this.separator(),
+                this.yyyymmhh()
+        );
     }
 
     @Test
     public void testParseNumber() {
-        this.parseAndCheck("#0.0;$ #0.00",
+        this.parseAndCheck(
+                "#0.0",
                 SpreadsheetParsePatterns::parseNumberParsePatterns,
-                this.number(), this.money());
+                this.number()
+        );
+    }
+
+    @Test
+    public void testParseNumberTwoPatterns() {
+        this.parseAndCheck(
+                "#0.0;$ #0.00",
+                SpreadsheetParsePatterns::parseNumberParsePatterns,
+                this.number(),
+                this.separator(),
+                this.money()
+        );
     }
 
     @Test
     public void testParseTime() {
-        this.parseAndCheck("hhmm;hhmmss",
+        this.parseAndCheck(
+                "hhmm",
                 SpreadsheetParsePatterns::parseTimeParsePatterns,
-                this.hhmm(), this.hhmmss());
+                this.hhmm()
+        );
+    }
+
+    @Test
+    public void testParseTimeTwoPatterns() {
+        this.parseAndCheck(
+                "hhmm;hhmmss",
+                SpreadsheetParsePatterns::parseTimeParsePatterns,
+                this.hhmm(),
+                this.separator(),
+                this.hhmmss()
+        );
     }
 
     private void parseAndCheck(final String text,
-                               final Function<String, SpreadsheetParsePatterns<?>> parse,
+                               final Function<String, SpreadsheetParsePatterns> parse,
                                final SpreadsheetFormatParserToken... tokens) {
-        this.checkEquals(Lists.of(tokens),
-                parse.apply(text).value(),
-                () -> "parse " + CharSequences.quoteAndEscape(text));
+        this.checkEquals(
+                ParserTokens.sequence(
+                        Lists.of(tokens),
+                        text
+                ),
+                parse.apply(text)
+                        .value(),
+                () -> "parse " + CharSequences.quoteAndEscape(text)
+        );
     }
 
     private SpreadsheetFormatDateParserToken dmyy() {
@@ -162,8 +198,15 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
                 .get();
     }
 
+    private SpreadsheetFormatSeparatorSymbolParserToken separator() {
+        return SpreadsheetFormatParserToken.separatorSymbol(
+                ";",
+                ";"
+        );
+    }
+
     @Override
-    public Class<SpreadsheetParsePatterns<?>> type() {
+    public Class<SpreadsheetParsePatterns> type() {
         return Cast.to(SpreadsheetParsePatterns.class);
     }
 

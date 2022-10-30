@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -27,34 +26,26 @@ import java.util.List;
 /**
  * Holds a valid {@link SpreadsheetNumberParsePatterns}.
  */
-public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatterns<SpreadsheetFormatNumberParserToken> {
+public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatterns {
 
     /**
      * Factory that creates a {@link SpreadsheetNumberParsePatterns} from the given tokens.
      */
-    static SpreadsheetNumberParsePatterns withToken(final ParserToken token) {
+    static SpreadsheetNumberParsePatterns with(final ParserToken token) {
         final SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor.with();
         visitor.startAccept(token);
-        return new SpreadsheetNumberParsePatterns(visitor.tokens(), visitor.patterns);
-    }
-
-    /**
-     * Factory that creates a {@link SpreadsheetNumberParsePatterns} from the given tokens.
-     */
-    static SpreadsheetNumberParsePatterns withTokens(final List<SpreadsheetFormatNumberParserToken> tokens) {
-        check(tokens);
-
-        final SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor.with();
-        tokens.forEach(visitor::startAccept);
-        return new SpreadsheetNumberParsePatterns(visitor.tokens(), visitor.patterns);
+        return new SpreadsheetNumberParsePatterns(
+                token,
+                visitor.patterns
+        );
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetNumberParsePatterns(final List<SpreadsheetFormatNumberParserToken> tokens,
+    private SpreadsheetNumberParsePatterns(final ParserToken token,
                                            final List<List<SpreadsheetNumberParsePatternsComponent>> patterns) {
-        super(tokens);
+        super(token);
         this.patterns = patterns;
     }
 

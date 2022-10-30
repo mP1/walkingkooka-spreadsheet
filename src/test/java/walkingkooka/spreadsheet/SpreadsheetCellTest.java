@@ -225,7 +225,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testSetParsePatternsDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetParsePatterns<?>> differentParsePatterns = Optional.of(
+        final Optional<SpreadsheetParsePatterns> differentParsePatterns = Optional.of(
                 SpreadsheetPattern.parseNumberParsePatterns("\"different-pattern\"")
         );
         final SpreadsheetCell different = cell.setParsePatterns(differentParsePatterns);
@@ -257,7 +257,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                 )
                         )
                 );
-        final Optional<SpreadsheetParsePatterns<?>> differentParsePatterns = Optional.of(
+        final Optional<SpreadsheetParsePatterns> differentParsePatterns = Optional.of(
                 SpreadsheetPattern.parseNumberParsePatterns("\"different-pattern\"")
         );
         final SpreadsheetCell different = cell.setParsePatterns(differentParsePatterns);
@@ -380,7 +380,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testSetFormatPatternDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetFormatPattern<?>> differentFormatPattern = Optional.of(
+        final Optional<SpreadsheetFormatPattern> differentFormatPattern = Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
         );
         final SpreadsheetCell different = cell.setFormatPattern(differentFormatPattern);
@@ -936,7 +936,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 )
         );
 
-        final SpreadsheetFormatPattern<?> formatPattern = SpreadsheetPattern.parseTextFormatPattern("@@@");
+        final SpreadsheetFormatPattern formatPattern = SpreadsheetPattern.parseTextFormatPattern("@@@");
 
         this.patchAndCheck(
                 cell,
@@ -1490,7 +1490,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkEquals(reference, cell.reference(), "reference");
     }
 
-    private Optional<SpreadsheetParsePatterns<?>> parsePatterns() {
+    private Optional<SpreadsheetParsePatterns> parsePatterns() {
         return Optional.of(
                 SpreadsheetPattern.parseDateTimeParsePatterns("dd/mm/yyyy")
         );
@@ -1511,7 +1511,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private void checkParsePatterns(final SpreadsheetCell cell,
-                                    final Optional<SpreadsheetParsePatterns<?>> parsePatterns) {
+                                    final Optional<SpreadsheetParsePatterns> parsePatterns) {
         this.checkEquals(
                 parsePatterns,
                 cell.parsePatterns(),
@@ -1548,7 +1548,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkEquals(style, cell.style(), "style");
     }
 
-    private Optional<SpreadsheetFormatPattern<?>> formatPattern() {
+    private Optional<SpreadsheetFormatPattern> formatPattern() {
         return Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("@@")
         );
@@ -1566,7 +1566,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private void checkFormatPattern(final SpreadsheetCell cell,
-                                    final Optional<SpreadsheetFormatPattern<?>> formatPattern) {
+                                    final Optional<SpreadsheetFormatPattern> formatPattern) {
         this.checkEquals(
                 formatPattern,
                 cell.formatPattern(),

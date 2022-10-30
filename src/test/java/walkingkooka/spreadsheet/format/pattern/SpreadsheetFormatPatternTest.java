@@ -30,7 +30,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 
-public final class SpreadsheetFormatPatternTest implements ClassTesting2<SpreadsheetFormatPattern<?>> {
+public final class SpreadsheetFormatPatternTest implements ClassTesting2<SpreadsheetFormatPattern> {
 
     @Test
     public void testWithDate() {
@@ -89,7 +89,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     }
 
     @Override
-    public Class<SpreadsheetFormatPattern<?>> type() {
+    public Class<SpreadsheetFormatPattern> type() {
         return Cast.to(SpreadsheetFormatPattern.class);
     }
 

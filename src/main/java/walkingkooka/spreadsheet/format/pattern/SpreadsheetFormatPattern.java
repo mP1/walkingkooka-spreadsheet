@@ -19,24 +19,19 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.text.CharSequences;
-import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.cursor.parser.ParserToken;
 
 /**
- * Holds a single {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
+ * Holds a {@link ParserToken} tokens and some common functionality.
  */
-public abstract class SpreadsheetFormatPattern<T extends SpreadsheetFormatParserToken> extends SpreadsheetPattern<T>
-        implements HasSpreadsheetFormatter {
+public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern implements HasSpreadsheetFormatter {
 
     // ctor.............................................................................................................
 
     /**
      * Package private ctor use factory
      */
-    SpreadsheetFormatPattern(final T token) {
+    SpreadsheetFormatPattern(final ParserToken token) {
         super(token);
     }
 
@@ -60,21 +55,5 @@ public abstract class SpreadsheetFormatPattern<T extends SpreadsheetFormatParser
      */
     final SpreadsheetFormatter createFormatter() {
         return SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor.createFormatter(this.value);
-    }
-
-    // TreePrintable....................................................................................................
-
-    @Override
-    final void printTreeValue(final IndentingPrinter printer) {
-        printer.println(
-                CharSequences.quoteAndEscape(this.value().text())
-        );
-    }
-
-    // Object...........................................................................................................
-
-    @Override
-    final String toStringPlain() {
-        return this.value.toString();
     }
 }

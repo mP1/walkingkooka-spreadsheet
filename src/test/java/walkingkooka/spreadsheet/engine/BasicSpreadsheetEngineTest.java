@@ -531,7 +531,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void cellStoreSaveAndLoadCellAndCheck(final Optional<SpreadsheetFormatPattern<?>> formatPattern,
+    private void cellStoreSaveAndLoadCellAndCheck(final Optional<SpreadsheetFormatPattern> formatPattern,
                                                   final String patternSuffix) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);

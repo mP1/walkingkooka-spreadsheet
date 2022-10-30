@@ -32,7 +32,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern<T>,
+public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern,
         T extends SpreadsheetFormatParentParserToken,
         V> extends SpreadsheetPatternTestCase<P, T>
         implements SpreadsheetFormatterTesting {

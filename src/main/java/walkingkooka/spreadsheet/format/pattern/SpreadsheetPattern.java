@@ -39,6 +39,7 @@ import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -60,7 +61,7 @@ import java.util.function.Function;
 /**
  * Holds a tokens that may be used to parse or format values along with helpers.
  */
-abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
+abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrintable {
 
     /**
      * The separator character between multiple patterns.
@@ -68,59 +69,59 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
     public static final CharacterConstant SEPARATOR = CharacterConstant.with(';');
 
     /**
-     * Factory that creates a {@link SpreadsheetDateFormatPattern} from the given token.
+     * Factory that creates a {@link ParserToken} from the given token.
      */
-    public static SpreadsheetDateFormatPattern dateFormatPattern(final SpreadsheetFormatDateParserToken value) {
-        return SpreadsheetDateFormatPattern.with(value);
+    public static SpreadsheetDateFormatPattern dateFormatPattern(final ParserToken token) {
+        return SpreadsheetDateFormatPattern.with(token);
     }
 
     /**
      * Factory that creates a {@link SpreadsheetDateParsePatterns} from the given tokens.
      */
-    public static SpreadsheetDateParsePatterns dateParse(final List<SpreadsheetFormatDateParserToken> token) {
-        return SpreadsheetDateParsePatterns.withTokens(token);
+    public static SpreadsheetDateParsePatterns dateParse(final ParserToken token) {
+        return SpreadsheetDateParsePatterns.with(token);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetDateTimeFormatPattern} from the given token.
+     * Factory that creates a {@link ParserToken} from the given token.
      */
-    public static SpreadsheetDateTimeFormatPattern dateTimeFormatPattern(final SpreadsheetFormatDateTimeParserToken value) {
-        return SpreadsheetDateTimeFormatPattern.with(value);
+    public static SpreadsheetDateTimeFormatPattern dateTimeFormatPattern(final ParserToken token) {
+        return SpreadsheetDateTimeFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetDateTimeParsePatterns} from the given tokens.
+     * Factory that creates a {@link ParserToken} from the given tokens.
      */
-    public static SpreadsheetDateTimeParsePatterns dateTimeParsePatterns(final List<SpreadsheetFormatDateTimeParserToken> token) {
-        return SpreadsheetDateTimeParsePatterns.withTokens(token);
+    public static SpreadsheetDateTimeParsePatterns dateTimeParsePatterns(final ParserToken token) {
+        return SpreadsheetDateTimeParsePatterns.with(token);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetNumberFormatPattern} from the given token.
+     * Factory that creates a {@link ParserToken} from the given token.
      */
-    public static SpreadsheetNumberFormatPattern numberFormatPattern(final SpreadsheetFormatNumberParserToken value) {
-        return SpreadsheetNumberFormatPattern.with(value);
+    public static SpreadsheetNumberFormatPattern numberFormatPattern(final ParserToken token) {
+        return SpreadsheetNumberFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetNumberParsePatterns} from the given tokens.
+     * Factory that creates a {@link ParserToken} from the given tokens.
      */
-    public static SpreadsheetNumberParsePatterns numberParsePatterns(final List<SpreadsheetFormatNumberParserToken> token) {
-        return SpreadsheetNumberParsePatterns.withTokens(token);
+    public static SpreadsheetNumberParsePatterns numberParsePatterns(final ParserToken token) {
+        return SpreadsheetNumberParsePatterns.with(token);
     }
 
     /**
      * Factory that creates a {@link SpreadsheetTimeFormatPattern} from the given token.
      */
-    public static SpreadsheetTimeFormatPattern timeFormatPattern(final SpreadsheetFormatTimeParserToken value) {
-        return SpreadsheetTimeFormatPattern.with(value);
+    public static SpreadsheetTimeFormatPattern timeFormatPattern(final ParserToken token) {
+        return SpreadsheetTimeFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetTimeParsePatterns} from the given tokens.
+     * Factory that creates a {@link ParserToken} from the given tokens.
      */
-    public static SpreadsheetTimeParsePatterns timeParsePatterns(final List<SpreadsheetFormatTimeParserToken> token) {
-        return SpreadsheetTimeParsePatterns.withTokens(token);
+    public static SpreadsheetTimeParsePatterns timeParsePatterns(final ParserToken token) {
+        return SpreadsheetTimeParsePatterns.with(token);
     }
 
     // Locale public factory............................................................................................
@@ -244,10 +245,10 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
     /**
      * Factory that fetches a {@link DateFormat}, casts to a {@link SimpleDateFormat} and parses the pattern.
      */
-    private static <P extends SpreadsheetPattern<V>, V> P javaTextDateFormat(final DateFormat dateFormat,
-                                                                             final boolean date,
-                                                                             final boolean time,
-                                                                             final Function<String, P> patternParser) {
+    private static <P extends SpreadsheetPattern, V> P javaTextDateFormat(final DateFormat dateFormat,
+                                                                          final boolean date,
+                                                                          final boolean time,
+                                                                          final Function<String, P> patternParser) {
         return javaTextDateFormat(
                 Lists.of(dateFormat),
                 date,
@@ -262,10 +263,10 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      * simplified forms of each pattern are also created, this means if a locale supports a pattern like <code>hh:mm:ss</code>
      * the form <code>hh:mm</code> will also be added.
      */
-    private static <P extends SpreadsheetPattern<V>, V> P javaTextDateFormat(final Iterable<DateFormat> dateFormats,
-                                                                             final boolean date,
-                                                                             final boolean time,
-                                                                             final Function<String, P> patternParser) {
+    private static <P extends SpreadsheetPattern, V> P javaTextDateFormat(final Iterable<DateFormat> dateFormats,
+                                                                          final boolean date,
+                                                                          final boolean time,
+                                                                          final Function<String, P> patternParser) {
         final Set<String> patterns = Sets.ordered();
 
         for (final DateFormat dateFormat : dateFormats) {
@@ -471,9 +472,11 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      * Creates a new {@link SpreadsheetDateFormatPattern} after checking the value is valid.
      */
     public static SpreadsheetDateFormatPattern parseDateFormatPattern(final String text) {
-        return parsePattern(text,
+        return parsePattern(
+                text,
                 DATE_FORMAT_PARSER,
-                SpreadsheetPattern::transformDate);
+                SpreadsheetPattern::transformDate
+        );
     }
 
     private final static Parser<SpreadsheetFormatParserContext> DATE_FORMAT_PARSER = formatParser(SpreadsheetFormatParsers.date().cast());
@@ -491,9 +494,11 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      * Creates a new {@link SpreadsheetDateParsePatterns} after checking the value is valid.
      */
     public static SpreadsheetDateParsePatterns parseDateParsePatterns(final String text) {
-        return parsePattern(text,
+        return parsePattern(
+                text,
                 DATE_PARSE_PARSER,
-                SpreadsheetDateParsePatterns::withToken);
+                SpreadsheetDateParsePatterns::with
+        );
     }
 
     private final static Parser<SpreadsheetFormatParserContext> DATE_PARSE_PARSER = parseParser(SpreadsheetFormatParsers.date().cast());
@@ -504,9 +509,11 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      * Creates a new {@link SpreadsheetDateTimeFormatPattern} after checking the value is valid.
      */
     public static SpreadsheetDateTimeFormatPattern parseDateTimeFormatPattern(final String text) {
-        return parsePattern(text,
+        return parsePattern(
+                text,
                 DATETIME_FORMAT_PARSER,
-                SpreadsheetPattern::transformDateTime);
+                SpreadsheetPattern::transformDateTime
+        );
     }
 
     private final static Parser<SpreadsheetFormatParserContext> DATETIME_FORMAT_PARSER = formatParser(SpreadsheetFormatParsers.dateTime().cast());
@@ -524,9 +531,11 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      * Creates a new {@link SpreadsheetDateTimeParsePatterns} after checking the value is valid.
      */
     public static SpreadsheetDateTimeParsePatterns parseDateTimeParsePatterns(final String text) {
-        return parsePattern(text,
+        return parsePattern(
+                text,
                 DATETIME_PARSE_PARSER,
-                SpreadsheetDateTimeParsePatterns::withToken);
+                SpreadsheetDateTimeParsePatterns::with
+        );
     }
 
     private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSE_PARSER = parseParser(SpreadsheetFormatParsers.dateTime().cast());
@@ -557,9 +566,11 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      * Creates a new {@link SpreadsheetNumberParsePatterns} after checking the value is valid.
      */
     public static SpreadsheetNumberParsePatterns parseNumberParsePatterns(final String text) {
-        return parsePattern(text,
+        return parsePattern(
+                text,
                 NUMBER_PARSE_PARSER,
-                SpreadsheetNumberParsePatterns::withToken);
+                SpreadsheetNumberParsePatterns::with
+        );
     }
 
     private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSE_PARSER = parseParser(SpreadsheetFormatParsers.number().cast());
@@ -592,9 +603,11 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      * Creates a new {@link SpreadsheetTimeFormatPattern} after checking the value is valid.
      */
     public static SpreadsheetTimeFormatPattern parseTimeFormatPattern(final String text) {
-        return parsePattern(text,
+        return parsePattern(
+                text,
                 TIME_FORMAT_PARSER,
-                SpreadsheetPattern::transformTime);
+                SpreadsheetPattern::transformTime
+        );
     }
 
     private final static Parser<SpreadsheetFormatParserContext> TIME_FORMAT_PARSER = formatParser(SpreadsheetFormatParsers.time().cast());
@@ -612,9 +625,11 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      * Creates a new {@link SpreadsheetTimeParsePatterns} after checking the value is valid.
      */
     public static SpreadsheetTimeParsePatterns parseTimeParsePatterns(final String text) {
-        return parsePattern(text,
+        return parsePattern(
+                text,
                 TIME_PARSE_PARSER,
-                SpreadsheetTimeParsePatterns::withToken);
+                SpreadsheetTimeParsePatterns::with
+        );
     }
 
     private final static Parser<SpreadsheetFormatParserContext> TIME_PARSE_PARSER = parseParser(SpreadsheetFormatParsers.time().cast());
@@ -632,11 +647,11 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
      * Parsers input that requires a single {@link SpreadsheetFormatParserToken token} followed by an optional separator and more tokens.
      */
     private static Parser<SpreadsheetFormatParserContext> parseParser(final Parser<ParserContext> parser) {
-        final Parser<ParserContext> expressionSeparator = SpreadsheetFormatParsers.patternSeparator()
+        final Parser<ParserContext> patternSeparator = SpreadsheetFormatParsers.patternSeparator()
                 .cast();
 
         final Parser<ParserContext> optional = Parsers.sequenceParserBuilder()
-                .required(expressionSeparator)
+                .required(patternSeparator)
                 .required(parser)
                 .build()
                 .repeating();
@@ -644,26 +659,32 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
         return Parsers.sequenceParserBuilder()
                 .required(parser)
                 .optional(optional.repeating())
-                .optional(expressionSeparator)
+                .optional(patternSeparator)
                 .build()
+                .transform(SpreadsheetPattern::transformParser)
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .cast();
     }
 
-    static void check(final List<? extends SpreadsheetFormatParserToken> tokens) {
-        Objects.requireNonNull(tokens, "tokens");
+    private static ParserToken transformParser(final ParserToken token,
+                                               final ParserContext context) {
+        final SequenceParserToken sequenceParserToken = token.cast(SequenceParserToken.class);
+        return sequenceParserToken.flat();
     }
 
     /**
      * Parses text using the given parser and transformer.
      */
-    private static <P extends SpreadsheetPattern<V>, V> P parsePattern(final String text,
-                                                                       final Parser<SpreadsheetFormatParserContext> parser,
-                                                                       final Function<ParserToken, P> transformer) {
+    private static <P extends SpreadsheetPattern> P parsePattern(final String text,
+                                                                 final Parser<SpreadsheetFormatParserContext> parser,
+                                                                 final Function<ParserToken, P> transformer) {
         Objects.requireNonNull(text, "text");
 
         try {
-            return parser.parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
+            return parser.parse(
+                            TextCursors.charSequence(text),
+                            SpreadsheetFormatParserContexts.basic()
+                    )
                     .map(transformer)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid pattern " + CharSequences.quoteAndEscape(text)));
         } catch (final ParserException cause) {
@@ -676,7 +697,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
     /**
      * Package private ctor use factory
      */
-    SpreadsheetPattern(final V value) {
+    SpreadsheetPattern(final ParserToken value) {
         super();
         this.value = value;
     }
@@ -684,11 +705,11 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
     // Value............................................................................................................
 
     @Override
-    public final V value() {
+    public final ParserToken value() {
         return this.value;
     }
 
-    final V value;
+    final ParserToken value;
 
     // isXXX............................................................................................................
 
@@ -732,14 +753,19 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
     @Override
     public final void printTree(final IndentingPrinter printer) {
         printer.println(this.printTreeTypeName());
+
         printer.indent();
-        this.printTreeValue(printer);
+        {
+            SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor.treePrint(
+                    this.value,
+                    printer
+            );
+        }
+
         printer.outdent();
     }
 
     abstract String printTreeTypeName();
-
-    abstract void printTreeValue(final IndentingPrinter printer);
 
     // Object...........................................................................................................
 
@@ -758,7 +784,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
 
     abstract boolean canBeEquals(final Object other);
 
-    private boolean equals0(final SpreadsheetPattern<?> other) {
+    private boolean equals0(final SpreadsheetPattern other) {
         return this.value.equals(other.value);
     }
 
@@ -769,14 +795,9 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
     @Override
     public final String toString() {
         return CharSequences.quoteAndEscape(
-                this.toStringPlain()
+                this.value.text()
         ).toString();
     }
-
-    /**
-     * Returns the text without quotes or escaping of the tokens within this pattern.
-     */
-    abstract String toStringPlain();
 
     // JsonNodeContext..................................................................................................
 
@@ -878,7 +899,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(
-                this.toStringPlain()
+            this.value.text()
         );
     }
 
@@ -930,8 +951,8 @@ abstract public class SpreadsheetPattern<V> implements Value<V>, TreePrintable {
         );
     }
 
-    private static <P extends SpreadsheetPattern<?>> void register(final Class<P> type,
-                                                                   final BiFunction<JsonNode, JsonNodeUnmarshallContext, P> unmarshaller) {
+    private static <P extends SpreadsheetPattern> void register(final Class<P> type,
+                                                                final BiFunction<JsonNode, JsonNodeUnmarshallContext, P> unmarshaller) {
         JsonNodeContext.register(JsonNodeContext.computeTypeName(type),
                 unmarshaller,
                 SpreadsheetPattern::marshall,

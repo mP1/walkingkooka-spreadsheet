@@ -43,6 +43,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatUnderscoreParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetAmPmParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDayNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetHourParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinuteParserToken;
@@ -53,6 +55,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -83,7 +86,11 @@ final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends
 
         return Parsers.alternatives(visitor.parsers)
                 .andEmptyTextCursor()
-                .setToString(token.toString());
+                .setToString(
+                        CharSequences.quoteAndEscape(
+                                token.toString()
+                        ).toString()
+                );
     }
 
     private static ParserToken flat(final ParserToken token,
@@ -125,32 +132,80 @@ final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends
 
     @Override
     protected void endVisit(final SpreadsheetFormatDateParserToken token) {
-        this.endParser(token);
+        this.endParser(
+                token,
+                SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor::transformDate
+        );
+    }
+
+    private static SpreadsheetDateParserToken transformDate(final ParserToken token,
+                                                            final SpreadsheetParserContext context) {
+        final SequenceParserToken sequenceParserToken = token.cast(SequenceParserToken.class);
+
+        return SpreadsheetParserToken.date(
+                sequenceParserToken.flat()
+                        .value(),
+                sequenceParserToken.text()
+        );
     }
 
     @Override
     protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        this.endParser(token);
+        this.endParser(
+                token,
+                SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor::transformDateTime
+        );
+    }
+
+    private static SpreadsheetDateTimeParserToken transformDateTime(final ParserToken token,
+                                                                    final SpreadsheetParserContext context) {
+        final SequenceParserToken sequenceParserToken = token.cast(SequenceParserToken.class);
+
+        return SpreadsheetParserToken.dateTime(
+                sequenceParserToken.flat()
+                        .value(),
+                sequenceParserToken.text()
+        );
     }
 
     @Override
     protected void endVisit(final SpreadsheetFormatGeneralParserToken token) {
-        this.endParser(token);
+        this.endParser(
+                token,
+                null
+        );
     }
 
     @Override
     protected void endVisit(final SpreadsheetFormatTimeParserToken token) {
-        this.endParser(token);
+        this.endParser(
+                token,
+                SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor::transformTime
+        );
     }
 
-    private void endParser(final SpreadsheetFormatParserToken token) {
+    private static SpreadsheetTimeParserToken transformTime(final ParserToken token,
+                                                            final SpreadsheetParserContext context) {
+        final SequenceParserToken sequenceParserToken = token.cast(SequenceParserToken.class);
+
+        return SpreadsheetParserToken.time(
+                sequenceParserToken.flat()
+                        .value(),
+                sequenceParserToken.text()
+        );
+    }
+
+    private void endParser(final SpreadsheetFormatParserToken token,
+                           final BiFunction<ParserToken, SpreadsheetParserContext, ParserToken> transformer) {
         this.appendDecimalSeparatorMillisecondsIfNecessary();
 
+        Parser<SpreadsheetParserContext> parser = this.sequenceParserBuilder.build();
+        if (null != transformer) {
+            parser = parser.transform(transformer);
+        }
+
         this.parsers.add(
-                this.sequenceParserBuilder.build()
-                        .transform(
-                                SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor::flat
-                        ).andEmptyTextCursor()
+                parser.andEmptyTextCursor()
                         .setToString(token.text())
         );
     }

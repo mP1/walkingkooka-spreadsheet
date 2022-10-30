@@ -48,12 +48,15 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformColor(final ParserToken token,
                                               final SpreadsheetFormatParserContext context) {
-        return SpreadsheetFormatParserToken.color(flat0(token), token.text());
+        return SpreadsheetFormatParserToken.color(
+                flat(token),
+                token.text()
+        );
     }
 
     private static ParserToken transformConditionEqual(final ParserToken token,
                                                        final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::equalsParserToken
         );
@@ -63,7 +66,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformConditionGreaterThan(final ParserToken token,
                                                              final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::greaterThan
         );
@@ -73,7 +76,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformConditionGreaterThanEqual(final ParserToken token,
                                                                   final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::greaterThanEquals
         );
@@ -83,7 +86,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformConditionLessThan(final ParserToken token,
                                                           final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::lessThan
         );
@@ -93,7 +96,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformConditionLessThanEqual(final ParserToken token,
                                                                final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::lessThanEquals
         );
@@ -103,7 +106,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformConditionNotEqual(final ParserToken token,
                                                           final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::notEquals
         );
@@ -113,7 +116,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformDate(final ParserToken token,
                                              final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::date
         );
@@ -123,7 +126,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformDateTime(final ParserToken token,
                                                  final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::dateTime
         );
@@ -138,7 +141,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformFraction(final ParserToken token,
                                                  final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::fraction
         );
@@ -148,7 +151,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformGeneral(final ParserToken token,
                                                 final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::general
         );
@@ -156,7 +159,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformText(final ParserToken token,
                                              final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::text
         );
@@ -175,7 +178,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformTime(final ParserToken token,
                                              final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::time
         );
@@ -183,7 +186,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformNumber(final ParserToken token,
                                                final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::number
         );
@@ -195,7 +198,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformBigDecimalExponent(final ParserToken token,
                                                            final SpreadsheetFormatParserContext context) {
-        return flat(
+        return flatAndCreate(
                 token,
                 SpreadsheetFormatParserToken::exponent
         );
@@ -205,15 +208,15 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static final EbnfIdentifierName TIME_IDENTIFIER = EbnfIdentifierName.with("TIME");
 
-    private static ParserToken flat(final ParserToken token,
-                                    final BiFunction<List<ParserToken>, String, ParserToken> factory) {
+    private static ParserToken flatAndCreate(final ParserToken token,
+                                             final BiFunction<List<ParserToken>, String, ParserToken> factory) {
         return factory.apply(
-                flat0(token),
+                flat(token),
                 token.text()
         );
     }
 
-    private static List<ParserToken> flat0(final ParserToken token) {
+    private static List<ParserToken> flat(final ParserToken token) {
         return token.cast(RepeatedOrSequenceParserToken.class)
                 .flat()
                 .value();
