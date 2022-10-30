@@ -80,7 +80,6 @@ final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends
     static Parser<SpreadsheetParserContext> toParser(final ParserToken token) {
         final SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
-        visitor.appendDecimalSeparatorMillisecondsIfNecessary();
 
         return Parsers.alternatives(visitor.parsers)
                 .andEmptyTextCursor()
@@ -156,7 +155,7 @@ final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends
         );
     }
 
-    private List<Parser<SpreadsheetParserContext>> parsers = Lists.array();
+    private final List<Parser<SpreadsheetParserContext>> parsers = Lists.array();
 
     // symbols within a date/datetime/time..............................................................................
 
