@@ -352,11 +352,9 @@ final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends
         );
     }
 
-//    final BiFunction<ParserToken, ParserContext, ParserToken> second(final )
-
     @Override
     protected void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
-        this.literal(token);
+        // consume but ignore separator.
     }
 
     @Override
@@ -424,7 +422,6 @@ final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends
                 SpreadsheetParserToken::year
         );
     }
-
 
     // helpers.........................................................................................................
 
