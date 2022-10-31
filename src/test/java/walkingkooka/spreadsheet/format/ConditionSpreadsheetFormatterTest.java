@@ -200,7 +200,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
 
     @Override
     public String value() {
-        return "Text123";
+        return "999";
     }
 
     @Override
@@ -234,12 +234,25 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
-                return this.converter.convert(value,
+                if (value instanceof String && BigDecimal.class == target) {
+                    return this.successfulConversion(
+                            new BigDecimal((String) value),
+                            target
+                    );
+                }
+
+                return this.converter.convert(
+                        value,
                         target,
-                        ExpressionNumberConverterContexts.basic(Converters.fake(),
-                                ConverterContexts.basic(Converters.fake(),
-                                        DateTimeContexts.fake(), this),
-                                ExpressionNumberKind.DEFAULT)
+                        ExpressionNumberConverterContexts.basic(
+                                Converters.fake(),
+                                ConverterContexts.basic(
+                                        Converters.fake(),
+                                        DateTimeContexts.fake(),
+                                        this
+                                ),
+                                ExpressionNumberKind.DEFAULT
+                        )
                 );
             }
 
