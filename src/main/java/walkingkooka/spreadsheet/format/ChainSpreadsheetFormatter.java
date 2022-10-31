@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import java.util.List;
 import java.util.Objects;
@@ -103,6 +104,8 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
 
     @Override
     public String toString() {
-        return this.formatters.toString();
+        return this.formatters.stream()
+                .map(SpreadsheetFormatter::toString)
+                .collect(Collectors.joining(SpreadsheetPattern.SEPARATOR));
     }
 }

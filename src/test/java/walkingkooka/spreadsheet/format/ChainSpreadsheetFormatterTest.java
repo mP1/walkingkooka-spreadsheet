@@ -106,7 +106,10 @@ public final class ChainSpreadsheetFormatterTest extends SpreadsheetFormatterTes
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createFormatter(), Lists.of(VALUE1, VALUE2).toString());
+        this.toStringAndCheck(
+                this.createFormatter(),
+                VALUE1 + ";" + VALUE2
+        );
     }
 
     // helpers..........................................................................................................
