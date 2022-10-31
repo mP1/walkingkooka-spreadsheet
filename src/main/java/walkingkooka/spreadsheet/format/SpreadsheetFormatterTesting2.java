@@ -81,7 +81,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                 LocalTime.of(12, 58, 59),
                 123L,
                 (short) 123,
-                "abc123",
+                "9999",
                 this);
 
         final F formatter = this.createFormatter();
