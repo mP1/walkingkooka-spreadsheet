@@ -167,6 +167,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
         );
     }
 
+    private static final EbnfIdentifierName TEXT_IDENTIFIER = EbnfIdentifierName.with("TEXT");
+
     private static ParserToken transformTextCharacter(final ParserToken token,
                                                       final SpreadsheetFormatParserContext context) {
         final String text = token.text();
@@ -273,7 +275,10 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
         identifierToTransform.put(SpreadsheetFormatParsers.GENERAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformGeneral);
 
-        identifierToTransform.put(SpreadsheetFormatParsers.TEXT_FORMAT_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformText);
+        identifierToTransform.put(TEXT_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformText);
+        identifierToTransform.put(SpreadsheetFormatParsers.TEXT_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+        identifierToTransform.put(SpreadsheetFormatParsers.TIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+
         identifierToTransform.put(TEXT_CHARACTER_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformTextCharacter);
 
         this.identifierToTransform = identifierToTransform;

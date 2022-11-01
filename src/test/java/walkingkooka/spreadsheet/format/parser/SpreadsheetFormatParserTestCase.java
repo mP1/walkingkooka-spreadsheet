@@ -288,6 +288,15 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.star('#', "*#");
     }
 
+    static SpreadsheetFormatTextParserToken text(final SpreadsheetFormatParserToken... tokens) {
+        final List<ParserToken> list = Lists.of(tokens);
+
+        return SpreadsheetFormatParserToken.text(
+                list,
+                ParserToken.text(list)
+        );
+    }
+
     static SpreadsheetFormatParserToken textPlaceholder() {
         return SpreadsheetFormatParserToken.textPlaceholder("@", "@");
     }

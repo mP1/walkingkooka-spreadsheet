@@ -393,7 +393,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     }
 
     private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER;
-    static final EbnfIdentifierName TEXT_FORMAT_IDENTIFIER = EbnfIdentifierName.with("TEXT_FORMAT");
+    static final EbnfIdentifierName TEXT_FORMAT = EbnfIdentifierName.with("TEXT_FORMAT");
 
     private static void text(final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined) {
         predefined.put(QUOTED_IDENTIFIER, QUOTED);
@@ -570,7 +570,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             GENERAL_PARSER = parsers.get(GENERAL_IDENTIFIER);
             NUMBER_PARSER = parsers.get(EbnfIdentifierName.with("NUMBER"));
 
-            TEXT_FORMAT_PARSER = parsers.get(TEXT_FORMAT_IDENTIFIER)
+            TEXT_FORMAT_PARSER = parsers.get(TEXT_FORMAT)
                     .orFailIfCursorNotEmpty(ParserReporters.basic());
 
             TIME_FORMAT_PARSER = parsers.get(TIME_FORMAT)
