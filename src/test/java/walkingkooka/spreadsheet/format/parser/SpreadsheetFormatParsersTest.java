@@ -174,11 +174,18 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     private void colorParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(this.colorParser(), SpreadsheetFormatParserToken::color, tokens);
+        this.parseAndCheck3(
+                this.colorParser(),
+                SpreadsheetFormatParserToken::color,
+                tokens
+        );
     }
 
     private void colorThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(this.colorParser(), tokens);
+        this.parseThrows2(
+                this.colorParser(),
+                tokens
+        );
     }
 
     private Parser<SpreadsheetFormatParserContext> colorParser() {
@@ -380,29 +387,36 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     private void conditionParseAndCheck(final BiFunction<List<ParserToken>, String, SpreadsheetFormatParserToken> factory,
                                         final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(this.conditionParser(), factory, tokens);
+        this.parseAndCheck3(
+                this.conditionParser(),
+                factory,
+                tokens
+        );
     }
 
     private void conditionParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(this.conditionParser(), tokens);
+        this.parseThrows2(
+                this.conditionParser(),
+                tokens
+        );
     }
 
     private Parser<SpreadsheetFormatParserContext> conditionParser() {
         return SpreadsheetFormatParsers.condition();
     }
 
-    // date........................................................................................................
+    // date format......................................................................................................
 
     @Test
-    public void testDateGeneral() {
-        this.dateParseAndCheck(
+    public void testDateFormatGeneral() {
+        this.dateFormatParseAndCheck(
                 general()
         );
     }
 
     @Test
-    public void testDateWhitespaceGeneral() {
-        this.dateParseAndCheck(
+    public void testDateFormatWhitespaceGeneral() {
+        this.dateFormatParseAndCheck(
                 general(
                         whitespace(),
                         generalSymbol()
@@ -411,8 +425,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateGeneralWhitespace() {
-        this.dateParseAndCheck(
+    public void testDateFormatGeneralWhitespace() {
+        this.dateFormatParseAndCheck(
                 general(
                         generalSymbol(),
                         whitespace()
@@ -421,8 +435,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateWhitespaceGeneralWhitespace() {
-        this.dateParseAndCheck(
+    public void testDateFormatWhitespaceGeneralWhitespace() {
+        this.dateFormatParseAndCheck(
                 general(
                         whitespace(),
                         generalSymbol(),
@@ -432,8 +446,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateColorGeneral() {
-        this.dateParseAndCheck(
+    public void testDateFormatColorGeneral() {
+        this.dateFormatParseAndCheck(
                 general(
                         color(),
                         generalSymbol()
@@ -442,8 +456,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateColorWhitespaceGeneral() {
-        this.dateParseAndCheck(
+    public void testDateFormatColorWhitespaceGeneral() {
+        this.dateFormatParseAndCheck(
                 general(
                         color(),
                         whitespace(),
@@ -453,624 +467,2501 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateColorEscaped() {
-        this.dateParseAndCheck(
-                color(),
-                escape()
+    public void testDateFormatColorEscaped() {
+        this.dateFormatParseAndCheck(
+                date(
+                        color(),
+                        escape()
+                )
         );
     }
 
     @Test
-    public void testDateTextDigitFails() {
-        this.dateParseThrows(digit());
+    public void testDateFormatTextDigitFails() {
+        this.dateFormatParseThrows(
+                digit()
+        );
     }
 
     @Test
-    public void testDateTextDigitZeroFails() {
-        this.dateParseThrows(digitZero());
+    public void testDateFormatTextDigitZeroFails() {
+        this.dateFormatParseThrows(
+                digitZero()
+        );
     }
 
     @Test
-    public void testDateTextDigitSpaceFails() {
-        this.dateParseThrows(digitSpace());
+    public void testDateFormatTextDigitSpaceFails() {
+        this.dateFormatParseThrows(
+                digitSpace()
+        );
     }
 
     @Test
-    public void testDateHourFails() {
-        this.dateParseThrows(hour());
+    public void testDateFormatHourFails() {
+        this.dateFormatParseThrows(
+                hour()
+        );
     }
 
     @Test
-    public void testDateSecondFails() {
-        this.dateParseThrows(second());
+    public void testDateFormatSecondFails() {
+        this.dateFormatParseThrows(
+                second()
+        );
     }
 
     @Test
-    public void testDateTextPlaceholderFails() {
-        this.dateParseThrows(textPlaceholder());
+    public void testDateFormatTextPlaceholderFails() {
+        this.dateFormatParseThrows(
+                textPlaceholder()
+        );
     }
 
     @Test
-    public void testDateEscaped() {
-        this.dateParseAndCheck(escape());
+    public void testDateFormatEscaped() {
+        this.dateFormatParseAndCheck(
+                date(
+                        escape()
+                )
+        );
     }
 
     @Test
-    public void testDateDollar() {
-        this.dateParseAndCheck(textLiteralDollar());
+    public void testDateFormatDollar() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralDollar()
+                )
+        );
     }
 
     @Test
-    public void testDateMinus() {
-        this.dateParseAndCheck(textLiteralMinus());
+    public void testDateFormatMinus() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralMinus()
+                )
+        );
     }
 
     @Test
-    public void testDatePlus() {
-        this.dateParseAndCheck(textLiteralPlus());
+    public void testDateFormatPlus() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralPlus()
+                )
+        );
     }
 
     @Test
-    public void testDateSlash() {
-        this.dateParseAndCheck(textLiteralSlash());
+    public void testDateFormatSlash() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralSlash()
+                )
+        );
     }
 
     @Test
-    public void testDateOpenParen() {
-        this.dateParseAndCheck(textLiteralOpenParens());
+    public void testDateFormatOpenParen() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralOpenParens()
+                )
+        );
     }
 
     @Test
-    public void testDateCloseParen() {
-        this.dateParseAndCheck(textLiteralCloseParens());
+    public void testDateFormatCloseParen() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralCloseParens()
+                )
+        );
     }
 
     @Test
-    public void testDateColon() {
-        this.dateParseAndCheck(textLiteralColon());
+    public void testDateFormatColon() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralColon()
+                )
+        );
     }
 
     @Test
-    public void testDateSpace() {
-        this.dateParseAndCheck(textLiteralSpace());
+    public void testDateFormatSpace() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralSpace()
+                )
+        );
     }
 
     @Test
-    public void testDateQuotedText() {
-        this.dateParseAndCheck(quotedText());
+    public void testDateFormatQuotedText() {
+        this.dateFormatParseAndCheck(
+                date(
+                        quotedText()
+                )
+        );
     }
 
     @Test
-    public void testDateDay() {
-        this.dateParseAndCheck(day());
+    public void testDateFormatDay() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day()
+                )
+        );
     }
 
     @Test
-    public void testDateMonth() {
-        this.dateParseAndCheck(monthOrMinute());
+    public void testDateFormatMonth() {
+        this.dateFormatParseAndCheck(
+                date(
+                        monthOrMinute()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year());
+    public void testDateFormatDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDay2Month2Year2() {
-        this.dateParseAndCheck(day(2), monthOrMinute(2), year(2));
+    public void testDateFormatDay2Month2Year2() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(2),
+                        monthOrMinute(2),
+                        year(2)
+                )
+        );
     }
 
     @Test
-    public void testDateDay3Month3Year3() {
-        this.dateParseAndCheck(day(3), monthOrMinute(3), year(3));
+    public void testDateFormatDay3Month3Year3() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(3),
+                        monthOrMinute(3),
+                        year(3)
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYearDateDayMonthYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), day(), monthOrMinute(), year());
+    public void testDateFormatDayMonthYearDateDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateMonthDayYear() {
-        this.dateParseAndCheck(monthOrMinute(), day(), year());
+    public void testDateFormatMonthDayYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        monthOrMinute(),
+                        day(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateYearMonthDay() {
-        this.dateParseAndCheck(year(), monthOrMinute(), day());
+    public void testDateFormatYearMonthDay() {
+        this.dateFormatParseAndCheck(
+                date(
+                        year(),
+                        monthOrMinute(),
+                        day()
+                )
+        );
     }
 
     @Test
-    public void testDateYearCommaMonthCommaDay() {
-        this.dateParseAndCheck(year(), textLiteralComma(), monthOrMinute(), textLiteralComma(), day());
+    public void testDateFormatYearCommaMonthCommaDay() {
+        this.dateFormatParseAndCheck(
+                date(
+                        year(),
+                        textLiteralComma(),
+                        monthOrMinute(),
+                        textLiteralComma(),
+                        day()
+                )
+        );
     }
 
     // escaped
 
     @Test
-    public void testDateEscapedDayMonthYear() {
-        this.dateParseAndCheck(escape(), day(), monthOrMinute(), year());
+    public void testDateFormatEscapedDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        escape(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayEscapedMonthYear() {
-        this.dateParseAndCheck(day(), escape(), monthOrMinute(), year());
+    public void testDateFormatDayEscapedMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        escape(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthEscapedYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), escape(), year());
+    public void testDateFormatDayMonthEscapedYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        escape(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYearEscaped() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), escape());
+    public void testDateFormatDayMonthYearEscaped() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        escape()
+                )
+        );
     }
 
     // quotedText
 
     @Test
-    public void testDateQuotedTextDayMonthYear() {
-        this.dateParseAndCheck(quotedText(), day(), monthOrMinute(), year());
+    public void testDateFormatQuotedTextDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        quotedText(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayQuotedTextMonthYear() {
-        this.dateParseAndCheck(day(), quotedText(), monthOrMinute(), year());
+    public void testDateFormatDayQuotedTextMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        quotedText(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthQuotedTextYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), quotedText(), year());
+    public void testDateFormatDayMonthQuotedTextYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        quotedText(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYearQuotedText() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), quotedText());
+    public void testDateFormatDayMonthYearQuotedText() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        quotedText()
+                )
+        );
     }
 
     // closeParens
 
     @Test
-    public void testDateCloseParensDayMonthYear() {
-        this.dateParseAndCheck(textLiteralCloseParens(), day(), monthOrMinute(), year());
+    public void testDateFormatCloseParensDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralCloseParens(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayCloseParensMonthYear() {
-        this.dateParseAndCheck(day(), textLiteralCloseParens(), monthOrMinute(), year());
+    public void testDateFormatDayCloseParensMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        textLiteralCloseParens(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthCloseParensYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), textLiteralCloseParens(), year());
+    public void testDateFormatDayMonthCloseParensYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralCloseParens(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYearCloseParens() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), textLiteralCloseParens());
+    public void testDateFormatDayMonthYearCloseParens() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralCloseParens()
+                )
+        );
     }
 
     // colon
 
     @Test
-    public void testDateColonDayMonthYear() {
-        this.dateParseAndCheck(textLiteralColon(), day(), monthOrMinute(), year());
+    public void testDateFormatColonDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralColon(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayColonMonthYear() {
-        this.dateParseAndCheck(day(), textLiteralColon(), monthOrMinute(), year());
+    public void testDateFormatDayColonMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        textLiteralColon(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthColonYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), textLiteralColon(), year());
+    public void testDateFormatDayMonthColonYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralColon(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYearColon() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), textLiteralColon());
+    public void testDateFormatDayMonthYearColon() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralColon()
+
+                )
+        );
     }
 
     // dollar
 
     @Test
-    public void testDateDollarDayMonthYear() {
-        this.dateParseAndCheck(textLiteralDollar(), day(), monthOrMinute(), year());
+    public void testDateFormatDollarDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralDollar(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayDollarMonthYear() {
-        this.dateParseAndCheck(day(), textLiteralDollar(), monthOrMinute(), year());
+    public void testDateFormatDayDollarMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        textLiteralDollar(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthDollarYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), textLiteralDollar(), year());
+    public void testDateFormatDayMonthDollarYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralDollar(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYearDollar() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), textLiteralDollar());
+    public void testDateFormatDayMonthYearDollar() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralDollar()
+                )
+        );
     }
 
     // minus
 
     @Test
-    public void testDateMinusDayMonthYear() {
-        this.dateParseAndCheck(textLiteralMinus(), day(), monthOrMinute(), year());
+    public void testDateFormatMinusDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralMinus(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMinusMonthYear() {
-        this.dateParseAndCheck(day(), textLiteralMinus(), monthOrMinute(), year());
+    public void testDateFormatDayMinusMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        textLiteralMinus(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthMinusYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), textLiteralMinus(), year());
+    public void testDateFormatDayMonthMinusYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralMinus(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYearMinus() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), textLiteralMinus());
+    public void testDateFormatDayMonthYearMinus() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralMinus()
+                )
+        );
     }
 
     // openParens
 
     @Test
-    public void testDateOpenParensDayMonthYear() {
-        this.dateParseAndCheck(textLiteralOpenParens(), day(), monthOrMinute(), year());
+    public void testDateFormatOpenParensDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralOpenParens(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayOpenParensMonthYear() {
-        this.dateParseAndCheck(day(), textLiteralOpenParens(), monthOrMinute(), year());
+    public void testDateFormatDayOpenParensMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        textLiteralOpenParens(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthOpenParensYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), textLiteralOpenParens(), year());
+    public void testDateFormatDayMonthOpenParensYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralOpenParens(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYearOpenParens() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), textLiteralOpenParens());
+    public void testDateFormatDayMonthYearOpenParens() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralOpenParens()
+                )
+        );
     }
 
     // plus
 
     @Test
-    public void testDatePlusDayMonthYear() {
-        this.dateParseAndCheck(textLiteralPlus(), day(), monthOrMinute(), year());
+    public void testDateFormatPlusDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralPlus(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayPlusMonthYear() {
-        this.dateParseAndCheck(day(), textLiteralPlus(), monthOrMinute(), year());
+    public void testDateFormatDayPlusMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        textLiteralPlus(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthPlusYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), textLiteralPlus(), year());
+    public void testDateFormatDayMonthPlusYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralPlus(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYearPlus() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), textLiteralPlus());
+    public void testDateFormatDayMonthYearPlus() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralPlus()
+                )
+        );
     }
 
     // slash
 
     @Test
-    public void testDateSlashDayMonthYear() {
-        this.dateParseAndCheck(textLiteralSlash(), day(), monthOrMinute(), year());
+    public void testDateFormatSlashDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralSlash(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDaySlashMonthYear() {
-        this.dateParseAndCheck(day(), textLiteralSlash(), monthOrMinute(), year());
+    public void testDateFormatDaySlashMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        textLiteralSlash(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthSlashYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), textLiteralSlash(), year());
+    public void testDateFormatDayMonthSlashYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralSlash(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYearSlash() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), textLiteralSlash());
+    public void testDateFormatDayMonthYearSlash() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralSlash()
+                )
+        );
     }
 
     // space
 
     @Test
-    public void testDateSpaceDayMonthYear() {
-        this.dateParseAndCheck(textLiteralSpace(), day(), monthOrMinute(), year());
+    public void testDateFormatSpaceDayMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        textLiteralSpace(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDaySpaceMonthYear() {
-        this.dateParseAndCheck(day(), textLiteralSpace(), monthOrMinute(), year());
+    public void testDateFormatDaySpaceMonthYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        textLiteralSpace(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthSpaceYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), textLiteralSpace(), year());
+    public void testDateFormatDayMonthSpaceYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralSpace(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayMonthYearSpace() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), textLiteralSpace());
+    public void testDateFormatDayMonthYearSpace() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralSpace()
+                )
+        );
     }
 
     // equals
 
     @Test
-    public void testDateEqualsDayMonthYearFails() {
-        this.dateParseThrows(equalsSymbol(), day(), monthOrMinute(), year());
+    public void testDateFormatEqualsDayMonthYearFails() {
+        this.dateFormatParseThrows(
+                equalsSymbol(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayEqualsMonthYearFails() {
-        this.dateParseThrows(day(), equalsSymbol(), monthOrMinute(), year());
+    public void testDateFormatDayEqualsMonthYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                equalsSymbol(),
+                monthOrMinute(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayMonthEqualsYearFails() {
-        this.dateParseThrows(day(), monthOrMinute(), equalsSymbol(), year());
+    public void testDateFormatDayMonthEqualsYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                equalsSymbol(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayMonthYearEqualsFails() {
-        this.dateParseThrows(day(), monthOrMinute(), year(), equalsSymbol());
+    public void testDateFormatDayMonthYearEqualsFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                equalsSymbol()
+        );
     }
 
     // greaterThan
 
     @Test
-    public void testDateGreaterThanDayMonthYearFails() {
-        this.dateParseThrows(greaterThan(), day(), monthOrMinute(), year());
+    public void testDateFormatGreaterThanDayMonthYearFails() {
+        this.dateFormatParseThrows(
+                greaterThan(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayGreaterThanMonthYearFails() {
-        this.dateParseThrows(day(), greaterThan(), monthOrMinute(), year());
+    public void testDateFormatDayGreaterThanMonthYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                greaterThan(),
+                monthOrMinute(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayMonthGreaterThanYearFails() {
-        this.dateParseThrows(day(), monthOrMinute(), greaterThan(), year());
+    public void testDateFormatDayMonthGreaterThanYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                greaterThan(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayMonthYearGreaterThanFails() {
-        this.dateParseThrows(day(), monthOrMinute(), year(), greaterThan());
+    public void testDateFormatDayMonthYearGreaterThanFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                greaterThan()
+        );
     }
 
     // greaterThanEquals
 
     @Test
-    public void testDateGreaterThanEqualsDayMonthYearFails() {
-        this.dateParseThrows(greaterThanEquals(), day(), monthOrMinute(), year());
+    public void testDateFormatGreaterThanEqualsDayMonthYearFails() {
+        this.dateFormatParseThrows(
+                greaterThanEquals(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayGreaterThanEqualsMonthYearFails() {
-        this.dateParseThrows(day(), greaterThanEquals(), monthOrMinute(), year());
+    public void testDateFormatDayGreaterThanEqualsMonthYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                greaterThanEquals(),
+                monthOrMinute(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayMonthGreaterThanEqualsYearFails() {
-        this.dateParseThrows(day(), monthOrMinute(), greaterThanEquals(), year());
+    public void testDateFormatDayMonthGreaterThanEqualsYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                greaterThanEquals(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayMonthYearGreaterThanEqualsFails() {
-        this.dateParseThrows(day(), monthOrMinute(), year(), greaterThanEquals());
+    public void testDateFormatDayMonthYearGreaterThanEqualsFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                greaterThanEquals()
+        );
     }
 
     // lessThan
 
     @Test
-    public void testDateLessThanDayMonthYearFails() {
-        this.dateParseThrows(lessThan(), day(), monthOrMinute(), year());
+    public void testDateFormatLessThanDayMonthYearFails() {
+        this.dateFormatParseThrows(
+                lessThan(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayLessThanMonthYearFails() {
-        this.dateParseThrows(day(), lessThan(), monthOrMinute(), year());
+    public void testDateFormatDayLessThanMonthYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                lessThan(),
+                monthOrMinute(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayMonthLessThanYearFails() {
-        this.dateParseThrows(day(), monthOrMinute(), lessThan(), year());
+    public void testDateFormatDayMonthLessThanYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                lessThan(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayMonthYearLessThanFails() {
-        this.dateParseThrows(day(), monthOrMinute(), year(), lessThan());
-    }
-
-    // lessThanEquals
-
-    @Test
-    public void testDateLessThanEqualsDayMonthYearFails() {
-        this.dateParseThrows(lessThanEquals(), day(), monthOrMinute(), year());
-    }
-
-    @Test
-    public void testDateDayLessThanEqualsMonthYearFails() {
-        this.dateParseThrows(day(), lessThanEquals(), monthOrMinute(), year());
+    public void testDateFormatDayMonthYearLessThanFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                lessThan()
+        );
     }
 
     @Test
-    public void testDateDayMonthLessThanEqualsYearFails() {
-        this.dateParseThrows(day(), monthOrMinute(), lessThanEquals(), year());
+    public void testDateFormatLessThanEqualsDayMonthYearFails() {
+        this.dateFormatParseThrows(
+                lessThanEquals(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayMonthYearLessThanEqualsFails() {
-        this.dateParseThrows(day(), monthOrMinute(), year(), lessThanEquals());
+    public void testDateFormatDayLessThanEqualsMonthYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                lessThanEquals(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateFormatDayMonthLessThanEqualsYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                lessThanEquals(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateFormatDayMonthYearLessThanEqualsFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                lessThanEquals()
+        );
     }
 
     // notEquals
 
     @Test
-    public void testDateNotEqualsDayMonthYearFails() {
-        this.dateParseThrows(notEquals(), day(), monthOrMinute(), year());
+    public void testDateFormatNotEqualsDayMonthYearFails() {
+        this.dateFormatParseThrows(
+                notEquals(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayNotEqualsMonthYearFails() {
-        this.dateParseThrows(day(), notEquals(), monthOrMinute(), year());
+    public void testDateFormatDayNotEqualsMonthYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                notEquals(),
+                monthOrMinute(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayMonthNotEqualsYearFails() {
-        this.dateParseThrows(day(), monthOrMinute(), notEquals(), year());
+    public void testDateFormatDayMonthNotEqualsYearFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                notEquals(),
+                year()
+        );
     }
 
     @Test
-    public void testDateDayMonthYearNotEqualsFails() {
-        this.dateParseThrows(day(), monthOrMinute(), year(), notEquals());
+    public void testDateFormatDayMonthYearNotEqualsFails() {
+        this.dateFormatParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                notEquals()
+        );
     }
 
     // color
 
     @Test
-    public void testDateColorDay() {
-        this.dateParseAndCheck(color(), day());
+    public void testDateFormatColorDay() {
+        this.dateFormatParseAndCheck(
+                date(
+                        color(),
+                        day()
+                )
+        );
     }
 
     @Test
-    public void testDateColorMonth() {
-        this.dateParseAndCheck(color(), monthOrMinute());
+    public void testDateFormatColorMonth() {
+        this.dateFormatParseAndCheck(
+                date(
+                        color(),
+                        monthOrMinute()
+                )
+        );
     }
 
     @Test
-    public void testDateColorYear() {
-        this.dateParseAndCheck(color(), year());
+    public void testDateFormatColorYear() {
+        this.dateFormatParseAndCheck(
+                date(
+                        color(),
+                        year()
+                )
+        );
     }
 
     @Test
-    public void testDateDayColor() {
-        this.dateParseAndCheck(day(), color());
+    public void testDateFormatDayColor() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        color()
+                )
+        );
     }
 
     @Test
-    public void testDateMonthColor() {
-        this.dateParseAndCheck(monthOrMinute(), color());
+    public void testDateFormatMonthColor() {
+        this.dateFormatParseAndCheck(
+                date(
+                        monthOrMinute(),
+                        color()
+                )
+        );
     }
 
     @Test
-    public void testDateYearColor() {
-        this.dateParseAndCheck(year(), color());
+    public void testDateFormatYearColor() {
+        this.dateFormatParseAndCheck(
+                date(
+                        year(),
+                        color()
+                )
+        );
     }
 
     // condition
 
     @Test
-    public void testDateConditionEqualsDay() {
-        this.dateParseAndCheck(conditionEquals(), day());
+    public void testDateFormatConditionEqualsDayFails() {
+        this.dateFormatParseThrows(
+                conditionEquals(),
+                day()
+        );
     }
 
     @Test
-    public void testDateConditionGreaterThanDay() {
-        this.dateParseAndCheck(conditionGreaterThan(), day());
+    public void testDateFormatConditionGreaterThanDayFails() {
+        this.dateFormatParseThrows(
+                conditionGreaterThan(),
+                day()
+        );
     }
 
     @Test
-    public void testDateConditionGreaterThanEqualsDay() {
-        this.dateParseAndCheck(conditionGreaterThanEquals(), day());
+    public void testDateFormatConditionGreaterThanEqualsDayFails() {
+        this.dateFormatParseThrows(
+                conditionGreaterThanEquals(),
+                day()
+        );
     }
 
     @Test
-    public void testDateConditionLessThanDay() {
-        this.dateParseAndCheck(conditionLessThan(), day());
+    public void testDateFormatConditionLessThanDayFails() {
+        this.dateFormatParseThrows(
+                conditionLessThan(),
+                day());
     }
 
     @Test
-    public void testDateConditionLessThanEqualsDay() {
-        this.dateParseAndCheck(conditionLessThanEquals(), day());
+    public void testDateFormatConditionLessThanEqualsDayFails() {
+        this.dateFormatParseThrows(
+                conditionLessThanEquals(),
+                day()
+        );
     }
 
     @Test
-    public void testDateConditionNotEqualsDay() {
-        this.dateParseAndCheck(
+    public void testDateFormatConditionNotEqualsDayFails() {
+        this.dateFormatParseThrows(
                 conditionNotEquals(),
                 day()
         );
     }
 
     @Test
-    public void testDayDateConditionEqualsFails() {
-        this.dateParseFails(
+    public void testDayFormatDateConditionEqualsFails() {
+        this.dateFormatParseThrows(
                 day(),
                 conditionEquals()
         );
     }
 
     @Test
-    public void testDateDayConditionGreaterThanFails() {
-        this.dateParseFails(
+    public void testDateFormatDayConditionGreaterThanFails() {
+        this.dateFormatParseThrows(
                 day(),
                 conditionGreaterThan()
         );
     }
 
     @Test
-    public void testDateDayConditionGreaterThanEqualsFails() {
-        this.dateParseFails(
+    public void testDateFormatDayConditionGreaterThanEqualsFails() {
+        this.dateFormatParseThrows(
                 day(),
                 conditionGreaterThanEquals()
         );
     }
 
     @Test
-    public void testDateDayConditionLessThanFails() {
-        this.dateParseFails(
+    public void testDateFormatDayConditionLessThanFails() {
+        this.dateFormatParseThrows(
                 day(),
                 conditionLessThan()
         );
     }
 
     @Test
-    public void testDateDayConditionLessThanEqualsFails() {
-        this.dateParseFails(
+    public void testDateFormatDayConditionLessThanEqualsFails() {
+        this.dateFormatParseThrows(
                 day(),
                 conditionLessThanEquals()
         );
     }
 
     @Test
-    public void testDateDayConditionNotEqualsFails() {
-        this.dateParseFails(
+    public void testDateFormatDayConditionNotEqualsFails() {
+        this.dateFormatParseThrows(
                 day(),
                 conditionNotEquals()
         );
     }
 
-    // date helpers....
-
-    private void dateParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(this.dateParser(), SpreadsheetFormatParserToken::date, tokens);
+    @Test
+    public void testDateFormatPatternSeparator() {
+        this.dateFormatParseAndCheck(
+                date(
+                        year(),
+                        monthOrMinute(),
+                        day()
+                ),
+                separator()
+        );
     }
 
-    private void dateParseFails(final SpreadsheetFormatParserToken... tokens) {
-        this.parseFailAndCheck2(
-                this.dateParser(),
+    @Test
+    public void testDateFormatPatternSeparatorPattern() {
+        this.dateFormatParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year()
+                ),
+                separator(),
+                date(
+                        year(),
+                        monthOrMinute(),
+                        day()
+                )
+        );
+    }
+
+    @Test
+    public void testDateFormatColorPatternSeparatorPattern() {
+        this.dateFormatParseAndCheck(
+                date(
+                        color(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                ),
+                separator(),
+                date(
+                        year(),
+                        monthOrMinute(),
+                        day()
+                )
+        );
+    }
+
+    // date format helpers..............................................................................................
+
+    private void dateFormatParseAndCheck(final SpreadsheetFormatDateParserToken... tokens) {
+        this.parseAndCheck2(
+                SpreadsheetFormatParsers.dateFormat(),
                 tokens
         );
     }
 
-    private void dateParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(this.dateParser(), tokens);
+    private void dateFormatParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
+        this.parseAndCheck2(
+                SpreadsheetFormatParsers.dateFormat(),
+                tokens
+        );
     }
 
-    private Parser<SpreadsheetFormatParserContext> dateParser() {
-        return SpreadsheetFormatParsers.date();
+    private void dateFormatParseThrows(final SpreadsheetFormatParserToken... tokens) {
+        this.parseThrows2(
+                SpreadsheetFormatParsers.dateFormat(),
+                tokens
+        );
+    }
+
+    // date format......................................................................................................
+
+    @Test
+    public void testDateParseGeneral() {
+        this.dateParseParseAndCheck(
+                general()
+        );
+    }
+
+    @Test
+    public void testDateParseWhitespaceGeneral() {
+        this.dateParseParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseGeneralWhitespace() {
+        this.dateParseParseAndCheck(
+                general(
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseWhitespaceGeneralWhitespace() {
+        this.dateParseParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseColorGeneral() {
+        this.dateParseParseAndCheck(
+                general(
+                        color(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseColorWhitespaceGeneral() {
+        this.dateParseParseAndCheck(
+                general(
+                        color(),
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseColorEscapedFails() {
+        this.dateParseParseThrows(
+                date(
+                        color(),
+                        escape()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseTextDigitFails() {
+        this.dateParseParseThrows(
+                digit()
+        );
+    }
+
+    @Test
+    public void testDateParseTextDigitZeroFails() {
+        this.dateParseParseThrows(
+                digitZero()
+        );
+    }
+
+    @Test
+    public void testDateParseTextDigitSpaceFails() {
+        this.dateParseParseThrows(
+                digitSpace()
+        );
+    }
+
+    @Test
+    public void testDateParseHourFails() {
+        this.dateParseParseThrows(
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateParseSecondFails() {
+        this.dateParseParseThrows(
+                second()
+        );
+    }
+
+    @Test
+    public void testDateParseTextPlaceholderFails() {
+        this.dateParseParseThrows(
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testDateParseEscaped() {
+        this.dateParseParseAndCheck(
+                date(
+                        escape()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDollar() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralDollar()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseMinus() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralMinus()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParsePlus() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralPlus()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseSlash() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralSlash()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseOpenParen() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralOpenParens()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseCloseParen() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralCloseParens()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseColon() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralColon()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseSpace() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralSpace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseQuotedText() {
+        this.dateParseParseAndCheck(
+                date(
+                        quotedText()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDay() {
+        this.dateParseParseAndCheck(
+                date(
+                        day()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseMonth() {
+        this.dateParseParseAndCheck(
+                date(
+                        monthOrMinute()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDay2Month2Year2() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(2),
+                        monthOrMinute(2),
+                        year(2)
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDay3Month3Year3() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(3),
+                        monthOrMinute(3),
+                        year(3)
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearDateDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseMonthDayYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        monthOrMinute(),
+                        day(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseYearMonthDay() {
+        this.dateParseParseAndCheck(
+                date(
+                        year(),
+                        monthOrMinute(),
+                        day()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseYearCommaMonthCommaDay() {
+        this.dateParseParseAndCheck(
+                date(
+                        year(),
+                        textLiteralComma(),
+                        monthOrMinute(),
+                        textLiteralComma(),
+                        day()
+                )
+        );
+    }
+
+    // escaped
+
+    @Test
+    public void testDateParseEscapedDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        escape(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayEscapedMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        escape(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthEscapedYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        escape(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearEscaped() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        escape()
+                )
+        );
+    }
+
+    // quotedText
+
+    @Test
+    public void testDateParseQuotedTextDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        quotedText(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayQuotedTextMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        quotedText(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthQuotedTextYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        quotedText(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearQuotedText() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        quotedText()
+                )
+        );
+    }
+
+    // closeParens
+
+    @Test
+    public void testDateParseCloseParensDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralCloseParens(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayCloseParensMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        textLiteralCloseParens(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthCloseParensYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralCloseParens(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearCloseParens() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralCloseParens()
+                )
+        );
+    }
+
+    // colon
+
+    @Test
+    public void testDateParseColonDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralColon(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayColonMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        textLiteralColon(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthColonYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralColon(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearColon() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralColon()
+
+                )
+        );
+    }
+
+    // dollar
+
+    @Test
+    public void testDateParseDollarDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralDollar(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayDollarMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        textLiteralDollar(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthDollarYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralDollar(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearDollar() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralDollar()
+                )
+        );
+    }
+
+    // minus
+
+    @Test
+    public void testDateParseMinusDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralMinus(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMinusMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        textLiteralMinus(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthMinusYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralMinus(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearMinus() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralMinus()
+                )
+        );
+    }
+
+    // openParens
+
+    @Test
+    public void testDateParseOpenParensDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralOpenParens(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayOpenParensMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        textLiteralOpenParens(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthOpenParensYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralOpenParens(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearOpenParens() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralOpenParens()
+                )
+        );
+    }
+
+    // plus
+
+    @Test
+    public void testDateParsePlusDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralPlus(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayPlusMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        textLiteralPlus(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthPlusYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralPlus(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearPlus() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralPlus()
+                )
+        );
+    }
+
+    // slash
+
+    @Test
+    public void testDateParseSlashDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralSlash(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDaySlashMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        textLiteralSlash(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthSlashYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralSlash(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearSlash() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralSlash()
+                )
+        );
+    }
+
+    // space
+
+    @Test
+    public void testDateParseSpaceDayMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        textLiteralSpace(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDaySpaceMonthYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        textLiteralSpace(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthSpaceYear() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        textLiteralSpace(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearSpace() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        textLiteralSpace()
+                )
+        );
+    }
+
+    // equals
+
+    @Test
+    public void testDateParseEqualsDayMonthYearFails() {
+        this.dateParseParseThrows(
+                equalsSymbol(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayEqualsMonthYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                equalsSymbol(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthEqualsYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                equalsSymbol(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearEqualsFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                equalsSymbol()
+        );
+    }
+
+    // greaterThan
+
+    @Test
+    public void testDateParseGreaterThanDayMonthYearFails() {
+        this.dateParseParseThrows(
+                greaterThan(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayGreaterThanMonthYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                greaterThan(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthGreaterThanYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                greaterThan(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearGreaterThanFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                greaterThan()
+        );
+    }
+
+    // greaterThanEquals
+
+    @Test
+    public void testDateParseGreaterThanEqualsDayMonthYearFails() {
+        this.dateParseParseThrows(
+                greaterThanEquals(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayGreaterThanEqualsMonthYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                greaterThanEquals(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthGreaterThanEqualsYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                greaterThanEquals(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearGreaterThanEqualsFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                greaterThanEquals()
+        );
+    }
+
+    // lessThan
+
+    @Test
+    public void testDateParseLessThanDayMonthYearFails() {
+        this.dateParseParseThrows(
+                lessThan(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayLessThanMonthYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                lessThan(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthLessThanYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                lessThan(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearLessThanFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                lessThan()
+        );
+    }
+
+    @Test
+    public void testDateParseLessThanEqualsDayMonthYearFails() {
+        this.dateParseParseThrows(
+                lessThanEquals(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayLessThanEqualsMonthYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                lessThanEquals(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthLessThanEqualsYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                lessThanEquals(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearLessThanEqualsFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                lessThanEquals()
+        );
+    }
+
+    // notEquals
+
+    @Test
+    public void testDateParseNotEqualsDayMonthYearFails() {
+        this.dateParseParseThrows(
+                notEquals(),
+                day(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayNotEqualsMonthYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                notEquals(),
+                monthOrMinute(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthNotEqualsYearFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                notEquals(),
+                year()
+        );
+    }
+
+    @Test
+    public void testDateParseDayMonthYearNotEqualsFails() {
+        this.dateParseParseThrows(
+                day(),
+                monthOrMinute(),
+                year(),
+                notEquals()
+        );
+    }
+
+    // color
+
+    @Test
+    public void testDateParseColorDayFails() {
+        this.dateParseParseThrows(
+                date(
+                        color(),
+                        day()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseColorMonthFails() {
+        this.dateParseParseThrows(
+                date(
+                        color(),
+                        monthOrMinute()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseColorYearFails() {
+        this.dateParseParseThrows(
+                date(
+                        color(),
+                        year()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseDayColorFails() {
+        this.dateParseParseThrows(
+                date(
+                        day(),
+                        color()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseMonthColorFails() {
+        this.dateParseParseThrows(
+                date(
+                        monthOrMinute(),
+                        color()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseYearColorFails() {
+        this.dateParseParseThrows(
+                date(
+                        year(),
+                        color()
+                )
+        );
+    }
+
+    // condition
+
+    @Test
+    public void testDateParseConditionEqualsDayFails() {
+        this.dateParseParseThrows(
+                conditionEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateParseConditionGreaterThanDayFails() {
+        this.dateParseParseThrows(
+                conditionGreaterThan(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateParseConditionGreaterThanEqualsDayFails() {
+        this.dateParseParseThrows(
+                conditionGreaterThanEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateParseConditionLessThanDayFails() {
+        this.dateParseParseThrows(
+                conditionLessThan(),
+                day());
+    }
+
+    @Test
+    public void testDateParseConditionLessThanEqualsDayFails() {
+        this.dateParseParseThrows(
+                conditionLessThanEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateParseConditionNotEqualsDayFails() {
+        this.dateParseParseThrows(
+                conditionNotEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateDayConditionEqualsFails() {
+        this.dateParseParseThrows(
+                day(),
+                conditionEquals()
+        );
+    }
+
+    @Test
+    public void testDateParseDayConditionGreaterThanFails() {
+        this.dateParseParseThrows(
+                day(),
+                conditionGreaterThan()
+        );
+    }
+
+    @Test
+    public void testDateParseDayConditionGreaterThanEqualsFails() {
+        this.dateParseParseThrows(
+                day(),
+                conditionGreaterThanEquals()
+        );
+    }
+
+    @Test
+    public void testDateParseDayConditionLessThanFails() {
+        this.dateParseParseThrows(
+                day(),
+                conditionLessThan()
+        );
+    }
+
+    @Test
+    public void testDateParseDayConditionLessThanEqualsFails() {
+        this.dateParseParseThrows(
+                day(),
+                conditionLessThanEquals()
+        );
+    }
+
+    @Test
+    public void testDateParseDayConditionNotEqualsFails() {
+        this.dateParseParseThrows(
+                day(),
+                conditionNotEquals()
+        );
+    }
+
+    @Test
+    public void testDateParsePatternSeparator() {
+        this.dateParseParseAndCheck(
+                date(
+                        year(),
+                        monthOrMinute(),
+                        day()
+                ),
+                separator()
+        );
+    }
+
+    @Test
+    public void testDateParsePatternSeparatorPattern() {
+        this.dateParseParseAndCheck(
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year()
+                ),
+                separator(),
+                date(
+                        year(),
+                        monthOrMinute(),
+                        day()
+                )
+        );
+    }
+
+    @Test
+    public void testDateParseColorPatternSeparatorPatternFails() {
+        this.dateParseParseThrows(
+                date(
+                        color(),
+                        day(),
+                        monthOrMinute(),
+                        year()
+                ),
+                separator(),
+                date(
+                        year(),
+                        monthOrMinute(),
+                        day()
+                )
+        );
+    }
+
+    // date parse helpers...............................................................................................
+
+    private void dateParseParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
+        this.parseAndCheck2(
+                SpreadsheetFormatParsers.dateParse(),
+                tokens
+        );
+    }
+
+    private void dateParseParseThrows(final SpreadsheetFormatParserToken... tokens) {
+        this.parseThrows2(
+                SpreadsheetFormatParsers.dateParse(),
+                tokens
+        );
     }
 
     // bigDecimal........................................................................................................
@@ -2107,7 +3998,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // number helpers...
 
     private void numberParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(this.numberParser(), SpreadsheetFormatParserToken::number, tokens);
+        this.parseAndCheck3(
+                this.numberParser(),
+                SpreadsheetFormatParserToken::number,
+                tokens
+        );
     }
 
     private void numberParseFails(final SpreadsheetFormatParserToken... tokens) {
@@ -2751,11 +4646,18 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // fraction helpers...
 
     private void fractionParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(this.fractionParser(), SpreadsheetFormatParserToken::fraction, tokens);
+        this.parseAndCheck3(
+                this.fractionParser(),
+                SpreadsheetFormatParserToken::fraction,
+                tokens
+        );
     }
 
     private void fractionParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(this.fractionParser(), tokens);
+        this.parseThrows2(
+                this.fractionParser(),
+                tokens
+        );
     }
 
     private Parser<SpreadsheetFormatParserContext> fractionParser() {
@@ -2808,11 +4710,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
      * Parsers the general expression using the general parser.
      */
     private void generalParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        final String general = ParserToken.text(Lists.of(tokens));
-        this.parseAndCheck(this.generalParser(),
-                general,
-                SpreadsheetFormatParserToken.general(Lists.of(tokens), general),
-                general);
+        this.parseAndCheck3(
+                this.generalParser(),
+                SpreadsheetFormatParserToken::general,
+                tokens
+        );
     }
 
     private Parser<SpreadsheetFormatParserContext> generalParser() {
@@ -3232,7 +5134,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // text helpers......................................................................................................
 
     private void textParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(
+        this.parseAndCheck3(
                 SpreadsheetFormatParsers.text(),
                 SpreadsheetFormatParserToken::text,
                 tokens
@@ -3246,48 +5148,60 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    // time........................................................................................................
+    // time format......................................................................................................
 
     @Test
-    public void testTimeTextDigitFails() {
-        this.timeParseThrows(digit());
+    public void testTimeFormatTextDigitFails() {
+        this.timeFormatParseThrows(
+                digit()
+        );
     }
 
     @Test
-    public void testTimeTextDigitZeroFails() {
-        this.timeParseThrows(digitZero());
+    public void testTimeFormatTextDigitZeroFails() {
+        this.timeFormatParseThrows(
+                digitZero()
+        );
     }
 
     @Test
-    public void testTimeTextDigitSpaceFails() {
-        this.timeParseThrows(digitSpace());
+    public void testTimeFormatTextDigitSpaceFails() {
+        this.timeFormatParseThrows(
+                digitSpace()
+        );
     }
 
     @Test
-    public void testTimeDayFails() {
-        this.timeParseThrows(day());
+    public void testTimeFormatDayFails() {
+        this.timeFormatParseThrows(
+                day()
+        );
     }
 
     @Test
-    public void testTimeYearFails() {
-        this.timeParseThrows(year());
+    public void testTimeFormatYearFails() {
+        this.timeFormatParseThrows(
+                year()
+        );
     }
 
     @Test
-    public void testTimeTextPlaceholderFails() {
-        this.timeParseThrows(textPlaceholder());
+    public void testTimeFormatTextPlaceholderFails() {
+        this.timeFormatParseThrows(
+                textPlaceholder()
+        );
     }
 
     @Test
-    public void testTimeGeneral() {
-        this.timeParseAndCheck(
+    public void testTimeFormatGeneral() {
+        this.timeFormatParseAndCheck(
                 general()
         );
     }
 
     @Test
-    public void testTimeWhitespaceGeneral() {
-        this.timeParseAndCheck(
+    public void testTimeFormatWhitespaceGeneral() {
+        this.timeFormatParseAndCheck(
                 general(
                         whitespace(),
                         generalSymbol()
@@ -3296,8 +5210,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeGeneralWhitespace() {
-        this.timeParseAndCheck(
+    public void testTimeFormatGeneralWhitespace() {
+        this.timeFormatParseAndCheck(
                 general(
                         generalSymbol(),
                         whitespace()
@@ -3306,8 +5220,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeWhitespaceGeneralWhitespace() {
-        this.timeParseAndCheck(
+    public void testTimeFormatWhitespaceGeneralWhitespace() {
+        this.timeFormatParseAndCheck(
                 general(
                         whitespace(),
                         generalSymbol(),
@@ -3317,8 +5231,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeColorGeneral() {
-        this.timeParseAndCheck(
+    public void testTimeFormatColorGeneral() {
+        this.timeFormatParseAndCheck(
                 general(
                         color(),
                         generalSymbol()
@@ -3327,8 +5241,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeColorWhitespaceGeneral() {
-        this.timeParseAndCheck(
+    public void testTimeFormatColorWhitespaceGeneral() {
+        this.timeFormatParseAndCheck(
                 general(
                         color(),
                         whitespace(),
@@ -3338,625 +5252,1273 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeColorEscaped() {
-        this.timeParseAndCheck(
-                color(),
-                escape()
+    public void testTimeFormatColorEscaped() {
+        this.timeFormatParseAndCheck(
+                time(
+                        color(),
+                        escape()
+                )
         );
     }
 
     @Test
-    public void testTimeEscaped() {
-        this.timeParseAndCheck(escape());
+    public void testTimeFormatEscaped() {
+        this.timeFormatParseAndCheck(
+                time(
+                        escape()
+                )
+        );
     }
 
     @Test
-    public void testTimeDollar() {
-        this.timeParseAndCheck(textLiteralDollar());
+    public void testTimeFormatDollar() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralDollar()
+                )
+        );
     }
 
     @Test
-    public void testTimeMinus() {
-        this.timeParseAndCheck(textLiteralMinus());
+    public void testTimeFormatMinus() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralMinus()
+                )
+        );
     }
 
     @Test
-    public void testTimePlus() {
-        this.timeParseAndCheck(textLiteralPlus());
+    public void testTimeFormatPlus() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralPlus()
+                )
+        );
     }
 
     @Test
-    public void testTimeSlash() {
-        this.timeParseAndCheck(textLiteralSlash());
+    public void testTimeFormatSlash() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralSlash()
+                )
+        );
     }
 
     @Test
-    public void testTimeOpenParen() {
-        this.timeParseAndCheck(textLiteralOpenParens());
+    public void testTimeFormatOpenParen() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralOpenParens()
+                )
+        );
     }
 
     @Test
-    public void testTimeCloseParen() {
-        this.timeParseAndCheck(textLiteralCloseParens());
+    public void testTimeFormatCloseParen() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralCloseParens()
+                )
+        );
     }
 
     @Test
-    public void testTimeColon() {
-        this.timeParseAndCheck(textLiteralColon());
+    public void testTimeFormatColon() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralColon()
+                )
+        );
     }
 
     @Test
-    public void testTimeSpace() {
-        this.timeParseAndCheck(textLiteralSpace());
+    public void testTimeFormatSpace() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralSpace()
+                )
+        );
     }
 
     @Test
-    public void testTimeQuotedText() {
-        this.timeParseAndCheck(quotedText());
+    public void testTimeFormatQuotedText() {
+        this.timeFormatParseAndCheck(
+                time(
+                        quotedText()
+                )
+        );
     }
 
     @Test
-    public void testTimeASlashP() {
-        this.timeParseAndCheck(aSlashP());
+    public void testTimeFormatASlashP() {
+        this.timeFormatParseAndCheck(
+                time(
+                        aSlashP()
+                )
+        );
     }
 
     @Test
-    public void testTimeAmSlashPm() {
-        this.timeParseAndCheck(amSlashPm());
+    public void testTimeFormatAmSlashPm() {
+        this.timeFormatParseAndCheck(
+                time(
+                        amSlashPm()
+                )
+        );
     }
 
     @Test
-    public void testTimeHour() {
-        this.timeParseAndCheck(hour());
+    public void testTimeFormatHour() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour()
+                )
+        );
     }
 
     @Test
-    public void testTimeMinute() {
-        this.timeParseAndCheck(monthOrMinute());
+    public void testTimeFormatMinute() {
+        this.timeFormatParseAndCheck(
+                time(
+                        monthOrMinute()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMinuteSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second());
+    public void testTimeFormatHourMinuteSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMinuteSecondASlashP() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), aSlashP());
+    public void testTimeFormatHourMinuteSecondASlashP() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        aSlashP()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMinuteSecondAmSlashPm() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), amSlashPm());
+    public void testTimeFormatHourMinuteSecondAmSlashPm() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        amSlashPm()
+                )
+        );
     }
 
     @Test
-    public void testTimeHour2Minute2Second2() {
-        this.timeParseAndCheck(hour(2), monthOrMinute(2), second(2));
+    public void testTimeFormatHour2Minute2Second2() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(2),
+                        monthOrMinute(2),
+                        second(2)
+                )
+        );
     }
 
     @Test
-    public void testTimeHour3Minute3Second3() {
-        this.timeParseAndCheck(hour(3), monthOrMinute(3), second(3));
+    public void testTimeFormatHour3Minute3Second3() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(3),
+                        monthOrMinute(3),
+                        second(3)
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMinuteSecondHourMinuteSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), hour(), monthOrMinute(), second());
+    public void testTimeFormatHourMinuteSecondHourMinuteSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeMinuteHourSecond() {
-        this.timeParseAndCheck(monthOrMinute(), hour(), second());
+    public void testTimeFormatMinuteHourSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        monthOrMinute(),
+                        hour(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeSecondMinuteHour() {
-        this.timeParseAndCheck(second(), monthOrMinute(), hour());
+    public void testTimeFormatSecondMinuteHour() {
+        this.timeFormatParseAndCheck(
+                time(
+                        second(),
+                        monthOrMinute(),
+                        hour()
+                )
+        );
     }
 
     @Test
-    public void testTimeSecondCommaMinuteCommaHour() {
-        this.timeParseAndCheck(second(), textLiteralComma(), monthOrMinute(), textLiteralComma(), hour());
+    public void testTimeFormatSecondCommaMinuteCommaHour() {
+        this.timeFormatParseAndCheck(
+                time(
+                        second(),
+                        textLiteralComma(),
+                        monthOrMinute(),
+                        textLiteralComma(),
+                        hour()
+                )
+        );
     }
 
     // escaped
 
     @Test
-    public void testTimeEscapedHourMonthSecond() {
-        this.timeParseAndCheck(escape(), hour(), monthOrMinute(), second());
+    public void testTimeFormatEscapedHourMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        escape(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourEscapedMonthSecond() {
-        this.timeParseAndCheck(hour(), escape(), monthOrMinute(), second());
+    public void testTimeFormatHourEscapedMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        escape(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthEscapedSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), escape(), second());
+    public void testTimeFormatHourMonthEscapedSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        escape(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsEscaped() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), escape());
+    public void testTimeFormatHourMonthSecondsEscaped() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        escape()
+                )
+        );
     }
 
     // quotedText
 
     @Test
-    public void testTimeQuotedTextHourMonthSecond() {
-        this.timeParseAndCheck(quotedText(), hour(), monthOrMinute(), second());
+    public void testTimeFormatQuotedTextHourMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        quotedText(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourQuotedTextMonthSecond() {
-        this.timeParseAndCheck(hour(), quotedText(), monthOrMinute(), second());
+    public void testTimeFormatHourQuotedTextMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        quotedText(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthQuotedTextSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), quotedText(), second());
+    public void testTimeFormatHourMonthQuotedTextSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        quotedText(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsQuotedText() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), quotedText());
+    public void testTimeFormatHourMonthSecondsQuotedText() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        quotedText()
+                )
+        );
     }
 
     // closeParens
 
     @Test
-    public void testTimeCloseParensHourMonthSecond() {
-        this.timeParseAndCheck(textLiteralCloseParens(), hour(), monthOrMinute(), second());
+    public void testTimeFormatCloseParensHourMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralCloseParens(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourCloseParensMonthSecond() {
-        this.timeParseAndCheck(hour(), textLiteralCloseParens(), monthOrMinute(), second());
+    public void testTimeFormatHourCloseParensMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralCloseParens(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthCloseParensSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), textLiteralCloseParens(), second());
+    public void testTimeFormatHourMonthCloseParensSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralCloseParens(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsCloseParens() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), textLiteralCloseParens());
+    public void testTimeFormatHourMonthSecondsCloseParens() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralCloseParens()
+                )
+        );
     }
 
     // colon
 
     @Test
-    public void testTimeColonHourMonthSecond() {
-        this.timeParseAndCheck(textLiteralColon(), hour(), monthOrMinute(), second());
+    public void testTimeFormatColonHourMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralColon(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourColonMonthSecond() {
-        this.timeParseAndCheck(hour(), textLiteralColon(), monthOrMinute(), second());
+    public void testTimeFormatHourColonMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralColon(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthColonSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), textLiteralColon(), second());
+    public void testTimeFormatHourMonthColonSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralColon(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsColon() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), textLiteralColon());
+    public void testTimeFormatHourMonthSecondsColon() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralColon()
+                )
+        );
     }
 
     // dollar
 
     @Test
-    public void testTimeDollarHourMonthSecond() {
-        this.timeParseAndCheck(textLiteralDollar(), hour(), monthOrMinute(), second());
+    public void testTimeFormatDollarHourMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralDollar(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourDollarMonthSecond() {
-        this.timeParseAndCheck(hour(), textLiteralDollar(), monthOrMinute(), second());
+    public void testTimeFormatHourDollarMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralDollar(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthDollarSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), textLiteralDollar(), second());
+    public void testTimeFormatHourMonthDollarSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralDollar(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsDollar() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), textLiteralDollar());
+    public void testTimeFormatHourMonthSecondsDollar() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralDollar()
+                )
+        );
     }
 
     // minus
 
     @Test
-    public void testTimeMinusHourMonthSecond() {
-        this.timeParseAndCheck(textLiteralMinus(), hour(), monthOrMinute(), second());
+    public void testTimeFormatMinusHourMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralMinus(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMinusMonthSecond() {
-        this.timeParseAndCheck(hour(), textLiteralMinus(), monthOrMinute(), second());
+    public void testTimeFormatHourMinusMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralMinus(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthMinusSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), textLiteralMinus(), second());
+    public void testTimeFormatHourMonthMinusSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralMinus(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsMinus() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), textLiteralMinus());
+    public void testTimeFormatHourMonthSecondsMinus() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralMinus()
+                )
+        );
     }
 
     // openParens
 
     @Test
-    public void testTimeOpenParensHourMonthSecond() {
-        this.timeParseAndCheck(textLiteralOpenParens(), hour(), monthOrMinute(), second());
+    public void testTimeFormatOpenParensHourMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralOpenParens(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourOpenParensMonthSecond() {
-        this.timeParseAndCheck(hour(), textLiteralOpenParens(), monthOrMinute(), second());
+    public void testTimeFormatHourOpenParensMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralOpenParens(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthOpenParensSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), textLiteralOpenParens(), second());
+    public void testTimeFormatHourMonthOpenParensSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralOpenParens(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsOpenParens() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), textLiteralOpenParens());
+    public void testTimeFormatHourMonthSecondsOpenParens() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralOpenParens()
+                )
+        );
     }
 
     // plus
 
     @Test
-    public void testTimePlusHourMonthSecond() {
-        this.timeParseAndCheck(textLiteralPlus(), hour(), monthOrMinute(), second());
+    public void testTimeFormatPlusHourMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralPlus(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourPlusMonthSecond() {
-        this.timeParseAndCheck(hour(), textLiteralPlus(), monthOrMinute(), second());
+    public void testTimeFormatHourPlusMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralPlus(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthPlusSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), textLiteralPlus(), second());
+    public void testTimeFormatHourMonthPlusSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralPlus(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsPlus() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), textLiteralPlus());
+    public void testTimeFormatHourMonthSecondsPlus() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralPlus()
+                )
+        );
     }
 
     // slash
 
     @Test
-    public void testTimeSlashHourMonthSecond() {
-        this.timeParseAndCheck(textLiteralSlash(), hour(), monthOrMinute(), second());
+    public void testTimeFormatSlashHourMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralSlash(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourSlashMonthSecond() {
-        this.timeParseAndCheck(hour(), textLiteralSlash(), monthOrMinute(), second());
+    public void testTimeFormatHourSlashMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralSlash(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSlashSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), textLiteralSlash(), second());
+    public void testTimeFormatHourMonthSlashSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralSlash(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsSlash() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), textLiteralSlash());
+    public void testTimeFormatHourMonthSecondsSlash() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralSlash()
+                )
+        );
     }
 
     // space
 
     @Test
-    public void testTimeSpaceHourMonthSecond() {
-        this.timeParseAndCheck(textLiteralSpace(), hour(), monthOrMinute(), second());
+    public void testTimeFormatSpaceHourMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        textLiteralSpace(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourSpaceMonthSecond() {
-        this.timeParseAndCheck(hour(), textLiteralSpace(), monthOrMinute(), second());
+    public void testTimeFormatHourSpaceMonthSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralSpace(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSpaceSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), textLiteralSpace(), second());
+    public void testTimeFormatHourMonthSpaceSecond() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralSpace(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsSpace() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), textLiteralSpace());
+    public void testTimeFormatHourMonthSecondsSpace() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralSpace()
+                )
+        );
     }
 
     // equals
 
     @Test
-    public void testTimeEqualsHourMonthSecondFails() {
-        this.timeParseThrows(equalsSymbol(), hour(), monthOrMinute(), second());
+    public void testTimeFormatEqualsHourMonthSecondFails() {
+        this.timeFormatParseThrows(
+                equalsSymbol(),
+                hour(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourEqualsMonthSecondFails() {
-        this.timeParseThrows(hour(), equalsSymbol(), monthOrMinute(), second());
+    public void testTimeFormatHourEqualsMonthSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                equalsSymbol(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthEqualsSecondFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), equalsSymbol(), second());
+    public void testTimeFormatHourMonthEqualsSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                equalsSymbol(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsEqualsFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), second(), equalsSymbol());
+    public void testTimeFormatHourMonthSecondsEqualsFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                second(),
+                equalsSymbol()
+        );
     }
 
     // greaterThan
 
     @Test
-    public void testTimeGreaterThanHourMonthSecondFails() {
-        this.timeParseThrows(greaterThan(), hour(), monthOrMinute(), second());
+    public void testTimeFormatGreaterThanHourMonthSecondFails() {
+        this.timeFormatParseThrows(
+                greaterThan(),
+                hour(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourGreaterThanMonthSecondFails() {
-        this.timeParseThrows(hour(), greaterThan(), monthOrMinute(), second());
+    public void testTimeFormatHourGreaterThanMonthSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                greaterThan(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthGreaterThanSecondFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), greaterThan(), second());
+    public void testTimeFormatHourMonthGreaterThanSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                greaterThan(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsGreaterThanFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), second(), greaterThan());
+    public void testTimeFormatHourMonthSecondsGreaterThanFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                second(),
+                greaterThan()
+        );
     }
 
     // greaterThanEquals
 
     @Test
-    public void testTimeGreaterThanEqualsHourMonthSecondFails() {
-        this.timeParseThrows(greaterThanEquals(), hour(), monthOrMinute(), second());
+    public void testTimeFormatGreaterThanEqualsHourMonthSecondFails() {
+        this.timeFormatParseThrows(
+                greaterThanEquals(),
+                hour(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourGreaterThanEqualsMonthSecondFails() {
-        this.timeParseThrows(hour(), greaterThanEquals(), monthOrMinute(), second());
+    public void testTimeFormatHourGreaterThanEqualsMonthSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                greaterThanEquals(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthGreaterThanEqualsSecondFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), greaterThanEquals(), second());
+    public void testTimeFormatHourMonthGreaterThanEqualsSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                greaterThanEquals(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsGreaterThanEqualsFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), second(), greaterThanEquals());
+    public void testTimeFormatHourMonthSecondsGreaterThanEqualsFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                second(),
+                greaterThanEquals()
+        );
     }
 
     // lessThan
 
     @Test
-    public void testTimeLessThanHourMonthSecondFails() {
-        this.timeParseThrows(lessThan(), hour(), monthOrMinute(), second());
+    public void testTimeFormatLessThanHourMonthSecondFails() {
+        this.timeFormatParseThrows(
+                lessThan(),
+                hour(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourLessThanMonthSecondFails() {
-        this.timeParseThrows(hour(), lessThan(), monthOrMinute(), second());
+    public void testTimeFormatHourLessThanMonthSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                lessThan(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthLessThanSecondFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), lessThan(), second());
+    public void testTimeFormatHourMonthLessThanSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                lessThan(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsLessThanFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), second(), lessThan());
+    public void testTimeFormatHourMonthSecondsLessThanFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                second(),
+                lessThan()
+        );
     }
 
     // lessThanEquals
 
     @Test
-    public void testTimeLessThanEqualsHourMonthSecondFails() {
-        this.timeParseThrows(lessThanEquals(), hour(), monthOrMinute(), second());
+    public void testTimeFormatLessThanEqualsHourMonthSecondFails() {
+        this.timeFormatParseThrows(
+                lessThanEquals(),
+                hour(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourLessThanEqualsMonthSecondFails() {
-        this.timeParseThrows(hour(), lessThanEquals(), monthOrMinute(), second());
+    public void testTimeFormatHourLessThanEqualsMonthSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                lessThanEquals(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthLessThanEqualsSecondFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), lessThanEquals(), second());
+    public void testTimeFormatHourMonthLessThanEqualsSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                lessThanEquals(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsLessThanEqualsFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), second(), lessThanEquals());
+    public void testTimeFormatHourMonthSecondsLessThanEqualsFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                second(),
+                lessThanEquals()
+        );
     }
 
     // notEquals
 
     @Test
-    public void testTimeNotEqualsHourMonthSecondFails() {
-        this.timeParseThrows(notEquals(), hour(), monthOrMinute(), second());
+    public void testTimeFormatNotEqualsHourMonthSecondFails() {
+        this.timeFormatParseThrows(
+                notEquals(),
+                hour(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourNotEqualsMonthSecondFails() {
-        this.timeParseThrows(hour(), notEquals(), monthOrMinute(), second());
+    public void testTimeFormatHourNotEqualsMonthSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                notEquals(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthNotEqualsSecondFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), notEquals(), second());
+    public void testTimeFormatHourMonthNotEqualsSecondFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                notEquals(),
+                second()
+        );
     }
 
     @Test
-    public void testTimeHourMonthSecondsNotEqualsFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), second(), notEquals());
+    public void testTimeFormatHourMonthSecondsNotEqualsFails() {
+        this.timeFormatParseThrows(
+                hour(),
+                monthOrMinute(),
+                second(),
+                notEquals()
+        );
     }
 
     // color
 
     @Test
-    public void testTimeColorHour() {
-        this.timeParseAndCheck(color(), hour());
+    public void testTimeFormatColorHour() {
+        this.timeFormatParseAndCheck(
+                time(
+                        color(),
+                        hour()
+                )
+        );
     }
 
     @Test
-    public void testTimeColorMinute() {
-        this.timeParseAndCheck(color(), monthOrMinute());
+    public void testTimeFormatColorMinute() {
+        this.timeFormatParseAndCheck(
+                time(
+                        color(),
+                        monthOrMinute()
+                )
+        );
     }
 
     @Test
-    public void testTimeColorSeconds() {
-        this.timeParseAndCheck(color(), second());
+    public void testTimeFormatColorSeconds() {
+        this.timeFormatParseAndCheck(
+                time(
+                        color(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testTimeHourColor() {
-        this.timeParseAndCheck(hour(), color());
+    public void testTimeFormatHourColor() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        color()
+                )
+        );
     }
 
     @Test
-    public void testTimeMinuteColor() {
-        this.timeParseAndCheck(monthOrMinute(), color());
+    public void testTimeFormatMinuteColor() {
+        this.timeFormatParseAndCheck(
+                time(
+                        monthOrMinute(),
+                        color()
+                )
+        );
     }
 
     @Test
-    public void testTimeSecondsColor() {
-        this.timeParseAndCheck(second(), color());
+    public void testTimeFormatSecondsColor() {
+        this.timeFormatParseAndCheck(
+                time(
+                        second(),
+                        color()
+                )
+        );
     }
 
     // condition
 
     @Test
-    public void testTimeConditionEqualsHour() {
-        this.timeParseAndCheck(conditionEquals(), hour());
+    public void testTimeFormatConditionEqualsHourFails() {
+        this.timeFormatParseThrows(
+                conditionEquals(),
+                hour()
+        );
     }
 
     @Test
-    public void testTimeConditionGreaterThanHour() {
-        this.timeParseAndCheck(conditionGreaterThan(), hour());
+    public void testTimeFormatConditionGreaterThanHourFails() {
+        this.timeFormatParseThrows(
+                conditionGreaterThan(),
+                hour()
+        );
     }
 
     @Test
-    public void testTimeConditionGreaterThanEqualsHour() {
-        this.timeParseAndCheck(conditionGreaterThanEquals(), hour());
+    public void testTimeFormatConditionGreaterThanEqualsHourFails() {
+        this.timeFormatParseThrows(
+                conditionGreaterThanEquals(),
+                hour()
+        );
     }
 
     @Test
-    public void testTimeConditionLessThanHour() {
-        this.timeParseAndCheck(conditionLessThan(), hour());
+    public void testTimeFormatConditionLessThanHourFails() {
+        this.timeFormatParseThrows(
+                conditionLessThan(),
+                hour()
+        );
     }
 
     @Test
-    public void testTimeConditionLessThanEqualsHour() {
-        this.timeParseAndCheck(conditionLessThanEquals(), hour());
+    public void testTimeFormatConditionLessThanEqualsHourFails() {
+        this.timeFormatParseThrows(
+                conditionLessThanEquals(),
+                hour()
+        );
     }
 
     @Test
-    public void testTimeConditionNotEqualsHour() {
-        this.timeParseAndCheck(conditionNotEquals(), hour());
+    public void testTimeFormatConditionNotEqualsHourFails() {
+        this.timeFormatParseThrows(
+                conditionNotEquals(),
+                hour()
+        );
     }
 
     @Test
-    public void testTimeHourConditionEqualsFails() {
-        this.timeParseFails(
+    public void testTimeFormatHourConditionEqualsFails() {
+        this.timeFormatParseThrows(
                 hour(),
                 conditionEquals()
         );
     }
 
     @Test
-    public void testTimeHourConditionGreaterThanFails() {
-        this.timeParseFails(
+    public void testTimeFormatHourConditionGreaterThanFails() {
+        this.timeFormatParseThrows(
                 hour(),
                 conditionGreaterThan()
         );
     }
 
     @Test
-    public void testTimeHourConditionGreaterThanEqualsFails() {
-        this.timeParseFails(
+    public void testTimeFormatHourConditionGreaterThanEqualsFails() {
+        this.timeFormatParseThrows(
                 hour(),
                 conditionGreaterThanEquals()
         );
     }
 
     @Test
-    public void testTimeHourConditionLessThanFails() {
-        this.timeParseFails(
+    public void testTimeFormatHourConditionLessThanFails() {
+        this.timeFormatParseThrows(
                 hour(),
                 conditionLessThan()
         );
     }
 
     @Test
-    public void testTimeHourConditionLessThanEqualsFails() {
-        this.timeParseFails(
+    public void testTimeFormatHourConditionLessThanEqualsFails() {
+        this.timeFormatParseThrows(
                 hour(),
                 conditionLessThanEquals()
         );
     }
 
     @Test
-    public void testTimeHourConditionNotEqualsFails() {
-        this.timeParseFails(
+    public void testTimeFormatHourConditionNotEqualsFails() {
+        this.timeFormatParseThrows(
                 hour(),
                 conditionNotEquals()
         );
     }
 
-    // time helpers...
-
-    private void timeParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(this.timeParser(), SpreadsheetFormatParserToken::time, tokens);
+    @Test
+    public void testTimeFormatPatternSeparator() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator()
+        );
     }
 
-    private void timeParseFails(final SpreadsheetFormatParserToken... tokens) {
-        this.parseFailAndCheck2(
-                this.timeParser(),
+    @Test
+    public void testTimeFormatPatternSeparatorPattern() {
+        this.timeFormatParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator(),
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeFormatColorPatternSeparatorPattern() {
+        this.timeFormatParseAndCheck(
+                time(
+                        color(),
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator(),
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    // time format helpers..............................................................................................
+
+    private void timeFormatParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
+        this.parseAndCheck2(
+                SpreadsheetFormatParsers.timeFormat(),
                 tokens
         );
     }
 
-    private void timeParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(this.timeParser(), tokens);
+    private void timeFormatParseThrows(final SpreadsheetFormatParserToken... tokens) {
+        this.parseThrows2(
+                SpreadsheetFormatParsers.timeFormat(),
+                tokens
+        );
     }
 
-    private Parser<SpreadsheetFormatParserContext> timeParser() {
-        return SpreadsheetFormatParsers.time();
-    }
-
-    // dateTime.........................................................................................................
+    // time parse.......................................................................................................
 
     @Test
-    public void testDateTimeGeneral() {
-        this.dateTimeParseAndCheck(
+    public void testTimeParseTextDigitFails() {
+        this.timeParseParseThrows(
+                digit()
+        );
+    }
+
+    @Test
+    public void testTimeParseTextDigitZeroFails() {
+        this.timeParseParseThrows(
+                digitZero()
+        );
+    }
+
+    @Test
+    public void testTimeParseTextDigitSpaceFails() {
+        this.timeParseParseThrows(
+                digitSpace()
+        );
+    }
+
+    @Test
+    public void testTimeParseDayFails() {
+        this.timeParseParseThrows(
+                day()
+        );
+    }
+
+    @Test
+    public void testTimeParseYearFails() {
+        this.timeParseParseThrows(
+                year()
+        );
+    }
+
+    @Test
+    public void testTimeParseTextPlaceholderFails() {
+        this.timeParseParseThrows(
+                textPlaceholder()
+        );
+    }
+
+    @Test
+    public void testTimeParseGeneral() {
+        this.timeParseParseAndCheck(
                 general()
         );
     }
 
     @Test
-    public void testDateTimeWhitespaceGeneral() {
-        this.dateTimeParseAndCheck(
+    public void testTimeParseWhitespaceGeneral() {
+        this.timeParseParseAndCheck(
                 general(
                         whitespace(),
                         generalSymbol()
@@ -3965,8 +6527,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateTimeGeneralWhitespace() {
-        this.dateTimeParseAndCheck(
+    public void testTimeParseGeneralWhitespace() {
+        this.timeParseParseAndCheck(
                 general(
                         generalSymbol(),
                         whitespace()
@@ -3975,8 +6537,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateTimeWhitespaceGeneralWhitespace() {
-        this.dateTimeParseAndCheck(
+    public void testTimeParseWhitespaceGeneralWhitespace() {
+        this.timeParseParseAndCheck(
                 general(
                         whitespace(),
                         generalSymbol(),
@@ -3986,8 +6548,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateTimeColorGeneral() {
-        this.dateTimeParseAndCheck(
+    public void testTimeParseColorGeneral() {
+        this.timeParseParseAndCheck(
                 general(
                         color(),
                         generalSymbol()
@@ -3996,8 +6558,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateTimeColorWhitespaceGeneral() {
-        this.dateTimeParseAndCheck(
+    public void testTimeParseColorWhitespaceGeneral() {
+        this.timeParseParseAndCheck(
                 general(
                         color(),
                         whitespace(),
@@ -4007,376 +6569,2612 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateTimeColorEscaped() {
-        this.dateTimeParseAndCheck(
-                color(),
-                escape()
+    public void testTimeParseColorEscapedFails() {
+        this.timeParseParseThrows(
+                time(
+                        color(),
+                        escape()
+                )
         );
     }
 
     @Test
-    public void testDateTimeEscaped() {
-        this.dateTimeParseAndCheck(escape());
+    public void testTimeParseEscaped() {
+        this.timeParseParseAndCheck(
+                time(
+                        escape()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeDollar() {
-        this.dateTimeParseAndCheck(textLiteralDollar());
+    public void testTimeParseDollar() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralDollar()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeMinus() {
-        this.dateTimeParseAndCheck(textLiteralMinus());
+    public void testTimeParseMinus() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralMinus()
+                )
+        );
     }
 
     @Test
-    public void testDateTimePlus() {
-        this.dateTimeParseAndCheck(textLiteralPlus());
+    public void testTimeParsePlus() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralPlus()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeSlash() {
-        this.dateTimeParseAndCheck(textLiteralSlash());
+    public void testTimeParseSlash() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralSlash()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeOpenParen() {
-        this.dateTimeParseAndCheck(textLiteralOpenParens());
+    public void testTimeParseOpenParen() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralOpenParens()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeCloseParen() {
-        this.dateTimeParseAndCheck(textLiteralCloseParens());
+    public void testTimeParseCloseParen() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralCloseParens()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeColon() {
-        this.dateTimeParseAndCheck(textLiteralColon());
+    public void testTimeParseColon() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralColon()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeSpace() {
-        this.dateTimeParseAndCheck(textLiteralSpace());
+    public void testTimeParseSpace() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralSpace()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeQuotedText() {
-        this.dateTimeParseAndCheck(quotedText());
-    }
-
-    // date only........................................................................................................
-
-    @Test
-    public void testDateTimeDay() {
-        this.dateTimeParseAndCheck(day());
+    public void testTimeParseQuotedText() {
+        this.timeParseParseAndCheck(
+                time(
+                        quotedText()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeDayMonth() {
-        this.dateTimeParseAndCheck(day(), monthOrMinute());
+    public void testTimeParseASlashP() {
+        this.timeParseParseAndCheck(
+                time(
+                        aSlashP()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeDayMonthYear() {
-        this.dateTimeParseAndCheck(day(), monthOrMinute(), year());
-    }
-
-    // time only........................................................................................................
-
-    @Test
-    public void testDateTimeHour() {
-        this.dateTimeParseAndCheck(hour());
+    public void testTimeParseAmSlashPm() {
+        this.timeParseParseAndCheck(
+                time(
+                        amSlashPm()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeHourMinute() {
-        this.dateTimeParseAndCheck(hour(), monthOrMinute());
+    public void testTimeParseHour() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeHourMinuteSecond() {
-        this.dateTimeParseAndCheck(hour(), monthOrMinute(), second());
-    }
-
-    // time with millis..................................................................................................
-
-    @Test
-    public void testDateTimeSecondsDecimalFails() {
-        this.dateParseThrows(second(), decimalPoint());
+    public void testTimeParseMinute() {
+        this.timeParseParseAndCheck(
+                time(
+                        monthOrMinute()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeSecondsDecimalNonZeroFails() {
-        this.dateParseThrows(second(), decimalPoint(), digit());
+    public void testTimeParseHourMinuteSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeSecondsDecimalSpaceFails() {
-        this.dateParseThrows(second(), decimalPoint(), digitSpace());
+    public void testTimeParseHourMinuteSecondASlashP() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        aSlashP()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeSecondsDecimalDigitZero() {
-        this.dateTimeParseAndCheck(second(), decimalPoint(), digitZero());
+    public void testTimeParseHourMinuteSecondAmSlashPm() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        amSlashPm()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeSecondsDecimalDigitZeroZero() {
-        this.dateTimeParseAndCheck(second(), decimalPoint(), digitZero(), digitZero());
-    }
-
-    // date&time........................................................................................................
-
-    @Test
-    public void testDateTimeDayHour() {
-        this.dateTimeParseAndCheck(day(), hour());
-    }
-
-    @Test
-    public void testDateTimeDayHour2() {
-        this.dateTimeParseAndCheck(day(), hour(), day(), hour());
+    public void testTimeParseHour2Minute2Second2() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(2),
+                        monthOrMinute(2),
+                        second(2)
+                )
+        );
     }
 
     @Test
-    public void testDateTimeDayMonthYearHourMinuteSecond() {
-        this.dateTimeParseAndCheck(day(), monthOrMinute(), year(), hour(), monthOrMinute(), second());
+    public void testTimeParseHour3Minute3Second3() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(3),
+                        monthOrMinute(3),
+                        second(3)
+                )
+        );
     }
 
     @Test
-    public void testDateTimeDayMonthYearHourMinuteSecond2() {
-        this.dateTimeParseAndCheck(day(), monthOrMinute(), year(), hour(), monthOrMinute(), second(), day(), monthOrMinute(), year(), hour(), monthOrMinute(), second());
+    public void testTimeParseHourMinuteSecondHourMinuteSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
     }
 
     @Test
-    public void testDateTimeDayMonthYearHourMinuteSecondMillis() {
-        this.dateTimeParseAndCheck(day(),
+    public void testTimeParseMinuteHourSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        monthOrMinute(),
+                        hour(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseSecondMinuteHour() {
+        this.timeParseParseAndCheck(
+                time(
+                        second(),
+                        monthOrMinute(),
+                        hour()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseSecondCommaMinuteCommaHour() {
+        this.timeParseParseAndCheck(
+                time(
+                        second(),
+                        textLiteralComma(),
+                        monthOrMinute(),
+                        textLiteralComma(),
+                        hour()
+                )
+        );
+    }
+
+    // escaped
+
+    @Test
+    public void testTimeParseEscapedHourMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        escape(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourEscapedMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        escape(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthEscapedSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        escape(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsEscaped() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        escape()
+                )
+        );
+    }
+
+    // quotedText
+
+    @Test
+    public void testTimeParseQuotedTextHourMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        quotedText(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourQuotedTextMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        quotedText(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthQuotedTextSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        quotedText(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsQuotedText() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        quotedText()
+                )
+        );
+    }
+
+    // closeParens
+
+    @Test
+    public void testTimeParseCloseParensHourMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralCloseParens(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourCloseParensMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralCloseParens(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthCloseParensSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralCloseParens(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsCloseParens() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralCloseParens()
+                )
+        );
+    }
+
+    // colon
+
+    @Test
+    public void testTimeParseColonHourMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralColon(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourColonMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralColon(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthColonSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralColon(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsColon() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralColon()
+                )
+        );
+    }
+
+    // dollar
+
+    @Test
+    public void testTimeParseDollarHourMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralDollar(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourDollarMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralDollar(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthDollarSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralDollar(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsDollar() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralDollar()
+                )
+        );
+    }
+
+    // minus
+
+    @Test
+    public void testTimeParseMinusHourMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralMinus(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMinusMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralMinus(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthMinusSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralMinus(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsMinus() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralMinus()
+                )
+        );
+    }
+
+    // openParens
+
+    @Test
+    public void testTimeParseOpenParensHourMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralOpenParens(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourOpenParensMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralOpenParens(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthOpenParensSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralOpenParens(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsOpenParens() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralOpenParens()
+                )
+        );
+    }
+
+    // plus
+
+    @Test
+    public void testTimeParsePlusHourMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralPlus(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourPlusMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralPlus(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthPlusSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralPlus(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsPlus() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralPlus()
+                )
+        );
+    }
+
+    // slash
+
+    @Test
+    public void testTimeParseSlashHourMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralSlash(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourSlashMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralSlash(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSlashSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralSlash(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsSlash() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralSlash()
+                )
+        );
+    }
+
+    // space
+
+    @Test
+    public void testTimeParseSpaceHourMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        textLiteralSpace(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourSpaceMonthSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        textLiteralSpace(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSpaceSecond() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        textLiteralSpace(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsSpace() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        textLiteralSpace()
+                )
+        );
+    }
+
+    // equals
+
+    @Test
+    public void testTimeParseEqualsHourMonthSecondFails() {
+        this.timeParseParseThrows(
+                equalsSymbol(),
+                hour(),
                 monthOrMinute(),
-                year(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourEqualsMonthSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                equalsSymbol(),
+                monthOrMinute(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthEqualsSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                monthOrMinute(),
+                equalsSymbol(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsEqualsFails() {
+        this.timeParseParseThrows(
                 hour(),
                 monthOrMinute(),
                 second(),
-                day(),
+                equalsSymbol()
+        );
+    }
+
+    // greaterThan
+
+    @Test
+    public void testTimeParseGreaterThanHourMonthSecondFails() {
+        this.timeParseParseThrows(
+                greaterThan(),
+                hour(),
                 monthOrMinute(),
-                year(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourGreaterThanMonthSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                greaterThan(),
+                monthOrMinute(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthGreaterThanSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                monthOrMinute(),
+                greaterThan(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsGreaterThanFails() {
+        this.timeParseParseThrows(
                 hour(),
                 monthOrMinute(),
                 second(),
-                decimalPoint(),
-                digitZero());
+                greaterThan()
+        );
+    }
+
+    // greaterThanEquals
+
+    @Test
+    public void testTimeParseGreaterThanEqualsHourMonthSecondFails() {
+        this.timeParseParseThrows(
+                greaterThanEquals(),
+                hour(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testDateTimeColorDay() {
-        this.dateTimeParseAndCheck(color(), day());
+    public void testTimeParseHourGreaterThanEqualsMonthSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                greaterThanEquals(),
+                monthOrMinute(),
+                second()
+        );
     }
 
     @Test
-    public void testDateTimeDayColor() {
-        this.dateTimeParseAndCheck(day(), color());
+    public void testTimeParseHourMonthGreaterThanEqualsSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                monthOrMinute(),
+                greaterThanEquals(),
+                second()
+        );
     }
 
     @Test
-    public void testDateTimeDayCommaMonthCommaYear() {
-        this.dateTimeParseAndCheck(day(), textLiteralComma(), monthOrMinute(), textLiteralComma(), year());
+    public void testTimeParseHourMonthSecondsGreaterThanEqualsFails() {
+        this.timeParseParseThrows(
+                hour(),
+                monthOrMinute(),
+                second(),
+                greaterThanEquals()
+        );
+    }
+
+    // lessThan
+
+    @Test
+    public void testTimeParseLessThanHourMonthSecondFails() {
+        this.timeParseParseThrows(
+                lessThan(),
+                hour(),
+                monthOrMinute(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourLessThanMonthSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                lessThan(),
+                monthOrMinute(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthLessThanSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                monthOrMinute(),
+                lessThan(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsLessThanFails() {
+        this.timeParseParseThrows(
+                hour(),
+                monthOrMinute(),
+                second(),
+                lessThan()
+        );
+    }
+
+    // lessThanEquals
+
+    @Test
+    public void testTimeParseLessThanEqualsHourMonthSecondFails() {
+        this.timeParseParseThrows(
+                lessThanEquals(),
+                hour(),
+                monthOrMinute(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourLessThanEqualsMonthSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                lessThanEquals(),
+                monthOrMinute(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthLessThanEqualsSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                monthOrMinute(),
+                lessThanEquals(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsLessThanEqualsFails() {
+        this.timeParseParseThrows(
+                hour(),
+                monthOrMinute(),
+                second(),
+                lessThanEquals()
+        );
+    }
+
+    // notEquals
+
+    @Test
+    public void testTimeParseNotEqualsHourMonthSecondFails() {
+        this.timeParseParseThrows(
+                notEquals(),
+                hour(),
+                monthOrMinute(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourNotEqualsMonthSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                notEquals(),
+                monthOrMinute(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthNotEqualsSecondFails() {
+        this.timeParseParseThrows(
+                hour(),
+                monthOrMinute(),
+                notEquals(),
+                second()
+        );
+    }
+
+    @Test
+    public void testTimeParseHourMonthSecondsNotEqualsFails() {
+        this.timeParseParseThrows(
+                hour(),
+                monthOrMinute(),
+                second(),
+                notEquals()
+        );
+    }
+
+    // color
+
+    @Test
+    public void testTimeParseColorHourFails() {
+        this.timeParseParseThrows(
+                time(
+                        color(),
+                        hour()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseColorMinuteFails() {
+        this.timeParseParseThrows(
+                time(
+                        color(),
+                        monthOrMinute()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseColorSecondsFails() {
+        this.timeParseParseThrows(
+                time(
+                        color(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseHourColorFails() {
+        this.timeParseParseThrows(
+                time(
+                        hour(),
+                        color()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseMinuteColorFails() {
+        this.timeParseParseThrows(
+                time(
+                        monthOrMinute(),
+                        color()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseSecondsColorFails() {
+        this.timeParseParseThrows(
+                time(
+                        second(),
+                        color()
+                )
+        );
     }
 
     // condition
 
     @Test
-    public void testDateTimeConditionEqualsDay() {
-        this.dateTimeParseAndCheck(conditionEquals(), day());
-    }
-
-    @Test
-    public void testDateTimeConditionGreaterThanDay() {
-        this.dateTimeParseAndCheck(conditionGreaterThan(), day());
-    }
-
-    @Test
-    public void testDateTimeConditionGreaterThanEqualsDay() {
-        this.dateTimeParseAndCheck(conditionGreaterThanEquals(), day());
-    }
-
-    @Test
-    public void testDateTimeConditionLessThanDay() {
-        this.dateTimeParseAndCheck(conditionLessThan(), day());
-    }
-
-    @Test
-    public void testDateTimeConditionLessThanEqualsDay() {
-        this.dateTimeParseAndCheck(conditionLessThanEquals(), day());
-    }
-
-    @Test
-    public void testDateTimeConditionNotEqualsDay() {
-        this.dateTimeParseAndCheck(conditionNotEquals(), day());
-    }
-
-    @Test
-    public void testDateTimeConditionEqualsHour() {
-        this.dateTimeParseAndCheck(conditionEquals(), hour());
-    }
-
-    @Test
-    public void testDateTimeConditionGreaterThanHour() {
-        this.dateTimeParseAndCheck(conditionGreaterThan(), hour());
-    }
-
-    @Test
-    public void testDateTimeConditionGreaterThanEqualsHour() {
-        this.dateTimeParseAndCheck(conditionGreaterThanEquals(), hour());
-    }
-
-    @Test
-    public void testDateTimeConditionLessThanHour() {
-        this.dateTimeParseAndCheck(conditionLessThan(), hour());
-    }
-
-    @Test
-    public void testDateTimeConditionLessThanEqualsHour() {
-        this.dateTimeParseAndCheck(conditionLessThanEquals(), hour());
-    }
-
-    @Test
-    public void testDateTimeConditionNotEqualsHour() {
-        this.dateTimeParseAndCheck(conditionNotEquals(), hour());
-    }
-
-    @Test
-    public void testDateTimeDayConditionFails() {
-        this.dateTimeParseFails(
-                day(),
-                conditionEquals()
+    public void testTimeParseConditionEqualsHourFails() {
+        this.timeParseParseThrows(
+                conditionEquals(),
+                hour()
         );
     }
 
     @Test
-    public void testDateTimeDayConditionGreaterThanFails() {
-        this.dateTimeParseFails(
-                day(),
-                conditionGreaterThan()
+    public void testTimeParseConditionGreaterThanHourFails() {
+        this.timeParseParseThrows(
+                conditionGreaterThan(),
+                hour()
         );
     }
 
     @Test
-    public void testDateTimeDayConditionGreaterThanEqualsFails() {
-        this.dateTimeParseFails(
-                day(),
-                conditionGreaterThanEquals()
+    public void testTimeParseConditionGreaterThanEqualsHourFails() {
+        this.timeParseParseThrows(
+                conditionGreaterThanEquals(),
+                hour()
         );
     }
 
     @Test
-    public void testDateTimeDayConditionLessThanFails() {
-        this.dateTimeParseFails(
-                day(),
-                conditionLessThan()
+    public void testTimeParseConditionLessThanHourFails() {
+        this.timeParseParseThrows(
+                conditionLessThan(),
+                hour()
         );
     }
 
     @Test
-    public void testDateTimeDayConditionLessThanEqualsFails() {
-        this.dateTimeParseFails(
-                day(),
-                conditionLessThanEquals()
+    public void testTimeParseConditionLessThanEqualsHourFails() {
+        this.timeParseParseThrows(
+                conditionLessThanEquals(),
+                hour()
         );
     }
 
     @Test
-    public void testDateTimeDayConditionNotEqualsFails() {
-        this.dateTimeParseFails(
-                day(),
-                conditionNotEquals()
+    public void testTimeParseConditionNotEqualsHourFails() {
+        this.timeParseParseThrows(
+                conditionNotEquals(),
+                hour()
         );
     }
 
     @Test
-    public void testDateTimeHourConditionEqualsFails() {
-        this.dateTimeParseFails(
+    public void testTimeParseHourConditionEqualsFails() {
+        this.timeParseParseThrows(
                 hour(),
                 conditionEquals()
         );
     }
 
     @Test
-    public void testDateTimeHourConditionGreaterThanFails() {
-        this.dateTimeParseFails(
+    public void testTimeParseHourConditionGreaterThanFails() {
+        this.timeParseParseThrows(
                 hour(),
                 conditionGreaterThan()
         );
     }
 
     @Test
-    public void testDateTimeHourConditionGreaterThanEqualsFails() {
-        this.dateTimeParseFails(
+    public void testTimeParseHourConditionGreaterThanEqualsFails() {
+        this.timeParseParseThrows(
                 hour(),
                 conditionGreaterThanEquals()
         );
     }
 
     @Test
-    public void testDateTimeHourConditionLessThanFails() {
-        this.dateTimeParseFails(
+    public void testTimeParseHourConditionLessThanFails() {
+        this.timeParseParseThrows(
                 hour(),
                 conditionLessThan()
         );
     }
 
     @Test
-    public void testDateTimeHourConditionLessThanEqualsFails() {
-        this.dateTimeParseFails(
+    public void testTimeParseHourConditionLessThanEqualsFails() {
+        this.timeParseParseThrows(
                 hour(),
                 conditionLessThanEquals()
         );
     }
 
     @Test
-    public void testDateTimeHourConditionNotEqualsFails() {
-        this.dateTimeParseFails(
+    public void testTimeParseHourConditionNotEqualsFails() {
+        this.timeParseParseThrows(
                 hour(),
                 conditionNotEquals()
         );
     }
 
-    private void dateTimeParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(this.dateTimeParser(), SpreadsheetFormatParserToken::dateTime, tokens);
+    @Test
+    public void testTimeParsePatternSeparator() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator()
+        );
     }
 
-    private void dateTimeParseFails(final SpreadsheetFormatParserToken... tokens) {
-        this.parseFailAndCheck2(
-                this.dateTimeParser(),
+    @Test
+    public void testTimeParsePatternSeparatorPattern() {
+        this.timeParseParseAndCheck(
+                time(
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator(),
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testTimeParseColorPatternSeparatorPatternFails() {
+        this.timeParseParseThrows(
+                time(
+                        color(),
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator(),
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    private void timeParseParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
+        this.parseAndCheck2(
+                SpreadsheetFormatParsers.timeParse(),
                 tokens
         );
     }
 
-    private Parser<SpreadsheetFormatParserContext> dateTimeParser() {
-        return SpreadsheetFormatParsers.dateTime();
+    private void timeParseParseThrows(final SpreadsheetFormatParserToken... tokens) {
+        this.parseThrows2(
+                SpreadsheetFormatParsers.timeParse(),
+                tokens
+        );
+    }
+
+    // dateTime format..................................................................................................
+
+    @Test
+    public void testDateTimeFormatGeneral() {
+        this.dateTimeFormatParseAndCheck(
+                general()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatWhitespaceGeneral() {
+        this.dateTimeFormatParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatGeneralWhitespace() {
+        this.dateTimeFormatParseAndCheck(
+                general(
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatWhitespaceGeneralWhitespace() {
+        this.dateTimeFormatParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatColorGeneral() {
+        this.dateTimeFormatParseAndCheck(
+                general(
+                        color(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatColorWhitespaceGeneral() {
+        this.dateTimeFormatParseAndCheck(
+                general(
+                        color(),
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatColorEscaped() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        color(),
+                        escape()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatEscaped() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        escape()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDollar() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        textLiteralDollar()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatMinus() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        textLiteralMinus()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatPlus() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        textLiteralPlus()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatSlash() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        textLiteralSlash()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatOpenParen() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        textLiteralOpenParens()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatCloseParen() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        textLiteralCloseParens()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatColon() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        textLiteralColon()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatSpace() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        textLiteralSpace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatQuotedText() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        quotedText()
+                )
+        );
+    }
+
+    // date only........................................................................................................
+
+    @Test
+    public void testDateTimeFormatDay() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        day()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayMonth() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        day(),
+                        monthOrMinute()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayMonthYear() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    // time only........................................................................................................
+
+    @Test
+    public void testDateTimeFormatHour() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        hour()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatHourMinute() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        hour(),
+                        monthOrMinute()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatHourMinuteSecond() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    // time with millis..................................................................................................
+
+    @Test
+    public void testDateTimeFormatSecondsDecimal() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        second(),
+                        decimalPoint()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatSecondsDecimalNonZeroFails() {
+        this.dateTimeFormatParseThrows(
+                second(),
+                decimalPoint(),
+                digit()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatSecondsDecimalSpaceFails() {
+        this.dateTimeFormatParseThrows(
+                second(),
+                decimalPoint(),
+                digitSpace()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatSecondsDecimalDigitZero() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        second(),
+                        decimalPoint(),
+                        digitZero()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatSecondsDecimalDigitZeroZero() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        second(),
+                        decimalPoint(),
+                        digitZero(),
+                        digitZero()
+                )
+        );
+    }
+
+    // date&time........................................................................................................
+
+    @Test
+    public void testDateTimeFormatDayHour() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        day(),
+                        hour()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayHour2() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        day(),
+                        hour(),
+                        day(),
+                        hour()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayMonthYearHourMinuteSecond() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayMonthYearHourMinuteSecond2() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayMonthYearHourMinuteSecondMillis() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        decimalPoint(),
+                        digitZero()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatColorDay() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        color(),
+                        day()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayColor() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        day(),
+                        color()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayCommaMonthCommaYear() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        day(),
+                        textLiteralComma(),
+                        monthOrMinute(),
+                        textLiteralComma(),
+                        year()
+                )
+        );
+    }
+
+    // condition
+
+    @Test
+    public void testDateTimeFormatConditionEqualsDayFails() {
+        this.dateTimeFormatParseThrows(
+                conditionEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionGreaterThanDayFails() {
+        this.dateTimeFormatParseThrows(
+                conditionGreaterThan(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionGreaterThanEqualsDayFails() {
+        this.dateTimeFormatParseThrows(
+                conditionGreaterThanEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionLessThanDayFails() {
+        this.dateTimeFormatParseThrows(
+                conditionLessThan(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionLessThanEqualsDayFails() {
+        this.dateTimeFormatParseThrows(
+                conditionLessThanEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionNotEqualsDayFails() {
+        this.dateTimeFormatParseThrows(
+                conditionNotEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionEqualsHourFails() {
+        this.dateTimeFormatParseThrows(
+                conditionEquals(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionGreaterThanHourFails() {
+        this.dateTimeFormatParseThrows(
+                conditionGreaterThan(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionGreaterThanEqualsHourFails() {
+        this.dateTimeFormatParseThrows(
+                conditionGreaterThanEquals(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionLessThanHourFails() {
+        this.dateTimeFormatParseThrows(
+                conditionLessThan(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionLessThanEqualsHourFails() {
+        this.dateTimeFormatParseThrows(
+                conditionLessThanEquals(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionNotEqualsHourFails() {
+        this.dateTimeFormatParseThrows(
+                conditionNotEquals(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayConditionFails() {
+        this.dateTimeFormatParseThrows(
+                day(),
+                conditionEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayConditionGreaterThanFails() {
+        this.dateTimeFormatParseThrows(
+                day(),
+                conditionGreaterThan()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayConditionGreaterThanEqualsFails() {
+        this.dateTimeFormatParseThrows(
+                day(),
+                conditionGreaterThanEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayConditionLessThanFails() {
+        this.dateTimeFormatParseThrows(
+                day(),
+                conditionLessThan()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayConditionLessThanEqualsFails() {
+        this.dateTimeFormatParseThrows(
+                day(),
+                conditionLessThanEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatDayConditionNotEqualsFails() {
+        this.dateTimeFormatParseThrows(
+                day(),
+                conditionNotEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatHourConditionEqualsFails() {
+        this.dateTimeFormatParseThrows(
+                hour(),
+                conditionEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatHourConditionGreaterThanFails() {
+        this.dateTimeFormatParseThrows(
+                hour(),
+                conditionGreaterThan()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatHourConditionGreaterThanEqualsFails() {
+        this.dateTimeFormatParseThrows(
+                hour(),
+                conditionGreaterThanEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatHourConditionLessThanFails() {
+        this.dateTimeFormatParseThrows(
+                hour(),
+                conditionLessThan()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatHourConditionLessThanEqualsFails() {
+        this.dateTimeFormatParseThrows(
+                hour(),
+                conditionLessThanEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatHourConditionNotEqualsFails() {
+        this.dateTimeFormatParseThrows(
+                hour(),
+                conditionNotEquals()
+        );
+    }
+
+
+    @Test
+    public void testDateTimeFormatPatternSeparator() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatPatternSeparatorPattern() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator(),
+                dateTime(
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatColorPatternSeparatorPattern() {
+        this.dateTimeFormatParseAndCheck(
+                dateTime(
+                        color(),
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator(),
+                dateTime(
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    // date format helpers..............................................................................................
+
+    private void dateTimeFormatParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
+        this.parseAndCheck2(
+                SpreadsheetFormatParsers.dateTimeFormat(),
+                tokens
+        );
+    }
+
+    private void dateTimeFormatParseThrows(final SpreadsheetFormatParserToken... tokens) {
+        this.parseThrows2(
+                SpreadsheetFormatParsers.dateTimeFormat(),
+                tokens
+        );
+    }
+
+    // date time parse..................................................................................................
+
+    // dateTime parse..................................................................................................
+
+    @Test
+    public void testDateTimeParseGeneral() {
+        this.dateTimeParseParseAndCheck(
+                general()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseWhitespaceGeneral() {
+        this.dateTimeParseParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseGeneralWhitespace() {
+        this.dateTimeParseParseAndCheck(
+                general(
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseWhitespaceGeneralWhitespace() {
+        this.dateTimeParseParseAndCheck(
+                general(
+                        whitespace(),
+                        generalSymbol(),
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseColorGeneral() {
+        this.dateTimeParseParseAndCheck(
+                general(
+                        color(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseColorWhitespaceGeneral() {
+        this.dateTimeParseParseAndCheck(
+                general(
+                        color(),
+                        whitespace(),
+                        generalSymbol()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseColorEscapedFails() {
+        this.dateTimeParseParseThrows(
+                dateTime(
+                        color(),
+                        escape()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseEscaped() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        escape()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDollar() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        textLiteralDollar()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseMinus() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        textLiteralMinus()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePlus() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        textLiteralPlus()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseSlash() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        textLiteralSlash()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseOpenParen() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        textLiteralOpenParens()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseCloseParen() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        textLiteralCloseParens()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseColon() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        textLiteralColon()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseSpace() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        textLiteralSpace()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseQuotedText() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        quotedText()
+                )
+        );
+    }
+
+    // date only........................................................................................................
+
+    @Test
+    public void testDateTimeParseDay() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        day()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayMonth() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        day(),
+                        monthOrMinute()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayMonthYear() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        day(),
+                        monthOrMinute(),
+                        year()
+                )
+        );
+    }
+
+    // time only........................................................................................................
+
+    @Test
+    public void testDateTimeParseHour() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        hour()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseHourMinute() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        hour(),
+                        monthOrMinute()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseHourMinuteSecond() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    // time with millis..................................................................................................
+
+    @Test
+    public void testDateTimeParseSecondsDecimal() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        second(),
+                        decimalPoint()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseSecondsDecimalNonZeroFails() {
+        this.dateTimeParseParseThrows(
+                second(),
+                decimalPoint(),
+                digit()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseSecondsDecimalSpaceFails() {
+        this.dateTimeParseParseThrows(
+                second(),
+                decimalPoint(),
+                digitSpace()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseSecondsDecimalDigitZero() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        second(),
+                        decimalPoint(),
+                        digitZero()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseSecondsDecimalDigitZeroZero() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        second(),
+                        decimalPoint(),
+                        digitZero(),
+                        digitZero()
+                )
+        );
+    }
+
+    // date&time........................................................................................................
+
+    @Test
+    public void testDateTimeParseDayHour() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        day(),
+                        hour()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayHour2() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        day(),
+                        hour(),
+                        day(),
+                        hour()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayMonthYearHourMinuteSecond() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayMonthYearHourMinuteSecond2() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayMonthYearHourMinuteSecondMillis() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        day(),
+                        monthOrMinute(),
+                        year(),
+                        hour(),
+                        monthOrMinute(),
+                        second(),
+                        decimalPoint(),
+                        digitZero()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseColorDayFails() {
+        this.dateTimeParseParseThrows(
+                dateTime(
+                        color(),
+                        day()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayColorFails() {
+        this.dateTimeParseParseThrows(
+                dateTime(
+                        day(),
+                        color()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayCommaMonthCommaYear() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        day(),
+                        textLiteralComma(),
+                        monthOrMinute(),
+                        textLiteralComma(),
+                        year()
+                )
+        );
+    }
+
+    // condition
+
+    @Test
+    public void testDateTimeParseConditionEqualsDayFails() {
+        this.dateTimeParseParseThrows(
+                conditionEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseConditionGreaterThanDayFails() {
+        this.dateTimeParseParseThrows(
+                conditionGreaterThan(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseConditionGreaterThanEqualsDayFails() {
+        this.dateTimeParseParseThrows(
+                conditionGreaterThanEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseConditionLessThanDayFails() {
+        this.dateTimeParseParseThrows(
+                conditionLessThan(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseConditionLessThanEqualsDayFails() {
+        this.dateTimeParseParseThrows(
+                conditionLessThanEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseConditionNotEqualsDayFails() {
+        this.dateTimeParseParseThrows(
+                conditionNotEquals(),
+                day()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseConditionEqualsHourFails() {
+        this.dateTimeParseParseThrows(
+                conditionEquals(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseConditionGreaterThanHourFails() {
+        this.dateTimeParseParseThrows(
+                conditionGreaterThan(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseConditionGreaterThanEqualsHourFails() {
+        this.dateTimeParseParseThrows(
+                conditionGreaterThanEquals(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseConditionLessThanHourFails() {
+        this.dateTimeParseParseThrows(
+                conditionLessThan(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseConditionLessThanEqualsHourFails() {
+        this.dateTimeParseParseThrows(
+                conditionLessThanEquals(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseConditionNotEqualsHourFails() {
+        this.dateTimeParseParseThrows(
+                conditionNotEquals(),
+                hour()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayConditionFails() {
+        this.dateTimeParseParseThrows(
+                day(),
+                conditionEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayConditionGreaterThanFails() {
+        this.dateTimeParseParseThrows(
+                day(),
+                conditionGreaterThan()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayConditionGreaterThanEqualsFails() {
+        this.dateTimeParseParseThrows(
+                day(),
+                conditionGreaterThanEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayConditionLessThanFails() {
+        this.dateTimeParseParseThrows(
+                day(),
+                conditionLessThan()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayConditionLessThanEqualsFails() {
+        this.dateTimeParseParseThrows(
+                day(),
+                conditionLessThanEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseDayConditionNotEqualsFails() {
+        this.dateTimeParseParseThrows(
+                day(),
+                conditionNotEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseHourConditionEqualsFails() {
+        this.dateTimeParseParseThrows(
+                hour(),
+                conditionEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseHourConditionGreaterThanFails() {
+        this.dateTimeParseParseThrows(
+                hour(),
+                conditionGreaterThan()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseHourConditionGreaterThanEqualsFails() {
+        this.dateTimeParseParseThrows(
+                hour(),
+                conditionGreaterThanEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseHourConditionLessThanFails() {
+        this.dateTimeParseParseThrows(
+                hour(),
+                conditionLessThan()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseHourConditionLessThanEqualsFails() {
+        this.dateTimeParseParseThrows(
+                hour(),
+                conditionLessThanEquals()
+        );
+    }
+
+    @Test
+    public void testDateTimeParseHourConditionNotEqualsFails() {
+        this.dateTimeParseParseThrows(
+                hour(),
+                conditionNotEquals()
+        );
+    }
+
+
+    @Test
+    public void testDateTimeParsePatternSeparator() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator()
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternSeparatorPattern() {
+        this.dateTimeParseParseAndCheck(
+                dateTime(
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator(),
+                dateTime(
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeParseColorPatternSeparatorPatternFails() {
+        this.dateTimeParseParseThrows(
+                dateTime(
+                        color(),
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator(),
+                dateTime(
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    private void dateTimeParseParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
+        this.parseAndCheck2(
+                SpreadsheetFormatParsers.dateTimeParse(),
+                tokens
+        );
+    }
+
+    private void dateTimeParseParseThrows(final SpreadsheetFormatParserToken... tokens) {
+        this.parseThrows2(
+                SpreadsheetFormatParsers.dateTimeParse(),
+                tokens
+        );
     }
 
     // helpers................................................................................................
 
     private void parseAndCheck2(final Parser<SpreadsheetFormatParserContext> parser,
+                                final SpreadsheetFormatParserToken... tokens) {
+        final List<ParserToken> list = Lists.of(tokens);
+        final String text = ParserToken.text(list);
+
+        this.checkEquals(
+                text.toUpperCase(),
+                text,
+                "text should be all upper case"
+        );
+
+        this.parseAndCheck4(
+                parser,
+                sequence(list)
+        );
+
+        final List<ParserToken> lower = Arrays.stream(tokens)
+                .map(SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor::toLower)
+                .collect(Collectors.toList());
+
+        this.parseAndCheck4(
+                parser,
+                sequence(lower)
+        );
+    }
+
+    private void parseAndCheck3(final Parser<SpreadsheetFormatParserContext> parser,
                                 final BiFunction<List<ParserToken>, String, SpreadsheetFormatParserToken> factory,
                                 final SpreadsheetFormatParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
         final String text = ParserToken.text(list);
 
-        this.checkEquals(text.toUpperCase(), text, "text should be all upper case");
-
-        this.parseAndCheck(parser,
+        this.checkEquals(
+                text.toUpperCase(),
                 text,
-                factory.apply(list, text),
-                text);
+                "text should be all upper case"
+        );
+
+        this.parseAndCheck4(
+                parser,
+                factory.apply(
+                        list,
+                        text
+                )
+        );
 
         final List<ParserToken> lower = Arrays.stream(tokens)
                 .map(SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor::toLower)
                 .collect(Collectors.toList());
         final String textLower = text.toLowerCase();
 
-        this.parseAndCheck(parser,
-                textLower,
-                factory.apply(lower, textLower),
-                textLower);
+        this.parseAndCheck4(
+                parser,
+                factory.apply(
+                        lower,
+                        textLower
+                )
+        );
+    }
+
+    private void parseAndCheck4(final Parser<SpreadsheetFormatParserContext> parser,
+                                final ParserToken token) {
+        final List<ParserToken> list = Lists.of(token);
+        final String text = ParserToken.text(list);
+
+        this.parseAndCheck(
+                parser,
+                text,
+                token,
+                text
+        );
     }
 
     private void parseFailAndCheck2(final Parser<SpreadsheetFormatParserContext> parser,

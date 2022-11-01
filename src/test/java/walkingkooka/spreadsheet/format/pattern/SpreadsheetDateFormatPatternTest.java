@@ -19,8 +19,9 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
-import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -122,12 +123,18 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
 
     @Test
     public void testParseStringDateTimePatternFails() {
-        this.parseStringFails("ddmmyyyy hhmmss", IllegalArgumentException.class);
+        this.parseStringFails(
+                "ddmmyyyy hhmmss",
+                IllegalArgumentException.class
+        );
     }
 
     @Test
     public void testParseStringNumberPatternFails() {
-        this.parseStringFails("0#00", IllegalArgumentException.class);
+        this.parseStringFails(
+                "0#00",
+                IllegalArgumentException.class
+        );
     }
 
     // HasFormatter.....................................................................................................
@@ -399,6 +406,54 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testFormatterFormatTrailingSeparator() {
+        this.formatAndCheck2(
+                "yyyymmdd;",
+                LocalDate.of(2000, 12, 31),
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        "20001231"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatterFormatFirstPattern() {
+        this.formatAndCheck2(
+                "[>0]yyyymmdd;ddmmyyyy",
+                LocalDate.of(2000, 12, 31),
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        "20001231"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatterFormatSecondPattern() {
+        this.formatAndCheck2(
+                "[=0]yyyymmdd;ddmmyyyy",
+                LocalDate.of(2000, 12, 31),
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        "31122000"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatterFormatSecondPatternTrailingPattern() {
+        this.formatAndCheck2(
+                "[=0]yyyymmdd;ddmmyyyy;",
+                LocalDate.of(2000, 12, 31),
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        "31122000"
+                )
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -406,15 +461,29 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             @Override
             public boolean canConvert(final Object value,
                                       final Class<?> target) {
-                return Converters.localDateLocalDateTime().canConvert(value, target, ConverterContexts.fake());
+                return this.converter.canConvert(
+                        value,
+                        target,
+                        this
+                );
             }
 
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
-                return Converters.localDateLocalDateTime()
-                        .convert(value, target, ConverterContexts.fake());
+                return this.converter.convert(
+                        value,
+                        target,
+                        this
+                );
             }
+
+            private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
+                    Lists.of(
+                            Converters.localDateNumber(0),
+                            Converters.localDateLocalDateTime()
+                    )
+            );
 
             @Override
             public List<String> monthNames() {
@@ -510,7 +579,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
     // helpers..........................................................................................................
 
     @Override
-    SpreadsheetDateFormatPattern createPattern(final SpreadsheetFormatDateParserToken token) {
+    SpreadsheetDateFormatPattern createPattern(final ParserToken token) {
         return SpreadsheetDateFormatPattern.with(token);
     }
 
@@ -520,11 +589,10 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Override
-    SpreadsheetFormatDateParserToken parseFormatParserToken(final String text) {
-        return SpreadsheetFormatParsers.date()
+    ParserToken parseFormatParserToken(final String text) {
+        return SpreadsheetFormatParsers.dateFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatDateParserToken.class::cast)
                 .get();
     }
 

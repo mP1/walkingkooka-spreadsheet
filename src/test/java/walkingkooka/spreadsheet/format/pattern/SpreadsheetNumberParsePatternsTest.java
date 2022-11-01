@@ -17,15 +17,15 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.json.JsonNode;
@@ -395,6 +395,14 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
         );
     }
 
+    // json............................................................................................................
+
+    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2662")
+    @Test
+    public void testMarshallRoundtripMap() {
+        throw new UnsupportedOperationException();
+    }
+
     // helpers.........................................................................................................
 
     @Override
@@ -408,12 +416,8 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
     }
 
     @Override
-    SpreadsheetFormatNumberParserToken parseFormatParserToken(final String text) {
-        return SpreadsheetFormatParsers.number()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatNumberParserToken.class::cast)
-                .get();
+    Parser<SpreadsheetFormatParserContext> parser() {
+        return SpreadsheetFormatParsers.number();
     }
 
     @Override

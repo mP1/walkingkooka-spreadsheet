@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.ParserTokens;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -100,6 +101,24 @@ public abstract class SpreadsheetFormatParserTestCase {
 
     static SpreadsheetFormatParserToken currency() {
         return SpreadsheetFormatParserToken.currency("$", "$");
+    }
+
+    static SpreadsheetFormatDateParserToken date(final SpreadsheetFormatParserToken... tokens) {
+        final List<ParserToken> list = Lists.of(tokens);
+
+        return SpreadsheetFormatParserToken.date(
+                list,
+                ParserToken.text(list)
+        );
+    }
+
+    static SpreadsheetFormatDateTimeParserToken dateTime(final SpreadsheetFormatParserToken... tokens) {
+        final List<ParserToken> list = Lists.of(tokens);
+
+        return SpreadsheetFormatParserToken.dateTime(
+                list,
+                ParserToken.text(list)
+        );
     }
 
     static SpreadsheetFormatParserToken day() {
@@ -244,6 +263,19 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.second(text, text);
     }
 
+    static ParserToken sequence(final SpreadsheetFormatParserToken... tokens) {
+        return sequence(
+                Lists.of(tokens)
+        );
+    }
+
+    static ParserToken sequence(final List<ParserToken> tokens) {
+        return ParserTokens.sequence(
+                tokens,
+                ParserToken.text(tokens)
+        );
+    }
+
     static SpreadsheetFormatParserToken separator() {
         return SpreadsheetFormatParserToken.separatorSymbol(";", ";");
     }
@@ -304,6 +336,15 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.textLiteral(
                 text,
                 text
+        );
+    }
+
+    static SpreadsheetFormatTimeParserToken time(final SpreadsheetFormatParserToken... tokens) {
+        final List<ParserToken> list = Lists.of(tokens);
+
+        return SpreadsheetFormatParserToken.time(
+                list,
+                ParserToken.text(list)
         );
     }
 

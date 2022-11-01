@@ -19,8 +19,9 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
-import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -114,7 +115,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     // helpers..........................................................................................................
 
     @Override
-    SpreadsheetTimeFormatPattern createPattern(final SpreadsheetFormatTimeParserToken token) {
+    SpreadsheetTimeFormatPattern createPattern(final ParserToken token) {
         return SpreadsheetTimeFormatPattern.with(token);
     }
 
@@ -130,11 +131,10 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Override
-    SpreadsheetFormatTimeParserToken parseFormatParserToken(final String text) {
-        return SpreadsheetFormatParsers.time()
+    ParserToken parseFormatParserToken(final String text) {
+        return SpreadsheetFormatParsers.timeFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatTimeParserToken.class::cast)
                 .get();
     }
 
@@ -425,6 +425,54 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testFormatterFormatTrailingPattern() {
+        this.formatAndCheck2(
+                "hhmmss;",
+                LocalTime.of(12, 58, 59),
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        "125859"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatterFormatFirstPattern() {
+        this.formatAndCheck2(
+                "[>0]hhmmss;hhmm",
+                LocalTime.of(12, 58, 59),
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        "125859"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatterFormatSecondPattern() {
+        this.formatAndCheck2(
+                "[=0]hh;hhmmss",
+                LocalTime.of(12, 58, 59),
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        "125859"
+                )
+        );
+    }
+
+    @Test
+    public void testFormatterFormatSecondPatternTrailingSeparator() {
+        this.formatAndCheck2(
+                "[=0]hh;hhmmss;",
+                LocalTime.of(12, 58, 59),
+                SpreadsheetText.with(
+                        SpreadsheetText.WITHOUT_COLOR,
+                        "125859"
+                )
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -432,14 +480,29 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             @Override
             public boolean canConvert(final Object value,
                                       final Class<?> target) {
-                return Converters.localTimeLocalDateTime().canConvert(value, target, ConverterContexts.fake());
+                return this.converter.canConvert(
+                        value,
+                        target,
+                        this
+                );
             }
 
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
-                return Converters.localTimeLocalDateTime().convert(value, target, ConverterContexts.fake());
+                return this.converter.convert(
+                        value,
+                        target,
+                        this
+                );
             }
+
+            private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
+                    Lists.of(
+                            Converters.localTimeNumber(),
+                            Converters.localTimeLocalDateTime()
+                    )
+            );
 
             @Override
             public String ampm(final int hourOfDay) {

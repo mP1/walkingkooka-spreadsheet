@@ -195,12 +195,19 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
 
     @Override
     ColorSpreadsheetFormatter createFormatter0(final SpreadsheetFormatColorParserToken token) {
-        return ColorSpreadsheetFormatter.with(token, this.textFormatter());
+        return ColorSpreadsheetFormatter.with(
+                token,
+                this.textFormatter()
+        );
     }
 
     private SpreadsheetFormatter textFormatter() {
-        return SpreadsheetFormatters.text(this.parsePatternOrFail(SpreadsheetFormatParsers.text(), TEXT_PATTERN)
-                .cast(SpreadsheetFormatTextParserToken.class));
+        return SpreadsheetFormatters.text(
+                this.parsePatternOrFail(
+                        SpreadsheetFormatParsers.text(),
+                        TEXT_PATTERN
+                ).cast(SpreadsheetFormatTextParserToken.class)
+        );
     }
 
     @Override

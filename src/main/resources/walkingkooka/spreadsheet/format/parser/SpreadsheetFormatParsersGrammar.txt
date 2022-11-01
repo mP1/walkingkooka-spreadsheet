@@ -65,34 +65,86 @@ CONDITION_NOT_EQUAL           = BRACKET_OPEN,
 
 
 (* date ..............................................................................................................*)
-DATE                          = [ CONDITION ],
-                                GENERAL_OR_DATE;
+DATE_FORMAT                   = [{ CONDITION, GENERAL_OR_DATE_COLOR, PATTERN_SEPARATOR }],
+                                GENERAL_OR_DATE_COLOR,
+                                [{ PATTERN_SEPARATOR, GENERAL_OR_DATE_COLOR}],
+                                [ PATTERN_SEPARATOR ];
 
-GENERAL_OR_DATE               = GENERAL |
-                                [{ DAY | MONTH_MINUTE | YEAR | DATETIME_COMPONENT }];
+DATE_PARSE                    = GENERAL_OR_DATE,
+                                [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}],
+                                [ PATTERN_SEPARATOR ];
+
+
+
+GENERAL_OR_DATE               = GENERAL | DATE;
+
+DATE                          = [{ DATE_COMPONENT }];
+
+GENERAL_OR_DATE_COLOR         = GENERAL | DATE_COLOR;
+
+DATE_COLOR                    = [{ COLOR | DATE_COMPONENT }];
+
+
+
+DATE_COMPONENT                = DAY | MONTH_MINUTE | YEAR | DATETIME_LITERAL;
 
 
 
 (* date/time .........................................................................................................*)
-DATETIME                      = [ CONDITION ],
-                                GENERAL_OR_DATETIME;
+DATETIME_FORMAT               = [{ CONDITION, GENERAL_OR_DATETIME_COLOR, PATTERN_SEPARATOR }],
+                                GENERAL_OR_DATETIME_COLOR,
+                                [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME_COLOR}],
+                                [ PATTERN_SEPARATOR ];
 
-GENERAL_OR_DATETIME           = GENERAL |
-                                [{ DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATETIME_COMPONENT }];
+DATETIME_PARSE                = GENERAL_OR_DATETIME,
+                                [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}],
+                                [ PATTERN_SEPARATOR ];
+
+
+
+GENERAL_OR_DATETIME           = GENERAL | DATETIME;
+
+DATETIME                      = [{ DATETIME_COMPONENT }];
+
+GENERAL_OR_DATETIME_COLOR     = GENERAL | DATETIME_COLOR;
+
+DATETIME_COLOR                = [{ COLOR | DATETIME_COMPONENT }];
+
+
+
+DATETIME_COMPONENT            = DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATETIME_LITERAL;
 
 
 
 (* time ..............................................................................................................*)
-TIME                          = [ CONDITION ],
-                                GENERAL_OR_TIME;
+TIME_FORMAT                   = [{ CONDITION, GENERAL_OR_TIME_COLOR, PATTERN_SEPARATOR }],
+                                GENERAL_OR_TIME_COLOR,
+                                [{ PATTERN_SEPARATOR, GENERAL_OR_TIME_COLOR}],
+                                [ PATTERN_SEPARATOR ];
 
-GENERAL_OR_TIME               = GENERAL |
-                                [{ HOUR | MONTH_MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATETIME_COMPONENT }];
+TIME_PARSE                    = GENERAL_OR_TIME,
+                                [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}],
+                                [ PATTERN_SEPARATOR ];
+
+
+
+GENERAL_OR_TIME_COLOR         = GENERAL | TIME_COLOR;
+
+TIME_COLOR                    = [{ COLOR | TIME_COMPONENT }];
+
+GENERAL_OR_TIME               = GENERAL | TIME;
+
+TIME                          = [{ TIME_COMPONENT }];
+
+
+
+TIME_COMPONENT                = HOUR | MONTH_MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATETIME_LITERAL;
 
 
 
 (* date, datetime, time ..............................................................................................*)
-DATETIME_COMPONENT            = COLOR | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED;
+DATETIME_LITERAL              = ESCAPE | DATETIME_TEXT_LITERAL | QUOTED;
+
 
 
 (* seconds decimal zeroes.............................................................................................*)

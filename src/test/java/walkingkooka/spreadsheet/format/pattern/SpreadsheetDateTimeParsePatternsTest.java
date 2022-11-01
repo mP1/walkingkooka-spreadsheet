@@ -19,13 +19,12 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -446,6 +445,15 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
+                SpreadsheetPattern.parseDateTimeParsePatterns("ddmmyyhhmmss"),
+                "date-time-parse-patterns\n" +
+                        "  \"ddmmyyhhmmss\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrint2() {
+        this.treePrintAndCheck(
                 SpreadsheetPattern.parseDateTimeParsePatterns("ddmmyyhhmmss;yymmdd"),
                 "date-time-parse-patterns\n" +
                         "  \"ddmmyyhhmmss\"\n" +
@@ -466,12 +474,8 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     }
 
     @Override
-    SpreadsheetFormatDateTimeParserToken parseFormatParserToken(final String text) {
-        return SpreadsheetFormatParsers.dateTime()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatDateTimeParserToken.class::cast)
-                .get();
+    Parser<SpreadsheetFormatParserContext> parser() {
+        return SpreadsheetFormatParsers.dateTimeParse();
     }
 
     @Override

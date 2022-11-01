@@ -72,7 +72,7 @@ public final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTo
                                 final int millisecondDecimals,
                                 final boolean ampm) {
         final DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor visitor = DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor.with();
-        visitor.accept(SpreadsheetFormatParsers.time().orFailIfCursorNotEmpty(ParserReporters.basic())
+        visitor.accept(SpreadsheetFormatParsers.timeFormat().orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern),
                         SpreadsheetFormatParserContexts.basic())
                 .get());

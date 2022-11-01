@@ -87,7 +87,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     // helpers.........................................................................................................
 
     @Override
-    SpreadsheetNumberFormatPattern createPattern(final SpreadsheetFormatNumberParserToken token) {
+    SpreadsheetNumberFormatPattern createPattern(final ParserToken token) {
         return SpreadsheetNumberFormatPattern.with(token);
     }
 

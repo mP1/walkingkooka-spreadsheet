@@ -21,70 +21,81 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.ParserToken;
 
 public final class SpreadsheetFormatPatternTest implements ClassTesting2<SpreadsheetFormatPattern> {
 
     @Test
     public void testWithDate() {
-        final SpreadsheetFormatDateParserToken token = this.dmyy();
-        this.checkEquals(token, SpreadsheetFormatPattern.dateFormatPattern(token).value());
+        final ParserToken token = this.dmyy();
+        this.checkEquals(
+                token,
+                SpreadsheetFormatPattern.dateFormatPattern(token)
+                        .value()
+        );
     }
 
     @Test
     public void testWithDateTime() {
-        final SpreadsheetFormatDateTimeParserToken token = this.hhmmyyyy();
-        this.checkEquals(token, SpreadsheetFormatPattern.dateTimeFormatPattern(token).value());
+        final ParserToken token = this.hhmmyyyy();
+        this.checkEquals(
+                token,
+                SpreadsheetFormatPattern.dateTimeFormatPattern(token)
+                        .value()
+        );
     }
 
     @Test
     public void testWithNumber() {
-        final SpreadsheetFormatNumberParserToken token = this.number();
-        this.checkEquals(token, SpreadsheetFormatPattern.numberFormatPattern(token).value());
+        final ParserToken token = this.number();
+
+        this.checkEquals(
+                token,
+                SpreadsheetFormatPattern.numberFormatPattern(token)
+                        .value()
+        );
     }
 
     @Test
     public void testWithTime() {
-        final SpreadsheetFormatTimeParserToken token = this.hhmm();
-        this.checkEquals(token, SpreadsheetFormatPattern.timeFormatPattern(token).value());
+        final ParserToken token = this.hhmm();
+
+        this.checkEquals(
+                token,
+                SpreadsheetFormatPattern.timeFormatPattern(token)
+                        .value()
+        );
     }
 
-    private SpreadsheetFormatDateParserToken dmyy() {
-        return SpreadsheetFormatParsers.date()
+    private ParserToken dmyy() {
+        return SpreadsheetFormatParsers.dateFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence("dmyy"), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatDateParserToken.class::cast)
                 .get();
     }
 
-    private SpreadsheetFormatDateTimeParserToken hhmmyyyy() {
-        return SpreadsheetFormatParsers.dateTime()
+    private ParserToken hhmmyyyy() {
+        return SpreadsheetFormatParsers.dateTimeFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence("hhmmyyyy"), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatDateTimeParserToken.class::cast)
                 .get();
     }
 
-    private SpreadsheetFormatNumberParserToken number() {
+    private ParserToken number() {
         return SpreadsheetFormatParsers.number()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence("#0.0"), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatNumberParserToken.class::cast)
                 .get();
     }
 
-    private SpreadsheetFormatTimeParserToken hhmm() {
-        return SpreadsheetFormatParsers.time()
+    private ParserToken hhmm() {
+        return SpreadsheetFormatParsers.timeFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence("hhmm"), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatTimeParserToken.class::cast)
                 .get();
     }
 

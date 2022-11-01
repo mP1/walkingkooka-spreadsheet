@@ -18,25 +18,42 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
+import walkingkooka.collect.map.Maps;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
-import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatternsTestCase<SpreadsheetTimeParsePatterns,
         SpreadsheetFormatTimeParserToken,
         SpreadsheetTimeParserToken,
         LocalTime> {
+
+    @Test
+    public void testMarshallRoundtripMap() {
+        final SpreadsheetTimeParsePatterns before1 = this.createJsonNodeMarshallingValue();
+        Map<String, Object> map = Maps.of("key123", this.createJsonNodeMarshallingValue());
+        final SpreadsheetTimeParsePatterns value1 = (SpreadsheetTimeParsePatterns) map.values().iterator().next();
+
+        final JsonNode json = this.marshallContext().marshallWithTypeMap(map);
+        final Map<String, Object> map2 = this.unmarshallContext().unmarshallWithTypeMap(json);
+
+        final SpreadsheetTimeParsePatterns value2 = (SpreadsheetTimeParsePatterns) map2.values().iterator().next();
+
+        this.checkEquals(map, map2, () -> {
+            return "Roundtrip to -> from -> to failed marshall=" + map;
+        });
+    }
 
     @Test
     public void testWithDateFails() {
@@ -422,9 +439,22 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     }
 
     @Test
-    public void testParseHourComma() {
+    public void testParseHourCommaMinutesCommaSecondsCommaSeparator() {
         this.parseAndCheck2(
                 "hh,mm,ss;",
+                "11,58,59",
+                hour11(),
+                comma(),
+                minute58(),
+                comma(),
+                second59()
+        );
+    }
+
+    @Test
+    public void testParseHourCommaMinutesCommaSecondsComma() {
+        this.parseAndCheck2(
+                "hh,mm,ss",
                 "11,58,59",
                 hour11(),
                 comma(),
@@ -524,6 +554,15 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
+                SpreadsheetPattern.parseTimeParsePatterns("hhmm"),
+                "time-parse-patterns\n" +
+                        "  \"hhmm\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrint2() {
+        this.treePrintAndCheck(
                 SpreadsheetPattern.parseTimeParsePatterns("hhmm;hhmmss"),
                 "time-parse-patterns\n" +
                         "  \"hhmm\"\n" +
@@ -544,12 +583,8 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     }
 
     @Override
-    SpreadsheetFormatTimeParserToken parseFormatParserToken(final String text) {
-        return SpreadsheetFormatParsers.time()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatTimeParserToken.class::cast)
-                .get();
+    Parser<SpreadsheetFormatParserContext> parser() {
+        return SpreadsheetFormatParsers.timeParse();
     }
 
     @Override

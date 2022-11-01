@@ -199,11 +199,21 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     /**
      * Returns a {@link Parser} that returns a date format expression as {@link SpreadsheetFormatParserToken tokens}.
      */
-    public static Parser<SpreadsheetFormatParserContext> date() {
-        return DATE_PARSER;
+    public static Parser<SpreadsheetFormatParserContext> dateFormat() {
+        return DATE_FORMAT_PARSER;
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSER;
+    private final static Parser<SpreadsheetFormatParserContext> DATE_FORMAT_PARSER;
+
+    /**
+     * Returns a {@link Parser} that returns a date format expression as {@link SpreadsheetFormatParserToken tokens}.
+     * Note unlike {@link #dateFormat()}, condition and color tokens are not allowed.
+     */
+    public static Parser<SpreadsheetFormatParserContext> dateParse() {
+        return DATE_PARSE_PARSER;
+    }
+
+    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSE_PARSER;
 
     private static void date(final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> parsers) {
         parsers.put(DAY_IDENTIFIER, DAY);
@@ -225,11 +235,21 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     /**
      * Returns a {@link Parser} that returns a datetime format expression as {@link SpreadsheetFormatParserToken tokens}.
      */
-    public static Parser<SpreadsheetFormatParserContext> dateTime() {
-        return DATETIME_PARSER;
+    public static Parser<SpreadsheetFormatParserContext> dateTimeFormat() {
+        return DATETIME_FORMAT_PARSER;
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSER;
+    private final static Parser<SpreadsheetFormatParserContext> DATETIME_FORMAT_PARSER;
+
+    /**
+     * Returns a {@link Parser} that returns a datetime format expression as {@link SpreadsheetFormatParserToken tokens}.
+     * Note unlike {@link #dateTimeFormat()}, condition and color tokens are not allowed.
+     */
+    public static Parser<SpreadsheetFormatParserContext> dateTimeParse() {
+        return DATETIME_PARSE_PARSER;
+    }
+
+    private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSE_PARSER;
 
     private static void dateAndTime(final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined) {
         predefined.put(MONTH_MINUTE_IDENTIFIER, MONTH_MINUTE);
@@ -416,11 +436,22 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     /**
      * Returns a {@link Parser} that returns a time format expression as {@link SpreadsheetFormatParserToken tokens}.
      */
-    public static Parser<SpreadsheetFormatParserContext> time() {
-        return TIME_PARSER;
+    public static Parser<SpreadsheetFormatParserContext> timeFormat() {
+        return TIME_FORMAT_PARSER;
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSER;
+    private final static Parser<SpreadsheetFormatParserContext> TIME_FORMAT_PARSER;
+
+    /**
+     * Returns a {@link Parser} that returns a time format expression as {@link SpreadsheetFormatParserToken tokens}.
+     * Note unlike {@link #timeFormat()}, condition and color tokens are not allowed.
+     */
+    public static Parser<SpreadsheetFormatParserContext> timeParse() {
+        return TIME_PARSE_PARSER;
+    }
+
+    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSE_PARSER;
+
 
     private static void time(final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined) {
         predefined.put(A_SLASH_P_IDENTIFIER, A_SLASH_P);
@@ -483,6 +514,16 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     // helpers..............................................................................................................
 
+
+    static final EbnfIdentifierName DATE_FORMAT = EbnfIdentifierName.with("DATE_FORMAT");
+    static final EbnfIdentifierName DATE_PARSE = EbnfIdentifierName.with("DATE_PARSE");
+
+    static final EbnfIdentifierName DATETIME_FORMAT = EbnfIdentifierName.with("DATETIME_FORMAT");
+    static final EbnfIdentifierName DATETIME_PARSE = EbnfIdentifierName.with("DATETIME_PARSE");
+
+    static final EbnfIdentifierName TIME_FORMAT = EbnfIdentifierName.with("TIME_FORMAT");
+    static final EbnfIdentifierName TIME_PARSE = EbnfIdentifierName.with("TIME_PARSE");
+
     /*
      * Parsers the grammar and returns the selected parser.
      */
@@ -512,17 +553,30 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                     .cast(EbnfGrammarParserToken.class)
                     .combinator(predefined, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
 
-
             COLOR_PARSER = parsers.get(COLOR_IDENTIFIER);
             CONDITION_PARSER = parsers.get(EbnfIdentifierName.with("CONDITION"));
-            DATE_PARSER = parsers.get(EbnfIdentifierName.with("DATE"));
-            DATETIME_PARSER = parsers.get(EbnfIdentifierName.with("DATETIME"));
+
+            DATE_FORMAT_PARSER = parsers.get(DATE_FORMAT)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+            DATE_PARSE_PARSER = parsers.get(DATE_PARSE)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+
+            DATETIME_FORMAT_PARSER = parsers.get(DATETIME_FORMAT)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+            DATETIME_PARSE_PARSER = parsers.get(DATETIME_PARSE)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+
             FRACTION_PARSER = parsers.get(EbnfIdentifierName.with("FRACTION"));
             GENERAL_PARSER = parsers.get(GENERAL_IDENTIFIER);
             NUMBER_PARSER = parsers.get(EbnfIdentifierName.with("NUMBER"));
+
             TEXT_FORMAT_PARSER = parsers.get(TEXT_FORMAT_IDENTIFIER)
                     .orFailIfCursorNotEmpty(ParserReporters.basic());
-            TIME_PARSER = parsers.get(EbnfIdentifierName.with("TIME"));
+
+            TIME_FORMAT_PARSER = parsers.get(TIME_FORMAT)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+            TIME_PARSE_PARSER = parsers.get(TIME_PARSE)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
 
         } catch (final SpreadsheetFormatParserException rethrow) {
             throw rethrow;
