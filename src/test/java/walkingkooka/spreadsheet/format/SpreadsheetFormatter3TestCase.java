@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -67,13 +66,11 @@ public abstract class SpreadsheetFormatter3TestCase<F extends SpreadsheetFormatt
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     final ParserToken parsePatternOrFail(final Parser<SpreadsheetFormatParserContext> parser,
                                          final String pattern) {
-        return Cast.to(
-                parser.orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(
-                                TextCursors.charSequence(pattern),
-                                SpreadsheetFormatParserContexts.basic())
-                        .get()
-        );
+        return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(
+                        TextCursors.charSequence(pattern),
+                        SpreadsheetFormatParserContexts.basic())
+                .get();
     }
 
     abstract Parser<SpreadsheetFormatParserContext> parser();

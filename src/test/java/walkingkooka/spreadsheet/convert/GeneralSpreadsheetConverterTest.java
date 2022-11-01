@@ -905,7 +905,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                         dateParser(),
                         dateTimeFormatter(),
                         dateTimeParser(),
-                        numberOrTextFormatter(
+                        numberFormatter(
                                 "#",
                                 SpreadsheetFormatParsers.number(),
                                 SpreadsheetFormatNumberParserToken.class,
@@ -1225,7 +1225,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     private SpreadsheetFormatter numberFormatter() {
-        return numberOrTextFormatter("\\N #.#",
+        return numberFormatter("\\N #.#",
                 SpreadsheetFormatParsers.number(),
                 SpreadsheetFormatNumberParserToken.class,
                 SpreadsheetFormatters::number
@@ -1237,10 +1237,12 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     private SpreadsheetFormatter textFormatter() {
-        return numberOrTextFormatter("@\"" + TEXT_SUFFIX + "\"",
+        return formatter(
+                "@\"" + TEXT_SUFFIX + "\"",
                 SpreadsheetFormatParsers.textFormat(),
                 SpreadsheetFormatTextParserToken.class,
-                SpreadsheetFormatters::text);
+                SpreadsheetFormatters::text
+        );
     }
 
     private final static String TEXT_SUFFIX = "text-literal-123";
@@ -1278,10 +1280,10 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     // https://github.com/mP1/walkingkooka-spreadsheet/issues/2662
-    private <T extends SpreadsheetFormatParserToken> SpreadsheetFormatter numberOrTextFormatter(final String pattern,
-                                                                                                final Parser<SpreadsheetFormatParserContext> parser,
-                                                                                                final Class<T> token,
-                                                                                                final Function<T, SpreadsheetFormatter> formatterFactory) {
+    private <T extends SpreadsheetFormatParserToken> SpreadsheetFormatter numberFormatter(final String pattern,
+                                                                                          final Parser<SpreadsheetFormatParserContext> parser,
+                                                                                          final Class<T> token,
+                                                                                          final Function<T, SpreadsheetFormatter> formatterFactory) {
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
                 .map(t -> t.cast(token))

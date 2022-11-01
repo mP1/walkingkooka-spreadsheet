@@ -4743,17 +4743,23 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testTextFormatTextDigitZeroFails() {
-        this.textFormatParseThrows(digitZero());
+        this.textFormatParseThrows(
+                digitZero()
+        );
     }
 
     @Test
     public void testTextFormatTextDigitSpaceFails() {
-        this.textFormatParseThrows(digitSpace());
+        this.textFormatParseThrows(
+                digitSpace()
+        );
     }
 
     @Test
     public void testTextFormatLetterFails() {
-        this.textFormatParseThrows(textLiteral('A'));
+        this.textFormatParseThrows(
+                textLiteral('A')
+        );
     }
 
     @Test
@@ -4763,22 +4769,36 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testTextFormatGeneraFailsl() {
-        this.textFormatParseThrows(generalSymbol());
+        this.textFormatParseThrows(
+                generalSymbol()
+        );
     }
 
     @Test
     public void testTextFormatEscaped() {
-        this.textFormatParseAndCheck(escape());
+        this.textFormatParseAndCheck(
+                text(
+                        escape()
+                )
+        );
     }
 
     @Test
     public void testTextFormatStar() {
-        this.textFormatParseAndCheck(star());
+        this.textFormatParseAndCheck(
+                text(
+                        star()
+                )
+        );
     }
 
     @Test
     public void testTextFormatStar2() {
-        this.textFormatParseAndCheck(star2());
+        this.textFormatParseAndCheck(
+                text(
+                        star2()
+                )
+        );
     }
 
     @Test
@@ -4803,142 +4823,215 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTextFormatDollar() {
         this.textFormatParseAndCheck(
-                textLiteralDollar()
+                text(
+                        textLiteralDollar()
+                )
         );
     }
 
     @Test
     public void testTextFormatMinusSign() {
         this.textFormatParseAndCheck(
-                textLiteralMinus()
+                text(
+                        textLiteralMinus()
+                )
         );
     }
 
     @Test
     public void testTextFormatPlusSign() {
         this.textFormatParseAndCheck(
-                textLiteralPlus()
+                text(
+                        textLiteralPlus()
+                )
         );
     }
 
     @Test
     public void testTextFormatSlash() {
         this.textFormatParseAndCheck(
-                textLiteralSlash()
+                text(
+                        textLiteralSlash()
+                )
         );
     }
 
     @Test
     public void testTextFormatOpenParens() {
         this.textFormatParseAndCheck(
-                textLiteralOpenParens()
+                text(
+                        textLiteralOpenParens()
+                )
         );
     }
 
     @Test
     public void testTextFormatCloseParens() {
         this.textFormatParseAndCheck(
-                textLiteralCloseParens()
+                text(
+                        textLiteralCloseParens()
+                )
         );
     }
 
     @Test
     public void testTextFormatColon() {
         this.textFormatParseAndCheck(
-                textLiteral(':')
+                text(
+                        textLiteral(':')
+                )
         );
     }
 
     @Test
     public void testTextFormatEqualsSign() {
         this.textFormatParseAndCheck(
-                textLiteral('=')
+                text(
+                        textLiteral('=')
+                )
         );
     }
 
     @Test
     public void testTextFormatGreaterThanEquals() {
         this.textFormatParseAndCheck(
-                textLiteral('>')
+                text(
+                        textLiteral('>')
+                )
         );
     }
 
     @Test
     public void testTextFormatGreaterThanEqualsSign() {
         this.textFormatParseAndCheck(
-                textLiteral(">=")
+                text(
+                        textLiteral(">=")
+                )
         );
     }
 
     @Test
     public void testTextFormatLessThan() {
         this.textFormatParseAndCheck(
-                textLiteral('<')
+                text(
+                        textLiteral('<')
+                )
         );
     }
 
     @Test
     public void testTextFormatLessThanEqualsSign() {
         this.textFormatParseAndCheck(
-                textLiteral("<=")
+                text(
+                        textLiteral("<=")
+                )
         );
     }
 
     @Test
     public void testTextFormatNotEqualsSign() {
         this.textFormatParseAndCheck(
-                textLiteral("!=")
+                text(
+                        textLiteral("!=")
+                )
         );
     }
 
     @Test
     public void testTextFormatSpace() {
-        this.textFormatParseAndCheck(textLiteralSpace());
+        this.textFormatParseAndCheck(
+                text(
+                        textLiteralSpace()
+                )
+        );
     }
 
     @Test
     public void testTextFormatTextPlaceholder() {
-        this.textFormatParseAndCheck(textPlaceholder());
+        this.textFormatParseAndCheck(
+                text(
+                        textPlaceholder()
+                )
+        );
     }
 
     @Test
     public void testTextFormatTextPlaceholder2() {
-        this.textFormatParseAndCheck(textPlaceholder(), textPlaceholder());
+        this.textFormatParseAndCheck(
+                text(
+                        textPlaceholder(),
+                        textPlaceholder()
+                )
+        );
     }
 
     @Test
     public void testTextFormatTextQuoted() {
-        this.textFormatParseAndCheck(quotedText());
+        this.textFormatParseAndCheck(
+                text(
+                        quotedText()
+                )
+        );
     }
 
     @Test
     public void testTextFormatUnderscore() {
-        this.textFormatParseAndCheck(underscore());
+        this.textFormatParseAndCheck(
+                text(
+                        underscore()
+                )
+        );
     }
 
     @Test
     public void testTextFormatUnderscore2() {
-        this.textFormatParseAndCheck(underscore());
+        this.textFormatParseAndCheck(
+                text(
+                        underscore()
+                )
+        );
     }
 
     @Test
     public void testTextFormatUnderscoreUnderscore() {
-        this.textFormatParseAndCheck(underscore(), underscore2());
+        this.textFormatParseAndCheck(
+                text(
+                        underscore(),
+                        underscore2()
+                )
+        );
     }
 
     @Test
     public void testTextFormatAll() {
-        this.textFormatParseAndCheck(textLiteralSpace(), quotedText(), textPlaceholder(), underscore());
+        this.textFormatParseAndCheck(
+                text(
+                        textLiteralSpace(),
+                        quotedText(),
+                        textPlaceholder(),
+                        underscore()
+                )
+        );
     }
 
     @Test
     public void testTextFormatColorQuotedText() {
-        this.textFormatParseAndCheck(color(), quotedText());
+        this.textFormatParseAndCheck(
+                text(
+                        color(),
+                        quotedText()
+                )
+        );
     }
 
     @Test
     public void testTextFormatQuotedTextColor() {
-        this.textFormatParseAndCheck(quotedText(), color());
+        this.textFormatParseAndCheck(
+                text(
+                        quotedText(),
+                        color()
+                )
+        );
     }
 
     @Test
@@ -5043,9 +5136,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionNotEqualsTextPlaceholderPatternSeparatorTextPlaceholder() {
         this.textFormatParseAndCheck(
                 conditionNotEquals(),
-                textPlaceholder(),
+                text(
+                        textPlaceholder()
+                ),
                 separator(),
-                textPlaceholder()
+                text(
+                        textPlaceholder()
+                )
         );
     }
 
@@ -5053,9 +5150,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionEqualsTextPlaceholderPatternSeparatorTextPlaceholder() {
         this.textFormatParseAndCheck(
                 conditionEquals(),
-                textPlaceholder(),
+                text(
+                        textPlaceholder()
+                ),
                 separator(),
-                textPlaceholder()
+                text(
+                        textPlaceholder()
+                )
         );
     }
 
@@ -5063,9 +5164,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionGreaterThanTextPlaceholderPatternSeparatorTextPlaceholder() {
         this.textFormatParseAndCheck(
                 conditionGreaterThan(),
-                textPlaceholder(),
+                text(
+                        textPlaceholder()
+                ),
                 separator(),
-                textPlaceholder()
+                text(
+                        textPlaceholder()
+                )
         );
     }
 
@@ -5073,9 +5178,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionGreaterThanEqualsTextPlaceholderPatternSeparatorTextPlaceholder() {
         this.textFormatParseAndCheck(
                 conditionGreaterThanEquals(),
-                textPlaceholder(),
+                text(
+                        textPlaceholder()
+                ),
                 separator(),
-                textPlaceholder()
+                text(
+                        textPlaceholder()
+                )
         );
     }
 
@@ -5083,9 +5192,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionLessThanTextPlaceholderPatternSeparatorTextPlaceholder() {
         this.textFormatParseAndCheck(
                 conditionLessThan(),
-                textPlaceholder(),
+                text(
+                        textPlaceholder()
+                ),
                 separator(),
-                textPlaceholder()
+                text(
+                        textPlaceholder()
+                )
         );
     }
 
@@ -5093,9 +5206,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionLessThanEqualsTextPlaceholderPatternSeparatorTextPlaceholder() {
         this.textFormatParseAndCheck(
                 conditionLessThanEquals(),
-                textPlaceholder(),
+                text(
+                        textPlaceholder()
+                ),
                 separator(),
-                textPlaceholder()
+                text(
+                        textPlaceholder()
+                )
         );
     }
 
@@ -5112,18 +5229,24 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionColorPatternSeparatorColorPattern() {
         this.textFormatParseAndCheck(
                 conditionEquals(),
-                color(),
-                textPlaceholder(),
+                text(
+                        color(),
+                        textPlaceholder()
+                ),
                 separator(),
-                color(),
-                textPlaceholder()
+                text(
+                        color(),
+                        textPlaceholder()
+                )
         );
     }
 
     @Test
     public void testTextFormatPatternSeparator() {
         this.textFormatParseAndCheck(
-                textPlaceholder(),
+                text(
+                        textPlaceholder()
+                ),
                 separator()
         );
     }
@@ -5142,9 +5265,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionPatternSeparatorPatternSeparator() {
         this.textFormatParseAndCheck(
                 conditionEquals(),
-                textPlaceholder(),
+                text(
+                        textPlaceholder()
+                ),
                 separator(),
-                textPlaceholder(),
+                text(
+                        textPlaceholder()
+                ),
                 separator()
         );
     }
@@ -5152,9 +5279,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // text helpers......................................................................................................
 
     private void textFormatParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 SpreadsheetFormatParsers.textFormat(),
-                SpreadsheetFormatParserToken::text,
                 tokens
         );
     }
