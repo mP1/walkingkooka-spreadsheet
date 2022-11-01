@@ -388,7 +388,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     /**
      * Returns a {@link Parser} that returns a text format expression as {@link SpreadsheetFormatParserToken tokens}.
      */
-    public static Parser<SpreadsheetFormatParserContext> text() {
+    public static Parser<SpreadsheetFormatParserContext> textFormat() {
         return TEXT_FORMAT_PARSER;
     }
 

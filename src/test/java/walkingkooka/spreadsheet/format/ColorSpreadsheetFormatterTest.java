@@ -204,7 +204,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
     private SpreadsheetFormatter textFormatter() {
         return SpreadsheetFormatters.text(
                 this.parsePatternOrFail(
-                        SpreadsheetFormatParsers.text(),
+                        SpreadsheetFormatParsers.textFormat(),
                         TEXT_PATTERN
                 ).cast(SpreadsheetFormatTextParserToken.class)
         );

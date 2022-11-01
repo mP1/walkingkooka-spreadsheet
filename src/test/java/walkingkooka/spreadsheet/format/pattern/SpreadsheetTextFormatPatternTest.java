@@ -202,7 +202,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
 
     @Override
     SpreadsheetFormatTextParserToken parseFormatParserToken(final String text) {
-        return SpreadsheetFormatParsers.text()
+        return SpreadsheetFormatParsers.textFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
                 .map(SpreadsheetFormatTextParserToken.class::cast)
