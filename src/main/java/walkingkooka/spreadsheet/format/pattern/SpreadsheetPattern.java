@@ -592,7 +592,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER = SpreadsheetFormatParsers.text();
+    private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER = SpreadsheetFormatParsers.textFormat();
 
     /**
      * Transforms the tokens into a {@link SpreadsheetTextFormatPattern}

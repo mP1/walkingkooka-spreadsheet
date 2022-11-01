@@ -1238,7 +1238,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     private SpreadsheetFormatter textFormatter() {
         return numberOrTextFormatter("@\"" + TEXT_SUFFIX + "\"",
-                SpreadsheetFormatParsers.text(),
+                SpreadsheetFormatParsers.textFormat(),
                 SpreadsheetFormatTextParserToken.class,
                 SpreadsheetFormatters::text);
     }

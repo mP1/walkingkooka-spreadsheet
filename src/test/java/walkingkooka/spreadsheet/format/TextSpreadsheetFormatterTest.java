@@ -136,7 +136,7 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
 
     @Override
     Parser<SpreadsheetFormatParserContext> parser() {
-        return SpreadsheetFormatParsers.text();
+        return SpreadsheetFormatParsers.textFormat();
     }
 
     //toString .......................................................................................................
