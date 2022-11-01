@@ -1665,6 +1665,24 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
+    @Test
+    public void testDateFormatConditionPatternSeparatorPattern() {
+        this.dateFormatParseAndCheck(
+                conditionEquals(),
+                date(
+                        day(),
+                        monthOrMinute(),
+                        year()
+                ),
+                separator(),
+                date(
+                        year(),
+                        monthOrMinute(),
+                        day()
+                )
+        );
+    }
+
     // date format helpers..............................................................................................
 
     private void dateFormatParseAndCheck(final SpreadsheetFormatDateParserToken... tokens) {
@@ -6449,6 +6467,23 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
+    @Test
+    public void testTimeFormatConditionPatternSeparatorPattern() {
+        this.timeFormatParseAndCheck(
+                conditionEquals(),
+                time(
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator(),
+                time(
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
     // time format helpers..............................................................................................
 
     private void timeFormatParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
@@ -8407,6 +8442,29 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 dateTime(
                         color(),
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute()
+                ),
+                separator(),
+                dateTime(
+                        year(),
+                        monthOrMinute(),
+                        day(),
+                        hour(),
+                        monthOrMinute(),
+                        second()
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatConditionPatternSeparatorPattern() {
+        this.dateTimeFormatParseAndCheck(
+                conditionEquals(),
+                dateTime(
                         year(),
                         monthOrMinute(),
                         day(),
