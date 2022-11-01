@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -32,28 +31,11 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
 
 public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatternsTestCase<SpreadsheetTimeParsePatterns,
         SpreadsheetFormatTimeParserToken,
         SpreadsheetTimeParserToken,
         LocalTime> {
-
-    @Test
-    public void testMarshallRoundtripMap() {
-        final SpreadsheetTimeParsePatterns before1 = this.createJsonNodeMarshallingValue();
-        Map<String, Object> map = Maps.of("key123", this.createJsonNodeMarshallingValue());
-        final SpreadsheetTimeParsePatterns value1 = (SpreadsheetTimeParsePatterns) map.values().iterator().next();
-
-        final JsonNode json = this.marshallContext().marshallWithTypeMap(map);
-        final Map<String, Object> map2 = this.unmarshallContext().unmarshallWithTypeMap(json);
-
-        final SpreadsheetTimeParsePatterns value2 = (SpreadsheetTimeParsePatterns) map2.values().iterator().next();
-
-        this.checkEquals(map, map2, () -> {
-            return "Roundtrip to -> from -> to failed marshall=" + map;
-        });
-    }
 
     @Test
     public void testWithDateFails() {
