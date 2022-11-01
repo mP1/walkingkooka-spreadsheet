@@ -466,7 +466,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         return decimalFormat.toPattern();
     }
 
-    // parseDateParsePatterns...........................................................................................
+    // parseDateFormatPatterns...........................................................................................
 
     /**
      * Creates a new {@link SpreadsheetDateFormatPattern} after checking the value is valid.
@@ -479,13 +479,15 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATE_FORMAT_PARSER = formatParser(SpreadsheetFormatParsers.date().cast());
+    private final static Parser<SpreadsheetFormatParserContext> DATE_FORMAT_PARSER = SpreadsheetFormatParsers.dateFormat();
 
     /**
      * Transforms the tokens into a {@link SpreadsheetDateFormatPattern}
      */
     private static SpreadsheetDateFormatPattern transformDate(final ParserToken token) {
-        return SpreadsheetDateFormatPattern.with(token.cast(SpreadsheetFormatDateParserToken.class));
+        return SpreadsheetDateFormatPattern.with(
+                token.cast(SpreadsheetFormatDateParserToken.class)
+        );
     }
 
     // parseDateParsePatterns...........................................................................................
@@ -501,7 +503,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSE_PARSER = parseParser(SpreadsheetFormatParsers.date().cast());
+    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSE_PARSER = SpreadsheetFormatParsers.dateParse();
 
     // parseDateTimeFormatPatterns.......................................................................................
 
@@ -516,13 +518,15 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATETIME_FORMAT_PARSER = formatParser(SpreadsheetFormatParsers.dateTime().cast());
+    private final static Parser<SpreadsheetFormatParserContext> DATETIME_FORMAT_PARSER = SpreadsheetFormatParsers.dateTimeFormat();
 
     /**
      * Transforms the tokens into a {@link SpreadsheetDateTimeFormatPattern}
      */
     private static SpreadsheetDateTimeFormatPattern transformDateTime(final ParserToken token) {
-        return SpreadsheetDateTimeFormatPattern.with(token.cast(SpreadsheetFormatDateTimeParserToken.class));
+        return SpreadsheetDateTimeFormatPattern.with(
+                token.cast(SpreadsheetFormatDateTimeParserToken.class)
+        );
     }
 
     // parseDateTimeParsePatterns.......................................................................................
@@ -538,7 +542,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSE_PARSER = parseParser(SpreadsheetFormatParsers.dateTime().cast());
+    private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSE_PARSER = SpreadsheetFormatParsers.dateTimeParse();
 
     // parseNumberFormatPatterns.........................................................................................
 
@@ -610,13 +614,15 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TIME_FORMAT_PARSER = formatParser(SpreadsheetFormatParsers.time().cast());
+    private final static Parser<SpreadsheetFormatParserContext> TIME_FORMAT_PARSER = SpreadsheetFormatParsers.timeFormat();
 
     /**
      * Transforms the tokens into a {@link SpreadsheetTimeFormatPattern}
      */
     private static SpreadsheetTimeFormatPattern transformTime(final ParserToken token) {
-        return SpreadsheetTimeFormatPattern.with(token.cast(SpreadsheetFormatTimeParserToken.class));
+        return SpreadsheetTimeFormatPattern.with(
+                token.cast(SpreadsheetFormatTimeParserToken.class)
+        );
     }
 
     // parseTimeParsePatterns....................................................................................................
@@ -632,7 +638,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSE_PARSER = parseParser(SpreadsheetFormatParsers.time().cast());
+    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSE_PARSER = SpreadsheetFormatParsers.timeParse();
 
     // helper...........................................................................................................
 

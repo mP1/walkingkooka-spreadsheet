@@ -25,6 +25,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -32,8 +33,10 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolPa
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserTokens;
+import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.function.Function;
@@ -143,11 +146,11 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     }
 
     private SpreadsheetFormatDateParserToken parseDateParserToken(final String text) {
-        return SpreadsheetFormatParsers.date()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatDateParserToken.class::cast)
-                .get();
+        return this.parseAndGetFirst(
+                text,
+                SpreadsheetFormatParsers.dateFormat(),
+                SpreadsheetFormatDateParserToken.class
+        );
     }
 
     private SpreadsheetFormatDateTimeParserToken hhmmyyyy() {
@@ -159,11 +162,11 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     }
 
     private SpreadsheetFormatDateTimeParserToken parseDateTimeParserToken(final String text) {
-        return SpreadsheetFormatParsers.dateTime()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatDateTimeParserToken.class::cast)
-                .get();
+        return this.parseAndGetFirst(
+                text,
+                SpreadsheetFormatParsers.dateTimeFormat(),
+                SpreadsheetFormatDateTimeParserToken.class
+        );
     }
 
     private SpreadsheetFormatNumberParserToken number() {
@@ -191,11 +194,23 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     }
 
     private SpreadsheetFormatTimeParserToken parseTimeParserToken(final String text) {
-        return SpreadsheetFormatParsers.time()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
+        return this.parseAndGetFirst(
+                text,
+                SpreadsheetFormatParsers.timeParse(),
+                SpreadsheetFormatTimeParserToken.class
+        );
+    }
+
+    private <T extends SpreadsheetFormatParserToken> T parseAndGetFirst(final String text,
+                                                                        final Parser<SpreadsheetFormatParserContext> parser,
+                                                                        final Class<T> type) {
+        return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatTimeParserToken.class::cast)
-                .get();
+                .get()
+                .cast(SequenceParserToken.class)
+                .value()
+                .get(0)
+                .cast(type);
     }
 
     private SpreadsheetFormatSeparatorSymbolParserToken separator() {

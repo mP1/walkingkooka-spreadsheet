@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserTok
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.SequenceParserToken;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -882,7 +883,8 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
     @Override
     Parser<SpreadsheetFormatParserContext> parser() {
-        return SpreadsheetFormatParsers.dateTime();
+        return SpreadsheetFormatParsers.dateTimeFormat()
+                .transform((v, c) -> v.cast(SequenceParserToken.class).value().get(0));
     }
 
     //toString .......................................................................................................

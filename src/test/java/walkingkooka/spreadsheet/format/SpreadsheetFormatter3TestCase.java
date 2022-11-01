@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.ParserToken;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -49,21 +50,30 @@ public abstract class SpreadsheetFormatter3TestCase<F extends SpreadsheetFormatt
     abstract String pattern();
 
     final F createFormatter(final String pattern) {
-        //noinspection unchecked
-        return this.createFormatter0((T) this.parsePatternOrFail(this.parser(), pattern));
+        return this.createFormatter0(
+                this.parsePatternOrFail(
+                        pattern
+                )
+        );
     }
 
     final T parsePatternOrFail(final String pattern) {
-        return Cast.to(this.parsePatternOrFail(this.parser(), pattern));
+        return (T) this.parsePatternOrFail(
+                this.parser(),
+                pattern
+        );
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    final SpreadsheetFormatParserToken parsePatternOrFail(final Parser<SpreadsheetFormatParserContext> parser, final String pattern) {
-        return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(pattern),
-                        SpreadsheetFormatParserContexts.basic())
-                .get()
-                .cast(SpreadsheetFormatParserToken.class);
+    final ParserToken parsePatternOrFail(final Parser<SpreadsheetFormatParserContext> parser,
+                                         final String pattern) {
+        return Cast.to(
+                parser.orFailIfCursorNotEmpty(ParserReporters.basic())
+                        .parse(
+                                TextCursors.charSequence(pattern),
+                                SpreadsheetFormatParserContexts.basic())
+                        .get()
+        );
     }
 
     abstract Parser<SpreadsheetFormatParserContext> parser();

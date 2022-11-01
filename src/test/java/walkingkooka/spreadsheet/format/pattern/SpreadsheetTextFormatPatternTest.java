@@ -29,7 +29,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
-import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -186,7 +185,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     // helpers..........................................................................................................
 
     @Override
-    SpreadsheetTextFormatPattern createPattern(final SpreadsheetFormatTextParserToken token) {
+    SpreadsheetTextFormatPattern createPattern(final ParserToken token) {
         return SpreadsheetTextFormatPattern.with(token);
     }
 

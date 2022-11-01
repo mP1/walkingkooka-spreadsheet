@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
@@ -34,6 +35,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNotEqualsParserTo
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -41,6 +43,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * A {@link SpreadsheetFormatParserTokenVisitor} that visits a {@link ParserToken} and creates a {@link SpreadsheetFormatter}.
@@ -48,35 +51,23 @@ import java.time.LocalTime;
 final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     static SpreadsheetFormatter createFormatter(final ParserToken token) {
-        final SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor();
+        final SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor(
+                token
+        );
         visitor.accept(token);
+        visitor.saveFormatterIfNecessary();
 
-        SpreadsheetFormatter formatter = visitor.formatter;
-        if (null == formatter) {
+        final List<SpreadsheetFormatter> formatters = visitor.formatters;
+        if (formatters.isEmpty()) {
             throw new IllegalArgumentException("Unable to create formatter from " + token);
         }
 
-        final SpreadsheetFormatColorParserToken color = visitor.color;
-        if (null != color) {
-            formatter = SpreadsheetFormatters.color(
-                    color,
-                    formatter
-            );
-        }
-
-        final SpreadsheetFormatConditionParserToken condition = visitor.condition;
-        if (null != condition) {
-            formatter = SpreadsheetFormatters.conditional(
-                    condition,
-                    formatter
-            );
-        }
-
-        return formatter;
+        return SpreadsheetFormatters.chain(formatters);
     }
 
-    SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor(final ParserToken token) {
         super();
+        this.token = token;
     }
 
     @Override
@@ -104,8 +95,8 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     }
 
     @Override
-    protected void endVisit(SpreadsheetFormatEqualsParserToken token) {
-        super.endVisit(token);
+    protected void endVisit(final SpreadsheetFormatEqualsParserToken token) {
+        this.condition = token;
     }
 
     @Override
@@ -169,6 +160,53 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
         );
     }
 
+    @Override
+    protected void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
+        this.saveFormatter();
+
+        this.formatter = null;
+        this.condition = null;
+        this.color = null;
+    }
+
+    private void saveFormatterIfNecessary() {
+        final SpreadsheetFormatter formatter = this.formatter;
+        if (null != formatter) {
+            this.saveFormatter();
+        }
+    }
+
+    private void saveFormatter() {
+        SpreadsheetFormatter formatter = this.formatter;
+        if (null == formatter) {
+            throw new IllegalArgumentException("Empty formatter within pattern " + this.token);
+        }
+        final SpreadsheetFormatColorParserToken color = this.color;
+        if (null != color) {
+            formatter = SpreadsheetFormatters.color(
+                    color,
+                    formatter
+            );
+        }
+
+        final SpreadsheetFormatConditionParserToken condition = this.condition;
+        if (null != condition) {
+            formatter = SpreadsheetFormatters.conditional(
+                    condition,
+                    formatter
+            );
+        }
+
+        this.formatters.add(formatter);
+    }
+
+    private final ParserToken token;
+
+    /**
+     * A {@link SpreadsheetFormatter} for each pattern within the pattern.
+     */
+    private final List<SpreadsheetFormatter> formatters = Lists.array();
+
     private SpreadsheetFormatConditionParserToken condition;
 
     private SpreadsheetFormatColorParserToken color;
@@ -176,6 +214,6 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     private SpreadsheetFormatter formatter;
 
     public String toString() {
-        return String.valueOf(this.formatter);
+        return this.token.toString();
     }
 }

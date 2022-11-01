@@ -26,6 +26,8 @@ import walkingkooka.convert.Converters;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetAmPmParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
@@ -47,6 +49,9 @@ import walkingkooka.spreadsheet.parser.SpreadsheetPlusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
@@ -232,7 +237,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         final String patternText = this.patternText();
 
         final List<ParserToken> tokens = Lists.array();
-        tokens.addAll(this.parseFormatParserToken(patternText).value());
+        tokens.add(this.parseFormatParserToken(patternText));
 
         final String patternText2 = patternText + token.text();
         tokens.add(token);
@@ -250,8 +255,8 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     @Test
     public final void testJsonRoundtripMultiplePatterns() {
-        final T first = this.parseFormatParserToken(this.patternText());
-        final T second = this.parseFormatParserToken("\"text-literal-2\"");
+        final ParserToken first = this.parseFormatParserToken(this.patternText());
+        final ParserToken second = this.parseFormatParserToken("\"text-literal-2\"");
 
         final List<ParserToken> tokens = Lists.of(
                 first,
@@ -272,18 +277,20 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     final P createPattern(final String pattern) {
         return this.createPattern(
-                ParserTokens.sequence(
-                        Lists.of(
-                                this.parseFormatParserToken(pattern)
-                        ),
-                        pattern
-                )
+                this.parseFormatParserToken(pattern)
         );
     }
 
     abstract P createPattern(final ParserToken token);
 
-    abstract T parseFormatParserToken(final String text);
+    final ParserToken parseFormatParserToken(final String text) {
+        return this.parser()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
+                .get();
+    }
+
+    abstract Parser<SpreadsheetFormatParserContext> parser();
 
     private T createFormatParserToken(final List<ParserToken> tokens) {
         return this.createFormatParserToken(tokens, ParserToken.text(tokens));
@@ -556,29 +563,35 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     final void convertAndCheck2(final String pattern,
                                 final String text,
                                 final V value) {
-        this.convertAndCheck(this.parseString(pattern).converter(),
+        this.convertAndCheck(
+                this.parseString(pattern).converter(),
                 text,
                 this.targetType(),
                 this.converterContext(),
-                value);
+                value
+        );
     }
 
     final void convertFails2(final String pattern,
                              final String text) {
-        this.convertFails(this.parseString(pattern).converter(),
+        this.convertFails(
+                this.parseString(pattern).converter(),
                 text,
                 this.targetType(),
-                this.converterContext());
+                this.converterContext()
+        );
     }
 
     abstract Class<V> targetType();
 
     private ExpressionNumberConverterContext converterContext() {
-        return ExpressionNumberConverterContexts.basic(Converters.fake(),
+        return ExpressionNumberConverterContexts.basic(
+                Converters.fake(),
                 ConverterContexts.basic(Converters.fake(),
                         this.dateTimeContext(),
                         this.decimalNumberContext()),
-                EXPRESSION_NUMBER_KIND);
+                EXPRESSION_NUMBER_KIND
+        );
     }
 
     // IsMethodTesting..................................................................................................

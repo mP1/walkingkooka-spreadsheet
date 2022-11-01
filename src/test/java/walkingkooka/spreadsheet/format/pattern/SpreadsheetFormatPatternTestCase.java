@@ -50,7 +50,9 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
 
     @Test
     public final void testWith() {
-        final T token = this.parseFormatParserToken(this.patternText());
+        final ParserToken token = this.parseFormatParserToken(
+                this.patternText()
+        );
 
         final P patterns = this.createPattern(token);
         this.checkEquals(patterns.value(), token, "value");
@@ -67,15 +69,22 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         final String patternText = this.patternText();
 
         final List<ParserToken> tokens = Lists.array();
-        tokens.addAll(this.parseFormatParserToken(patternText).value());
+        tokens.add(this.parseFormatParserToken(patternText));
 
         final String patternText2 = patternText + token.text();
         tokens.add(token);
 
         final T parent = this.createFormatParserToken(tokens, patternText2);
 
-        final InvalidCharacterException thrown = assertThrows(InvalidCharacterException.class, () -> this.createPattern(parent));
-        this.checkEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> this.createPattern(parent)
+        );
+        this.checkEquals(
+                patternText.length(),
+                thrown.position(),
+                () -> "position pattern=" + patternText2
+        );
     }
 
     @Test
@@ -88,12 +97,14 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     // helpers..........................................................................................................
 
     final P createPattern(final String pattern) {
-        return this.createPattern(this.parseFormatParserToken(pattern));
+        return this.createPattern(
+                this.parseFormatParserToken(pattern)
+        );
     }
 
-    abstract P createPattern(final T token);
+    abstract P createPattern(final ParserToken token);
 
-    abstract T parseFormatParserToken(final String text);
+    abstract ParserToken parseFormatParserToken(final String text);
 
     private T createFormatParserToken(final List<ParserToken> tokens) {
         return this.createFormatParserToken(tokens, ParserToken.text(tokens));

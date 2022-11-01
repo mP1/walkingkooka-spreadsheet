@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -904,7 +905,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                         dateParser(),
                         dateTimeFormatter(),
                         dateTimeParser(),
-                        formatter(
+                        numberOrTextFormatter(
                                 "#",
                                 SpreadsheetFormatParsers.number(),
                                 SpreadsheetFormatNumberParserToken.class,
@@ -1224,10 +1225,11 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     private SpreadsheetFormatter numberFormatter() {
-        return formatter("\\N #.#",
+        return numberOrTextFormatter("\\N #.#",
                 SpreadsheetFormatParsers.number(),
                 SpreadsheetFormatNumberParserToken.class,
-                SpreadsheetFormatters::number);
+                SpreadsheetFormatters::number
+        );
     }
 
     private SpreadsheetNumberParsePatterns numberParser() {
@@ -1235,7 +1237,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     private SpreadsheetFormatter textFormatter() {
-        return formatter("@\"" + TEXT_SUFFIX + "\"",
+        return numberOrTextFormatter("@\"" + TEXT_SUFFIX + "\"",
                 SpreadsheetFormatParsers.text(),
                 SpreadsheetFormatTextParserToken.class,
                 SpreadsheetFormatters::text);
@@ -1258,7 +1260,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                                                    final Class<?> type) {
         return formatter(
                 pattern,
-                SpreadsheetFormatParsers.dateTime(),
+                SpreadsheetFormatParsers.dateTimeFormat(),
                 SpreadsheetFormatDateTimeParserToken.class,
                 (t) -> SpreadsheetFormatters.dateTime(t, type::isInstance)
         );
@@ -1270,7 +1272,19 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                                                                                     final Function<T, SpreadsheetFormatter> formatterFactory) {
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
-                .map(token::cast)
+                .map(t -> t.cast(SequenceParserToken.class).value().get(0).cast(token))
+                .map(formatterFactory)
+                .orElse(SpreadsheetFormatters.fake()); // orElse wont happen.
+    }
+
+    // https://github.com/mP1/walkingkooka-spreadsheet/issues/2662
+    private <T extends SpreadsheetFormatParserToken> SpreadsheetFormatter numberOrTextFormatter(final String pattern,
+                                                                                                final Parser<SpreadsheetFormatParserContext> parser,
+                                                                                                final Class<T> token,
+                                                                                                final Function<T, SpreadsheetFormatter> formatterFactory) {
+        return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
+                .map(t -> t.cast(token))
                 .map(formatterFactory)
                 .orElse(SpreadsheetFormatters.fake()); // orElse wont happen.
     }
