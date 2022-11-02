@@ -178,11 +178,14 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     }
 
     private SpreadsheetFormatNumberParserToken parseNumberParserToken(final String text) {
-        return SpreadsheetFormatParsers.number()
+        return SpreadsheetFormatParsers.numberParse()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatNumberParserToken.class::cast)
-                .get();
+                .get()
+                .cast(SequenceParserToken.class)
+                .value()
+                .get(0)
+                .cast(SpreadsheetFormatNumberParserToken.class);
     }
 
     private SpreadsheetFormatTimeParserToken hhmm() {

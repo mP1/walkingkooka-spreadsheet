@@ -86,7 +86,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     }
 
     private ParserToken number() {
-        return SpreadsheetFormatParsers.number()
+        return SpreadsheetFormatParsers.numberParse()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence("#0.0"), SpreadsheetFormatParserContexts.basic())
                 .get();

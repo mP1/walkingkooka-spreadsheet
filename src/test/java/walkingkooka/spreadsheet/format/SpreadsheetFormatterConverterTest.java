@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -106,9 +107,10 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
     }
 
     private SpreadsheetFormatter formatter(final String pattern) {
-        return SpreadsheetFormatParsers.number().orFailIfCursorNotEmpty(ParserReporters.basic())
+        return SpreadsheetFormatParsers.numberFormat()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatNumberParserToken.class::cast)
+                .map((t) -> t.cast(SequenceParserToken.class).value().get(0).cast(SpreadsheetFormatNumberParserToken.class))
                 .map(SpreadsheetFormatters::number)
                 .orElse(SpreadsheetFormatters.fake());
     }

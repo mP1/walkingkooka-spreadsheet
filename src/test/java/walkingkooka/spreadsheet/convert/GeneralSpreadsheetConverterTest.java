@@ -905,9 +905,9 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                         dateParser(),
                         dateTimeFormatter(),
                         dateTimeParser(),
-                        numberFormatter(
+                        formatter(
                                 "#",
-                                SpreadsheetFormatParsers.number(),
+                                SpreadsheetFormatParsers.numberParse(),
                                 SpreadsheetFormatNumberParserToken.class,
                                 SpreadsheetFormatters::number
                         ),
@@ -1225,8 +1225,8 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     private SpreadsheetFormatter numberFormatter() {
-        return numberFormatter("\\N #.#",
-                SpreadsheetFormatParsers.number(),
+        return formatter("\\N #.#",
+                SpreadsheetFormatParsers.numberParse(),
                 SpreadsheetFormatNumberParserToken.class,
                 SpreadsheetFormatters::number
         );
@@ -1275,18 +1275,6 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
                 .map(t -> t.cast(SequenceParserToken.class).value().get(0).cast(token))
-                .map(formatterFactory)
-                .orElse(SpreadsheetFormatters.fake()); // orElse wont happen.
-    }
-
-    // https://github.com/mP1/walkingkooka-spreadsheet/issues/2662
-    private <T extends SpreadsheetFormatParserToken> SpreadsheetFormatter numberFormatter(final String pattern,
-                                                                                          final Parser<SpreadsheetFormatParserContext> parser,
-                                                                                          final Class<T> token,
-                                                                                          final Function<T, SpreadsheetFormatter> formatterFactory) {
-        return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
-                .map(t -> t.cast(token))
                 .map(formatterFactory)
                 .orElse(SpreadsheetFormatters.fake()); // orElse wont happen.
     }

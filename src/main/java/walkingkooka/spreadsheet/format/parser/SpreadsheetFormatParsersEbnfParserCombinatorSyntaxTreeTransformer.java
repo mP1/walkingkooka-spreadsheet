@@ -197,8 +197,10 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
     }
 
     private static final EbnfIdentifierName NUMBER_IDENTIFIER = EbnfIdentifierName.with("NUMBER");
+    private static final EbnfIdentifierName NUMBER_COLOR_IDENTIFIER = EbnfIdentifierName.with("NUMBER_COLOR");
 
     private static final EbnfIdentifierName NUMBER_EXPONENT_IDENTIFIER = EbnfIdentifierName.with("NUMBER_EXPONENT");
+    private static final EbnfIdentifierName NUMBER_EXPONENT_COLOR_IDENTIFIER = EbnfIdentifierName.with("NUMBER_EXPONENT_COLOR");
 
     private static ParserToken transformBigDecimalExponent(final ParserToken token,
                                                            final SpreadsheetFormatParserContext context) {
@@ -249,7 +251,13 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
         identifierToTransform.put(CONDITION_LESS_THAN_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformConditionLessThanEqual);
         identifierToTransform.put(CONDITION_NOT_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformConditionNotEqual);
 
+        identifierToTransform.put(SpreadsheetFormatParsers.NUMBER_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+        identifierToTransform.put(SpreadsheetFormatParsers.NUMBER_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+
         identifierToTransform.put(NUMBER_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformNumber);
+        identifierToTransform.put(NUMBER_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformNumber);
+
+        identifierToTransform.put(NUMBER_EXPONENT_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformBigDecimalExponent);
         identifierToTransform.put(NUMBER_EXPONENT_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformBigDecimalExponent);
         identifierToTransform.put(NUMBER_EXPONENT_SYMBOL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformExponentSymbol);
 

@@ -177,21 +177,41 @@ GENERAL_COLOR_WHITESPACE      = WHITESPACE | COLOR;
 
 
 (* NUMBER .............................................................................................................*)
-NUMBER                        = [CONDITION],
-                                 GENERAL_OR_NUMBER;
+NUMBER_FORMAT                   = [CONDITION], GENERAL_OR_NUMBER_COLOR,
+                                  [ PATTERN_SEPARATOR, [CONDITION], GENERAL_OR_NUMBER_COLOR ],
+                                  [ PATTERN_SEPARATOR, [CONDITION], GENERAL_OR_NUMBER_COLOR ],
+                                  [ PATTERN_SEPARATOR, GENERAL_OR_NUMBER_OR_TEXT_COLOR ],
+                                  [ PATTERN_SEPARATOR ];
 
-GENERAL_OR_NUMBER             = GENERAL |
-                                { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_EXPONENT | NUMBER_COMPONENT | PERCENTAGE | QUOTED };
+GENERAL_OR_NUMBER_OR_TEXT_COLOR = GENERAL_OR_NUMBER_COLOR | TEXT;
+
+GENERAL_OR_NUMBER_COLOR         = GENERAL |
+                                  NUMBER_COLOR;
+
+NUMBER_COLOR                    = { COLOR | NUMBER_COMPONENT | NUMBER_EXPONENT_COLOR };
+
+NUMBER_EXPONENT_COLOR           = NUMBER_EXPONENT_SYMBOL,
+                                  [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_COMPONENT | COLOR }];
 
 
-NUMBER_EXPONENT               = NUMBER_EXPONENT_SYMBOL,
-                                [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_COMPONENT }];
-NUMBER_EXPONENT_SYMBOL        = ( 'E+' | 'e+' | 'E-' | 'e-' );
 
-NUMBER_DIGIT                  = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
+NUMBER_PARSE                    = GENERAL_OR_NUMBER,
+                                  [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}],
+                                  [ PATTERN_SEPARATOR ];
 
-NUMBER_COMPONENT              = { COLOR | CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_DIGIT | NUMBER_LITERAL | QUOTED };
+GENERAL_OR_NUMBER               = GENERAL |
+                                  NUMBER;
 
+NUMBER                          = { NUMBER_COMPONENT | NUMBER_EXPONENT };
+
+NUMBER_COMPONENT                = CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_DIGIT | NUMBER_LITERAL | PERCENTAGE | QUOTED;
+
+NUMBER_EXPONENT                 = NUMBER_EXPONENT_SYMBOL,
+                                  [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_COMPONENT }];
+
+NUMBER_EXPONENT_SYMBOL          = ( 'E+' | 'e+' | 'E-' | 'e-' );
+
+NUMBER_DIGIT                    = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
 
 
 
