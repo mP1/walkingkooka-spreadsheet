@@ -155,18 +155,45 @@ public abstract class SpreadsheetFormatParserTestCase {
     }
 
     static SpreadsheetFormatParserToken exponent1(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbolMinus(), token, digitSpace(), digitZero(), digit());
-        return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
+        final List<ParserToken> tokens = Lists.of(
+                exponentSymbolMinus(),
+                token,
+                digitSpace(),
+                digitZero(),
+                digit()
+        );
+        return SpreadsheetFormatParserToken.exponent(
+                tokens,
+                ParserToken.text(tokens)
+        );
     }
 
     static SpreadsheetFormatParserToken exponent2(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbolPlus(), digitSpace(), token, digitZero(), digit());
-        return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
+        final List<ParserToken> tokens = Lists.of(
+                exponentSymbolPlus(),
+                digitSpace(),
+                token,
+                digitZero(),
+                digit()
+        );
+        return SpreadsheetFormatParserToken.exponent(
+                tokens,
+                ParserToken.text(tokens)
+        );
     }
 
     static SpreadsheetFormatParserToken exponent3(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbolPlus(), digitSpace(), digitZero(), digit(), token);
-        return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
+        final List<ParserToken> tokens = Lists.of(
+                exponentSymbolPlus(),
+                digitSpace(),
+                digitZero(),
+                digit(),
+                token
+        );
+        return SpreadsheetFormatParserToken.exponent(
+                tokens,
+                ParserToken.text(tokens)
+        );
     }
 
     static SpreadsheetFormatParserToken exponentSymbolMinus() {
@@ -236,6 +263,15 @@ public abstract class SpreadsheetFormatParserTestCase {
 
     static SpreadsheetFormatParserToken notEquals() {
         return SpreadsheetFormatParserToken.notEqualsSymbol("<>", "<>");
+    }
+
+    static SpreadsheetFormatNumberParserToken number(final SpreadsheetFormatParserToken... tokens) {
+        final List<ParserToken> list = Lists.of(tokens);
+
+        return SpreadsheetFormatParserToken.number(
+                list,
+                ParserToken.text(list)
+        );
     }
 
     static SpreadsheetFormatParserToken bracketOpenSymbol() {

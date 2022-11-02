@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -395,14 +394,6 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
         );
     }
 
-    // json............................................................................................................
-
-    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2662")
-    @Test
-    public void testMarshallRoundtripMap() {
-        throw new UnsupportedOperationException();
-    }
-
     // helpers.........................................................................................................
 
     @Override
@@ -417,7 +408,7 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
 
     @Override
     Parser<SpreadsheetFormatParserContext> parser() {
-        return SpreadsheetFormatParsers.number();
+        return SpreadsheetFormatParsers.numberParse();
     }
 
     @Override

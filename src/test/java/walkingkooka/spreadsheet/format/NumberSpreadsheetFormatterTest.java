@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporterException;
+import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -1521,7 +1522,8 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
 
     @Override
     Parser<SpreadsheetFormatParserContext> parser() {
-        return SpreadsheetFormatParsers.number();
+        return SpreadsheetFormatParsers.numberFormat()
+                .transform((v, c) -> v.cast(SequenceParserToken.class).value().get(0));
     }
 
     @Override

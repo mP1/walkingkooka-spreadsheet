@@ -103,11 +103,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     }
 
     @Override
-    SpreadsheetFormatNumberParserToken parseFormatParserToken(final String text) {
-        return SpreadsheetFormatParsers.number()
+    ParserToken parseFormatParserToken(final String text) {
+        return SpreadsheetFormatParsers.numberFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatNumberParserToken.class::cast)
                 .get();
     }
 

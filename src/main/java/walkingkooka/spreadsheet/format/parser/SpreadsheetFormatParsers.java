@@ -305,11 +305,20 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     /**
      * Returns a {@link Parser} that given text returns a {@link SpreadsheetFormatParserToken}.
      */
-    public static Parser<SpreadsheetFormatParserContext> number() {
-        return NUMBER_PARSER;
+    public static Parser<SpreadsheetFormatParserContext> numberFormat() {
+        return NUMBER_FORMAT_PARSER;
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSER;
+    private final static Parser<SpreadsheetFormatParserContext> NUMBER_FORMAT_PARSER;
+
+    /**
+     * Returns a {@link Parser} that given text returns a {@link SpreadsheetFormatParserToken}.
+     */
+    public static Parser<SpreadsheetFormatParserContext> numberParse() {
+        return NUMBER_PARSE_PARSER;
+    }
+
+    private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSE_PARSER;
 
     private static void number(final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined) {
         predefined.put(CURRENCY_IDENTIFIER, CURRENCY);
@@ -514,12 +523,14 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     // helpers..............................................................................................................
 
-
     static final EbnfIdentifierName DATE_FORMAT = EbnfIdentifierName.with("DATE_FORMAT");
     static final EbnfIdentifierName DATE_PARSE = EbnfIdentifierName.with("DATE_PARSE");
 
     static final EbnfIdentifierName DATETIME_FORMAT = EbnfIdentifierName.with("DATETIME_FORMAT");
     static final EbnfIdentifierName DATETIME_PARSE = EbnfIdentifierName.with("DATETIME_PARSE");
+
+    static final EbnfIdentifierName NUMBER_FORMAT = EbnfIdentifierName.with("NUMBER_FORMAT");
+    static final EbnfIdentifierName NUMBER_PARSE = EbnfIdentifierName.with("NUMBER_PARSE");
 
     static final EbnfIdentifierName TIME_FORMAT = EbnfIdentifierName.with("TIME_FORMAT");
     static final EbnfIdentifierName TIME_PARSE = EbnfIdentifierName.with("TIME_PARSE");
@@ -568,7 +579,11 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
             FRACTION_PARSER = parsers.get(EbnfIdentifierName.with("FRACTION"));
             GENERAL_PARSER = parsers.get(GENERAL_IDENTIFIER);
-            NUMBER_PARSER = parsers.get(EbnfIdentifierName.with("NUMBER"));
+
+            NUMBER_FORMAT_PARSER = parsers.get(NUMBER_FORMAT)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+            NUMBER_PARSE_PARSER = parsers.get(NUMBER_PARSE)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
 
             TEXT_FORMAT_PARSER = parsers.get(TEXT_FORMAT)
                     .orFailIfCursorNotEmpty(ParserReporters.basic());

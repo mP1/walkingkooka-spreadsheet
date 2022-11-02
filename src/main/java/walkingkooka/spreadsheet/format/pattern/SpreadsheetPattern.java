@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserTok
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
@@ -34,12 +33,8 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserException;
-import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -555,7 +550,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
                 SpreadsheetPattern::transformNumber);
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> NUMBER_FORMAT_PARSER = formatParser(SpreadsheetFormatParsers.number().cast());
+    private final static Parser<SpreadsheetFormatParserContext> NUMBER_FORMAT_PARSER = SpreadsheetFormatParsers.numberFormat();
 
     /**
      * Transforms the tokens into a {@link SpreadsheetNumberFormatPattern}
@@ -577,7 +572,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSE_PARSER = parseParser(SpreadsheetFormatParsers.number().cast());
+    private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSE_PARSER = SpreadsheetFormatParsers.numberParse();
 
     // parseTextFormatPatterns..........................................................................................
 
@@ -641,42 +636,6 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     private final static Parser<SpreadsheetFormatParserContext> TIME_PARSE_PARSER = SpreadsheetFormatParsers.timeParse();
 
     // helper...........................................................................................................
-
-    /**
-     * Parsers input that requires a single {@link SpreadsheetFormatParserToken token} followed by an optional separator and more tokens.
-     */
-    private static Parser<SpreadsheetFormatParserContext> formatParser(final Parser<ParserContext> parser) {
-        return parser.orFailIfCursorNotEmpty(ParserReporters.basic()).cast();
-    }
-
-    /**
-     * Parsers input that requires a single {@link SpreadsheetFormatParserToken token} followed by an optional separator and more tokens.
-     */
-    private static Parser<SpreadsheetFormatParserContext> parseParser(final Parser<ParserContext> parser) {
-        final Parser<ParserContext> patternSeparator = SpreadsheetFormatParsers.patternSeparator()
-                .cast();
-
-        final Parser<ParserContext> optional = Parsers.sequenceParserBuilder()
-                .required(patternSeparator)
-                .required(parser)
-                .build()
-                .repeating();
-
-        return Parsers.sequenceParserBuilder()
-                .required(parser)
-                .optional(optional.repeating())
-                .optional(patternSeparator)
-                .build()
-                .transform(SpreadsheetPattern::transformParser)
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .cast();
-    }
-
-    private static ParserToken transformParser(final ParserToken token,
-                                               final ParserContext context) {
-        final SequenceParserToken sequenceParserToken = token.cast(SequenceParserToken.class);
-        return sequenceParserToken.flat();
-    }
 
     /**
      * Parses text using the given parser and transformer.
