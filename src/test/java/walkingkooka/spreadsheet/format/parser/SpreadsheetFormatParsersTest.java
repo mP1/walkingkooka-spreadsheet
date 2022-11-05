@@ -1717,6 +1717,14 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // date format......................................................................................................
 
     @Test
+    public void testDateParseEmpty() {
+        this.parseFailAndCheck(
+                SpreadsheetFormatParsers.dateParse(),
+                ""
+        );
+    }
+
+    @Test
     public void testDateParseGeneral() {
         this.dateParseParseAndCheck(
                 general()
@@ -5145,6 +5153,14 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     // number parse.....................................................................................................
+
+    @Test
+    public void testNumberParseEmpty() {
+        this.parseFailAndCheck(
+                SpreadsheetFormatParsers.numberParse(),
+                ""
+        );
+    }
 
     @Test
     public void testNumberParseDayFails() {
@@ -9691,6 +9707,14 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // time parse.......................................................................................................
 
     @Test
+    public void testTimeParseEmpty() {
+        this.parseFailAndCheck(
+                SpreadsheetFormatParsers.timeParse(),
+                ""
+        );
+    }
+
+    @Test
     public void testTimeParseTextDigitFails() {
         this.timeParseParseThrows(
                 digit()
@@ -11697,7 +11721,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     // date time parse..................................................................................................
 
-    // dateTime parse..................................................................................................
+    @Test
+    public void testDateTimeParseEmpty() {
+        this.parseFailAndCheck(
+                SpreadsheetFormatParsers.dateTimeParse(),
+                ""
+        );
+    }
 
     @Test
     public void testDateTimeParseGeneral() {
