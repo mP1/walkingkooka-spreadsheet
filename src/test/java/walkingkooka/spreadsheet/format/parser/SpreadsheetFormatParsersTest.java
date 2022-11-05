@@ -408,6 +408,14 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // date format......................................................................................................
 
     @Test
+    public void testDateFormatEmpty() {
+        this.parseFailAndCheck(
+                SpreadsheetFormatParsers.dateFormat(),
+                ""
+        );
+    }
+
+    @Test
     public void testDateFormatGeneral() {
         this.dateFormatParseAndCheck(
                 general()
@@ -2983,6 +2991,14 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     // number format.....................................................................................................
+
+    @Test
+    public void testNumberFormatEmpty() {
+        this.parseFailAndCheck(
+                SpreadsheetFormatParsers.numberFormat(),
+                ""
+        );
+    }
 
     @Test
     public void testNumberFormatDayFails() {
@@ -7772,6 +7788,14 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // text........................................................................................................
 
     @Test
+    public void testTextFormatEmpty() {
+        this.parseFailAndCheck(
+                SpreadsheetFormatParsers.textFormat(),
+                ""
+        );
+    }
+
+    @Test
     public void testTextFormatTextDigitZeroFails() {
         this.textFormatParseThrows(
                 digitZero()
@@ -8323,6 +8347,14 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     // time format......................................................................................................
+
+    @Test
+    public void testTimeFormatEmpty() {
+        this.parseFailAndCheck(
+                SpreadsheetFormatParsers.timeFormat(),
+                ""
+        );
+    }
 
     @Test
     public void testTimeFormatTextDigitFails() {
@@ -10972,6 +11004,14 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     // dateTime format..................................................................................................
+
+    @Test
+    public void testDateTimeFormatEmpty() {
+        this.parseFailAndCheck(
+                SpreadsheetFormatParsers.dateTimeFormat(),
+                ""
+        );
+    }
 
     @Test
     public void testDateTimeFormatGeneral() {
