@@ -65,10 +65,11 @@ CONDITION_NOT_EQUAL           = BRACKET_OPEN,
 
 
 (* date ..............................................................................................................*)
-DATE_FORMAT                   = [{ CONDITION, GENERAL_OR_DATE_COLOR, PATTERN_SEPARATOR }],
-                                GENERAL_OR_DATE_COLOR,
-                                [{ PATTERN_SEPARATOR, GENERAL_OR_DATE_COLOR}],
+DATE_FORMAT                   = [ CONDITION ], [ GENERAL_OR_DATE_COLOR ],
+                                [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }],
                                 [ PATTERN_SEPARATOR ];
+
+
 
 DATE_PARSE                    = GENERAL_OR_DATE,
                                 [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}],
@@ -91,10 +92,11 @@ DATE_COMPONENT                = DAY | MONTH_MINUTE | YEAR | DATETIME_LITERAL;
 
 
 (* date/time .........................................................................................................*)
-DATETIME_FORMAT               = [{ CONDITION, GENERAL_OR_DATETIME_COLOR, PATTERN_SEPARATOR }],
-                                GENERAL_OR_DATETIME_COLOR,
-                                [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME_COLOR}],
+DATETIME_FORMAT                = [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ],
+                                [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }],
                                 [ PATTERN_SEPARATOR ];
+
+
 
 DATETIME_PARSE                = GENERAL_OR_DATETIME,
                                 [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}],
@@ -117,10 +119,11 @@ DATETIME_COMPONENT            = DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS
 
 
 (* time ..............................................................................................................*)
-TIME_FORMAT                   = [{ CONDITION, GENERAL_OR_TIME_COLOR, PATTERN_SEPARATOR }],
-                                GENERAL_OR_TIME_COLOR,
-                                [{ PATTERN_SEPARATOR, GENERAL_OR_TIME_COLOR}],
+TIME_FORMAT                   = [ CONDITION ], [ GENERAL_OR_TIME_COLOR ],
+                                [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }],
                                 [ PATTERN_SEPARATOR ];
+
+
 
 TIME_PARSE                    = GENERAL_OR_TIME,
                                 [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}],
@@ -177,11 +180,19 @@ GENERAL_COLOR_WHITESPACE      = WHITESPACE | COLOR;
 
 
 (* NUMBER .............................................................................................................*)
-NUMBER_FORMAT                   = [CONDITION], GENERAL_OR_NUMBER_COLOR,
-                                  [ PATTERN_SEPARATOR, [CONDITION], GENERAL_OR_NUMBER_COLOR ],
-                                  [ PATTERN_SEPARATOR, [CONDITION], GENERAL_OR_NUMBER_COLOR ],
-                                  [ PATTERN_SEPARATOR, GENERAL_OR_NUMBER_OR_TEXT_COLOR ],
-                                  [ PATTERN_SEPARATOR ];
+NUMBER_FORMAT                     = PATTERN_SEPARATOR_3 | NUMBER_FORMAT2;
+
+NUMBER_FORMAT2                    = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                    [ PATTERN_SEPARATOR, CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                    [ PATTERN_SEPARATOR, CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                    [ PATTERN_SEPARATOR, [ TEXT ]],
+                                    [ PATTERN_SEPARATOR ];
+
+PATTERN_SEPARATOR_3               = PATTERN_SEPARATOR, PATTERN_SEPARATOR, PATTERN_SEPARATOR;
+
+CONDITION_GENERAL_OR_NUMBER_COLOR = [ CONDITION ], [ GENERAL_OR_NUMBER_COLOR ];
+
+
 
 GENERAL_OR_NUMBER_OR_TEXT_COLOR = GENERAL_OR_NUMBER_COLOR | TEXT;
 
@@ -217,7 +228,7 @@ NUMBER_DIGIT                    = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
 
 (* text format, note the last pattern may not have a condition........................................................*)
 TEXT_FORMAT                   = [{ CONDITION, TEXT, PATTERN_SEPARATOR }],
-                                TEXT,
+                                [ TEXT ],
                                 [ PATTERN_SEPARATOR ];
 
 
