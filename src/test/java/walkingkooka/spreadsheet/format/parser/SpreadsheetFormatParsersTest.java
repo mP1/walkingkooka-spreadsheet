@@ -416,6 +416,30 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
+    public void testDateFormatSeparator() {
+        this.dateFormatParseAndCheck(
+                separator()
+        );
+    }
+
+    @Test
+    public void testDateFormatSeparatorSeparator() {
+        this.dateFormatParseAndCheck(
+                separator(),
+                separator()
+        );
+    }
+
+    @Test
+    public void testDateFormatSeparatorSeparatorSeparator() {
+        this.dateFormatParseAndCheck(
+                separator(),
+                separator(),
+                separator()
+        );
+    }
+
+    @Test
     public void testDateFormatGeneral() {
         this.dateFormatParseAndCheck(
                 general()
@@ -1532,49 +1556,62 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // condition
 
     @Test
-    public void testDateFormatConditionEqualsDayFails() {
-        this.dateFormatParseThrows(
+    public void testDateFormatConditionEqualsDay() {
+        this.dateFormatParseAndCheck(
                 conditionEquals(),
-                day()
+                date(
+                        day()
+                )
         );
     }
 
     @Test
-    public void testDateFormatConditionGreaterThanDayFails() {
-        this.dateFormatParseThrows(
+    public void testDateFormatConditionGreaterThanDay() {
+        this.dateFormatParseAndCheck(
                 conditionGreaterThan(),
-                day()
+                date(
+                        day()
+                )
         );
     }
 
     @Test
-    public void testDateFormatConditionGreaterThanEqualsDayFails() {
-        this.dateFormatParseThrows(
+    public void testDateFormatConditionGreaterThanEqualsDay() {
+        this.dateFormatParseAndCheck(
                 conditionGreaterThanEquals(),
-                day()
+                date(
+                        day()
+                )
         );
     }
 
     @Test
-    public void testDateFormatConditionLessThanDayFails() {
-        this.dateFormatParseThrows(
+    public void testDateFormatConditionLessThanDay() {
+        this.dateFormatParseAndCheck(
                 conditionLessThan(),
-                day());
-    }
-
-    @Test
-    public void testDateFormatConditionLessThanEqualsDayFails() {
-        this.dateFormatParseThrows(
-                conditionLessThanEquals(),
-                day()
+                date(
+                        day()
+                )
         );
     }
 
     @Test
-    public void testDateFormatConditionNotEqualsDayFails() {
-        this.dateFormatParseThrows(
+    public void testDateFormatConditionLessThanEqualsDay() {
+        this.dateFormatParseAndCheck(
+                conditionLessThanEquals(),
+                date(
+                        day()
+                )
+        );
+    }
+
+    @Test
+    public void testDateFormatConditionNotEqualsDay() {
+        this.dateFormatParseAndCheck(
                 conditionNotEquals(),
-                day()
+                date(
+                        day()
+                )
         );
     }
 
@@ -1714,7 +1751,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    // date format......................................................................................................
+    // date parse......................................................................................................
 
     @Test
     public void testDateParseEmpty() {
@@ -3005,6 +3042,30 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.parseFailAndCheck(
                 SpreadsheetFormatParsers.numberFormat(),
                 ""
+        );
+    }
+
+    @Test
+    public void testNumberFormatSeparator() {
+        this.numberFormatParseAndCheck(
+                separator()
+        );
+    }
+
+    @Test
+    public void testNumberFormatSeparatorSeparator() {
+        this.numberFormatParseAndCheck(
+                separator(),
+                separator()
+        );
+    }
+
+    @Test
+    public void testNumberFormatSeparatorSeparatorSeparator() {
+        this.numberFormatParseAndCheck(
+                separator(),
+                separator(),
+                separator()
         );
     }
 
@@ -5026,50 +5087,6 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 separator()
         );
     }
-
-    @Test
-    public void testNumberFormatPatternSeparatorPatternSeparatorPatternSeparatorPattern() {
-        this.numberFormatParseAndCheck(
-                number(
-                        digit()
-                ),
-                separator(),
-                number(
-                        digit()
-                ),
-                separator(),
-                number(
-                        digit()
-                ),
-                separator(),
-                number(
-                        digit()
-                )
-        );
-    }
-
-    @Test
-    public void testNumberFormatPatternSeparatorPatternSeparatorPatternSeparatorPatternSeparator() {
-        this.numberFormatParseAndCheck(
-                number(
-                        digit()
-                ),
-                separator(),
-                number(
-                        digit()
-                ),
-                separator(),
-                number(
-                        digit()
-                ),
-                separator(),
-                number(
-                        digit()
-                ),
-                separator()
-        );
-    }
-
 
     @Test
     public void testNumberFormatPatternSeparatorPatternSeparatorPatternSeparatorTextPattern() {
@@ -7812,6 +7829,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
+    public void testTextFormatSeparator() {
+        this.textFormatParseAndCheck(
+                separator()
+        );
+    }
+
+    @Test
     public void testTextFormatTextDigitZeroFails() {
         this.textFormatParseThrows(
                 digitZero()
@@ -7833,12 +7857,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTextFormatSeparatorFails() {
-        this.textFormatParseThrows(separator());
-    }
-
-    @Test
-    public void testTextFormatGeneraFailsl() {
+    public void testTextFormatGeneraFails() {
         this.textFormatParseThrows(
                 generalSymbol()
         );
@@ -8369,6 +8388,30 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.parseFailAndCheck(
                 SpreadsheetFormatParsers.timeFormat(),
                 ""
+        );
+    }
+
+    @Test
+    public void testTimeFormatSeparator() {
+        this.timeFormatParseAndCheck(
+                separator()
+        );
+    }
+
+    @Test
+    public void testTimeFormatSeparatorSeparator() {
+        this.timeFormatParseAndCheck(
+                separator(),
+                separator()
+        );
+    }
+
+    @Test
+    public void testTimeFormatSeparatorSeparatorSeparator() {
+        this.timeFormatParseAndCheck(
+                separator(),
+                separator(),
+                separator()
         );
     }
 
@@ -9532,50 +9575,62 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // condition
 
     @Test
-    public void testTimeFormatConditionEqualsHourFails() {
-        this.timeFormatParseThrows(
+    public void testTimeFormatConditionEqualsHour() {
+        this.timeFormatParseAndCheck(
                 conditionEquals(),
-                hour()
+                time(
+                        hour()
+                )
         );
     }
 
     @Test
-    public void testTimeFormatConditionGreaterThanHourFails() {
-        this.timeFormatParseThrows(
+    public void testTimeFormatConditionGreaterThanHour() {
+        this.timeFormatParseAndCheck(
                 conditionGreaterThan(),
-                hour()
+                time(
+                        hour()
+                )
         );
     }
 
     @Test
-    public void testTimeFormatConditionGreaterThanEqualsHourFails() {
-        this.timeFormatParseThrows(
+    public void testTimeFormatConditionGreaterThanEqualsHour() {
+        this.timeFormatParseAndCheck(
                 conditionGreaterThanEquals(),
-                hour()
+                time(
+                        hour()
+                )
         );
     }
 
     @Test
-    public void testTimeFormatConditionLessThanHourFails() {
-        this.timeFormatParseThrows(
+    public void testTimeFormatConditionLessThanHour() {
+        this.timeFormatParseAndCheck(
                 conditionLessThan(),
-                hour()
+                time(
+                        hour()
+                )
         );
     }
 
     @Test
-    public void testTimeFormatConditionLessThanEqualsHourFails() {
-        this.timeFormatParseThrows(
+    public void testTimeFormatConditionLessThanEqualsHour() {
+        this.timeFormatParseAndCheck(
                 conditionLessThanEquals(),
-                hour()
+                time(
+                        hour()
+                )
         );
     }
 
     @Test
-    public void testTimeFormatConditionNotEqualsHourFails() {
-        this.timeFormatParseThrows(
+    public void testTimeFormatConditionNotEqualsHour() {
+        this.timeFormatParseAndCheck(
                 conditionNotEquals(),
-                hour()
+                time(
+                        hour()
+                )
         );
     }
 
@@ -11038,6 +11093,30 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
+    public void testDateTimeFormatSeparator() {
+        this.dateTimeFormatParseAndCheck(
+                separator()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatSeparatorSeparator() {
+        this.dateTimeFormatParseAndCheck(
+                separator(),
+                separator()
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatSeparatorSeparatorSeparator() {
+        this.dateTimeFormatParseAndCheck(
+                separator(),
+                separator(),
+                separator()
+        );
+    }
+
+    @Test
     public void testDateTimeFormatGeneral() {
         this.dateTimeFormatParseAndCheck(
                 general()
@@ -11429,98 +11508,122 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // condition
 
     @Test
-    public void testDateTimeFormatConditionEqualsDayFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionEqualsDay() {
+        this.dateTimeFormatParseAndCheck(
                 conditionEquals(),
-                day()
+                dateTime(
+                        day()
+                )
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionGreaterThanDayFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionGreaterThanDay() {
+        this.dateTimeFormatParseAndCheck(
                 conditionGreaterThan(),
-                day()
+                dateTime(
+                        day()
+                )
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionGreaterThanEqualsDayFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionGreaterThanEqualsDay() {
+        this.dateTimeFormatParseAndCheck(
                 conditionGreaterThanEquals(),
-                day()
+                dateTime(
+                        day()
+                )
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionLessThanDayFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionLessThanDay() {
+        this.dateTimeFormatParseAndCheck(
                 conditionLessThan(),
-                day()
+                dateTime(
+                        day()
+                )
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionLessThanEqualsDayFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionLessThanEqualsDay() {
+        this.dateTimeFormatParseAndCheck(
                 conditionLessThanEquals(),
-                day()
+                dateTime(
+                        day()
+                )
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionNotEqualsDayFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionNotEqualsDay() {
+        this.dateTimeFormatParseAndCheck(
                 conditionNotEquals(),
-                day()
+                dateTime(
+                        day()
+                )
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionEqualsHourFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionEqualsHour() {
+        this.dateTimeFormatParseAndCheck(
                 conditionEquals(),
-                hour()
+                dateTime(
+                        hour()
+                )
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionGreaterThanHourFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionGreaterThanHour() {
+        this.dateTimeFormatParseAndCheck(
                 conditionGreaterThan(),
-                hour()
+                dateTime(
+                        hour()
+                )
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionGreaterThanEqualsHourFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionGreaterThanEqualsHour() {
+        this.dateTimeFormatParseAndCheck(
                 conditionGreaterThanEquals(),
-                hour()
+                dateTime(
+                        hour()
+                )
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionLessThanHourFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionLessThanHour() {
+        this.dateTimeFormatParseAndCheck(
                 conditionLessThan(),
-                hour()
+                dateTime(
+                        hour()
+                )
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionLessThanEqualsHourFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionLessThanEqualsHour() {
+        this.dateTimeFormatParseAndCheck(
                 conditionLessThanEquals(),
-                hour()
+                dateTime(
+                        hour()
+                )
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionNotEqualsHourFails() {
-        this.dateTimeFormatParseThrows(
+    public void testDateTimeFormatConditionNotEqualsHour() {
+        this.dateTimeFormatParseAndCheck(
                 conditionNotEquals(),
-                hour()
+                dateTime(
+                        hour()
+                )
         );
     }
 
@@ -11619,7 +11722,6 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 conditionNotEquals()
         );
     }
-
 
     @Test
     public void testDateTimeFormatPatternSeparator() {
