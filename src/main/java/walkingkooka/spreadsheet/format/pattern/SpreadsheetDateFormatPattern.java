@@ -17,7 +17,10 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.text.cursor.parser.ParserToken;
+
+import java.util.function.Consumer;
 
 /**
  * Holds a valid {@link SpreadsheetDateFormatPattern}.
@@ -39,6 +42,14 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
      */
     private SpreadsheetDateFormatPattern(final ParserToken token) {
         super(token);
+    }
+
+    @Override
+    void missingCondition(final int index,
+                          final int total,
+                          final SpreadsheetFormatter formatter,
+                          final Consumer<SpreadsheetFormatter> formatters) {
+        formatters.accept(formatter);
     }
 
     // TreePrintable....................................................................................................

@@ -49,16 +49,30 @@ import java.util.List;
  */
 final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
-    static SpreadsheetFormatter createFormatter(final ParserToken token) {
+    static SpreadsheetFormatter createFormatter(final SpreadsheetFormatPattern pattern) {
+        final ParserToken token = pattern.value;
+
         final SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor(
                 token
         );
         visitor.accept(token);
-        visitor.saveFormatterIfNecessary();
 
-        final List<SpreadsheetFormatter> formatters = visitor.formatters;
-        if (formatters.isEmpty()) {
+        final List<SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent> components = visitor.components;
+        final int count = components.size();
+        if (0 == count) {
             throw new IllegalArgumentException("Unable to create formatter from " + token);
+        }
+
+        final List<SpreadsheetFormatter> formatters = Lists.array();
+        int i = 0;
+        for (final SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent component : components) {
+            component.prepare(
+                    i,
+                    count,
+                    pattern,
+                    formatters::add
+            );
+            i++;
         }
 
         return SpreadsheetFormatters.chain(formatters);
@@ -71,132 +85,134 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
 
     @Override
     protected void endVisit(final SpreadsheetFormatDateParserToken token) {
-        this.formatter = SpreadsheetFormatters.dateTime(
-                SpreadsheetFormatParserToken.dateTime(
-                        token.value(),
-                        token.text()
-                ),
-                (v) -> v instanceof LocalDate
+        this.saveFormatter(
+                SpreadsheetFormatters.dateTime(
+                        SpreadsheetFormatParserToken.dateTime(
+                                token.value(),
+                                token.text()
+                        ),
+                        (v) -> v instanceof LocalDate
+                )
         );
     }
 
     @Override
     protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        this.formatter = SpreadsheetFormatters.dateTime(
-                token,
-                (v) -> v instanceof LocalDateTime
+        this.saveFormatter(
+                SpreadsheetFormatters.dateTime(
+                        token,
+                        (v) -> v instanceof LocalDateTime
+                )
         );
     }
 
     @Override
     protected void endVisit(final SpreadsheetFormatEqualsParserToken token) {
-        this.condition = token;
+        this.saveCondition(token);
     }
 
     @Override
     protected void endVisit(final SpreadsheetFormatFractionParserToken token) {
-        this.formatter = SpreadsheetFormatters.fraction(
-                token,
-                (bigDecimal -> {
-                    throw new UnsupportedOperationException();
-                })
+        this.saveFormatter(
+                SpreadsheetFormatters.fraction(
+                        token,
+                        (bigDecimal -> {
+                            throw new UnsupportedOperationException();
+                        })
+                )
         );
     }
 
     @Override
     protected void endVisit(final SpreadsheetFormatGeneralParserToken token) {
-        this.formatter = SpreadsheetFormatters.general();
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
-        this.condition = token;
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatGreaterThanParserToken token) {
-        this.condition = token;
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
-        this.condition = token;
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatLessThanParserToken token) {
-        this.condition = token;
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatNotEqualsParserToken token) {
-        this.condition = token;
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
-        this.formatter = SpreadsheetFormatters.number(token);
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatTextParserToken token) {
-        this.formatter = SpreadsheetFormatters.text(token);
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatTimeParserToken token) {
-        this.formatter = SpreadsheetFormatters.dateTime(
-                SpreadsheetFormatParserToken.dateTime(
-                        token.value(),
-                        token.text()
-                ),
-                (v) -> v instanceof LocalTime
+        this.saveFormatter(
+                SpreadsheetFormatters.general()
         );
     }
 
     @Override
+    protected void endVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
+        this.saveCondition(token);
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatGreaterThanParserToken token) {
+        this.saveCondition(token);
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
+        this.saveCondition(token);
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatLessThanParserToken token) {
+        this.saveCondition(token);
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+        this.saveCondition(token);
+    }
+
+    private void saveCondition(final SpreadsheetFormatConditionParserToken token) {
+        this.component().condition = token;
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
+        this.saveFormatter(
+                SpreadsheetFormatters.number(token)
+        );
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatTextParserToken token) {
+        this.saveFormatter(
+                SpreadsheetFormatters.text(token)
+        );
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatTimeParserToken token) {
+        this.saveFormatter(
+                SpreadsheetFormatters.dateTime(
+                        SpreadsheetFormatParserToken.dateTime(
+                                token.value(),
+                                token.text()
+                        ),
+                        (v) -> v instanceof LocalTime
+                )
+        );
+    }
+
+    private void saveFormatter(final SpreadsheetFormatter formatter) {
+        this.component().formatter = formatter;
+    }
+
+    @Override
     protected void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
-        this.saveFormatter();
-
-        this.formatter = null;
-        this.condition = null;
+        this.component = null;
     }
 
-    private void saveFormatterIfNecessary() {
-        final SpreadsheetFormatter formatter = this.formatter;
-        if (null != formatter) {
-            this.saveFormatter();
+    private SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent component() {
+        if (null == this.component) {
+            this.component = SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent.create();
+            this.components.add(this.component);
         }
-    }
-
-    private void saveFormatter() {
-        SpreadsheetFormatter formatter = this.formatter;
-        if (null == formatter) {
-            throw new IllegalArgumentException("Empty formatter within pattern " + this.token);
-        }
-
-        final SpreadsheetFormatConditionParserToken condition = this.condition;
-        if (null != condition) {
-            formatter = SpreadsheetFormatters.conditional(
-                    condition,
-                    formatter
-            );
-        }
-
-        this.formatters.add(formatter);
+        return this.component;
     }
 
     private final ParserToken token;
 
+    private SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent component;
+
     /**
-     * A {@link SpreadsheetFormatter} for each pattern within the pattern.
+     * A {@link SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent} for each pattern within the pattern.
      */
-    private final List<SpreadsheetFormatter> formatters = Lists.array();
+    private final List<SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent> components = Lists.array();
 
-    private SpreadsheetFormatConditionParserToken condition;
-
-    private SpreadsheetFormatter formatter;
-
+    @Override
     public String toString() {
         return this.token.toString();
     }
