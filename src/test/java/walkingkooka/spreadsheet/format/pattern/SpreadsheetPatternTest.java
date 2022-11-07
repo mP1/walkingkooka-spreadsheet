@@ -384,7 +384,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    private <T> void localePatternParseAndCheck(final SpreadsheetParsePatterns pattern,
+    private <T> void localePatternParseAndCheck(final SpreadsheetParsePattern pattern,
                                                 final String text,
                                                 final BiFunction<ParserToken, ExpressionEvaluationContext, T> tokenToValue,
                                                 final T expected) {

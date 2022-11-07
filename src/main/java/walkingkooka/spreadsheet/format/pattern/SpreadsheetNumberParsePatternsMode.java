@@ -38,7 +38,7 @@ enum SpreadsheetNumberParsePatternsMode {
          * Loops over all component and fails if any report they are NOT compatible.
          */
         @Override
-        void checkCompatible(final SpreadsheetNumberParsePatterns patterns) {
+        void checkCompatible(final SpreadsheetNumberParsePattern patterns) {
             patterns.patterns.forEach(this::checkCompatible0);
         }
 
@@ -59,12 +59,12 @@ enum SpreadsheetNumberParsePatternsMode {
         }
 
         @Override
-        void checkCompatible(final SpreadsheetNumberParsePatterns patterns) {
+        void checkCompatible(final SpreadsheetNumberParsePattern patterns) {
             // nop
         }
     };
 
     abstract boolean isGroupSeparator(final char c, final DecimalNumberContext context);
 
-    abstract void checkCompatible(final SpreadsheetNumberParsePatterns patterns);
+    abstract void checkCompatible(final SpreadsheetNumberParsePattern patterns);
 }

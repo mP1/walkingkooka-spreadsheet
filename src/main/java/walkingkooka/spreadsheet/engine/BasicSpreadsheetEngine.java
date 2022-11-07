@@ -33,7 +33,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -984,13 +984,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * If a {@link SpreadsheetCell#parsePatterns()} is present use that to parse the formula text otherwise delegate
      * to {@link SpreadsheetEngineContext#parseFormula(TextCursor)}.
      * <br>
-     * This means if a {@link SpreadsheetParsePatterns} is present it can only contain a value such as date, number etc
+     * This means if a {@link SpreadsheetParsePattern} is present it can only contain a value such as date, number etc
      * and never an expression.
      */
     private SpreadsheetParserToken parseFormula(final SpreadsheetCell cell,
                                                 final SpreadsheetEngineContext context,
                                                 final String text) {
-        final Optional<SpreadsheetParsePatterns> maybeParsePatterns = cell.parsePatterns();
+        final Optional<SpreadsheetParsePattern> maybeParsePatterns = cell.parsePatterns();
         final TextCursor textCursor = TextCursors.charSequence(text);
 
         final SpreadsheetParserToken token;

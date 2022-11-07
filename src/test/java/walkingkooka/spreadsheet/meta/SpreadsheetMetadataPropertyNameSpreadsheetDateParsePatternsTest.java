@@ -18,17 +18,17 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns, SpreadsheetDateParsePatterns> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns, SpreadsheetDateParsePattern> {
 
     @Test
     public void testExtractLocaleValueUS() {
         this.extractLocaleValueAndCheck(
                 Locale.ENGLISH,
-                SpreadsheetDateParsePatterns.parseDateParsePatterns("dddd, mmmm d, yyyy;dddd, mmmm d, yy;dddd, mmmm d;mmmm d, yyyy;mmmm d, yy;mmmm d;mmm d, yyyy;mmm d, yy;mmm d;m/d/yy;m/d/yyyy;m/d")
+                SpreadsheetDateParsePattern.parseDateParsePatterns("dddd, mmmm d, yyyy;dddd, mmmm d, yy;dddd, mmmm d;mmmm d, yyyy;mmmm d, yy;mmmm d;mmm d, yyyy;mmm d, yy;mmm d;m/d/yy;m/d/yyyy;m/d")
         );
     }
 
@@ -36,7 +36,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternsTe
     public void testExtractLocaleValueAu() {
         this.extractLocaleValueAndCheck(
                 Locale.forLanguageTag("EN-AU"),
-                SpreadsheetDateParsePatterns.parseDateParsePatterns("dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m")
+                SpreadsheetDateParsePattern.parseDateParsePatterns("dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m")
         );
     }
 
@@ -51,8 +51,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternsTe
     }
 
     @Override
-    SpreadsheetDateParsePatterns propertyValue() {
-        return SpreadsheetDateParsePatterns.parseDateParsePatterns("dd mm yyyy \"custom\"");
+    SpreadsheetDateParsePattern propertyValue() {
+        return SpreadsheetDateParsePattern.parseDateParsePatterns("dd mm yyyy \"custom\"");
     }
 
     @Override

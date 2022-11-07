@@ -22,7 +22,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -33,7 +33,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatternsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns, SpreadsheetNumberParsePatterns> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatternsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns, SpreadsheetNumberParsePattern> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
@@ -61,7 +61,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns
     private void extractLocaleValueAndCheck2(final String text,
                                              final ExpressionNumberKind kind) throws ParseException {
         final Locale locale = Locale.ENGLISH;
-        final SpreadsheetNumberParsePatterns pattern = SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns.instance()
+        final SpreadsheetNumberParsePattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns.instance()
                 .extractLocaleValue(locale)
                 .get();
 
@@ -100,8 +100,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns
     }
 
     @Override
-    SpreadsheetNumberParsePatterns propertyValue() {
-        return SpreadsheetNumberParsePatterns.parseNumberParsePatterns("#.## \"pattern-1\";#.00 \"pattern-2\"");
+    SpreadsheetNumberParsePattern propertyValue() {
+        return SpreadsheetNumberParsePattern.parseNumberParsePatterns("#.## \"pattern-1\";#.00 \"pattern-2\"");
     }
 
     @Override

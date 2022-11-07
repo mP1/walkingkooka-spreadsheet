@@ -32,7 +32,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
-public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePatternsTestCase<SpreadsheetNumberParsePatterns,
+public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePatternTestCase<SpreadsheetNumberParsePattern,
         SpreadsheetFormatNumberParserToken,
         SpreadsheetNumberParserToken,
         ExpressionNumber> {
@@ -397,8 +397,8 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
     // helpers.........................................................................................................
 
     @Override
-    SpreadsheetNumberParsePatterns createPattern(final ParserToken token) {
-        return SpreadsheetNumberParsePatterns.with(token);
+    SpreadsheetNumberParsePattern createPattern(final ParserToken token) {
+        return SpreadsheetNumberParsePattern.with(token);
     }
 
     @Override
@@ -431,22 +431,22 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetNumberParsePatterns> type() {
-        return SpreadsheetNumberParsePatterns.class;
+    public Class<SpreadsheetNumberParsePattern> type() {
+        return SpreadsheetNumberParsePattern.class;
     }
 
     // JsonNodeMarshallingTesting............................................................................................
 
     @Override
-    public SpreadsheetNumberParsePatterns unmarshall(final JsonNode jsonNode,
-                                                     final JsonNodeUnmarshallContext context) {
-        return SpreadsheetNumberParsePatterns.unmarshallNumberParsePatterns(jsonNode, context);
+    public SpreadsheetNumberParsePattern unmarshall(final JsonNode jsonNode,
+                                                    final JsonNodeUnmarshallContext context) {
+        return SpreadsheetNumberParsePattern.unmarshallNumberParsePatterns(jsonNode, context);
     }
 
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetNumberParsePatterns parseString(final String text) {
-        return SpreadsheetNumberParsePatterns.parseNumberParsePatterns(text);
+    public SpreadsheetNumberParsePattern parseString(final String text) {
+        return SpreadsheetNumberParsePattern.parseNumberParsePatterns(text);
     }
 }

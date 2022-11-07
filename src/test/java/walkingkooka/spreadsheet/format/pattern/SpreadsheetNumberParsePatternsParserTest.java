@@ -68,7 +68,7 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
     }
 
     private void parseExpressionFails(final String pattern) {
-        assertThrows(IllegalStateException.class, () -> SpreadsheetNumberParsePatterns.parseNumberParsePatterns(pattern).expressionParser());
+        assertThrows(IllegalStateException.class, () -> SpreadsheetNumberParsePattern.parseNumberParsePatterns(pattern).expressionParser());
     }
 
     // integer values single digit pattern..............................................................................
@@ -575,7 +575,7 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
     }
 
     private SpreadsheetNumberParsePatternsParser createParser(final String pattern) {
-        return SpreadsheetNumberParsePatterns.parseNumberParsePatterns(pattern).createParser();
+        return SpreadsheetNumberParsePattern.parseNumberParsePatterns(pattern).createParser();
     }
 
     @Override

@@ -24,14 +24,14 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
@@ -119,7 +119,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateParsePatterns(final SpreadsheetDateParsePatterns patterns) {
+    protected void visitDateParsePatterns(final SpreadsheetDateParsePattern patterns) {
         // nop
     }
 
@@ -131,7 +131,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateTimeParsePatterns(final SpreadsheetDateTimeParsePatterns patterns) {
+    protected void visitDateTimeParsePatterns(final SpreadsheetDateTimeParsePattern patterns) {
         // nop
     }
 
@@ -191,7 +191,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitNumberParsePatterns(final SpreadsheetNumberParsePatterns patterns) {
+    protected void visitNumberParsePatterns(final SpreadsheetNumberParsePattern patterns) {
         // nop
     }
 
@@ -235,7 +235,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitTimeParsePatterns(final SpreadsheetTimeParsePatterns patterns) {
+    protected void visitTimeParsePatterns(final SpreadsheetTimeParsePattern patterns) {
         // nop
     }
 

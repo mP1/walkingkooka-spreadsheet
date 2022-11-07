@@ -64,7 +64,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetParsePatterns,
+public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParsePattern,
         T extends SpreadsheetFormatParentParserToken,
         SPT extends SpreadsheetParentParserToken,
         V> extends SpreadsheetPatternTestCase<P, List<T>>
@@ -82,7 +82,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     final static char PERCENT = 'q';
     final static char PLUS = 'p';
 
-    SpreadsheetParsePatternsTestCase() {
+    SpreadsheetParsePatternTestCase() {
         super();
         this.checkEquals(this.decimalNumberContext().currencySymbol(), currencyDollarSign().text(), "currencySymbol");
         this.checkEquals(this.decimalNumberContext().exponentSymbol(), e().text(), "exponentSymbol");

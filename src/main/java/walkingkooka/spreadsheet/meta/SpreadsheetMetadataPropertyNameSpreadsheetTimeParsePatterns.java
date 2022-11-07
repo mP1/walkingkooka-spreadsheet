@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 
 import java.util.Locale;
 import java.util.Optional;
 
-final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns extends SpreadsheetMetadataPropertyName<SpreadsheetTimeParsePatterns> {
+final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns extends SpreadsheetMetadataPropertyName<SpreadsheetTimeParsePattern> {
 
     /**
      * Singleton
@@ -40,9 +40,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns extends 
     }
 
     @Override
-    SpreadsheetTimeParsePatterns checkValue0(final Object value) {
+    SpreadsheetTimeParsePattern checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetTimeParsePatterns);
+                v -> v instanceof SpreadsheetTimeParsePattern);
     }
 
     @Override
@@ -51,20 +51,20 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns extends 
     }
 
     @Override
-    void accept(final SpreadsheetTimeParsePatterns value,
+    void accept(final SpreadsheetTimeParsePattern value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitTimeParsePatterns(value);
     }
 
-    Optional<SpreadsheetTimeParsePatterns> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetTimeParsePattern> extractLocaleValue(final Locale locale) {
         return Optional.of(
                 SpreadsheetPattern.timeParsePatternsLocale(locale)
         );
     }
 
     @Override
-    Class<SpreadsheetTimeParsePatterns> type() {
-        return SpreadsheetTimeParsePatterns.class;
+    Class<SpreadsheetTimeParsePattern> type() {
+        return SpreadsheetTimeParsePattern.class;
     }
 
     @Override

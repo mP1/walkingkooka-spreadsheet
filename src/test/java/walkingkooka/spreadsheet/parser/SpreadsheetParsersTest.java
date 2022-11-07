@@ -34,7 +34,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -202,7 +202,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                    final SpreadsheetParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
-                SpreadsheetParsePatterns.parseDateParsePatterns(pattern).parser(),
+                SpreadsheetParsePattern.parseDateParsePatterns(pattern).parser(),
                 SpreadsheetParserToken::date,
                 tokens
         );
@@ -246,7 +246,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                        final SpreadsheetParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
-                SpreadsheetParsePatterns.parseDateTimeParsePatterns(pattern).parser(),
+                SpreadsheetParsePattern.parseDateTimeParsePatterns(pattern).parser(),
                 SpreadsheetParserToken::dateTime,
                 tokens
         );
@@ -306,7 +306,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                    final SpreadsheetParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
-                SpreadsheetParsePatterns.parseTimeParsePatterns(pattern).parser(),
+                SpreadsheetParsePattern.parseTimeParsePatterns(pattern).parser(),
                 SpreadsheetParserToken::time,
                 tokens
         );
@@ -2967,10 +2967,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParsers.valueOrExpression(
                 Parsers.alternatives(
                         Lists.of(
-                                SpreadsheetParsePatterns.parseDateParsePatterns("yyyy/mm/dd").parser(),
-                                SpreadsheetParsePatterns.parseDateTimeParsePatterns("yyyy/mm/dd hh:mm").parser(),
-                                SpreadsheetParsePatterns.parseNumberParsePatterns("#;#.#").parser(),
-                                SpreadsheetParsePatterns.parseTimeParsePatterns("hh:mm").parser()
+                                SpreadsheetParsePattern.parseDateParsePatterns("yyyy/mm/dd").parser(),
+                                SpreadsheetParsePattern.parseDateTimeParsePatterns("yyyy/mm/dd hh:mm").parser(),
+                                SpreadsheetParsePattern.parseNumberParsePatterns("#;#.#").parser(),
+                                SpreadsheetParsePattern.parseTimeParsePatterns("hh:mm").parser()
                         )
                 )
         );

@@ -22,7 +22,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -66,9 +66,9 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     public final static Optional<TextNode> NO_FORMATTED_CELL = Optional.empty();
 
     /**
-     * Holds an absent {@link SpreadsheetParsePatterns}.
+     * Holds an absent {@link SpreadsheetParsePattern}.
      */
-    public final static Optional<SpreadsheetParsePatterns> NO_PARSE_PATTERNS = Optional.empty();
+    public final static Optional<SpreadsheetParsePattern> NO_PARSE_PATTERNS = Optional.empty();
 
     /**
      * An empty {@link TextStyle}.
@@ -121,7 +121,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     private SpreadsheetCell(final SpreadsheetCellReference reference,
                             final SpreadsheetFormula formula,
                             final TextStyle style,
-                            final Optional<SpreadsheetParsePatterns> parsePatterns,
+                            final Optional<SpreadsheetParsePattern> parsePatterns,
                             final Optional<SpreadsheetFormatPattern> formatPattern,
                             final Optional<TextNode> formatted) {
         super();
@@ -208,15 +208,15 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
 
     // parsePatterns..... .............................................................................................
 
-    public Optional<SpreadsheetParsePatterns> parsePatterns() {
+    public Optional<SpreadsheetParsePattern> parsePatterns() {
         return this.parsePatterns;
     }
 
     /**
-     * Returns a {@link SpreadsheetCell} with the given {@link SpreadsheetParsePatterns}. If the formula has a token or
+     * Returns a {@link SpreadsheetCell} with the given {@link SpreadsheetParsePattern}. If the formula has a token or
      * expression they will be cleared.
      */
-    public SpreadsheetCell setParsePatterns(final Optional<SpreadsheetParsePatterns> parsePatterns) {
+    public SpreadsheetCell setParsePatterns(final Optional<SpreadsheetParsePattern> parsePatterns) {
         Objects.requireNonNull(parsePatterns, "parsePatterns");
 
         return this.parsePatterns.equals(parsePatterns) ?
@@ -224,7 +224,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 this.setParsePatterns0(parsePatterns);
     }
 
-    private SpreadsheetCell setParsePatterns0(final Optional<SpreadsheetParsePatterns> parsePatterns) {
+    private SpreadsheetCell setParsePatterns0(final Optional<SpreadsheetParsePattern> parsePatterns) {
         final SpreadsheetFormula formula = this.formula;
 
         return this.replace(
@@ -241,7 +241,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     /**
      * When present used to parse non expressions into a value.
      */
-    private final Optional<SpreadsheetParsePatterns> parsePatterns;
+    private final Optional<SpreadsheetParsePattern> parsePatterns;
 
     // formatPattern..... .............................................................................................
 
@@ -290,7 +290,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     private SpreadsheetCell replace(final SpreadsheetCellReference reference,
                                     final SpreadsheetFormula formula,
                                     final TextStyle style,
-                                    final Optional<SpreadsheetParsePatterns> parsePatterns,
+                                    final Optional<SpreadsheetParsePattern> parsePatterns,
                                     final Optional<SpreadsheetFormatPattern> formatPattern,
                                     final Optional<TextNode> formatted) {
         return new SpreadsheetCell(
@@ -374,7 +374,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
             this.formula.printTree(printer);
             this.style.printTree(printer);
 
-            final Optional<SpreadsheetParsePatterns> parsePatterns = this.parsePatterns();
+            final Optional<SpreadsheetParsePattern> parsePatterns = this.parsePatterns();
             if (parsePatterns.isPresent()) {
                 printer.println("parsePatterns:");
                 printer.indent();
@@ -443,7 +443,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                                                final JsonNodeUnmarshallContext context) {
         SpreadsheetFormula formula = SpreadsheetFormula.EMPTY;
         TextStyle style = TextStyle.EMPTY;
-        SpreadsheetParsePatterns parsePatterns = null;
+        SpreadsheetParsePattern parsePatterns = null;
         SpreadsheetFormatPattern formatPattern = null;
         TextNode formatted = null;
 

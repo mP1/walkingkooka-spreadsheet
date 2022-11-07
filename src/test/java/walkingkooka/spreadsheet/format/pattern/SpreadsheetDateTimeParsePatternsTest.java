@@ -32,7 +32,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParsePatternsTestCase<SpreadsheetDateTimeParsePatterns,
+public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParsePatternTestCase<SpreadsheetDateTimeParsePattern,
         SpreadsheetFormatDateTimeParserToken,
         SpreadsheetDateTimeParserToken,
         LocalDateTime> {
@@ -464,8 +464,8 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     // helpers.........................................................................................................
 
     @Override
-    SpreadsheetDateTimeParsePatterns createPattern(final ParserToken token) {
-        return SpreadsheetDateTimeParsePatterns.with(token);
+    SpreadsheetDateTimeParsePattern createPattern(final ParserToken token) {
+        return SpreadsheetDateTimeParsePattern.with(token);
     }
 
     @Override
@@ -498,23 +498,23 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetDateTimeParsePatterns> type() {
-        return SpreadsheetDateTimeParsePatterns.class;
+    public Class<SpreadsheetDateTimeParsePattern> type() {
+        return SpreadsheetDateTimeParsePattern.class;
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetDateTimeParsePatterns unmarshall(final JsonNode jsonNode,
-                                                       final JsonNodeUnmarshallContext context) {
-        return SpreadsheetDateTimeParsePatterns.unmarshallDateTimeParsePatterns(jsonNode, context);
+    public SpreadsheetDateTimeParsePattern unmarshall(final JsonNode jsonNode,
+                                                      final JsonNodeUnmarshallContext context) {
+        return SpreadsheetDateTimeParsePattern.unmarshallDateTimeParsePatterns(jsonNode, context);
     }
 
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetDateTimeParsePatterns parseString(final String text) {
-        return SpreadsheetDateTimeParsePatterns.parseDateTimeParsePatterns(text);
+    public SpreadsheetDateTimeParsePattern parseString(final String text) {
+        return SpreadsheetDateTimeParsePattern.parseDateTimeParsePatterns(text);
     }
 }
 

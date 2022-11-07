@@ -17,13 +17,13 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import java.util.Locale;
 import java.util.Optional;
 
-final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns extends SpreadsheetMetadataPropertyName<SpreadsheetNumberParsePatterns> {
+final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns extends SpreadsheetMetadataPropertyName<SpreadsheetNumberParsePattern> {
 
     /**
      * Singleton
@@ -40,9 +40,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns extend
     }
 
     @Override
-    SpreadsheetNumberParsePatterns checkValue0(final Object value) {
+    SpreadsheetNumberParsePattern checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetNumberParsePatterns);
+                v -> v instanceof SpreadsheetNumberParsePattern);
     }
 
     @Override
@@ -51,21 +51,21 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns extend
     }
 
     @Override
-    void accept(final SpreadsheetNumberParsePatterns value,
+    void accept(final SpreadsheetNumberParsePattern value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitNumberParsePatterns(value);
     }
 
     @Override
-    Optional<SpreadsheetNumberParsePatterns> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetNumberParsePattern> extractLocaleValue(final Locale locale) {
         return Optional.of(
                 SpreadsheetPattern.numberParsePatternsLocale(locale)
         );
     }
 
     @Override
-    Class<SpreadsheetNumberParsePatterns> type() {
-        return SpreadsheetNumberParsePatterns.class;
+    Class<SpreadsheetNumberParsePattern> type() {
+        return SpreadsheetNumberParsePattern.class;
     }
 
     @Override

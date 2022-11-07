@@ -33,15 +33,15 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * The {@link Converter} that handles each pattern returned by {@link SpreadsheetNumberParsePatterns#converter()}
+ * The {@link Converter} that handles each pattern returned by {@link SpreadsheetNumberParsePattern#converter()}
  */
 final class SpreadsheetNumberParsePatternsConverter implements Converter<ExpressionNumberConverterContext> {
 
-    static SpreadsheetNumberParsePatternsConverter with(final SpreadsheetNumberParsePatterns pattern) {
+    static SpreadsheetNumberParsePatternsConverter with(final SpreadsheetNumberParsePattern pattern) {
         return new SpreadsheetNumberParsePatternsConverter(pattern);
     }
 
-    private SpreadsheetNumberParsePatternsConverter(final SpreadsheetNumberParsePatterns pattern) {
+    private SpreadsheetNumberParsePatternsConverter(final SpreadsheetNumberParsePattern pattern) {
         super();
         this.pattern = pattern;
     }
@@ -139,7 +139,7 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter<Express
     }
 
     /**
-     * The enclosing {@link SpreadsheetNumberParsePatterns}.
+     * The enclosing {@link SpreadsheetNumberParsePattern}.
      */
-    private final SpreadsheetNumberParsePatterns pattern;
+    private final SpreadsheetNumberParsePattern pattern;
 }

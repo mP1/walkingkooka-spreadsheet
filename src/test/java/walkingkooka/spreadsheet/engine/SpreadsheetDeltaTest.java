@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -1258,7 +1258,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithParsePatterns() {
-        final Optional<SpreadsheetParsePatterns> beforeFormat = Optional.of(
+        final Optional<SpreadsheetParsePattern> beforeFormat = Optional.of(
                 SpreadsheetPattern.parseNumberParsePatterns("\"before\"")
         );
 
@@ -1274,7 +1274,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Sets.of(a1, a2)
                 );
 
-        final SpreadsheetParsePatterns parsePatterns = SpreadsheetPattern.parseNumberParsePatterns("\"patched\"");
+        final SpreadsheetParsePattern parsePatterns = SpreadsheetPattern.parseNumberParsePatterns("\"patched\"");
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(
@@ -1302,7 +1302,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(SpreadsheetFormula.EMPTY);
 
-        final Optional<SpreadsheetParsePatterns> format = Optional.of(
+        final Optional<SpreadsheetParsePattern> format = Optional.of(
                 SpreadsheetPattern.parseNumberParsePatterns("#\"should be cleared\"")
         );
 

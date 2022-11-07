@@ -17,57 +17,57 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
- * Holds a valid {@link SpreadsheetDateTimeParsePatterns}.
+ * Holds a valid {@link SpreadsheetTimeParsePattern}.
  */
-public final class SpreadsheetDateTimeParsePatterns extends SpreadsheetParsePatterns2<LocalDateTime> {
+public final class SpreadsheetTimeParsePattern extends SpreadsheetParsePattern2<LocalTime> {
 
     /**
      * Factory that creates a {@link ParserToken} from the given tokens.
      */
-    static SpreadsheetDateTimeParsePatterns with(final ParserToken token) {
-        final SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor.with();
+    static SpreadsheetTimeParsePattern with(final ParserToken token) {
+        final SpreadsheetTimeParsePatternSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetTimeParsePatternSpreadsheetFormatParserTokenVisitor.with();
         visitor.startAccept(token);
-        return new SpreadsheetDateTimeParsePatterns(token);
+        return new SpreadsheetTimeParsePattern(token);
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetDateTimeParsePatterns(final ParserToken token) {
+    private SpreadsheetTimeParsePattern(final ParserToken token) {
         super(token);
     }
 
     @Override
-    Class<LocalDateTime> targetType() {
-        return LocalDateTime.class;
+    Class<LocalTime> targetType() {
+        return LocalTime.class;
     }
 
     @Override
-    LocalDateTime converterTransformer0(final ParserToken token,
-                                        final ExpressionEvaluationContext context) {
+    LocalTime converterTransformer0(final ParserToken token,
+                                    final ExpressionEvaluationContext context) {
         return token.cast(
-                SpreadsheetDateTimeParserToken.class
-        ).toLocalDateTime(context);
+                SpreadsheetTimeParserToken.class
+        ).toLocalTime();
     }
 
     // TreePrintable....................................................................................................
 
     @Override
     String printTreeTypeName() {
-        return "date-time-parse-patterns";
+        return "time-parse-patterns";
     }
 
     // Object...........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetDateTimeParsePatterns;
+        return other instanceof SpreadsheetTimeParsePattern;
     }
 }

@@ -27,6 +27,6 @@ public abstract class SpreadsheetNumberParsePatternsTestCase2<T> extends Spreads
 
     @Override
     public final String typeNamePrefix() {
-        return SpreadsheetNumberParsePatterns.class.getSimpleName();
+        return SpreadsheetNumberParsePattern.class.getSimpleName();
     }
 }

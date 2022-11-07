@@ -28,7 +28,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 /**
  * Holds a {@link ParserToken} typically a date/dateime/time and possibly color or conditions.
  */
-public abstract class SpreadsheetParsePatterns extends SpreadsheetPattern
+public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
         implements HasConverter<ExpressionNumberConverterContext>,
         HasParser<SpreadsheetParserContext> {
 
@@ -37,7 +37,7 @@ public abstract class SpreadsheetParsePatterns extends SpreadsheetPattern
     /**
      * Package private ctor use factory
      */
-    SpreadsheetParsePatterns(final ParserToken token) {
+    SpreadsheetParsePattern(final ParserToken token) {
         super(token);
     }
 

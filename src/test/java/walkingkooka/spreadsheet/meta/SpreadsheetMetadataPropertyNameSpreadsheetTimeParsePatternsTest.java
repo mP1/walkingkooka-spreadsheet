@@ -18,17 +18,17 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatternsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns, SpreadsheetTimeParsePatterns> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatternsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns, SpreadsheetTimeParsePattern> {
 
     @Test
     public void testExtractLocaleValue() {
         this.extractLocaleValueAndCheck(
                 Locale.ENGLISH,
-                SpreadsheetTimeParsePatterns.parseTimeParsePatterns("h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm")
+                SpreadsheetTimeParsePattern.parseTimeParsePatterns("h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm")
         );
     }
 
@@ -43,8 +43,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatternsTe
     }
 
     @Override
-    SpreadsheetTimeParsePatterns propertyValue() {
-        return SpreadsheetTimeParsePatterns.parseTimeParsePatterns("hhmmss \"pattern-1\";hhmmss \"pattern-2\"");
+    SpreadsheetTimeParsePattern propertyValue() {
+        return SpreadsheetTimeParsePattern.parseTimeParsePatterns("hhmmss \"pattern-1\";hhmmss \"pattern-2\"");
     }
 
     @Override

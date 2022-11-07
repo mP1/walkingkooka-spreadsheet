@@ -22,9 +22,9 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 
-public final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitorTest
-        extends SpreadsheetParsePatterns2TestCase<SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor>
-        implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitorTest
+        extends SpreadsheetParsePattern2TestCase<SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor>
+        implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor> {
 
     @Override
     public void testIfClassIsFinalIfAllConstructorsArePrivate() {
@@ -40,7 +40,7 @@ public final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitorT
     public void testToString() {
         final SpreadsheetFormatParserToken token = this.parserToken("yyyymmdd");
 
-        final SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor();
+        final SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
 
         this.toStringAndCheck(
@@ -50,7 +50,7 @@ public final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitorT
     }
 
     private SpreadsheetFormatParserToken parserToken(final String pattern) {
-        final SpreadsheetParsePatterns date = SpreadsheetParsePatterns.parseDateParsePatterns(pattern);
+        final SpreadsheetParsePattern date = SpreadsheetParsePattern.parseDateParsePatterns(pattern);
         final SequenceParserToken sequenceParserToken = (SequenceParserToken) date.value();
         return sequenceParserToken.value()
                 .get(0)
@@ -58,21 +58,21 @@ public final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitorT
     }
 
     @Override
-    public SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor();
+    public SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor.class;
     }
 
     // TypeNameTesting..................................................................................................
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetParsePatterns2.class.getSimpleName();
+        return SpreadsheetParsePattern2.class.getSimpleName();
     }
 }

@@ -27,7 +27,7 @@ import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -225,7 +225,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testSetParsePatternsDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetParsePatterns> differentParsePatterns = Optional.of(
+        final Optional<SpreadsheetParsePattern> differentParsePatterns = Optional.of(
                 SpreadsheetPattern.parseNumberParsePatterns("\"different-pattern\"")
         );
         final SpreadsheetCell different = cell.setParsePatterns(differentParsePatterns);
@@ -257,7 +257,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                 )
                         )
                 );
-        final Optional<SpreadsheetParsePatterns> differentParsePatterns = Optional.of(
+        final Optional<SpreadsheetParsePattern> differentParsePatterns = Optional.of(
                 SpreadsheetPattern.parseNumberParsePatterns("\"different-pattern\"")
         );
         final SpreadsheetCell different = cell.setParsePatterns(differentParsePatterns);
@@ -1490,7 +1490,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkEquals(reference, cell.reference(), "reference");
     }
 
-    private Optional<SpreadsheetParsePatterns> parsePatterns() {
+    private Optional<SpreadsheetParsePattern> parsePatterns() {
         return Optional.of(
                 SpreadsheetPattern.parseDateTimeParsePatterns("dd/mm/yyyy")
         );
@@ -1511,7 +1511,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private void checkParsePatterns(final SpreadsheetCell cell,
-                                    final Optional<SpreadsheetParsePatterns> parsePatterns) {
+                                    final Optional<SpreadsheetParsePattern> parsePatterns) {
         this.checkEquals(
                 parsePatterns,
                 cell.parsePatterns(),

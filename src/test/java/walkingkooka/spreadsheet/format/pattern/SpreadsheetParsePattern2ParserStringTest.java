@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
-public final class SpreadsheetParsePatterns2ParserStringTest extends SpreadsheetParsePatterns2ParserTestCase<SpreadsheetParsePatterns2ParserString> {
+public final class SpreadsheetParsePattern2ParserStringTest extends SpreadsheetParsePattern2ParserTestCase<SpreadsheetParsePattern2ParserString> {
 
     private final static String PATTERN = "Pattern-123";
 
@@ -165,8 +165,8 @@ public final class SpreadsheetParsePatterns2ParserStringTest extends Spreadsheet
     }
 
     @Override
-    public SpreadsheetParsePatterns2ParserString createParser() {
-        return SpreadsheetParsePatterns2ParserString.stringChoices(
+    public SpreadsheetParsePattern2ParserString createParser() {
+        return SpreadsheetParsePattern2ParserString.stringChoices(
                 DateTimeContext::monthNames,
                 SpreadsheetParserToken::monthName,
                 PATTERN
@@ -178,7 +178,7 @@ public final class SpreadsheetParsePatterns2ParserStringTest extends Spreadsheet
         return new FakeSpreadsheetParserContext() {
             @Override
             public List<String> monthNames() {
-                return SpreadsheetParsePatterns2ParserStringTest.this.monthNames();
+                return SpreadsheetParsePattern2ParserStringTest.this.monthNames();
             }
         };
     }
@@ -193,8 +193,8 @@ public final class SpreadsheetParsePatterns2ParserStringTest extends Spreadsheet
     }
 
     @Override
-    public Class<SpreadsheetParsePatterns2ParserString> type() {
-        return SpreadsheetParsePatterns2ParserString.class;
+    public Class<SpreadsheetParsePattern2ParserString> type() {
+        return SpreadsheetParsePattern2ParserString.class;
     }
 
     @Override

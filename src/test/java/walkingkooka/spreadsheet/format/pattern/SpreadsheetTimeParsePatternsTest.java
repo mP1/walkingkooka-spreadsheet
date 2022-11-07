@@ -32,7 +32,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.time.LocalTime;
 import java.util.List;
 
-public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatternsTestCase<SpreadsheetTimeParsePatterns,
+public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatternTestCase<SpreadsheetTimeParsePattern,
         SpreadsheetFormatTimeParserToken,
         SpreadsheetTimeParserToken,
         LocalTime> {
@@ -110,7 +110,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParserToString2() {
         final String pattern = "hh:mm:ss";
         this.toStringAndCheck(
-                SpreadsheetTimeParsePatterns.parseTimeParsePatterns(pattern).parser(),
+                SpreadsheetTimeParsePattern.parseTimeParsePatterns(pattern).parser(),
                 '"' + pattern + '"'
         );
     }
@@ -555,8 +555,8 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     // helpers..........................................................................................................
 
     @Override
-    SpreadsheetTimeParsePatterns createPattern(final ParserToken token) {
-        return SpreadsheetTimeParsePatterns.with(token);
+    SpreadsheetTimeParsePattern createPattern(final ParserToken token) {
+        return SpreadsheetTimeParsePattern.with(token);
     }
 
     @Override
@@ -589,23 +589,23 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetTimeParsePatterns> type() {
-        return SpreadsheetTimeParsePatterns.class;
+    public Class<SpreadsheetTimeParsePattern> type() {
+        return SpreadsheetTimeParsePattern.class;
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetTimeParsePatterns unmarshall(final JsonNode jsonNode,
-                                                   final JsonNodeUnmarshallContext context) {
-        return SpreadsheetTimeParsePatterns.unmarshallTimeParsePatterns(jsonNode, context);
+    public SpreadsheetTimeParsePattern unmarshall(final JsonNode jsonNode,
+                                                  final JsonNodeUnmarshallContext context) {
+        return SpreadsheetTimeParsePattern.unmarshallTimeParsePatterns(jsonNode, context);
     }
 
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetTimeParsePatterns parseString(final String text) {
-        return SpreadsheetTimeParsePatterns.parseTimeParsePatterns(text);
+    public SpreadsheetTimeParsePattern parseString(final String text) {
+        return SpreadsheetTimeParsePattern.parseTimeParsePatterns(text);
     }
 }
 

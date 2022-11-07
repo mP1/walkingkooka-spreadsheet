@@ -17,13 +17,13 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import java.util.Locale;
 import java.util.Optional;
 
-final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns extends SpreadsheetMetadataPropertyName<SpreadsheetDateTimeParsePatterns> {
+final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns extends SpreadsheetMetadataPropertyName<SpreadsheetDateTimeParsePattern> {
 
     /**
      * Singleton
@@ -40,9 +40,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns exte
     }
 
     @Override
-    SpreadsheetDateTimeParsePatterns checkValue0(final Object value) {
+    SpreadsheetDateTimeParsePattern checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetDateTimeParsePatterns);
+                v -> v instanceof SpreadsheetDateTimeParsePattern);
     }
 
     @Override
@@ -51,21 +51,21 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns exte
     }
 
     @Override
-    void accept(final SpreadsheetDateTimeParsePatterns value,
+    void accept(final SpreadsheetDateTimeParsePattern value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitDateTimeParsePatterns(value);
     }
 
     @Override
-    Optional<SpreadsheetDateTimeParsePatterns> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetDateTimeParsePattern> extractLocaleValue(final Locale locale) {
         return Optional.of(
                 SpreadsheetPattern.dateTimeParsePatternsLocale(locale)
         );
     }
 
     @Override
-    Class<SpreadsheetDateTimeParsePatterns> type() {
-        return SpreadsheetDateTimeParsePatterns.class;
+    Class<SpreadsheetDateTimeParsePattern> type() {
+        return SpreadsheetDateTimeParsePattern.class;
     }
 
     @Override

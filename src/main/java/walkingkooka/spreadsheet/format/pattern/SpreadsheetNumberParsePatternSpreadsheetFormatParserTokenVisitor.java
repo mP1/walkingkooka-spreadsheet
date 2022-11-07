@@ -46,13 +46,13 @@ import java.util.List;
  * A {@link SpreadsheetFormatParserTokenVisitor} used to convert a {@link SpreadsheetFormatNumberParserToken} to
  * {@link SpreadsheetNumberParsePatternsComponent}.
  */
-final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatNumberParserToken> {
+final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatNumberParserToken> {
 
-    static SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor with() {
-        return new SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor();
+    static SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor with() {
+        return new SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor();
     }
 
-    SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 
