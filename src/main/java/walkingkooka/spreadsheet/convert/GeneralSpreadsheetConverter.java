@@ -23,10 +23,10 @@ import walkingkooka.convert.Converters;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
@@ -45,14 +45,14 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
      * Factory that creates a new {@link GeneralSpreadsheetConverter}.
      */
     static GeneralSpreadsheetConverter with(final SpreadsheetFormatter dateFormatter,
-                                            final SpreadsheetDateParsePatterns dateParser,
+                                            final SpreadsheetDateParsePattern dateParser,
                                             final SpreadsheetFormatter dateTimeFormatter,
-                                            final SpreadsheetDateTimeParsePatterns dateTimeParser,
+                                            final SpreadsheetDateTimeParsePattern dateTimeParser,
                                             final SpreadsheetFormatter numberFormatter,
-                                            final SpreadsheetNumberParsePatterns numberParser,
+                                            final SpreadsheetNumberParsePattern numberParser,
                                             final SpreadsheetFormatter textFormatter,
                                             final SpreadsheetFormatter timeFormatter,
-                                            final SpreadsheetTimeParsePatterns timeParser,
+                                            final SpreadsheetTimeParsePattern timeParser,
                                             final long dateOffset) {
         Objects.requireNonNull(dateFormatter, "dateFormatter");
         Objects.requireNonNull(dateParser, "dateParser");
@@ -81,14 +81,14 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
     }
 
     private GeneralSpreadsheetConverter(final SpreadsheetFormatter dateFormatter,
-                                        final SpreadsheetDateParsePatterns dateParser,
+                                        final SpreadsheetDateParsePattern dateParser,
                                         final SpreadsheetFormatter dateTimeFormatter,
-                                        final SpreadsheetDateTimeParsePatterns dateTimeParser,
+                                        final SpreadsheetDateTimeParsePattern dateTimeParser,
                                         final SpreadsheetFormatter numberFormatter,
-                                        final SpreadsheetNumberParsePatterns numberParser,
+                                        final SpreadsheetNumberParsePattern numberParser,
                                         final SpreadsheetFormatter textFormatter,
                                         final SpreadsheetFormatter timeFormatter,
-                                        final SpreadsheetTimeParsePatterns timeParser,
+                                        final SpreadsheetTimeParsePattern timeParser,
                                         final long dateOffset) {
         super();
 

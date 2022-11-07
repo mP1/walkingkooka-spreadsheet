@@ -30,7 +30,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -46,7 +46,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
     public void testExtractLocaleValue() {
         this.extractLocaleValueAndCheck(
                 Locale.ENGLISH,
-                SpreadsheetTimeParsePatterns.parseTimeFormatPattern("h:mm:ss AM/PM")
+                SpreadsheetTimeParsePattern.parseTimeFormatPattern("h:mm:ss AM/PM")
         );
     }
 

@@ -41,13 +41,13 @@ import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.function.Function;
 
-public final class SpreadsheetParsePatternsTest implements ClassTesting2<SpreadsheetParsePatterns>, TreePrintableTesting {
+public final class SpreadsheetParsePatternTest implements ClassTesting2<SpreadsheetParsePattern>, TreePrintableTesting {
 
     @Test
     public void testParseDate() {
         this.parseAndCheck(
                 "dmyy",
-                SpreadsheetParsePatterns::parseDateParsePatterns,
+                SpreadsheetParsePattern::parseDateParsePatterns,
                 this.dmyy()
         );
     }
@@ -56,7 +56,7 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     public void testParseDateTwoPatterns() {
         this.parseAndCheck(
                 "dmyy;ddmmyyyy",
-                SpreadsheetParsePatterns::parseDateParsePatterns,
+                SpreadsheetParsePattern::parseDateParsePatterns,
                 this.dmyy(),
                 this.separator(),
                 this.ddmmyyyy()
@@ -67,7 +67,7 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     public void testParseDateTime() {
         this.parseAndCheck(
                 "hhmmyyyy",
-                SpreadsheetParsePatterns::parseDateTimeParsePatterns,
+                SpreadsheetParsePattern::parseDateTimeParsePatterns,
                 this.hhmmyyyy()
         );
     }
@@ -76,7 +76,7 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     public void testParseDateTimeTwoPatterns() {
         this.parseAndCheck(
                 "hhmmyyyy;yyyymmhh",
-                SpreadsheetParsePatterns::parseDateTimeParsePatterns,
+                SpreadsheetParsePattern::parseDateTimeParsePatterns,
                 this.hhmmyyyy(),
                 this.separator(),
                 this.yyyymmhh()
@@ -87,7 +87,7 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     public void testParseNumber() {
         this.parseAndCheck(
                 "#0.0",
-                SpreadsheetParsePatterns::parseNumberParsePatterns,
+                SpreadsheetParsePattern::parseNumberParsePatterns,
                 this.number()
         );
     }
@@ -96,7 +96,7 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     public void testParseNumberTwoPatterns() {
         this.parseAndCheck(
                 "#0.0;$ #0.00",
-                SpreadsheetParsePatterns::parseNumberParsePatterns,
+                SpreadsheetParsePattern::parseNumberParsePatterns,
                 this.number(),
                 this.separator(),
                 this.money()
@@ -107,7 +107,7 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     public void testParseTime() {
         this.parseAndCheck(
                 "hhmm",
-                SpreadsheetParsePatterns::parseTimeParsePatterns,
+                SpreadsheetParsePattern::parseTimeParsePatterns,
                 this.hhmm()
         );
     }
@@ -116,7 +116,7 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     public void testParseTimeTwoPatterns() {
         this.parseAndCheck(
                 "hhmm;hhmmss",
-                SpreadsheetParsePatterns::parseTimeParsePatterns,
+                SpreadsheetParsePattern::parseTimeParsePatterns,
                 this.hhmm(),
                 this.separator(),
                 this.hhmmss()
@@ -124,7 +124,7 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     }
 
     private void parseAndCheck(final String text,
-                               final Function<String, SpreadsheetParsePatterns> parse,
+                               final Function<String, SpreadsheetParsePattern> parse,
                                final SpreadsheetFormatParserToken... tokens) {
         this.checkEquals(
                 ParserTokens.sequence(
@@ -224,8 +224,8 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     }
 
     @Override
-    public Class<SpreadsheetParsePatterns> type() {
-        return Cast.to(SpreadsheetParsePatterns.class);
+    public Class<SpreadsheetParsePattern> type() {
+        return Cast.to(SpreadsheetParsePattern.class);
     }
 
     @Override

@@ -17,26 +17,23 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 
-public final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor,
+public final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor,
         SpreadsheetFormatDateTimeParserToken> {
 
     @Override
-    public SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor();
+    public SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor();
     }
 
     @Override
-    public Class<SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor.class;
     }
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetDateTimeParsePatterns.class.getSimpleName();
+        return SpreadsheetDateTimeParsePattern.class.getSimpleName();
     }
 }

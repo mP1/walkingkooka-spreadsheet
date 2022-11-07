@@ -535,7 +535,7 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
                                   final ExpressionNumberKind kind,
                                   final Number number) {
         this.convertAndCheck(
-                SpreadsheetNumberParsePatterns.parseNumberParsePatterns(pattern).createConverter(),
+                SpreadsheetNumberParsePattern.parseNumberParsePatterns(pattern).createConverter(),
                 text,
                 ExpressionNumber.class,
                 this.createContext0(kind),
@@ -585,7 +585,7 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
     }
 
     private SpreadsheetNumberParsePatternsConverter createConverter(final String pattern) {
-        return SpreadsheetNumberParsePatterns.parseNumberParsePatterns(pattern).createConverter();
+        return SpreadsheetNumberParsePattern.parseNumberParsePatterns(pattern).createConverter();
     }
 
     @Override

@@ -24,17 +24,17 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import java.util.List;
 
 /**
- * Holds a valid {@link SpreadsheetNumberParsePatterns}.
+ * Holds a valid {@link SpreadsheetNumberParsePattern}.
  */
-public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatterns {
+public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern {
 
     /**
-     * Factory that creates a {@link SpreadsheetNumberParsePatterns} from the given tokens.
+     * Factory that creates a {@link SpreadsheetNumberParsePattern} from the given tokens.
      */
-    static SpreadsheetNumberParsePatterns with(final ParserToken token) {
-        final SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor.with();
+    static SpreadsheetNumberParsePattern with(final ParserToken token) {
+        final SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor.with();
         visitor.startAccept(token);
-        return new SpreadsheetNumberParsePatterns(
+        return new SpreadsheetNumberParsePattern(
                 token,
                 visitor.patterns
         );
@@ -43,8 +43,8 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
     /**
      * Private ctor use factory
      */
-    private SpreadsheetNumberParsePatterns(final ParserToken token,
-                                           final List<List<SpreadsheetNumberParsePatternsComponent>> patterns) {
+    private SpreadsheetNumberParsePattern(final ParserToken token,
+                                          final List<List<SpreadsheetNumberParsePatternsComponent>> patterns) {
         super(token);
         this.patterns = patterns;
     }
@@ -60,7 +60,7 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
 
     @Override
     boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetNumberParsePatterns;
+        return other instanceof SpreadsheetNumberParsePattern;
     }
 
     // HasConverter.....................................................................................................

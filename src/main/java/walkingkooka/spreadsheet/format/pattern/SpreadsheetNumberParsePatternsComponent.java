@@ -115,7 +115,7 @@ abstract class SpreadsheetNumberParsePatternsComponent {
     }
 
     /**
-     * Called by {@link SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor}.
+     * Called by {@link SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor}.
      * Most digits only consume a single character, while the last will be greedy.
      */
     abstract SpreadsheetNumberParsePatternsComponent lastDigit(final SpreadsheetNumberParsePatternsComponentDigitMode mode);

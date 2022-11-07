@@ -24,23 +24,23 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import java.time.LocalDate;
 
 /**
- * Holds a valid {@link SpreadsheetDateParsePatterns}.
+ * Holds a valid {@link SpreadsheetDateParsePattern}.
  */
-public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns2<LocalDate> {
+public final class SpreadsheetDateParsePattern extends SpreadsheetParsePattern2<LocalDate> {
 
     /**
      * Factory that creates a {@link ParserToken} from the given tokens.
      */
-    static SpreadsheetDateParsePatterns with(final ParserToken token) {
-        final SpreadsheetDateParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDateParsePatternsSpreadsheetFormatParserTokenVisitor.with();
+    static SpreadsheetDateParsePattern with(final ParserToken token) {
+        final SpreadsheetDateParsePatternSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDateParsePatternSpreadsheetFormatParserTokenVisitor.with();
         visitor.startAccept(token);
-        return new SpreadsheetDateParsePatterns(token);
+        return new SpreadsheetDateParsePattern(token);
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetDateParsePatterns(final ParserToken token) {
+    private SpreadsheetDateParsePattern(final ParserToken token) {
         super(token);
     }
 
@@ -68,6 +68,6 @@ public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns
 
     @Override
     boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetDateParsePatterns;
+        return other instanceof SpreadsheetDateParsePattern;
     }
 }

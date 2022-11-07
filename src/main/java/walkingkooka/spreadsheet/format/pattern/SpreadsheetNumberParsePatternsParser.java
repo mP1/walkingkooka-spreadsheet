@@ -28,11 +28,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The {@link Parser} returned by {@link SpreadsheetNumberParsePatterns#converter()}.
+ * The {@link Parser} returned by {@link SpreadsheetNumberParsePattern#converter()}.
  */
 final class SpreadsheetNumberParsePatternsParser implements Parser<SpreadsheetParserContext> {
 
-    static SpreadsheetNumberParsePatternsParser with(final SpreadsheetNumberParsePatterns pattern,
+    static SpreadsheetNumberParsePatternsParser with(final SpreadsheetNumberParsePattern pattern,
                                                      final SpreadsheetNumberParsePatternsMode mode) {
         return new SpreadsheetNumberParsePatternsParser(
                 pattern,
@@ -40,7 +40,7 @@ final class SpreadsheetNumberParsePatternsParser implements Parser<SpreadsheetPa
         );
     }
 
-    private SpreadsheetNumberParsePatternsParser(final SpreadsheetNumberParsePatterns pattern,
+    private SpreadsheetNumberParsePatternsParser(final SpreadsheetNumberParsePattern pattern,
                                                  final SpreadsheetNumberParsePatternsMode mode) {
         super();
         this.pattern = pattern;
@@ -86,7 +86,7 @@ final class SpreadsheetNumberParsePatternsParser implements Parser<SpreadsheetPa
     }
 
     /**
-     * The enclosing {@link SpreadsheetNumberParsePatterns}.
+     * The enclosing {@link SpreadsheetNumberParsePattern}.
      */
-    private final SpreadsheetNumberParsePatterns pattern;
+    private final SpreadsheetNumberParsePattern pattern;
 }

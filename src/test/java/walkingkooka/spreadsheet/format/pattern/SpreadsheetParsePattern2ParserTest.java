@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-public final class SpreadsheetParsePatterns2ParserTest extends SpreadsheetParsePatterns2TestCase<SpreadsheetParsePatterns2Parser> {
+public final class SpreadsheetParsePattern2ParserTest extends SpreadsheetParsePattern2TestCase<SpreadsheetParsePattern2Parser> {
 
     @Override
-    public Class<SpreadsheetParsePatterns2Parser> type() {
-        return SpreadsheetParsePatterns2Parser.class;
+    public Class<SpreadsheetParsePattern2Parser> type() {
+        return SpreadsheetParsePattern2Parser.class;
     }
 }

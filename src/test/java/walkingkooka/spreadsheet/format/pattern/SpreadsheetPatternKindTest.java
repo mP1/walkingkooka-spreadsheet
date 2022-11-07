@@ -38,7 +38,7 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     public void testDateTimeParse() {
         this.typeNameAndCheck(
                 SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERNS,
-                SpreadsheetDateTimeParsePatterns.class
+                SpreadsheetDateTimeParsePattern.class
         );
     }
 
@@ -62,7 +62,7 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     public void testTimeParse() {
         this.typeNameAndCheck(
                 SpreadsheetPatternKind.TIME_PARSE_PATTERNS,
-                SpreadsheetTimeParsePatterns.class
+                SpreadsheetTimeParsePattern.class
         );
     }
 
