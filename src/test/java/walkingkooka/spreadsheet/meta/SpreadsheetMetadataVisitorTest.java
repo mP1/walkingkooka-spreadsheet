@@ -167,13 +167,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDateParsePatterns() {
+    public void testVisitDateParsePattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDateParsePatterns(final SpreadsheetDateParsePattern p) {
+            protected void visitDateParsePattern(final SpreadsheetDateParsePattern p) {
                 this.visited = p;
             }
-        }.accept(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetDateTimeParsePattern.parseDateParsePatterns("DD/MM/YYYY"));
+        }.accept(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetDateTimeParsePattern.parseDateParsePattern("DD/MM/YYYY"));
     }
 
     @Test
@@ -197,13 +197,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDateTimeParsePatterns() {
+    public void testVisitDateTimeParsePattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDateTimeParsePatterns(final SpreadsheetDateTimeParsePattern p) {
+            protected void visitDateTimeParsePattern(final SpreadsheetDateTimeParsePattern p) {
                 this.visited = p;
             }
-        }.accept(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetDateTimeParsePattern.parseDateTimeParsePatterns("DD/MM/YYYY HH:MM:SS;DDMMYYYY HHMMSS"));
+        }.accept(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetDateTimeParsePattern.parseDateTimeParsePattern("DD/MM/YYYY HH:MM:SS;DDMMYYYY HHMMSS"));
     }
 
     @Test
@@ -349,13 +349,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitNumberParsePatterns() {
+    public void testVisitNumberParsePattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitNumberParsePatterns(final SpreadsheetNumberParsePattern p) {
+            protected void visitNumberParsePattern(final SpreadsheetNumberParsePattern p) {
                 this.visited = p;
             }
-        }.accept(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPattern.parseNumberParsePatterns("#0.0;#0.00"));
+        }.accept(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#0.0;#0.00"));
     }
 
     @Test
@@ -453,13 +453,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitTimeParsePatterns() {
+    public void testVisitTimeParsePattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitTimeParsePatterns(final SpreadsheetTimeParsePattern p) {
+            protected void visitTimeParsePattern(final SpreadsheetTimeParsePattern p) {
                 this.visited = p;
             }
-        }.accept(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("hh:mm;hh:mm:ss;hh:mm:ss.000"));
+        }.accept(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("hh:mm;hh:mm:ss;hh:mm:ss.000"));
     }
 
     @Test

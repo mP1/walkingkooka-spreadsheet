@@ -95,7 +95,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDateParsePatterns(final SpreadsheetDateParsePattern patterns) {
+    protected void visitDateParsePattern(final SpreadsheetDateParsePattern patterns) {
         throw new UnsupportedOperationException();
     }
 
@@ -110,7 +110,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDateTimeParsePatterns(final SpreadsheetDateTimeParsePattern pattern) {
+    protected void visitDateTimeParsePattern(final SpreadsheetDateTimeParsePattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -185,7 +185,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitNumberParsePatterns(final SpreadsheetNumberParsePattern patterns) {
+    protected void visitNumberParsePattern(final SpreadsheetNumberParsePattern patterns) {
         throw new UnsupportedOperationException();
     }
 
@@ -240,7 +240,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitTimeParsePatterns(final SpreadsheetTimeParsePattern patterns) {
+    protected void visitTimeParsePattern(final SpreadsheetTimeParsePattern patterns) {
         throw new UnsupportedOperationException();
     }
 

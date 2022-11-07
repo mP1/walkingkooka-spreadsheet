@@ -44,7 +44,7 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
      * Private ctor use factory
      */
     private SpreadsheetNumberParsePattern(final ParserToken token,
-                                          final List<List<SpreadsheetNumberParsePatternsComponent>> patterns) {
+                                          final List<List<SpreadsheetNumberParsePatternComponent>> patterns) {
         super(token);
         this.patterns = patterns;
     }
@@ -53,7 +53,7 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
 
     @Override
     String printTreeTypeName() {
-        return "number-parse-patterns";
+        return "number-parse-pattern";
     }
 
     // Object...........................................................................................................
@@ -66,15 +66,15 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
     // HasConverter.....................................................................................................
 
     @Override
-    SpreadsheetNumberParsePatternsConverter createConverter() {
-        return SpreadsheetNumberParsePatternsConverter.with(this);
+    SpreadsheetNumberParsePatternConverter createConverter() {
+        return SpreadsheetNumberParsePatternConverter.with(this);
     }
 
     // HasParser........................................................................................................
 
     @Override
-    SpreadsheetNumberParsePatternsParser createParser() {
-        return SpreadsheetNumberParsePatternsParser.with(this, SpreadsheetNumberParsePatternsMode.VALUE);
+    SpreadsheetNumberParsePatternParser createParser() {
+        return SpreadsheetNumberParsePatternParser.with(this, SpreadsheetNumberParsePatternMode.VALUE);
     }
 
     /**
@@ -89,12 +89,12 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
 
     private Parser<SpreadsheetParserContext> expressionParser;
 
-    private SpreadsheetNumberParsePatternsParser createExpressionParser() {
-        return SpreadsheetNumberParsePatternsParser.with(this, SpreadsheetNumberParsePatternsMode.EXPRESSION);
+    private SpreadsheetNumberParsePatternParser createExpressionParser() {
+        return SpreadsheetNumberParsePatternParser.with(this, SpreadsheetNumberParsePatternMode.EXPRESSION);
     }
 
     /**
      * The outer {@link List} contains an element for each pattern, with the inner {@link List} containing the components.
      */
-    final List<List<SpreadsheetNumberParsePatternsComponent>> patterns;
+    final List<List<SpreadsheetNumberParsePatternComponent>> patterns;
 }

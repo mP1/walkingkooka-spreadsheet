@@ -87,7 +87,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     /**
      * Factory that creates a {@link ParserToken} from the given tokens.
      */
-    public static SpreadsheetDateTimeParsePattern dateTimeParsePatterns(final ParserToken token) {
+    public static SpreadsheetDateTimeParsePattern dateTimeParsePattern(final ParserToken token) {
         return SpreadsheetDateTimeParsePattern.with(token);
     }
 
@@ -101,7 +101,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     /**
      * Factory that creates a {@link ParserToken} from the given tokens.
      */
-    public static SpreadsheetNumberParsePattern numberParsePatterns(final ParserToken token) {
+    public static SpreadsheetNumberParsePattern numberParsePattern(final ParserToken token) {
         return SpreadsheetNumberParsePattern.with(token);
     }
 
@@ -115,7 +115,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     /**
      * Factory that creates a {@link ParserToken} from the given tokens.
      */
-    public static SpreadsheetTimeParsePattern timeParsePatterns(final ParserToken token) {
+    public static SpreadsheetTimeParsePattern timeParsePattern(final ParserToken token) {
         return SpreadsheetTimeParsePattern.with(token);
     }
 
@@ -136,7 +136,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     /**
      * Creates a {@link SpreadsheetDateFormatPattern} using date patterns from the {@link DateFormat} and {@link Locale}.
      */
-    public static SpreadsheetDateParsePattern dateParsePatternsLocale(final Locale locale) {
+    public static SpreadsheetDateParsePattern dateParsePatternLocale(final Locale locale) {
         return javaTextDateFormat(
                 Lists.of(
                         DateFormat.getDateInstance(DateFormat.FULL, locale),
@@ -146,7 +146,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
                 ),
                 DATE,
                 NOT_TIME,
-                SpreadsheetPattern::parseDateParsePatterns
+                SpreadsheetPattern::parseDateParsePattern
         );
     }
 
@@ -168,7 +168,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    public static SpreadsheetDateTimeParsePattern dateTimeParsePatternsLocale(final Locale locale) {
+    public static SpreadsheetDateTimeParsePattern dateTimeParsePatternLocale(final Locale locale) {
         checkLocale(locale);
 
         final List<DateFormat> patterns = Lists.array();
@@ -189,7 +189,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
                 patterns,
                 DATE,
                 TIME,
-                SpreadsheetPattern::parseDateTimeParsePatterns
+                SpreadsheetPattern::parseDateTimeParsePattern
         );
     }
 
@@ -211,7 +211,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     /**
      * Creates a {@link SpreadsheetTimeFormatPattern} using time patterns from the {@link DateFormat} and {@link Locale}.
      */
-    public static SpreadsheetTimeParsePattern timeParsePatternsLocale(final Locale locale) {
+    public static SpreadsheetTimeParsePattern timeParsePatternLocale(final Locale locale) {
         checkLocale(locale);
 
         return javaTextDateFormat(
@@ -223,7 +223,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
                 ),
                 NOT_DATE,
                 TIME,
-                SpreadsheetPattern::parseTimeParsePatterns
+                SpreadsheetPattern::parseTimeParsePattern
         );
     }
 
@@ -439,13 +439,13 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     /**
      * Creates a {@link SpreadsheetNumberParsePattern} using the {@link Locale}
      */
-    public static SpreadsheetNumberParsePattern numberParsePatternsLocale(final Locale locale) {
+    public static SpreadsheetNumberParsePattern numberParsePatternLocale(final Locale locale) {
         checkLocale(locale);
 
         final String number = decimalFormatPattern(DecimalFormat.getInstance(locale));
         final String integer = decimalFormatPattern(DecimalFormat.getIntegerInstance(locale));
 
-        return parseNumberParsePatterns(
+        return parseNumberParsePattern(
                 number.equals(integer) ?
                         number :
                         number + ";" + integer);
@@ -485,12 +485,12 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    // parseDateParsePatterns...........................................................................................
+    // parseDateParsePattern...........................................................................................
 
     /**
      * Creates a new {@link SpreadsheetDateParsePattern} after checking the value is valid.
      */
-    public static SpreadsheetDateParsePattern parseDateParsePatterns(final String text) {
+    public static SpreadsheetDateParsePattern parseDateParsePattern(final String text) {
         return parsePattern(
                 text,
                 DATE_PARSE_PARSER,
@@ -524,12 +524,12 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    // parseDateTimeParsePatterns.......................................................................................
+    // parseDateTimeParsePattern.......................................................................................
 
     /**
      * Creates a new {@link SpreadsheetDateTimeParsePattern} after checking the value is valid.
      */
-    public static SpreadsheetDateTimeParsePattern parseDateTimeParsePatterns(final String text) {
+    public static SpreadsheetDateTimeParsePattern parseDateTimeParsePattern(final String text) {
         return parsePattern(
                 text,
                 DATETIME_PARSE_PARSER,
@@ -559,12 +559,12 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         return SpreadsheetNumberFormatPattern.with(token.cast(SpreadsheetFormatNumberParserToken.class));
     }
 
-    // parseNumberParsePatterns.........................................................................................
+    // parseNumberParsePattern.........................................................................................
 
     /**
      * Creates a new {@link SpreadsheetNumberParsePattern} after checking the value is valid.
      */
-    public static SpreadsheetNumberParsePattern parseNumberParsePatterns(final String text) {
+    public static SpreadsheetNumberParsePattern parseNumberParsePattern(final String text) {
         return parsePattern(
                 text,
                 NUMBER_PARSE_PARSER,
@@ -620,12 +620,12 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    // parseTimeParsePatterns....................................................................................................
+    // parseTimeParsePattern....................................................................................................
 
     /**
      * Creates a new {@link SpreadsheetTimeParsePattern} after checking the value is valid.
      */
-    public static SpreadsheetTimeParsePattern parseTimeParsePatterns(final String text) {
+    public static SpreadsheetTimeParsePattern parseTimeParsePattern(final String text) {
         return parsePattern(
                 text,
                 TIME_PARSE_PARSER,
@@ -779,9 +779,9 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     /**
      * Factory that creates a {@link SpreadsheetDateParsePattern} from a {@link JsonNode}.
      */
-    static SpreadsheetDateParsePattern unmarshallDateParsePatterns(final JsonNode node,
-                                                                   final JsonNodeUnmarshallContext context) {
-        return parseDateParsePatterns(
+    static SpreadsheetDateParsePattern unmarshallDateParsePattern(final JsonNode node,
+                                                                  final JsonNodeUnmarshallContext context) {
+        return parseDateParsePattern(
                 checkString(node)
         );
     }
@@ -799,9 +799,9 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     /**
      * Factory that creates a {@link SpreadsheetDateTimeParsePattern} from a {@link JsonNode}.
      */
-    static SpreadsheetDateTimeParsePattern unmarshallDateTimeParsePatterns(final JsonNode node,
-                                                                           final JsonNodeUnmarshallContext context) {
-        return parseDateTimeParsePatterns(
+    static SpreadsheetDateTimeParsePattern unmarshallDateTimeParsePattern(final JsonNode node,
+                                                                          final JsonNodeUnmarshallContext context) {
+        return parseDateTimeParsePattern(
                 checkString(node)
         );
     }
@@ -819,9 +819,9 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     /**
      * Factory that creates a {@link SpreadsheetNumberParsePattern} from a {@link JsonNode}.
      */
-    static SpreadsheetNumberParsePattern unmarshallNumberParsePatterns(final JsonNode node,
-                                                                       final JsonNodeUnmarshallContext context) {
-        return parseNumberParsePatterns(
+    static SpreadsheetNumberParsePattern unmarshallNumberParsePattern(final JsonNode node,
+                                                                      final JsonNodeUnmarshallContext context) {
+        return parseNumberParsePattern(
                 checkString(node)
         );
     }
@@ -849,9 +849,9 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     /**
      * Factory that creates a {@link SpreadsheetTimeParsePattern} from a {@link JsonNode}.
      */
-    static SpreadsheetTimeParsePattern unmarshallTimeParsePatterns(final JsonNode node,
-                                                                   final JsonNodeUnmarshallContext context) {
-        return parseTimeParsePatterns(
+    static SpreadsheetTimeParsePattern unmarshallTimeParsePattern(final JsonNode node,
+                                                                  final JsonNodeUnmarshallContext context) {
+        return parseTimeParsePattern(
                 checkString(node)
         );
     }
@@ -877,7 +877,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
 
         register(
                 SpreadsheetDateParsePattern.class,
-                SpreadsheetPattern::unmarshallDateParsePatterns
+                SpreadsheetPattern::unmarshallDateParsePattern
         );
 
         register(
@@ -887,7 +887,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
 
         register(
                 SpreadsheetDateTimeParsePattern.class,
-                SpreadsheetPattern::unmarshallDateTimeParsePatterns
+                SpreadsheetPattern::unmarshallDateTimeParsePattern
         );
 
         register(
@@ -897,7 +897,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
 
         register(
                 SpreadsheetNumberParsePattern.class,
-                SpreadsheetPattern::unmarshallNumberParsePatterns
+                SpreadsheetPattern::unmarshallNumberParsePattern
         );
 
         register(
@@ -912,7 +912,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
 
         register(
                 SpreadsheetTimeParsePattern.class,
-                SpreadsheetPattern::unmarshallTimeParsePatterns
+                SpreadsheetPattern::unmarshallTimeParsePattern
         );
     }
 

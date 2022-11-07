@@ -67,8 +67,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateParsePatternsLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateParsePatternsLocale(null));
+    public void testDateParsePatternLocaleNullLocaleFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateParsePatternLocale(null));
     }
 
     @Test
@@ -77,8 +77,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateTimeParsePatternsLocale(null));
+    public void testDateTimeParsePatternLocaleNullLocaleFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateTimeParsePatternLocale(null));
     }
 
     @Test
@@ -87,8 +87,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeParsePatternsLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.timeParsePatternsLocale(null));
+    public void testTimeParsePatternLocaleNullLocaleFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.timeParsePatternLocale(null));
     }
 
     private final static Locale EN_AU = Locale.forLanguageTag("EN-AU");
@@ -180,7 +180,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     // Locale parse Date................................................................................................
 
     @Test
-    public void testDateParsePatternsLocaleDayMonthNumberTwoDigitYear() {
+    public void testDateParsePatternLocaleDayMonthNumberTwoDigitYear() {
         this.localeDatePatternParseAndCheck(
                 "31/12/00",
                 LocalDate.of(2000, 12, 31)
@@ -188,7 +188,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateParsePatternsLocaleDayMonthNumberFourDigitYear() {
+    public void testDateParsePatternLocaleDayMonthNumberFourDigitYear() {
         this.localeDatePatternParseAndCheck(
                 "31/12/2000",
                 LocalDate.of(2000, 12, 31)
@@ -196,7 +196,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateParsePatternsLocaleDayMonthNameTwoDigitYear() {
+    public void testDateParsePatternLocaleDayMonthNameTwoDigitYear() {
         this.localeDatePatternParseAndCheck(
                 "31 December 00",
                 LocalDate.of(2000, 12, 31)
@@ -204,7 +204,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateParsePatternsLocaleDayMonthNameFourDigitYear() {
+    public void testDateParsePatternLocaleDayMonthNameFourDigitYear() {
         this.localeDatePatternParseAndCheck(
                 "31 December 2000",
                 LocalDate.of(2000, 12, 31)
@@ -214,7 +214,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     private void localeDatePatternParseAndCheck(final String text,
                                                 final LocalDate expected) {
         this.localePatternParseAndCheck(
-                SpreadsheetPattern.dateParsePatternsLocale(EN_AU),
+                SpreadsheetPattern.dateParsePatternLocale(EN_AU),
                 text,
                 (t, c) -> t.cast(SpreadsheetDateParserToken.class).toLocalDate(c),
                 expected
@@ -224,7 +224,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     // Locale parse DateTime............................................................................................
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinute() {
+    public void testDateTimeParsePatternLocaleDayNumberTwoDigitYearHourMinute() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/00, 12:58",
                 LocalDateTime.of(2000, 12, 31, 12, 58)
@@ -232,7 +232,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteAmpm() {
+    public void testDateTimeParsePatternLocaleDayNumberTwoDigitYearHourMinuteAmpm() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/00, 11:58 PM",
                 LocalDateTime.of(2000, 12, 31, 23, 58)
@@ -240,7 +240,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteSecond() {
+    public void testDateTimeParsePatternLocaleDayNumberTwoDigitYearHourMinuteSecond() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/00, 12:58:59",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59)
@@ -248,7 +248,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteSecondMillis5() {
+    public void testDateTimeParsePatternLocaleDayNumberTwoDigitYearHourMinuteSecondMillis5() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/00, 12:58:59.5",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59, 500000000)
@@ -256,7 +256,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteSecondMillis123() {
+    public void testDateTimeParsePatternLocaleDayNumberTwoDigitYearHourMinuteSecondMillis123() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/00, 12:58:59.123",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123000000)
@@ -264,7 +264,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberTwoDigitYearHourMinuteSecondAmpm() {
+    public void testDateTimeParsePatternLocaleDayNumberTwoDigitYearHourMinuteSecondAmpm() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/00, 11:58:59 PM",
                 LocalDateTime.of(2000, 12, 31, 23, 58, 59)
@@ -272,7 +272,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinute() {
+    public void testDateTimeParsePatternLocaleDayNumberFourDigitYearHourMinute() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/2000, 12:58",
                 LocalDateTime.of(2000, 12, 31, 12, 58)
@@ -280,7 +280,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinuteAmpm() {
+    public void testDateTimeParsePatternLocaleDayNumberFourDigitYearHourMinuteAmpm() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/2000, 11:58 PM",
                 LocalDateTime.of(2000, 12, 31, 23, 58)
@@ -288,7 +288,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinuteSecond() {
+    public void testDateTimeParsePatternLocaleDayNumberFourDigitYearHourMinuteSecond() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/2000, 12:58:59",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59)
@@ -296,7 +296,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinuteSecondMilli1() {
+    public void testDateTimeParsePatternLocaleDayNumberFourDigitYearHourMinuteSecondMilli1() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/2000, 12:58:59.1",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59, 100000000)
@@ -304,7 +304,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinuteSecondMilli123() {
+    public void testDateTimeParsePatternLocaleDayNumberFourDigitYearHourMinuteSecondMilli123() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/2000, 12:58:59.123",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123000000)
@@ -312,7 +312,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternsLocaleDayNumberFourDigitYearHourMinuteSecondAmpm() {
+    public void testDateTimeParsePatternLocaleDayNumberFourDigitYearHourMinuteSecondAmpm() {
         this.localeDateTimePatternParseAndCheck(
                 "31/12/2000, 11:58:59 PM",
                 LocalDateTime.of(2000, 12, 31, 23, 58, 59)
@@ -322,7 +322,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     private void localeDateTimePatternParseAndCheck(final String text,
                                                     final LocalDateTime expected) {
         this.localePatternParseAndCheck(
-                SpreadsheetPattern.dateTimeParsePatternsLocale(EN_AU),
+                SpreadsheetPattern.dateTimeParsePatternLocale(EN_AU),
                 text,
                 (t, c) -> t.cast(SpreadsheetDateTimeParserToken.class).toLocalDateTime(c),
                 expected
@@ -332,7 +332,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     // Locale parse Time................................................................................................
 
     @Test
-    public void testTimeParsePatternsLocaleHourMinute() {
+    public void testTimeParsePatternLocaleHourMinute() {
         this.localeTimePatternParseAndCheck(
                 "12:58",
                 LocalTime.of(12, 58)
@@ -340,7 +340,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeParsePatternsLocaleHourMinuteSecond() {
+    public void testTimeParsePatternLocaleHourMinuteSecond() {
         this.localeTimePatternParseAndCheck(
                 "12:58:59",
                 LocalTime.of(12, 58, 59)
@@ -351,7 +351,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 // SpreadsheetPattern from Locale needs permutation with millis (added to seconds)
     @Test
     @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/1442")
-    public void testTimeParsePatternsLocaleHourMinuteSecondMillis() {
+    public void testTimeParsePatternLocaleHourMinuteSecondMillis() {
         this.localeTimePatternParseAndCheck(
                 "12:58:59.123",
                 LocalTime.of(12, 58, 59, 1230000)
@@ -359,7 +359,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeParsePatternsLocaleHourMinuteAmpm() {
+    public void testTimeParsePatternLocaleHourMinuteAmpm() {
         this.localeTimePatternParseAndCheck(
                 "11:58 PM",
                 LocalTime.of(23, 58)
@@ -367,7 +367,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeParsePatternsLocaleHourMinuteSecondAmpm() {
+    public void testTimeParsePatternLocaleHourMinuteSecondAmpm() {
         this.localeTimePatternParseAndCheck(
                 "11:58:59 PM",
                 LocalTime.of(23, 58, 59)
@@ -377,7 +377,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     private void localeTimePatternParseAndCheck(final String text,
                                                 final LocalTime expected) {
         this.localePatternParseAndCheck(
-                SpreadsheetPattern.timeParsePatternsLocale(EN_AU),
+                SpreadsheetPattern.timeParsePatternLocale(EN_AU),
                 text,
                 (t, c) -> t.cast(SpreadsheetTimeParserToken.class).toLocalTime(),
                 expected
@@ -447,8 +447,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberParsePatternsLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.numberParsePatternsLocale(null));
+    public void testNumberParsePatternLocaleNullLocaleFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.numberParsePatternLocale(null));
     }
 
     @Test
@@ -504,8 +504,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberParsePatternsLocale() {
-        final Parser<SpreadsheetParserContext> parser = SpreadsheetPattern.numberParsePatternsLocale(EN_AU).parser();
+    public void testNumberParsePatternLocale() {
+        final Parser<SpreadsheetParserContext> parser = SpreadsheetPattern.numberParsePatternLocale(EN_AU).parser();
         final String text = "1d2";
         final TextCursor cursor = TextCursors.charSequence(text);
 

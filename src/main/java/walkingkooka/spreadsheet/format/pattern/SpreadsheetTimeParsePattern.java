@@ -61,7 +61,7 @@ public final class SpreadsheetTimeParsePattern extends SpreadsheetParsePattern2<
 
     @Override
     String printTreeTypeName() {
-        return "time-parse-patterns";
+        return "time-parse-pattern";
     }
 
     // Object...........................................................................................................

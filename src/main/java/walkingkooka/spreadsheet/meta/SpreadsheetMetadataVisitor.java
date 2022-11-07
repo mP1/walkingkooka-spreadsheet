@@ -119,7 +119,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateParsePatterns(final SpreadsheetDateParsePattern patterns) {
+    protected void visitDateParsePattern(final SpreadsheetDateParsePattern patterns) {
         // nop
     }
 
@@ -131,7 +131,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateTimeParsePatterns(final SpreadsheetDateTimeParsePattern patterns) {
+    protected void visitDateTimeParsePattern(final SpreadsheetDateTimeParsePattern patterns) {
         // nop
     }
 
@@ -191,7 +191,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitNumberParsePatterns(final SpreadsheetNumberParsePattern patterns) {
+    protected void visitNumberParsePattern(final SpreadsheetNumberParsePattern patterns) {
         // nop
     }
 
@@ -235,7 +235,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitTimeParsePatterns(final SpreadsheetTimeParsePattern patterns) {
+    protected void visitTimeParsePattern(final SpreadsheetTimeParsePattern patterns) {
         // nop
     }
 

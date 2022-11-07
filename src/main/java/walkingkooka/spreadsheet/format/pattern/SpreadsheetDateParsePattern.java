@@ -61,7 +61,7 @@ public final class SpreadsheetDateParsePattern extends SpreadsheetParsePattern2<
 
     @Override
     String printTreeTypeName() {
-        return "date-parse-patterns";
+        return "date-parse-pattern";
     }
 
     // Object...........................................................................................................

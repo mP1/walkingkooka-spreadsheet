@@ -104,9 +104,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public static final SpreadsheetMetadataPropertyName<SpreadsheetDateFormatPattern> DATE_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-parse-patterns {@link String}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-parse-pattern {@link String}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetDateParsePattern> DATE_PARSE_PATTERNS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetDateParsePattern> DATE_PARSE_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateParsePattern.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-offset {@link Long}</code>
@@ -119,9 +119,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public static final SpreadsheetMetadataPropertyName<SpreadsheetDateTimeFormatPattern> DATETIME_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPattern.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-parse-patterns</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-parse-pattern</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetDateTimeParsePattern> DATETIME_PARSE_PATTERNS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetDateTimeParsePattern> DATETIME_PARSE_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-separator {@link Character}</code>
@@ -186,7 +186,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-parse-pattern</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetNumberParsePattern> NUMBER_PARSE_PATTERNS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetNumberParsePattern> NUMBER_PARSE_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>percentage-symbol {@link Character}</code>
@@ -239,9 +239,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public static final SpreadsheetMetadataPropertyName<SpreadsheetTimeFormatPattern> TIME_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-parse-patterns</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-parse-pattern</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetTimeParsePattern> TIME_PARSE_PATTERNS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetTimeParsePattern> TIME_PARSE_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePattern.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year {@link SpreadsheetFormatPattern}</code>

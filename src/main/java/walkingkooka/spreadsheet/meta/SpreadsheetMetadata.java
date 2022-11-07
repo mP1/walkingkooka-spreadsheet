@@ -409,14 +409,14 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
      * <ul>
      * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMAT_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSE_PATTERNS}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSE_PATTERN}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_FORMAT_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_PARSE_PATTERNS}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_PARSE_PATTERN}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_FORMAT_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSE_PATTERNS}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSE_PATTERN}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#TEXT_FORMAT_PATTERN}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMAT_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSE_PATTERNS}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSE_PATTERN}</li>
      * </ul>
      */
     @Override
@@ -429,18 +429,18 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final SpreadsheetDateFormatPattern dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN);
-        final SpreadsheetDateParsePattern dateParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS);
+        final SpreadsheetDateParsePattern dateParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN);
 
         final SpreadsheetDateTimeFormatPattern dateTimeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN);
-        final SpreadsheetDateTimeParsePattern dateTimeParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS);
+        final SpreadsheetDateTimeParsePattern dateTimeParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN);
 
         final SpreadsheetNumberFormatPattern numberFormat = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN);
-        final SpreadsheetNumberParsePattern numberParser = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS);
+        final SpreadsheetNumberParsePattern numberParser = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN);
 
         final SpreadsheetTextFormatPattern textFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN);
 
         final SpreadsheetTimeFormatPattern timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN);
-        final SpreadsheetTimeParsePattern timeParser = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS);
+        final SpreadsheetTimeParsePattern timeParser = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN);
 
         final Long dateOffset = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_OFFSET);
 
@@ -677,10 +677,10 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     final Parser<SpreadsheetParserContext> createParser() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final SpreadsheetDateParsePattern date = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS);
-        final SpreadsheetDateTimeParsePattern dateTime = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS);
-        final SpreadsheetNumberParsePattern number = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS);
-        final SpreadsheetTimeParsePattern time = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS);
+        final SpreadsheetDateParsePattern date = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN);
+        final SpreadsheetDateTimeParsePattern dateTime = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN);
+        final SpreadsheetNumberParsePattern number = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN);
+        final SpreadsheetTimeParsePattern time = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN);
 
         components.reportIfMissing();
 

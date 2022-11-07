@@ -589,9 +589,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.cell(
                                 cellReference,
                                 "=1+2"
-                        ).setParsePatterns(
+                        ).setParsePattern(
                                 Optional.of(
-                                        SpreadsheetPattern.parseNumberParsePatterns("#")
+                                        SpreadsheetPattern.parseNumberParsePattern("#")
                                 )
                         )
                 );
@@ -617,9 +617,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.cell(
                                 cellReference,
                                 "123"
-                        ).setParsePatterns(
+                        ).setParsePattern(
                                 Optional.of(
-                                        SpreadsheetPattern.parseNumberParsePatterns("$#;#")
+                                        SpreadsheetPattern.parseNumberParsePattern("$#;#")
                                 )
                         )
                 );
@@ -11634,14 +11634,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
                 .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetParsePattern.parseDateFormatPattern(DATE_PATTERN + suffix))
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetParsePattern.parseDateParsePatterns(DATE_PATTERN + ";dd/mm"))
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetParsePattern.parseDateParsePattern(DATE_PATTERN + ";dd/mm"))
                 .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetParsePattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix))
-                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetParsePattern.parseDateTimeParsePatterns(DATETIME_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetParsePattern.parseDateTimeParsePattern(DATETIME_PATTERN))
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetParsePattern.parseNumberFormatPattern(NUMBER_PATTERN + suffix))
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetParsePattern.parseNumberParsePatterns(NUMBER_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetParsePattern.parseNumberParsePattern(NUMBER_PATTERN))
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetParsePattern.parseTextFormatPattern(TEXT_PATTERN + suffix))
                 .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetParsePattern.parseTimeFormatPattern(TIME_PATTERN + suffix))
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetParsePattern.parseTimeParsePatterns(TIME_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetParsePattern.parseTimeParsePattern(TIME_PATTERN))
                 .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
                         .set(TextStylePropertyName.WIDTH, Length.parsePixels(COLUMN_WIDTH + "px"))
                         .set(TextStylePropertyName.HEIGHT, Length.parsePixels(ROW_HEIGHT + "px"))

@@ -28,21 +28,21 @@ import java.util.Objects;
 public enum SpreadsheetPatternKind {
     DATE_FORMAT_PATTERN,
 
-    DATE_PARSE_PATTERNS,
+    DATE_PARSE_PATTERN,
 
     DATE_TIME_FORMAT_PATTERN,
 
-    DATE_TIME_PARSE_PATTERNS,
+    DATE_TIME_PARSE_PATTERN,
 
     NUMBER_FORMAT_PATTERN,
 
-    NUMBER_PARSE_PATTERNS,
+    NUMBER_PARSE_PATTERN,
 
     TEXT_FORMAT_PATTERN,
 
     TIME_FORMAT_PATTERN,
 
-    TIME_PARSE_PATTERNS;
+    TIME_PARSE_PATTERN;
 
     SpreadsheetPatternKind() {
         this.typeName =

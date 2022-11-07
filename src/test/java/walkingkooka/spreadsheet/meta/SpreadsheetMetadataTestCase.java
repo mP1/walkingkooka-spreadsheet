@@ -302,7 +302,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testConverterRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().converter());
         checkMessage(thrown,
-                "Required properties \"date-format-pattern\", \"date-parse-patterns\", \"date-time-format-pattern\", \"date-time-offset\", \"date-time-parse-patterns\", \"number-format-pattern\", \"number-parse-patterns\", \"text-format-pattern\", \"time-format-pattern\", \"time-parse-patterns\" missing.");
+                "Required properties \"date-format-pattern\", \"date-parse-pattern\", \"date-time-format-pattern\", \"date-time-offset\", \"date-time-parse-pattern\", \"number-format-pattern\", \"number-parse-pattern\", \"text-format-pattern\", \"time-format-pattern\", \"time-parse-pattern\" missing.");
     }
 
     // HasDateTimeContext...............................................................................................

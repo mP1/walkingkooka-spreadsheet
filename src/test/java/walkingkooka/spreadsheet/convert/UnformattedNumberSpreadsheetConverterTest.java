@@ -206,14 +206,14 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                         "{\n" +
                                 "  \"date-time-offset\": " + Converters.EXCEL_1900_DATE_SYSTEM_OFFSET + ",\n" +
                                 "  \"date-format-pattern\": \"\\\"date:\\\" dd/mm/yyyy\",\n" +
-                                "  \"date-parse-patterns\": \"ddmmyyyy\",\n" +
+                                "  \"date-parse-pattern\": \"ddmmyyyy\",\n" +
                                 "  \"date-time-format-pattern\": \"\\\"datetime:\\\" dd/mm/yyyy hh:mm:ss\",\n" +
-                                "  \"date-time-parse-patterns\": \"ddmmyyyyhhmmss\",\n" +
+                                "  \"date-time-parse-pattern\": \"ddmmyyyyhhmmss\",\n" +
                                 "  \"number-format-pattern\": \"\\\"number: \\\" #.##\",\n" +
-                                "  \"number-parse-patterns\": \"\\\"number: \\\" #.##\",\n" +
+                                "  \"number-parse-pattern\": \"\\\"number: \\\" #.##\",\n" +
                                 "  \"text-format-pattern\": \"\\\"text: \\\" @\",\n" +
                                 "  \"time-format-pattern\": \"\\\"time:\\\" hh:mm:ss\",\n" +
-                                "  \"time-parse-patterns\": \"hhmmss\"\n" +
+                                "  \"time-parse-pattern\": \"hhmmss\"\n" +
                                 "}"
                 ),
                 SpreadsheetMetadata.class
