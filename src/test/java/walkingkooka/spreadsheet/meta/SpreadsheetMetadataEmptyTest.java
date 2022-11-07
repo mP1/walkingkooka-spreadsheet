@@ -134,7 +134,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 IllegalStateException.class,
                 SpreadsheetMetadata.EMPTY::parser
         );
-        this.checkEquals("Required properties \"date-parse-patterns\", \"date-time-parse-patterns\", \"number-parse-patterns\", \"time-parse-patterns\" missing.",
+        this.checkEquals("Required properties \"date-parse-pattern\", \"date-time-parse-pattern\", \"number-parse-pattern\", \"time-parse-pattern\" missing.",
                 thrown.getMessage(),
                 "message");
     }

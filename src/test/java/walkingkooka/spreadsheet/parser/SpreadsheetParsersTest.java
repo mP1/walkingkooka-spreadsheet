@@ -153,7 +153,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testParseDateWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseDateParsePatterns("yyyy/mm/dd").parser()),
+                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser()),
                 "2000/12/31 Extra"
         );
     }
@@ -202,7 +202,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                    final SpreadsheetParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
-                SpreadsheetParsePattern.parseDateParsePatterns(pattern).parser(),
+                SpreadsheetParsePattern.parseDateParsePattern(pattern).parser(),
                 SpreadsheetParserToken::date,
                 tokens
         );
@@ -213,7 +213,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testParseDateTimeWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseDateTimeParsePatterns("yyyy/mm/dd hh:m").parser()),
+                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:m").parser()),
                 "2000/12/31 12:58 Extra"
         );
     }
@@ -246,7 +246,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                        final SpreadsheetParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
-                SpreadsheetParsePattern.parseDateTimeParsePatterns(pattern).parser(),
+                SpreadsheetParsePattern.parseDateTimeParsePattern(pattern).parser(),
                 SpreadsheetParserToken::dateTime,
                 tokens
         );
@@ -257,7 +257,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testParseTimeWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseTimeParsePatterns("hh:mm").parser()),
+                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseTimeParsePattern("hh:mm").parser()),
                 "12:58 Extra"
         );
     }
@@ -306,7 +306,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                    final SpreadsheetParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
-                SpreadsheetParsePattern.parseTimeParsePatterns(pattern).parser(),
+                SpreadsheetParsePattern.parseTimeParsePattern(pattern).parser(),
                 SpreadsheetParserToken::time,
                 tokens
         );
@@ -424,7 +424,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testParseNumberWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseNumberParsePatterns("#").parser().andEmptyTextCursor()),
+                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseNumberParsePattern("#").parser().andEmptyTextCursor()),
                 "12 Extra"
         );
     }
@@ -2967,10 +2967,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParsers.valueOrExpression(
                 Parsers.alternatives(
                         Lists.of(
-                                SpreadsheetParsePattern.parseDateParsePatterns("yyyy/mm/dd").parser(),
-                                SpreadsheetParsePattern.parseDateTimeParsePatterns("yyyy/mm/dd hh:mm").parser(),
-                                SpreadsheetParsePattern.parseNumberParsePatterns("#;#.#").parser(),
-                                SpreadsheetParsePattern.parseTimeParsePatterns("hh:mm").parser()
+                                SpreadsheetParsePattern.parseDateParsePattern("yyyy/mm/dd").parser(),
+                                SpreadsheetParsePattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").parser(),
+                                SpreadsheetParsePattern.parseNumberParsePattern("#;#.#").parser(),
+                                SpreadsheetParsePattern.parseTimeParsePattern("hh:mm").parser()
                         )
                 )
         );

@@ -47,7 +47,7 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     public void testParseDate() {
         this.parseAndCheck(
                 "dmyy",
-                SpreadsheetParsePattern::parseDateParsePatterns,
+                SpreadsheetParsePattern::parseDateParsePattern,
                 this.dmyy()
         );
     }
@@ -56,7 +56,7 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     public void testParseDateTwoPatterns() {
         this.parseAndCheck(
                 "dmyy;ddmmyyyy",
-                SpreadsheetParsePattern::parseDateParsePatterns,
+                SpreadsheetParsePattern::parseDateParsePattern,
                 this.dmyy(),
                 this.separator(),
                 this.ddmmyyyy()
@@ -67,7 +67,7 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     public void testParseDateTime() {
         this.parseAndCheck(
                 "hhmmyyyy",
-                SpreadsheetParsePattern::parseDateTimeParsePatterns,
+                SpreadsheetParsePattern::parseDateTimeParsePattern,
                 this.hhmmyyyy()
         );
     }
@@ -76,7 +76,7 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     public void testParseDateTimeTwoPatterns() {
         this.parseAndCheck(
                 "hhmmyyyy;yyyymmhh",
-                SpreadsheetParsePattern::parseDateTimeParsePatterns,
+                SpreadsheetParsePattern::parseDateTimeParsePattern,
                 this.hhmmyyyy(),
                 this.separator(),
                 this.yyyymmhh()
@@ -87,7 +87,7 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     public void testParseNumber() {
         this.parseAndCheck(
                 "#0.0",
-                SpreadsheetParsePattern::parseNumberParsePatterns,
+                SpreadsheetParsePattern::parseNumberParsePattern,
                 this.number()
         );
     }
@@ -96,7 +96,7 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     public void testParseNumberTwoPatterns() {
         this.parseAndCheck(
                 "#0.0;$ #0.00",
-                SpreadsheetParsePattern::parseNumberParsePatterns,
+                SpreadsheetParsePattern::parseNumberParsePattern,
                 this.number(),
                 this.separator(),
                 this.money()
@@ -107,7 +107,7 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     public void testParseTime() {
         this.parseAndCheck(
                 "hhmm",
-                SpreadsheetParsePattern::parseTimeParsePatterns,
+                SpreadsheetParsePattern::parseTimeParsePattern,
                 this.hhmm()
         );
     }
@@ -116,7 +116,7 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     public void testParseTimeTwoPatterns() {
         this.parseAndCheck(
                 "hhmm;hhmmss",
-                SpreadsheetParsePattern::parseTimeParsePatterns,
+                SpreadsheetParsePattern::parseTimeParsePattern,
                 this.hhmm(),
                 this.separator(),
                 this.hhmmss()

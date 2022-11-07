@@ -981,7 +981,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     );
 
     /**
-     * If a {@link SpreadsheetCell#parsePatterns()} is present use that to parse the formula text otherwise delegate
+     * If a {@link SpreadsheetCell#parsePattern()} is present use that to parse the formula text otherwise delegate
      * to {@link SpreadsheetEngineContext#parseFormula(TextCursor)}.
      * <br>
      * This means if a {@link SpreadsheetParsePattern} is present it can only contain a value such as date, number etc
@@ -990,12 +990,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetParserToken parseFormula(final SpreadsheetCell cell,
                                                 final SpreadsheetEngineContext context,
                                                 final String text) {
-        final Optional<SpreadsheetParsePattern> maybeParsePatterns = cell.parsePatterns();
+        final Optional<SpreadsheetParsePattern> maybeParsePattern = cell.parsePattern();
         final TextCursor textCursor = TextCursors.charSequence(text);
 
         final SpreadsheetParserToken token;
-        if (maybeParsePatterns.isPresent()) {
-            token = maybeParsePatterns.get()
+        if (maybeParsePattern.isPresent()) {
+            token = maybeParsePattern.get()
                     .parser()
                     .orFailIfCursorNotEmpty(ParserReporters.basic())
                     .parse(

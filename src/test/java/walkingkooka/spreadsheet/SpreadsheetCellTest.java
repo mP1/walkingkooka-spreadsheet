@@ -89,7 +89,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final SpreadsheetCell cell = this.createCell();
 
         this.checkReference(cell);
-        this.checkParsePatterns(cell);
+        this.checkParsePattern(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
         this.checkFormatPattern(cell);
@@ -103,7 +103,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 formula(FORMULA));
 
         this.checkReference(cell, reference.toRelative());
-        this.checkNoParsePatterns(cell);
+        this.checkNoParsePattern(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
         this.checkNoFormatPattern(cell);
@@ -115,7 +115,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
 
         this.checkReference(cell);
-        this.checkNoParsePatterns(cell);
+        this.checkNoParsePattern(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
         this.checkNoFormatPattern(cell);
@@ -133,7 +133,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
 
         this.checkReference(cell);
-        this.checkNoParsePatterns(cell);
+        this.checkNoParsePattern(cell);
         this.checkFormula(
                 cell,
                 SpreadsheetFormula.EMPTY.setText("=1+2")
@@ -172,9 +172,9 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         this.checkReference(cell);
         this.checkEquals(
-                cell.parsePatterns(),
-                different.parsePatterns(),
-                "parsePatterns"
+                cell.parsePattern(),
+                different.parsePattern(),
+                "parsePattern"
         );
         this.checkFormula(cell);
         this.checkEquals(
@@ -184,22 +184,22 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
     }
 
-    // SetParsePatterns.....................................................................................................
+    // SetParsePattern.....................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
-    public void testSetParsePatternsNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createCell().setParsePatterns(null));
+    public void testSetParsePatternNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createCell().setParsePattern(null));
     }
 
     @Test
-    public void testSetParsePatternsSame() {
+    public void testSetParsePatternSame() {
         final SpreadsheetCell cell = this.createCell();
-        assertSame(cell, cell.setParsePatterns(cell.parsePatterns()));
+        assertSame(cell, cell.setParsePattern(cell.parsePattern()));
     }
 
     @Test
-    public void testSetParsePatternsSameDoesntClearFormulaToken() {
+    public void testSetParsePatternSameDoesntClearFormulaToken() {
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
                 .setText("'A");
 
@@ -218,21 +218,21 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 );
         assertSame(
                 cell,
-                cell.setParsePatterns(cell.parsePatterns())
+                cell.setParsePattern(cell.parsePattern())
         );
     }
 
     @Test
-    public void testSetParsePatternsDifferent() {
+    public void testSetParsePatternDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetParsePattern> differentParsePatterns = Optional.of(
-                SpreadsheetPattern.parseNumberParsePatterns("\"different-pattern\"")
+        final Optional<SpreadsheetParsePattern> differentParsePattern = Optional.of(
+                SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
         );
-        final SpreadsheetCell different = cell.setParsePatterns(differentParsePatterns);
+        final SpreadsheetCell different = cell.setParsePattern(differentParsePattern);
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePatterns(different, differentParsePatterns);
+        this.checkParsePattern(different, differentParsePattern);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
         this.checkFormatPattern(different);
@@ -240,7 +240,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testSetParsePatternsDifferentClearsFormulaTokenAndExpression() {
+    public void testSetParsePatternDifferentClearsFormulaTokenAndExpression() {
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
                 .setText("'A");
 
@@ -257,14 +257,14 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                 )
                         )
                 );
-        final Optional<SpreadsheetParsePattern> differentParsePatterns = Optional.of(
-                SpreadsheetPattern.parseNumberParsePatterns("\"different-pattern\"")
+        final Optional<SpreadsheetParsePattern> differentParsePattern = Optional.of(
+                SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
         );
-        final SpreadsheetCell different = cell.setParsePatterns(differentParsePatterns);
+        final SpreadsheetCell different = cell.setParsePattern(differentParsePattern);
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePatterns(different, differentParsePatterns);
+        this.checkParsePattern(different, differentParsePattern);
         this.checkFormula(different, formula);
         this.checkTextStyle(different);
         this.checkFormatPattern(different);
@@ -272,13 +272,13 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testSetParsePatternsWhenWithout() {
+    public void testSetParsePatternWhenWithout() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
-        final SpreadsheetCell different = cell.setParsePatterns(this.parsePatterns());
+        final SpreadsheetCell different = cell.setParsePattern(this.parsePattern());
         assertNotSame(cell, different);
 
         this.checkReference(different);
-        this.checkParsePatterns(different);
+        this.checkParsePattern(different);
         this.checkFormula(different);
         this.checkTextStyle(different);
         this.checkNoFormatPattern(different);
@@ -306,7 +306,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePatterns(different);
+        this.checkParsePattern(different);
         this.checkFormula(different, differentFormula);
         this.checkTextStyle(different);
         this.checkFormatPattern(different);
@@ -324,7 +324,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePatterns(different);
+        this.checkParsePattern(different);
         this.checkFormula(
                 different,
                 SpreadsheetFormula.EMPTY
@@ -356,7 +356,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePatterns(different);
+        this.checkParsePattern(different);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different, differentTextStyle);
         this.checkFormatPattern(different);
@@ -387,7 +387,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePatterns(different);
+        this.checkParsePattern(different);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
         this.checkFormatPattern(different, differentFormatPattern);
@@ -401,7 +401,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertNotSame(cell, different);
 
         this.checkReference(different);
-        this.checkNoParsePatterns(different);
+        this.checkNoParsePattern(different);
         this.checkFormula(different);
         this.checkTextStyle(different);
         this.checkFormatPattern(different);
@@ -452,12 +452,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     // equals .............................................................................................
 
     @Test
-    public void testCompareDifferentParsePatterns() {
+    public void testCompareDifferentParsePattern() {
         this.compareToAndCheckEquals(
                 this.createComparable()
-                        .setParsePatterns(
+                        .setParsePattern(
                                 Optional.of(
-                                        SpreadsheetPattern.parseNumberParsePatterns("\"different-pattern\"")
+                                        SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
                                 )
                         )
         );
@@ -612,12 +612,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 JsonNode.object()
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula))
-                                .set(SpreadsheetCell.PARSE_PATTERNS_PROPERTY, context.marshallWithType(this.parsePatterns().get()))
+                                .set(SpreadsheetCell.PARSE_PATTERN_PROPERTY, context.marshallWithType(this.parsePattern().get()))
                                 .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get()))
                         ),
                 reference()
                         .setFormula(SpreadsheetFormula.EMPTY)
-                        .setParsePatterns(this.parsePatterns())
+                        .setParsePattern(this.parsePattern())
                         .setFormula(formula)
                         .setFormatted(formatted())
                         .setFormatted(formatted())
@@ -708,8 +708,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "    \"formula\": {\n" +
                         "      \"text\": \"=1+2\"\n" +
                         "    },\n" +
-                        "    \"parse-patterns\": {\n" +
-                        "      \"type\": \"spreadsheet-date-time-parse-patterns\",\n" +
+                        "    \"parse-pattern\": {\n" +
+                        "      \"type\": \"spreadsheet-date-time-parse-pattern\",\n" +
                         "      \"value\": \"dd/mm/yyyy\"\n" +
                         "    },\n" +
                         "    \"format-pattern\": {\n" +
@@ -743,8 +743,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "      \"font-style\": \"ITALIC\",\n" +
                         "      \"font-weight\": \"bold\"\n" +
                         "    },\n" +
-                        "    \"parse-patterns\": {\n" +
-                        "      \"type\": \"spreadsheet-date-time-parse-patterns\",\n" +
+                        "    \"parse-pattern\": {\n" +
+                        "      \"type\": \"spreadsheet-date-time-parse-pattern\",\n" +
                         "      \"value\": \"dd/mm/yyyy\"\n" +
                         "    },\n" +
                         "    \"format-pattern\": {\n" +
@@ -1212,12 +1212,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleParsePatterns() {
+    public void testTreePrintableFormulaTokenExpressionValueStyleParsePattern() {
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("$A$1")
                         .setFormula(SpreadsheetFormula.EMPTY)
                         .setStyle(this.boldAndItalics())
-                        .setParsePatterns(this.parsePatterns())
+                        .setParsePattern(this.parsePattern())
                         .setFormula(
                                 this.formula(FORMULA_TEXT)
                                         .setToken(this.token())
@@ -1242,19 +1242,19 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
                         "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
-                        "  parsePatterns:\n" +
-                        "    date-time-parse-patterns\n" +
+                        "  parsePattern:\n" +
+                        "    date-time-parse-pattern\n" +
                         "      \"dd/mm/yyyy\"\n"
         );
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleParsePatternsFormatPattern() {
+    public void testTreePrintableFormulaTokenExpressionValueStyleParsePatternFormatPattern() {
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("$A$1")
                         .setFormula(SpreadsheetFormula.EMPTY)
                         .setStyle(this.boldAndItalics())
-                        .setParsePatterns(this.parsePatterns())
+                        .setParsePattern(this.parsePattern())
                         .setFormatPattern(this.formatPattern())
                         .setFormula(
                                 this.formula(FORMULA_TEXT)
@@ -1280,8 +1280,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
                         "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
-                        "  parsePatterns:\n" +
-                        "    date-time-parse-patterns\n" +
+                        "  parsePattern:\n" +
+                        "    date-time-parse-pattern\n" +
                         "      \"dd/mm/yyyy\"\n" +
                         "  formatPattern:\n" +
                         "    text-format-pattern\n" +
@@ -1462,7 +1462,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         reference(column, row),
                         formula(formula)
                 )
-                .setParsePatterns(this.parsePatterns())
+                .setParsePattern(this.parsePattern())
                 .setFormatPattern(this.formatPattern())
                 .setFormatted(this.formatted());
     }
@@ -1490,32 +1490,32 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkEquals(reference, cell.reference(), "reference");
     }
 
-    private Optional<SpreadsheetParsePattern> parsePatterns() {
+    private Optional<SpreadsheetParsePattern> parsePattern() {
         return Optional.of(
-                SpreadsheetPattern.parseDateTimeParsePatterns("dd/mm/yyyy")
+                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy")
         );
     }
 
-    private void checkNoParsePatterns(final SpreadsheetCell cell) {
-        this.checkParsePatterns(
+    private void checkNoParsePattern(final SpreadsheetCell cell) {
+        this.checkParsePattern(
                 cell,
-                SpreadsheetCell.NO_PARSE_PATTERNS
+                SpreadsheetCell.NO_PARSE_PATTERN
         );
     }
 
-    private void checkParsePatterns(final SpreadsheetCell cell) {
-        this.checkParsePatterns(
+    private void checkParsePattern(final SpreadsheetCell cell) {
+        this.checkParsePattern(
                 cell,
-                this.parsePatterns()
+                this.parsePattern()
         );
     }
 
-    private void checkParsePatterns(final SpreadsheetCell cell,
-                                    final Optional<SpreadsheetParsePattern> parsePatterns) {
+    private void checkParsePattern(final SpreadsheetCell cell,
+                                   final Optional<SpreadsheetParsePattern> parsePattern) {
         this.checkEquals(
-                parsePatterns,
-                cell.parsePatterns(),
-                "parsePatterns"
+                parsePattern,
+                cell.parsePattern(),
+                "parsePattern"
         );
     }
 

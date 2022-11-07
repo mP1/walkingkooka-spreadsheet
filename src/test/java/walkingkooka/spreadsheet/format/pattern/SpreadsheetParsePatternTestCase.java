@@ -598,6 +598,6 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     @Override
     public final String isMethodTypeNameSuffix() {
-        return "ParsePatterns";
+        return "ParsePattern";
     }
 }
