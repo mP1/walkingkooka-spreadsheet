@@ -110,10 +110,12 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     private void canFormatAndCheck4(final Temporal temporal) {
-        this.canFormatAndCheck(this.createPattern().createFormatter(),
+        this.canFormatAndCheck(
+                this.createPattern().formatter(),
                 temporal,
                 SpreadsheetFormatterContexts.fake(),
-                false);
+                false
+        );
     }
 
     // ParseString.......................................................................................................

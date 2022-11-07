@@ -21,6 +21,8 @@ import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.text.cursor.parser.ParserToken;
 
+import java.util.function.Consumer;
+
 /**
  * Holds a {@link ParserToken} tokens and some common functionality.
  */
@@ -53,7 +55,18 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern implem
     /**
      * Factory that lazily creates a {@link SpreadsheetFormatter}
      */
-    final SpreadsheetFormatter createFormatter() {
-        return SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor.createFormatter(this.value);
+    private SpreadsheetFormatter createFormatter() {
+        return SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor.createFormatter(
+                this
+        );
     }
+
+    /**
+     * All sub-classes will return the given {@link SpreadsheetFormatter} except for number which will add a condition
+     * depending on the index and total.
+     */
+    abstract void missingCondition(final int index,
+                                   final int total,
+                                   final SpreadsheetFormatter formatter,
+                                   final Consumer<SpreadsheetFormatter> formatters);
 }

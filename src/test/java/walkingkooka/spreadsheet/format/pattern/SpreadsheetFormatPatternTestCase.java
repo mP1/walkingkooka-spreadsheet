@@ -115,7 +115,7 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     // format...........................................................................................................
 
     final void formatAndCheck2(final String pattern,
-                               final V value,
+                               final Object value,
                                final String expected) {
         this.formatAndCheck2(
                 pattern,
@@ -128,7 +128,7 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     }
 
     final void formatAndCheck2(final String pattern,
-                               final V value,
+                               final Object value,
                                final SpreadsheetText expected) {
         this.formatAndCheck(
                 this.createPattern(pattern).formatter(),

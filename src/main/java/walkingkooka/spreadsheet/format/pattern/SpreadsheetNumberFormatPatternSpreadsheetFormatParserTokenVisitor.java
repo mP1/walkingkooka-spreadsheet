@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthOrMinuteParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
@@ -50,11 +49,6 @@ final class SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitor ex
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        return this.failInvalid(token);
-    }
-
-    @Override
-    protected Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
         return this.failInvalid(token);
     }
 

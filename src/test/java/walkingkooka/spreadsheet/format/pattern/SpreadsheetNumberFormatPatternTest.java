@@ -44,6 +44,8 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         SpreadsheetFormatNumberParserToken,
         Double> {
 
+    private final static String TEXT = "Text123";
+
     @Test
     public void testWithAmpmFails() {
         this.withInvalidCharacterFails(this.ampm());
@@ -444,6 +446,120 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         );
     }
 
+    // two patterns.....................................................................................................
+
+    @Test
+    public void testFormatterPatternPatternWithPositiveNumber() {
+        this.formatAndCheck2(
+                "$0.0;[color44]0.00",
+                123,
+                "c123d0"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternWithNegativeNumber() {
+        this.formatAndCheck2(
+                "[color44]0.0;$0.00",
+                -123,
+                "cn123d00"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternWithZero() {
+        this.formatAndCheck2(
+                "$0.0;[color44]0.00",
+                0,
+                "c0d0"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternWithText() {
+        this.formatAndCheck2(
+                "[color44]0;[color44]0.00",
+                TEXT,
+                TEXT
+        );
+    }
+
+    // three patterns.....................................................................................................
+
+    @Test
+    public void testFormatterPatternPatternPatternWithPositiveNumber() {
+        this.formatAndCheck2(
+                "$0.0;[color44]0.00;[color44]0.000",
+                123,
+                "c123d0"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternPatternWithNegativeNumber() {
+        this.formatAndCheck2(
+                "[color44]0.0;$0.00;[color44]0.000",
+                -123,
+                "cn123d00"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternPatternWithZero() {
+        this.formatAndCheck2(
+                "[color44]0.0;[color44]0.00;$0.000",
+                0,
+                "c0d000"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternPatternWithText() {
+        this.formatAndCheck2(
+                "[color44]0.0;[color44]0.00;[color44]0.000",
+                TEXT,
+                TEXT
+        );
+    }
+
+    // four patterns....................................................................................................
+
+    @Test
+    public void testFormatterPatternPatternPatternPatternWithPositiveNumber() {
+        this.formatAndCheck2(
+                "$0.0;[color44]0.00;[color44]0.000;[color44]@@@@",
+                123,
+                "c123d0"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternPatternPatternWithNegativeNumber() {
+        this.formatAndCheck2(
+                "[color44]0.0;$0.00;[color44]0.000;[color44]@@@@",
+                -123,
+                "cn123d00"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternPatternPatternWithZero() {
+        this.formatAndCheck2(
+                "[color44]0.0;[color44]0.00;$0.000;[color44]@@@@",
+                0,
+                "c0d000"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternPatternPatternWithText() {
+        this.formatAndCheck2(
+                "[color44]0.0;[color44]0.00;[color44]0.000;@@@@",
+                TEXT,
+                TEXT + TEXT + TEXT + TEXT
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -461,8 +577,15 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
-                return Converters.numberNumber()
-                        .convert(value, target, ConverterContexts.fake());
+                return TEXT.equals(value) && String.class == target ?
+                        this.successfulConversion(value, target) :
+                        Converters.numberNumber()
+                                .convert(value, target, ConverterContexts.fake());
+            }
+
+            @Override
+            public String currencySymbol() {
+                return "c";
             }
 
             @Override
