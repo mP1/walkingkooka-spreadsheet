@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
@@ -68,11 +67,6 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor(final ParserToken token) {
         super();
         this.token = token;
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatColorParserToken token) {
-        this.color = token;
     }
 
     @Override
@@ -166,7 +160,6 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
 
         this.formatter = null;
         this.condition = null;
-        this.color = null;
     }
 
     private void saveFormatterIfNecessary() {
@@ -180,13 +173,6 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
         SpreadsheetFormatter formatter = this.formatter;
         if (null == formatter) {
             throw new IllegalArgumentException("Empty formatter within pattern " + this.token);
-        }
-        final SpreadsheetFormatColorParserToken color = this.color;
-        if (null != color) {
-            formatter = SpreadsheetFormatters.color(
-                    color,
-                    formatter
-            );
         }
 
         final SpreadsheetFormatConditionParserToken condition = this.condition;
@@ -208,8 +194,6 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     private final List<SpreadsheetFormatter> formatters = Lists.array();
 
     private SpreadsheetFormatConditionParserToken condition;
-
-    private SpreadsheetFormatColorParserToken color;
 
     private SpreadsheetFormatter formatter;
 
