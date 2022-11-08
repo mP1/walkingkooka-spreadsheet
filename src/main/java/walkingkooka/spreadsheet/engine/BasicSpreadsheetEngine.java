@@ -806,9 +806,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private static void addLabels(final SpreadsheetExpressionReference reference,
                                   final SpreadsheetLabelStore store,
                                   final Set<SpreadsheetLabelMapping> all) {
-        for (final SpreadsheetLabelMapping mapping : store.labels(reference)) {
-            all.add(mapping);
-        }
+        all.addAll(store.labels(reference));
     }
 
     private static <T> Set<T> sortedSet(final Map<?, T> columnsOrRows) {
