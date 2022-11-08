@@ -2307,32 +2307,6 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
         );
     }
 
-    private void parseFormatAndCheck(final String pattern,
-                                     final String value,
-                                     final String text) {
-        this.parseFormatAndCheck(
-                pattern,
-                value,
-                this.createContext(),
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        text
-                )
-        );
-    }
-
-    private void parseFormatAndCheck(final String pattern,
-                                     final String value,
-                                     final SpreadsheetFormatterContext context,
-                                     final SpreadsheetText text) {
-        this.formatAndCheck(
-                this.createFormatter(pattern),
-                value,
-                context,
-                text
-        );
-    }
-
     private void parseFormatNumberAndCheck(final String pattern,
                                            final String value,
                                            final String text) {
