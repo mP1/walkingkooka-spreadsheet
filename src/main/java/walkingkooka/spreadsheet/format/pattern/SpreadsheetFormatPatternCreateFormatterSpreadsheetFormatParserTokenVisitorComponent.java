@@ -31,7 +31,6 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
 
     SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent() {
         super();
-        ;
     }
 
     SpreadsheetFormatConditionParserToken condition;
