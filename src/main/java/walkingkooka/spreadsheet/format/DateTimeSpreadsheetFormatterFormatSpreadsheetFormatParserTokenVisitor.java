@@ -221,6 +221,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
     @Override
     protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
         final String pattern = token.text();
+
         if (this.month) {
             this.visitMonth(pattern.length());
         } else {
@@ -240,12 +241,15 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
             case 3:
                 this.append(this.context.monthNameAbbreviation(month - LOCALE_DATE_TIME_MONTH_BIAS));
                 break;
+            case 5:
+                this.append(
+                        this.context.monthName(month - LOCALE_DATE_TIME_MONTH_BIAS)
+                                .substring(0, 1)
+                );
+                break;
             default:
                 // https://www.myonlinetraininghub.com/excel-date-and-time-formatting
-                final String full = this.context.monthName(month - LOCALE_DATE_TIME_MONTH_BIAS);
-                this.append(5 == patternLength ?
-                        full.substring(0, 1) :
-                        full);
+                this.append(this.context.monthName(month - LOCALE_DATE_TIME_MONTH_BIAS));
                 break;
         }
     }
