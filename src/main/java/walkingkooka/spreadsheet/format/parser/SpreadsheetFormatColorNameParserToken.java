@@ -18,6 +18,8 @@ package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 
+import java.util.Optional;
+
 /**
  * Represents a color name token.
  */
@@ -41,6 +43,15 @@ public final class SpreadsheetFormatColorNameParserToken extends SpreadsheetForm
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.COLOR_NAME.asOptional;
+    }
+
+    // equals...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

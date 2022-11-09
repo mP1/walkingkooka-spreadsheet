@@ -34,6 +34,7 @@ import walkingkooka.visit.Visiting;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiFunction;
 
 /**
@@ -841,6 +842,15 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     public final boolean isYear() {
         return this instanceof SpreadsheetFormatYearParserToken;
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    /**
+     * Returns the {@link SpreadsheetFormatParserTokenKind} for this token. Only leaf tokens will return something.
+     */
+    public abstract Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute);
+
+    final static Optional<SpreadsheetFormatParserTokenKind> EMPTY_KIND = Optional.empty();
 
     // Visitor ...........................................................................................................
 

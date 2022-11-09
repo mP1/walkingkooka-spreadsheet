@@ -17,6 +17,8 @@
 package walkingkooka.spreadsheet.format.parser;
 
 
+import java.util.Optional;
+
 /**
  * Represents a year placeholder.
  */
@@ -36,6 +38,27 @@ public final class SpreadsheetFormatYearParserToken extends SpreadsheetFormatNon
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        SpreadsheetFormatParserTokenKind kind;
+
+        switch (this.textLength()) {
+            case 1:
+            case 2:
+                kind = SpreadsheetFormatParserTokenKind.YEAR_TWO_DIGIT;
+                break;
+            default:
+                kind = SpreadsheetFormatParserTokenKind.YEAR_FULL;
+                break;
+        }
+
+        return kind.asOptional;
+    }
+
+    // Object...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

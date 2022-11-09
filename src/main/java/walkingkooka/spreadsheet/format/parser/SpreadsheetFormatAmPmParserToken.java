@@ -17,6 +17,8 @@
 package walkingkooka.spreadsheet.format.parser;
 
 
+import java.util.Optional;
+
 /**
  * Represents a am/pm placeholder.
  */
@@ -36,6 +38,33 @@ public final class SpreadsheetFormatAmPmParserToken extends SpreadsheetFormatNon
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        SpreadsheetFormatParserTokenKind kind;
+
+        final String text = this.text();
+        final boolean lower = Character.isLowerCase(text.charAt(0));
+
+        switch (text.length()) {
+            case 3:
+                kind = lower ?
+                        SpreadsheetFormatParserTokenKind.AMPM_INITIAL_LOWER :
+                        SpreadsheetFormatParserTokenKind.AMPM_INITIAL_UPPER;
+                break;
+            default:
+                kind = lower ?
+                        SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER :
+                        SpreadsheetFormatParserTokenKind.AMPM_FULL_UPPER;
+                break;
+        }
+
+        return kind.asOptional;
+    }
+
+    // Object...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

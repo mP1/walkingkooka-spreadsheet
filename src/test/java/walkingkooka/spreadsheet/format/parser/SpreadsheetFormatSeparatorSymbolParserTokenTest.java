@@ -67,6 +67,17 @@ public final class SpreadsheetFormatSeparatorSymbolParserTokenTest extends Sprea
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.SEPARATOR
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "#";

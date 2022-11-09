@@ -67,6 +67,17 @@ public final class SpreadsheetFormatGreaterThanSymbolParserTokenTest extends Spr
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.CONDITION
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "..";

@@ -67,6 +67,17 @@ public final class SpreadsheetFormatDigitParserTokenTest extends SpreadsheetForm
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.DIGIT
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "#";

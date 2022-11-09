@@ -67,6 +67,18 @@ public final class SpreadsheetFormatDecimalPointParserTokenTest extends Spreadsh
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                ".",
+                SpreadsheetFormatParserTokenKind.DECIMAL_PLACE
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "..";

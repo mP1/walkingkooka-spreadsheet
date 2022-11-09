@@ -135,6 +135,15 @@ public final class SpreadsheetFormatColorParserTokenTest extends SpreadsheetForm
         );
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck();
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     SpreadsheetFormatColorParserToken createToken(final String text, final List<ParserToken> tokens) {
         return SpreadsheetFormatColorParserToken.with(tokens, text);

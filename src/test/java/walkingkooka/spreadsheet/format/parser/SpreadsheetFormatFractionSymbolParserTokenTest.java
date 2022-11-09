@@ -67,6 +67,17 @@ public final class SpreadsheetFormatFractionSymbolParserTokenTest extends Spread
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.FRACTION
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "..";

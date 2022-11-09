@@ -67,6 +67,17 @@ public final class SpreadsheetFormatPercentParserTokenTest extends SpreadsheetFo
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.PERCENT
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     String value() {
         return "%";

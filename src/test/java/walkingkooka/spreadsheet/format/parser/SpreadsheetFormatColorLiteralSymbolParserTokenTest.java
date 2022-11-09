@@ -67,6 +67,15 @@ public final class SpreadsheetFormatColorLiteralSymbolParserTokenTest extends Sp
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck();
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "..";

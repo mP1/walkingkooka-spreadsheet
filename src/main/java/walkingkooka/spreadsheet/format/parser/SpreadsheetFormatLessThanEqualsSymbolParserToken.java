@@ -16,6 +16,8 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import java.util.Optional;
+
 /**
  * Represents a less than equals symbol token.
  */
@@ -36,6 +38,13 @@ public final class SpreadsheetFormatLessThanEqualsSymbolParserToken extends Spre
     @Override
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
+    }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.CONDITION.asOptional;
     }
 
     // Object...........................................................................................................

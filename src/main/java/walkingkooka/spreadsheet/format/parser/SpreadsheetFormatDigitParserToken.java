@@ -17,6 +17,8 @@
 package walkingkooka.spreadsheet.format.parser;
 
 
+import java.util.Optional;
+
 /**
  * Represents a digit placeholder.
  */
@@ -36,6 +38,15 @@ public final class SpreadsheetFormatDigitParserToken extends SpreadsheetFormatNo
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.DIGIT.asOptional;
+    }
+
+    // Object...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

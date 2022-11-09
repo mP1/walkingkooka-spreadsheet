@@ -135,6 +135,15 @@ public final class SpreadsheetFormatTextParserTokenTest extends SpreadsheetForma
                 "visited");
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck();
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     SpreadsheetFormatTextParserToken createToken(final String text, final List<ParserToken> tokens) {
         return SpreadsheetFormatTextParserToken.with(tokens, text);

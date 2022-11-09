@@ -67,6 +67,17 @@ public final class SpreadsheetFormatGeneralSymbolParserTokenTest extends Spreads
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.GENERAL
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "GENEral";

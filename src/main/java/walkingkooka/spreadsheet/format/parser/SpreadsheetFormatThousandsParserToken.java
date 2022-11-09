@@ -16,6 +16,8 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import java.util.Optional;
+
 /**
  * Represents a thousands token.
  */
@@ -36,9 +38,17 @@ public final class SpreadsheetFormatThousandsParserToken extends SpreadsheetForm
         visitor.visit(this);
     }
 
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.THOUSANDS.asOptional;
+    }
+
+    // equals...........................................................................................................
+
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetFormatThousandsParserToken;
     }
-
 }

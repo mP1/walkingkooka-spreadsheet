@@ -16,6 +16,8 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import java.util.Optional;
+
 /**
  * Holds whitespace
  */
@@ -37,6 +39,13 @@ public final class SpreadsheetFormatWhitespaceParserToken extends SpreadsheetFor
     @Override
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
+    }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.TEXT_LITERAL.asOptional;
     }
 
     // Object...........................................................................................................

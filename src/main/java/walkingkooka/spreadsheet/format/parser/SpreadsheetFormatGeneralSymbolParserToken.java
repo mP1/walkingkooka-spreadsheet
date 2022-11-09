@@ -16,6 +16,8 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import java.util.Optional;
+
 /**
  * Holds the literal GENERAL.
  */
@@ -36,6 +38,13 @@ public final class SpreadsheetFormatGeneralSymbolParserToken extends Spreadsheet
     @Override
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
+    }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.GENERAL.asOptional;
     }
 
     // Object...........................................................................................................

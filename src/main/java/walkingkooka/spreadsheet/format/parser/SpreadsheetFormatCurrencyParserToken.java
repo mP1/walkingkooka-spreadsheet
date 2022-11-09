@@ -16,6 +16,8 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import java.util.Optional;
+
 /**
  * Represents a currency token.
  */
@@ -35,6 +37,15 @@ public final class SpreadsheetFormatCurrencyParserToken extends SpreadsheetForma
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL.asOptional;
+    }
+
+    // equals ..........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

@@ -67,6 +67,17 @@ public final class SpreadsheetFormatCurrencyParserTokenTest extends SpreadsheetF
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "..";

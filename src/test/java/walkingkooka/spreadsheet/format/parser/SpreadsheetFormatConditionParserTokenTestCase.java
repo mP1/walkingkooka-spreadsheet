@@ -41,6 +41,17 @@ public abstract class SpreadsheetFormatConditionParserTokenTestCase<T extends Sp
         assertThrows(IllegalArgumentException.class, () -> this.createToken("", this.whitespace(), this.whitespace()));
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public final void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.CONDITION
+        );
+    }
+
+    // helpers..........................................................................................................
+
     abstract T createToken(final String text, final List<ParserToken> tokens);
 
     @Override

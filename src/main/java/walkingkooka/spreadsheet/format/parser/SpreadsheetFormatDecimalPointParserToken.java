@@ -17,6 +17,8 @@
 package walkingkooka.spreadsheet.format.parser;
 
 
+import java.util.Optional;
+
 /**
  * Represents the decimal point token.
  */
@@ -36,6 +38,15 @@ public final class SpreadsheetFormatDecimalPointParserToken extends SpreadsheetF
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.DECIMAL_PLACE.asOptional;
+    }
+
+    // equals ..........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

@@ -109,6 +109,15 @@ public final class SpreadsheetFormatNumberParserTokenTest extends SpreadsheetFor
                 "visited");
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck();
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     SpreadsheetFormatNumberParserToken createToken(final String text, final List<ParserToken> tokens) {
         return SpreadsheetFormatNumberParserToken.with(tokens, text);

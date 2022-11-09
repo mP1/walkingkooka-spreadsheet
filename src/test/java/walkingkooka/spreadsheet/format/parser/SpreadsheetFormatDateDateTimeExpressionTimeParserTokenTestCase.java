@@ -16,6 +16,8 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import org.junit.jupiter.api.Test;
+
 public abstract class SpreadsheetFormatDateDateTimeExpressionTimeParserTokenTestCase<T extends SpreadsheetFormatParentParserToken> extends SpreadsheetFormatParentParserTokenTestCase<T> {
 
     SpreadsheetFormatDateDateTimeExpressionTimeParserTokenTestCase() {
@@ -27,4 +29,13 @@ public abstract class SpreadsheetFormatDateDateTimeExpressionTimeParserTokenTest
     public void testWithEmptyTextFails() {
         throw new UnsupportedOperationException();
     }
+
+    // kind............................................................................................................
+
+    @Test
+    public final void testKind() {
+        this.kindAndCheck();
+    }
+
+    // helpers..........................................................................................................
 }
