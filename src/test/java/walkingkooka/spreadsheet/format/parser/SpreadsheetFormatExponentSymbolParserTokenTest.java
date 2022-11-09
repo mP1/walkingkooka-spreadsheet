@@ -67,6 +67,17 @@ public final class SpreadsheetFormatExponentSymbolParserTokenTest extends Spread
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.EXPONENT
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "..";

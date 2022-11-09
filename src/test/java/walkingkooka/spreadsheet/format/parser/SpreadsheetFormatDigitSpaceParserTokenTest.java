@@ -67,6 +67,17 @@ public final class SpreadsheetFormatDigitSpaceParserTokenTest extends Spreadshee
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.DIGIT_SPACE
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "#";

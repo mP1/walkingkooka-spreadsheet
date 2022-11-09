@@ -17,6 +17,8 @@
 package walkingkooka.spreadsheet.format.parser;
 
 
+import java.util.Optional;
+
 /**
  * Represents the pattern separator token.
  */
@@ -37,6 +39,13 @@ public final class SpreadsheetFormatSeparatorSymbolParserToken extends Spreadshe
     @Override
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
+    }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.SEPARATOR.asOptional;
     }
 
     // Object...........................................................................................................

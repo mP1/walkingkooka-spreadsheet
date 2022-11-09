@@ -125,6 +125,67 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
         assertThrows(IllegalArgumentException.class, () -> this.createToken(" \t"));
     }
 
+    // kind............................................................................................................
+
+    final void kindAndCheck() {
+        this.kindAndCheck(
+                this.createToken(),
+                Optional.empty()
+        );
+    }
+
+    final void kindAndCheck(final SpreadsheetFormatParserTokenKind expected) {
+        this.kindAndCheck(
+                this.createToken(),
+                Optional.of(expected)
+        );
+    }
+
+    final void kindAndCheck(final String token,
+                            final boolean minutes,
+                            final SpreadsheetFormatParserTokenKind kind) {
+        this.kindAndCheck(
+                this.createToken(token),
+                minutes,
+                Optional.of(kind)
+        );
+    }
+
+    final void kindAndCheck(final String token,
+                            final SpreadsheetFormatParserTokenKind expected) {
+        this.kindAndCheck(
+                token,
+                Optional.of(expected)
+        );
+    }
+
+    final void kindAndCheck(final String token,
+                            final Optional<SpreadsheetFormatParserTokenKind> expected) {
+        this.kindAndCheck(
+                this.createToken(token),
+                expected
+        );
+    }
+
+    final void kindAndCheck(final T token,
+                            final Optional<SpreadsheetFormatParserTokenKind> expected) {
+        this.kindAndCheck(
+                token,
+                false,
+                expected
+        );
+    }
+
+    final void kindAndCheck(final T token,
+                            final boolean minutes,
+                            final Optional<SpreadsheetFormatParserTokenKind> expected) {
+        this.checkEquals(
+                expected,
+                token.kind(minutes),
+                () -> token + " " + (minutes ? "minutes" : "months")
+        );
+    }
+
     // IsMethodTesting.................................................................................................
 
     @Override

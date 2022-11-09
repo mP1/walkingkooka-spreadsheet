@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
+import java.util.Optional;
+
 public enum SpreadsheetFormatParserTokenKind {
 
     // COLOR............................................................................................................
@@ -112,4 +114,9 @@ public enum SpreadsheetFormatParserTokenKind {
     // MISC.............................................................................................................
 
     SEPARATOR;
+
+    /**
+     * Used as the answer for many {@link SpreadsheetFormatParserToken#kind(boolean)}
+     */
+    final Optional<SpreadsheetFormatParserTokenKind> asOptional = Optional.of(this);
 }

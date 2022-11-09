@@ -16,6 +16,8 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import java.util.Optional;
+
 /**
  * Holds a quoted text.
  */
@@ -35,6 +37,15 @@ public final class SpreadsheetFormatQuotedTextParserToken extends SpreadsheetFor
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.TEXT_LITERAL.asOptional;
+    }
+
+    // equals ..........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

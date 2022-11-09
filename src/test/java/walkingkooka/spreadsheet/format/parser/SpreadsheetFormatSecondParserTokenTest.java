@@ -67,6 +67,26 @@ public final class SpreadsheetFormatSecondParserTokenTest extends SpreadsheetFor
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind1() {
+        this.kindAndCheck(
+                "s",
+                SpreadsheetFormatParserTokenKind.SECONDS_WITHOUT_LEADING_ZERO
+        );
+    }
+
+    @Test
+    public void testKind2() {
+        this.kindAndCheck(
+                "ss",
+                SpreadsheetFormatParserTokenKind.SECONDS_WITH_LEADING_ZERO
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "#";

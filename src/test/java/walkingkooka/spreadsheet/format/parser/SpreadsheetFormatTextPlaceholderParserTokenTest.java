@@ -67,6 +67,17 @@ public final class SpreadsheetFormatTextPlaceholderParserTokenTest extends Sprea
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "<>";

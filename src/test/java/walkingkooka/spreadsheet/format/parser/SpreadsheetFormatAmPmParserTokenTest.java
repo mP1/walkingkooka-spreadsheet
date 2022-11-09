@@ -67,6 +67,58 @@ public final class SpreadsheetFormatAmPmParserTokenTest extends SpreadsheetForma
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKindUpperASlashP() {
+        this.kindAndCheck(
+                "A/P",
+                SpreadsheetFormatParserTokenKind.AMPM_INITIAL_UPPER
+        );
+    }
+
+    @Test
+    public void testKindLowerASlashP() {
+        this.kindAndCheck(
+                "a/P",
+                SpreadsheetFormatParserTokenKind.AMPM_INITIAL_LOWER
+        );
+    }
+
+    @Test
+    public void testKindUpperAMSlashPM() {
+        this.kindAndCheck(
+                "AM/PM",
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_UPPER
+        );
+    }
+
+    @Test
+    public void testKindUpperAMSlashPM2() {
+        this.kindAndCheck(
+                "Am/pm",
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_UPPER
+        );
+    }
+
+    @Test
+    public void testKindLowerAMSlashPM() {
+        this.kindAndCheck(
+                "am/pm",
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER
+        );
+    }
+
+    @Test
+    public void testKindLowerAMSlashPM2() {
+        this.kindAndCheck(
+                "am/PM",
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER
+        );
+    }
+
+    // helpers............................................................................................................
+
     @Override
     public String text() {
         return "123.5";

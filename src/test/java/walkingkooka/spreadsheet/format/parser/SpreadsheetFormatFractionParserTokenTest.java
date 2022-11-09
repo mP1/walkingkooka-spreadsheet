@@ -105,6 +105,15 @@ public final class SpreadsheetFormatFractionParserTokenTest extends SpreadsheetF
                 "visited");
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck();
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     SpreadsheetFormatFractionParserToken createToken(final String text, final List<ParserToken> tokens) {
         return SpreadsheetFormatFractionParserToken.with(tokens, text);

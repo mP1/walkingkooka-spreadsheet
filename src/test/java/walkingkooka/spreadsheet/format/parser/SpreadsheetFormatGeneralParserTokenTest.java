@@ -109,6 +109,15 @@ public final class SpreadsheetFormatGeneralParserTokenTest extends SpreadsheetFo
         );
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck();
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     SpreadsheetFormatGeneralParserToken createToken(final String text, final List<ParserToken> tokens) {
         return SpreadsheetFormatGeneralParserToken.with(tokens, text);

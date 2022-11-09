@@ -67,6 +67,17 @@ public final class SpreadsheetFormatUnderscoreParserTokenTest extends Spreadshee
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.UNDERSCORE
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "_" + this.value();

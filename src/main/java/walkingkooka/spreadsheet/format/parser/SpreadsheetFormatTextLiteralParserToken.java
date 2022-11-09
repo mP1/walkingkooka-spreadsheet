@@ -16,6 +16,8 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import java.util.Optional;
+
 /**
  * Holds literal text.
  */
@@ -36,6 +38,15 @@ public final class SpreadsheetFormatTextLiteralParserToken extends SpreadsheetFo
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.TEXT_LITERAL.asOptional;
+    }
+
+    // equals ..........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

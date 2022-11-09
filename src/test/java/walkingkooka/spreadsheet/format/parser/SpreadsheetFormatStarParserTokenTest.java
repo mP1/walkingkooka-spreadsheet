@@ -67,6 +67,18 @@ public final class SpreadsheetFormatStarParserTokenTest extends SpreadsheetForma
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.STAR
+        );
+    }
+
+    // helpers..........................................................................................................
+
+
     @Override
     public String text() {
         return "*" + this.value();

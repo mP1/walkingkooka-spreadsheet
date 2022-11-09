@@ -17,6 +17,8 @@
 package walkingkooka.spreadsheet.format.parser;
 
 
+import java.util.Optional;
+
 /**
  * Represents the digit including leading zeros.
  */
@@ -36,6 +38,15 @@ public final class SpreadsheetFormatDigitZeroParserToken extends SpreadsheetForm
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.DIGIT_ZERO.asOptional;
+    }
+
+    // equals ..........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

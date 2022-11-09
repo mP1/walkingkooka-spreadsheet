@@ -16,6 +16,8 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import java.util.Optional;
+
 /**
  * Represents the star fill with a character.
  */
@@ -35,6 +37,15 @@ public final class SpreadsheetFormatStarParserToken extends SpreadsheetFormatNon
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.STAR.asOptional;
+    }
+
+    // equals...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

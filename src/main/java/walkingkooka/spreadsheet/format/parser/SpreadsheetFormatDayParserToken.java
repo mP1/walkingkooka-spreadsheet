@@ -17,6 +17,8 @@
 package walkingkooka.spreadsheet.format.parser;
 
 
+import java.util.Optional;
+
 /**
  * Represents a day placeholder.
  */
@@ -36,6 +38,32 @@ public final class SpreadsheetFormatDayParserToken extends SpreadsheetFormatNonS
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        SpreadsheetFormatParserTokenKind kind;
+
+        switch (this.text().length()) {
+            case 1:
+                kind = SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO;
+                break;
+            case 2:
+                kind = SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO;
+                break;
+            case 3:
+                kind = SpreadsheetFormatParserTokenKind.DAY_NAME_ABBREVIATION;
+                break;
+            default:
+                kind = SpreadsheetFormatParserTokenKind.DAY_NAME_FULL;
+                break;
+        }
+
+        return kind.asOptional;
+    }
+
+    // Object...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

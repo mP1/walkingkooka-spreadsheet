@@ -17,6 +17,7 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 /**
  * Holds the condition number argument.
@@ -37,6 +38,15 @@ public final class SpreadsheetFormatConditionNumberParserToken extends Spreadshe
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+        return SpreadsheetFormatParserTokenKind.CONDITION.asOptional;
+    }
+
+    // equals ..........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

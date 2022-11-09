@@ -67,6 +67,34 @@ public final class SpreadsheetFormatHourParserTokenTest extends SpreadsheetForma
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind1() {
+        this.kindAndCheck(
+                "h",
+                SpreadsheetFormatParserTokenKind.HOUR_WITHOUT_LEADING_ZERO
+        );
+    }
+
+    @Test
+    public void testKind2() {
+        this.kindAndCheck(
+                "hh",
+                SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO
+        );
+    }
+
+    @Test
+    public void testKind3() {
+        this.kindAndCheck(
+                "hhh",
+                SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "..";

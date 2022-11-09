@@ -69,6 +69,17 @@ public final class SpreadsheetFormatColorNumberParserTokenTest extends Spreadshe
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.COLOR_NUMBER
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "..";

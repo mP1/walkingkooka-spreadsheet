@@ -71,6 +71,17 @@ public final class SpreadsheetFormatTextLiteralParserTokenTest extends Spreadshe
         this.checkEquals("13542", b.toString());
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKind() {
+        this.kindAndCheck(
+                SpreadsheetFormatParserTokenKind.TEXT_LITERAL
+        );
+    }
+
+    // helpers..........................................................................................................
+
     @Override
     public String text() {
         return "'A'";
