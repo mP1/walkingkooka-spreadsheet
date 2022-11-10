@@ -106,7 +106,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatternT
 
     @Override
     String propertyValueType() {
-        return "Number parse patterns";
+        return "Number parse pattern";
     }
 
     // ClassTesting.....................................................................................................
