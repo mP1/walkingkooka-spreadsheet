@@ -1212,7 +1212,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void checkEquals(final TreePrintable expected,
                              final TreePrintable actual,
                              final Supplier<String> message) {
-        final Indentation indentation = Indentation.with("  ");
+        final Indentation indentation = Indentation.SPACES2;
         final LineEnding eol = LineEnding.SYSTEM;
 
         this.checkEquals(

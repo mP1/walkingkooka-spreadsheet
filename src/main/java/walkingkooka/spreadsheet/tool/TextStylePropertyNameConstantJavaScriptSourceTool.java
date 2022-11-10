@@ -28,7 +28,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 public final class TextStylePropertyNameConstantJavaScriptSourceTool {
 
     public static void main(final String[] args) {
-        try (final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.with("  "))) {
+        try (final IndentingPrinter printer = Printers.sysOut().indenting(Indentation.SPACES2)) {
             for (final TextStylePropertyName<?> name : TextStylePropertyName.values()) {
                 printer.println("static " + name.constantName() + " = \"" + name.value() + "\";");
             }
