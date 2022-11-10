@@ -136,7 +136,7 @@ public final class EnumJavaScriptSourceTool {
                                       final Path dest) throws Exception {
         try (final Writer writer = new FileWriter(sourceFilePath(dest, enumType).toFile())) {
             final IndentingPrinter printer = Printers.writer(writer, LineEnding.SYSTEM)
-                    .indenting(Indentation.with("  "));
+                    .indenting(Indentation.SPACES2);
 
             int importUp = 0;
             Path up = dest;
