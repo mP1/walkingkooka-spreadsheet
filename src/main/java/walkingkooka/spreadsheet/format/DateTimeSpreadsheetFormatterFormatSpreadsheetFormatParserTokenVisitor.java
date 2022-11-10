@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthOrMinuteParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
@@ -113,32 +114,39 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
         this.secondRounding = secondRounding;
 
         this.twelveHourTime = twelveHourTime;
-        this.month = true;
+        this.minute = false;
     }
 
     private final SpreadsheetFormatterContext context;
 
     @Override
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
-        final String tokenText = token.text();
         final String ampm = this.context.ampm(this.value.getHour());
 
-        final String text;
+        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+                .get();
 
-        switch (tokenText.length()) {
-            case 3: // A/P or a/p
-                text = ampm.substring(0, 1);
+        final String text;
+        switch (kind) {
+            case AMPM_INITIAL_LOWER: // a/p
+                text = ampm.substring(0, 1)
+                        .toLowerCase();
+                break;
+            case AMPM_INITIAL_UPPER: // A/P
+                text = ampm.substring(0, 1)
+                        .toUpperCase();
+                break;
+            case AMPM_FULL_LOWER:
+                text = ampm.toLowerCase();
+                break;
+            case AMPM_FULL_UPPER:
+                text = ampm.toUpperCase();
                 break;
             default:
-                text = ampm;
-                break;
+                throw new UnsupportedOperationException("Expected ampm kind got " + kind);
         }
 
-        this.text.append(
-                Character.isLowerCase(tokenText.charAt(0)) ?
-                        text.toLowerCase() :
-                        text.toUpperCase()
-        );
+        this.text.append(text);
     }
 
     @Override
@@ -161,21 +169,38 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
     protected void visit(final SpreadsheetFormatDayParserToken token) {
         final LocalDateTime value = this.value;
 
-        switch (token.text().length()) {
-            case 1:
-                this.append(value.getDayOfMonth());
+        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+                .get();
+
+        switch (kind) {
+            case DAY_WITHOUT_LEADING_ZERO:
+                this.append(
+                        value.getDayOfMonth()
+                );
                 break;
-            case 2:
-                this.appendWithLeadingZero(value.getDayOfMonth());
+            case DAY_WITH_LEADING_ZERO:
+                this.appendWithLeadingZero(
+                        value.getDayOfMonth()
+                );
                 break;
-            case 3:
-                this.append(this.context.weekDayNameAbbreviation(dayOfWeekIndex(value)));
+            case DAY_NAME_ABBREVIATION:
+                this.append(
+                        this.context.weekDayNameAbbreviation(
+                                dayOfWeekIndex(value)
+                        )
+                );
+                break;
+            case DAY_NAME_FULL:
+                this.append(
+                        this.context.weekDayName(
+                                dayOfWeekIndex(value)
+                        )
+                );
                 break;
             default:
-                this.append(this.context.weekDayName(dayOfWeekIndex(value)));
-                break;
+                throw new UnsupportedOperationException("Expected day kind got " + kind);
         }
-        this.month = true;
+        this.minute = false;
     }
 
     // DayOfWeek 1=Monday 2=Tuesday.
@@ -193,76 +218,92 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
 
     @Override
     protected void visit(final SpreadsheetFormatHourParserToken token) {
-        final int hour = this.value.getHour();
-        final String pattern = token.text();
-
+        int hour = this.value.getHour();
         if (this.twelveHourTime) {
-            this.visit12(hour, pattern);
-        } else {
-            this.visit24(hour, pattern);
+            hour = hour % 12;
+            if (0 == hour) {
+                hour = 12;
+            }
         }
 
-        this.month = false;
+        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+                .get();
+
+        switch (kind) {
+            case HOUR_WITHOUT_LEADING_ZERO:
+                this.append(hour);
+                break;
+            case HOUR_WITH_LEADING_ZERO:
+                this.appendWithLeadingZero(hour);
+                break;
+            default:
+                throw new UnsupportedOperationException("Expected hour kind got " + kind);
+        }
+
+        this.minute = true;
     }
 
     private final boolean twelveHourTime;
 
-    private void visit12(final int hour, final String pattern) {
-        final int h = hour % 12;
-        this.append(0 == h ? 12 : h,
-                pattern,
-                1);
-    }
-
-    private void visit24(final int hour, final String pattern) {
-        this.append(hour, pattern, 1);
-    }
-
     @Override
     protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
-        final String pattern = token.text();
+        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+                .get();
+        final LocalDateTime value = this.value;
 
-        if (this.month) {
-            this.visitMonth(pattern.length());
-        } else {
-            this.visitMinute(pattern);
-        }
-    }
-
-    private void visitMonth(final int patternLength) {
-        final int month = this.value.getMonthValue();
-        switch (patternLength) {
-            case 1:
-                this.append(month);
-                break;
-            case 2:
-                this.appendWithLeadingZero(month);
-                break;
-            case 3:
-                this.append(this.context.monthNameAbbreviation(month - LOCALE_DATE_TIME_MONTH_BIAS));
-                break;
-            case 5:
+        switch (kind) {
+            case MINUTES_WITHOUT_LEADING_ZERO:
                 this.append(
-                        this.context.monthName(month - LOCALE_DATE_TIME_MONTH_BIAS)
-                                .substring(0, 1)
+                        value.getMinute()
+                );
+                break;
+            case MINUTES_WITH_LEADING_ZERO:
+                this.appendWithLeadingZero(
+                        value.getMinute()
+                );
+                break;
+            case MONTH_WITHOUT_LEADING_ZERO:
+                this.append(
+                        value.getMonthValue()
+                );
+                break;
+            case MONTH_WITH_LEADING_ZERO:
+                this.appendWithLeadingZero(
+                        value.getMonthValue()
+                );
+                break;
+            case MONTH_NAME_ABBREVIATION:
+                this.append(
+                        this.context.monthNameAbbreviation(
+                                value.getMonthValue() -
+                                        LOCALE_DATE_TIME_MONTH_BIAS
+                        )
+                );
+                break;
+            case MONTH_NAME_FULL:
+                this.append(
+                        this.context.monthName(
+                                value.getMonthValue() -
+                                        LOCALE_DATE_TIME_MONTH_BIAS
+                        )
+                );
+                break;
+            case MONTH_NAME_INITIAL:
+                this.append(
+                        this.context.monthName(
+                                value.getMonthValue() -
+                                        LOCALE_DATE_TIME_MONTH_BIAS
+                        ).substring(0, 1)
                 );
                 break;
             default:
-                // https://www.myonlinetraininghub.com/excel-date-and-time-formatting
-                this.append(this.context.monthName(month - LOCALE_DATE_TIME_MONTH_BIAS));
-                break;
+                throw new UnsupportedOperationException("Expected minute or month kind got " + kind);
         }
     }
 
     private final static int LOCALE_DATE_TIME_MONTH_BIAS = 1;
 
-    private void visitMinute(final String pattern) {
-        this.append(this.value.getMinute(),
-                pattern,
-                1);
-    }
-
-    private boolean month;
+    private boolean minute;
 
     @Override
     protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
@@ -274,9 +315,19 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
         final LocalDateTime value = this.value;
         final double secondsAndMills = value.getSecond() + 1.0 * value.getNano() / NANOS_IN_SECOND + this.secondRounding;
         final int seconds = (int) secondsAndMills;
-        this.append(seconds,
-                token.text(),
-                1);
+
+        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+                .get();
+        switch (kind) {
+            case SECONDS_WITHOUT_LEADING_ZERO:
+                this.append(seconds);
+                break;
+            case SECONDS_WITH_LEADING_ZERO:
+                this.appendWithLeadingZero(seconds);
+                break;
+            default:
+                throw new UnsupportedOperationException("Expected seconds kind got " + kind);
+        }
 
         // only add decimal point followed by millis as a decimal if decimal places were present.
         final int millisecondDecimals = this.millisecondDecimals;
@@ -291,7 +342,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
             }
         }
 
-        this.month = true;
+        this.minute = false;
     }
 
     private final static int NANOS_IN_SECOND = 1_000_000_000;
@@ -314,20 +365,22 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
     @Override
     protected void visit(final SpreadsheetFormatYearParserToken token) {
         final int year = this.value.getYear();
-        if (token.text().length() <= 2) {
-            this.appendWithLeadingZero(year % 100);
-        } else {
-            this.append(year);
-        }
-        this.month = true;
-    }
 
-    private void append(final int value, final String pattern, final int without) {
-        if (pattern.length() <= without) {
-            this.append(value);
-        } else {
-            this.appendWithLeadingZero(value);
+        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+                .get();
+
+        switch (kind) {
+            case YEAR_TWO_DIGIT:
+                this.appendWithLeadingZero(year % 100);
+                break;
+            case YEAR_FULL:
+                this.append(year);
+                break;
+            default:
+                throw new UnsupportedOperationException("Expected year kind got " + kind);
         }
+
+        this.minute = false;
     }
 
     private void append(final int text) {
