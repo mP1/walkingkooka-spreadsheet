@@ -47,7 +47,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePattern extends S
 
     @Override
     String expected() {
-        return "Date parse patterns";
+        return "Date parse pattern";
     }
 
     @Override

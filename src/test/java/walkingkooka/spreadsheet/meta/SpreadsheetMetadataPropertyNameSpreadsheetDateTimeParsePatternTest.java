@@ -50,7 +50,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatter
 
     @Override
     String propertyValueType() {
-        return "DateTime parse patterns";
+        return "DateTime parse pattern";
     }
 
     // ClassTesting.....................................................................................................
