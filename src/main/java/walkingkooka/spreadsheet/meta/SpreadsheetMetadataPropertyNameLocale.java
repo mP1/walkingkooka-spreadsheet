@@ -33,7 +33,7 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameLocale() {
-        super("locale");
+        super();
     }
 
     @Override

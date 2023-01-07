@@ -38,7 +38,7 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameStyle() {
-        super("style");
+        super();
     }
 
     @Override

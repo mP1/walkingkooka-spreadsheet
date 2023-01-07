@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.text.CaseKind;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -303,12 +304,29 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     /**
+     * Calls to this constructor will compute the {@link #name} from the {@Link Class#getSimpleName}
+     */
+    SpreadsheetMetadataPropertyName() {
+        this(null);
+    }
+
+    /**
      * Package private constructor use factory.
      */
     SpreadsheetMetadataPropertyName(final String name) {
         super();
-        this.name = name;
-        this.jsonPropertyName = JsonPropertyName.with(name);
+
+        final String finalName = null == name ?
+                CaseKind.CAMEL.change(
+                        this.getClass()
+                                .getSimpleName()
+                                .substring(SpreadsheetMetadataPropertyName.class.getSimpleName().length())
+                                .replace("Spreadsheet", ""), // handles sub classes like SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern
+                        CaseKind.KEBAB
+                ) :
+                name;
+        this.name = finalName;
+        this.jsonPropertyName = JsonPropertyName.with(finalName);
     }
 
     /**

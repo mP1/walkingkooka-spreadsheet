@@ -30,7 +30,7 @@ final class SpreadsheetMetadataPropertyNameCellCharacterWidth extends Spreadshee
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameCellCharacterWidth() {
-        super("cell-character-width");
+        super();
     }
 
     @Override

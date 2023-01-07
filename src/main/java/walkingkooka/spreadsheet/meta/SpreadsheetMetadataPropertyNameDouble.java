@@ -25,8 +25,8 @@ abstract class SpreadsheetMetadataPropertyNameDouble extends SpreadsheetMetadata
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetMetadataPropertyNameDouble(final String name) {
-        super(name);
+    SpreadsheetMetadataPropertyNameDouble() {
+        super();
     }
 
     @Override

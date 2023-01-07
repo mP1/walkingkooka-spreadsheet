@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyNameCreateDateTime extends SpreadsheetMet
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameCreateDateTime() {
-        super("create-date-time");
+        super();
     }
 
     @Override

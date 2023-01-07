@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyNameModifiedBy extends SpreadsheetMetadat
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameModifiedBy() {
-        super("modified-by");
+        super();
     }
 
     @Override

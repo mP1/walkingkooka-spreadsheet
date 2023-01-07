@@ -33,7 +33,7 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameDateTimeOffset() {
-        super("date-time-offset");
+        super();
     }
 
     @Override

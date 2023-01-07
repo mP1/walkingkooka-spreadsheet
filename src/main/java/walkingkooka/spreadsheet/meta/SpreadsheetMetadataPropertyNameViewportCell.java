@@ -39,7 +39,7 @@ final class SpreadsheetMetadataPropertyNameViewportCell extends SpreadsheetMetad
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameViewportCell() {
-        super("viewport-cell");
+        super();
     }
 
     /**

@@ -39,7 +39,7 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameFrozenColumns() {
-        super("frozen-columns");
+        super();
     }
 
     @Override

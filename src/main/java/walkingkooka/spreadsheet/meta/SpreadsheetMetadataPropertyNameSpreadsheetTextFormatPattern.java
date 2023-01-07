@@ -35,7 +35,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern extends 
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern() {
-        super("text-format-pattern");
+        super();
     }
 
     @Override
