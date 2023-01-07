@@ -30,7 +30,7 @@ final class SpreadsheetMetadataPropertyNameTwoDigitYear extends SpreadsheetMetad
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameTwoDigitYear() {
-        super("two-digit-year");
+        super();
     }
 
     @Override

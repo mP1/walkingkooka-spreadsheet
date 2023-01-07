@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyNameModifiedDateTime extends SpreadsheetM
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameModifiedDateTime() {
-        super("modified-date-time");
+        super();
     }
 
     @Override

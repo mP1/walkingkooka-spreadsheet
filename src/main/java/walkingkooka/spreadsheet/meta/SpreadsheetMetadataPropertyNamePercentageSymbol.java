@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyNamePercentageSymbol extends SpreadsheetM
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNamePercentageSymbol() {
-        super("percentage-symbol");
+        super();
     }
 
     @Override

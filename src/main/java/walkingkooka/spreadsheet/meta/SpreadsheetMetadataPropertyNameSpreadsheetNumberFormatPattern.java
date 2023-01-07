@@ -36,7 +36,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern extend
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern() {
-        super("number-format-pattern");
+        super();
     }
 
     @Override

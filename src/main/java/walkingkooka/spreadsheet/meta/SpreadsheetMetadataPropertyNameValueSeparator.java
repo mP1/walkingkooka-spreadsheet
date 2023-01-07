@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyNameValueSeparator extends SpreadsheetMet
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameValueSeparator() {
-        super("value-separator");
+        super();
     }
 
     @Override

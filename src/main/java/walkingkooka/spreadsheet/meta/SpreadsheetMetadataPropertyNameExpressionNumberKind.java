@@ -35,7 +35,7 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameExpressionNumberKind() {
-        super("expression-number-kind");
+        super();
     }
 
     @Override

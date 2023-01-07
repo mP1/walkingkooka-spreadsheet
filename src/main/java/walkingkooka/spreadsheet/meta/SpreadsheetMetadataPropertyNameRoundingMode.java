@@ -34,7 +34,7 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameRoundingMode() {
-        super("rounding-mode");
+        super();
     }
 
     @Override

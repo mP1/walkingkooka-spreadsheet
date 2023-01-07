@@ -26,8 +26,8 @@ abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetM
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetMetadataPropertyNameLocalDateTime(final String name) {
-        super(name);
+    SpreadsheetMetadataPropertyNameLocalDateTime() {
+        super();
     }
 
     @Override

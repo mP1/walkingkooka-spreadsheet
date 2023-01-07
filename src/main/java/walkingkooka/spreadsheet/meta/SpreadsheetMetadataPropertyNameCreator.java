@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyNameCreator extends SpreadsheetMetadataPr
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameCreator() {
-        super("creator");
+        super();
     }
 
     @Override

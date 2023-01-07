@@ -30,7 +30,7 @@ final class SpreadsheetMetadataPropertyNamePrecision extends SpreadsheetMetadata
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNamePrecision() {
-        super("precision");
+        super();
     }
 
     @Override

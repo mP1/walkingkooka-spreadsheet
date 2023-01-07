@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyNameGroupingSeparator extends Spreadsheet
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameGroupingSeparator() {
-        super("grouping-separator");
+        super();
     }
 
     @Override

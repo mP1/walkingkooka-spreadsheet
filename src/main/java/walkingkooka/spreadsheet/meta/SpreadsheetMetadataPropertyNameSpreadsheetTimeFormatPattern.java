@@ -36,7 +36,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern extends 
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern() {
-        super("time-format-pattern");
+        super();
     }
 
     @Override

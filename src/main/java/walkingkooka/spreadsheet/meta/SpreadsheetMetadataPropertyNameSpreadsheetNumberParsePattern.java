@@ -36,7 +36,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern extends
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern() {
-        super("number-parse-pattern");
+        super();
     }
 
     @Override

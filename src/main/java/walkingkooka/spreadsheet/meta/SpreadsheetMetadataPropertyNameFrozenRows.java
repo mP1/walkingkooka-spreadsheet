@@ -40,7 +40,7 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameFrozenRows() {
-        super("frozen-rows");
+        super();
     }
 
     @Override

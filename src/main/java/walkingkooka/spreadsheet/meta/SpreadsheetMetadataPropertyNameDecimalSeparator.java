@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyNameDecimalSeparator extends SpreadsheetM
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameDecimalSeparator() {
-        super("decimal-separator");
+        super();
     }
 
     @Override
