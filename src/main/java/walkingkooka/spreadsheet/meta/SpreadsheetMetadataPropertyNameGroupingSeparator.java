@@ -19,19 +19,19 @@ package walkingkooka.spreadsheet.meta;
 
 import java.text.DecimalFormatSymbols;
 
-final class SpreadsheetMetadataPropertyNameGroupingSymbol extends SpreadsheetMetadataPropertyNameCharacter {
+final class SpreadsheetMetadataPropertyNameGroupingSeparator extends SpreadsheetMetadataPropertyNameCharacter {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameGroupingSymbol instance() {
-        return new SpreadsheetMetadataPropertyNameGroupingSymbol();
+    static SpreadsheetMetadataPropertyNameGroupingSeparator instance() {
+        return new SpreadsheetMetadataPropertyNameGroupingSeparator();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameGroupingSymbol() {
+    private SpreadsheetMetadataPropertyNameGroupingSeparator() {
         super("grouping-separator");
     }
 

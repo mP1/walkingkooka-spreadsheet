@@ -156,7 +156,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>grouping-separator {@link Character}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Character> GROUPING_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameGroupingSymbol.instance());
+    public static final SpreadsheetMetadataPropertyName<Character> GROUPING_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameGroupingSeparator.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>
@@ -332,7 +332,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     final boolean isGroupingSeparatorOrValueSeparator() {
-        return this instanceof SpreadsheetMetadataPropertyNameGroupingSymbol || this instanceof SpreadsheetMetadataPropertyNameValueSeparator;
+        return this instanceof SpreadsheetMetadataPropertyNameGroupingSeparator || this instanceof SpreadsheetMetadataPropertyNameValueSeparator;
     }
 
     @Override
