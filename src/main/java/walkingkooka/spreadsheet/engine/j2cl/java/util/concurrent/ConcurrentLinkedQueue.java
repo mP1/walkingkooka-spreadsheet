@@ -29,8 +29,8 @@ import java.util.List;
 public class ConcurrentLinkedQueue<E> extends AbstractQueue<E> {
 
     @Override
-    public boolean add(final E o) {
-        return this.list.add(o);
+    public boolean add(final E element) {
+        return this.list.add(element);
     }
 
     @Override
@@ -44,8 +44,8 @@ public class ConcurrentLinkedQueue<E> extends AbstractQueue<E> {
     }
 
     @Override
-    public boolean offer(final Object o) {
-        return false;
+    public boolean offer(final Object element) {
+        return this.list.add((E) element);
     }
 
     @Override
