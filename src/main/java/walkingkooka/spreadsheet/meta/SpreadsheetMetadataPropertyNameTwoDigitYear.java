@@ -17,19 +17,19 @@
 
 package walkingkooka.spreadsheet.meta;
 
-final class SpreadsheetMetadataPropertyNameTwoYearDigit extends SpreadsheetMetadataPropertyNameInteger {
+final class SpreadsheetMetadataPropertyNameTwoDigitYear extends SpreadsheetMetadataPropertyNameInteger {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameTwoYearDigit instance() {
-        return new SpreadsheetMetadataPropertyNameTwoYearDigit();
+    static SpreadsheetMetadataPropertyNameTwoDigitYear instance() {
+        return new SpreadsheetMetadataPropertyNameTwoDigitYear();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameTwoYearDigit() {
+    private SpreadsheetMetadataPropertyNameTwoDigitYear() {
         super("two-digit-year");
     }
 

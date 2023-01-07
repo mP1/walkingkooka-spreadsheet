@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameTwoYearDigitTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameTwoYearDigit> {
+public final class SpreadsheetMetadataPropertyNameTwoDigitYearTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameTwoDigitYear> {
 
     @Test
     public void testNegativeValueFails() {
@@ -43,18 +43,18 @@ public final class SpreadsheetMetadataPropertyNameTwoYearDigitTest extends Sprea
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameTwoYearDigit.instance(), "two-digit-year");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameTwoDigitYear.instance(), "two-digit-year");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameTwoYearDigit createName() {
-        return SpreadsheetMetadataPropertyNameTwoYearDigit.instance();
+    SpreadsheetMetadataPropertyNameTwoDigitYear createName() {
+        return SpreadsheetMetadataPropertyNameTwoDigitYear.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameTwoYearDigit> type() {
-        return SpreadsheetMetadataPropertyNameTwoYearDigit.class;
+    public Class<SpreadsheetMetadataPropertyNameTwoDigitYear> type() {
+        return SpreadsheetMetadataPropertyNameTwoDigitYear.class;
     }
 }
