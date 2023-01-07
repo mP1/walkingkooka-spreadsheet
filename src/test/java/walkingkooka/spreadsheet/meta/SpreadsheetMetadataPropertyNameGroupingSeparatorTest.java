@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameGroupingSymbolTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameGroupingSymbol> {
+public final class SpreadsheetMetadataPropertyNameGroupingSeparatorTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameGroupingSeparator> {
 
     @Test
     public void testExtractLocaleValue() {
@@ -30,18 +30,18 @@ public final class SpreadsheetMetadataPropertyNameGroupingSymbolTest extends Spr
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameGroupingSymbol.instance(), "grouping-separator");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameGroupingSeparator.instance(), "grouping-separator");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameGroupingSymbol createName() {
-        return SpreadsheetMetadataPropertyNameGroupingSymbol.instance();
+    SpreadsheetMetadataPropertyNameGroupingSeparator createName() {
+        return SpreadsheetMetadataPropertyNameGroupingSeparator.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameGroupingSymbol> type() {
-        return SpreadsheetMetadataPropertyNameGroupingSymbol.class;
+    public Class<SpreadsheetMetadataPropertyNameGroupingSeparator> type() {
+        return SpreadsheetMetadataPropertyNameGroupingSeparator.class;
     }
 }
