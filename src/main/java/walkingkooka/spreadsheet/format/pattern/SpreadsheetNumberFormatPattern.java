@@ -227,13 +227,6 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
             )
     );
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    String printTreeTypeName() {
-        return "number-format-pattern";
-    }
-
     // Object...........................................................................................................
 
     @Override

@@ -49,13 +49,6 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
         this.patterns = patterns;
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    String printTreeTypeName() {
-        return "number-parse-pattern";
-    }
-
     // Object...........................................................................................................
 
     @Override

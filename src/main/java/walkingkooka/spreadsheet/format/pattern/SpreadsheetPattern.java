@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
+import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursors;
@@ -730,7 +731,15 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         printer.outdent();
     }
 
-    abstract String printTreeTypeName();
+    // SpreadsheetNumberParsePattern -> number-parse-pattern
+    private String printTreeTypeName() {
+        return CaseKind.CAMEL.change(
+                this.getClass()
+                        .getSimpleName()
+                        .substring("Spreadsheet".length()),
+                CaseKind.KEBAB
+        );
+    }
 
     // Object...........................................................................................................
 

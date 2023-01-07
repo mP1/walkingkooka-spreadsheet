@@ -51,13 +51,6 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
         formatters.accept(formatter);
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    String printTreeTypeName() {
-        return "time-format-pattern";
-    }
-
     // Object...........................................................................................................
 
     @Override
