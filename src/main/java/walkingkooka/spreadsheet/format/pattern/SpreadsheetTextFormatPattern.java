@@ -52,13 +52,6 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
         formatters.accept(formatter);
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    String printTreeTypeName() {
-        return "text-format-pattern";
-    }
-
     // Object...........................................................................................................
 
     @Override

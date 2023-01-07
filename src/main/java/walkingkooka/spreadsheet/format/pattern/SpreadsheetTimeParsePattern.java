@@ -57,13 +57,6 @@ public final class SpreadsheetTimeParsePattern extends SpreadsheetParsePattern2<
         ).toLocalTime();
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    String printTreeTypeName() {
-        return "time-parse-pattern";
-    }
-
     // Object...........................................................................................................
 
     @Override

@@ -57,13 +57,6 @@ public final class SpreadsheetDateParsePattern extends SpreadsheetParsePattern2<
         ).toLocalDate(context);
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    String printTreeTypeName() {
-        return "date-parse-pattern";
-    }
-
     // Object...........................................................................................................
 
     @Override

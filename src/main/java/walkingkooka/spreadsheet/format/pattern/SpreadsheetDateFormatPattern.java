@@ -52,13 +52,6 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
         formatters.accept(formatter);
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    String printTreeTypeName() {
-        return "date-format-pattern";
-    }
-
     // Object...........................................................................................................
 
     @Override
