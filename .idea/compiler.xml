@@ -6,8 +6,24 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+      </profile>
+      <profile name="Annotation profile for walkingkooka-spreadsheet" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <option name="walkingkooka.j2cl.java.util.Currency" value="XXX" />
+        <option name="walkingkooka.j2cl.java.util.Locale" value="EN-AU" />
+        <option name="walkingkooka.j2cl.java.util.Locale.DEFAULT" value="en-AU" />
+        <option name="walkingkooka.j2cl.java.util.TimeZone" value="Australia/*" />
+        <option name="walkingkooka.j2cl.java.util.TimeZone.DEFAULT" value="Australia/Sydney" />
+        <option name="walkingkooka.j2cl.locale.Logging" value="SLASH_SLASH_COMMENTS" />
         <module name="walkingkooka-spreadsheet" />
       </profile>
     </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="walkingkooka-spreadsheet" options="-Awalkingkooka.j2cl.java.util.Currency=XXX -Awalkingkooka.j2cl.java.util.Locale=EN-AU -Awalkingkooka.j2cl.java.util.Locale.DEFAULT=en-AU -Awalkingkooka.j2cl.java.util.TimeZone=Australia/* -Awalkingkooka.j2cl.java.util.TimeZone.DEFAULT=Australia/Sydney -Awalkingkooka.j2cl.locale.Logging=SLASH_SLASH_COMMENTS" />
+    </option>
   </component>
 </project>
