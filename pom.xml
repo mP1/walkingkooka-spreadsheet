@@ -153,6 +153,7 @@
         </includes>
       </resource>
     </resources>
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -163,46 +164,20 @@
           <target>9</target>
           <compilerArgs>
             <arg>-Awalkingkooka.j2cl.java.util.Currency=XXX</arg>
-            <arg>-Awalkingkooka.j2cl.java.util.Locale=EN-AU</arg>
+            <arg>-Awalkingkooka.j2cl.java.util.Locale=*</arg>
             <arg>-Awalkingkooka.j2cl.java.util.Locale.DEFAULT=en-AU</arg>
-            <arg>-Awalkingkooka.j2cl.java.util.TimeZone=Australia/*</arg>
+            <arg>-Awalkingkooka.j2cl.java.util.TimeZone=Australia/Sydney</arg>
             <arg>-Awalkingkooka.j2cl.java.util.TimeZone.DEFAULT=Australia/Sydney</arg>
             <arg>-Awalkingkooka.j2cl.locale.Logging=SLASH_SLASH_COMMENTS</arg>
           </compilerArgs>
           <showWarnings>true</showWarnings>
         </configuration>
       </plugin>
-      <!-- required so the generated grammar *.java is included in the jar file-->
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${basedir}/src/main/resources</directory>
-                  <filtering>false</filtering>
-                </resource>
-                <resource>
-                  <directory>${project.build.directory}/generated-sources/annotations</directory>
-                  <filtering>false</filtering>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.2</version>
+        <version>2.19.1</version>
         <dependencies>
           <dependency>
             <groupId>org.junit.platform</groupId>
@@ -211,6 +186,92 @@
           </dependency>
         </dependencies>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>create walkingkooka-spreadsheet/temp</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>temp</classifier>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>walkingkooka</groupId>
+        <artifactId>walkingkooka-gwt-archive-maker-maven-plugin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <id>build walkingkooka-spreadsheet-gwt JAR</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+            <configuration>
+              <input>target/walkingkooka-spreadsheet-1.0-SNAPSHOT-temp.jar</input>
+              <output>target/walkingkooka-spreadsheet-gwt-1.0-SNAPSHOT.jar</output>
+              <pom-file>gwt-pom.xml</pom-file>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>install walkingkooka:walkingkooka-spreadsheet-gwt</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>install-file</goal>
+            </goals>
+            <configuration>
+              <groupId>walkingkooka</groupId>
+              <artifactId>walkingkooka-spreadsheet-gwt</artifactId>
+              <version>1.0-SNAPSHOT</version>
+              <packaging>jar</packaging>
+              <file>target/walkingkooka-spreadsheet-gwt-1.0-SNAPSHOT.jar</file>
+              <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-invoker-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>install</goal>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <cloneProjectsTo>${project.build.directory}/it-tests</cloneProjectsTo>
+          <debug>true</debug>
+          <invokerPropertiesFile>src/it/invoker.properties</invokerPropertiesFile>
+          <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
+          <settingsFile>src/it/settings.xml</settingsFile>
+          <streamLogs>false</streamLogs>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -257,28 +318,29 @@
           </dependency>
         </dependencies>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-invoker-plugin</artifactId>
-        <version>3.2.1</version>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.0.0</version>
         <executions>
           <execution>
+            <id>deploy walkingkooka:walkingkooka-spreadsheet-gwt</id>
+            <phase>deploy</phase>
             <goals>
-              <goal>install</goal>
-              <goal>integration-test</goal>
-              <goal>verify</goal>
+              <goal>deploy-file</goal>
             </goals>
+            <configuration>
+              <groupId>walkingkooka</groupId>
+              <artifactId>walkingkooka-spreadsheet-gwt</artifactId>
+              <version>1.0-SNAPSHOT</version>
+              <packaging>jar</packaging>
+              <file>target/walkingkooka-spreadsheet-gwt-1.0-SNAPSHOT.jar</file>
+              <url>https://maven-repo-254709.appspot.com</url>
+              <repositoryId>github-mp1-appengine-repo</repositoryId>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <mavenOpts>-Xms2000M -Xmx6000M</mavenOpts>
-          <cloneProjectsTo>${project.build.directory}/it-tests</cloneProjectsTo>
-          <debug>true</debug>
-          <invokerPropertiesFile>src/it/invoker.properties</invokerPropertiesFile>
-          <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
-          <settingsFile>src/it/settings.xml</settingsFile>
-          <streamLogs>true</streamLogs>
-        </configuration>
       </plugin>
     </plugins>
   </build>
