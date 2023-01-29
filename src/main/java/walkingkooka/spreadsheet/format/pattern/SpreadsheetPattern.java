@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserTok
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
@@ -51,6 +52,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -738,6 +740,18 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
                         .getSimpleName()
                         .substring("Spreadsheet".length()),
                 CaseKind.KEBAB
+        );
+    }
+
+    /**
+     * The given {@link BiConsumer} will receive the individual components of this pattern text and kind.
+     * <br>
+     * This method will be useful when creating a UI to build a pattern.
+     */
+    public final void forEachComponent(final BiConsumer<SpreadsheetFormatParserTokenKind, String> consumer) {
+        SpreadsheetPatternForEachComponentSpreadsheetFormatParserTokenVisitor.traverse(
+                this.value,
+                consumer
         );
     }
 

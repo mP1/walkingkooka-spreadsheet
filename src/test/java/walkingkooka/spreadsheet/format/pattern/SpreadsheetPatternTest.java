@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
@@ -29,6 +30,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
@@ -51,6 +53,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -552,6 +555,283 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                         }))
                         .orElse(null),
                 () -> "parse " + CharSequences.quoteAndEscape(text) + " parser: " + parser
+        );
+    }
+
+    // forEachComponent..................................................................................................
+
+    @Test
+    public void testForEachComponentWithNullBiConsumerFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.parseTextFormatPattern("@").forEachComponent(null)
+        );
+    }
+
+    @Test
+    public void testForEachComponentDateFormat() {
+        this.forEachComponentAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                        "dd"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                        "mm"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                        "yyyy"
+                )
+        );
+    }
+
+    @Test
+    public void testForEachComponentDateTimeFormat() {
+        this.forEachComponentAndCheck(
+                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                        "dd"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                        "mm"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                        "yyyy"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        " "
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                        "hh"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        ":"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                        "mm"
+                )
+        );
+    }
+
+    @Test
+    public void testForEachComponentNumberFormat() {
+        this.forEachComponentAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("$#.00"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL,
+                        "$"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT,
+                        "#"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DECIMAL_PLACE,
+                        "."
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT_ZERO,
+                        "0"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT_ZERO,
+                        "0"
+                )
+        );
+    }
+
+    @Test
+    public void testForEachComponentTextFormat() {
+        this.forEachComponentAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("@\"Hello\""),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
+                        "@"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "\"Hello\""
+                )
+        );
+    }
+
+    @Test
+    public void testForEachComponentTimeFormat() {
+        this.forEachComponentAndCheck(
+                SpreadsheetPattern.parseTimeFormatPattern("hh:mm"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                        "hh"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        ":"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                        "mm"
+                )
+        );
+    }
+
+    @Test
+    public void testForEachComponentDateParse() {
+        this.forEachComponentAndCheck(
+                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                        "dd"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                        "mm"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                        "yyyy"
+                )
+        );
+    }
+
+    @Test
+    public void testForEachComponentDateTimeParse() {
+        this.forEachComponentAndCheck(
+                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                        "dd"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                        "mm"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                        "yyyy"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        " "
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                        "hh"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        ":"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                        "mm"
+                )
+        );
+    }
+
+    @Test
+    public void testForEachComponentNumberParse() {
+        this.forEachComponentAndCheck(
+                SpreadsheetPattern.parseNumberParsePattern("$#.00"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL,
+                        "$"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT,
+                        "#"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DECIMAL_PLACE,
+                        "."
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT_ZERO,
+                        "0"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT_ZERO,
+                        "0"
+                )
+        );
+    }
+
+    @Test
+    public void testForEachComponentTimeParse() {
+        this.forEachComponentAndCheck(
+                SpreadsheetPattern.parseTimeParsePattern("hh:mm"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                        "hh"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        ":"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                        "mm"
+                )
+        );
+    }
+
+    private void forEachComponentAndCheck(final SpreadsheetPattern pattern,
+                                          final Map.Entry<SpreadsheetFormatParserTokenKind, String>... expected) {
+        final List<Map.Entry<SpreadsheetFormatParserTokenKind, String>> components = Lists.array();
+
+        pattern.forEachComponent(
+                (kind, text) -> components.add(
+                        Map.entry(
+                                kind,
+                                text
+                        )
+                )
+        );
+
+        this.checkEquals(
+                Lists.of(expected),
+                components,
+                () -> pattern + " components"
         );
     }
 
