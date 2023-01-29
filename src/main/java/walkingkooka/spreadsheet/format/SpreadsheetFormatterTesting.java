@@ -17,15 +17,15 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.test.Testing;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 
 /**
  * Mixin interface with default methods to assist testing of a given {@link SpreadsheetFormatter}.
  */
-public interface SpreadsheetFormatterTesting extends Testing {
+public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
 
     default void canFormatAndCheck(final SpreadsheetFormatter formatter,
                                    final Object value,
