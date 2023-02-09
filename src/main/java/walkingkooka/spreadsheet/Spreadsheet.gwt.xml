@@ -6,4 +6,5 @@
     <inherits name="walkingkooka.tree.text.Text"/>
 
     <source path=""/>
+    <super-source path="super"/>
 </module>
