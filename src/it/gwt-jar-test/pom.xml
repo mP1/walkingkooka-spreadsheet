@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>walkingkooka-test</groupId>
-    <artifactId>walkingkooka-tree-patch-gwt-jar-test</artifactId>
+    <artifactId>walkingkooka-spreadsheet-gwt-jar-test</artifactId>
     <version>1.0</version>
     <packaging>gwt-lib</packaging>
     <description>A basic test that invokes some of the repackaged jar APIs</description>
@@ -100,7 +100,7 @@
                 <configuration>
                     <failOnError>true</failOnError>
                     <moduleName>test.Test</moduleName>
-                    <sourceLevel>1.8</sourceLevel>
+                    <sourceLevel>1.9</sourceLevel>
                     <logLevel>DEBUG</logLevel>
                     <style>PRETTY</style>
                     <!-- If assertions are enabled, Compiler will fail when building AST tree-->
