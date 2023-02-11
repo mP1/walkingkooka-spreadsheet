@@ -5,6 +5,8 @@
     <inherits name="walkingkooka.store.Store"/>
     <inherits name="walkingkooka.tree.text.Text"/>
 
-    <source path=""/>
+    <source path="">
+        <exclude name="super/**"/>
+    </source>
     <super-source path="super"/>
 </module>
