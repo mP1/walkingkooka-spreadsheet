@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -578,6 +579,89 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                         )
                 ),
                 "row-range 12:34 TOP LEFT" + EOL
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Test
+    public void testUrlFragmentCell() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseCell("A1")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE),
+                "/cell/A1"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentCellRangeTopLeft() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseCellRange("B2:C3")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT),
+                "/cell/B2:C3/top-left"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentCellRangeTopRight() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseCellRange("B2:C3")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_RIGHT),
+                "/cell/B2:C3/top-right"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentColumnNone() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseColumn("Z")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE),
+                "/column/Z"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentColumnRangeLeft() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseColumnRange("X:Y")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.LEFT),
+                "/column/X:Y/left"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentColumnRangeRight() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseColumnRange("X:Y")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.RIGHT),
+                "/column/X:Y/right"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentLabelNone() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseCellOrLabel("Label123")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE),
+                "/cell/Label123"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentLabelBottomRight() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseCellOrLabel("Label123")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT),
+                "/cell/Label123/bottom-right"
+        );
+    }
+
+    private void urlFragmentAndCheck(final SpreadsheetViewportSelection selection,
+                                     final String expected) {
+        this.checkEquals(
+                UrlFragment.with(expected),
+                selection.urlFragment(),
+                selection + " urlfragment"
         );
     }
 
