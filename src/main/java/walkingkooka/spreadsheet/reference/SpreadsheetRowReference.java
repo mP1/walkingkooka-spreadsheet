@@ -359,13 +359,6 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return this;
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    public String selectionTypeName() {
-        return "row";
-    }
-
     // Object...........................................................................................................
 
     @Override

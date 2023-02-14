@@ -276,13 +276,6 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
         return SpreadsheetReferenceKind.RELATIVE.column(value);
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    public String selectionTypeName() {
-        return "column-range";
-    }
-
     // Object...........................................................................................................
 
     @Override

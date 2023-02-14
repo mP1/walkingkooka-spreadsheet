@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursor;
@@ -854,7 +855,16 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
      * {@link SpreadsheetColumnReference} returns <pre>column</pre>
      * </pre>
      */
-    public abstract String selectionTypeName();
+    public final String selectionTypeName() {
+        return CaseKind.CAMEL.change(
+                this.getClass()
+                        .getSimpleName()
+                        .substring("Spreadsheet".length())
+                        .replace("Reference", "")
+                        .replace("Name", ""),
+                CaseKind.KEBAB
+        );
+    }
 
     // Object...........................................................................................................
 

@@ -334,13 +334,6 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         visitor.visit(this);
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    public String selectionTypeName() {
-        return "cell";
-    }
-
     // SpreadsheetViewportSelectionNavigation...........................................................................
 
     @Override
