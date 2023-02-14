@@ -920,6 +920,7 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
         return UrlFragment.with(
                 UrlPath.SEPARATOR.string() +
                         this.selectionTypeName()
+                                .replace("label", "cell")
                                 .replace("-range", "") +
                         UrlPath.SEPARATOR.string() +
                         this.toString()

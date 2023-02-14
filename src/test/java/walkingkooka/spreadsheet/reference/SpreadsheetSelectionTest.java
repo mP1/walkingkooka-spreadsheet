@@ -741,6 +741,14 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    @Test
+    public void testHasUrlFragmentLabel() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.labelName("Label456"),
+                "/cell/Label456"
+        );
+    }
+
     private void urlFragmentAndCheck(final SpreadsheetSelection selection,
                                      final String expected) {
         this.checkEquals(
