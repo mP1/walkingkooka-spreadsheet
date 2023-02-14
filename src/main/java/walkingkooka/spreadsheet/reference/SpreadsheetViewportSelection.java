@@ -19,6 +19,9 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
+import walkingkooka.net.UrlPath;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -42,7 +45,8 @@ import java.util.Optional;
  * }
  * </pre>
  */
-public final class SpreadsheetViewportSelection implements TreePrintable,
+public final class SpreadsheetViewportSelection implements HasUrlFragment,
+        TreePrintable,
         UsesToStringBuilder {
 
     /**
@@ -129,6 +133,20 @@ public final class SpreadsheetViewportSelection implements TreePrintable,
         }
 
         printer.println();
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Override
+    public UrlFragment urlFragment() {
+        final UrlFragment selection = this.selection().urlFragment();
+        final SpreadsheetViewportSelectionAnchor anchor = this.anchor();
+
+        return SpreadsheetViewportSelectionAnchor.NONE != anchor ?
+                UrlFragment.with(
+                        selection.value() + UrlPath.SEPARATOR + anchor.kebabText()
+                ) :
+                selection;
     }
 
     // Object...........................................................................................................
