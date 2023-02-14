@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
@@ -2132,6 +2133,25 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected,
                 selection.simplify(),
                 () -> "simplify " + selection
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Test
+    public final void testHasUrlFragment() {
+        final S selection = this.createSelection();
+        final String toString = selection.toString();
+
+        this.checkEquals(
+                UrlFragment.with(
+                        "/" +
+                                selection.selectionTypeName()
+                                        .replace("-range", "") +
+                                "/" +
+                                toString
+                ),
+                selection.urlFragment()
         );
     }
 

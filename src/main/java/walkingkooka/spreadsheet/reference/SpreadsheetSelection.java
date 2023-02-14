@@ -25,6 +25,9 @@ import walkingkooka.collect.HasRange;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
+import walkingkooka.net.UrlPath;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -67,7 +70,8 @@ import java.util.stream.Collectors;
 /**
  * Base class for all selection types, including columns, rows, cells, labels and ranges.
  */
-public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellReference>,
+public abstract class SpreadsheetSelection implements HasUrlFragment,
+        Predicate<SpreadsheetCellReference>,
         TreePrintable,
         UsesToStringBuilder {
 
@@ -889,6 +893,28 @@ public abstract class SpreadsheetSelection implements Predicate<SpreadsheetCellR
 
     @Override
     abstract public String toString();
+
+    // HasUrlFragment...................................................................................................
+
+    /**
+     * Produces a fragment that is composed of the selection type a slash and the string form of a selection.
+     * <pre>
+     * /cell/A1
+     * /cell/Label123
+     * /column/A1
+     * /column/B2:C3
+     * </pre>
+     */
+    @Override
+    public final UrlFragment urlFragment() {
+        return UrlFragment.with(
+                UrlPath.SEPARATOR.string() +
+                        this.selectionTypeName()
+                                .replace("-range", "") +
+                        UrlPath.SEPARATOR.string() +
+                        this.toString()
+        );
+    }
 
     // UsesToStringBuilder..............................................................................................
 

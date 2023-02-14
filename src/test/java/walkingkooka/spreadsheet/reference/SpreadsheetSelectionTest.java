@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
@@ -703,6 +704,49 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         this.checkEquals(
                 "Cell not found: Z99",
                 SpreadsheetSelection.parseCell("Z99").notFound()
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Test
+    public void testHasUrlFragmentCell() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseCell("A1"),
+                "/cell/A1"
+        );
+    }
+
+    @Test
+    public void testHasUrlFragmentCellRange() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseCellOrCellRange("B2:C3"),
+                "/cell/B2:C3"
+        );
+    }
+
+    @Test
+    public void testHasUrlFragmentColumn() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseColumn("D"),
+                "/column/D"
+        );
+    }
+
+    @Test
+    public void testHasUrlFragmentColumnRange() {
+        this.urlFragmentAndCheck(
+                SpreadsheetSelection.parseColumnRange("E:F"),
+                "/column/E:F"
+        );
+    }
+
+    private void urlFragmentAndCheck(final SpreadsheetSelection selection,
+                                     final String expected) {
+        this.checkEquals(
+                UrlFragment.with(expected),
+                selection.urlFragment(),
+                () -> selection + " urlFragment"
         );
     }
 
