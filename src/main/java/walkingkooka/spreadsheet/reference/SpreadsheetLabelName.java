@@ -196,13 +196,6 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         throw new UnsupportedOperationException();
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    public String selectionTypeName() {
-        return "label";
-    }
-
     // SpreadsheetViewportSelectionNavigation...........................................................................
 
     @Override

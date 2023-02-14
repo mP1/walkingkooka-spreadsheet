@@ -220,13 +220,6 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         visitor.visit(this);
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    public String selectionTypeName() {
-        return "column";
-    }
-
     // range/columnRange.......................................................................................
 
     /**

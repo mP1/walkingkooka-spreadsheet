@@ -579,13 +579,6 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                 .testRow(row);
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    public String selectionTypeName() {
-        return "cell-range";
-    }
-
     // HashCodeEqualsDefined.......................................................................................
 
     @Override

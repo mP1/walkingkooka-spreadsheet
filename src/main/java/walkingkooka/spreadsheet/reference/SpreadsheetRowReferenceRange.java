@@ -124,13 +124,6 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
         return SpreadsheetReferenceKind.RELATIVE.row(value);
     }
 
-    // TreePrintable....................................................................................................
-
-    @Override
-    public String selectionTypeName() {
-        return "row-range";
-    }
-
     // SpreadsheetViewportSelectionNavigation...........................................................................
 
     @Override
