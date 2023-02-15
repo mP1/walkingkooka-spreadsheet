@@ -110,7 +110,7 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     @Test
     public void testUrlFragmentDateFormatPattern() {
         this.checkEquals(
-                UrlFragment.with("date-format-pattern"),
+                UrlFragment.with("format-pattern/date"),
                 SpreadsheetPatternKind.DATE_FORMAT_PATTERN.urlFragment()
         );
     }
@@ -118,7 +118,7 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     @Test
     public void testUrlFragmentDateTimeFormatPattern() {
         this.checkEquals(
-                UrlFragment.with("date-time-format-pattern"),
+                UrlFragment.with("format-pattern/date-time"),
                 SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN.urlFragment()
         );
     }
@@ -126,7 +126,7 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     @Test
     public void testUrlFragmentTimeParsePattern() {
         this.checkEquals(
-                UrlFragment.with("time-parse-pattern"),
+                UrlFragment.with("parse-pattern/time"),
                 SpreadsheetPatternKind.TIME_PARSE_PATTERN.urlFragment()
         );
     }
