@@ -27,7 +27,6 @@ import walkingkooka.collect.Range;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.net.UrlPath;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -917,14 +916,14 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
      */
     @Override
     public final UrlFragment urlFragment() {
-        return UrlFragment.with(
-                UrlPath.SEPARATOR.string() +
-                        this.selectionTypeName()
-                                .replace("label", "cell")
-                                .replace("-range", "") +
-                        UrlPath.SEPARATOR.string() +
-                        this.toString()
-        );
+        return UrlFragment.SLASH.append(
+                        UrlFragment.with(
+                                this.selectionTypeName()
+                                        .replace("label", "cell")
+                                        .replace("-range", "")
+                        )
+                ).append(UrlFragment.SLASH)
+                .append(UrlFragment.with(this.toString()));
     }
 
     // UsesToStringBuilder..............................................................................................

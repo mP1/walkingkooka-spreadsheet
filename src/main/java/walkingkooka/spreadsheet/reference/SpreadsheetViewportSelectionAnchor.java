@@ -17,13 +17,16 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
+import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
 /**
  * Each of the {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection} require an anchor to create a {@link SpreadsheetViewportSelection}.
  * Not all combinations are valid for each of range.
  */
-public enum SpreadsheetViewportSelectionAnchor {
+public enum SpreadsheetViewportSelectionAnchor implements HasUrlFragment {
     NONE,
     TOP_LEFT,
     TOP_RIGHT,
@@ -162,6 +165,16 @@ public enum SpreadsheetViewportSelectionAnchor {
         if (this == NONE) {
             throw new IllegalArgumentException("Invalid operation for " + this);
         }
+    }
+
+    @Override
+    public UrlFragment urlFragment() {
+        return UrlFragment.with(
+                CaseKind.SNAKE.change(
+                        this.name().toLowerCase(),
+                        CaseKind.KEBAB
+                )
+        );
     }
 
     /**
