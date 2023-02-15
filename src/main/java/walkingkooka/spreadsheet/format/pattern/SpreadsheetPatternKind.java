@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
 import java.util.Arrays;
@@ -48,18 +47,29 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     TIME_PARSE_PATTERN;
 
     SpreadsheetPatternKind() {
+        final String name = this.name()
+                .toLowerCase();
+
         this.typeName =
                 "spreadsheet-" +
-                        this.name()
-                                .toLowerCase()
-                                .replace('_', '-');
+                        name.replace('_', '-');
 
-        this.urlFragment = UrlFragment.with(
-                CaseKind.SNAKE.change(
-                        this.name().toLowerCase(),
-                        CaseKind.KEBAB
-                )
-        );
+        final boolean format = name.contains("format");
+
+        this.urlFragment =
+                UrlFragment.with(
+                                format ?
+                                        "format-pattern" :
+                                        "parse-pattern"
+                        ).append(UrlFragment.SLASH)
+                        .append(
+                                UrlFragment.with(
+                                        name.substring(
+                                                0,
+                                                name.length() - (format ? "FORMAT_PATTERN" : "PARSE_PATTERN").length() - 1
+                                        ).replace('_', '-')
+                                )
+                        );
     }
 
     /**
