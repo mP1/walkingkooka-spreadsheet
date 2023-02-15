@@ -679,6 +679,12 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
 
     final ParserToken value;
 
+    public final SpreadsheetPatternKind kind() {
+        return SpreadsheetPatternKind.fromTypeName(
+                "spreadsheet-" + this.printTreeTypeName()
+        );
+    }
+
     // isXXX............................................................................................................
 
     /**
