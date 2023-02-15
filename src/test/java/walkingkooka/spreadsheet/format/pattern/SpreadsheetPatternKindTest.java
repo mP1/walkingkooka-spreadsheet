@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -104,6 +105,30 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
                     )
             );
         }
+    }
+
+    @Test
+    public void testUrlFragmentDateFormatPattern() {
+        this.checkEquals(
+                UrlFragment.with("date-format-pattern"),
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN.urlFragment()
+        );
+    }
+
+    @Test
+    public void testUrlFragmentDateTimeFormatPattern() {
+        this.checkEquals(
+                UrlFragment.with("date-time-format-pattern"),
+                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN.urlFragment()
+        );
+    }
+
+    @Test
+    public void testUrlFragmentTimeParsePattern() {
+        this.checkEquals(
+                UrlFragment.with("time-parse-pattern"),
+                SpreadsheetPatternKind.TIME_PARSE_PATTERN.urlFragment()
+        );
     }
 
     @Override
