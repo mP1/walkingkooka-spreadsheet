@@ -835,6 +835,40 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    // kind............................................................................................................
+
+    @Test
+    public void testKindDateParsePattern() {
+        this.checkEquals(
+                SpreadsheetPatternKind.DATE_PARSE_PATTERN,
+                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy").kind()
+        );
+    }
+
+    @Test
+    public void testKindDateTimeParsePattern() {
+        this.checkEquals(
+                SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN,
+                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss").kind()
+        );
+    }
+
+    @Test
+    public void testKindNumberFormatPattern() {
+        this.checkEquals(
+                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN,
+                SpreadsheetPattern.parseNumberFormatPattern("#.###").kind()
+        );
+    }
+
+    @Test
+    public void testKindTextFormatPattern() {
+        this.checkEquals(
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
+                SpreadsheetPattern.parseTextFormatPattern("@").kind()
+        );
+    }
+
     // Class............................................................................................................
 
     @Override
