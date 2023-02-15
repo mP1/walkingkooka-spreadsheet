@@ -17,6 +17,9 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
+import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
 import java.util.Arrays;
@@ -25,7 +28,7 @@ import java.util.Objects;
 /**
  * The different types of {@link SpreadsheetPattern}.
  */
-public enum SpreadsheetPatternKind {
+public enum SpreadsheetPatternKind implements HasUrlFragment {
     DATE_FORMAT_PATTERN,
 
     DATE_PARSE_PATTERN,
@@ -50,6 +53,13 @@ public enum SpreadsheetPatternKind {
                         this.name()
                                 .toLowerCase()
                                 .replace('_', '-');
+
+        this.urlFragment = UrlFragment.with(
+                CaseKind.SNAKE.change(
+                        this.name().toLowerCase(),
+                        CaseKind.KEBAB
+                )
+        );
     }
 
     /**
@@ -60,6 +70,14 @@ public enum SpreadsheetPatternKind {
     }
 
     private final String typeName;
+
+
+    @Override
+    public UrlFragment urlFragment() {
+        return this.urlFragment;
+    }
+
+    private final UrlFragment urlFragment;
 
     /**
      * Tries to find the matching {@link SpreadsheetPatternKind} given its {@link SpreadsheetPatternKind#typeName()}
