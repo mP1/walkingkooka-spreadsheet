@@ -21,7 +21,6 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.net.UrlPath;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -139,13 +138,13 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
 
     @Override
     public UrlFragment urlFragment() {
-        final UrlFragment selection = this.selection().urlFragment();
+        final UrlFragment selection = this.selection()
+                .urlFragment();
         final SpreadsheetViewportSelectionAnchor anchor = this.anchor();
 
         return SpreadsheetViewportSelectionAnchor.NONE != anchor ?
-                UrlFragment.with(
-                        selection.value() + UrlPath.SEPARATOR + anchor.kebabText()
-                ) :
+                selection.append(UrlFragment.SLASH)
+                        .append(anchor.urlFragment()) :
                 selection;
     }
 
