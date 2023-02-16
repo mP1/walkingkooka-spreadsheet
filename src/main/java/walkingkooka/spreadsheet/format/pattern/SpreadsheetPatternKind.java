@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.text.CharSequences;
 
 import java.util.Arrays;
@@ -57,11 +58,10 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
         final boolean format = name.contains("format");
 
         this.urlFragment =
-                UrlFragment.with(
-                                format ?
-                                        "format-pattern" :
-                                        "parse-pattern"
-                        ).append(UrlFragment.SLASH)
+                (format ?
+                        SpreadsheetUrlFragments.FORMAT_PATTERN :
+                        SpreadsheetUrlFragments.PARSE_PATTERN
+                ).append(UrlFragment.SLASH)
                         .append(
                                 UrlFragment.with(
                                         name.substring(
