@@ -26,6 +26,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
@@ -55,6 +56,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -866,6 +868,51 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.checkEquals(
                 SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
                 SpreadsheetPattern.parseTextFormatPattern("@").kind()
+        );
+    }
+
+    // urlFragment......................................................................................................
+
+    @Test
+    public void testUrlFragmentDateParsePattern() {
+        this.urlFragmentAndCheck(
+                "dd/mm/yyyy",
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testUrlFragmentDateTimeParsePattern() {
+        this.urlFragmentAndCheck(
+                "dd/mm/yyyy hh:mm:ss",
+                SpreadsheetPattern::parseDateTimeParsePattern
+        );
+    }
+
+    @Test
+    public void testUrlFragmentNumberFormatPattern() {
+        this.urlFragmentAndCheck(
+                "#.###",
+                SpreadsheetPattern::parseNumberFormatPattern
+        );
+    }
+
+    @Test
+    public void testUrlFragmentTextFormatPattern() {
+        this.urlFragmentAndCheck(
+                "@",
+                SpreadsheetPattern::parseTextFormatPattern
+        );
+    }
+
+    private void urlFragmentAndCheck(final String pattern,
+                                     final Function<String, SpreadsheetPattern> factory) {
+        this.checkEquals(
+                UrlFragment.with(
+                        CharSequences.quoteAndEscape(pattern)
+                                .toString()
+                ),
+                factory.apply(pattern).urlFragment()
         );
     }
 

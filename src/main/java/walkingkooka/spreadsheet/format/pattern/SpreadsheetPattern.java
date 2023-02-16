@@ -21,6 +21,8 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
@@ -59,7 +61,7 @@ import java.util.function.Function;
 /**
  * Holds a tokens that may be used to parse or format values along with helpers.
  */
-abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrintable {
+abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrintable, HasUrlFragment {
 
     /**
      * The separator character between multiple patterns.
@@ -682,6 +684,20 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     public final SpreadsheetPatternKind kind() {
         return SpreadsheetPatternKind.fromTypeName(
                 "spreadsheet-" + this.printTreeTypeName()
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    /**
+     * Quotes after escaping the pattern.
+     */
+    @Override
+    public final UrlFragment urlFragment() {
+        return UrlFragment.with(
+                CharSequences.quoteAndEscape(
+                        this.toString()
+                ).toString()
         );
     }
 
