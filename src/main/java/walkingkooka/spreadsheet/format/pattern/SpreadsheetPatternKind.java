@@ -55,19 +55,17 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                 "spreadsheet-" +
                         name.replace('_', '-');
 
-        final boolean format = name.contains("format");
-
         this.urlFragment =
-                (format ?
-                        SpreadsheetUrlFragments.FORMAT_PATTERN :
-                        SpreadsheetUrlFragments.PARSE_PATTERN
-                ).append(UrlFragment.SLASH)
+                SpreadsheetUrlFragments.PATTERN
+                        .append(UrlFragment.SLASH)
                         .append(
                                 UrlFragment.with(
-                                        name.substring(
-                                                0,
-                                                name.length() - (format ? "FORMAT_PATTERN" : "PARSE_PATTERN").length() - 1
-                                        ).replace('_', '-')
+                                        CharSequences.subSequence(
+                                                        typeName,
+                                                        "spreadsheet-".length(),
+                                                        -"_PATTERN".length()
+                                                ).toString()
+                                                .replace('_', '-')
                                 )
                         );
     }
