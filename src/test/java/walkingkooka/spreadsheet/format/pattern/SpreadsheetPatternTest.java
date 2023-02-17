@@ -908,10 +908,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     private void urlFragmentAndCheck(final String pattern,
                                      final Function<String, SpreadsheetPattern> factory) {
         this.checkEquals(
-                UrlFragment.with(
-                        CharSequences.quoteAndEscape(pattern)
-                                .toString()
-                ),
+                UrlFragment.with(pattern),
                 factory.apply(pattern).urlFragment()
         );
     }

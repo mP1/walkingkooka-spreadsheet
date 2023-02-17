@@ -695,9 +695,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     @Override
     public final UrlFragment urlFragment() {
         return UrlFragment.with(
-                CharSequences.quoteAndEscape(
-                        this.toString()
-                ).toString()
+                this.value().text()
         );
     }
 
