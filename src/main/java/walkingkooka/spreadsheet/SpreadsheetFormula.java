@@ -21,6 +21,8 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
@@ -47,7 +49,8 @@ import java.util.Optional;
 public final class SpreadsheetFormula implements HasText,
         Patchable<SpreadsheetFormula>,
         TreePrintable,
-        UsesToStringBuilder {
+        UsesToStringBuilder,
+        HasUrlFragment {
 
     /**
      * No {@link SpreadsheetParserToken} constant.
@@ -473,6 +476,13 @@ public final class SpreadsheetFormula implements HasText,
                 SpreadsheetFormula::marshall,
                 SpreadsheetFormula.class
         );
+    }
+
+    // HasUrlFragment..................................................................................................
+
+    @Override
+    public UrlFragment urlFragment() {
+        return UrlFragment.with(this.text());
     }
 
     // HashCodeEqualsDefined..........................................................................................

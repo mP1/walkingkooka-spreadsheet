@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
@@ -827,6 +828,19 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         return JsonNodeUnmarshallContexts.basic(
                 ExpressionNumberKind.BIG_DECIMAL,
                 MathContext.UNLIMITED
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Test
+    public void testUrlFragment() {
+        final String formula = "1+2+345";
+
+        this.checkEquals(
+                UrlFragment.with(formula),
+                SpreadsheetFormula.EMPTY.setText(formula)
+                        .urlFragment()
         );
     }
 
