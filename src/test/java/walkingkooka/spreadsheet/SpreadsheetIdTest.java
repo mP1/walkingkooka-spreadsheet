@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.compare.ComparableTesting2;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
@@ -40,6 +41,16 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         final SpreadsheetId id = SpreadsheetId.with(VALUE);
         this.checkEquals(VALUE, id.value(), "value");
         this.checkEquals(VALUE, id.id(), "id");
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Test
+    public void testUrlFragment() {
+        this.checkEquals(
+                UrlFragment.with("/123456"),
+                SpreadsheetId.with(0x123456).urlFragment()
+        );
     }
 
     // ParseString............................................................................................................
