@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.naming.NameTesting2;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
@@ -40,6 +41,18 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
         this.checkEquals(VALUE, name.value(), "value");
         this.checkEquals(VALUE, name.id(), "id");
     }
+
+    // HasUrlFragment...................................................................................................
+
+    @Test
+    public void testUrlFragment() {
+        this.checkEquals(
+                UrlFragment.with("/" + VALUE),
+                this.createObject().urlFragment()
+        );
+    }
+
+    // equals...........................................................................................................
 
     @Test
     public void testDifferentSpreadsheetName() {
