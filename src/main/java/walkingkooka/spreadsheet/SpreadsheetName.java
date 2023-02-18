@@ -22,6 +22,8 @@ import walkingkooka.HasId;
 import walkingkooka.InvalidTextLengthException;
 import walkingkooka.Value;
 import walkingkooka.naming.Name;
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
@@ -35,7 +37,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 public final class SpreadsheetName implements Comparable<SpreadsheetName>,
         Name,
         HasId<String>,
-        Value<String> {
+        Value<String>,
+        HasUrlFragment {
 
     /**
      * Creates a new {@link SpreadsheetName} after vaildating only supported characters are entered.
@@ -88,6 +91,16 @@ public final class SpreadsheetName implements Comparable<SpreadsheetName>,
     }
 
     private final String value;
+
+    // HasUrlFragment...................................................................................................
+
+    // /spreadsheetName123
+    @Override
+    public UrlFragment urlFragment() {
+        return UrlFragment.SLASH.append(
+                UrlFragment.with(this.toString())
+        );
+    }
 
     // JsonNodeContext..................................................................................................
 
