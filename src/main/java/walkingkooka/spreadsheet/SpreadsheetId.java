@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet;
 import walkingkooka.Cast;
 import walkingkooka.HasId;
 import walkingkooka.Value;
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -31,7 +33,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  */
 public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         HasId<Long>,
-        Value<Long> {
+        Value<Long>,
+        HasUrlFragment {
 
     /**
      * Parses some text into a {@link SpreadsheetId}. This is the inverse of {@link SpreadsheetId#toString()}.
@@ -79,6 +82,15 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
     }
 
     private final Long value;
+
+    // HasUrlFragment...................................................................................................
+
+    @Override
+    public UrlFragment urlFragment() {
+        return UrlFragment.SLASH.append(
+                UrlFragment.with(this.toString())
+        );
+    }
 
     // JsonNodeContext..................................................................................................
 
