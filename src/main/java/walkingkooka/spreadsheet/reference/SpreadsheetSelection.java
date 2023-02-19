@@ -338,6 +338,16 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
             .orReport(ParserReporters.basic());
 
     /**
+     * Parses the text into a {@link SpreadsheetColumnReference} or {@link SpreadsheetColumnReferenceRange}.
+     */
+    public static SpreadsheetSelection parseColumnOrColumnRange(final String text) {
+        final SpreadsheetColumnReferenceRange range = parseColumnRange(text);
+        return range.isSingle() ?
+                range.begin() :
+                range;
+    }
+
+    /**
      * Parsers a range of columns.
      */
     public static SpreadsheetColumnReferenceRange parseColumnRange(final String text) {
