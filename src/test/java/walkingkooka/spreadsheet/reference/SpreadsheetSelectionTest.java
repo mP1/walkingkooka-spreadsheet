@@ -296,34 +296,65 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseColumnWithRangeFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetSelection.parseColumn("B:C"));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseColumn("B:C")
+        );
+    }
+
+    @Test
+    public void testParseColumnWithRowFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseColumn("1")
+        );
     }
 
     @Test
     public void testParseColumn() {
         this.checkEquals(
-                SpreadsheetSelection.parseColumn("B"),
-                SpreadsheetReferenceKind.RELATIVE.column(1)
+                SpreadsheetReferenceKind.RELATIVE.column(1),
+                SpreadsheetSelection.parseColumn("B")
         );
     }
 
-    // parseColumnReference...............................................................................................
+    // parseColumnRange.................................................................................................
 
     @Test
-    public void testParseColumnReference() {
+    public void testParseColumnRangeWithRowFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseColumnRange("1")
+        );
+    }
+
+
+    @Test
+    public void testParseColumnRangeWithColumn() {
         this.checkEquals(
-                SpreadsheetSelection.parseColumn("B")
-                        .columnRange(SpreadsheetSelection.parseColumn("D")),
+                SpreadsheetReferenceKind.RELATIVE.column(1)
+                        .toColumnRange(),
+                SpreadsheetSelection.parseColumnRange("B")
+        );
+    }
+
+    @Test
+    public void testParseColumnRangeWithRange() {
+        this.checkEquals(
+                SpreadsheetReferenceKind.RELATIVE.column(1)
+                        .columnRange(
+                                SpreadsheetReferenceKind.RELATIVE.column(3)
+                        ),
                 SpreadsheetSelection.parseColumnRange("B:D")
         );
     }
 
     @Test
-    public void testParseColumnReferenceSingleton() {
+    public void testParseColumnRangeWithSingleton() {
         this.checkEquals(
-                SpreadsheetSelection.parseColumn("B")
+                SpreadsheetReferenceKind.RELATIVE.column(1)
                         .toColumnRange(),
-                SpreadsheetSelection.parseColumnRange("B")
+                SpreadsheetSelection.parseColumnRange("B:B")
         );
     }
     
@@ -530,8 +561,19 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     // parseRow.........................................................................................................
 
     @Test
+    public void testParseRowWithColumnFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseRow("A")
+        );
+    }
+
+    @Test
     public void testParseRowWithRangeFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetSelection.parseRow("12:3"));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseRow("12:3")
+        );
     }
 
     @Test
@@ -547,6 +589,44 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         this.checkEquals(
                 SpreadsheetReferenceKind.RELATIVE.row(23 - 1),
                 SpreadsheetSelection.parseRow("23")
+        );
+    }
+
+    // parseRowRange....................................................................................................
+
+    @Test
+    public void testParseRowRangeWithColumnFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseRowRange("C")
+        );
+    }
+
+    @Test
+    public void testParseRowRangeWithRow() {
+        this.checkEquals(
+                SpreadsheetReferenceKind.RELATIVE.row(1).toRowRange(),
+                SpreadsheetSelection.parseRowRange("2")
+        );
+    }
+
+    @Test
+    public void testParseRowRangeWithRange() {
+        this.checkEquals(
+                SpreadsheetReferenceKind.RELATIVE.row(1)
+                        .rowRange(
+                                SpreadsheetReferenceKind.RELATIVE.row(3)
+                        ),
+                SpreadsheetSelection.parseRowRange("2:4")
+        );
+    }
+
+    @Test
+    public void testParseRowRangeWithSingleton() {
+        this.checkEquals(
+                SpreadsheetReferenceKind.RELATIVE.row(1)
+                        .toRowRange(),
+                SpreadsheetSelection.parseRowRange("2:2")
         );
     }
 
