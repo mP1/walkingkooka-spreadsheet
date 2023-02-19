@@ -402,6 +402,16 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
     }
 
     /**
+     * Parses the text into a {@link SpreadsheetRowReference} or {@link SpreadsheetRowReferenceRange}.
+     */
+    public static SpreadsheetSelection parseRowOrRowRange(final String text) {
+        final SpreadsheetRowReferenceRange range = parseRowRange(text);
+        return range.isSingle() ?
+                range.begin() :
+                range;
+    }
+
+    /**
      * General purpose helper used by parseXXXRange methods that leverages the simple parser to also handle ranges separated by a {@link #SEPARATOR}.
      */
     private static <R extends SpreadsheetSelection, S extends SpreadsheetSelection & Comparable<S>> R parseRange(final String text,

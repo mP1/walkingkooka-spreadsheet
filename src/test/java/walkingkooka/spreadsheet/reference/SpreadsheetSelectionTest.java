@@ -664,6 +664,40 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    // parseRowOrRowRange.........................................................................................
+
+    @Test
+    public void testParseRowOrRowRangeWithColumnFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseRowOrRowRange("A")
+        );
+    }
+
+    @Test
+    public void testParseRowOrRowRangeWithRow() {
+        this.checkEquals(
+                SpreadsheetSelection.parseRow("2"),
+                SpreadsheetSelection.parseRowOrRowRange("2")
+        );
+    }
+
+    @Test
+    public void testParseRowOrRowRangeWithRowRange() {
+        this.checkEquals(
+                SpreadsheetSelection.parseRowRange("3:4"),
+                SpreadsheetSelection.parseRowOrRowRange("3:4")
+        );
+    }
+
+    @Test
+    public void testParseRowOrRowRangeWithRowRangeSingleton() {
+        this.checkEquals(
+                SpreadsheetSelection.parseRow("5"),
+                SpreadsheetSelection.parseRowOrRowRange("5:5")
+        );
+    }
+
     // textLabel.......................................................................................................
 
     @Test
