@@ -357,7 +357,41 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 SpreadsheetSelection.parseColumnRange("B:B")
         );
     }
-    
+
+    // parseColumnOrColumnRange.........................................................................................
+
+    @Test
+    public void testParseColumnOrColumnRangeWithRowFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseColumnOrColumnRange("1")
+        );
+    }
+
+    @Test
+    public void testParseColumnOrColumnRangeWithColumn() {
+        this.checkEquals(
+                SpreadsheetSelection.parseColumn("B"),
+                SpreadsheetSelection.parseColumnOrColumnRange("B")
+        );
+    }
+
+    @Test
+    public void testParseColumnOrColumnRangeWithColumnRange() {
+        this.checkEquals(
+                SpreadsheetSelection.parseColumnRange("C:D"),
+                SpreadsheetSelection.parseColumnOrColumnRange("C:D")
+        );
+    }
+
+    @Test
+    public void testParseColumnOrColumnRangeWithColumnRangeSingleton() {
+        this.checkEquals(
+                SpreadsheetSelection.parseColumn("E"),
+                SpreadsheetSelection.parseColumnOrColumnRange("E:E")
+        );
+    }
+
     // ParseString...............................................................................................
 
     @Test
