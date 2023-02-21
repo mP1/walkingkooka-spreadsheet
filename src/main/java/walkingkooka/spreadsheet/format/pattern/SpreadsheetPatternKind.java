@@ -24,30 +24,31 @@ import walkingkooka.text.CharSequences;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * The different types of {@link SpreadsheetPattern}.
  */
 public enum SpreadsheetPatternKind implements HasUrlFragment {
-    DATE_FORMAT_PATTERN,
+    DATE_FORMAT_PATTERN(SpreadsheetPattern::parseDateFormatPattern),
 
-    DATE_PARSE_PATTERN,
+    DATE_PARSE_PATTERN(SpreadsheetPattern::parseDateParsePattern),
 
-    DATE_TIME_FORMAT_PATTERN,
+    DATE_TIME_FORMAT_PATTERN(SpreadsheetPattern::parseDateTimeFormatPattern),
 
-    DATE_TIME_PARSE_PATTERN,
+    DATE_TIME_PARSE_PATTERN(SpreadsheetPattern::parseDateTimeParsePattern),
 
-    NUMBER_FORMAT_PATTERN,
+    NUMBER_FORMAT_PATTERN(SpreadsheetPattern::parseNumberFormatPattern),
 
-    NUMBER_PARSE_PATTERN,
+    NUMBER_PARSE_PATTERN(SpreadsheetPattern::parseNumberParsePattern),
 
-    TEXT_FORMAT_PATTERN,
+    TEXT_FORMAT_PATTERN(SpreadsheetPattern::parseTextFormatPattern),
 
-    TIME_FORMAT_PATTERN,
+    TIME_FORMAT_PATTERN(SpreadsheetPattern::parseTimeFormatPattern),
 
-    TIME_PARSE_PATTERN;
+    TIME_PARSE_PATTERN(SpreadsheetPattern::parseTimeParsePattern);
 
-    SpreadsheetPatternKind() {
+    SpreadsheetPatternKind(final Function<String, SpreadsheetPattern> parser) {
         final String name = this.name()
                 .toLowerCase();
 
@@ -68,7 +69,18 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                                                 .replace('_', '-')
                                 )
                         );
+
+        this.parser = parser;
     }
+
+    /**
+     * Parses the given {@link String pattern} into a {@link SpreadsheetPattern} that matches this enum.
+     */
+    public SpreadsheetPattern parse(final String pattern) {
+        return this.parser.apply(pattern);
+    }
+
+    private final Function<String, SpreadsheetPattern> parser;
 
     /**
      * This is the corresponding type name that appears in JSON for each pattern.

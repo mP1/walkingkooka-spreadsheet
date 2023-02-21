@@ -21,7 +21,10 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
+
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -107,6 +110,101 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
         }
     }
 
+    // parse............................................................................................................
+
+    @Test
+    public void testParseDateFormat() {
+        this.parseAndCheck(
+                "yyyy/mm/dd",
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
+                SpreadsheetPattern::parseDateFormatPattern
+        );
+    }
+
+    @Test
+    public void testParseDateParse() {
+        this.parseAndCheck(
+                "yyyy/mm/dd;yyyy/mm/dd;",
+                SpreadsheetPatternKind.DATE_PARSE_PATTERN,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testParseDateTimeFormat() {
+        this.parseAndCheck(
+                "yyyy/mm/dd",
+                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN,
+                SpreadsheetPattern::parseDateTimeFormatPattern
+        );
+    }
+
+    @Test
+    public void testParseDateTimeParse() {
+        this.parseAndCheck(
+                "yyyy/mm/dd;yyyy/mm/dd;",
+                SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN,
+                SpreadsheetPattern::parseDateTimeParsePattern
+        );
+    }
+
+    @Test
+    public void testParseNumberFormat() {
+        this.parseAndCheck(
+                "$0.00",
+                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN,
+                SpreadsheetPattern::parseNumberFormatPattern
+        );
+    }
+
+    @Test
+    public void testParseNumberParse() {
+        this.parseAndCheck(
+                "$0.00,$0.000;",
+                SpreadsheetPatternKind.NUMBER_PARSE_PATTERN,
+                SpreadsheetPattern::parseNumberParsePattern
+        );
+    }
+
+    @Test
+    public void testParseTextFormat() {
+        this.parseAndCheck(
+                "@@@",
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
+                SpreadsheetPattern::parseTextFormatPattern
+        );
+    }
+
+    @Test
+    public void testParseTimeFormat() {
+        this.parseAndCheck(
+                "hh/mm/ss",
+                SpreadsheetPatternKind.TIME_FORMAT_PATTERN,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    @Test
+    public void testParseTimeParse() {
+        this.parseAndCheck(
+                "hh/mm/ss;hh/mm/ss;",
+                SpreadsheetPatternKind.TIME_PARSE_PATTERN,
+                SpreadsheetPattern::parseTimeParsePattern
+        );
+    }
+
+    private void parseAndCheck(final String pattern,
+                               final SpreadsheetPatternKind kind,
+                               final Function<String, SpreadsheetPattern> expected) {
+        this.checkEquals(
+                expected.apply(pattern),
+                kind.parse(pattern),
+                () -> "parse " + CharSequences.quoteAndEscape(pattern)
+        );
+    }
+
+    // HasUrlFragment....................................................................................................
+
     @Test
     public void testUrlFragmentDateFormatPattern() {
         this.checkEquals(
@@ -130,6 +228,8 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
                 SpreadsheetPatternKind.TIME_PARSE_PATTERN.urlFragment()
         );
     }
+
+    // ClassTesting......................................................................................................
 
     @Override
     public Class<SpreadsheetPatternKind> type() {
