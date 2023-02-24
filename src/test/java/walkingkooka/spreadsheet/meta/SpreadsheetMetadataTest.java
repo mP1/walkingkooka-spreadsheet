@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -419,6 +420,75 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .remove(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL)
         );
     }
+
+    // urlFragment......................................................................................................
+
+    @Test
+    public void testUrlFragmentSpreadsheetId() {
+        this.urlFragmentAndCheck(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                "/spreadsheet-id"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentSpreadsheetName() {
+        this.urlFragmentAndCheck(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                "/spreadsheet-name"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentSpreadsheetDateFormatPattern() {
+        this.urlFragmentAndCheck(
+                SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN,
+                "/pattern/date-format"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentSpreadsheetDateTimeFormatPattern() {
+        this.urlFragmentAndCheck(
+                SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN,
+                "/pattern/date-time-format"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentSpreadsheetDateTimeParsePattern() {
+        this.urlFragmentAndCheck(
+                SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN,
+                "/pattern/date-time-parse"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentSpreadsheetDateTimeOffset() {
+        this.urlFragmentAndCheck(
+                SpreadsheetMetadataPropertyName.DATETIME_OFFSET,
+                "/date-time-offset"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentSpreadsheetStyle() {
+        this.urlFragmentAndCheck(
+                SpreadsheetMetadataPropertyName.STYLE,
+                "/style"
+        );
+    }
+
+    private void urlFragmentAndCheck(final SpreadsheetMetadataPropertyName<?> propertyName,
+                                     final String urlFragment) {
+        this.checkEquals(
+                UrlFragment.parse(urlFragment),
+                propertyName.urlFragment(),
+                () -> propertyName + " urlFragment"
+        );
+    }
+
+    // json.............................................................................................................
 
     private JsonNode marshall(final Object value) {
         return JsonNodeMarshallContexts.basic()

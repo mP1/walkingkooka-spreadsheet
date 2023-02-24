@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -136,6 +137,13 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
     @Override
     String propertyValueType() {
         return "Time format pattern";
+    }
+
+    @Override
+    String urlFragment() {
+        return SpreadsheetPatternKind.TIME_FORMAT_PATTERN
+                .urlFragment()
+                .value();
     }
 
     // ClassTesting.....................................................................................................

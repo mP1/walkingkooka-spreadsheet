@@ -38,6 +38,11 @@ public final class SpreadsheetMetadataPropertyNameCurrencySymbolTest extends Spr
         return SpreadsheetMetadataPropertyNameCurrencySymbol.instance();
     }
 
+    @Override
+    String urlFragment() {
+        return "/currency-symbol";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

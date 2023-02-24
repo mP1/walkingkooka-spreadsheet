@@ -74,6 +74,11 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
         return Color.class.getSimpleName();
     }
 
+    @Override
+    String urlFragment() {
+        return "/color-12";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

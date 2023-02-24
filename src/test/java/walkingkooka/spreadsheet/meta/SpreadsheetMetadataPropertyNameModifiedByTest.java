@@ -31,6 +31,11 @@ public final class SpreadsheetMetadataPropertyNameModifiedByTest extends Spreads
         return SpreadsheetMetadataPropertyNameModifiedBy.instance();
     }
 
+    @Override
+    String urlFragment() {
+        return "/modified-by";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

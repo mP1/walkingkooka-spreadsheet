@@ -51,6 +51,11 @@ public final class SpreadsheetMetadataPropertyNameTwoDigitYearTest extends Sprea
         return SpreadsheetMetadataPropertyNameTwoDigitYear.instance();
     }
 
+    @Override
+    String urlFragment() {
+        return "/two-digit-year";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

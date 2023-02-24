@@ -23,6 +23,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -107,6 +108,13 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatternT
     @Override
     String propertyValueType() {
         return "Number parse pattern";
+    }
+
+    @Override
+    String urlFragment() {
+        return SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
+                .urlFragment()
+                .value();
     }
 
     // ClassTesting.....................................................................................................

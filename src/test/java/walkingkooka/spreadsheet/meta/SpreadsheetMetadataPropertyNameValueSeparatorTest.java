@@ -38,6 +38,11 @@ public final class SpreadsheetMetadataPropertyNameValueSeparatorTest extends Spr
         return SpreadsheetMetadataPropertyNameValueSeparator.instance();
     }
 
+    @Override
+    String urlFragment() {
+        return "/value-separator";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

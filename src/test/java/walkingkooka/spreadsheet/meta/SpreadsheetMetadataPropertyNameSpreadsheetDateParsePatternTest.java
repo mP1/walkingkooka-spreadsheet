@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 
 import java.util.Locale;
 
@@ -58,6 +59,13 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternTes
     @Override
     String propertyValueType() {
         return "Date parse pattern";
+    }
+
+    @Override
+    String urlFragment() {
+        return SpreadsheetPatternKind.DATE_PARSE_PATTERN
+                .urlFragment()
+                .value();
     }
 
     // ClassTesting.....................................................................................................

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 
 import java.util.Locale;
@@ -47,6 +48,13 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPatternTe
     @Override
     String propertyValueType() {
         return "Text format pattern";
+    }
+
+    @Override
+    String urlFragment() {
+        return SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+                .urlFragment()
+                .value();
     }
 
     // ClassTesting.....................................................................................................
