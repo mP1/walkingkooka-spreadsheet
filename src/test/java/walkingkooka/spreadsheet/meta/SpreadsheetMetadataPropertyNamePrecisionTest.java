@@ -41,6 +41,11 @@ public final class SpreadsheetMetadataPropertyNamePrecisionTest extends Spreadsh
         return SpreadsheetMetadataPropertyNamePrecision.instance();
     }
 
+    @Override
+    String urlFragment() {
+        return "/precision";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

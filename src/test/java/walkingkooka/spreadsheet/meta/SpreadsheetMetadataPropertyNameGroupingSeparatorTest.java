@@ -38,6 +38,11 @@ public final class SpreadsheetMetadataPropertyNameGroupingSeparatorTest extends 
         return SpreadsheetMetadataPropertyNameGroupingSeparator.instance();
     }
 
+    @Override
+    String urlFragment() {
+        return "/grouping-separator";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

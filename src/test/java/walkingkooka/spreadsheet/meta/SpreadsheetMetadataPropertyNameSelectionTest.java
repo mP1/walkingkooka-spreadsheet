@@ -93,6 +93,11 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
         return SpreadsheetSelection.class.getSimpleName();
     }
 
+    @Override
+    String urlFragment() {
+        return "/selection";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

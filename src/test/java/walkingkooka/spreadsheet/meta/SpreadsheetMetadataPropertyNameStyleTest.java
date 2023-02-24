@@ -41,13 +41,6 @@ public final class SpreadsheetMetadataPropertyNameStyleTest extends SpreadsheetM
         return SpreadsheetMetadataPropertyNameStyle.instance();
     }
 
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<SpreadsheetMetadataPropertyNameStyle> type() {
-        return SpreadsheetMetadataPropertyNameStyle.class;
-    }
-
     @Override
     TextStyle propertyValue() {
         return TextStyle.EMPTY
@@ -60,5 +53,17 @@ public final class SpreadsheetMetadataPropertyNameStyleTest extends SpreadsheetM
     @Override
     String propertyValueType() {
         return TextStyle.class.getSimpleName();
+    }
+
+    @Override
+    String urlFragment() {
+        return "/style";
+    }
+
+    // ClassTesting.....................................................................................................
+
+    @Override
+    public Class<SpreadsheetMetadataPropertyNameStyle> type() {
+        return SpreadsheetMetadataPropertyNameStyle.class;
     }
 }

@@ -48,6 +48,11 @@ public final class SpreadsheetMetadataPropertyNameLocaleTest extends Spreadsheet
         return Locale.class.getSimpleName();
     }
 
+    @Override
+    String urlFragment() {
+        return "/locale";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

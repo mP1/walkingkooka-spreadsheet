@@ -62,6 +62,11 @@ public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends Spre
         return SpreadsheetColumnReferenceRange.class.getSimpleName();
     }
 
+    @Override
+    String urlFragment() {
+        return "/frozen-columns";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

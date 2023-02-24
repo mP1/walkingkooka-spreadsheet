@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -133,6 +134,13 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern
     @Override
     String propertyValueType() {
         return "Number format pattern";
+    }
+
+    @Override
+    String urlFragment() {
+        return SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
+                .urlFragment()
+                .value();
     }
 
     // ClassTesting.....................................................................................................

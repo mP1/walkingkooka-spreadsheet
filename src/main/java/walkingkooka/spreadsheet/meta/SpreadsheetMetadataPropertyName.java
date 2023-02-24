@@ -21,6 +21,8 @@ import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -60,7 +62,9 @@ import java.util.function.Predicate;
 /**
  * The {@link Name} of metadata property.
  */
-public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Comparable<SpreadsheetMetadataPropertyName<?>> {
+public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
+        Comparable<SpreadsheetMetadataPropertyName<?>>,
+        HasUrlFragment {
 
     // constants
 
@@ -327,6 +331,25 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
                 name;
         this.name = finalName;
         this.jsonPropertyName = JsonPropertyName.with(finalName);
+
+        final String urlFragment;
+        if (finalName.contains("pattern")) {
+            // /pattern/date-format
+            urlFragment = "pattern/" +
+                    CharSequences.subSequence(
+                            finalName,
+                            0,
+                            -"-pattern".length()
+                    ).toString();
+        } else {
+            // /expression-number-kind
+            // /currency-symbol
+            // /rounding-mode
+            urlFragment = finalName;
+        }
+
+        this.urlFragment = UrlFragment.SLASH
+                .append(UrlFragment.parse(urlFragment));
     }
 
     /**
@@ -423,6 +446,15 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * Dispatches to the appropriate {@link SpreadsheetMetadataVisitor} visit method.
      */
     abstract void accept(final T value, final SpreadsheetMetadataVisitor visitor);
+
+    // HaUrlFragment....................................................................................................
+
+    @Override
+    public final UrlFragment urlFragment() {
+        return this.urlFragment;
+    }
+
+    private final UrlFragment urlFragment;
 
     // Object...........................................................................................................
 

@@ -69,6 +69,11 @@ public final class SpreadsheetMetadataPropertyNameNamedColorTest extends Spreads
         return Color.class.getSimpleName();
     }
 
+    @Override
+    String urlFragment() {
+        return "/color-dull";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

@@ -55,6 +55,11 @@ public final class SpreadsheetMetadataPropertyNameRoundingModeTest extends Sprea
         return RoundingMode.class.getSimpleName();
     }
 
+    @Override
+    String urlFragment() {
+        return "/rounding-mode";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

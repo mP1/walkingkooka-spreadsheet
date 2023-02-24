@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
@@ -45,6 +46,19 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     SpreadsheetMetadataPropertyNameTestCase() {
         super();
     }
+
+    @Test
+    public final void testUrlFragment() {
+        final N name = this.createName();
+
+        this.checkEquals(
+                UrlFragment.parse(this.urlFragment()),
+                name.urlFragment(),
+                () -> name + " urlFragment"
+        );
+    }
+
+    abstract String urlFragment();
 
     @Test
     public final void testTextStylePropertyNameClashFree() {

@@ -55,6 +55,11 @@ public final class SpreadsheetMetadataPropertyNameExpressionNumberKindTest exten
         return ExpressionNumberKind.class.getSimpleName();
     }
 
+    @Override
+    String urlFragment() {
+        return "/expression-number-kind";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

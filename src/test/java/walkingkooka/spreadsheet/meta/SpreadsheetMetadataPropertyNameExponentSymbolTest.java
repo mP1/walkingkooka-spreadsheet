@@ -38,6 +38,11 @@ public final class SpreadsheetMetadataPropertyNameExponentSymbolTest extends Spr
         return SpreadsheetMetadataPropertyNameExponentSymbol.instance();
     }
 
+    @Override
+    String urlFragment() {
+        return "/exponent-symbol";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

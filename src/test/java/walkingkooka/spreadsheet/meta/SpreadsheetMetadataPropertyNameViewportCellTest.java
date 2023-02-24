@@ -56,6 +56,11 @@ public final class SpreadsheetMetadataPropertyNameViewportCellTest extends Sprea
         return SpreadsheetCellReference.class.getSimpleName();
     }
 
+    @Override
+    public String urlFragment() {
+        return "/viewport-cell";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

@@ -46,6 +46,11 @@ public final class SpreadsheetMetadataPropertyNameDefaultYearTest extends Spread
         return SpreadsheetMetadataPropertyNameDefaultYear.instance();
     }
 
+    @Override
+    String urlFragment() {
+        return "/default-year";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

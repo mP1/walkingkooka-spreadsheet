@@ -38,6 +38,11 @@ public final class SpreadsheetMetadataPropertyNamePercentageSymbolTest extends S
         return SpreadsheetMetadataPropertyNamePercentageSymbol.instance();
     }
 
+    @Override
+    String urlFragment() {
+        return "/percentage-symbol";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

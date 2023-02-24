@@ -55,6 +55,11 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetIdTest extends Spre
         return SpreadsheetId.class.getSimpleName();
     }
 
+    @Override
+    String urlFragment() {
+        return "/spreadsheet-id";
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
