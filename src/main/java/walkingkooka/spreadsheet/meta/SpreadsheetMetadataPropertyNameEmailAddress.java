@@ -56,4 +56,16 @@ abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMe
     final String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public final boolean isParseValueSupported() {
+        return false;
+    }
+
+    @Override
+    public final EmailAddress parseValue0(final String value) {
+        return this.failParseValueUnsupported();
+    }
 }

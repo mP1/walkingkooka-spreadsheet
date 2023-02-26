@@ -55,4 +55,16 @@ abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetM
     final String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public final boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public final LocalDateTime parseValue0(final String value) {
+        return LocalDateTime.parse(value);
+    }
 }

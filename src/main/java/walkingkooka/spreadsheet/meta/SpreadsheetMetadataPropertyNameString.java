@@ -61,4 +61,16 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
     final String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public final boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public final String parseValue0(final String value) {
+        return value;
+    }
 }

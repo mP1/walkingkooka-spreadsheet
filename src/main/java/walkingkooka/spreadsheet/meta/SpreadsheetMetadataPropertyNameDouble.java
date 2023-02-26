@@ -48,4 +48,16 @@ abstract class SpreadsheetMetadataPropertyNameDouble extends SpreadsheetMetadata
     String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public final boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public final Double parseValue0(final String value) {
+        return Double.parseDouble(value);
+    }
 }

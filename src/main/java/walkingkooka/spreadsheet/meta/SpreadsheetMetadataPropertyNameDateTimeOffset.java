@@ -67,4 +67,16 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
     String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public Long parseValue0(final String value) {
+        return Long.parseLong(value);
+    }
 }

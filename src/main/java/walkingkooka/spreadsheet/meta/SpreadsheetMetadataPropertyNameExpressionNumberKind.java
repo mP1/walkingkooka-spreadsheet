@@ -69,4 +69,16 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
     String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public ExpressionNumberKind parseValue0(final String value) {
+        return ExpressionNumberKind.valueOf(value);
+    }
 }

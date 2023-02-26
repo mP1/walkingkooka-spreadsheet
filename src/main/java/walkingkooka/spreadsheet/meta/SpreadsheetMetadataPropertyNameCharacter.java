@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.text.CharSequences;
+
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Optional;
@@ -65,5 +67,21 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
     @Override
     final String compareToName() {
         return this.value();
+    }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public final boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public final Character parseValue0(final String value) {
+        if (value.isEmpty() || value.length() > 1) {
+            throw new IllegalArgumentException("Invalid value " + CharSequences.quoteAndEscape(value) + " expected a single character");
+        }
+
+        return value.charAt(0);
     }
 }

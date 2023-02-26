@@ -71,4 +71,16 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePattern extends S
     String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public SpreadsheetTimeParsePattern parseValue0(final String value) {
+        return SpreadsheetPattern.parseTimeParsePattern(value);
+    }
 }

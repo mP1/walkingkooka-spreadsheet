@@ -77,4 +77,16 @@ final class SpreadsheetMetadataPropertyNameViewportCell extends SpreadsheetMetad
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitViewportCell(value);
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return false;
+    }
+
+    @Override
+    public SpreadsheetCellReference parseValue0(final String value) {
+        return this.failParseValueUnsupported();
+    }
 }

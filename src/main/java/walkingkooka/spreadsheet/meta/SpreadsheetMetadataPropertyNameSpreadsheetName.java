@@ -70,4 +70,16 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetName extends SpreadsheetMe
     String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return false;
+    }
+
+    @Override
+    public SpreadsheetName parseValue0(final String value) {
+        return this.failParseValueUnsupported();
+    }
 }

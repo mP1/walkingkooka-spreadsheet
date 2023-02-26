@@ -70,4 +70,16 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
     String compareToName() {
         return ""; // ensure id always appears first.
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return false;
+    }
+
+    @Override
+    public SpreadsheetId parseValue0(final String value) {
+        return this.failParseValueUnsupported();
+    }
 }

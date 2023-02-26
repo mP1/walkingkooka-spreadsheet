@@ -67,4 +67,16 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
     String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public Locale parseValue0(final String value) {
+        return Locale.forLanguageTag(value);
+    }
 }
