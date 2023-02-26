@@ -56,6 +56,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -447,7 +448,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     abstract void accept(final T value, final SpreadsheetMetadataVisitor visitor);
 
-    // HaUrlFragment....................................................................................................
+    // HasUrlFragment...................................................................................................
 
     @Override
     public final UrlFragment urlFragment() {
@@ -455,6 +456,26 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     private final UrlFragment urlFragment;
+
+    /**
+     * Not all values may be represented by a {@link UrlFragment} which indicates that a property may have its value
+     * updated.
+     */
+    public abstract boolean isParseValueSupported();
+
+    public final T parseValue(final String value) {
+        Objects.requireNonNull(value, value);
+
+        return this.checkValue(
+                this.parseValue0(value)
+        );
+    }
+
+    abstract T parseValue0(final String value);
+
+    final T failParseValueUnsupported() {
+        throw new UnsupportedOperationException("UrlFragment not supported for " + CharSequences.quoteAndEscape(this.value()));
+    }
 
     // Object...........................................................................................................
 

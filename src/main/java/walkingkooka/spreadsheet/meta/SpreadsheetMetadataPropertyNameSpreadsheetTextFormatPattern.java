@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 
 import java.util.Locale;
@@ -68,5 +69,17 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern extends 
     @Override
     String compareToName() {
         return this.value();
+    }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public SpreadsheetTextFormatPattern parseValue0(final String value) {
+        return SpreadsheetPattern.parseTextFormatPattern(value);
     }
 }

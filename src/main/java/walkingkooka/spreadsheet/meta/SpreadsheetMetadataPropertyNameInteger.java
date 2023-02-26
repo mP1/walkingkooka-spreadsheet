@@ -52,4 +52,16 @@ abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadat
     final String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public final boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public final Integer parseValue0(final String value) {
+        return Integer.parseInt(value);
+    }
 }

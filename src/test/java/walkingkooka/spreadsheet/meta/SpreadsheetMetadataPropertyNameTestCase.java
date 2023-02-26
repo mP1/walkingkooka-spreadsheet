@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -145,6 +146,36 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         this.checkEquals(Optional.ofNullable(value),
                 propertyName.extractLocaleValue(locale),
                 propertyName + " extractLocaleValue " + locale);
+    }
+
+    // parseValue.......................................................................................................
+
+    @Test
+    public final void testParseValue() {
+        final SpreadsheetMetadataPropertyName<V> propertyName = this.createName();
+
+        final String text;
+
+        final V value = this.propertyValue();
+        if (value instanceof HasUrlFragment) {
+            final HasUrlFragment has = (HasUrlFragment) value;
+            text = has.urlFragment().value();
+        } else {
+            text = String.valueOf(value);
+        }
+
+        if (propertyName.isParseValueSupported()) {
+            this.checkEquals(
+                    value,
+                    propertyName.parseValue(text),
+                    () -> "parseValue " + CharSequences.quoteAndEscape(text)
+            );
+        } else {
+            assertThrows(
+                    UnsupportedOperationException.class,
+                    () -> propertyName.parseValue("")
+            );
+        }
     }
 
     // NameTesting......................................................................................................

@@ -79,4 +79,16 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
     String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return false;
+    }
+
+    @Override
+    public SpreadsheetColumnReferenceRange parseValue0(final String value) {
+        return this.failParseValueUnsupported();
+    }
 }

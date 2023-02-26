@@ -77,4 +77,16 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitSelection(value);
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return false;
+    }
+
+    @Override
+    public SpreadsheetViewportSelection parseValue0(final String value) {
+        return this.failParseValueUnsupported();
+    }
 }

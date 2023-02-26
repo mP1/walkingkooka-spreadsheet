@@ -22,8 +22,11 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.naming.NameTesting;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.text.CaseSensitivity;
 
 import java.lang.reflect.Field;
@@ -170,6 +173,99 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         this.compareToArraySortAndCheck(
                 color3, color2, creator, spreadsheetId, color10,
                 spreadsheetId, color2, color3, color10, creator
+        );
+    }
+
+    // parseValue.......................................................................................................
+
+    @Test
+    public void testParseValueColor() {
+        final Color color = Color.parse("#123456");
+
+        this.checkEquals(
+                color,
+                SpreadsheetMetadataPropertyName.numberedColor(1)
+                        .parseValue(color.toString())
+        );
+    }
+
+    @Test
+    public void testParseValueCreatorFails() {
+        this.parseValueFails(
+                SpreadsheetMetadataPropertyName.CREATOR,
+                EmailAddress.parse("creator@example.com")
+        );
+    }
+
+    @Test
+    public void testParseValueFrozenColumnFails() {
+        this.parseValueFails(
+                SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
+                "A:B"
+        );
+    }
+
+    @Test
+    public void testParseValueModifiedByFails() {
+        this.parseValueFails(
+                SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                EmailAddress.parse("modified-by@example.com")
+        );
+    }
+
+    @Test
+    public void testParseValueFrozenRowFails() {
+        this.parseValueFails(
+                SpreadsheetMetadataPropertyName.FROZEN_ROWS,
+                "1:2"
+        );
+    }
+
+    @Test
+    public void testParseValueSpreadsheetIdFails() {
+        this.parseValueFails(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SpreadsheetId.parse("123abc")
+        );
+    }
+
+    @Test
+    public void testParseValueSpreadsheetNameFails() {
+        this.parseValueFails(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                SpreadsheetName.with("SpreadsheetName123")
+        );
+    }
+
+    @Test
+    public void testParseValueStyleFails() {
+        this.parseValueFails(
+                SpreadsheetMetadataPropertyName.STYLE,
+                "style"
+        );
+    }
+
+    @Test
+    public void testParseValueViewportCellFails() {
+        this.parseValueFails(
+                SpreadsheetMetadataPropertyName.VIEWPORT_CELL,
+                "!"
+        );
+    }
+
+    private <T> void parseValueFails(final SpreadsheetMetadataPropertyName<T> propertyName,
+                                     final T propertyValue) {
+        this.parseValueFails(
+                propertyName,
+                propertyValue.toString()
+        );
+    }
+
+    private void parseValueFails(final SpreadsheetMetadataPropertyName<?> propertyName,
+                                 final String propertyValue) {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> propertyName.parseValue(propertyValue)
         );
     }
 

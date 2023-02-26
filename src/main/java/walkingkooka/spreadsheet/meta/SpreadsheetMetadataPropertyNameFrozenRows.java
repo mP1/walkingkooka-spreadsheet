@@ -80,4 +80,16 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return false;
+    }
+
+    @Override
+    public SpreadsheetRowReferenceRange parseValue0(final String value) {
+        return this.failParseValueUnsupported();
+    }
 }

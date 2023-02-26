@@ -54,4 +54,16 @@ abstract class SpreadsheetMetadataPropertyNameColor extends SpreadsheetMetadataP
     final Class<Color> type() {
         return Color.class;
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public final boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public final Color parseValue0(final String value) {
+        return Color.parse(value);
+    }
 }

@@ -72,4 +72,16 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern extend
     String compareToName() {
         return this.value();
     }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public SpreadsheetNumberFormatPattern parseValue0(final String value) {
+        return SpreadsheetPattern.parseNumberFormatPattern(value);
+    }
 }
