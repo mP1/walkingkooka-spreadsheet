@@ -421,7 +421,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     /**
-     * Prpvides the actual text with the exception message.
+     * Provides the specific text about an invalid value for {@link #spreadsheetMetadataPropertyValueException(Object)}.
      */
     abstract String expected();
 
