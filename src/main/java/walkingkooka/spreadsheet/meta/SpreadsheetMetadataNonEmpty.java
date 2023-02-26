@@ -100,7 +100,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
         final String invalid = this.value.keySet()
                 .stream()
-                .filter(SpreadsheetMetadataPropertyName::isInvalidGenericProperty)
+                .filter(SpreadsheetMetadataPropertyName::isNotDefaultProperty)
                 .map(Object::toString)
                 .sorted()
                 .collect(Collectors.joining(", "));
