@@ -230,14 +230,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseValueSpreadsheetNameFails() {
-        this.parseValueFails(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
-                SpreadsheetName.with("SpreadsheetName123")
-        );
-    }
-
-    @Test
     public void testParseValueStyleFails() {
         this.parseValueFails(
                 SpreadsheetMetadataPropertyName.STYLE,
@@ -268,6 +260,17 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                 () -> propertyName.parseValue(propertyValue)
         );
     }
+
+    @Test
+    public void testParseValueSpreadsheetName() {
+        final String value = "SpreadsheetName123";
+
+        this.checkEquals(
+                SpreadsheetName.with(value),
+                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.parseValue(value)
+        );
+    }
+
 
     // JsonNodeMarshallingTesting.......................................................................................
 
