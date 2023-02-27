@@ -428,7 +428,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * Defaults must not include a spreadsheet-id, email address or timestamp.
      */
-    final boolean isInvalidGenericProperty() {
+    final boolean isNotDefaultProperty() {
         return this instanceof SpreadsheetMetadataPropertyNameEmailAddress ||
                 this instanceof SpreadsheetMetadataPropertyNameLocalDateTime ||
                 this instanceof SpreadsheetMetadataPropertyNameSpreadsheetId;
