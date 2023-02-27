@@ -47,7 +47,7 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
     @Test
     public void testUrlFragment() {
         this.checkEquals(
-                UrlFragment.with("/" + VALUE),
+                UrlFragment.with(VALUE),
                 this.createObject().urlFragment()
         );
     }
