@@ -94,12 +94,10 @@ public final class SpreadsheetName implements Comparable<SpreadsheetName>,
 
     // HasUrlFragment...................................................................................................
 
-    // /spreadsheetName123
+    // spreadsheetName123
     @Override
     public UrlFragment urlFragment() {
-        return UrlFragment.SLASH.append(
-                UrlFragment.with(this.toString())
-        );
+        return UrlFragment.with(this.toString());
     }
 
     // JsonNodeContext..................................................................................................
