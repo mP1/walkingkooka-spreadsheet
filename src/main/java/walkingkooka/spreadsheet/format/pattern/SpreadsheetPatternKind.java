@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CharSequences;
 
 import java.util.Arrays;
@@ -91,6 +92,15 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
 
     private final String typeName;
 
+    /**
+     * Returns the {@link SpreadsheetMetadataPropertyName} for this {@link SpreadsheetPatternKind}.
+     */
+    public SpreadsheetMetadataPropertyName<?> spreadsheetMetadataPropertyName() {
+        return SpreadsheetMetadataPropertyName.with(
+                this.typeName()
+                        .substring("spreadsheet-".length())
+        );
+    }
 
     @Override
     public UrlFragment urlFragment() {
