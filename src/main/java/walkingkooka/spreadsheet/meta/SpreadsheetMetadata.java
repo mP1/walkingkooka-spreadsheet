@@ -244,11 +244,17 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
      * Fetches the effective style with properties replaced by non defaults when they exist.
      */
     public TextStyle effectiveStyle() {
-        final TextStyle style = this.getStyleOrEmpty();
-        final TextStyle defaultStyle = this.defaults().getStyleOrEmpty();
+        if (null == this.effectiveStyle) {
+            final TextStyle style = this.getStyleOrEmpty();
+            final TextStyle defaultStyle = this.defaults().getStyleOrEmpty();
 
-        return style.merge(defaultStyle);
+            this.effectiveStyle = style.merge(defaultStyle);
+        }
+
+        return this.effectiveStyle;
     }
+
+    private TextStyle effectiveStyle;
 
     private TextStyle getStyleOrEmpty() {
         return this.getIgnoringDefaults(SpreadsheetMetadataPropertyName.STYLE)
