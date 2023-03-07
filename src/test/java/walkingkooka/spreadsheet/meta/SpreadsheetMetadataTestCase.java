@@ -139,10 +139,18 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     final void effectiveStyleAndCheck(final SpreadsheetMetadata metadata,
                                       final TextStyle expected) {
+        final TextStyle effectiveStyle = metadata.effectiveStyle();
+
         this.checkEquals(
                 expected,
-                metadata.effectiveStyle(),
+                effectiveStyle,
                 () -> "effectiveStyle of " + metadata
+        );
+
+        assertSame(
+                effectiveStyle,
+                metadata.effectiveStyle(),
+                () -> "effectiveStyle not cached of " + metadata
         );
     }
 
