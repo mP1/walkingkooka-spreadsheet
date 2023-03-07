@@ -151,6 +151,161 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 () -> "getOrFail " + propertyName + " in " + metadata);
     }
 
+    // effectiveStyle...................................................................................................
+
+    @Test
+    public void testEffectiveStyleMissingDefaults() {
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        );
+
+        this.effectiveStyleAndCheck(
+                SpreadsheetMetadata.EMPTY.set(
+                        SpreadsheetMetadataPropertyName.STYLE,
+                        style
+                ),
+                style
+        );
+    }
+
+    @Test
+    public void testEffectiveStyleOnlyDefaults() {
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        );
+
+        this.effectiveStyleAndCheck(
+                SpreadsheetMetadata.EMPTY.setDefaults(
+                        SpreadsheetMetadata.EMPTY.set(
+                                SpreadsheetMetadataPropertyName.STYLE,
+                                style
+                        )
+                ),
+                style
+        );
+    }
+
+    @Test
+    public void testEffectiveStyleMixed() {
+        final Length<?> width = Length.pixel(12.0);
+        final Length<?> height = Length.pixel(34.0);
+
+        this.effectiveStyleAndCheck(
+                SpreadsheetMetadata.EMPTY
+                        .set(
+                                SpreadsheetMetadataPropertyName.STYLE,
+                                TextStyle.EMPTY.set(
+                                        TextStylePropertyName.WIDTH,
+                                        width
+                                )
+                        ).setDefaults(
+                                SpreadsheetMetadata.EMPTY.set(
+                                        SpreadsheetMetadataPropertyName.STYLE,
+                                        TextStyle.EMPTY.set(
+                                                TextStylePropertyName.HEIGHT,
+                                                height
+                                        )
+                                )
+                        ),
+                TextStyle.EMPTY.set(
+                        TextStylePropertyName.WIDTH,
+                        width
+                ).set(
+                        TextStylePropertyName.HEIGHT,
+                        height
+                )
+        );
+    }
+
+    @Test
+    public void testEffectiveStyleDefaultLowerPriority() {
+        final Length<?> width = Length.pixel(12.0);
+        final Length<?> height = Length.pixel(34.0);
+
+        this.effectiveStyleAndCheck(
+                SpreadsheetMetadata.EMPTY
+                        .set(
+                                SpreadsheetMetadataPropertyName.STYLE,
+                                TextStyle.EMPTY.set(
+                                        TextStylePropertyName.WIDTH,
+                                        width
+                                )
+                        ).setDefaults(
+                                SpreadsheetMetadata.EMPTY.set(
+                                        SpreadsheetMetadataPropertyName.STYLE,
+                                        TextStyle.EMPTY.set(
+                                                TextStylePropertyName.HEIGHT,
+                                                height
+                                        ).set(
+                                                TextStylePropertyName.WIDTH,
+                                                Length.pixel(999.0) // ignored
+                                        )
+                                )
+                        ),
+                TextStyle.EMPTY.set(
+                        TextStylePropertyName.WIDTH,
+                        width
+                ).set(
+                        TextStylePropertyName.HEIGHT,
+                        height
+                )
+        );
+    }
+
+    @Test
+    public void testEffectiveStyleDefaultLowerPriority2() {
+        final Length<?> width = Length.pixel(12.0);
+        final Length<?> height = Length.pixel(34.0);
+        final Color color = Color.parse("#123");
+        final Color bgColor = Color.parse("#456");
+
+        this.effectiveStyleAndCheck(
+                SpreadsheetMetadata.EMPTY
+                        .set(
+                                SpreadsheetMetadataPropertyName.STYLE,
+                                TextStyle.EMPTY.set(
+                                        TextStylePropertyName.WIDTH,
+                                        width
+                                ).set(
+                                        TextStylePropertyName.COLOR,
+                                        color
+                                )
+                        ).setDefaults(
+                                SpreadsheetMetadata.EMPTY.set(
+                                        SpreadsheetMetadataPropertyName.STYLE,
+                                        TextStyle.EMPTY.set(
+                                                TextStylePropertyName.HEIGHT,
+                                                height
+                                        ).set(
+                                                TextStylePropertyName.WIDTH,
+                                                Length.pixel(999.0) // ignored
+                                        ).set(
+                                                TextStylePropertyName.BACKGROUND_COLOR,
+                                                bgColor
+                                        ).set(
+                                                TextStylePropertyName.COLOR,
+                                                Color.parse("#999")
+                                        )
+                                )
+                        ),
+                TextStyle.EMPTY.set(
+                        TextStylePropertyName.WIDTH,
+                        width
+                ).set(
+                        TextStylePropertyName.HEIGHT,
+                        height
+                ).set(
+                        TextStylePropertyName.COLOR,
+                        color
+                ).set(
+                        TextStylePropertyName.BACKGROUND_COLOR,
+                        bgColor
+                )
+        );
+    }
+
     // set..............................................................................................................
 
     @Test

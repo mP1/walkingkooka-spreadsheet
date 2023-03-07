@@ -23,6 +23,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.text.TextStyle;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -41,6 +42,16 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testValue() {
         assertSame(SpreadsheetMetadata.EMPTY.value(), SpreadsheetMetadata.EMPTY.value());
+    }
+
+    // effectiveStyle...................................................................................................
+
+    @Test
+    public void testEffectiveStyle() {
+        this.effectiveStyleAndCheck(
+                SpreadsheetMetadata.EMPTY,
+                TextStyle.EMPTY
+        );
     }
 
     // set..............................................................................................................
