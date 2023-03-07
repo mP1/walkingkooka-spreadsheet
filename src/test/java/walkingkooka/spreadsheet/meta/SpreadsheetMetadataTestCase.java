@@ -127,6 +127,25 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         this.checkEquals(null, thrown.value(), "property value");
     }
 
+    // effectiveStyle...................................................................................................
+
+    @Test
+    public final void testEffectiveStyleNotNull() {
+        this.checkNotEquals(
+                this.createObject().effectiveStyle(),
+                null
+        );
+    }
+
+    final void effectiveStyleAndCheck(final SpreadsheetMetadata metadata,
+                                      final TextStyle expected) {
+        this.checkEquals(
+                expected,
+                metadata.effectiveStyle(),
+                () -> "effectiveStyle of " + metadata
+        );
+    }
+
     // set..............................................................................................................
 
     @Test

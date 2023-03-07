@@ -240,6 +240,21 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
                 .orElseThrow(() -> new TextStylePropertyValueException("Missing " + propertyName));
     }
 
+    /**
+     * Fetches the effective style with properties replaced by non defaults when they exist.
+     */
+    public TextStyle effectiveStyle() {
+        final TextStyle style = this.getStyleOrEmpty();
+        final TextStyle defaultStyle = this.defaults().getStyleOrEmpty();
+
+        return style.merge(defaultStyle);
+    }
+
+    private TextStyle getStyleOrEmpty() {
+        return this.getIgnoringDefaults(SpreadsheetMetadataPropertyName.STYLE)
+                .orElse(TextStyle.EMPTY);
+    }
+
     // set..............................................................................................................
 
     /**
