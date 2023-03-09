@@ -40,6 +40,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -302,6 +303,65 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final SpreadsheetViewportSelection viewportSelection = selection.setAnchor(anchor);
         this.checkEquals(anchor, viewportSelection.anchor(), "anchor");
         this.checkEquals(selection, viewportSelection.selection(), "selection");
+    }
+
+    // setAnchor........................................................................................................
+
+    @Test
+    public final void testSetAnchorNullFails() {
+        final S selection = this.createSelection();
+
+        assertThrows(
+                NullPointerException.class,
+                () -> selection.setAnchor(null)
+        );
+    }
+
+    @Test
+    public final void testSetAnchorInvalidFails() {
+        final S selection = this.createSelection();
+
+        if (false == selection.isLabelName()) {
+            for (final SpreadsheetViewportSelectionAnchor anchor : SpreadsheetViewportSelectionAnchor.values()) {
+                if (selection.anchors().contains(anchor)) {
+                    continue;
+                }
+                final IllegalArgumentException thrown = assertThrows(
+                        IllegalArgumentException.class,
+                        () -> selection.setAnchor(anchor)
+                );
+                this.checkEquals(
+                        selection +
+                                " contains an invalid anchor " +
+                                anchor +
+                                ", valid anchors: " +
+                                selection.anchors()
+                                        .stream()
+                                        .map(Enum::toString)
+                                        .collect(Collectors.joining(", ")),
+                        thrown.getMessage()
+                );
+            }
+        }
+    }
+
+    @Test
+    public final void testSetAnchorTryAllValid() {
+        final S selection = this.createSelection();
+
+        for (final SpreadsheetViewportSelectionAnchor anchor : SpreadsheetViewportSelectionAnchor.values()) {
+            if (selection.anchors().contains(anchor)) {
+                this.checkEquals(
+                        SpreadsheetViewportSelection.with(
+                                selection,
+                                anchor,
+                                SpreadsheetViewportSelection.NO_NAVIGATION
+                        ),
+                        selection.setAnchor(anchor),
+                        () -> selection + ".setAnchor " + anchor
+                );
+            }
+        }
     }
 
     // setDefaultAnchor.................................................................................................
