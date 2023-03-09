@@ -668,6 +668,15 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
         );
     }
 
+    /**
+     * Factory that returns a {@link SpreadsheetViewportSelection} after selecting the default {@link SpreadsheetViewportSelectionAnchor}.
+     */
+    public final SpreadsheetViewportSelection setDefaultAnchor() {
+        return this.setAnchor(
+                this.defaultAnchor()
+        );
+    }
+
     final SpreadsheetViewportSelection setAnchorOrDefault(final SpreadsheetViewportSelectionAnchor anchor) {
         return this.setAnchor(
                 this instanceof HasRange ?

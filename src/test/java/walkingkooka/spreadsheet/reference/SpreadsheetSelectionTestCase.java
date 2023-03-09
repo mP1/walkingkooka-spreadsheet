@@ -304,6 +304,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.checkEquals(selection, viewportSelection.selection(), "selection");
     }
 
+    // setDefaultAnchor.................................................................................................
+
+    @Test
+    public final void testSetDefaultAnchor() {
+        final S selection = this.createSelection();
+        final SpreadsheetViewportSelectionAnchor anchor = selection.defaultAnchor();
+
+        this.checkEquals(
+                selection.setAnchor(anchor),
+                selection.setDefaultAnchor()
+        );
+    }
+
     // isHidden.........................................................................................................
 
     final void isHiddenAndCheck(final String selection,
