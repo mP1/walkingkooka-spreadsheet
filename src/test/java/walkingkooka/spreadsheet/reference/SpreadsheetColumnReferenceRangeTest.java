@@ -446,6 +446,13 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // cellColumnOrRowText..............................................................................................
+
+    @Test
+    public void testCellColumnOrRow() {
+        this.cellColumnOrRowTextAndCheck("column");
+    }
+
     // isAll............................................................................................................
 
     @Test

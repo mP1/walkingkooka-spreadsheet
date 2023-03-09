@@ -317,6 +317,24 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // cellColumnOrRowText..............................................................................................
+
+    final void cellColumnOrRowTextAndCheck(final String text) {
+        this.cellColumnOrRowTextAndCheck(
+                this.createSelection(),
+                text
+        );
+    }
+
+    final void cellColumnOrRowTextAndCheck(final SpreadsheetSelection selection,
+                                           final String text) {
+        this.checkEquals(
+                text,
+                selection.cellColumnOrRowText(),
+                selection + " cellColumnOrRowText"
+        );
+    }
+
     // isHidden.........................................................................................................
 
     final void isHiddenAndCheck(final String selection,

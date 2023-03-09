@@ -25,6 +25,14 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
     SpreadsheetExpressionReferenceTestCase() {
         super();
     }
+
+    // cellColumnOrRowText..............................................................................................
+
+    @Test
+    public final void testCellColumnOrRow() {
+        this.cellColumnOrRowTextAndCheck("cell");
+    }
+
     // viewport........................................................................................................
 
     final void viewportAndCheck(final SpreadsheetExpressionReference selection,

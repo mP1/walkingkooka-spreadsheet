@@ -108,6 +108,13 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // cellColumnOrRowText..............................................................................................
+
+    @Test
+    public void testCellColumnOrRow() {
+        this.cellColumnOrRowTextAndCheck("row");
+    }
+
     // Predicate........................................................................................................
 
     @Test
