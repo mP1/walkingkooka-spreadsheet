@@ -790,6 +790,17 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
                 Optional.of(this.setAnchor(anchor));
     }
 
+    // cellColumnOrRow..................................................................................................
+
+    /**
+     * Returns either cell for cell/cell-range/label, column for column/column-range and row for row/row-range.
+     */
+    public final String cellColumnOrRowText() {
+        return this.isColumnReference() || this.isColumnReferenceRange() ? "column" :
+                this.isRowReference() || this.isRowReferenceRange() ? "row" :
+                        "cell";
+    }
+
     // textLabel........................................................................................................
 
     /**

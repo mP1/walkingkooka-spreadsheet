@@ -72,6 +72,13 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.countAndCheck("$Z", 1);
     }
 
+    // cellColumnOrRowText..............................................................................................
+
+    @Test
+    public void testCellColumnOrRow() {
+        this.cellColumnOrRowTextAndCheck("column");
+    }
+
     // Predicate........................................................................................................
 
     @Test
