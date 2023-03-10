@@ -636,13 +636,14 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
     final void checkAnchor(final SpreadsheetViewportSelectionAnchor anchor) {
         Objects.requireNonNull(anchor, "anchor");
 
-        if (!this.isLabelName()) {
+        if (false == this.isLabelName()) {
             final Set<SpreadsheetViewportSelectionAnchor> anyOf = this.anchors();
-            if (!anyOf.contains(anchor)) {
+            if (false == anyOf.contains(anchor)) {
                 throw new IllegalArgumentException(
-                        this +
-                                " contains an invalid anchor " +
+                        "Invalid anchor " +
                                 anchor +
+                                " for " +
+                                this +
                                 ", valid anchors: " +
                                 anyOf.stream()
                                         .map(Object::toString)

@@ -127,7 +127,16 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     private void withAnchorNotNonRangeFails(final SpreadsheetSelection selection) {
         for (final SpreadsheetViewportSelectionAnchor anchor : SpreadsheetViewportSelectionAnchor.values()) {
             if (anchor != SpreadsheetViewportSelectionAnchor.NONE) {
-                this.withFails(selection, anchor, selection + " contains an invalid anchor " + anchor + ", valid anchors: " + SpreadsheetViewportSelectionAnchor.NONE);
+                this.withFails(
+                        selection,
+                        anchor,
+                        "Invalid anchor " +
+                                anchor +
+                                " for " +
+                                selection +
+                                ", valid anchors: " +
+                                SpreadsheetViewportSelectionAnchor.NONE
+                );
             }
         }
     }
