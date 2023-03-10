@@ -331,9 +331,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         () -> selection.setAnchor(anchor)
                 );
                 this.checkEquals(
-                        selection +
-                                " contains an invalid anchor " +
+                        "Invalid anchor " +
                                 anchor +
+                                " for " +
+                                selection +
                                 ", valid anchors: " +
                                 selection.anchors()
                                         .stream()
