@@ -541,6 +541,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         SpreadsheetPattern.parseNumberFormatPattern(" ");
         //noinspection ResultOfMethodCallIgnored
         SpreadsheetId.with(0);
+        SpreadsheetName.with("Untitled");
         SpreadsheetViewportSelection.NO_NAVIGATION.isPresent();
     }
 }
