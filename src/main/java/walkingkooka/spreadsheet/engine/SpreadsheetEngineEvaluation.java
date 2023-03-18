@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.text.CaseKind;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.json.JsonNode;
@@ -142,7 +143,9 @@ public enum SpreadsheetEngineEvaluation {
     };
 
     SpreadsheetEngineEvaluation() {
-        this.linkRelation = LinkRelation.with(this.name().toLowerCase().replace('_', '-'));
+        this.linkRelation = LinkRelation.with(
+                CaseKind.kebabEnumName(this)
+        );
     }
 
     abstract SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,

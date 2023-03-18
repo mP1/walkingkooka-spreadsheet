@@ -38,7 +38,7 @@ public enum SpreadsheetViewportSelectionAnchor implements HasUrlFragment {
     RIGHT;
 
     SpreadsheetViewportSelectionAnchor() {
-        this.kebabText = this.name().toLowerCase().replace('_', '-');
+        this.kebabText = CaseKind.kebabEnumName(this);
     }
 
     public String kebabText() {
