@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
 import java.util.Optional;
@@ -105,9 +106,7 @@ public enum SpreadsheetViewportSelectionNavigation {
     };
 
     SpreadsheetViewportSelectionNavigation() {
-        this.kebabText = this.name()
-                .toLowerCase()
-                .replace('_', '-');
+        this.kebabText = CaseKind.kebabEnumName(this);
     }
 
     public String kebabText() {
