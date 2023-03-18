@@ -618,12 +618,12 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
     public abstract boolean isAll();
 
     /**
-     * Returns true if this selection is the first, eg A1, column A or row 1.
+     * Returns true if this selection is the first possible value, eg A1, column A or row 1.
      */
     public abstract boolean isFirst();
 
     /**
-     * Returns true if this selection is the last.
+     * Returns true if this selection is the last possible column, row or cell.
      */
     public abstract boolean isLast();
 
