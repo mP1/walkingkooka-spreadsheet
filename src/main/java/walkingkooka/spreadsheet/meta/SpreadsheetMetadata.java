@@ -812,6 +812,41 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
 
     abstract void accept(final SpreadsheetMetadataVisitor visitor);
 
+    // viewport.........................................................................................................
+
+    /**
+     * This may be used to test if there is sufficient differences between this and the given {@link SpreadsheetMetadata}.
+     */
+    public boolean shouldRenderedCellsRefresh(final SpreadsheetMetadata metadata) {
+        Objects.requireNonNull(metadata, "metadata");
+
+        boolean should = false;
+        if (this.id().isPresent()) {
+
+            for (final SpreadsheetMetadataPropertyName<?> name : SpreadsheetMetadataPropertyName.CONSTANTS.values()) {
+                switch (name.name) {
+                    case "creator":
+                    case "create-date-time":
+                    case "modified-by":
+                    case "modified-date-time":
+                    case "selection":
+                    case "spreadsheet-name":
+                        break;
+                    default:
+                        should = false == this.get(name).equals(metadata.get(name));
+                        break;
+                }
+
+                // any important property differences, stop checking and return true
+                if (should) {
+                    break;
+                }
+            }
+        }
+
+        return should;
+    }
+
     // Object...........................................................................................................
 
     @Override
