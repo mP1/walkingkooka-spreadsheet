@@ -26,6 +26,8 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -225,6 +227,242 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkEquals(
                 metadata.set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.'),
                 metadata.setOrRemove(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
+        );
+    }
+
+    // shouldRenderedCellsRefresh.......................................................................................
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameIdMissing() {
+        this.shouldRenderedCellsRefreshAndCheck(
+                SpreadsheetMetadata.EMPTY,
+                this.metadata(),
+                false
+        );
+    }
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameIdPresent() {
+        final SpreadsheetMetadata metadata = this.metadata().set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SpreadsheetId.with(1)
+        );
+
+        this.checkNotEquals(
+                Optional.empty(),
+                metadata.id()
+        );
+
+        this.shouldRenderedCellsRefreshAndCheck(
+                metadata,
+                metadata,
+                false
+        );
+    }
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameDifferentCreator() {
+        final SpreadsheetMetadata metadata = this.metadata();
+        final SpreadsheetMetadata different = metadata.set(
+                SpreadsheetMetadataPropertyName.CREATOR,
+                EmailAddress.parse("different@example.com")
+        );
+
+        this.checkNotEquals(
+                metadata,
+                different
+        );
+
+        this.shouldRenderedCellsRefreshAndCheck(
+                different,
+                metadata,
+                false
+        );
+    }
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameDifferentCreateDateTime() {
+        final SpreadsheetMetadata metadata = this.metadata();
+        final SpreadsheetMetadata different = metadata.set(
+                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                LocalDateTime.now().plusDays(1)
+        );
+
+        this.checkNotEquals(
+                metadata,
+                different
+        );
+
+        this.shouldRenderedCellsRefreshAndCheck(
+                different,
+                metadata,
+                false
+        );
+    }
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameDifferentModified() {
+        final SpreadsheetMetadata metadata = this.metadata();
+        final SpreadsheetMetadata different = metadata.set(
+                SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                EmailAddress.parse("different@example.com")
+        );
+
+        this.checkNotEquals(
+                metadata,
+                different
+        );
+
+        this.shouldRenderedCellsRefreshAndCheck(
+                different,
+                metadata,
+                false
+        );
+    }
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameDifferentModifiedDateTime() {
+        final SpreadsheetMetadata metadata = this.metadata();
+        final SpreadsheetMetadata different = metadata.set(
+                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                LocalDateTime.now().plusDays(1)
+        );
+
+        this.checkNotEquals(
+                metadata,
+                different
+        );
+
+        this.shouldRenderedCellsRefreshAndCheck(
+                different,
+                metadata,
+                false
+        );
+    }
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameDifferentName() {
+        final SpreadsheetMetadata metadata = this.metadata();
+        final SpreadsheetMetadata different = metadata.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                SpreadsheetName.with("Different")
+        );
+
+        this.checkNotEquals(
+                metadata,
+                different
+        );
+
+        this.shouldRenderedCellsRefreshAndCheck(
+                different,
+                metadata,
+                false
+        );
+    }
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameDifferentSelection() {
+        final SpreadsheetMetadata metadata = this.metadata();
+        final SpreadsheetMetadata different = metadata.set(
+                SpreadsheetMetadataPropertyName.SELECTION,
+                SpreadsheetSelection.parseColumn("A")
+                        .setDefaultAnchor()
+        );
+
+        this.checkNotEquals(
+                metadata,
+                different
+        );
+
+        this.shouldRenderedCellsRefreshAndCheck(
+                different,
+                metadata,
+                false
+        );
+    }
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameIdPresentDifferentCurrencySymbol() {
+        final SpreadsheetMetadata metadata = this.metadata()
+                .set(
+                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                        SpreadsheetId.with(1)
+                );
+
+        this.shouldRenderedCellsRefreshAndCheck(
+                metadata.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "Diff"),
+                metadata,
+                true
+        );
+    }
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameIdPresentDifferentId() {
+        final SpreadsheetMetadata metadata = this.metadata();
+
+        this.shouldRenderedCellsRefreshAndCheck(
+                metadata.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(9999)),
+                metadata,
+                true
+        );
+    }
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameIdPresentDifferentLocale() {
+        final SpreadsheetMetadata metadata = this.metadata()
+                .set(
+                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                        SpreadsheetId.with(1)
+                );
+
+        this.shouldRenderedCellsRefreshAndCheck(
+                metadata.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.FRANCE),
+                metadata,
+                true
+        );
+    }
+
+    @Test
+    public void testShouldRenderedCellsRefreshSameIdPresentDifferentStyle() {
+        final SpreadsheetMetadata metadata = this.metadata()
+                .set(
+                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                        SpreadsheetId.with(1)
+                ).set(
+                        SpreadsheetMetadataPropertyName.STYLE,
+                        TextStyle.EMPTY.set(
+                                TextStylePropertyName.COLOR,
+                                Color.parse("#000000")
+                        )
+                );
+
+        this.shouldRenderedCellsRefreshAndCheck(
+                metadata.set(
+                        SpreadsheetMetadataPropertyName.STYLE,
+                        TextStyle.EMPTY.set(
+                                TextStylePropertyName.COLOR,
+                                Color.parse("#123456")
+                        )
+                ),
+                metadata,
+                true
+        );
+    }
+
+    private void shouldRenderedCellsRefreshAndCheck(final SpreadsheetMetadata metadata,
+                                                    final SpreadsheetMetadata previous,
+                                                    final boolean expected) {
+        if (expected) {
+            this.checkNotEquals(
+                    metadata,
+                    previous
+            );
+        }
+
+        this.checkEquals(
+                expected,
+                metadata.shouldRenderedCellsRefresh(previous),
+                () -> metadata + " shouldRenderedCellsRefresh " + previous
         );
     }
 
