@@ -230,11 +230,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
-    // shouldRenderedCellsRefresh.......................................................................................
+    // shouldViewsRefresh...............................................................................................
 
     @Test
-    public void testShouldRenderedCellsRefreshSameIdMissing() {
-        this.shouldRenderedCellsRefreshAndCheck(
+    public void testShouldViewsRefreshSameIdMissing() {
+        this.shouldViewsRefreshAndCheck(
                 SpreadsheetMetadata.EMPTY,
                 this.metadata(),
                 false
@@ -242,7 +242,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldRenderedCellsRefreshSameIdPresent() {
+    public void testShouldViewsRefreshSameIdPresent() {
         final SpreadsheetMetadata metadata = this.metadata().set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 SpreadsheetId.with(1)
@@ -253,7 +253,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 metadata.id()
         );
 
-        this.shouldRenderedCellsRefreshAndCheck(
+        this.shouldViewsRefreshAndCheck(
                 metadata,
                 metadata,
                 false
@@ -261,7 +261,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldRenderedCellsRefreshSameDifferentCreator() {
+    public void testShouldViewsRefreshSameDifferentCreator() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
                 SpreadsheetMetadataPropertyName.CREATOR,
@@ -273,7 +273,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldRenderedCellsRefreshAndCheck(
+        this.shouldViewsRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -281,7 +281,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldRenderedCellsRefreshSameDifferentCreateDateTime() {
+    public void testShouldViewsRefreshSameDifferentCreateDateTime() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
@@ -293,7 +293,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldRenderedCellsRefreshAndCheck(
+        this.shouldViewsRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -301,7 +301,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldRenderedCellsRefreshSameDifferentModified() {
+    public void testShouldViewsRefreshSameDifferentModified() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
@@ -313,7 +313,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldRenderedCellsRefreshAndCheck(
+        this.shouldViewsRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -321,7 +321,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldRenderedCellsRefreshSameDifferentModifiedDateTime() {
+    public void testShouldViewsRefreshSameDifferentModifiedDateTime() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
@@ -333,7 +333,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldRenderedCellsRefreshAndCheck(
+        this.shouldViewsRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -341,7 +341,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldRenderedCellsRefreshSameDifferentName() {
+    public void testShouldViewsRefreshSameDifferentName() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
@@ -353,7 +353,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldRenderedCellsRefreshAndCheck(
+        this.shouldViewsRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -361,7 +361,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldRenderedCellsRefreshSameDifferentSelection() {
+    public void testShouldViewsRefreshSameDifferentSelection() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
                 SpreadsheetMetadataPropertyName.SELECTION,
@@ -374,7 +374,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldRenderedCellsRefreshAndCheck(
+        this.shouldViewsRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -382,14 +382,14 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldRenderedCellsRefreshSameIdPresentDifferentCurrencySymbol() {
+    public void testShouldViewsRefreshSameIdPresentDifferentCurrencySymbol() {
         final SpreadsheetMetadata metadata = this.metadata()
                 .set(
                         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                         SpreadsheetId.with(1)
                 );
 
-        this.shouldRenderedCellsRefreshAndCheck(
+        this.shouldViewsRefreshAndCheck(
                 metadata.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "Diff"),
                 metadata,
                 true
@@ -397,10 +397,10 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldRenderedCellsRefreshSameIdPresentDifferentId() {
+    public void testShouldViewsRefreshSameIdPresentDifferentId() {
         final SpreadsheetMetadata metadata = this.metadata();
 
-        this.shouldRenderedCellsRefreshAndCheck(
+        this.shouldViewsRefreshAndCheck(
                 metadata.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(9999)),
                 metadata,
                 true
@@ -408,14 +408,14 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldRenderedCellsRefreshSameIdPresentDifferentLocale() {
+    public void testShouldViewsRefreshSameIdPresentDifferentLocale() {
         final SpreadsheetMetadata metadata = this.metadata()
                 .set(
                         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                         SpreadsheetId.with(1)
                 );
 
-        this.shouldRenderedCellsRefreshAndCheck(
+        this.shouldViewsRefreshAndCheck(
                 metadata.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.FRANCE),
                 metadata,
                 true
@@ -423,7 +423,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldRenderedCellsRefreshSameIdPresentDifferentStyle() {
+    public void testShouldViewsRefreshSameIdPresentDifferentStyle() {
         final SpreadsheetMetadata metadata = this.metadata()
                 .set(
                         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
@@ -436,7 +436,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         )
                 );
 
-        this.shouldRenderedCellsRefreshAndCheck(
+        this.shouldViewsRefreshAndCheck(
                 metadata.set(
                         SpreadsheetMetadataPropertyName.STYLE,
                         TextStyle.EMPTY.set(
@@ -449,9 +449,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
-    private void shouldRenderedCellsRefreshAndCheck(final SpreadsheetMetadata metadata,
-                                                    final SpreadsheetMetadata previous,
-                                                    final boolean expected) {
+    private void shouldViewsRefreshAndCheck(final SpreadsheetMetadata metadata,
+                                            final SpreadsheetMetadata previous,
+                                            final boolean expected) {
         if (expected) {
             this.checkNotEquals(
                     metadata,
@@ -461,8 +461,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.checkEquals(
                 expected,
-                metadata.shouldRenderedCellsRefresh(previous),
-                () -> metadata + " shouldRenderedCellsRefresh " + previous
+                metadata.shouViewRefresh(previous),
+                () -> metadata + " shouldViewsRefresh " + previous
         );
     }
 
