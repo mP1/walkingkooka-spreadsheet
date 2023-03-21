@@ -817,7 +817,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     /**
      * This may be used to test if there is sufficient differences between this and the given {@link SpreadsheetMetadata}.
      */
-    public boolean shouViewRefresh(final SpreadsheetMetadata metadata) {
+    public boolean shouldViewRefresh(final SpreadsheetMetadata metadata) {
         Objects.requireNonNull(metadata, "metadata");
 
         boolean should = false;

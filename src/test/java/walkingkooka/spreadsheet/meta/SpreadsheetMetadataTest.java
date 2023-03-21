@@ -461,7 +461,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.checkEquals(
                 expected,
-                metadata.shouViewRefresh(previous),
+                metadata.shouldViewRefresh(previous),
                 () -> metadata + " shouldViewsRefresh " + previous
         );
     }
