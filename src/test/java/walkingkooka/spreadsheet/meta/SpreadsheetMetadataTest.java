@@ -234,7 +234,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testShouldViewsRefreshSameIdMissing() {
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 SpreadsheetMetadata.EMPTY,
                 this.metadata(),
                 false
@@ -253,7 +253,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 metadata.id()
         );
 
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 metadata,
                 metadata,
                 false
@@ -273,7 +273,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -293,7 +293,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -313,7 +313,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -333,7 +333,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -353,7 +353,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -374,7 +374,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 different
         );
 
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 different,
                 metadata,
                 false
@@ -389,7 +389,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetId.with(1)
                 );
 
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 metadata.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "Diff"),
                 metadata,
                 true
@@ -400,7 +400,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testShouldViewsRefreshSameIdPresentDifferentId() {
         final SpreadsheetMetadata metadata = this.metadata();
 
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 metadata.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(9999)),
                 metadata,
                 true
@@ -415,7 +415,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetId.with(1)
                 );
 
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 metadata.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.FRANCE),
                 metadata,
                 true
@@ -436,7 +436,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         )
                 );
 
-        this.shouldViewsRefreshAndCheck(
+        this.shouldViewRefreshAndCheck(
                 metadata.set(
                         SpreadsheetMetadataPropertyName.STYLE,
                         TextStyle.EMPTY.set(
@@ -449,9 +449,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
-    private void shouldViewsRefreshAndCheck(final SpreadsheetMetadata metadata,
-                                            final SpreadsheetMetadata previous,
-                                            final boolean expected) {
+    private void shouldViewRefreshAndCheck(final SpreadsheetMetadata metadata,
+                                           final SpreadsheetMetadata previous,
+                                           final boolean expected) {
         if (expected) {
             this.checkNotEquals(
                     metadata,
