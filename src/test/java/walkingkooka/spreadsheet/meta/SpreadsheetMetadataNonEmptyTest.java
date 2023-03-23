@@ -111,6 +111,22 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkEquals(Optional.of(id), metadata.id(), "id");
     }
 
+    @Test
+    public void testName() {
+        final SpreadsheetName name = SpreadsheetName.with("Title123");
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata(
+                Maps.of(
+                        SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                        name
+                )
+        );
+        this.checkEquals(
+                Optional.of(name),
+                metadata.name(),
+                "name"
+        );
+    }
+
     // get..............................................................................................................
 
     @Test
