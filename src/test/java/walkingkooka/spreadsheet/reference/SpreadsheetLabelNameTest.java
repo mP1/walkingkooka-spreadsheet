@@ -259,11 +259,14 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         );
     }
 
-    // Predicate........................................................................................................
+    // testCell.........................................................................................................
 
     @Test
-    public void testTestFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createSelection().test(SpreadsheetSelection.parseCell("A1")));
+    public void testTestCellFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().testCell(SpreadsheetSelection.parseCell("A1"))
+        );
     }
 
     // testCellRange.....................................................................................................

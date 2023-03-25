@@ -531,20 +531,18 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                 .iterator();
     }
 
-    // Predicate........................................................................................................
+    // testXXXX.........................................................................................................
 
     /**
      * Tests if this range test the given {@link SpreadsheetCellReference}.
      */
     @Override
-    public boolean test(final SpreadsheetCellReference reference) {
+    public boolean testCell(final SpreadsheetCellReference reference) {
         checkCellReference(reference);
 
         return this.testColumn(reference.column()) &&
                 this.testRow(reference.row());
     }
-
-    // testCellRange.....................................................................................................
 
     /**
      * Returns true if any part of the given range intersects this range.
@@ -557,8 +555,6 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                 this.rowReferenceRange().testCellRange(range);
     }
 
-    // testColumn.....................................................................................................
-
     /**
      * Returns true if the column is within this range.
      */
@@ -567,8 +563,6 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         return this.columnReferenceRange()
                 .testColumn(column);
     }
-
-    // testRow.....................................................................................................
 
     /**
      * Returns true if the row is within this range.

@@ -174,7 +174,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
      * Always throws {@link UnsupportedOperationException}.
      */
     @Override
-    public boolean test(final SpreadsheetCellReference reference) {
+    public boolean testCell(final SpreadsheetCellReference reference) {
         checkCellReference(reference);
         throw new UnsupportedOperationException();
     }

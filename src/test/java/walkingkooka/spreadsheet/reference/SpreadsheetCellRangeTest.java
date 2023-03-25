@@ -22,7 +22,6 @@ import walkingkooka.collect.Range;
 import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparableTesting2;
-import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -44,10 +43,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellRange>
-        implements
-        ComparableTesting2<SpreadsheetCellRange>,
-        IterableTesting<SpreadsheetCellRange, SpreadsheetCellReference>,
-        PredicateTesting2<SpreadsheetCellRange, SpreadsheetCellReference> {
+        implements ComparableTesting2<SpreadsheetCellRange>,
+        IterableTesting<SpreadsheetCellRange, SpreadsheetCellReference> {
 
     @Test
     public void testAll() {
@@ -502,148 +499,150 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // test.............................................................................................................
 
     @Test
-    public void testTestSingletonTopLeft() {
-        this.testFalse("C3", "B2");
+    public void testTestCellSingletonTopLeft() {
+        this.testCellAndCheckFalse("C3", "B2");
     }
 
     @Test
-    public void testTestSingletonTop() {
-        this.testFalse("C3", "B3");
+    public void testTestCellSingletonTop() {
+        this.testCellAndCheckFalse("C3", "B3");
     }
 
     @Test
-    public void testTestSingletonTopRight() {
-        this.testFalse("C3", "B4");
+    public void testTestCellSingletonTopRight() {
+        this.testCellAndCheckFalse("C3", "B4");
     }
 
     @Test
-    public void testTestSingletonLeft() {
-        this.testFalse("C3", "B3");
+    public void testTestCellSingletonLeft() {
+        this.testCellAndCheckFalse("C3", "B3");
     }
 
     @Test
-    public void testTestSingleton() {
-        this.testTrue("C3", "C3");
+    public void testTestCellSingleton() {
+        this.testCellAndCheckTrue("C3", "C3");
     }
 
     @Test
-    public void testTestSingletonRight() {
-        this.testFalse("C3", "D3");
+    public void testTestCellSingletonRight() {
+        this.testCellAndCheckFalse("C3", "D3");
     }
 
     @Test
-    public void testTestSingletonBottomLeft() {
-        this.testFalse("C3", "D2");
+    public void testTestCellSingletonBottomLeft() {
+        this.testCellAndCheckFalse("C3", "D2");
     }
 
     @Test
-    public void testTestSingletonBottom() {
-        this.testFalse("C3", "D3");
+    public void testTestCellSingletonBottom() {
+        this.testCellAndCheckFalse("C3", "D3");
     }
 
     @Test
-    public void testTestSingletonBottomRight() {
-        this.testFalse("C3", "D4");
+    public void testTestCellSingletonBottomRight() {
+        this.testCellAndCheckFalse("C3", "D4");
     }
 
     @Test
-    public void testTestTopLeft() {
-        this.testFalse("C3:E5", "B2");
+    public void testTestCellTopLeft() {
+        this.testCellAndCheckFalse("C3:E5", "B2");
     }
 
     @Test
-    public void testTestTop() {
-        this.testFalse("C3:E5", "B2");
+    public void testTestCellTop() {
+        this.testCellAndCheckFalse("C3:E5", "B2");
     }
 
     @Test
-    public void testTestTopRight() {
-        this.testFalse("C3:E5", "B6");
+    public void testTestCellTopRight() {
+        this.testCellAndCheckFalse("C3:E5", "B6");
     }
 
     @Test
-    public void testTestLeft() {
-        this.testFalse("C3:E5", "B4");
+    public void testTestCellLeft() {
+        this.testCellAndCheckFalse("C3:E5", "B4");
     }
 
     @Test
-    public void testTest() {
-        this.testTrue("C3:E5", "C3");
+    public void testTestCell() {
+        this.testCellAndCheckTrue("C3:E5", "C3");
     }
 
     @Test
-    public void testTest2() {
-        this.testTrue("C3:E5", "D3");
+    public void testTestCell2() {
+        this.testCellAndCheckTrue("C3:E5", "D3");
     }
 
     @Test
-    public void testTest3() {
-        this.testTrue("C3:E5", "E3");
+    public void testTestCell3() {
+        this.testCellAndCheckTrue("C3:E5", "E3");
     }
 
     @Test
-    public void testTest4() {
-        this.testTrue("C3:E5", "C4");
+    public void testTestCell4() {
+        this.testCellAndCheckTrue("C3:E5", "C4");
     }
 
     @Test
-    public void testTest5() {
-        this.testTrue("C3:E5", "D4");
+    public void testTestCell5() {
+        this.testCellAndCheckTrue("C3:E5", "D4");
     }
 
     @Test
-    public void testTest6() {
-        this.testTrue("C3:E5", "E4");
+    public void testTestCell6() {
+        this.testCellAndCheckTrue("C3:E5", "E4");
     }
 
     @Test
-    public void testTest7() {
-        this.testTrue("C3:E5", "C5");
+    public void testTestCell7() {
+        this.testCellAndCheckTrue("C3:E5", "C5");
     }
 
     @Test
-    public void testTest8() {
-        this.testTrue("C3:E5", "D5");
+    public void testTestCell8() {
+        this.testCellAndCheckTrue("C3:E5", "D5");
     }
 
     @Test
-    public void testTest9() {
-        this.testTrue("C3:E5", "E5");
+    public void testTestCell9() {
+        this.testCellAndCheckTrue("C3:E5", "E5");
     }
 
     @Test
-    public void testTestRight() {
-        this.testFalse("C3:E5", "D6");
+    public void testTestCellRight() {
+        this.testCellAndCheckFalse("C3:E5", "D6");
     }
 
     @Test
-    public void testTestBottomLeft() {
-        this.testFalse("C3:E5", "F2");
+    public void testTestCellBottomLeft() {
+        this.testCellAndCheckFalse("C3:E5", "F2");
     }
 
     @Test
-    public void testTestBottom() {
-        this.testFalse("C3:E5", "F4");
+    public void testTestCellBottom() {
+        this.testCellAndCheckFalse("C3:E5", "F4");
     }
 
     @Test
-    public void testTestBottomRight() {
-        this.testFalse("C3:E5", "F6");
+    public void testTestCellBottomRight() {
+        this.testCellAndCheckFalse("C3:E5", "F6");
     }
 
-    private void testTrue(final String range,
-                          final String cell) {
-        this.testTrue(
+    private void testCellAndCheckTrue(final String range,
+                                      final String cell) {
+        this.testCellAndCheck(
                 SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseCell(cell)
+                SpreadsheetSelection.parseCell(cell),
+                true
         );
     }
 
-    private void testFalse(final String range,
-                           final String cell) {
-        this.testFalse(
+    private void testCellAndCheckFalse(final String range,
+                                       final String cell) {
+        this.testCellAndCheck(
                 SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseCell(cell)
+                SpreadsheetSelection.parseCell(cell),
+                false
         );
     }
 

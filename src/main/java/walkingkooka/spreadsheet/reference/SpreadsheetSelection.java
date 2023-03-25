@@ -71,7 +71,6 @@ import java.util.stream.Collectors;
  * Base class for all selection types, including columns, rows, cells, labels and ranges.
  */
 public abstract class SpreadsheetSelection implements HasUrlFragment,
-        Predicate<SpreadsheetCellReference>,
         TreePrintable,
         UsesToStringBuilder {
 
@@ -547,6 +546,11 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
     public abstract int count();
 
     // test...........................................................................................................
+
+    /**
+     * Tests if this {@link SpreadsheetSelection} includes the given {@link SpreadsheetCellReference}
+     */
+    public abstract boolean testCell(final SpreadsheetCellReference cell);
 
     /**
      * Tests if the selection be it a column, row or cell is within the given range.

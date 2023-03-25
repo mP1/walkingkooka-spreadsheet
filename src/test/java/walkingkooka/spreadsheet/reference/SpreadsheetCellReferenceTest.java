@@ -244,24 +244,36 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    // Predicate........................................................................................................
+    // testCell.........................................................................................................
 
     @Test
     public void testTestDifferentColumnFalse() {
         final SpreadsheetCellReference selection = this.createSelection();
-        this.testFalse(selection.setColumn(selection.column().add(1)));
+        this.testCellAndCheck(
+                selection,
+                selection.setColumn(selection.column().add(1)),
+                false
+        );
     }
 
     @Test
     public void testTestDifferentRowFalse() {
         final SpreadsheetCellReference selection = this.createSelection();
-        this.testFalse(selection.setRow(selection.row().add(1)));
+        this.testCellAndCheck(
+                selection,
+                selection.setRow(selection.row().add(1)),
+                false
+        );
     }
 
     @Test
     public void testTestDifferentColumnKindTrue() {
         final SpreadsheetCellReference selection = this.createSelection();
-        this.testFalse(selection.setRow(selection.row().add(1)));
+        this.testCellAndCheck(
+                selection,
+                selection.setRow(selection.row().add(1)),
+                false
+        );
     }
 
     @Test
@@ -270,7 +282,11 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         final SpreadsheetRowReference row = selection.row();
         final SpreadsheetReferenceKind kind = row.referenceKind();
 
-        this.testTrue(selection.setRow(row.setReferenceKind(kind.flip())));
+        this.testCellAndCheck(
+                selection,
+                selection.setRow(row.setReferenceKind(kind.flip())),
+                true
+        );
     }
 
     // toRelative........................................................................................................

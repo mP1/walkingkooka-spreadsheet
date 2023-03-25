@@ -252,24 +252,22 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    // Predicate<SpreadsheetCellReference>..............................................................................
+    // test............................................................................................................
 
     /**
      * Returns true if the other {@link SpreadsheetCellReference} has the same column and row ignoring {@link SpreadsheetReferenceKind}.
      */
     @Override
-    public boolean test(final SpreadsheetCellReference reference) {
+    public boolean testCell(final SpreadsheetCellReference reference) {
         checkCellReference(reference);
 
         return this.equalsIgnoreReferenceKind(reference);
     }
 
-    // testCellRange.....................................................................................................
-
     @Override
     public boolean testCellRange(final SpreadsheetCellRange range) {
         checkCellRange(range);
-        return range.test(this);
+        return range.testCell(this);
     }
 
     @Override

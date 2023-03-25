@@ -23,7 +23,6 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
@@ -51,7 +50,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         JsonNodeMarshallingTesting<S>,
         IsMethodTesting<S>,
         ParseStringTesting<S>,
-        PredicateTesting2<S, SpreadsheetCellReference>,
         ToStringTesting<S>,
         TreePrintableTesting {
 
@@ -200,7 +198,27 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    // testCellRangeAndCheck............................................................................................
+    // testXXX..........................................................................................................
+
+    final void testCellAndCheck(final String selection,
+                                final String cell,
+                                final boolean expected) {
+        this.testCellAndCheck(
+                this.parseString(selection),
+                SpreadsheetSelection.parseCell(cell),
+                expected
+        );
+    }
+
+    final void testCellAndCheck(final S selection,
+                                final SpreadsheetCellReference cell,
+                                final boolean expected) {
+        this.checkEquals(
+                expected,
+                selection.testCell(cell),
+                () -> selection + " testCell " + cell
+        );
+    }
 
     final void testCellRangeAndCheck(final String selection,
                                      final String range,
@@ -2335,6 +2353,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         return this.createSelection();
     }
 
+    // NamingTesting....................................................................................................
+
+    public final void testTypeNaming() {
+        // nop
+    }
+
     // ParsingTesting...................................................................................................
 
     @Override
@@ -2353,26 +2377,5 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected.getClass().getName() + "=" + expected + " not a sub class of " + IllegalArgumentException.class
         );
         return expected;
-    }
-
-    // PredicateTesting.................................................................................................
-
-    @Override
-    public final S createPredicate() {
-        return this.createSelection();
-    }
-
-    public final void testTypeNaming() {
-        // nop
-    }
-
-    @Override
-    public final String typeNamePrefix() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public final String typeNameSuffix() {
-        throw new UnsupportedOperationException();
     }
 }
