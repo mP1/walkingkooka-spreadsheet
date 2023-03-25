@@ -196,26 +196,42 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
-    // test............................................................................................................
+    // testCell.........................................................................................................
 
     @Test
-    public void testTestAbove() {
-        this.testFalse(SpreadsheetSelection.parseCell("A1"));
+    public void testTestCellAbove() {
+        this.testCellAndCheck(
+                this.createSelection(),
+                SpreadsheetSelection.parseCell("A1"),
+                false
+        );
     }
 
     @Test
-    public void testTestLeft() {
-        this.testTrue(SpreadsheetSelection.parseCell("B2"));
+    public void testTestCellLeft() {
+        this.testCellAndCheck(
+                this.createSelection(),
+                SpreadsheetSelection.parseCell("B2"),
+                true
+        );
     }
 
     @Test
-    public void testTestRight() {
-        this.testTrue(SpreadsheetSelection.parseCell("D4"));
+    public void testTestCellRight() {
+        this.testCellAndCheck(
+                this.createSelection(),
+                SpreadsheetSelection.parseCell("D4"),
+                true
+        );
     }
 
     @Test
     public void testTestBelow() {
-        this.testFalse(SpreadsheetSelection.parseCell("E5"));
+        this.testCellAndCheck(
+                this.createSelection(),
+                SpreadsheetSelection.parseCell("E5"),
+                false
+        );
     }
 
     // testCellRange....................................................................................................

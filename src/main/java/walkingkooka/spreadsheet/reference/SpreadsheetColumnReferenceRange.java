@@ -86,15 +86,17 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
                 );
     }
 
+    // testXXX.........................................................................................................
+
+    @Override
+    public boolean testCell(final SpreadsheetCellReference reference) {
+        return this.testColumn(reference.column());
+    }
+
     @Override
     public boolean testCellRange(final SpreadsheetCellRange range) {
         return this.end().compareTo(range.begin().column()) >= 0 &&
                 this.begin().compareTo(range.end().column()) <= 0;
-    }
-
-    @Override
-    public boolean test(final SpreadsheetCellReference reference) {
-        return this.testColumn(reference.column());
     }
 
     /**

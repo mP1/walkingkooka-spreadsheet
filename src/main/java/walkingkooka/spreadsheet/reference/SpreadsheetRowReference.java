@@ -166,17 +166,15 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
                 other;
     }
 
-    // Predicate<SpreadsheetCellReference>..............................................................................
+    // testXXX.........................................................................................................
 
     /**
      * Returns true if the given {@link SpreadsheetCellReference} has this row.
      */
     @Override
-    public boolean test(final SpreadsheetCellReference reference) {
+    public boolean testCell(final SpreadsheetCellReference reference) {
         return this.testRow(reference.row());
     }
-
-    // testXXX.........................................................................................................
 
     @Override
     public boolean testCellRange(final SpreadsheetCellRange range) {

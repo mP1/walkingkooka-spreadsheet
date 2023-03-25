@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -80,7 +80,7 @@ abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<Tr
     final void loadCellReferenceRanges(final SpreadsheetCellReference cell,
                                        final Collection<SpreadsheetCellRange> ranges) {
 
-        if (this.range.test(cell)) {
+        if (this.range.testCell(cell)) {
             ranges.add(this.range);
         }
     }

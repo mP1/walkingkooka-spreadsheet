@@ -115,23 +115,29 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.cellColumnOrRowTextAndCheck("row");
     }
 
-    // Predicate........................................................................................................
+    // testCell.........................................................................................................
 
     @Test
     public void testTestDifferentRowFalse() {
         final SpreadsheetRowReference selection = this.createSelection();
-        this.testFalse(selection
-                .add(1)
-                .setColumn(this.columnReference())
+
+        this.testCellAndCheck(
+                selection,
+                selection.add(1)
+                        .setColumn(this.columnReference()),
+                false
         );
     }
 
     @Test
     public void testTestDifferentRowKindTrue() {
         final SpreadsheetRowReference selection = this.createSelection();
-        this.testTrue(selection
-                .setReferenceKind(selection.referenceKind().flip())
-                .setColumn(this.columnReference())
+
+        this.testCellAndCheck(
+                selection,
+                selection.setReferenceKind(selection.referenceKind().flip())
+                        .setColumn(this.columnReference()),
+                true
         );
     }
 

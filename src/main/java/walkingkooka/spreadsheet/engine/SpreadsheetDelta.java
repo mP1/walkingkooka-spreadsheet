@@ -633,7 +633,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
 
         if (null != window && !window.isEmpty()) {
-            final Predicate<SpreadsheetCell> windowPredicate = c -> window.stream().anyMatch(w -> w.test(c.reference()));
+            final Predicate<SpreadsheetCell> windowPredicate = c -> window.stream().anyMatch(w -> w.testCell(c.reference()));
 
             predicate = null != predicate ?
                     predicate.and(windowPredicate) :
@@ -725,7 +725,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                                      final Set<SpreadsheetCellRange> window) {
         return filter(
                 deletedCells,
-                (c) -> window.stream().anyMatch(w -> w.test(c)),
+                (c) -> window.stream().anyMatch(w -> w.testCell(c)),
                 SpreadsheetCellReference::toRelative
         );
     }

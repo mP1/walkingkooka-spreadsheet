@@ -52,7 +52,7 @@ final class BasicSpreadsheetEngineFillCells {
             this.deleteCell(to);
         } else {
             final List<SpreadsheetCell> out = cells.stream()
-                    .filter(c -> false == from.test(c.reference()))
+                    .filter(c -> false == from.testCell(c.reference()))
                     .collect(Collectors.toList());
             if (!out.isEmpty()) {
                 throw new IllegalArgumentException("Several cells " + out + " are outside the range " + from);
