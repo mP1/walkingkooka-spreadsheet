@@ -168,31 +168,28 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         visitor.visit(this);
     }
 
-    // Predicate<SpreadsheetCellReference>..............................................................................
+    // testXXX..........................................................................................................
 
     /**
      * Always throws {@link UnsupportedOperationException}.
      */
     @Override
-    public boolean testCell(final SpreadsheetCellReference reference) {
-        checkCellReference(reference);
-        throw new UnsupportedOperationException();
-    }
-
-    // testXXX..........................................................................................................
-
-    @Override
-    public boolean testCellRange(final SpreadsheetCellRange range) {
+    boolean testCell0(final SpreadsheetCellReference reference) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean testColumn(final SpreadsheetColumnReference column) {
+    boolean testCellRange0(final SpreadsheetCellRange range) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean testRow(final SpreadsheetRowReference row) {
+    boolean testColumn0(final SpreadsheetColumnReference column) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    boolean testRow0(final SpreadsheetRowReference row) {
         throw new UnsupportedOperationException();
     }
 
