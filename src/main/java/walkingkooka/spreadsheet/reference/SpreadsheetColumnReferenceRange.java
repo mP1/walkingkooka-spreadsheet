@@ -89,12 +89,12 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     // testXXX.........................................................................................................
 
     @Override
-    public boolean testCell(final SpreadsheetCellReference reference) {
-        return this.testColumn(reference.column());
+    boolean testCell0(final SpreadsheetCellReference cell) {
+        return this.testColumn0(cell.column());
     }
 
     @Override
-    public boolean testCellRange(final SpreadsheetCellRange range) {
+    boolean testCellRange0(final SpreadsheetCellRange range) {
         return this.end().compareTo(range.begin().column()) >= 0 &&
                 this.begin().compareTo(range.end().column()) <= 0;
     }
@@ -102,12 +102,13 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     /**
      * Tests if the given {@link SpreadsheetColumnReference} is within this {@link SpreadsheetColumnReferenceRange}.
      */
-    public boolean testColumn(final SpreadsheetColumnReference column) {
+    @Override
+    boolean testColumn0(final SpreadsheetColumnReference column) {
         return this.range.test(column);
     }
 
     @Override
-    public boolean testRow(final SpreadsheetRowReference row) {
+    boolean testRow0(final SpreadsheetRowReference row) {
         return false;
     }
 

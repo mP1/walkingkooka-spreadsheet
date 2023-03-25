@@ -200,6 +200,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // testXXX..........................................................................................................
 
+    @Test
+    final void testTestCellWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection().testCell(null)
+        );
+    }
+
     final void testCellAndCheck(final String selection,
                                 final String cell,
                                 final boolean expected) {
@@ -217,6 +225,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected,
                 selection.testCell(cell),
                 () -> selection + " testCell " + cell
+        );
+    }
+
+    @Test
+    final void testTestCellRangeWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection().testCellRange(null)
         );
     }
 
@@ -240,6 +256,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    @Test
+    final void testTestColumnWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection().testColumn(null)
+        );
+    }
+
     final void testColumnAndCheck(final String selection,
                                   final String column,
                                   final boolean expected) {
@@ -257,6 +281,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected,
                 selection.testColumn(SpreadsheetSelection.parseColumn(column)),
                 selection + ".testColumn(" + column + ")"
+        );
+    }
+
+    @Test
+    final void testTestRowWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection().testRow(null)
         );
     }
 

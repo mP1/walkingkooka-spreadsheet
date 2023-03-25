@@ -550,24 +550,48 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
     /**
      * Tests if this {@link SpreadsheetSelection} includes the given {@link SpreadsheetCellReference}
      */
-    public abstract boolean testCell(final SpreadsheetCellReference cell);
+    public final boolean testCell(final SpreadsheetCellReference cell) {
+        return this.testCell0(
+                checkCellReference(cell)
+        );
+    }
+
+    abstract boolean testCell0(final SpreadsheetCellReference cell);
 
     /**
      * Tests if the selection be it a column, row or cell is within the given range.
      */
-    public abstract boolean testCellRange(final SpreadsheetCellRange range);
+    public final boolean testCellRange(final SpreadsheetCellRange range) {
+        return this.testCellRange0(
+                checkCellRange(range)
+        );
+    }
+
+    abstract boolean testCellRange0(final SpreadsheetCellRange range);
 
     /**
      * Tests if the selection includes the given {@link SpreadsheetColumnReference}.<br>
      * {@link SpreadsheetRowReference} and {@link SpreadsheetRowReferenceRange} both return false.
      */
-    public abstract boolean testColumn(final SpreadsheetColumnReference column);
+    public final boolean testColumn(final SpreadsheetColumnReference column) {
+        return this.testColumn0(
+                checkColumnReference(column)
+        );
+    }
+
+    abstract boolean testColumn0(final SpreadsheetColumnReference column);
 
     /**
      * Tests if the selection includes the given {@link SpreadsheetRowReference}.<br>
      * {@link SpreadsheetColumnReference} and {@link SpreadsheetColumnReferenceRange} both return false.
      */
-    public abstract boolean testRow(final SpreadsheetRowReference row);
+    public final boolean testRow(final SpreadsheetRowReference row) {
+        return this.testRow0(
+                checkRowReference(row)
+        );
+    }
+
+    abstract boolean testRow0(final SpreadsheetRowReference row);
 
     // isXXX............................................................................................................
 
@@ -1136,12 +1160,16 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
 
     // guards............................................................................................................
 
-    static void checkCellRange(final SpreadsheetCellRange range) {
-        Objects.requireNonNull(range, "range");
+    static SpreadsheetCellRange checkCellRange(final SpreadsheetCellRange range) {
+        return Objects.requireNonNull(range, "range");
     }
 
-    static void checkCellReference(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
+    static SpreadsheetCellReference checkCellReference(final SpreadsheetCellReference cell) {
+        return Objects.requireNonNull(cell, "cell");
+    }
+
+    static SpreadsheetColumnReference checkColumnReference(final SpreadsheetColumnReference column) {
+        return Objects.requireNonNull(column, "column");
     }
 
     static SpreadsheetColumnReferenceRange checkColumnReferenceRange(final SpreadsheetColumnReferenceRange columnReferenceRange) {
@@ -1150,6 +1178,10 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
 
     static void checkReferenceKind(final SpreadsheetReferenceKind referenceKind) {
         Objects.requireNonNull(referenceKind, "referenceKind");
+    }
+
+    static SpreadsheetRowReference checkRowReference(final SpreadsheetRowReference row) {
+        return Objects.requireNonNull(row, "row");
     }
 
     static void checkRowReferenceRange(final SpreadsheetRowReferenceRange rowReferenceRange) {

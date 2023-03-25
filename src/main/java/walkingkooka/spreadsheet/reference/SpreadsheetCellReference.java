@@ -258,25 +258,22 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
      * Returns true if the other {@link SpreadsheetCellReference} has the same column and row ignoring {@link SpreadsheetReferenceKind}.
      */
     @Override
-    public boolean testCell(final SpreadsheetCellReference reference) {
-        checkCellReference(reference);
-
-        return this.equalsIgnoreReferenceKind(reference);
+    boolean testCell0(final SpreadsheetCellReference cell) {
+        return this.equalsIgnoreReferenceKind(cell);
     }
 
     @Override
-    public boolean testCellRange(final SpreadsheetCellRange range) {
-        checkCellRange(range);
-        return range.testCell(this);
+    boolean testCellRange0(final SpreadsheetCellRange range) {
+        return range.testCell0(this);
     }
 
     @Override
-    public boolean testColumn(final SpreadsheetColumnReference column) {
+    boolean testColumn0(final SpreadsheetColumnReference column) {
         return this.column().equalsIgnoreReferenceKind(column);
     }
 
     @Override
-    public boolean testRow(final SpreadsheetRowReference row) {
+    boolean testRow0(final SpreadsheetRowReference row) {
         return this.row().equalsIgnoreReferenceKind(row);
     }
 

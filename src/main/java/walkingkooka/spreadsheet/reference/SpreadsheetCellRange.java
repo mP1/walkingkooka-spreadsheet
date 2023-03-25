@@ -537,40 +537,38 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
      * Tests if this range test the given {@link SpreadsheetCellReference}.
      */
     @Override
-    public boolean testCell(final SpreadsheetCellReference reference) {
-        checkCellReference(reference);
-
-        return this.testColumn(reference.column()) &&
-                this.testRow(reference.row());
+    boolean testCell0(final SpreadsheetCellReference cell) {
+        return this.testColumn0(cell.column()) &&
+                this.testRow0(cell.row());
     }
 
     /**
      * Returns true if any part of the given range intersects this range.
      */
     @Override
-    public boolean testCellRange(final SpreadsheetCellRange range) {
+    boolean testCellRange0(final SpreadsheetCellRange range) {
         checkCellRange(range);
 
-        return this.columnReferenceRange().testCellRange(range) &&
-                this.rowReferenceRange().testCellRange(range);
+        return this.columnReferenceRange().testCellRange0(range) &&
+                this.rowReferenceRange().testCellRange0(range);
     }
 
     /**
      * Returns true if the column is within this range.
      */
     @Override
-    public boolean testColumn(final SpreadsheetColumnReference column) {
+    boolean testColumn0(final SpreadsheetColumnReference column) {
         return this.columnReferenceRange()
-                .testColumn(column);
+                .testColumn0(column);
     }
 
     /**
      * Returns true if the row is within this range.
      */
     @Override
-    public boolean testRow(final SpreadsheetRowReference row) {
+    boolean testRow0(final SpreadsheetRowReference row) {
         return this.rowReferenceRange()
-                .testRow(row);
+                .testRow0(row);
     }
 
     // HashCodeEqualsDefined.......................................................................................
