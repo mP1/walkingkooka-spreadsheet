@@ -118,7 +118,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     // testCell.........................................................................................................
 
     @Test
-    public void testTestDifferentRowFalse() {
+    public void testTestCellDifferentRowFalse() {
         final SpreadsheetRowReference selection = this.createSelection();
 
         this.testCellAndCheck(
@@ -130,7 +130,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testTestDifferentRowKindTrue() {
+    public void testTestCellDifferentRowKindTrue() {
         final SpreadsheetRowReference selection = this.createSelection();
 
         this.testCellAndCheck(

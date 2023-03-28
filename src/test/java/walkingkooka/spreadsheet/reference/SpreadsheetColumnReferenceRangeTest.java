@@ -201,7 +201,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     // testCelll........................................................................................................
 
     @Test
-    public void testTestBefore() {
+    public void testTestCellBefore() {
         this.testCellAndCheck(
                 this.createSelection(),
                 SpreadsheetSelection.parseCell("A1"),
@@ -210,7 +210,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testTestLeft() {
+    public void testTestCellLeft() {
         this.testCellAndCheck(
                 this.createSelection(),
                 SpreadsheetSelection.parseCell("B1"),
@@ -219,7 +219,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testTestRight() {
+    public void testTestCellRight() {
         this.testCellAndCheck(
                 this.createSelection(),
                 SpreadsheetSelection.parseCell("D2"),
@@ -228,7 +228,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testTestAfter() {
+    public void testTestCellAfter() {
         this.testCellAndCheck(
                 this.createSelection(),
                 SpreadsheetSelection.parseCell("E1"),

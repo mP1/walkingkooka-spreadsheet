@@ -93,7 +93,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testTestDifferentColumnKindTrue() {
+    public void testTestCellDifferentColumnKindTrue() {
         final SpreadsheetColumnReference selection = this.createSelection();
         this.testCellAndCheck(
                 selection,
