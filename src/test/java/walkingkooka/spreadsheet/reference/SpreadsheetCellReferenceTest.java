@@ -247,7 +247,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     // testCell.........................................................................................................
 
     @Test
-    public void testTestDifferentColumnFalse() {
+    public void testTestCellDifferentColumnFalse() {
         final SpreadsheetCellReference selection = this.createSelection();
         this.testCellAndCheck(
                 selection,
@@ -257,7 +257,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestDifferentRowFalse() {
+    public void testTestCellDifferentRowFalse() {
         final SpreadsheetCellReference selection = this.createSelection();
         this.testCellAndCheck(
                 selection,
@@ -267,7 +267,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestDifferentColumnKindTrue() {
+    public void testTestCellDifferentColumnKindTrue() {
         final SpreadsheetCellReference selection = this.createSelection();
         this.testCellAndCheck(
                 selection,
@@ -277,7 +277,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testTestDifferentRowKindTrue() {
+    public void testTestCellDifferentRowKindTrue() {
         final SpreadsheetCellReference selection = this.createSelection();
         final SpreadsheetRowReference row = selection.row();
         final SpreadsheetReferenceKind kind = row.referenceKind();
