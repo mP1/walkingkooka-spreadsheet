@@ -244,6 +244,37 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // test.............................................................................................................
+
+    @Test
+    public void testTestSameCell() {
+        this.testTrue(this.createSelection());
+    }
+
+    @Test
+    public void testTestDifferentCell() {
+        this.testFalse(
+                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
+    @Test
+    public void testTestDifferentColumn() {
+        this.testFalse(
+                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.parseColumn("B")
+        );
+    }
+
+    @Test
+    public void testTestDifferentRow() {
+        this.testFalse(
+                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.parseRow("2")
+        );
+    }
+
     // testCell.........................................................................................................
 
     @Test
@@ -538,7 +569,14 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         return columnKind.column(column).setRow(rowKind.row(row));
     }
 
-    // cellRange........................................................................................................
+    // testCell.........................................................................................................
+
+    @Test
+    public void testTestCellDifferent() {
+        this.testWithNullColumnFails();
+    }
+
+    // testCellRange....................................................................................................
 
     @Test
     public void testCellRangeNullFails() {

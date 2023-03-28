@@ -71,6 +71,7 @@ import java.util.stream.Collectors;
  * Base class for all selection types, including columns, rows, cells, labels and ranges.
  */
 public abstract class SpreadsheetSelection implements HasUrlFragment,
+        Predicate<SpreadsheetSelection>,
         TreePrintable,
         UsesToStringBuilder {
 
@@ -546,6 +547,31 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
     public abstract int count();
 
     // test...........................................................................................................
+
+    /**
+     * Tests if this {@link SpreadsheetSelection} overlaps the given {@link SpreadsheetSelection}.
+     * This is intended to support ideas such as selecting the column, cell and row when a cell is selected,
+     * eg
+     * <pre></pre>
+     * selection = A1:
+     * cell = A1,
+     * column = A,
+     * row = 1 all return true everything else false.
+     * <p>
+     * selection = B
+     * cell = any cell with row = B true
+     * column = B = true
+     * row = false
+     * </pre>
+     */
+    public final boolean test(final SpreadsheetSelection selection) {
+        Objects.requireNonNull(selection, "selection");
+
+        return SpreadsheetSelectionTestSpreadsheetSelectionVisitor.test(
+                this,
+                selection
+        );
+    }
 
     /**
      * Tests if this {@link SpreadsheetSelection} includes the given {@link SpreadsheetCellReference}

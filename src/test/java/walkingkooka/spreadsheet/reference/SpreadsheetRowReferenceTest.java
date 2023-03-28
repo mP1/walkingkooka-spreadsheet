@@ -108,6 +108,45 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // test.............................................................................................................
+
+    @Test
+    public void testTestSameRown() {
+        this.testTrue(this.createSelection());
+    }
+
+    @Test
+    public void testTestDifferentRow() {
+        this.testFalse(
+                SpreadsheetSelection.parseRow("1"),
+                SpreadsheetSelection.parseRow("2")
+        );
+    }
+
+    @Test
+    public void testTestWithCellDifferentRow() {
+        this.testFalse(
+                SpreadsheetSelection.parseRow("1"),
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
+    @Test
+    public void testTestWithCellSameRow() {
+        this.testTrue(
+                SpreadsheetSelection.parseRow("2"),
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
+    @Test
+    public void testTestWithColumn() {
+        this.testFalse(
+                SpreadsheetSelection.parseRow("3"),
+                SpreadsheetSelection.parseColumn("C")
+        );
+    }
+
     // cellColumnOrRowText..............................................................................................
 
     @Test

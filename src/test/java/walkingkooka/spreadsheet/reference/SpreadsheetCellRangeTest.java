@@ -499,6 +499,40 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // test.............................................................................................................
 
     @Test
+    public void testTestWithCellOutOfRange() {
+        this.testFalse(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseCell("C3")
+        );
+    }
+
+    @Test
+    public void testTestWithCellInsideRange() {
+        this.testTrue(
+                SpreadsheetSelection.parseCellRange("C3:D4"),
+                SpreadsheetSelection.parseCell("C3")
+        );
+    }
+
+    @Test
+    public void testTestDifferentColumn() {
+        this.testFalse(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseColumn("C")
+        );
+    }
+
+    @Test
+    public void testTestDifferentRow() {
+        this.testFalse(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseRow("3")
+        );
+    }
+
+    // testCell.........................................................................................................
+
+    @Test
     public void testTestCellSingletonTopLeft() {
         this.testCellAndCheckFalse("C3", "B2");
     }

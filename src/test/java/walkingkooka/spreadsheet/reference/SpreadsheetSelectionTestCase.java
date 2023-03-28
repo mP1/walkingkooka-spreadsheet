@@ -23,6 +23,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
@@ -50,6 +51,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         JsonNodeMarshallingTesting<S>,
         IsMethodTesting<S>,
         ParseStringTesting<S>,
+        PredicateTesting2<S, SpreadsheetSelection>,
         ToStringTesting<S>,
         TreePrintableTesting {
 
@@ -199,6 +201,46 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     // testXXX..........................................................................................................
+
+    @Test
+    public final void testTestWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection().test(null)
+        );
+    }
+
+    @Test
+    public final void testTestWithCellRangeFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().test(SpreadsheetSelection.parseCellRange("A1:B2"))
+        );
+    }
+
+    @Test
+    public final void testTestWithColumnRangeFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().test(SpreadsheetSelection.parseColumnRange("B:C"))
+        );
+    }
+
+    @Test
+    public final void testTestWithLabelFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().test(SpreadsheetSelection.labelName("Label123"))
+        );
+    }
+
+    @Test
+    public final void testTestWithRowRangeFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().test(SpreadsheetSelection.parseRowRange("4:5"))
+        );
+    }
 
     @Test
     final void testTestCellWithNullFails() {
@@ -2391,6 +2433,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         // nop
     }
 
+    @Override
+    public final String typeNamePrefix() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public final String typeNameSuffix() {
+        throw new UnsupportedOperationException();
+    }
+
     // ParsingTesting...................................................................................................
 
     @Override
@@ -2409,5 +2461,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected.getClass().getName() + "=" + expected + " not a sub class of " + IllegalArgumentException.class
         );
         return expected;
+    }
+
+    // PredicateTesting.................................................................................................
+
+    @Override
+    public final S createPredicate() {
+        return this.createSelection();
     }
 }

@@ -79,6 +79,45 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.cellColumnOrRowTextAndCheck("column");
     }
 
+    // test.............................................................................................................
+
+    @Test
+    public void testTestSameColumn() {
+        this.testTrue(this.createSelection());
+    }
+
+    @Test
+    public void testTestDifferentColumn() {
+        this.testFalse(
+                SpreadsheetSelection.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("B")
+        );
+    }
+
+    @Test
+    public void testTestWithCellDifferentColumn() {
+        this.testFalse(
+                SpreadsheetSelection.parseColumn("A"),
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
+    @Test
+    public void testTestWithCellSameColumn() {
+        this.testTrue(
+                SpreadsheetSelection.parseColumn("B"),
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
+    @Test
+    public void testTestWithRow() {
+        this.testFalse(
+                SpreadsheetSelection.parseColumn("C"),
+                SpreadsheetSelection.parseRow("3")
+        );
+    }
+
     // testCell........................................................................................................
 
     @Test
