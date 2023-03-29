@@ -58,6 +58,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -528,6 +529,17 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
                                 window.split(WINDOW_SEPARATOR.string())
                         ).map(SpreadsheetSelection::parseCellRange)
                         .collect(Collectors.toCollection(Sets::ordered));
+    }
+
+    /**
+     * Converts the given windows into a {@link String}. This is the inverse of {@link #parseWindow(String)}.
+     */
+    public static String toStringWindow(final Collection<SpreadsheetCellRange> window) {
+        Objects.requireNonNull(window, "window");
+
+        return window.stream()
+                .map(SpreadsheetCellRange::toString)
+                .collect(Collectors.joining(WINDOW_SEPARATOR.string()));
     }
 
     // ctor.............................................................................................................

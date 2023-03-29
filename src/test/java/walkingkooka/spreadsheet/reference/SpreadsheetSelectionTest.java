@@ -27,6 +27,8 @@ import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -824,6 +826,105 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 window,
                 SpreadsheetSelection.parseWindow(text),
                 () -> "parse " + CharSequences.quoteAndEscape(text)
+        );
+    }
+
+    // toStringWindow...................................................................................................
+
+    @Test
+    public void testToStringWindowWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.toStringWindow(null)
+        );
+    }
+
+    @Test
+    public void testToStringWindowEmpty() {
+        this.toStringWindowAndCheck(
+                Collections.emptyList(),
+                ""
+        );
+    }
+
+    @Test
+    public void testToStringWindow() {
+        this.toStringWindowAndCheck(
+                Sets.of(
+                        SpreadsheetSelection.parseCellRange("A1")
+                ),
+                "A1"
+        );
+    }
+
+    @Test
+    public void testToStringWindow2() {
+        this.toStringWindowAndCheck(
+                Sets.of(
+                        SpreadsheetSelection.parseCellRange("A1:B2")
+                ),
+                "A1:B2"
+        );
+    }
+
+    @Test
+    public void testToStringWindowMany() {
+        this.toStringWindowAndCheck(
+                Sets.of(
+                        SpreadsheetSelection.parseCellRange("C3:D4"),
+                        SpreadsheetSelection.parseCellRange("E5:F6")
+                ),
+                "C3:D4,E5:F6"
+        );
+    }
+
+    @Test
+    public void testToStringWindowMany2() {
+        this.toStringWindowAndCheck(
+                Sets.of(
+                        SpreadsheetSelection.parseCellRange("C3:D4"),
+                        SpreadsheetSelection.parseCellRange("E5:F6"),
+                        SpreadsheetSelection.parseCellRange("Z99")
+                ),
+                "C3:D4,E5:F6,Z99"
+        );
+    }
+
+    private void toStringWindowAndCheck(final Collection<SpreadsheetCellRange> window,
+                                        final String expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetSelection.toStringWindow(window),
+                () -> "toStringWindow " + window
+        );
+    }
+
+    @Test
+    public void testParseWindowToStringWindow() {
+        this.parseWindowToStringWindowCheck("A1");
+    }
+
+    @Test
+    public void testParseWindowToStringWindow2() {
+        this.parseWindowToStringWindowCheck("A1:B2");
+    }
+
+    @Test
+    public void testParseWindowToStringWindow3() {
+        this.parseWindowToStringWindowCheck("C3:D4,E5:G7");
+    }
+
+    @Test
+    public void testParseWindowToStringWindow4() {
+        this.parseWindowToStringWindowCheck("C3:D4,E5:G7,H8:J10");
+    }
+
+    private void parseWindowToStringWindowCheck(final String string) {
+        this.checkEquals(
+                string,
+                SpreadsheetSelection.toStringWindow(
+                        SpreadsheetSelection.parseWindow(string)
+                )
         );
     }
 
