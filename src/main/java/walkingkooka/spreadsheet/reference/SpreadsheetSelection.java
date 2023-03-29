@@ -521,7 +521,7 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
      * </pre>
      */
     public static Set<SpreadsheetCellRange> parseWindow(final String window) {
-        Objects.requireNonNull(window, "window");
+        checkWindow(window);
 
         return window.length() == 0 ?
                 SpreadsheetDelta.NO_WINDOW :
@@ -535,11 +535,15 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
      * Converts the given windows into a {@link String}. This is the inverse of {@link #parseWindow(String)}.
      */
     public static String toStringWindow(final Collection<SpreadsheetCellRange> window) {
-        Objects.requireNonNull(window, "window");
+        checkWindow(window);
 
         return window.stream()
                 .map(SpreadsheetCellRange::toString)
                 .collect(Collectors.joining(WINDOW_SEPARATOR.string()));
+    }
+
+    private static void checkWindow(final Object window) {
+        Objects.requireNonNull(window, "window");
     }
 
     // ctor.............................................................................................................
