@@ -238,6 +238,50 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
     // parse............................................................................................................
 
     /**
+     * Uses the type to select the appropriate parseXXX methods to call with text.
+     */
+    public static SpreadsheetSelection parse(final String selection,
+                                             final String type) {
+        Objects.requireNonNull(selection, "text");
+        Objects.requireNonNull(type, "type");
+
+        final SpreadsheetSelection spreadsheetSelection;
+
+        switch (type) {
+            case "cell":
+                spreadsheetSelection = parseCell(selection);
+                break;
+            case "cell-range":
+                spreadsheetSelection = parseCellRange(selection);
+                break;
+            case "column":
+                spreadsheetSelection = parseColumn(selection);
+                break;
+            case "column-range":
+                spreadsheetSelection = parseColumnRange(selection);
+                break;
+            case "label":
+                spreadsheetSelection = labelName(selection);
+                break;
+            case "row":
+                spreadsheetSelection = parseRow(selection);
+                break;
+            case "row-range":
+                spreadsheetSelection = parseRowRange(selection);
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        "Invalid type " +
+                                CharSequences.quoteAndEscape(type) +
+                                " value " +
+                                CharSequences.quoteAndEscape(selection)
+                );
+        }
+
+        return spreadsheetSelection;
+    }
+
+    /**
      * Parsers the given text into one of the sub classes of {@link SpreadsheetExpressionReference}.
      */
     public static SpreadsheetExpressionReference parseExpressionReference(final String text) {

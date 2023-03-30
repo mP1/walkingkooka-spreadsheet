@@ -928,6 +928,139 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    // parse............................................................................................................
+
+    @Test
+    public void testParseWithNullSelectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.parse(null, "cell")
+        );
+    }
+
+    @Test
+    public void testParseWithNullSelectionTypeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.parse("A1", null)
+        );
+    }
+
+    @Test
+    public void testParseWithInvalidSelectionType() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parse("A1", "bad123")
+        );
+        this.checkEquals(
+                "Invalid type \"bad123\" value \"A1\"",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testParseWithInvalidCell() {
+        final String cell = "hello";
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parse(cell, "cell")
+        );
+
+        this.checkEquals(
+                "Invalid column value 3752126 expected between 0 and 16384",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testParseWithCell() {
+        this.parseAndCheck(
+                "A1",
+                "cell",
+                SpreadsheetSelection::parseCell
+        );
+    }
+
+    @Test
+    public void testParseWithCellRange() {
+        this.parseAndCheck(
+                "B2:C3",
+                "cell-range",
+                SpreadsheetSelection::parseCellRange
+        );
+    }
+
+    @Test
+    public void testParseWithColumn() {
+        this.parseAndCheck(
+                "D",
+                "column",
+                SpreadsheetSelection::parseColumn
+        );
+    }
+
+    @Test
+    public void testParseWithColumnRange() {
+        this.parseAndCheck(
+                "E:F",
+                "column-range",
+                SpreadsheetSelection::parseColumnRange
+        );
+    }
+
+    @Test
+    public void testParseWithRow() {
+        this.parseAndCheck(
+                "11",
+                "row",
+                SpreadsheetSelection::parseRow
+        );
+    }
+
+    @Test
+    public void testParseWithRowRange() {
+        this.parseAndCheck(
+                "22:33",
+                "row-range",
+                SpreadsheetSelection::parseRowRange
+        );
+    }
+
+    @Test
+    public void testParseWithLabel() {
+        this.parseAndCheck(
+                "Label123",
+                "label",
+                SpreadsheetSelection::labelName
+        );
+    }
+
+    private void parseAndCheck(final String selection,
+                               final String selectionType,
+                               final Function<String, SpreadsheetSelection> expected) {
+        this.parseAndCheck(
+                selection,
+                selectionType,
+                expected.apply(selection)
+        );
+    }
+
+    private void parseAndCheck(final String selection,
+                               final String selectionType,
+                               final SpreadsheetSelection expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetSelection.parse(
+                        selection,
+                        selectionType
+                ),
+                () -> "parse " + CharSequences.quoteAndEscape(selection) + " " + CharSequences.quoteAndEscape(selectionType)
+        );
+    }
+
     // deletedText.......................................................................................................
 
     @Test
