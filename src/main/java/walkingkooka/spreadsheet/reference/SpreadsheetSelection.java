@@ -241,13 +241,13 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
      * Uses the type to select the appropriate parseXXX methods to call with text.
      */
     public static SpreadsheetSelection parse(final String selection,
-                                             final String type) {
+                                             final String selectionType) {
         Objects.requireNonNull(selection, "text");
-        Objects.requireNonNull(type, "type");
+        Objects.requireNonNull(selectionType, "selectionType");
 
         final SpreadsheetSelection spreadsheetSelection;
 
-        switch (type) {
+        switch (selectionType) {
             case "cell":
                 spreadsheetSelection = parseCell(selection);
                 break;
@@ -271,8 +271,8 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
                 break;
             default:
                 throw new IllegalArgumentException(
-                        "Invalid type " +
-                                CharSequences.quoteAndEscape(type) +
+                        "Invalid selectionType " +
+                                CharSequences.quoteAndEscape(selectionType) +
                                 " value " +
                                 CharSequences.quoteAndEscape(selection)
                 );

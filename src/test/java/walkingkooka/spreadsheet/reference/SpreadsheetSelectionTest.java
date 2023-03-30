@@ -953,7 +953,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 () -> SpreadsheetSelection.parse("A1", "bad123")
         );
         this.checkEquals(
-                "Invalid type \"bad123\" value \"A1\"",
+                "Invalid selectionType \"bad123\" value \"A1\"",
                 thrown.getMessage(),
                 "message"
         );
