@@ -716,6 +716,31 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
     public abstract SpreadsheetCellReference toCell();
 
     /**
+     * Attempts to conver this selection to a {@link SpreadsheetCellRange}.
+     * This only returns for cell and cell-range, other selections will throw a {@link UnsupportedOperationException}.
+     */
+    public final SpreadsheetCellRange toCellRange() {
+        return this.toCellRange(LABEL_TO_CELL_RANGE_UOE)
+                .get(); // always works because Labels will throw UOE.
+    }
+
+    private static final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> LABEL_TO_CELL_RANGE_UOE = (l) -> {
+        throw new UnsupportedOperationException("Unexpected label " + l);
+    };
+
+    /**
+     * A helper that converts any {@link SpreadsheetSelection} including labels to a {@link SpreadsheetCellRange}.
+     * <br>
+     * A {@link SpreadsheetCellReference} will become a range with a single cell, a column will become a range that includes all cells etc.
+     */
+    public final Optional<SpreadsheetCellRange> toCellRange(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange) {
+        return SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor.toCellRange(
+                this,
+                labelToCellRange
+        );
+    }
+
+    /**
      * If the sub class has a {@link SpreadsheetReferenceKind} return a new instance with that set to {@link SpreadsheetReferenceKind#RELATIVE}.
      * The sub class {@link SpreadsheetLabelName} will always return <code>this</code>.
      */
@@ -929,27 +954,6 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
                 .replace("Reference", "")
                 .replace("Name", "")
                 .replace("Range", " Range");
-    }
-
-    public final SpreadsheetCellRange toCellRange() {
-        return this.toCellRange(LABEL_TO_CELL_RANGE_UOE)
-                .get(); // always works because Labels will throw UOE.
-    }
-
-    private static final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> LABEL_TO_CELL_RANGE_UOE = (l) -> {
-        throw new UnsupportedOperationException("Unexpected label " + l);
-    };
-
-    /**
-     * A helper that converts any {@link SpreadsheetSelection} including labels to a {@link SpreadsheetCellRange}.
-     * <br>
-     * A {@link SpreadsheetCellReference} will become a range with a single cell, a column will become a range that includes all cells etc.
-     */
-    public final Optional<SpreadsheetCellRange> toCellRange(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange) {
-        return SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor.toCellRange(
-                this,
-                labelToCellRange
-        );
     }
 
     // notFound.........................................................................................................
