@@ -466,13 +466,13 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    // toCellOrFail.....................................................................................................
+    // toCell...........................................................................................................
 
     @Test
-    public void testToCellOrFail() {
+    public void testToCell() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:C3");
 
-        this.toCellOrFailAndCheck(
+        this.toCellAndCheck(
                 range,
                 SpreadsheetSelection.parseCell("B2")
         );

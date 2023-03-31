@@ -129,7 +129,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     }
 
     @Override
-    public final SpreadsheetCellReference toCellOrFail() {
+    public final SpreadsheetCellReference toCell() {
         throw new UnsupportedOperationException();
     }
 

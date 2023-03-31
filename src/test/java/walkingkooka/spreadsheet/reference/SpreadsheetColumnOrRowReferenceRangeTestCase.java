@@ -50,7 +50,7 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
 
     @Test
     public final void testToCellOrFailFails() {
-        this.toCellOrFailFails();
+        this.toCellFails();
     }
 
     // compare.........................................................................................................

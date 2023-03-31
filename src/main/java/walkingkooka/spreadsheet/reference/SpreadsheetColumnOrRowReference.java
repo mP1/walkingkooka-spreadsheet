@@ -150,7 +150,7 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     }
 
     @Override
-    public final SpreadsheetCellReference toCellOrFail() {
+    public final SpreadsheetCellReference toCell() {
         throw new UnsupportedOperationException();
     }
 

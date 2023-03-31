@@ -213,7 +213,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    public SpreadsheetCellReference toCellOrFail() {
+    public SpreadsheetCellReference toCell() {
         return this;
     }
 

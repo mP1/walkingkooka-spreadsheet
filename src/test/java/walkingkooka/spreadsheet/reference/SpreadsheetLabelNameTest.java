@@ -208,7 +208,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testToCellOrFailFails() {
-        this.toCellOrFailFails();
+        this.toCellFails();
     }
 
     // simplify.........................................................................................................
