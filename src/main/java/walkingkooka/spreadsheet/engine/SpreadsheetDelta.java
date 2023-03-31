@@ -1057,7 +1057,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case FORMAT_PATTERN_PROPERTY_STRING:
                     cells = patchFormatPattern(
-                            selection.toCellRangeOrFail(),
+                            selection.toCellRange(),
                             cells,
                             JsonNode.object()
                                     .set(FORMAT_PATTERN_PROPERTY, propertyAndValue),
@@ -1066,7 +1066,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case PARSE_PATTERN_PROPERTY_STRING:
                     cells = patchParsePattern(
-                            selection.toCellRangeOrFail(),
+                            selection.toCellRange(),
                             cells,
                             JsonNode.object()
                                     .set(PARSE_PATTERN_PROPERTY, propertyAndValue),
@@ -1078,7 +1078,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case STYLE_PROPERTY_STRING:
                     cells = patchStyle(
-                            selection.toCellRangeOrFail(),
+                            selection.toCellRange(),
                             cells,
                             propertyAndValue,
                             context

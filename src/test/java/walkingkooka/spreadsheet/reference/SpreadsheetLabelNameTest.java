@@ -299,10 +299,10 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testToCellRangeOrFailFails() {
+    public void testToCellRangeFails() {
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> SpreadsheetLabelName.with("Label123").toCellRangeOrFail()
+                () -> SpreadsheetLabelName.with("Label123").toCellRange()
         );
     }
 
@@ -403,10 +403,10 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
                 (l) -> {
                     this.checkEquals(name, l);
                     return Optional.of(
-                            cell.toCellRangeOrFail()
+                            cell.toCellRange()
                     );
                 },
-                cell.toCellRangeOrFail()
+                cell.toCellRange()
         );
     }
 

@@ -579,7 +579,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     // testCellRange....................................................................................................
 
     @Test
-    public void testCellRangeNullFails() {
+    public void testToCellRangeNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.cell(1, 1)
@@ -588,7 +588,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testCellRangeOne() {
+    public void testToCellRangeOne() {
         final SpreadsheetCellReference lower = this.cell(1, 1);
         final SpreadsheetCellRange range = lower.cellRange(lower);
 
@@ -599,13 +599,13 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testCellRangeLeftTopRightBottom() {
+    public void testToCellRangeLeftTopRightBottom() {
         final int left = 1;
         final int top = 2;
         final int right = 3;
         final int bottom = 4;
 
-        this.toCellRangeOrFailAndCheck(
+        this.toCellRangeAndCheck(
                 this.cell(left, top),
                 this.cell(right, bottom),
                 left, top,
@@ -614,13 +614,13 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testCellRangeLeftBottomRightTop() {
+    public void testToCellRangeLeftBottomRightTop() {
         final int left = 1;
         final int top = 2;
         final int right = 3;
         final int bottom = 4;
 
-        this.toCellRangeOrFailAndCheck(
+        this.toCellRangeAndCheck(
                 this.cell(left, bottom),
                 this.cell(right, top),
                 left, top,
@@ -629,13 +629,13 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testCellRangeRightTopLeftBottom() {
+    public void testToCellRangeRightTopLeftBottom() {
         final int left = 1;
         final int top = 2;
         final int right = 3;
         final int bottom = 4;
 
-        this.toCellRangeOrFailAndCheck(
+        this.toCellRangeAndCheck(
                 this.cell(right, top),
                 this.cell(left, bottom),
                 left, top,
@@ -643,12 +643,12 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    private void toCellRangeOrFailAndCheck(final SpreadsheetCellReference cell,
-                                           final SpreadsheetCellReference other,
-                                           final int left,
-                                           final int top,
-                                           final int right,
-                                           final int bottom) {
+    private void toCellRangeAndCheck(final SpreadsheetCellReference cell,
+                                     final SpreadsheetCellReference other,
+                                     final int left,
+                                     final int top,
+                                     final int right,
+                                     final int bottom) {
         final Range<SpreadsheetCellReference> expected = Range.greaterThanEquals(
                 this.cell(left, top)
         ).and(
@@ -675,29 +675,29 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     // toCellRange......................................................................................................
 
     @Test
-    public void testToCellRangeOrFailAbsolute() {
-        this.toCellRangeOrFailAndCheck(
+    public void testToCellRangeAbsolute() {
+        this.toCellRangeAndCheck(
                 SpreadsheetSelection.parseCell("$B$2"),
                 SpreadsheetSelection.parseCellRange("$B$2")
         );
     }
 
     @Test
-    public void testToCellRangeOrFailRelative() {
+    public void testToCellRangeRelative() {
         final String text = "C3";
 
-        this.toCellRangeOrFailAndCheck(
+        this.toCellRangeAndCheck(
                 SpreadsheetSelection.parseCell(text),
                 SpreadsheetSelection.parseCellRange(text)
         );
     }
 
-    private void toCellRangeOrFailAndCheck(final SpreadsheetCellReference reference,
-                                           final SpreadsheetCellRange range) {
+    private void toCellRangeAndCheck(final SpreadsheetCellReference reference,
+                                     final SpreadsheetCellRange range) {
         this.checkEquals(
                 range,
-                reference.toCellRangeOrFail(),
-                () -> reference + " toCellRangeOrFail()"
+                reference.toCellRange(),
+                () -> reference + " toCellRange()"
         );
     }
 
