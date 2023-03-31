@@ -1037,6 +1037,16 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // toColumn.........................................................................................................
+
+    @Test
+    public void testToColumn() {
+        this.toColumnAndCheck(
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                SpreadsheetSelection.parseColumn("A")
+        );
+    }
+
     // json.............................................................................................................
 
     @Test

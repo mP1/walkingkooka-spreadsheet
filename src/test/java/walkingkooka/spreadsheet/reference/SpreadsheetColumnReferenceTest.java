@@ -501,6 +501,18 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
+    // toColumn.........................................................................................................
+
+    @Test
+    public void testToColumn() {
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("A");
+
+        this.toColumnAndCheck(
+                column,
+                column
+        );
+    }
+
     // JsonNodeTesting..................................................................................................
 
     @Test

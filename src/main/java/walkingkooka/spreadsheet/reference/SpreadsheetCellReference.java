@@ -218,6 +218,11 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
+    public SpreadsheetColumnReference toColumn() {
+        return this.column();
+    }
+
+    @Override
     public SpreadsheetSelection simplify() {
         return this;
     }

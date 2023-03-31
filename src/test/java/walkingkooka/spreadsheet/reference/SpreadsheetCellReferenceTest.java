@@ -219,6 +219,16 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // toColumn.........................................................................................................
+
+    @Test
+    public void testToColumn() {
+        this.toColumnAndCheck(
+                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.parseColumn("A")
+        );
+    }
+
     // simplify.........................................................................................................
 
     @Test

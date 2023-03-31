@@ -238,6 +238,11 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         );
     }
 
+    @Override
+    public SpreadsheetColumnReference toColumn() {
+        return this;
+    }
+
     /**
      * Returns a {@link SpreadsheetColumnReferenceRange} holding only this column.
      */

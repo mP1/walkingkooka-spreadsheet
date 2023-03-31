@@ -215,6 +215,11 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return SpreadsheetRowReferenceRange.with(this.range(other));
     }
 
+    @Override
+    public SpreadsheetColumnReference toColumn() {
+        throw new UnsupportedOperationException(this.toString());
+    }
+
     /**
      * Returns a {@link SpreadsheetRowReferenceRange} holding only this row.
      */
