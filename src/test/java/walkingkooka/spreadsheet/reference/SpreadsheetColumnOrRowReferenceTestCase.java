@@ -297,7 +297,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testToCellOrFailFails() {
-        this.toCellOrFailFails();
+        this.toCellFails();
     }
 
     // helper............................................................................................................

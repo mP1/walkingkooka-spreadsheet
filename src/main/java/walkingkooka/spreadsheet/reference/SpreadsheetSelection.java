@@ -713,7 +713,7 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
      * Not really a cast operation but only {@link SpreadsheetCellReference} and {@link SpreadsheetCellRange} will
      * succeed all other types will throw {@link UnsupportedOperationException}.
      */
-    public abstract SpreadsheetCellReference toCellOrFail();
+    public abstract SpreadsheetCellReference toCell();
 
     /**
      * If the sub class has a {@link SpreadsheetReferenceKind} return a new instance with that set to {@link SpreadsheetReferenceKind#RELATIVE}.

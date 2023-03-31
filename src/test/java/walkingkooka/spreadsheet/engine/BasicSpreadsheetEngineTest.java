@@ -11413,7 +11413,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return (r -> {
                     if (r instanceof SpreadsheetExpressionReference) {
                         final SpreadsheetCellReference cell = this.resolveIfLabel((SpreadsheetExpressionReference) r)
-                                .toCellOrFail();
+                                .toCell();
                         final SpreadsheetDelta delta = engine.loadCells(
                                 cell,
                                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,

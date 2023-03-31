@@ -264,7 +264,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     @Override
-    public SpreadsheetCellReference toCellOrFail() {
+    public SpreadsheetCellReference toCell() {
         return this.begin();
     }
 

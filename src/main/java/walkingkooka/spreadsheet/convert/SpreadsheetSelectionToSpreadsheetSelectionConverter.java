@@ -121,7 +121,7 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Conve
     }
 
     private static SpreadsheetCellReference cellRangeToCell(final SpreadsheetCellRange range) {
-        return range.toCellOrFail();
+        return range.toCell();
     }
 
     @Override

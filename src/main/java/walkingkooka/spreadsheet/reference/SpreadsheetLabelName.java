@@ -135,7 +135,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     // SpreadsheetExpressionReference...................................................................................
 
     @Override
-    public SpreadsheetCellReference toCellOrFail() {
+    public SpreadsheetCellReference toCell() {
         throw new UnsupportedOperationException();
     }
 
