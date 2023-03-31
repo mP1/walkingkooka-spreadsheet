@@ -931,7 +931,7 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
                 .replace("Range", " Range");
     }
 
-    public final SpreadsheetCellRange toCellRangeOrFail() {
+    public final SpreadsheetCellRange toCellRange() {
         return this.toCellRange(LABEL_TO_CELL_RANGE_UOE)
                 .get(); // always works because Labels will throw UOE.
     }

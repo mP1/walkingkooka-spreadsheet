@@ -1181,7 +1181,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("C3:Z99");
 
         assertSame(
-                range.toCellRangeOrFail(),
+                range.toCellRange(),
                 range
         );
     }

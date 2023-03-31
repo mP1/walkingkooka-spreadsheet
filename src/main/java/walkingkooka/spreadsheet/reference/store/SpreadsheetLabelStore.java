@@ -67,7 +67,7 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
      */
     default Optional<SpreadsheetCellRange> cellRange(final SpreadsheetExpressionReference reference) {
         return this.cellReferenceOrRange(reference)
-                .map(SpreadsheetCellReferenceOrRange::toCellRangeOrFail);
+                .map(SpreadsheetCellReferenceOrRange::toCellRange);
     }
 
     /**
