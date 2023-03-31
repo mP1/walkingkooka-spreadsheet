@@ -503,6 +503,13 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // toColumn.........................................................................................................
+
+    @Test
+    public void testToColumnFails() {
+        this.toColumnFails();
+    }
+
     // testCellRange.....................................................................................................
 
     @Test

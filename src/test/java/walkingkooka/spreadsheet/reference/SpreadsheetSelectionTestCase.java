@@ -201,6 +201,24 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // toColumn.........................................................................................................
+
+    final void toColumnFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().toColumn()
+        );
+    }
+
+    final void toColumnAndCheck(final SpreadsheetSelection selection,
+                                final SpreadsheetColumnReference expected) {
+        this.checkEquals(
+                expected,
+                selection.toColumn(),
+                () -> selection + " toColumn"
+        );
+    }
+
     // testXXX..........................................................................................................
 
     @Test

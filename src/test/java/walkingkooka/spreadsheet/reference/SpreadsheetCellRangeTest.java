@@ -496,6 +496,16 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
+    // toColumn.........................................................................................................
+
+    @Test
+    public void testToColumn() {
+        this.toColumnAndCheck(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseColumn("A")
+        );
+    }
+
     // test.............................................................................................................
 
     @Test

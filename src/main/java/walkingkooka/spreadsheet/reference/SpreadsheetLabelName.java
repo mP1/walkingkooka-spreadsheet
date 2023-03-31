@@ -140,6 +140,11 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
+    public SpreadsheetColumnReference toColumn() {
+        throw new UnsupportedOperationException(this.toString());
+    }
+
+    @Override
     public SpreadsheetSelection simplify() {
         return this;
     }
