@@ -394,24 +394,27 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    // SetRowReferenceRange.............................................................................................
+    // SetRowRange......................................................................................................
 
     @Test
-    public void testSetRowReferenceRangeNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createSelection().setRowReferenceRange(null));
+    public void testSetRowRangeNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection().setRowRange(null)
+        );
     }
 
     @Test
-    public void testSetRowReferenceRangeSame() {
+    public void testSetRowRangeSame() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
-        assertSame(range, range.setRowReferenceRange(SpreadsheetSelection.parseRowRange("2:4")));
+        assertSame(range, range.setRowRange(SpreadsheetSelection.parseRowRange("2:4")));
     }
 
     @Test
-    public void testSetRowReferenceRangeDifferent() {
+    public void testSetRowRangeDifferent() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
         final SpreadsheetRowReferenceRange rows = SpreadsheetSelection.parseRowRange("6:7");
-        final SpreadsheetCellRange different = range.setRowReferenceRange(rows);
+        final SpreadsheetCellRange different = range.setRowRange(rows);
 
         assertNotSame(range, different);
         this.checkEquals(

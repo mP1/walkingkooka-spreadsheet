@@ -160,7 +160,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
         if (top.compareTo(beginRow) < 0) {
 
             // set new top...
-            this.range = celRange.setRowReferenceRange(
+            this.range = celRange.setRowRange(
                     this.engine.rowRange(
                             top,
                             0,
@@ -183,7 +183,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
                         context
                 );
 
-                this.range = celRange.setRowReferenceRange(
+                this.range = celRange.setRowRange(
                         engine.rowRange(
                                 beginRow,
                                 bottomOffset,
