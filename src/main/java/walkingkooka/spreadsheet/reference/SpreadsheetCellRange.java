@@ -237,13 +237,13 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
      * Would be setter that combines the new column reference range and the current column reference range,
      * returning a {@link SpreadsheetCellRange} with the result.
      */
-    public SpreadsheetCellRange setRowReferenceRange(final SpreadsheetRowReferenceRange rowReferenceRange) {
-        checkRowReferenceRange(rowReferenceRange);
+    public SpreadsheetCellRange setRowRange(final SpreadsheetRowReferenceRange rowRange) {
+        checkRowReferenceRange(rowRange);
 
         return this.setRange(
-                Range.greaterThanEquals(this.begin().column().setRow(rowReferenceRange.begin()))
+                Range.greaterThanEquals(this.begin().column().setRow(rowRange.begin()))
                         .and(
-                                Range.lessThanEquals(this.end().column().setRow(rowReferenceRange.end()))
+                                Range.lessThanEquals(this.end().column().setRow(rowRange.end()))
                         )
         );
     }
