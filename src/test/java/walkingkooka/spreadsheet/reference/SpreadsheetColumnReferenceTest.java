@@ -254,19 +254,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     // toCellRange.....................................................................................................
 
     @Test
-    public void testToCellRange() {
-        this.toCellRangeAndCheck(
-                "A",
-                "A2"
-        );
-    }
-
-    @Test
-    public void testToCellRange2() {
-        this.toCellRangeAndCheck(
-                "B",
-                "C3"
-        );
+    public void testToCellRangeFails() {
+        this.toCellRangeWithNullFunctionFails();
     }
 
     // toRelative........................................................................................................

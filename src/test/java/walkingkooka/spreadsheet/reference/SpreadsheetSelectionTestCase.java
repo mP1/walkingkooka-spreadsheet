@@ -185,7 +185,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange,
                                    final SpreadsheetCellRange expected) {
         this.toCellRangeAndCheck(
-                expected,
+                selection,
                 labelToCellRange,
                 Optional.of(expected)
         );
