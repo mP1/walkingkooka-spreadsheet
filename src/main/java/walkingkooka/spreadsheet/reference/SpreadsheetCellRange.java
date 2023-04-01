@@ -283,6 +283,11 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         return this.toCell().row();
     }
 
+    @Override
+    public SpreadsheetRowReferenceRange toRowRange() {
+        return this.rowReferenceRange();
+    }
+
     /**
      * Creates a {@link SpreadsheetViewport} with the begin or top/left cell.
      */

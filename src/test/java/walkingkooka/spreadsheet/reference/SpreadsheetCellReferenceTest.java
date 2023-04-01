@@ -257,6 +257,24 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // toRowRange.......................................................................................................
+
+    @Test
+    public void testToRowRange() {
+        this.toRowRangeAndCheck(
+                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.parseRowRange("A")
+        );
+    }
+
+    @Test
+    public void testToRowRange2() {
+        this.toRowRangeAndCheck(
+                SpreadsheetSelection.parseCellRange("B2"),
+                SpreadsheetSelection.parseRowRange("2")
+        );
+    }
+
     // simplify.........................................................................................................
 
     @Test

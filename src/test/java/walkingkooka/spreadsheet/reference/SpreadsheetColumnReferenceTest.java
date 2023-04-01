@@ -511,6 +511,13 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.toRowFails();
     }
 
+    // toRowRange....................................................................................................
+
+    @Test
+    public void testToRowRangeFails() {
+        this.toRowRangeFails();
+    }
+
     // JsonNodeTesting..................................................................................................
 
     @Test

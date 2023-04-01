@@ -526,6 +526,24 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
+    // toRowRange.......................................................................................................
+
+    @Test
+    public void testToRowRange() {
+        this.toRowRangeAndCheck(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseRowRange("1:2")
+        );
+    }
+
+    @Test
+    public void testToRowRange2() {
+        this.toRowRangeAndCheck(
+                SpreadsheetSelection.parseCellRange("C3:D4"),
+                SpreadsheetSelection.parseRowRange("3:4")
+        );
+    }
+
     // test.............................................................................................................
 
     @Test

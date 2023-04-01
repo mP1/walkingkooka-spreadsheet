@@ -233,6 +233,11 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
+    public SpreadsheetRowReferenceRange toRowRange() {
+        return this.row().toRowRange();
+    }
+
+    @Override
     public SpreadsheetSelection simplify() {
         return this;
     }

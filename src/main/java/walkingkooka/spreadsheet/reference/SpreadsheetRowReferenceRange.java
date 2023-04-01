@@ -119,6 +119,11 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     }
 
     @Override
+    public SpreadsheetRowReferenceRange toRowRange() {
+        return this;
+    }
+
+    @Override
     public SpreadsheetRowReferenceRange toRelative() {
         final SpreadsheetRowReferenceRange relative = this.begin()
                 .toRelative()
