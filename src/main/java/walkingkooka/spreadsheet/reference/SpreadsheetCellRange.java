@@ -148,7 +148,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
 
     @Override
     public int count() {
-        return this.columnReferenceRange().count() *
+        return this.columnRange().count() *
                 this.rowReferenceRange().count();
     }
 
@@ -190,7 +190,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     /**
      * Getter that returns the {@link SpreadsheetColumnReferenceRange} component.
      */
-    public SpreadsheetColumnReferenceRange columnReferenceRange() {
+    public SpreadsheetColumnReferenceRange columnRange() {
         return columnRange(
                 Range.greaterThanEquals(this.begin().column())
                         .and(
@@ -282,7 +282,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
 
     @Override
     public SpreadsheetColumnReferenceRange toColumnRange() {
-        return this.columnReferenceRange();
+        return this.columnRange();
     }
 
     @Override
@@ -447,7 +447,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                                                                 final SpreadsheetColumnStore columnStore,
                                                                 final SpreadsheetRowStore rowStore) {
         final SpreadsheetRowReferenceRange rowRange = this.rowReferenceRange();
-        final SpreadsheetColumnReferenceRange columnRange = this.columnReferenceRange();
+        final SpreadsheetColumnReferenceRange columnRange = this.columnRange();
 
         return rowRange.isHidden(columnStore, rowStore) ?
                 Optional.empty() :
@@ -506,7 +506,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                                                              final Supplier<SpreadsheetViewportSelectionAnchor> singleRowAnchor,
                                                              final SpreadsheetColumnStore columnStore,
                                                              final SpreadsheetRowStore rowStore) {
-        final SpreadsheetColumnReferenceRange columnRange = this.columnReferenceRange();
+        final SpreadsheetColumnReferenceRange columnRange = this.columnRange();
         final SpreadsheetRowReferenceRange rowRange = this.rowReferenceRange();
 
         return columnRange.isHidden(columnStore, rowStore) ?
@@ -530,7 +530,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     @Override
     public SpreadsheetCellReference focused(final SpreadsheetViewportSelectionAnchor anchor) {
         this.checkAnchor(anchor);
-        return anchor.column(this.columnReferenceRange())
+        return anchor.column(this.columnRange())
                 .setRow(anchor.row(this.rowReferenceRange()));
     }
 
@@ -576,7 +576,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     boolean testCellRange0(final SpreadsheetCellRange range) {
         checkCellRange(range);
 
-        return this.columnReferenceRange().testCellRange0(range) &&
+        return this.columnRange().testCellRange0(range) &&
                 this.rowReferenceRange().testCellRange0(range);
     }
 
@@ -585,7 +585,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
      */
     @Override
     boolean testColumn0(final SpreadsheetColumnReference column) {
-        return this.columnReferenceRange()
+        return this.columnRange()
                 .testColumn0(column);
     }
 

@@ -786,7 +786,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                                        final Set<SpreadsheetCellRange> window) {
         return filterMap(
                 columnWidths,
-                c -> window.stream().anyMatch(w -> w.columnReferenceRange().testColumn(c))
+                c -> window.stream().anyMatch(w -> w.columnRange().testColumn(c))
         );
     }
 
