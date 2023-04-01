@@ -794,7 +794,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                                   final Set<SpreadsheetCellRange> window) {
         return filterMap(
                 rowHeights,
-                r -> window.stream().anyMatch(w -> w.rowReferenceRange().testRow(r))
+                r -> window.stream().anyMatch(w -> w.rowRange().testRow(r))
         );
     }
 
