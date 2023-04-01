@@ -523,8 +523,16 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     @Test
     public void testToRowRange() {
         this.toRowRangeAndCheck(
-                SpreadsheetSelection.parseRow("A"),
-                SpreadsheetSelection.parseRowRange("A")
+                SpreadsheetSelection.parseRow("1"),
+                SpreadsheetSelection.parseRowRange("1")
+        );
+    }
+
+    @Test
+    public void testToRowRange2() {
+        this.toRowRangeAndCheck(
+                SpreadsheetSelection.parseRow("2"),
+                SpreadsheetSelection.parseRowRange("2")
         );
     }
 
