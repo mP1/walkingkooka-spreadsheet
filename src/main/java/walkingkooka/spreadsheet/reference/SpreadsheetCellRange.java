@@ -278,6 +278,11 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         return this.columnReferenceRange();
     }
 
+    @Override
+    public SpreadsheetRowReference toRow() {
+        return this.toCell().row();
+    }
+
     /**
      * Creates a {@link SpreadsheetViewport} with the begin or top/left cell.
      */

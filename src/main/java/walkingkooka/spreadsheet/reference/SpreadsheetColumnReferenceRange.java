@@ -123,6 +123,11 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
+    public SpreadsheetRowReference toRow() {
+        throw new UnsupportedOperationException(this.toString());
+    }
+
+    @Override
     public SpreadsheetColumnReferenceRange toRelative() {
         final SpreadsheetColumnReferenceRange relative = this.begin()
                 .toRelative()

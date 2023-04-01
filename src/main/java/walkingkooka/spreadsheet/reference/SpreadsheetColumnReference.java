@@ -251,6 +251,11 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return this.columnRange(this);
     }
 
+    @Override
+    public SpreadsheetRowReference toRow() {
+        throw new UnsupportedOperationException(this.toString());
+    }
+
     // SpreadsheetViewportSelectionNavigation...........................................................................
 
     @Override
