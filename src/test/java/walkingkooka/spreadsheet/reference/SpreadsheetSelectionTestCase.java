@@ -237,6 +237,24 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // toRow.........................................................................................................
+
+    final void toRowFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().toRow()
+        );
+    }
+
+    final void toRowAndCheck(final SpreadsheetSelection selection,
+                             final SpreadsheetRowReference expected) {
+        this.checkEquals(
+                expected,
+                selection.toRow(),
+                () -> selection + " toRow"
+        );
+    }
+
     // testXXX..........................................................................................................
 
     @Test

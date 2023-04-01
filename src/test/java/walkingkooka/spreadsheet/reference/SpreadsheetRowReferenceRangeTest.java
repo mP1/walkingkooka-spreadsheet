@@ -992,6 +992,24 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.toColumnRangeFails();
     }
 
+    // toRow............................................................................................................
+
+    @Test
+    public void testToRow() {
+        this.toRowAndCheck(
+                SpreadsheetSelection.parseRowRange("1:2"),
+                SpreadsheetSelection.parseRow("1")
+        );
+    }
+
+    @Test
+    public void testToRow2() {
+        this.toRowAndCheck(
+                SpreadsheetSelection.parseRowRange("3:4"),
+                SpreadsheetSelection.parseRow("3")
+        );
+    }
+
     // IterableTesting..................................................................................................
 
     @Test
