@@ -118,6 +118,11 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
+    public SpreadsheetColumnReferenceRange toColumnRange() {
+        return this;
+    }
+
+    @Override
     public SpreadsheetColumnReferenceRange toRelative() {
         final SpreadsheetColumnReferenceRange relative = this.begin()
                 .toRelative()

@@ -218,6 +218,13 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         this.toColumnFails();
     }
 
+    // toColumnRange....................................................................................................
+
+    @Test
+    public void testToColumnRangeFails() {
+        this.toColumnRangeFails();
+    }
+
     // simplify.........................................................................................................
 
     @Test

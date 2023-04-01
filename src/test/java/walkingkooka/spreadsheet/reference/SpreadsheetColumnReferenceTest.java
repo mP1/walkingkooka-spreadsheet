@@ -491,16 +491,6 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
-    @Test
-    public void testToColumnRange() {
-        final SpreadsheetColumnReference column = this.createSelection();
-        this.checkEquals(
-                SpreadsheetColumnReferenceRange.with(Range.singleton(column)),
-                column.toColumnRange(),
-                () -> column + ".toColumnRange"
-        );
-    }
-
     // toColumn.........................................................................................................
 
     @Test
@@ -510,6 +500,18 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.toColumnAndCheck(
                 column,
                 column
+        );
+    }
+
+    // toColumnRange....................................................................................................
+
+    @Test
+    public void testToColumnRange() {
+        final SpreadsheetColumnReference column = this.createSelection();
+
+        this.toColumnRangeAndCheck(
+                SpreadsheetColumnReferenceRange.with(Range.singleton(column)),
+                column.toColumnRange()
         );
     }
 
