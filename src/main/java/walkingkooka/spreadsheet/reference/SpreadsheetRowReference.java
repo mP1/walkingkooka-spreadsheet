@@ -220,6 +220,11 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         throw new UnsupportedOperationException(this.toString());
     }
 
+    @Override
+    public SpreadsheetColumnReferenceRange toColumnRange() {
+        throw new UnsupportedOperationException(this.toString());
+    }
+
     /**
      * Returns a {@link SpreadsheetRowReferenceRange} holding only this row.
      */

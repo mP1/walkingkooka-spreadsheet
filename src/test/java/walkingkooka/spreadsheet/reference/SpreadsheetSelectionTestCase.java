@@ -219,6 +219,24 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // toColumnRange.........................................................................................................
+
+    final void toColumnRangeFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().toColumnRange()
+        );
+    }
+
+    final void toColumnRangeAndCheck(final SpreadsheetSelection selection,
+                                     final SpreadsheetColumnReferenceRange expected) {
+        this.checkEquals(
+                expected,
+                selection.toColumnRange(),
+                () -> selection + " toColumnRange"
+        );
+    }
+
     // testXXX..........................................................................................................
 
     @Test
