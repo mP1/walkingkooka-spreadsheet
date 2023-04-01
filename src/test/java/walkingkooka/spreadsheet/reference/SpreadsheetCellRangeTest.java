@@ -342,24 +342,27 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    // SetColumnReferenceRange.............................................................................................
+    // SetColumnRange..................................................................................................
 
     @Test
-    public void testSetColumnReferenceRangeNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createSelection().setColumnReferenceRange(null));
+    public void testSetColumnRangeNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection().setColumnRange(null)
+        );
     }
 
     @Test
-    public void testSetColumnReferenceRangeSame() {
+    public void testSetColumnRangeSame() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
-        assertSame(range, range.setColumnReferenceRange(SpreadsheetSelection.parseColumnRange("B:D")));
+        assertSame(range, range.setColumnRange(SpreadsheetSelection.parseColumnRange("B:D")));
     }
 
     @Test
-    public void testSetColumnReferenceRangeDifferent() {
+    public void testSetColumnRangeDifferent() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
         final SpreadsheetColumnReferenceRange columns = SpreadsheetSelection.parseColumnRange("F:G");
-        final SpreadsheetCellRange different = range.setColumnReferenceRange(columns);
+        final SpreadsheetCellRange different = range.setColumnRange(columns);
 
         assertNotSame(range, different);
         this.checkEquals(
