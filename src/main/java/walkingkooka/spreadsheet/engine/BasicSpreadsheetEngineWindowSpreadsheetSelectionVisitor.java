@@ -97,7 +97,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
         if (left.compareTo(beginColumn) < 0) {
 
             // set new left...
-            this.range = cellRange.setColumnReferenceRange(
+            this.range = cellRange.setColumnRange(
                     this.engine.columnRange(
                             left,
                             0,
@@ -120,7 +120,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
                         context
                 );
 
-                this.range = cellRange.setColumnReferenceRange(
+                this.range = cellRange.setColumnRange(
                         engine.columnRange(
                                 beginColumn,
                                 rightOffset,
