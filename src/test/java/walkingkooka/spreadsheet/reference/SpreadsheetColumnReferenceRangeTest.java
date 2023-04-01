@@ -1055,6 +1055,13 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.toRowFails();
     }
 
+    // toRowRange....................................................................................................
+
+    @Test
+    public void testToRowRangeFails() {
+        this.toRowRangeFails();
+    }
+
     // json.............................................................................................................
 
     @Test

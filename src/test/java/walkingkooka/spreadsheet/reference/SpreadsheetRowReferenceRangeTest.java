@@ -1010,6 +1010,18 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // toRowRange....................................................................................................
+
+    @Test
+    public void testToRowRange() {
+        final SpreadsheetRowReferenceRange range = this.createSelection();
+
+        this.toRowRangeAndCheck(
+                range,
+                range
+        );
+    }
+
     // IterableTesting..................................................................................................
 
     @Test

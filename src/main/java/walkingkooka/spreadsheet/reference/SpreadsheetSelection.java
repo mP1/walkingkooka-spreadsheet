@@ -771,6 +771,16 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
     public abstract SpreadsheetRowReference toRow();
 
     /**
+     * If possible return the row range from this selection otherwise such as for a column a {@link UnsupportedOperationException}.
+     * <br>
+     * A cell will return a row range with its row reference.
+     * <pre>
+     * A1 -> 1:1
+     * </pre>
+     */
+    public abstract SpreadsheetRowReferenceRange toRowRange();
+
+    /**
      * If the sub class has a {@link SpreadsheetReferenceKind} return a new instance with that set to {@link SpreadsheetReferenceKind#RELATIVE}.
      * The sub class {@link SpreadsheetLabelName} will always return <code>this</code>.
      */

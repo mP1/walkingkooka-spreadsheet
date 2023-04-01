@@ -518,6 +518,16 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // toRowRange....................................................................................................
+
+    @Test
+    public void testToRowRange() {
+        this.toRowRangeAndCheck(
+                SpreadsheetSelection.parseRow("A"),
+                SpreadsheetSelection.parseRowRange("A")
+        );
+    }
+
     // testCellRange.....................................................................................................
 
     @Test
@@ -592,17 +602,6 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 ),
                 lower.rowRange(upper),
                 () -> lower + " rowRange " + upper
-        );
-    }
-
-    @Test
-    public void testToRowRange() {
-        final SpreadsheetRowReference row = this.createSelection();
-
-        this.checkEquals(
-                SpreadsheetRowReferenceRange.with(Range.singleton(row)),
-                row.toRowRange(),
-                () -> row + ".toRowRange"
         );
     }
 
