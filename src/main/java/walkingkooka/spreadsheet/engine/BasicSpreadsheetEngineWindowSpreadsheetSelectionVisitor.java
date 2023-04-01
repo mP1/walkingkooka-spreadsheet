@@ -67,7 +67,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
 
     @Override
     protected void visit(final SpreadsheetCellRange range) {
-        this.columnRange(range.columnReferenceRange());
+        this.columnRange(range.columnRange());
         this.rowRange(range.rowReferenceRange());
     }
 

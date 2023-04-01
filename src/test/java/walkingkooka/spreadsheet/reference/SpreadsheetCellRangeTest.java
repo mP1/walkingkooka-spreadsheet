@@ -321,24 +321,24 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.check(different, 1, 2, 88, 99);
     }
 
-    // columnReferenceRange.............................................................................................
+    // columnRange.....................................................................................................
 
     @Test
-    public void testColumnReferenceRange() {
-        this.columnReferenceRangeAndCheck("B2:D4", "B:D");
+    public void testColumnRange() {
+        this.columnRangeAndCheck("B2:D4", "B:D");
     }
 
     @Test
-    public void testColumnReferenceRangeSingleton() {
-        this.columnReferenceRangeAndCheck("B2:B4", "B");
+    public void testColumnRangeSingleton() {
+        this.columnRangeAndCheck("B2:B4", "B");
     }
 
-    private void columnReferenceRangeAndCheck(final String cell,
-                                              final String column) {
+    private void columnRangeAndCheck(final String cell,
+                                     final String column) {
         this.checkEquals(
                 SpreadsheetSelection.parseColumnRange(column),
-                SpreadsheetSelection.parseCellRange(cell).columnReferenceRange(),
-                () -> cell + ".columnReferenceRange()"
+                SpreadsheetSelection.parseCellRange(cell).columnRange(),
+                () -> cell + ".columnRange()"
         );
     }
 
@@ -370,7 +370,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 different
         );
 
-        this.checkEquals(columns, different.columnReferenceRange());
+        this.checkEquals(columns, different.columnRange());
     }
 
     // rowReferenceRange.............................................................................................
