@@ -1575,6 +1575,33 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchColumnsFormatPatternFails() {
+        this.patchColumnInvalidPropertyFails2(
+                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                JsonNode.nullNode()
+
+        );
+    }
+
+    @Test
+    public void testPatchColumnsParsePatternFails() {
+        this.patchColumnInvalidPropertyFails2(
+                SpreadsheetDelta.PARSE_PATTERN_PROPERTY,
+                JsonNode.nullNode()
+
+        );
+    }
+
+    @Test
+    public void testPatchColumnsStyleFails() {
+        this.patchColumnInvalidPropertyFails2(
+                SpreadsheetDelta.STYLE_PROPERTY,
+                JsonNode.nullNode()
+
+        );
+    }
+
+    @Test
     public void testPatchColumnsColumnWidthFails() {
         this.patchColumnInvalidPropertyFails2(
                 SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
@@ -1852,6 +1879,33 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchRowInvalidPropertyFails2(
                 SpreadsheetDelta.DELETED_COLUMNS_PROPERTY,
                 JsonNode.nullNode()
+        );
+    }
+
+    @Test
+    public void testPatchRowsFormatPatternFails() {
+        this.patchRowInvalidPropertyFails2(
+                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                JsonNode.nullNode()
+
+        );
+    }
+
+    @Test
+    public void testPatchRowsParsePatternFails() {
+        this.patchRowInvalidPropertyFails2(
+                SpreadsheetDelta.PARSE_PATTERN_PROPERTY,
+                JsonNode.nullNode()
+
+        );
+    }
+
+    @Test
+    public void testPatchRowsStyleFails() {
+        this.patchRowInvalidPropertyFails2(
+                SpreadsheetDelta.STYLE_PROPERTY,
+                JsonNode.nullNode()
+
         );
     }
 
