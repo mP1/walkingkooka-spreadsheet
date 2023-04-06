@@ -870,14 +870,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private final static Predicate<String> IS_CELL_OR_FORMAT_OR_PARSE_OR_STYLE = Predicates.is(SpreadsheetDelta.CELLS_PROPERTY_STRING)
-            .or(
-                    Predicates.is(SpreadsheetDelta.FORMAT_PATTERN_PROPERTY_STRING)
-            ).or(
-                    Predicates.is(SpreadsheetDelta.PARSE_PATTERN_PROPERTY_STRING)
-            ).or(
-                    Predicates.is(SpreadsheetDelta.STYLE_PROPERTY_STRING)
-            );
+    private final static Predicate<String> IS_CELL_OR_FORMAT_OR_PARSE_OR_STYLE = Predicates.setContains(
+            Sets.of(
+                    SpreadsheetDelta.CELLS_PROPERTY_STRING,
+                    SpreadsheetDelta.FORMAT_PATTERN_PROPERTY_STRING,
+                    SpreadsheetDelta.PARSE_PATTERN_PROPERTY_STRING,
+                    SpreadsheetDelta.STYLE_PROPERTY_STRING
+            )
+    );
 
     // PatchColumns.....................................................................................................
 
