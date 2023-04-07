@@ -343,6 +343,55 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     // Patch argument factories.........................................................................................
 
+    // formatPatternPatch...............................................................................................
+
+    @Test
+    public void testFormatPatternPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.formatPatternPatch(
+                        SpreadsheetPattern.parseDateFormatPattern("ddmmyyyyy"),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testFormatPatternPatch() {
+        final SpreadsheetFormatPattern pattern = SpreadsheetFormatPattern.parseTextFormatPattern("@@");
+
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                                marshallWithType(pattern)
+                        )
+                ,
+                SpreadsheetDelta.formatPatternPatch(
+                        pattern,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testFormatPatternPatchWithNullPattern() {
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                                JsonNode.nullNode()
+                        )
+                ,
+                SpreadsheetDelta.formatPatternPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    // stylePatch.......................................................................................................
+
     @Test
     public void testStylePatchWithNullContextFails() {
         assertThrows(
@@ -1012,10 +1061,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
         final JsonNode patch = this.marshall(delta)
                 .objectOrFail()
-                .set(
-                        SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
-                        this.marshall(
-                                SpreadsheetPattern.parseTextFormatPattern("@")
+                .merge(
+                        SpreadsheetDelta.formatPatternPatch(
+                                SpreadsheetPattern.parseTextFormatPattern("@"),
+                                MARSHALL_CONTEXT
                         )
                 );
 
@@ -1067,18 +1116,18 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellFormatPatternAndParsePatternFails() {
-        final JsonNode patch = JsonNode.object()
-                .set(
-                        SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
-                        this.marshall(
-                                SpreadsheetPattern.parseTextFormatPattern("@")
+        final JsonNode patch = SpreadsheetDelta.formatPatternPatch(
+                SpreadsheetPattern.parseTextFormatPattern("@"),
+                MARSHALL_CONTEXT
+        ).merge(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.PARSE_PATTERN_PROPERTY,
+                                this.marshall(
+                                        SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+                                )
                         )
-                ).set(
-                        SpreadsheetDelta.PARSE_PATTERN_PROPERTY,
-                        this.marshall(
-                                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
-                        )
-                );
+        );
 
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
@@ -1097,18 +1146,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellWithFormatPatternAndStyleFails() {
-        final JsonNode patch = JsonNode.object()
-                .set(
-                        SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
-                        this.marshall(
-                                SpreadsheetPattern.parseTextFormatPattern("@")
-                        )
-                ).merge(
-                        SpreadsheetDelta.stylePatch(
-                                TextStyle.EMPTY,
-                                MARSHALL_CONTEXT
-                        )
-                );
+        final JsonNode patch = SpreadsheetDelta.formatPatternPatch(
+                SpreadsheetPattern.parseTextFormatPattern("@"),
+                MARSHALL_CONTEXT
+        ).merge(
+                SpreadsheetDelta.stylePatch(
+                        TextStyle.EMPTY,
+                        MARSHALL_CONTEXT
+                )
+        );
 
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
@@ -1184,11 +1230,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchCellsAndCheck(
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
-                                marshallWithType(formatPattern)
-                        ),
+                SpreadsheetDelta.formatPatternPatch(
+                        formatPattern,
+                        MARSHALL_CONTEXT
+                ),
                 after
         );
     }
@@ -1223,11 +1268,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchCellsAndCheck(
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
-                                marshallWithType(formatPattern)
-                        ),
+                SpreadsheetDelta.formatPatternPatch(
+                        formatPattern,
+                        MARSHALL_CONTEXT
+                ),
                 after
         );
     }
@@ -1260,11 +1304,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchCellsAndCheck(
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
+                SpreadsheetDelta.formatPatternPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                ),
                 after
         );
     }
@@ -1301,11 +1344,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchCellsAndCheck(
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
-                                marshallWithType(formatPattern)
-                        ),
+                SpreadsheetDelta.formatPatternPatch(
+                        formatPattern,
+                        MARSHALL_CONTEXT
+                ),
                 after
         );
     }

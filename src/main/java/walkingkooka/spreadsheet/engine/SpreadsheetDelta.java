@@ -818,6 +818,20 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // patch argument factories.........................................................................................
 
     /**
+     * Creates a {@link SpreadsheetFormatPattern} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
+     */
+    public static JsonObject formatPatternPatch(final SpreadsheetFormatPattern pattern,
+                                                final JsonNodeMarshallContext context) {
+        checkContext(context);
+
+        return JsonNode.object()
+                .set(
+                        FORMAT_PATTERN_PROPERTY,
+                        context.marshallWithType(pattern)
+                );
+    }
+
+    /**
      * Creates a {@link TextStyle} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
     public static JsonObject stylePatch(final TextStyle style,
