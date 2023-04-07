@@ -257,6 +257,39 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
         );
     }
 
+    // check............................................................................................................
+
+    @Test
+    public void testCheckWithNullPatternFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.check(null)
+        );
+    }
+
+    @Test
+    public void testCheck() {
+        SpreadsheetPatternKind.DATE_FORMAT_PATTERN.check(
+                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
+        );
+    }
+
+    @Test
+    public void testCheckInvalidThrows() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.check(
+                        SpreadsheetPattern.parseTimeParsePattern("hh:mm")
+                )
+        );
+
+        this.checkEquals(
+                "Pattern \"hh:mm\" is not a TIME_PARSE_PATTERN.",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
     // ClassTesting......................................................................................................
 
     @Override
