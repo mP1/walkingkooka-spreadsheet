@@ -221,11 +221,39 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
         );
     }
 
+
     @Test
     public void testUrlFragmentTimeParsePattern() {
         this.checkEquals(
                 UrlFragment.with("/pattern/time-parse"),
                 SpreadsheetPatternKind.TIME_PARSE_PATTERN.urlFragment()
+        );
+    }
+
+    // isFormatPattern..................................................................................................
+
+    @Test
+    public void testIsFormatPatternDateFormatPattern() {
+        this.isFormatPatternAndCheck(
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
+                true
+        );
+    }
+
+    @Test
+    public void testIsFormatPatternDateParsePattern() {
+        this.isFormatPatternAndCheck(
+                SpreadsheetPatternKind.DATE_PARSE_PATTERN,
+                false
+        );
+    }
+
+    private void isFormatPatternAndCheck(final SpreadsheetPatternKind kind,
+                                         final boolean expected) {
+        this.checkEquals(
+                expected,
+                kind.isFormatPattern(),
+                () -> kind + " isFormatPattern"
         );
     }
 
