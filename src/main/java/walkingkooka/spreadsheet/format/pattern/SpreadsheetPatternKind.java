@@ -20,8 +20,11 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -125,6 +128,23 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
         if (this != kind) {
             throw new IllegalArgumentException("Pattern " + pattern + " is not a " + kind + ".");
         }
+    }
+
+    /**
+     * Factory that creates a {@link JsonNode} patch for the given {@link SpreadsheetPattern}.
+     */
+    public JsonNode patternPatch(final SpreadsheetPattern pattern,
+                                 final JsonNodeMarshallContext context) {
+        this.check(pattern);
+        return this.isFormatPattern() ?
+                SpreadsheetDelta.formatPatternPatch(
+                        (SpreadsheetFormatPattern) pattern,
+                        context
+                ) :
+                SpreadsheetDelta.parsePatternPatch(
+                        (SpreadsheetParsePattern) pattern,
+                        context
+                );
     }
 
     /**
