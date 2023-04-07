@@ -17,12 +17,11 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.SpreadsheetException;
 import walkingkooka.text.CharSequences;
 
 import java.util.Objects;
 
-public class SpreadsheetMetadataPropertyValueException extends SpreadsheetException {
+public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentException {
 
     private static final long serialVersionUID = 1L;
 
