@@ -21,8 +21,11 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
 import java.util.function.Function;
 
@@ -287,6 +290,64 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
                 "Pattern \"hh:mm\" is not a TIME_PARSE_PATTERN.",
                 thrown.getMessage(),
                 "message"
+        );
+    }
+
+    // patternPatch.....................................................................................................
+
+    @Test
+    public void testPatternPatchWithNullPatternFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
+                        null,
+                        JsonNodeMarshallContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testPatternPatchWithInvalidPatternFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
+                        SpreadsheetPattern.parseTextFormatPattern("@@@"),
+                        JsonNodeMarshallContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testPatternPatchWithSpreadsheetFormatPattern() {
+        final SpreadsheetFormatPattern pattern = SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy");
+        final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
+
+        this.checkEquals(
+                SpreadsheetDelta.formatPatternPatch(
+                        pattern,
+                        context
+                ),
+                pattern.kind().patternPatch(
+                        pattern,
+                        context
+                )
+        );
+    }
+
+    @Test
+    public void testPatternPatchWithSpreadsheetParsePattern() {
+        final SpreadsheetParsePattern pattern = SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy");
+        final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
+
+        this.checkEquals(
+                SpreadsheetDelta.parsePatternPatch(
+                        pattern,
+                        context
+                ),
+                pattern.kind().patternPatch(
+                        pattern,
+                        context
+                )
         );
     }
 
