@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.Whitespace;
 
 import java.util.Objects;
 
@@ -28,7 +29,7 @@ public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentEx
     public SpreadsheetMetadataPropertyValueException(final String message,
                                                      final SpreadsheetMetadataPropertyName<?> name,
                                                      final Object value) {
-        super(message);
+        super(checkMessage(message));
 
         this.name = checkName(name);
         this.value = value;
@@ -38,15 +39,25 @@ public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentEx
                                                      final SpreadsheetMetadataPropertyName<?> name,
                                                      final Object value,
                                                      final Throwable cause) {
-        super(message, cause);
+        super(
+                checkMessage(message),
+                checkCause(cause)
+        );
 
         this.name = checkName(name);
         this.value = value;
     }
 
+    private static String checkMessage(String message) {
+        return (String) Whitespace.failIfNullOrEmptyOrWhitespace(message, "message");
+    }
+
     static SpreadsheetMetadataPropertyName<?> checkName(final SpreadsheetMetadataPropertyName<?> name) {
-        Objects.requireNonNull(name, "name");
-        return name;
+        return Objects.requireNonNull(name, "name");
+    }
+
+    private static Throwable checkCause(Throwable cause) {
+        return (Throwable) Objects.requireNonNull(cause, "cause");
     }
 
     @Override
