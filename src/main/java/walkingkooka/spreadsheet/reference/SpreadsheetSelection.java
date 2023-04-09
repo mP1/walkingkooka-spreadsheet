@@ -77,6 +77,14 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
         UsesToStringBuilder {
 
     /**
+     * A {@link SpreadsheetCellReference} with A1.
+     */
+    public final static SpreadsheetCellReference A1 = SpreadsheetReferenceKind.RELATIVE.firstColumn()
+            .setRow(
+                    SpreadsheetReferenceKind.RELATIVE.firstRow()
+            );
+
+    /**
      * {@see SpreadsheetCellRange#ALL}
      */
     public final static SpreadsheetCellRange ALL_CELLS = SpreadsheetCellRange.ALL;
