@@ -178,7 +178,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testMappingCellReference() {
-        this.mappingAndCheck(SpreadsheetSelection.parseCell("A1"));
+        this.mappingAndCheck(SpreadsheetSelection.A1);
     }
 
     @Test
@@ -293,7 +293,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     public void testTestCellFails() {
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> this.createSelection().testCell(SpreadsheetSelection.parseCell("A1"))
+                () -> this.createSelection().testCell(SpreadsheetSelection.A1)
         );
     }
 

@@ -105,7 +105,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
 
         store.save(SpreadsheetLabelMapping.with(label, reference));
-        store.save(SpreadsheetLabelMapping.with(SpreadsheetSelection.labelName("DifferentLabel"), SpreadsheetSelection.parseCell("A1")));
+        store.save(SpreadsheetLabelMapping.with(SpreadsheetSelection.labelName("DifferentLabel"), SpreadsheetSelection.A1));
 
         this.labelsAndCheck(
                 store,
@@ -212,7 +212,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
 
     @Override
     default SpreadsheetLabelMapping value() {
-        return SpreadsheetLabelMapping.with(this.id(), SpreadsheetSelection.parseCell("A1"));
+        return SpreadsheetLabelMapping.with(this.id(), SpreadsheetSelection.A1);
     }
 
     // TypeNameTesting..................................................................

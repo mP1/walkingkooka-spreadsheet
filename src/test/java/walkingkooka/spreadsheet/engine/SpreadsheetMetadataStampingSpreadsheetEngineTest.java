@@ -100,7 +100,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
         assertNotNull(
                 engine.loadCells(
-                        SpreadsheetSelection.parseCell("A1"),
+                        SpreadsheetSelection.A1,
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                         SpreadsheetDeltaProperties.ALL,
                         context
@@ -149,7 +149,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        engine.deleteCells(SpreadsheetSelection.parseCell("A1"), context);
+        engine.deleteCells(SpreadsheetSelection.A1, context);
 
         this.checkMetadataNotUpdated(context);
     }
@@ -295,7 +295,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     }
 
     private SpreadsheetCell cell() {
-        return SpreadsheetSelection.parseCell("A1")
+        return SpreadsheetSelection.A1
                 .setFormula(
                         SpreadsheetFormula.EMPTY
                                 .setText(FORMULA_TEXT)

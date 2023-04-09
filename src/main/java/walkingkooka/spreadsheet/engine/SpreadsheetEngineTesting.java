@@ -285,7 +285,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullCellsFails() {
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
         final SpreadsheetCellRange range = reference.cellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(null,
@@ -296,7 +296,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullFromFails() {
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
         final SpreadsheetCell cell = reference.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
@@ -311,7 +311,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullToFails() {
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
         final SpreadsheetCell cell = reference.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
@@ -326,7 +326,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullContextFails() {
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
         final SpreadsheetCell cell = reference.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
@@ -441,7 +441,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testSaveLabelNullContextFails() {
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().saveLabel(SpreadsheetLabelMapping.with(SpreadsheetSelection.labelName("LABEL123"),
-                SpreadsheetSelection.parseCell("A1")), null));
+                SpreadsheetSelection.A1), null));
     }
 
     default void saveLabelAndCheck(final SpreadsheetEngine engine,

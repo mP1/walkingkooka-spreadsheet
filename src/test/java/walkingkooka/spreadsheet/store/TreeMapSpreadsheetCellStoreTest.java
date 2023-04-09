@@ -39,7 +39,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     public void testLoadCells() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         store.save(a1);
 
@@ -68,7 +68,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         store.save(
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
                         .setFormula(SpreadsheetFormula.EMPTY)
         );
 
@@ -233,7 +233,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     public void testToString() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
                         .setFormula(
                                 SpreadsheetFormula.EMPTY
                                         .setText("1+2")

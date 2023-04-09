@@ -155,7 +155,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.checkEquals(
                 Optional.of(
-                        SpreadsheetSelection.parseCell("A1")
+                        SpreadsheetSelection.A1
                 ),
                 nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT_CELL)
         );

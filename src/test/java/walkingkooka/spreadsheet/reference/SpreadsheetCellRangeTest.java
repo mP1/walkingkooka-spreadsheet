@@ -460,7 +460,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testSimplifyBeginAndEndSame() {
         this.simplifyAndCheck(
                 "A1:A1",
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
         );
     }
 
@@ -2284,7 +2284,7 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     public void testParseMissingSeparatorSingleton() {
         this.parseStringAndCheck(
                 "A1",
-                SpreadsheetCellRange.with(Range.singleton(SpreadsheetSelection.parseCell("A1")))
+                SpreadsheetCellRange.with(Range.singleton(SpreadsheetSelection.A1))
         );
     }
 
@@ -2335,7 +2335,7 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
                 "A1:$A$1",
                 SpreadsheetCellRange.with(
                         Range.singleton(
-                                SpreadsheetSelection.parseCell("A1")
+                                SpreadsheetSelection.A1
                         )
                 )
         );
@@ -2386,7 +2386,7 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
         this.parseStringAndCheck(
                 "B2:A1",
                 SpreadsheetCellRange.with(
-                        SpreadsheetSelection.parseCell("A1")
+                        SpreadsheetSelection.A1
                                 .range(SpreadsheetSelection.parseCell("B2")
                                 )
                 )

@@ -839,7 +839,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         this.patchAndCheck(
                 SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("A1"),
+                        SpreadsheetSelection.A1,
                         formula(text)
                 ),
                 JsonNode.object()
@@ -856,7 +856,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testPatchDifferentText() {
-        final SpreadsheetCellReference cellReference = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
         final String text = "=2";
 
         this.patchAndCheck(
@@ -883,7 +883,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testPatchSetStyle() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 formula("=1")
         );
 
@@ -905,7 +905,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testPatchSetStyle2() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 formula("=1")
         );
 
@@ -928,7 +928,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testPatchSetFormatPattern() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 formula("=1")
         ).setFormatPattern(
                 Optional.of(
@@ -956,7 +956,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testPatchRemoveFormatPattern() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 formula("=1")
         ).setFormatPattern(
                 Optional.of(
@@ -983,7 +983,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 .set(TextStylePropertyName.BACKGROUND_COLOR, Color.BLACK);
 
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 formula("=1")
         ).setStyle(style);
 

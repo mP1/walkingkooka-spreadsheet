@@ -539,7 +539,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE),
                 "cell A1" + EOL
         );
@@ -567,7 +567,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     public void testTreePrintNonRangeAndNavigation() {
         this.treePrintAndCheck(
                 SpreadsheetViewportSelection.with(
-                        SpreadsheetSelection.parseCell("A1"),
+                        SpreadsheetSelection.A1,
                         SpreadsheetViewportSelectionAnchor.NONE,
                         Optional.of(
                                 SpreadsheetViewportSelectionNavigation.LEFT
@@ -596,7 +596,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     @Test
     public void testUrlFragmentCell() {
         this.urlFragmentAndCheck(
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE),
                 "/cell/A1"
         );
