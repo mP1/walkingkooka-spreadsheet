@@ -39,6 +39,19 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         ParseStringTesting<SpreadsheetExpressionReference> {
 
     @Test
+    public void testA1Constant() {
+        final SpreadsheetCellReference a1 = SpreadsheetCellReference.A1;
+        this.checkEquals(
+                SpreadsheetSelection.parseColumn("A"),
+                SpreadsheetReferenceKind.RELATIVE.firstColumn()
+        );
+        this.checkEquals(
+                SpreadsheetSelection.parseRow("1"),
+                SpreadsheetReferenceKind.RELATIVE.firstRow()
+        );
+    }
+
+    @Test
     public void testAllCells() {
         this.checkEquals(
                 "A1:XFD1048576",

@@ -50,14 +50,6 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         HateosResource<String> {
 
     /**
-     * A {@link SpreadsheetCellReference} with A1.
-     */
-    public final static SpreadsheetCellReference A1 = SpreadsheetReferenceKind.RELATIVE.firstColumn()
-            .setRow(
-                    SpreadsheetReferenceKind.RELATIVE.firstRow()
-            );
-
-    /**
      * Parsers the text expecting a valid {@link SpreadsheetCellReference} or fails.
      */
     static SpreadsheetCellReference parseCell0(final String text) {
