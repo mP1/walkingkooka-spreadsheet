@@ -217,7 +217,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testToColumn() {
         this.toColumnAndCheck(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 SpreadsheetSelection.parseColumn("A")
         );
     }
@@ -227,7 +227,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testToColumnRange() {
         this.toColumnRangeAndCheck(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 SpreadsheetSelection.parseColumnRange("A")
         );
     }
@@ -245,7 +245,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testToRow() {
         this.toRowAndCheck(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 SpreadsheetSelection.parseRow("1")
         );
     }
@@ -255,7 +255,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testToRowRange() {
         this.toRowRangeAndCheck(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 SpreadsheetSelection.parseRowRange("1")
         );
     }
@@ -303,7 +303,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testTestDifferentCell() {
         this.testFalse(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 SpreadsheetSelection.parseCell("B2")
         );
     }
@@ -311,7 +311,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testTestDifferentColumn() {
         this.testFalse(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 SpreadsheetSelection.parseColumn("B")
         );
     }
@@ -319,7 +319,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testTestDifferentRow() {
         this.testFalse(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 SpreadsheetSelection.parseRow("2")
         );
     }
@@ -1518,7 +1518,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testArraySort() {
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B2");
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c$3");
         final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("$D$4");

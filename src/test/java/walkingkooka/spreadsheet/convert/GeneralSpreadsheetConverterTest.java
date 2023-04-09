@@ -283,7 +283,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetCellReferenceToCellReference() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 SpreadsheetCellReference.class
         );
     }
@@ -291,7 +291,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetCellReferenceToCellReferenceOrRange() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 SpreadsheetCellReferenceOrRange.class
         );
     }
@@ -316,14 +316,14 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetCellReferenceToSpreadsheetSelection() {
         this.convertAndCheckSpreadsheetSelection(
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
         );
     }
 
     @Test
     public void testSpreadsheetCellReferenceToString() {
         this.convertAndCheckString(
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
         );
     }
 

@@ -93,7 +93,7 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
         );
 
         changes.onCellSavedImmediate(
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
                         .setFormula(
                                 SpreadsheetFormula.EMPTY
                                         .setText("1+2")

@@ -42,7 +42,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
     @Test
     default void testSaveNullFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().save(Sets.of(SpreadsheetSelection.parseCell("A1"))));
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().save(Sets.of(SpreadsheetSelection.A1)));
     }
 
     @Test
@@ -160,7 +160,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
     @Test
     default void testSaveReferencesNullIdFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().saveReferences(null, Sets.of(SpreadsheetSelection.parseCell("A1"))));
+        assertThrows(NullPointerException.class, () -> this.createStore().saveReferences(null, Sets.of(SpreadsheetSelection.A1)));
     }
 
     @Test

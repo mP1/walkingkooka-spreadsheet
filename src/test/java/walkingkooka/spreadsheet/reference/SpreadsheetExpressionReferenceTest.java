@@ -62,7 +62,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     @Test
     public void testTestParameterNameCell() {
         this.testParameterNameAndCheck(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 "different",
                 false
         );
@@ -109,7 +109,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
 
     @Test
     public void testJsonRoundtripCellReference() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetSelection.parseCell("A1"));
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetSelection.A1);
     }
 
     @Test

@@ -251,7 +251,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseCell() {
-        this.checkEquals(SpreadsheetSelection.parseCell("A1"),
+        this.checkEquals(SpreadsheetSelection.A1,
                 SpreadsheetSelection.cell(SpreadsheetSelection.parseColumn("A"),
                         SpreadsheetSelection.parseRow("1")));
     }
@@ -578,7 +578,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testParseCellOrCellRangeWithCell() {
         this.parseCellOrCellRangeAndCheck(
                 "A1",
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
         );
     }
 
@@ -1107,7 +1107,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testHasUrlFragmentCell() {
         this.urlFragmentAndCheck(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 "/cell/A1"
         );
     }

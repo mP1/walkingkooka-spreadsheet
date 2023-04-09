@@ -62,7 +62,7 @@ public final class StringToSpreadsheetSelectionConverterTest implements Converte
         this.convertAndCheck(
                 "A1",
                 SpreadsheetCellReferenceOrRange.class,
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
         );
     }
 

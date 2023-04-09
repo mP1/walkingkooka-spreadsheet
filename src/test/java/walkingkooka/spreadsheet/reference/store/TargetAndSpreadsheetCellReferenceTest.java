@@ -81,7 +81,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     }
 
     private SpreadsheetCellReference reference() {
-        return SpreadsheetSelection.parseCell("A1");
+        return SpreadsheetSelection.A1;
     }
 
     @Override

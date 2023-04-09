@@ -204,7 +204,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testTestCellBefore() {
         this.testCellAndCheck(
                 this.createSelection(),
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 false
         );
     }

@@ -32,7 +32,7 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor
 
     @Test
     public void testToString() {
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("ABCDEF123");

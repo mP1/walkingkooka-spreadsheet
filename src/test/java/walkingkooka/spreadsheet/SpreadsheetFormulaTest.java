@@ -293,7 +293,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.replaceErrorWithValueIfPossibleAndCheck(
                 formula.setValue(
                         Optional.of(
-                                SpreadsheetError.selectionNotFound(SpreadsheetSelection.parseCell("A1"))
+                                SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1)
                         )
                 ),
                 new FakeSpreadsheetEngineContext() {

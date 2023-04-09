@@ -2264,7 +2264,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         properties.put(
                 SpreadsheetMetadataPropertyName.SELECTION,
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));

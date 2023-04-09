@@ -313,7 +313,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
         context.storeRepository()
                 .cells()
@@ -337,7 +337,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
         context.storeRepository()
                 .cells()
@@ -360,7 +360,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
         context.storeRepository()
                 .cells()
@@ -411,7 +411,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
         context.storeRepository()
                 .cells()
@@ -437,7 +437,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
         context.storeRepository()
                 .cells()
@@ -1147,7 +1147,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference cellReference = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
         final SpreadsheetCell cell = this.cell(cellReference, "=1+2");
 
@@ -2503,7 +2503,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
         engine.saveCell(this.cell(a1, "=123"), context);
 
@@ -2527,7 +2527,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         engine.saveCell(
                 this.cell(
                         a1, "=111"
@@ -2564,7 +2564,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         engine.saveCell(
                 this.cell(
                         a1, "=111"
@@ -2692,7 +2692,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetColumnStore columnStore = context.storeRepository()
                 .columns();
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
         final SpreadsheetColumn a = a1.column()
                 .column();
@@ -2826,7 +2826,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRowStore rowStore = context.storeRepository()
                 .rows();
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
         final SpreadsheetRow a = a1.row()
                 .row();
@@ -3307,7 +3307,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
 
-        final SpreadsheetCellReference a = SpreadsheetSelection.parseCell("A1"); // A1
+        final SpreadsheetCellReference a = SpreadsheetSelection.A1; // A1
         final SpreadsheetCellReference b = SpreadsheetSelection.parseCell("E2"); // E2
 
         engine.saveCell(this.cell(a, "=99+0"), context);
@@ -10031,7 +10031,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testWindowColumnHidden() {
         final SpreadsheetViewport viewport = SpreadsheetViewport.with(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 COLUMN_WIDTH * 4,
                 ROW_HEIGHT * 2
         );
@@ -10076,7 +10076,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testWindowRowHidden() {
         final SpreadsheetViewport viewport = SpreadsheetViewport.with(
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 COLUMN_WIDTH * 4,
                 ROW_HEIGHT * 2
         );
@@ -10713,7 +10713,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ROW_HEIGHT * 5,
                 3, // frozenColumns
                 3, // frozenRows
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 "A1:C3,D1:E3,A4:C5,D4:E5"
         );
     }
@@ -10985,7 +10985,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCellReference selection = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference selection = SpreadsheetSelection.A1;
 
         context.storeRepository()
                 .labels()
@@ -11011,7 +11011,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCellReference selection = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference selection = SpreadsheetSelection.A1;
 
         context.storeRepository()
                 .labels()

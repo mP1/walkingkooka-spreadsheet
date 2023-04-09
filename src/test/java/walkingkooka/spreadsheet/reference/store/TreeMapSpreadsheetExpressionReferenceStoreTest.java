@@ -884,7 +884,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     }
 
     private SpreadsheetCellReference a1() {
-        return SpreadsheetSelection.parseCell("A1");
+        return SpreadsheetSelection.A1;
     }
 
     private SpreadsheetCellReference b1() {

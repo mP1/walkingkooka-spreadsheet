@@ -73,7 +73,7 @@ public final class SpreadsheetParserTokenVisitorToExpressionTest extends Spreads
                         "A1"
                 ),
                 Expression.reference(
-                        SpreadsheetSelection.parseCell("A1")
+                        SpreadsheetSelection.A1
                 )
         );
     }

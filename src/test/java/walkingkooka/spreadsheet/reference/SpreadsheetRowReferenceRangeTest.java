@@ -202,7 +202,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     public void testTestCellAbove() {
         this.testCellAndCheck(
                 this.createSelection(),
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 false
         );
     }

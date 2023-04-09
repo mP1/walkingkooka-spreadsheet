@@ -101,7 +101,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         assertNotSame(repository.repository.cells(), repository.cells(), "cells");
 
         cellStore.save(
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=4+5+6")
                         )
@@ -164,7 +164,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         repository.metadatas()
                 .save(metadata);
 
-        final SpreadsheetCell cell = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell cell = SpreadsheetSelection.A1
                 .setFormula(
                         SpreadsheetFormula.EMPTY
                                 .setText("1.5")

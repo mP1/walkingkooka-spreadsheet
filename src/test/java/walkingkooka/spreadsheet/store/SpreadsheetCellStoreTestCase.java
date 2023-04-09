@@ -299,7 +299,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Override
     public final SpreadsheetCellReference id() {
-        return SpreadsheetSelection.parseCell("A1");
+        return SpreadsheetSelection.A1;
     }
 
     @Override

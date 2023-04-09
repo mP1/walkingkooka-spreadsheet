@@ -150,7 +150,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.isMissingCellAndCheck(
                 SpreadsheetErrorKind.NAME.setMessageAndValue(
                         "Ignored",
-                        SpreadsheetSelection.parseCell("A1")
+                        SpreadsheetSelection.A1
                 ),
                 true
         );
@@ -197,7 +197,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     public void testSetNameStringNAME_STRING() {
         final SpreadsheetError error = SpreadsheetErrorKind.NAME_STRING.setMessageAndValue(
                 "AAA",
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
         );
 
         assertSame(
@@ -209,7 +209,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     @Test
     public void testSetNameString() {
         final SpreadsheetError error = SpreadsheetError.selectionNotFound(
-                SpreadsheetSelection.parseCell("A1")
+                SpreadsheetSelection.A1
         );
 
         this.checkEquals(
@@ -325,7 +325,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     public void testMarshallRoundtripKindMessageValue() {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetError.selectionNotFound(
-                        SpreadsheetSelection.parseCell("A1")
+                        SpreadsheetSelection.A1
                 )
         );
     }

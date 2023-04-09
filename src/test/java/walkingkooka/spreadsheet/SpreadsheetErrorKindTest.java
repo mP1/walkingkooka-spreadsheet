@@ -117,7 +117,7 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
 
     @Test
     public void testTranslateHasExpressionReferenceException() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         this.translateAndCheck(
                 new ExpressionEvaluationReferenceException(

@@ -38,7 +38,7 @@ public final class HasSpreadsheetReferenceTest implements ClassTesting<HasSpread
                 HasSpreadsheetReference.hasSpreadsheetReferenceComparator()
         );
 
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(
                         SpreadsheetFormula.EMPTY
                 );

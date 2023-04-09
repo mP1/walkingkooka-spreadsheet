@@ -143,7 +143,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testCellWhenEmpty() {
         this.cellAndCheck(
                 SpreadsheetDelta.EMPTY,
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 Optional.empty()
         );
     }
@@ -189,7 +189,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     private SpreadsheetCell cell() {
-        return SpreadsheetSelection.parseCell("A1")
+        return SpreadsheetSelection.A1
                 .setFormula(
                         SpreadsheetFormula.EMPTY
                                 .setText("=1+2")
@@ -907,7 +907,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final InvalidPropertyJsonNodeException thrown = assertThrows(
                 InvalidPropertyJsonNodeException.class,
                 () -> SpreadsheetDelta.EMPTY.patchCells(
-                        SpreadsheetSelection.parseCell("A1"),
+                        SpreadsheetSelection.A1,
                         patch,
                         this.createPatchContext()
                 )
@@ -970,7 +970,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 )
                         )
                 ,
-                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.A1,
                 JsonNode.object()
                         .set(
                                 SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
@@ -982,7 +982,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsNewCell() {
-        final SpreadsheetCell cell = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell cell = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
@@ -1002,7 +1002,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsNewCell2() {
-        final SpreadsheetCell cell = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell cell = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
@@ -1022,7 +1022,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsReplacesCell() {
-        final SpreadsheetCell cell = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell cell = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
@@ -1072,7 +1072,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsCellWithWindow() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
                 .setFormula(SpreadsheetFormula.EMPTY);
@@ -1100,7 +1100,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellAndFormatPatternFails() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(
                 Sets.of(a1)
@@ -1131,7 +1131,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellAndParsePatternFails() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(
                 Sets.of(a1)
@@ -1247,7 +1247,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
         );
 
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY)
                 .setFormatPattern(beforeFormat);
 
@@ -1284,7 +1284,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
         );
 
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY)
                 .setFormatPattern(beforeFormat);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
@@ -1318,7 +1318,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithFormatPatternNullClears() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(SpreadsheetFormula.EMPTY);
@@ -1358,7 +1358,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
         );
 
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY)
                 .setFormatPattern(beforeFormat);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
@@ -1399,7 +1399,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetPattern.parseNumberParsePattern("\"before\"")
         );
 
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY)
                 .setParsePattern(beforeFormat);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
@@ -1433,7 +1433,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithParsePatternNullClears() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(SpreadsheetFormula.EMPTY);
@@ -1469,7 +1469,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellAndStyleFails() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(
                 Sets.of(a1)
@@ -1500,7 +1500,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithStyleMissing() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
@@ -1535,7 +1535,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithStyle() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(SpreadsheetFormula.EMPTY);
@@ -1573,7 +1573,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final TextStyle beforeStyle = TextStyle.EMPTY
                 .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
 
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY)
                 .setStyle(beforeStyle);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
@@ -1612,7 +1612,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithStyleNullClears() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.parseCell("A1")
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(SpreadsheetFormula.EMPTY);
@@ -2357,7 +2357,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(
-                                SpreadsheetSelection.parseCell("A1")
+                                SpreadsheetSelection.A1
                                         .setFormula(
                                                 SpreadsheetFormula.EMPTY
                                         )
@@ -2376,7 +2376,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(
-                                SpreadsheetSelection.parseCell("A1")
+                                SpreadsheetSelection.A1
                                         .setFormula(
                                                 SpreadsheetFormula.EMPTY
                                         ),

@@ -444,7 +444,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     @Test
     public final void testSetDeletedCellsSorted() {
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("A1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
 
         final SpreadsheetDelta delta = this.createSpreadsheetDelta()
