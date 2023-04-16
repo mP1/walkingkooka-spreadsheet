@@ -239,7 +239,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         return ANCHORS;
     }
 
-    private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
+    private final static Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
 
     // SpreadsheetViewport..............................................................................................
 
