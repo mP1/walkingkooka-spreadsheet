@@ -2354,6 +2354,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected.count(),
                 () -> "Expected " + expected + " count must be one"
         );
+
         this.checkEquals(
                 expected,
                 selection.focused(anchor),
