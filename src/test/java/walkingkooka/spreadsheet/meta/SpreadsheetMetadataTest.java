@@ -508,19 +508,17 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     // patch............................................................................................................
 
     @Test
-    public void testPatchEmptyObject() {
-        this.patchAndCheck(
-                SpreadsheetMetadata.EMPTY,
-                JsonNode.object()
+    public void testPatchEmptyObjectFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetMetadata.EMPTY.patch(
+                        JsonNode.object(),
+                        JsonNodeUnmarshallContexts.fake()
+                )
         );
-    }
-
-    @Test
-    public void testPatchEmptyObject2() {
-        this.patchAndCheck(
-                SpreadsheetMetadata.EMPTY
-                        .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com")),
-                JsonNode.object()
+        this.checkEquals(
+                "Empty patch",
+                thrown.getMessage()
         );
     }
 

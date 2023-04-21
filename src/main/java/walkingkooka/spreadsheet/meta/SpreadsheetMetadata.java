@@ -988,7 +988,10 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
 
         SpreadsheetMetadata result = this;
 
+        int patchCount = 0;
         for (final JsonNode nameAndValue : patch.objectOrFail().children()) {
+            patchCount++;
+
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(nameAndValue);
 
             if (nameAndValue.isNull()) {
@@ -1012,6 +1015,10 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
                         Cast.to(value)
                 );
             }
+        }
+
+        if (0 == patchCount) {
+            throw new IllegalArgumentException("Empty patch");
         }
 
         return result;
