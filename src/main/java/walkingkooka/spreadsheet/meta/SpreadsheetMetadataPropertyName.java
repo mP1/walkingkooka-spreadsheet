@@ -48,6 +48,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.TextStyle;
@@ -331,7 +332,15 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 ) :
                 name;
         this.name = finalName;
-        this.jsonPropertyName = JsonPropertyName.with(finalName);
+
+        final JsonPropertyName jsonPropertyName = JsonPropertyName.with(finalName);
+        this.jsonPropertyName = jsonPropertyName;
+
+        this.patchRemove = JsonNode.object()
+                .set(
+                        this.jsonPropertyName,
+                        JsonNode.nullNode()
+                );
 
         final String urlFragment;
         if (finalName.contains("pattern")) {
@@ -521,6 +530,23 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
 
     abstract Class<T> type();
+
+    // JsonNode.........................................................................................................
+
+    /**
+     * Creates a {@link JsonNode} which may be used to patch a {@link SpreadsheetMetadata}.
+     */
+    public final JsonNode patch(final T value) {
+        return null == value ?
+                this.patchRemove :
+                SpreadsheetMetadata.EMPTY.set(this, value)
+                        .marshall(JsonNodeMarshallContexts.basic());
+    }
+
+    /**
+     * Cached {@link JsonNode}
+     */
+    private final JsonNode patchRemove;
 
     /**
      * Factory that retrieves a {@link SpreadsheetMetadataPropertyName} from a {@link JsonNode#name()}.

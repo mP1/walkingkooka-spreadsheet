@@ -28,9 +28,15 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.lang.reflect.Field;
+import java.math.MathContext;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -111,6 +117,125 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                             propertyName.checkValue(color);
                         }
                 );
+    }
+
+    // patch............................................................................................................
+
+    @Test
+    public void testPatchNonNullValue() {
+        this.patchAndCheck(
+                SpreadsheetMetadataPropertyName.CREATOR,
+                EmailAddress.parse("user@example.com"),
+                JsonNode.object()
+                        .set(
+                                JsonPropertyName.with("creator"),
+                                JsonNode.string("user@example.com")
+                        )
+        );
+    }
+
+    @Test
+    public void testPatchNonNullValue2() {
+        this.patchAndCheck(
+                SpreadsheetMetadataPropertyName.CREATOR,
+                EmailAddress.parse("user@example.com"),
+                SpreadsheetMetadata.EMPTY.set(
+                        SpreadsheetMetadataPropertyName.CREATOR,
+                        EmailAddress.parse("user@patched-over.com")
+                ),
+                SpreadsheetMetadata.EMPTY.set(
+                        SpreadsheetMetadataPropertyName.CREATOR,
+                        EmailAddress.parse("user@example.com")
+                )
+        );
+    }
+
+    @Test
+    public void testPatchNonNullValue3() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+
+        this.patchAndCheck(
+                SpreadsheetMetadataPropertyName.CREATOR,
+                EmailAddress.parse("user@example.com"),
+                metadata.set(
+                        SpreadsheetMetadataPropertyName.CREATOR,
+                        EmailAddress.parse("user@patched-over.com")
+                ),
+                metadata.set(
+                        SpreadsheetMetadataPropertyName.CREATOR,
+                        EmailAddress.parse("user@example.com")
+                )
+        );
+    }
+
+    @Test
+    public void testPatchNullValue() {
+        this.patchAndCheck(
+                SpreadsheetMetadataPropertyName.CREATOR,
+                null,
+                JsonNode.object()
+                        .set(
+                                JsonPropertyName.with("creator"),
+                                JsonNode.nullNode()
+                        )
+        );
+    }
+
+    @Test
+    public void testPatchNullValue2() {
+        this.patchAndCheck(
+                SpreadsheetMetadataPropertyName.CREATOR,
+                null,
+                SpreadsheetMetadata.EMPTY.set(
+                        SpreadsheetMetadataPropertyName.CREATOR,
+                        EmailAddress.parse("user@patched-over.com")
+                ),
+                SpreadsheetMetadata.EMPTY
+        );
+    }
+
+    @Test
+    public void testPatchNullValue3() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+
+        this.patchAndCheck(
+                SpreadsheetMetadataPropertyName.CREATOR,
+                null,
+                metadata.set(
+                        SpreadsheetMetadataPropertyName.CREATOR,
+                        EmailAddress.parse("user@patched-over.com")
+                ),
+                metadata
+        );
+    }
+
+    private <T> void patchAndCheck(final SpreadsheetMetadataPropertyName<T> propertyName,
+                                   final T value,
+                                   final JsonNode expected) {
+        this.checkEquals(
+                expected,
+                propertyName.patch(value),
+                () -> propertyName + " patch " + value
+        );
+    }
+
+    private <T> void patchAndCheck(final SpreadsheetMetadataPropertyName<T> propertyName,
+                                   final T value,
+                                   final SpreadsheetMetadata initial,
+                                   final SpreadsheetMetadata expected) {
+        this.checkEquals(
+                expected,
+                initial.patch(
+                        propertyName.patch(value),
+                        JsonNodeUnmarshallContexts.basic(
+                                ExpressionNumberKind.BIG_DECIMAL,
+                                MathContext.DECIMAL32
+                        )
+                ),
+                () -> initial + " patch " + propertyName + " patch " + value
+        );
     }
 
     // Comparator ......................................................................................................
