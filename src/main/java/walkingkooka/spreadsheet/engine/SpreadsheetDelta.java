@@ -985,7 +985,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                     final Predicate<String> patchableProperties,
                                     final JsonNodeUnmarshallContext context) {
         checkPatch(json, context);
-        patchValidate(json, patchableProperties);
+        patchValidate(
+                selection,
+                json,
+                patchableProperties
+        );
+
         return patchApply(
                 selection,
                 json,
@@ -993,7 +998,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private static void patchValidate(final JsonNode json,
+    private static void patchValidate(final SpreadsheetSelection selection,
+                                      final JsonNode json,
                                       final Predicate<String> patchableProperties) {
         boolean cellsPatched = false;
         boolean formatPatternPatched = false;
@@ -1059,6 +1065,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         if (cellsPatched && stylePatched) {
             patchInvalidFail(CELLS_PROPERTY_STRING, STYLE_PROPERTY_STRING);
+        }
+
+        if (false == cellsPatched && stylePatched && null == selection) {
+            throw new IllegalArgumentException(
+                    "Patch includes " +
+                            CharSequences.quote(STYLE_PROPERTY_STRING) +
+                            " but is missing selection."
+            );
         }
 
         if (formatPatternPatched && parsePatternPatched) {

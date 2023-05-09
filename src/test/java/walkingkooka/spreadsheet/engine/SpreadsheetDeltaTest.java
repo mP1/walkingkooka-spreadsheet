@@ -631,6 +631,25 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchAllStyleMissingSelectionFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetDelta.EMPTY.patch(
+                        SpreadsheetDelta.stylePatch(
+                                TextStylePropertyName.COLOR.patch(null)
+                        ),
+                        JsonNodeUnmarshallContexts.fake()
+                )
+        );
+
+        this.checkEquals(
+                "Patch includes \"style\" but is missing selection.",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
     public void testPatchAllNoViewportSelection() {
         this.patchViewportSelectionAndCheck(
                 SpreadsheetDelta.NO_VIEWPORT_SELECTION,
