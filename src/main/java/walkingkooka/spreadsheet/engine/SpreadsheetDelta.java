@@ -845,21 +845,21 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 );
     }
 
-    /**
-     * Creates a {@link TextStyle} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
-     */
-    public static JsonObject stylePatch(final TextStyle style,
-                                        final JsonNodeMarshallContext context) {
-        checkContext(context);
-
-        return JsonNode.object().set(
-                STYLE_PROPERTY,
-                context.marshall(style)
-        );
-    }
-
     private static JsonNodeMarshallContext checkContext(final JsonNodeMarshallContext context) {
         return Objects.requireNonNull(context, "context");
+    }
+
+    /**
+     * Creates a {@link JsonObject} which can then be used to as an argument to {@link #patchStyle(SpreadsheetCellRange, Set, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonObject stylePatch(final JsonNode style) {
+        Objects.requireNonNull(style, "style");
+
+        return JsonNode.object()
+                .set(
+                        STYLE_PROPERTY,
+                        style
+                );
     }
 
     // Patchable.......................................................................................................
