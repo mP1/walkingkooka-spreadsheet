@@ -439,50 +439,122 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     // stylePatch.......................................................................................................
 
     @Test
-    public void testStylePatchWithNullContextFails() {
+    public void testStylePatchWithNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetDelta.stylePatch(
-                        TextStyle.EMPTY,
                         null
                 )
         );
     }
 
     @Test
-    public void testStylePatch() {
-        final TextStyle style = TextStyle.EMPTY
-                .set
-                        (TextStylePropertyName.COLOR,
-                                Color.parse("#123456")
-                        );
-        this.checkEquals(
+    public void testStylePatchSetOrReplace() {
+        final TextStylePropertyName<Color> propertyName = TextStylePropertyName.COLOR;
+        final Color color = Color.parse("#123456");
+
+        final JsonNode stylePatch = propertyName.patch(color);
+
+        final JsonObject deltaPatch = SpreadsheetDelta.stylePatch(stylePatch);
+        this.stylePatchAndCheck(
+                deltaPatch,
                 JsonNode.object()
                         .set(
                                 SpreadsheetDelta.STYLE_PROPERTY,
-                                marshall(style)
+                                stylePatch
                         )
-                ,
-                SpreadsheetDelta.stylePatch(
-                        style,
-                        MARSHALL_CONTEXT
+        );
+
+        // cell = 1+2 with background-color=#ffffff
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.BACKGROUND_COLOR,
+                Color.parse("#ffffff")
+        );
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY
+                        .setText("=1+2")
+        );
+
+        this.patchCellsAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                cell.setStyle(style)
+                        )
+                ),
+                cell.reference(),
+                deltaPatch,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                cell.setStyle(
+                                        style.set(
+                                                propertyName,
+                                                color
+                                        )
+                                )
+                        )
                 )
         );
     }
 
     @Test
-    public void testStylePatchWithNullTextStyle() {
-        this.checkEquals(
+    public void testStylePatchRemoves() {
+        final TextStylePropertyName<Color> propertyName = TextStylePropertyName.COLOR;
+        final Color color = null;
+
+        final JsonNode stylePatch = propertyName.patch(color);
+
+        final JsonObject deltaPatch = SpreadsheetDelta.stylePatch(stylePatch);
+        this.stylePatchAndCheck(
+                deltaPatch,
                 JsonNode.object()
                         .set(
                                 SpreadsheetDelta.STYLE_PROPERTY,
-                                JsonNode.nullNode()
+                                stylePatch
                         )
-                ,
-                SpreadsheetDelta.stylePatch(
-                        null,
-                        MARSHALL_CONTEXT
+        );
+
+        // cell = 1+2 with background-color=#ffffff
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.BACKGROUND_COLOR,
+                Color.parse("#ffffff")
+        ).set(
+                propertyName,
+                Color.BLACK
+        );
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY
+                        .setText("=1+2")
+        );
+
+        this.patchCellsAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                cell.setStyle(style)
+                        )
+                ),
+                cell.reference(),
+                deltaPatch,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                cell.setStyle(
+                                        style.setOrRemove(
+                                                propertyName,
+                                                color
+                                        )
+                                )
+                        )
                 )
+        );
+    }
+
+    private void stylePatchAndCheck(final JsonNode patch,
+                                    final JsonNode expected) {
+        this.checkEquals(
+                expected,
+                patch,
+                () -> "stylePatch " + patch
         );
     }
 
@@ -1194,8 +1266,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 MARSHALL_CONTEXT
         ).merge(
                 SpreadsheetDelta.stylePatch(
-                        TextStyle.EMPTY,
-                        MARSHALL_CONTEXT
+                        JsonNode.object()
                 )
         );
 
@@ -1221,8 +1292,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 MARSHALL_CONTEXT
         ).merge(
                 SpreadsheetDelta.stylePatch(
-                        TextStyle.EMPTY,
-                        MARSHALL_CONTEXT
+                        JsonNode.object()
                 )
         );
 
@@ -1478,8 +1548,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .objectOrFail()
                 .merge(
                         SpreadsheetDelta.stylePatch(
-                                TextStyle.EMPTY,
-                                MARSHALL_CONTEXT
+                                JsonNode.object()
                         )
                 );
 
@@ -1510,8 +1579,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetSelection.parseWindow("A1:A2")
                 );
 
-        final TextStyle style = TextStyle.EMPTY
-                .set(TextStylePropertyName.COLOR, Color.parse("#123456"));
+        final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(
+                Color.parse("#123456")
+        );
+
+        final TextStyle style = TextStyle.EMPTY.patch(
+                stylePatch,
+                this.createPatchContext()
+        );
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(
@@ -1526,8 +1601,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.stylePatch(
-                        style,
-                        MARSHALL_CONTEXT
+                        stylePatch
                 ),
                 after
         );
@@ -1547,8 +1621,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetSelection.parseWindow("A1:A2")
                 );
 
+        final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(
+                Color.parse("#123456")
+        );
         final TextStyle style = TextStyle.EMPTY
-                .set(TextStylePropertyName.COLOR, Color.parse("#123456"));
+                .patch(
+                        stylePatch,
+                        this.createPatchContext()
+                );
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(
@@ -1560,10 +1640,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchCellsAndCheck(
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.stylePatch(
-                        style,
-                        JsonNodeMarshallContexts.basic()
-                ),
+                SpreadsheetDelta.stylePatch(stylePatch),
                 after
         );
     }
@@ -1587,8 +1664,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetSelection.parseWindow("A1:A2")
                 );
 
+        final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(
+                Color.parse("#123456")
+        );
         final TextStyle patchStyle = TextStyle.EMPTY
-                .set(TextStylePropertyName.COLOR, Color.parse("#123456"));
+                .patch(
+                        stylePatch,
+                        this.createPatchContext()
+                );
 
         final TextStyle patchedStyle = beforeStyle.merge(patchStyle);
 
@@ -1603,8 +1686,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellOrCellRange("A1:A2"),
                 SpreadsheetDelta.stylePatch(
-                        patchStyle,
-                        MARSHALL_CONTEXT
+                        stylePatch
                 ),
                 after
         );
@@ -1640,8 +1722,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.stylePatch(
-                        null,
-                        MARSHALL_CONTEXT
+                        JsonNode.nullNode()
                 ),
                 after
         );
