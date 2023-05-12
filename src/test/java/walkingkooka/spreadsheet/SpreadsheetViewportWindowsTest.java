@@ -25,13 +25,16 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.test.ParseStringTesting;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportWindowsTest implements ClassTesting<SpreadsheetViewportWindows>,
         HashCodeEqualsDefinedTesting2<SpreadsheetViewportWindows>,
+        ParseStringTesting<SpreadsheetViewportWindows>,
         ToStringTesting<SpreadsheetViewportWindows> {
 
     @Test
@@ -54,6 +57,78 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         );
     }
 
+    // parse............................................................................................................
+
+    public void testParseStringEmptyFails() {
+        // nop
+    }
+
+    @Test
+    public void testParseEmpty() {
+        this.parseStringAndCheck(
+                "",
+                Sets.empty()
+        );
+    }
+
+    @Test
+    public void testParseOneCell() {
+        this.parseStringAndCheck(
+                "C1",
+                SpreadsheetSelection.parseCellRange("C1")
+        );
+    }
+
+    @Test
+    public void testParseMany() {
+        this.parseStringAndCheck(
+                "A1,B2:C3",
+                "A1",
+                "B2:C3"
+        );
+    }
+
+    private void parseStringAndCheck(final String text,
+                                     final String... windows) {
+        this.parseStringAndCheck(
+                text,
+                Arrays.stream(windows)
+                        .map(SpreadsheetSelection::parseCellRange)
+                        .toArray(SpreadsheetCellRange[]::new)
+        );
+    }
+
+    private void parseStringAndCheck(final String text,
+                                     final SpreadsheetCellRange... window) {
+        this.parseStringAndCheck(
+                text,
+                Sets.of(window)
+        );
+    }
+
+    private void parseStringAndCheck(final String text,
+                                     final Set<SpreadsheetCellRange> window) {
+        this.parseStringAndCheck(
+                text,
+                SpreadsheetViewportWindows.with(window)
+        );
+    }
+
+    @Override
+    public SpreadsheetViewportWindows parseString(final String windows) {
+        return SpreadsheetViewportWindows.parse(windows);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
+    }
+
     // equals...........................................................................................................
 
     @Test
@@ -63,6 +138,15 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
                         Sets.of(
                                 SpreadsheetSelection.parseCellRange("A1:C3")
                         )
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetViewportWindows createObject() {
+        return SpreadsheetViewportWindows.with(
+                Sets.of(
+                        SpreadsheetSelection.parseCellRange("A1:B2")
                 )
         );
     }
@@ -100,16 +184,5 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
-    }
-
-    // HashCodeEqualsDefinedTesting2.....................................................................................................
-
-    @Override
-    public SpreadsheetViewportWindows createObject() {
-        return SpreadsheetViewportWindows.with(
-                Sets.of(
-                        SpreadsheetSelection.parseCellRange("A1:B2")
-                )
-        );
     }
 }
