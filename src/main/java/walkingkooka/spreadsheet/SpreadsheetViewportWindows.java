@@ -20,6 +20,10 @@ package walkingkooka.spreadsheet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 import java.util.Set;
@@ -80,5 +84,25 @@ public final class SpreadsheetViewportWindows {
     @Override
     public String toString() {
         return SpreadsheetSelection.toStringWindow(this.cellRanges);
+    }
+
+    // Json.............................................................................................................
+
+    static SpreadsheetViewportWindows unmarshall(final JsonNode node,
+                                                 final JsonNodeUnmarshallContext context) {
+        return parse(node.stringOrFail());
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.toString());
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetViewportWindows.class),
+                SpreadsheetViewportWindows::unmarshall,
+                SpreadsheetViewportWindows::marshall,
+                SpreadsheetViewportWindows.class
+        );
     }
 }
