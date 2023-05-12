@@ -139,7 +139,7 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
     public void testMarshall() {
         this.marshallAndCheck(
                 this.createJsonNodeMarshallingValue(),
-                "A1:B2"
+                JsonNode.string("A1:B2")
         );
     }
 
@@ -149,7 +149,7 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
 
         this.marshallAndCheck(
                 SpreadsheetViewportWindows.parse(string),
-                string
+                JsonNode.string(string)
         );
     }
 
