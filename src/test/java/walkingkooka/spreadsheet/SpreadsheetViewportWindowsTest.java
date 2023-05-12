@@ -26,6 +26,9 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -34,6 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportWindowsTest implements ClassTesting<SpreadsheetViewportWindows>,
         HashCodeEqualsDefinedTesting2<SpreadsheetViewportWindows>,
+        JsonNodeMarshallingTesting<SpreadsheetViewportWindows>,
         ParseStringTesting<SpreadsheetViewportWindows>,
         ToStringTesting<SpreadsheetViewportWindows> {
 
@@ -127,6 +131,40 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
         return thrown;
+    }
+
+    // json.............................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+                this.createJsonNodeMarshallingValue(),
+                "A1:B2"
+        );
+    }
+
+    @Test
+    public void testMarshallManyCellRanges() {
+        final String string = "A1:B2,C3:D4,E5";
+
+        this.marshallAndCheck(
+                SpreadsheetViewportWindows.parse(string),
+                string
+        );
+    }
+
+    @Override
+    public SpreadsheetViewportWindows unmarshall(final JsonNode node,
+                                                 final JsonNodeUnmarshallContext context) {
+        return SpreadsheetViewportWindows.unmarshall(
+                node,
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetViewportWindows createJsonNodeMarshallingValue() {
+        return this.createObject();
     }
 
     // equals...........................................................................................................
