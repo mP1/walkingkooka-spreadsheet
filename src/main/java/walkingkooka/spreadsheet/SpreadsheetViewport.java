@@ -30,7 +30,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Objects;
 
 /**
- * Represents a rectangle selection of cells, starting from an cell home covering the given pixel dimensions.
+ * Represents a rectangle selection of cells, with the top left being the home and pixels measuring the width and height.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport> {
