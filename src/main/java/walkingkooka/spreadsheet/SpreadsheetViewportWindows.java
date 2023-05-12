@@ -29,6 +29,21 @@ import java.util.Set;
  */
 public final class SpreadsheetViewportWindows {
 
+    /**
+     * Parses a window query parameter or other string representation into a {@link Set} or {@link SpreadsheetCellRange}.
+     * eg
+     * <pre>
+     * A1
+     * B2,C3
+     * D4:E5,F6,G7:HI
+     * </pre>
+     */
+    public static SpreadsheetViewportWindows parse(final String windows) {
+        return with(
+                SpreadsheetSelection.parseWindow(windows)
+        );
+    }
+
     public static SpreadsheetViewportWindows with(final Set<SpreadsheetCellRange> cellRanges) {
         Objects.requireNonNull(cellRanges, "cellRanges");
         return new SpreadsheetViewportWindows(Sets.immutable(cellRanges));
