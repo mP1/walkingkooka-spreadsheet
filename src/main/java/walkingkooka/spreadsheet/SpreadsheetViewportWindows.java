@@ -39,6 +39,11 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
         Predicate<SpreadsheetSelection> {
 
     /**
+     * An empty {@link SpreadsheetViewportWindows}.
+     */
+    public final static SpreadsheetViewportWindows EMPTY = new SpreadsheetViewportWindows(Sets.empty());
+
+    /**
      * Parses a window query parameter or other string representation into a {@link Set} or {@link SpreadsheetCellRange}.
      * eg
      * <pre>
@@ -55,7 +60,11 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
 
     public static SpreadsheetViewportWindows with(final Set<SpreadsheetCellRange> cellRanges) {
         Objects.requireNonNull(cellRanges, "cellRanges");
-        return new SpreadsheetViewportWindows(Sets.immutable(cellRanges));
+
+        final Set<SpreadsheetCellRange> copy = Sets.immutable(cellRanges);
+        return copy.isEmpty() ?
+                EMPTY :
+                new SpreadsheetViewportWindows(copy);
     }
 
     private SpreadsheetViewportWindows(final Set<SpreadsheetCellRange> cellRanges) {
