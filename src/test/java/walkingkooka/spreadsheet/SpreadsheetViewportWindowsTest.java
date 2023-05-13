@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
@@ -42,6 +43,7 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         IterableTesting<SpreadsheetViewportWindows, SpreadsheetCellReference>,
         JsonNodeMarshallingTesting<SpreadsheetViewportWindows>,
         ParseStringTesting<SpreadsheetViewportWindows>,
+        PredicateTesting,
         ToStringTesting<SpreadsheetViewportWindows> {
 
     @Test
@@ -205,6 +207,80 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
     @Override
     public void testTypeNaming() {
         throw new UnsupportedOperationException();
+    }
+
+    // Predicate........................................................................................................
+
+    @Test
+    public void testTestEmptyWindow() {
+        this.testTrue(
+                SpreadsheetViewportWindows.parse(""),
+                SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testTestNotEmptyWindowCellInside() {
+        this.testTrue(
+                SpreadsheetViewportWindows.parse("A1:B2"),
+                SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testTestNotEmptyWindowCellInside2() {
+        this.testTrue(
+                SpreadsheetViewportWindows.parse("A1:B2,C3:D4"),
+                SpreadsheetSelection.parseCell("C4")
+        );
+    }
+
+    @Test
+    public void testTestNotEmptyWindowCellOutside() {
+        this.testFalse(
+                SpreadsheetViewportWindows.parse("A1:B2"),
+                SpreadsheetSelection.parseCell("Z99")
+        );
+    }
+
+    @Test
+    public void testTestNotEmptyWindowCellOutside2() {
+        this.testFalse(
+                SpreadsheetViewportWindows.parse("A1:B2,C3:D4"),
+                SpreadsheetSelection.parseCell("Z99")
+        );
+    }
+
+    @Test
+    public void testTestNotEmptyWindowColumnInside() {
+        this.testTrue(
+                SpreadsheetViewportWindows.parse("A1:B2"),
+                SpreadsheetSelection.parseColumn("A")
+        );
+    }
+
+    @Test
+    public void testTestNotEmptyWindowColumnOutside() {
+        this.testFalse(
+                SpreadsheetViewportWindows.parse("A1:B2"),
+                SpreadsheetSelection.parseColumn("C")
+        );
+    }
+
+    @Test
+    public void testTestNotEmptyWindowRowInside() {
+        this.testTrue(
+                SpreadsheetViewportWindows.parse("A1:B2"),
+                SpreadsheetSelection.parseRow("1")
+        );
+    }
+
+    @Test
+    public void testTestNotEmptyWindowRowOutside() {
+        this.testFalse(
+                SpreadsheetViewportWindows.parse("A1:B2"),
+                SpreadsheetSelection.parseRow("3")
+        );
     }
 
     // json.............................................................................................................

@@ -30,11 +30,13 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Captures one or more windows that define the cells within a viewport.
  */
-public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCellReference> {
+public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCellReference>,
+        Predicate<SpreadsheetSelection> {
 
     /**
      * Parses a window query parameter or other string representation into a {@link Set} or {@link SpreadsheetCellRange}.
@@ -78,6 +80,23 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
         cellRanges.toArray(iterables);
 
         return Iterables.chain(iterables).iterator();
+    }
+
+    // Predicate........................................................................................................
+
+    /**
+     * Return true if there are no cell-ranges OR the cell is matched by any cell-range.
+     */
+    @Override
+    public boolean test(final SpreadsheetSelection selection) {
+        Objects.requireNonNull(selection, "selection");
+
+        final Set<SpreadsheetCellRange> cellRanges = this.cellRanges;
+        return cellRanges.isEmpty() ||
+                cellRanges.stream()
+                        .filter(r -> r.test(selection))
+                        .count() != 0;
+
     }
 
     // Object...........................................................................................................
