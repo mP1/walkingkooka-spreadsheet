@@ -36,6 +36,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Arrays;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportWindowsTest implements ClassTesting<SpreadsheetViewportWindows>,
@@ -76,6 +77,10 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
                 windows.cellRanges()
         );
         this.checkEquals(true, windows.isEmpty());
+        assertSame(
+                SpreadsheetViewportWindows.EMPTY,
+                windows
+        );
     }
 
     // parse............................................................................................................
@@ -86,9 +91,12 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
 
     @Test
     public void testParseEmpty() {
-        this.parseStringAndCheck(
-                "",
-                Sets.empty()
+        assertSame(
+                SpreadsheetViewportWindows.EMPTY,
+                this.parseStringAndCheck(
+                        "",
+                        Sets.empty()
+                )
         );
     }
 
@@ -109,9 +117,9 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         );
     }
 
-    private void parseStringAndCheck(final String text,
-                                     final String... windows) {
-        this.parseStringAndCheck(
+    private SpreadsheetViewportWindows parseStringAndCheck(final String text,
+                                                           final String... windows) {
+        return this.parseStringAndCheck(
                 text,
                 Arrays.stream(windows)
                         .map(SpreadsheetSelection::parseCellRange)
@@ -119,17 +127,17 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         );
     }
 
-    private void parseStringAndCheck(final String text,
-                                     final SpreadsheetCellRange... window) {
-        this.parseStringAndCheck(
+    private SpreadsheetViewportWindows parseStringAndCheck(final String text,
+                                                           final SpreadsheetCellRange... window) {
+        return this.parseStringAndCheck(
                 text,
                 Sets.of(window)
         );
     }
 
-    private void parseStringAndCheck(final String text,
-                                     final Set<SpreadsheetCellRange> window) {
-        this.parseStringAndCheck(
+    private SpreadsheetViewportWindows parseStringAndCheck(final String text,
+                                                           final Set<SpreadsheetCellRange> window) {
+        return this.parseStringAndCheck(
                 text,
                 SpreadsheetViewportWindows.with(window)
         );
