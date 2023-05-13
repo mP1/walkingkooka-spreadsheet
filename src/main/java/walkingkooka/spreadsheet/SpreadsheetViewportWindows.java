@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -37,6 +38,12 @@ import java.util.function.Predicate;
  */
 public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCellReference>,
         Predicate<SpreadsheetSelection> {
+
+    /**
+     * A window query parameter and other string representations are {@link SpreadsheetCellReference} separated by a
+     * comma.
+     */
+    public final static CharacterConstant SEPARATOR = CharacterConstant.with(',');
 
     /**
      * An empty {@link SpreadsheetViewportWindows}.
