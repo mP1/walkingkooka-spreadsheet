@@ -70,6 +70,13 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
 
     private final Set<SpreadsheetCellRange> cellRanges;
 
+    /**
+     * Returns true if there are no {@link SpreadsheetCellRange ranges}
+     */
+    public boolean isEmpty() {
+        return this.cellRanges.isEmpty();
+    }
+
     // Iterable.........................................................................................................
 
     @Override

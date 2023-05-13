@@ -64,6 +64,18 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
                 cellRanges,
                 windows.cellRanges()
         );
+        this.checkEquals(false, windows.isEmpty());
+    }
+
+    @Test
+    public void testWithEmpty() {
+        final Set<SpreadsheetCellRange> cellRanges = Sets.empty();
+        final SpreadsheetViewportWindows windows = SpreadsheetViewportWindows.with(cellRanges);
+        this.checkEquals(
+                cellRanges,
+                windows.cellRanges()
+        );
+        this.checkEquals(true, windows.isEmpty());
     }
 
     // parse............................................................................................................
