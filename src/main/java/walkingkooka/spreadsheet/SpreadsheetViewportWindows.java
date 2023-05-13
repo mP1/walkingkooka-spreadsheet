@@ -17,21 +17,24 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * Captures one or more windows that define the cells within a viewport.
  */
-public final class SpreadsheetViewportWindows {
+public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCellReference> {
 
     /**
      * Parses a window query parameter or other string representation into a {@link Set} or {@link SpreadsheetCellRange}.
@@ -64,6 +67,18 @@ public final class SpreadsheetViewportWindows {
     }
 
     private final Set<SpreadsheetCellRange> cellRanges;
+
+    // Iterable.........................................................................................................
+
+    @Override
+    public Iterator<SpreadsheetCellReference> iterator() {
+        final Set<SpreadsheetCellRange> cellRanges = this.cellRanges;
+
+        final Iterable<SpreadsheetCellReference>[] iterables = new Iterable[cellRanges.size()];
+        cellRanges.toArray(iterables);
+
+        return Iterables.chain(iterables).iterator();
+    }
 
     // Object...........................................................................................................
 

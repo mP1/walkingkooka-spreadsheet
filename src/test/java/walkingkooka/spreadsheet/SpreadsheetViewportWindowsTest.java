@@ -20,10 +20,12 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -37,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportWindowsTest implements ClassTesting<SpreadsheetViewportWindows>,
         HashCodeEqualsDefinedTesting2<SpreadsheetViewportWindows>,
+        IterableTesting<SpreadsheetViewportWindows, SpreadsheetCellReference>,
         JsonNodeMarshallingTesting<SpreadsheetViewportWindows>,
         ParseStringTesting<SpreadsheetViewportWindows>,
         ToStringTesting<SpreadsheetViewportWindows> {
@@ -131,6 +134,77 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
         return thrown;
+    }
+
+    // Iterable.........................................................................................................
+
+    @Test
+    public void testIterableAndIterateEmpty() {
+        this.iterateAndCheck2(
+                ""
+        );
+    }
+
+    @Test
+    public void testIterableAndIterateOneRange() {
+        this.iterateAndCheck2(
+                "A1",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testIterableAndIterateOneRange2() {
+        this.iterateAndCheck2(
+                "A1:A3",
+                "A1",
+                "A2",
+                "A3"
+        );
+    }
+
+    @Test
+    public void testIterableAndIterateSeveralCellRanges() {
+        this.iterateAndCheck2(
+                "A1:A2,B1:B2",
+                "A1",
+                "A2",
+                "B1",
+                "B2"
+        );
+    }
+
+    @Test
+    public void testIterableAndIterateSeveralCellRanges2() {
+        this.iterateAndCheck2(
+                "A1:A2,B1:B2,C3",
+                "A1",
+                "A2",
+                "B1",
+                "B2",
+                "C3"
+        );
+    }
+
+    private void iterateAndCheck2(final String text,
+                                  final String... cellReferences) {
+        this.iterateAndCheck(
+                SpreadsheetViewportWindows.parse(text)
+                        .iterator(),
+                Arrays.stream(cellReferences)
+                        .map(SpreadsheetSelection::parseCell)
+                        .toArray(SpreadsheetCellReference[]::new)
+        );
+    }
+
+    @Override
+    public SpreadsheetViewportWindows createIterable() {
+        return this.createObject();
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 
     // json.............................................................................................................
