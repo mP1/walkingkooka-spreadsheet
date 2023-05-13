@@ -128,7 +128,7 @@ public interface SpreadsheetEngine {
     /**
      * Loads a range of cells. This is useful to fill a range that fills the viewport.
      */
-    SpreadsheetDelta loadCells(final SpreadsheetViewportWindows windows,
+    SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> range,
                                final SpreadsheetEngineEvaluation evaluation,
                                final Set<SpreadsheetDeltaProperties> deltaProperties,
                                final SpreadsheetEngineContext context);
