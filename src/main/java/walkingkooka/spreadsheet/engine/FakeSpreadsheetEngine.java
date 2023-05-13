@@ -117,7 +117,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final SpreadsheetViewportWindows windows,
+    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> range,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {

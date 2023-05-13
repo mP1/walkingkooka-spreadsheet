@@ -465,11 +465,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final SpreadsheetViewportWindows windows,
+    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(windows, "windows");
+        Objects.requireNonNull(ranges, "ranges");
         checkEvaluation(evaluation);
         checkDeltaProperties(deltaProperties);
         checkContext(context);
@@ -478,7 +478,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final SpreadsheetCellStore store = context.storeRepository()
                     .cells();
 
-            for (final SpreadsheetCellRange range : windows.cellRanges()) {
+            for (final SpreadsheetCellRange range : ranges) {
                 range.cellStream()
                         .forEach(reference -> {
                                     if (!changes.isLoaded(reference)) {
@@ -492,11 +492,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         );
             }
 
+            final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.with(ranges);
+
             return this.prepareDelta(
                     changes,
-                    windows,
+                    window,
                     context
-            ).setWindow(windows);
+            ).setWindow(window);
         }
     }
 

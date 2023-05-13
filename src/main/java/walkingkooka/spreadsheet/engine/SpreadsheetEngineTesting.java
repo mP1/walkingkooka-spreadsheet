@@ -977,14 +977,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final String window,
+                                   final String cells,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
         this.loadCellsAndCheck(
                 engine,
-                SpreadsheetViewportWindows.parse(window),
+                SpreadsheetViewportWindows.parse(cells).cellRanges(),
                 evaluation,
                 deltaProperties,
                 context,
@@ -993,24 +993,28 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetViewportWindows window,
+                                   final Set<SpreadsheetCellRange> ranges,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
         this.loadCellsAndCheck(
                 engine,
-                window,
+                ranges,
                 evaluation,
                 deltaProperties,
                 context,
-                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated))
-                        .setWindow(window)
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(updated)
+                        ).setWindow(
+                                SpreadsheetViewportWindows.with(ranges)
+                        )
         );
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetViewportWindows window,
+                                   final Set<SpreadsheetCellRange> ranges,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                    final SpreadsheetEngineContext context,
@@ -1018,12 +1022,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         checkEquals(
                 delta,
                 engine.loadCells(
-                        window,
+                        ranges,
                         evaluation,
                         deltaProperties,
                         context
                 ),
-                () -> "loadCells " + window + " " + evaluation
+                () -> "loadCells " + ranges + " " + evaluation
         );
     }
 

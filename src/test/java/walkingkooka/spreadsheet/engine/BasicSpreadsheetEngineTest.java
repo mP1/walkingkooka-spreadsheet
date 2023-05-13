@@ -6905,7 +6905,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // c3 must not be returned
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -6949,7 +6949,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -6979,7 +6979,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7020,7 +7020,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7048,7 +7048,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7086,7 +7086,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7122,7 +7122,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7161,7 +7161,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7201,7 +7201,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7245,7 +7245,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7285,7 +7285,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7313,7 +7313,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7345,7 +7345,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7382,7 +7382,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7446,7 +7446,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
@@ -7511,7 +7511,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellsAndCheck(
                 engine,
-                window,
+                window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
