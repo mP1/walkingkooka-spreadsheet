@@ -101,8 +101,7 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
         final Set<SpreadsheetCellRange> cellRanges = this.cellRanges;
         return cellRanges.isEmpty() ||
                 cellRanges.stream()
-                        .filter(r -> r.test(selection))
-                        .count() != 0;
+                        .anyMatch(r -> r.test(selection));
 
     }
 
