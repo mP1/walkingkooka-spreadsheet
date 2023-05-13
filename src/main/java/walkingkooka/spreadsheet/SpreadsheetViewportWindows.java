@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Captures one or more windows that define the cells within a viewport.
@@ -139,7 +140,9 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
 
     @Override
     public String toString() {
-        return SpreadsheetSelection.toStringWindow(this.cellRanges);
+        return this.cellRanges.stream()
+                .map(SpreadsheetCellRange::toString)
+                .collect(Collectors.joining(SEPARATOR.string()));
     }
 
     // Json.............................................................................................................
