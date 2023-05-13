@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -79,13 +80,13 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> range,
+    public SpreadsheetDelta loadCells(final SpreadsheetViewportWindows windows,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
         return this.stamp(
                 () -> this.engine.loadCells(
-                        range,
+                        windows,
                         evaluation,
                         deltaProperties,
                         context
@@ -240,10 +241,10 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public Set<SpreadsheetCellRange> window(final SpreadsheetViewport viewport,
-                                            final boolean includeFrozenColumnsRows,
-                                            final Optional<SpreadsheetSelection> selection,
-                                            final SpreadsheetEngineContext context) {
+    public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
+                                             final boolean includeFrozenColumnsRows,
+                                             final Optional<SpreadsheetSelection> selection,
+                                             final SpreadsheetEngineContext context) {
         return this.engine.window(
                 viewport,
                 includeFrozenColumnsRows,

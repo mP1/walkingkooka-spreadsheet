@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.tree.json.JsonNode;
 
@@ -910,8 +910,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Override
-    Set<SpreadsheetCellRange> window() {
-        return SpreadsheetDelta.NO_WINDOW;
+    SpreadsheetViewportWindows window() {
+        return SpreadsheetViewportWindows.EMPTY;
     }
 
     @Override

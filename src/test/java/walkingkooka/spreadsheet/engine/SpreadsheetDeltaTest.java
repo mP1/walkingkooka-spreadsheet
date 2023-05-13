@@ -27,10 +27,10 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -78,7 +78,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testNoWindowConstant() {
         this.checkEquals(
-                Sets.empty(),
+                SpreadsheetViewportWindows.EMPTY,
                 SpreadsheetDelta.NO_WINDOW
         );
     }
@@ -90,7 +90,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Set<SpreadsheetLabelMapping> mappings = this.labelMappingsLabel123ToC3E5();
 
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setWindow(SpreadsheetSelection.parseWindow("B2:F6"))
+                .setWindow(SpreadsheetViewportWindows.parse("B2:F6"))
                 .setLabels(mappings);
 
         this.checkEquals(
@@ -105,7 +105,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Set<SpreadsheetLabelMapping> mappings = this.labelMappingsLabel123ToC3E5();
 
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setWindow(SpreadsheetSelection.parseWindow("B2:D4"))
+                .setWindow(SpreadsheetViewportWindows.parse("B2:D4"))
                 .setLabels(mappings);
 
         this.checkEquals(
@@ -120,7 +120,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Set<SpreadsheetLabelMapping> mappings = this.labelMappingsLabel123ToC3E5();
 
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setWindow(SpreadsheetSelection.parseWindow("A1:B2"))
+                .setWindow(SpreadsheetViewportWindows.parse("A1:B2"))
                 .setLabels(mappings);
 
         this.checkEquals(
@@ -838,19 +838,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Sets.of(a1, b2)
                 );
 
-        final Set<SpreadsheetCellRange> afterWindow = Sets.of(
-                SpreadsheetSelection.parseCellRange("A1")
-        );
-        final SpreadsheetDelta after = before.setWindow(
-                afterWindow
-        );
+        final SpreadsheetViewportWindows afterWindow = SpreadsheetViewportWindows.parse("A1");
+        final SpreadsheetDelta after = before.setWindow(afterWindow);
 
         this.patchAndCheck(
                 before,
                 marshall(after),
-                before.setWindow(
-                        afterWindow
-                )
+                before.setWindow(afterWindow)
         );
     }
 
@@ -871,21 +865,17 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setCells(
                         Sets.of(a1, b2)
                 ).setWindow(
-                        SpreadsheetSelection.parseWindow("A1:B2")
+                        SpreadsheetViewportWindows.parse("A1:B2")
                 );
 
-        final Set<SpreadsheetCellRange> afterWindow = SpreadsheetSelection.parseWindow("A1");
+        final SpreadsheetViewportWindows afterWindow = SpreadsheetViewportWindows.parse("A1");
 
-        final SpreadsheetDelta after = before.setWindow(
-                afterWindow
-        );
+        final SpreadsheetDelta after = before.setWindow(afterWindow);
 
         this.patchAndCheck(
                 before,
                 marshall(after),
-                before.setWindow(
-                        afterWindow
-                )
+                before.setWindow(afterWindow)
         );
     }
 
@@ -906,7 +896,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setCells(
                         Sets.of(a1, b2)
                 ).setWindow(
-                        SpreadsheetSelection.parseWindow("A1:B2")
+                        SpreadsheetViewportWindows.parse("A1:B2")
                 );
 
         this.patchAndCheck(
@@ -1172,13 +1162,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setCells(
                         Sets.of(a1, b2)
                 ).setWindow(
-                        SpreadsheetSelection.parseWindow("A1:A2")
+                        SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(a1)
         ).setWindow(
-                SpreadsheetSelection.parseWindow("A1:A2")
+                SpreadsheetViewportWindows.parse("A1:A2")
         );
 
         this.patchCellsAndCheck(
@@ -1458,7 +1448,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setCells(
                         Sets.of(a1, a2)
                 ).setWindow(
-                        SpreadsheetSelection.parseWindow("A1:A2")
+                        SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
         final SpreadsheetFormatPattern formatPattern = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"");
@@ -1595,7 +1585,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setCells(
                         Sets.of(a1)
                 ).setWindow(
-                        SpreadsheetSelection.parseWindow("A1:A2")
+                        SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
         final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(
@@ -1637,7 +1627,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setCells(
                         Sets.of(a1, a2)
                 ).setWindow(
-                        SpreadsheetSelection.parseWindow("A1:A2")
+                        SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
         final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(
@@ -1680,7 +1670,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setCells(
                         Sets.of(a1, a2)
                 ).setWindow(
-                        SpreadsheetSelection.parseWindow("A1:A2")
+                        SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
         final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(
@@ -1728,7 +1718,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 a2.setStyle(style)
                         )
                 ).setWindow(
-                        SpreadsheetSelection.parseWindow("A1:A2")
+                        SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
         final SpreadsheetDelta after = before.setCells(
@@ -2046,13 +2036,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setColumns(
                         Sets.of(a, b)
                 ).setWindow(
-                        SpreadsheetSelection.parseWindow("A1:B2")
+                        SpreadsheetViewportWindows.parse("A1:B2")
                 );
 
         final SpreadsheetDelta after = before.setColumns(
                 Sets.of(a)
         ).setWindow(
-                SpreadsheetSelection.parseWindow("A1")
+                SpreadsheetViewportWindows.parse("A1")
         );
 
         this.patchColumnsAndCheck(
@@ -2356,13 +2346,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setRows(
                         Sets.of(row1, row2)
                 ).setWindow(
-                        SpreadsheetSelection.parseWindow("A1:B2")
+                        SpreadsheetViewportWindows.parse("A1:B2")
                 );
 
         final SpreadsheetDelta after = before.setRows(
                 Sets.of(row1)
         ).setWindow(
-                SpreadsheetSelection.parseWindow("A1")
+                SpreadsheetViewportWindows.parse("A1")
         );
 
         this.patchRowsAndCheck(

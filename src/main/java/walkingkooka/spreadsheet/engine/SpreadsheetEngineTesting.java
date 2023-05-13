@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -976,14 +977,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final String range,
+                                   final String window,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
         this.loadCellsAndCheck(
                 engine,
-                SpreadsheetSelection.parseWindow(range),
+                SpreadsheetViewportWindows.parse(window),
                 evaluation,
                 deltaProperties,
                 context,
@@ -992,24 +993,24 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final Set<SpreadsheetCellRange> range,
+                                   final SpreadsheetViewportWindows window,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
         this.loadCellsAndCheck(
                 engine,
-                range,
+                window,
                 evaluation,
                 deltaProperties,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(Sets.of(updated))
-                        .setWindow(range)
+                        .setWindow(window)
         );
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final Set<SpreadsheetCellRange> range,
+                                   final SpreadsheetViewportWindows window,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                    final SpreadsheetEngineContext context,
@@ -1017,12 +1018,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         checkEquals(
                 delta,
                 engine.loadCells(
-                        range,
+                        window,
                         evaluation,
                         deltaProperties,
                         context
                 ),
-                () -> "loadCells " + range + " " + evaluation
+                () -> "loadCells " + window + " " + evaluation
         );
     }
 
@@ -1107,7 +1108,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 includeFrozenColumnsRows,
                 selection,
                 context,
-                SpreadsheetSelection.parseWindow(window)
+                SpreadsheetViewportWindows.parse(window)
         );
     }
 
@@ -1124,7 +1125,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 includeFrozenColumnsRows,
                 selection,
                 context,
-                Sets.of(window)
+                SpreadsheetViewportWindows.with(
+                        Sets.of(window)
+                )
         );
     }
 
@@ -1134,7 +1137,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             final boolean includeFrozenColumnsRows,
             final Optional<SpreadsheetSelection> selection,
             final SpreadsheetEngineContext context,
-            final Set<SpreadsheetCellRange> window) {
+            final SpreadsheetViewportWindows window) {
         this.checkEquals(
                 window,
                 engine.window(

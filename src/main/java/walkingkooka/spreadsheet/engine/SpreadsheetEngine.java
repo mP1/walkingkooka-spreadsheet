@@ -21,6 +21,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -125,9 +126,9 @@ public interface SpreadsheetEngine {
                                 final SpreadsheetEngineContext context);
 
     /**
-     * Loads a range of cells. Thsi is useful to fill a range that fills the viewport.
+     * Loads a range of cells. This is useful to fill a range that fills the viewport.
      */
-    SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
+    SpreadsheetDelta loadCells(final SpreadsheetViewportWindows windows,
                                final SpreadsheetEngineEvaluation evaluation,
                                final Set<SpreadsheetDeltaProperties> deltaProperties,
                                final SpreadsheetEngineContext context);
@@ -186,7 +187,7 @@ public interface SpreadsheetEngine {
     Optional<SpreadsheetSelection> NO_SELECTION = Optional.empty();
 
     /**
-     * Translates the {@link SpreadsheetViewport} into the actual {@link SpreadsheetCellRange} of cells that occupy that space.
+     * Translates the {@link SpreadsheetViewport} into the actual {@link SpreadsheetViewportWindows} of cells that occupy that space.
      * The combination of parameters make it possible to load the range of cells that occupy the selected range and
      * automatically pan across as necessary to include the provided {@link SpreadsheetSelection}.
      * The {@link SpreadsheetSelection} must contain a single
@@ -196,10 +197,10 @@ public interface SpreadsheetEngine {
      *     <li>{@link SpreadsheetRowReference}</li>
      * </ul>
      */
-    Set<SpreadsheetCellRange> window(final SpreadsheetViewport viewport,
-                                     final boolean includeFrozenColumnsRows,
-                                     final Optional<SpreadsheetSelection> selection,
-                                     final SpreadsheetEngineContext context);
+    SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
+                                      final boolean includeFrozenColumnsRows,
+                                      final Optional<SpreadsheetSelection> selection,
+                                      final SpreadsheetEngineContext context);
 
     /**
      * An absent {@link SpreadsheetViewportSelection}.

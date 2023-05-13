@@ -18,10 +18,11 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
+import walkingkooka.ToStringBuilderOption;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -53,7 +54,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                                  final Set<SpreadsheetRowReference> deletedRows,
                                                  final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                  final Map<SpreadsheetRowReference, Double> rowHeights,
-                                                 final Set<SpreadsheetCellRange> window) {
+                                                 final SpreadsheetViewportWindows window) {
         return new SpreadsheetDeltaWindowed(
                 viewportSelection,
                 cells,
@@ -79,7 +80,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                      final Set<SpreadsheetRowReference> deletedRows,
                                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                                      final Map<SpreadsheetRowReference, Double> rowHeights,
-                                     final Set<SpreadsheetCellRange> window) {
+                                     final SpreadsheetViewportWindows window) {
         super(
                 viewportSelection,
                 cells,
@@ -277,11 +278,11 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    public Set<SpreadsheetCellRange> window() {
+    public SpreadsheetViewportWindows window() {
         return this.window;
     }
 
-    private final Set<SpreadsheetCellRange> window;
+    private final SpreadsheetViewportWindows window;
 
     @Override
     Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns) {
@@ -325,9 +326,9 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         printer.println("window:");
         printer.indent();
         {
-            final Set<SpreadsheetCellRange> window = this.window();
-            if (!window.isEmpty()) {
-                printer.println(csv(window));
+            final SpreadsheetViewportWindows window = this.window();
+            if (false == window.isEmpty()) {
+                printer.println(window.toString());
             }
         }
 
@@ -342,7 +343,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         b.label("window")
                 .labelSeparator(": ")
                 .separator(" ")
-                .value(this.window());
+                .disable(ToStringBuilderOption.QUOTE)
+                .value(this.window().toString());
     }
 
     @Override
