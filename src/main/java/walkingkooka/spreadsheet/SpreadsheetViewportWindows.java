@@ -28,6 +28,7 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
@@ -61,9 +62,16 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
      * </pre>
      */
     public static SpreadsheetViewportWindows parse(final String windows) {
-        return with(
-                SpreadsheetSelection.parseWindow(windows)
-        );
+        Objects.requireNonNull(windows, "windows");
+
+        return windows.length() == 0 ?
+                EMPTY :
+                new SpreadsheetViewportWindows(
+                        Arrays.stream(
+                                        windows.split(SEPARATOR.string())
+                                ).map(SpreadsheetSelection::parseCellRange)
+                                .collect(Collectors.toCollection(Sets::ordered))
+                );
     }
 
     public static SpreadsheetViewportWindows with(final Set<SpreadsheetCellRange> cellRanges) {
