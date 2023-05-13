@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -116,7 +117,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
+    public SpreadsheetDelta loadCells(final SpreadsheetViewportWindows windows,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
@@ -162,10 +163,10 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public Set<SpreadsheetCellRange> window(final SpreadsheetViewport viewport,
-                                            final boolean includeFrozenColumnsRows,
-                                            final Optional<SpreadsheetSelection> selection,
-                                            final SpreadsheetEngineContext context) {
+    public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
+                                             final boolean includeFrozenColumnsRows,
+                                             final Optional<SpreadsheetSelection> selection,
+                                             final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 

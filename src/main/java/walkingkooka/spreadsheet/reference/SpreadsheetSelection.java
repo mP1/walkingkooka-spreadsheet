@@ -24,12 +24,10 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.HasRange;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
-import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -57,8 +55,6 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -555,47 +551,6 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
                         createRange(right, left) :
                         Range.greaterThanEquals(left)
                                 .and(Range.lessThanEquals(right));
-    }
-
-    /**
-     * A window query parameter and other string representations are {@link SpreadsheetCellReference} separated by a
-     * comma.
-     */
-    public final static CharacterConstant WINDOW_SEPARATOR = CharacterConstant.with(',');
-
-    /**
-     * Parses a window query parameter or other string representation into a {@link Set} or {@link SpreadsheetCellRange}.
-     * eg
-     * <pre>
-     * A1
-     * B2,C3
-     * D4:E5,F6,G7:HI
-     * </pre>
-     */
-    public static Set<SpreadsheetCellRange> parseWindow(final String window) {
-        checkWindow(window);
-
-        return window.length() == 0 ?
-                SpreadsheetDelta.NO_WINDOW :
-                Arrays.stream(
-                                window.split(WINDOW_SEPARATOR.string())
-                        ).map(SpreadsheetSelection::parseCellRange)
-                        .collect(Collectors.toCollection(Sets::ordered));
-    }
-
-    /**
-     * Converts the given windows into a {@link String}. This is the inverse of {@link #parseWindow(String)}.
-     */
-    public static String toStringWindow(final Collection<SpreadsheetCellRange> window) {
-        checkWindow(window);
-
-        return window.stream()
-                .map(SpreadsheetCellRange::toString)
-                .collect(Collectors.joining(WINDOW_SEPARATOR.string()));
-    }
-
-    private static void checkWindow(final Object window) {
-        Objects.requireNonNull(window, "window");
     }
 
     // ctor.............................................................................................................

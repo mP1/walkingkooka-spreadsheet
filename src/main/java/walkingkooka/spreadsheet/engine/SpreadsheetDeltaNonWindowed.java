@@ -22,7 +22,7 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -266,7 +266,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
      * There are no window.
      */
     @Override
-    public Set<SpreadsheetCellRange> window() {
+    public SpreadsheetViewportWindows window() {
         return NO_WINDOW;
     }
 

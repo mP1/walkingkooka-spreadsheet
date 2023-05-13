@@ -23,7 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -233,7 +233,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 this.row3().reference(), 30.0,
                 row5, 60.0
         );
-        final Set<SpreadsheetCellRange> window = SpreadsheetDelta.NO_WINDOW;
+        final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.EMPTY;
 
         final SpreadsheetDeltaWindowed before = SpreadsheetDeltaWindowed.withWindowed(
                 viewportSelection,
@@ -262,7 +262,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
         this.checkWindow(before, window);
 
-        final Set<SpreadsheetCellRange> window2 = SpreadsheetSelection.parseWindow("a1,e5:f6");
+        final SpreadsheetViewportWindows window2 = SpreadsheetViewportWindows.parse("a1,e5:f6");
 
         final SpreadsheetDelta after = before.setWindow(window2);
 
@@ -1077,8 +1077,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     // helpers..........................................................................................................
 
     @Override
-    Set<SpreadsheetCellRange> window() {
-        return SpreadsheetSelection.parseWindow("A1:E5");
+    SpreadsheetViewportWindows window() {
+        return SpreadsheetViewportWindows.parse("A1:E5");
     }
 
     @Override
@@ -1090,7 +1090,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     private SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells,
-                                                            final Set<SpreadsheetCellRange> window) {
+                                                            final SpreadsheetViewportWindows window) {
         return SpreadsheetDeltaWindowed.withWindowed(
                 this.viewportSelection(),
                 cells,

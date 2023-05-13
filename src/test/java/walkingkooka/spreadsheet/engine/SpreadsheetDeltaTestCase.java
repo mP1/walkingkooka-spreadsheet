@@ -31,7 +31,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -720,7 +720,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testSetDifferentWindow() {
         final D before = this.createSpreadsheetDelta();
 
-        final Set<SpreadsheetCellRange> window = SpreadsheetSelection.parseWindow("A1:Z9999");
+        final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("A1:Z9999");
         this.checkNotEquals(window, this.window());
 
         final SpreadsheetDelta after = before.setWindow(window);
@@ -739,7 +739,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testSetDifferentWindowWithLabels() {
         final D before = this.createSpreadsheetDelta();
 
-        final Set<SpreadsheetCellRange> window = SpreadsheetSelection.parseWindow("A1:Z9999");
+        final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("A1:Z9999");
         this.checkNotEquals(window, this.window());
 
         final SpreadsheetDelta after = before.setWindow(window);
@@ -902,7 +902,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     @Test
     public final void testDifferentWindow() {
-        final Set<SpreadsheetCellRange> differentWindow = this.differentWindow();
+        final SpreadsheetViewportWindows differentWindow = this.differentWindow();
         this.checkNotEquals(this.window(), differentWindow, "window() and differentWindow() must be un equal");
 
         this.checkNotEquals(this.createSpreadsheetDelta().setWindow(differentWindow));
@@ -1310,16 +1310,20 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final void checkWindow(final SpreadsheetDelta delta,
-                           final Set<SpreadsheetCellRange> window) {
-        this.checkEquals(window, delta.window(), "window");
+                           final SpreadsheetViewportWindows window) {
+        this.checkEquals(
+                window,
+                delta.window(),
+                "window"
+        );
     }
 
     // window...........................................................................................................
 
-    abstract Set<SpreadsheetCellRange> window();
+    abstract SpreadsheetViewportWindows window();
 
-    final Set<SpreadsheetCellRange> differentWindow() {
-        return SpreadsheetSelection.parseWindow("A1:Z99");
+    final SpreadsheetViewportWindows differentWindow() {
+        return SpreadsheetViewportWindows.parse("A1:Z99");
     }
 
     final void checkWindow(final SpreadsheetDelta delta) {

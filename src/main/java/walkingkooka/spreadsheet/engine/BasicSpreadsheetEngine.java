@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
@@ -464,11 +465,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
+    public SpreadsheetDelta loadCells(final SpreadsheetViewportWindows windows,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(ranges, "ranges");
+        Objects.requireNonNull(windows, "windows");
         checkEvaluation(evaluation);
         checkDeltaProperties(deltaProperties);
         checkContext(context);
@@ -477,13 +478,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final SpreadsheetCellStore store = context.storeRepository()
                     .cells();
 
-            for (final SpreadsheetCellRange range : ranges) {
-
+            for (final SpreadsheetCellRange range : windows.cellRanges()) {
                 range.cellStream()
                         .forEach(reference -> {
-                            if (!changes.isLoaded(reference)) {
-                                final Optional<SpreadsheetCell> loaded = store.load(reference);
-                                if (loaded.isPresent()) {
+                                    if (!changes.isLoaded(reference)) {
+                                        final Optional<SpreadsheetCell> loaded = store.load(reference);
+                                        if (loaded.isPresent()) {
                                             final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(loaded.get(), evaluation, context);
                                             changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
                                         }
@@ -494,9 +494,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             return this.prepareDelta(
                     changes,
-                    ranges,
+                    windows,
                     context
-            ).setWindow(ranges);
+            ).setWindow(windows);
         }
     }
 
@@ -532,9 +532,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return this.prepareDelta(
                 changes,
-                changes.deletedAndUpdatedCellRange()
-                        .map(Sets::of)
-                        .orElse(Sets.empty()),
+                changes.deletedAndUpdatedCellRange().map(
+                        r -> SpreadsheetViewportWindows.with(
+                                Sets.of(r)
+                        )
+                ).orElse(SpreadsheetViewportWindows.EMPTY),
                 context
         );
     }
@@ -543,7 +545,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
      */
     private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
-                                          final Set<SpreadsheetCellRange> window,
+                                          final SpreadsheetViewportWindows window,
                                           final SpreadsheetEngineContext context) {
         changes.refreshUpdated();
 
@@ -634,17 +636,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             if (addCells && (addColumns || addRows || addLabels)) {
                 final Set<SpreadsheetCellReference> cellReferences = Sets.hash();
 
-                for (final SpreadsheetCellRange range : window) {
+
+                for (final SpreadsheetCellRange range : window.cellRanges()) {
 
                     // include all columns and rows within the window.
                     range.cellStream()
                             .forEach(c -> {
-                                        if (cellReferences.add(c)) {
-                                            if (addColumns) {
-                                                addIfNecessary(
-                                                        c.column(),
-                                                        columns,
-                                                        columnStore
+                                if (cellReferences.add(c)) {
+                                    if (addColumns) {
+                                        addIfNecessary(
+                                                c.column(),
+                                                columns,
+                                                columnStore
                                                 );
                                             }
 
@@ -1264,10 +1267,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // WINDOW...........................................................................................................
 
     @Override
-    public Set<SpreadsheetCellRange> window(final SpreadsheetViewport viewport,
-                                            final boolean includeFrozenColumnsRows,
-                                            final Optional<SpreadsheetSelection> selection,
-                                            final SpreadsheetEngineContext context) {
+    public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
+                                             final boolean includeFrozenColumnsRows,
+                                             final Optional<SpreadsheetSelection> selection,
+                                             final SpreadsheetEngineContext context) {
         Objects.requireNonNull(viewport, "viewport");
         Objects.requireNonNull(selection, "selection");
         selection.ifPresent(BasicSpreadsheetEngine::windowSelectionCheck);
@@ -1433,7 +1436,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             window.add(nonFrozenCells);
         }
 
-        return SpreadsheetDelta.createWindowSet(window);
+        return SpreadsheetViewportWindows.with(window);
     }
 
     private static void windowSelectionCheck(final SpreadsheetSelection selection) {
