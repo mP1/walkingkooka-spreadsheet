@@ -341,11 +341,11 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testParseColumnRangeWithExtraComponentFails() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetSelection.parseColumnRange("1:2:3")
+                () -> SpreadsheetSelection.parseColumnRange("A:B:C")
         );
 
         this.checkEquals(
-                "Invalid character '1' at 0 in \"1:2:3\"",
+                "Invalid character ':' at 3 in \"A:B:C\"",
                 thrown.getMessage()
         );
     }
@@ -668,11 +668,11 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testParseRowRangeWithExtraComponentFails() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetSelection.parseRowRange("A:B:C")
+                () -> SpreadsheetSelection.parseRowRange("1:2:3")
         );
 
         this.checkEquals(
-                "Invalid character 'A' at 0 in \"A:B:C\"",
+                "Invalid character ':' at 3 in \"1:2:3\"",
                 thrown.getMessage()
         );
     }
