@@ -102,7 +102,7 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
     private SpreadsheetViewportWindows(final Set<SpreadsheetCellRange> cellRanges) {
         super();
 
-        this.cellRanges = Sets.immutable(cellRanges);
+        this.cellRanges = cellRanges;
     }
 
     public Set<SpreadsheetCellRange> cellRanges() {
