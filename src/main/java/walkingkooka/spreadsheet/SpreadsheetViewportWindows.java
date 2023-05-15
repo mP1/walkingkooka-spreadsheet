@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.collect.iterable.Iterables;
+import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -172,6 +173,50 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
         cellRanges.toArray(iterables);
 
         return Iterables.chain(iterables).iterator();
+    }
+
+    /**
+     * This {@link Iterator} returns all the {@link SpreadsheetCellReference} present within this {@link SpreadsheetViewportWindows}.
+     */
+    public Iterator<SpreadsheetCellReference> cells(final SpreadsheetSelection nonLabel) {
+        Objects.requireNonNull(nonLabel, "nonLabel");
+
+        return this.isEmpty() ?
+                Iterators.empty() :
+                this.cells0(nonLabel.toCellRange());
+    }
+
+    private Iterator<SpreadsheetCellReference> cells0(final SpreadsheetCellRange cells) {
+        final SpreadsheetCellReference cellsBegin = cells.begin();
+        final SpreadsheetCellReference cellsEnd = cells.end();
+
+        final SpreadsheetCellRange bounds = this.bounds()
+                .get();
+
+        final SpreadsheetCellReference boundsBegin = bounds.begin();
+        final SpreadsheetCellReference boundsEnd = bounds.end();
+
+        final SpreadsheetColumnReference left = cellsBegin.column()
+                .max(boundsBegin.column());
+
+        final SpreadsheetRowReference top = cellsBegin.row()
+                .max(boundsBegin.row());
+
+        final SpreadsheetColumnReference right = cellsEnd.column()
+                .min(boundsEnd.column());
+
+        final SpreadsheetRowReference bottom = cellsEnd.row()
+                .min(boundsEnd.row());
+
+        final SpreadsheetCellRange selection = left.setRow(top)
+                .cellRange(
+                        right.setRow(bottom)
+                );
+
+        return Iterators.predicated(
+                this.iterator(),
+                selection::testCell
+        );
     }
 
     // Predicate........................................................................................................
