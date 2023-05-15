@@ -502,6 +502,11 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
                 throw new InvalidCharacterException(text, lineInfo.column() - 1);
             }
             upperSelection = parserTokenToSelection.apply(upper);
+
+            if (false == cursor.isEmpty()) {
+                final TextCursorLineInfo lineInfo = cursor.lineInfo();
+                throw new InvalidCharacterException(text, lineInfo.column() - 1);
+            }
         }
 
         return rangeFactory.apply(
