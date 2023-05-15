@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -70,20 +71,32 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
         return windows.length() == 0 ?
                 EMPTY :
                 new SpreadsheetViewportWindows(
-                        Arrays.stream(
-                                        windows.split(SEPARATOR.string())
-                                ).map(SpreadsheetSelection::parseCellRange)
-                                .collect(Collectors.toCollection(Sets::ordered))
+                        Sets.immutable(
+                                Arrays.stream(
+                                                windows.split(SEPARATOR.string())
+                                        ).map(SpreadsheetSelection::parseCellRange)
+                                        .collect(Collectors.toCollection(Sets::sorted))
+                        )
                 );
     }
 
     public static SpreadsheetViewportWindows with(final Set<SpreadsheetCellRange> cellRanges) {
         Objects.requireNonNull(cellRanges, "cellRanges");
 
-        final Set<SpreadsheetCellRange> copy = Sets.immutable(cellRanges);
+        final Set<SpreadsheetCellRange> copy = Sets.immutable(
+                cellRanges instanceof SortedSet ?
+                        cellRanges :
+                        copy(cellRanges)
+        );
         return copy.isEmpty() ?
                 EMPTY :
                 new SpreadsheetViewportWindows(copy);
+    }
+
+    private static Set<SpreadsheetCellRange> copy(final Set<SpreadsheetCellRange> cellRanges) {
+        final Set<SpreadsheetCellRange> copy = Sets.sorted();
+        copy.addAll(cellRanges);
+        return copy;
     }
 
     private SpreadsheetViewportWindows(final Set<SpreadsheetCellRange> cellRanges) {
