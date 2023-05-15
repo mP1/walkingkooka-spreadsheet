@@ -85,6 +85,34 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         );
     }
 
+    // cellRanges.......................................................................................................
+
+    @Test
+    public void testCellRangesWith() {
+        final Set<SpreadsheetCellRange> set = Sets.hash();
+        set.add(SpreadsheetSelection.parseCellRange("A1"));
+
+        this.cellRangesReadOnly(
+                SpreadsheetViewportWindows.with(
+                        set
+                )
+        );
+    }
+
+    @Test
+    public void testCellRangesParse() {
+        this.cellRangesReadOnly(
+                SpreadsheetViewportWindows.parse("A1")
+        );
+    }
+
+    private void cellRangesReadOnly(final SpreadsheetViewportWindows windows) {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> windows.cellRanges().add(null)
+        );
+    }
+
     // parse............................................................................................................
 
     public void testParseStringEmptyFails() {
