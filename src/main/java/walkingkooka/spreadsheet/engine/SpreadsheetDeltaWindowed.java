@@ -326,10 +326,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
         printer.println("window:");
         printer.indent();
         {
-            final SpreadsheetViewportWindows window = this.window();
-            if (false == window.isEmpty()) {
-                printer.println(window.toString());
-            }
+            this.window()
+                    .printTree(printer);
         }
 
         printer.outdent();

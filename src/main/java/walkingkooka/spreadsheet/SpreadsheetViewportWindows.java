@@ -23,6 +23,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharacterConstant;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -39,7 +41,8 @@ import java.util.stream.Collectors;
  * Captures one or more windows that define the cells within a viewport.
  */
 public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCellReference>,
-        Predicate<SpreadsheetSelection> {
+        Predicate<SpreadsheetSelection>,
+        TreePrintable {
 
     /**
      * A window query parameter and other string representations are {@link SpreadsheetCellReference} separated by a
@@ -128,6 +131,13 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
                 cellRanges.stream()
                         .anyMatch(r -> r.test(selection));
 
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.toString());
     }
 
     // Object...........................................................................................................

@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -45,6 +46,7 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         JsonNodeMarshallingTesting<SpreadsheetViewportWindows>,
         ParseStringTesting<SpreadsheetViewportWindows>,
         PredicateTesting,
+        TreePrintableTesting,
         ToStringTesting<SpreadsheetViewportWindows> {
 
     @Test
@@ -300,6 +302,24 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         this.testFalse(
                 SpreadsheetViewportWindows.parse("A1:B2"),
                 SpreadsheetSelection.parseRow("3")
+        );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintEmpty() {
+        this.treePrintAndCheck(
+                SpreadsheetViewportWindows.EMPTY,
+                "" + EOL
+        );
+    }
+
+    @Test
+    public void testTreePrintNotEmpty() {
+        this.treePrintAndCheck(
+                this.createObject(),
+                "A1:B2" + EOL
         );
     }
 
