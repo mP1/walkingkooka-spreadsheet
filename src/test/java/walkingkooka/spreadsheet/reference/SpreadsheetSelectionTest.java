@@ -337,6 +337,18 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    @Test
+    public void testParseColumnRangeWithExtraComponentFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseColumnRange("1:2:3")
+        );
+
+        this.checkEquals(
+                "Invalid character '1' at 0 in \"1:2:3\"",
+                thrown.getMessage()
+        );
+    }
 
     @Test
     public void testParseColumnRangeWithColumn() {
@@ -464,11 +476,18 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseStringRange() {
+    public void testParseStringExtraComponentFails() {
+        this.parseStringFails(
+                "A1:B2:C3",
+                new IllegalArgumentException("Expected cell, label or range got \"A1:B2:C3\"")
+        );
+    }
+
+    @Test
+    public void testParseStringCellRange() {
         final String range = "A2:B2";
         this.parseStringAndCheck(range, SpreadsheetSelection.parseCellRange(range));
     }
-
 
     // parseCellOrLabel....................................................................................
 
@@ -642,6 +661,19 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetSelection.parseRowRange("C")
+        );
+    }
+
+    @Test
+    public void testParseRowRangeWithExtraComponentFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseRowRange("A:B:C")
+        );
+
+        this.checkEquals(
+                "Invalid character 'A' at 0 in \"A:B:C\"",
+                thrown.getMessage()
         );
     }
 
