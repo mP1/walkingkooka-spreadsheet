@@ -402,6 +402,29 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         );
     }
 
+    // two testToString verify cell-ranges are sorted.
+
+    @Test
+    public void testToStringSeveralRanges2() {
+        this.toStringAndCheck(
+                SpreadsheetViewportWindows.with(
+                        Sets.of(
+                                SpreadsheetSelection.parseCellRange("C3:D4"),
+                                SpreadsheetSelection.parseCellRange("A1:B2")
+                        )
+                ),
+                "A1:B2,C3:D4"
+        );
+    }
+
+    @Test
+    public void testToStringSeveralRanges3() {
+        this.toStringAndCheck(
+                SpreadsheetViewportWindows.parse("C3:D4,A1:B2"),
+                "A1:B2,C3:D4"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
