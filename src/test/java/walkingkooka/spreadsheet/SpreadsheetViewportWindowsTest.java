@@ -35,6 +35,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -186,6 +187,77 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
         return thrown;
+    }
+
+    // bounds...........................................................................................................
+
+    @Test
+    public void testBoundsEmpty() {
+        this.boundsAndCheck(
+                SpreadsheetViewportWindows.EMPTY,
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testBoundsOneCellRange() {
+        this.boundsAndCheck(
+                "A1:B2",
+                "A1:B2"
+        );
+    }
+
+    @Test
+    public void testBoundsOneCellRange2() {
+        this.boundsAndCheck(
+                "C3:D4",
+                "C3:D4"
+        );
+    }
+
+    @Test
+    public void testBoundsTwoCellRange() {
+        this.boundsAndCheck(
+                "A1:B2,C3:D4",
+                "A1:D4"
+        );
+    }
+
+    @Test
+    public void testBoundsTwoCellRange2() {
+        this.boundsAndCheck(
+                "E5:F5,G6:H7",
+                "E5:H7"
+        );
+    }
+
+    @Test
+    public void testBoundsFourCells() {
+        this.boundsAndCheck(
+                "A1,B1:C1,A2:A5,B2:C5",
+                "A1:C5"
+        );
+    }
+
+    private void boundsAndCheck(final String windows,
+                                final String bounds) {
+        this.boundsAndCheck(
+                SpreadsheetViewportWindows.parse(windows),
+                Optional.ofNullable(
+                        bounds.isEmpty() ?
+                                null :
+                                SpreadsheetSelection.parseCellRange(bounds)
+                )
+        );
+    }
+
+    private void boundsAndCheck(final SpreadsheetViewportWindows windows,
+                                final Optional<SpreadsheetCellRange> bounds) {
+        this.checkEquals(
+                bounds,
+                windows.bounds(),
+                () -> windows + " bounds"
+        );
     }
 
     // Iterable.........................................................................................................

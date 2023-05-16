@@ -21,6 +21,8 @@ import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -33,6 +35,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.function.Predicate;
@@ -116,6 +119,47 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
      */
     public boolean isEmpty() {
         return this.cellRanges.isEmpty();
+    }
+
+    // bounds...........................................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetCellRange} or bounds that includes all the {@link SpreadsheetCellRange ranges}.
+     */
+    public Optional<SpreadsheetCellRange> bounds() {
+        if (null == this.bounds) {
+            this.bounds = this.isEmpty() ?
+                    Optional.empty() :
+                    this.boundsNotEmpty();
+        }
+
+        return this.bounds;
+    }
+
+    private Optional<SpreadsheetCellRange> bounds;
+
+    private Optional<SpreadsheetCellRange> boundsNotEmpty() {
+        SpreadsheetColumnReference left = SpreadsheetColumnReference.MAX;
+        SpreadsheetRowReference top = SpreadsheetRowReference.MAX;
+
+        SpreadsheetColumnReference right = SpreadsheetColumnReference.MIN;
+        SpreadsheetRowReference bottom = SpreadsheetRowReference.MIN;
+
+        for (final SpreadsheetCellRange range : this.cellRanges()) {
+            final SpreadsheetCellReference begin = range.begin();
+            left = left.min(begin.column());
+            top = top.min(begin.row());
+
+            final SpreadsheetCellReference end = range.end();
+            right = right.max(end.column());
+            bottom = bottom.max(end.row());
+        }
+
+        return Optional.of(left.setRow(top)
+                .cellRange(
+                        right.setRow(bottom)
+                )
+        );
     }
 
     // Iterable.........................................................................................................
