@@ -17,10 +17,56 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<SpreadsheetFormatParserTokenKind> {
+
+    // labelText........................................................................................................
+
+    @Test
+    public void testLabelTextForCOLOR_NAME() {
+        this.labelTextAndCheck(
+                SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                "Color name"
+        );
+    }
+
+    @Test
+    public void testLabelTextForCONDITION() {
+        this.labelTextAndCheck(
+                SpreadsheetFormatParserTokenKind.CONDITION,
+                "Condition"
+        );
+    }
+
+    @Test
+    public void testLabelTextForDAY_WITH_LEADING_ZERO() {
+        this.labelTextAndCheck(
+                SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                "Day with leading zero"
+        );
+    }
+
+    @Test
+    public void testLabelTextForAMPM_FULL_LOWER() {
+        this.labelTextAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER,
+                "AMPM full lower"
+        );
+    }
+
+    private void labelTextAndCheck(final SpreadsheetFormatParserTokenKind kind,
+                                   final String expected) {
+        this.checkEquals(
+                expected,
+                kind.labelText(),
+                () -> kind + " labelText()"
+        );
+    }
+
+    // ClassTesting.....................................................................................................
 
     @Override
     public Class<SpreadsheetFormatParserTokenKind> type() {
