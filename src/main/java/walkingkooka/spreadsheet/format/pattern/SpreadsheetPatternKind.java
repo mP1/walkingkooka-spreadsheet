@@ -17,10 +17,12 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
@@ -28,37 +30,82 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 
 /**
  * The different types of {@link SpreadsheetPattern}.
  */
 public enum SpreadsheetPatternKind implements HasUrlFragment {
-    DATE_FORMAT_PATTERN(SpreadsheetPattern::parseDateFormatPattern),
+    DATE_FORMAT_PATTERN(
+            SpreadsheetPattern::parseDateFormatPattern,
+            SpreadsheetFormatParserTokenKind.dateOnly()
+    ),
 
-    DATE_PARSE_PATTERN(SpreadsheetPattern::parseDateParsePattern),
+    DATE_PARSE_PATTERN(
+            SpreadsheetPattern::parseDateParsePattern,
+            SpreadsheetFormatParserTokenKind.dateOnly()
+    ),
 
-    DATE_TIME_FORMAT_PATTERN(SpreadsheetPattern::parseDateTimeFormatPattern),
+    DATE_TIME_FORMAT_PATTERN(
+            SpreadsheetPattern::parseDateTimeFormatPattern,
+            concat(
+                    SpreadsheetFormatParserTokenKind.dateOnly(),
+                    SpreadsheetFormatParserTokenKind.timeOnly()
+            )
+    ),
 
-    DATE_TIME_PARSE_PATTERN(SpreadsheetPattern::parseDateTimeParsePattern),
+    DATE_TIME_PARSE_PATTERN(
+            SpreadsheetPattern::parseDateTimeParsePattern,
+            concat(
+                    SpreadsheetFormatParserTokenKind.dateOnly(),
+                    SpreadsheetFormatParserTokenKind.timeOnly()
+            )
+    ),
 
-    NUMBER_FORMAT_PATTERN(SpreadsheetPattern::parseNumberFormatPattern),
+    NUMBER_FORMAT_PATTERN(
+            SpreadsheetPattern::parseNumberFormatPattern,
+            SpreadsheetFormatParserTokenKind.numberOnly()
+    ),
 
-    NUMBER_PARSE_PATTERN(SpreadsheetPattern::parseNumberParsePattern),
+    NUMBER_PARSE_PATTERN(
+            SpreadsheetPattern::parseNumberParsePattern,
+            SpreadsheetFormatParserTokenKind.numberOnly()
+    ),
 
-    TEXT_FORMAT_PATTERN(SpreadsheetPattern::parseTextFormatPattern),
+    TEXT_FORMAT_PATTERN(
+            SpreadsheetPattern::parseTextFormatPattern,
+            SpreadsheetFormatParserTokenKind.textOnly()
+    ),
 
-    TIME_FORMAT_PATTERN(SpreadsheetPattern::parseTimeFormatPattern),
+    TIME_FORMAT_PATTERN(
+            SpreadsheetPattern::parseTimeFormatPattern,
+            SpreadsheetFormatParserTokenKind.timeOnly()
+    ),
 
-    TIME_PARSE_PATTERN(SpreadsheetPattern::parseTimeParsePattern);
+    TIME_PARSE_PATTERN(
+            SpreadsheetPattern::parseTimeParsePattern,
+            SpreadsheetFormatParserTokenKind.timeOnly()
+    );
 
-    SpreadsheetPatternKind(final Function<String, SpreadsheetPattern> parser) {
-        final String name = this.name()
-                .toLowerCase();
+    SpreadsheetPatternKind(final Function<String, SpreadsheetPattern> parser,
+                           final Set<SpreadsheetFormatParserTokenKind> only) {
+        this.parser = parser;
+        this.spreadsheetFormatParserTokenKinds =
+                concat(
+                        this.isFormatPattern() ?
+                                SpreadsheetFormatParserTokenKind.formatOnly() :
+                                SpreadsheetFormatParserTokenKind.parseOnly(),
+                        SpreadsheetFormatParserTokenKind.formatAndParseOnly(),
+                        only
+                );
+
 
         this.typeName =
                 "spreadsheet-" +
-                        name.replace('_', '-');
+                        this.name()
+                                .toLowerCase()
+                                .replace('_', '-');
 
         this.urlFragment =
                 SpreadsheetUrlFragments.PATTERN
@@ -73,8 +120,19 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                                                 .replace('_', '-')
                                 )
                         );
+    }
 
-        this.parser = parser;
+    private static Set<SpreadsheetFormatParserTokenKind> concat(final Set<SpreadsheetFormatParserTokenKind>... kinds) {
+        final Set<SpreadsheetFormatParserTokenKind> all = Sets.ordered();
+
+        for (final Set<SpreadsheetFormatParserTokenKind> k : kinds) {
+            all.addAll(k);
+        }
+
+        final int count = all.size();
+        final SpreadsheetFormatParserTokenKind[] allArray = new SpreadsheetFormatParserTokenKind[count];
+        all.toArray(allArray);
+        return Sets.of(allArray);
     }
 
     /**
@@ -85,6 +143,12 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     }
 
     private final Function<String, SpreadsheetPattern> parser;
+
+    public Set<SpreadsheetFormatParserTokenKind> spreadsheetFormatParserTokenKinds() {
+        return this.spreadsheetFormatParserTokenKinds;
+    }
+
+    private final Set<SpreadsheetFormatParserTokenKind> spreadsheetFormatParserTokenKinds;
 
     /**
      * This is the corresponding type name that appears in JSON for each pattern.
