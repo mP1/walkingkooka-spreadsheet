@@ -33,6 +33,40 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     // XXXOnly..........................................................................................................
 
     @Test
+    public void testTextOnly() {
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
+                        SpreadsheetFormatParserTokenKind.STAR,
+                        SpreadsheetFormatParserTokenKind.UNDERSCORE
+                ),
+                SpreadsheetFormatParserTokenKind.textOnly()
+        );
+    }
+
+    @Test
+    public void testFormatOnlyAndFormatAndParserOnlyAndTextOnly() {
+        final Set<SpreadsheetFormatParserTokenKind> kinds = Sets.ordered();
+        kinds.addAll(SpreadsheetFormatParserTokenKind.formatOnly());
+        kinds.addAll(SpreadsheetFormatParserTokenKind.formatAndParseOnly());
+        kinds.addAll(SpreadsheetFormatParserTokenKind.textOnly());
+
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
+                        SpreadsheetFormatParserTokenKind.CONDITION,
+                        SpreadsheetFormatParserTokenKind.GENERAL,
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
+                        SpreadsheetFormatParserTokenKind.STAR,
+                        SpreadsheetFormatParserTokenKind.UNDERSCORE
+                ),
+                kinds
+        );
+    }
+
+    @Test
     public void testOnlyNotEmpty() throws Exception {
         final Map<String, Set<SpreadsheetFormatParserTokenKind>> methodNameToKinds = Maps.sorted();
 
