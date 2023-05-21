@@ -149,7 +149,8 @@ public enum SpreadsheetFormatParserTokenKind {
     }
 
     private final static Set<SpreadsheetFormatParserTokenKind> FORMAT_AND_PARSE_ONLY = Sets.of(
-            GENERAL
+            GENERAL,
+            TEXT_LITERAL
     );
 
     /**
@@ -204,7 +205,6 @@ public enum SpreadsheetFormatParserTokenKind {
 
     private final static Set<SpreadsheetFormatParserTokenKind> TEXT_ONLY = Sets.of(
             TEXT_PLACEHOLDER,
-            TEXT_LITERAL,
             STAR,
             UNDERSCORE
     );
