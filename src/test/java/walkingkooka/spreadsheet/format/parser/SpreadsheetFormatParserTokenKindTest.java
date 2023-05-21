@@ -18,10 +18,59 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
+import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
+import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.Set;
+
 public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<SpreadsheetFormatParserTokenKind> {
+
+    // XXXOnly..........................................................................................................
+
+    @Test
+    public void testOnlyNotEmpty() throws Exception {
+        final Map<String, Set<SpreadsheetFormatParserTokenKind>> methodNameToKinds = Maps.sorted();
+
+        for (final Method method : SpreadsheetFormatParserTokenKind.class.getDeclaredMethods()) {
+            if (false == method.getName().endsWith("Only")) {
+                continue;
+            }
+
+            methodNameToKinds.put(
+                    method.getName(),
+                    Cast.to(
+                            method.invoke(null)
+                    )
+            );
+        }
+
+        for (final Map.Entry<String, Set<SpreadsheetFormatParserTokenKind>> methodNameAndKinds : methodNameToKinds.entrySet()) {
+            final String methodName = methodNameAndKinds.getKey();
+            final Set<SpreadsheetFormatParserTokenKind> kinds = methodNameAndKinds.getValue();
+
+            for (final Map.Entry<String, Set<SpreadsheetFormatParserTokenKind>> methodNameAndKinds2 : methodNameToKinds.entrySet()) {
+                final String methodName2 = methodNameAndKinds2.getKey();
+                if (methodName.equals(methodName2)) {
+                    continue;
+                }
+
+                final Set<SpreadsheetFormatParserTokenKind> duplicates = Sets.sorted();
+                duplicates.addAll(kinds);
+                duplicates.retainAll(methodNameAndKinds2.getValue());
+
+                this.checkEquals(
+                        Sets.empty(),
+                        duplicates,
+                        () -> methodName + " kinds also appear in " + methodName2
+                );
+            }
+        }
+    }
 
     // labelText........................................................................................................
 
