@@ -122,7 +122,7 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     /**
      * Checks and throws a {@link IllegalArgumentException} if the {@link SpreadsheetPattern#kind()} is different to this.
      */
-    public void check(final SpreadsheetPattern pattern) {
+    public void checkSameOrFail(final SpreadsheetPattern pattern) {
         Objects.requireNonNull(pattern, "pattern");
         final SpreadsheetPatternKind kind = pattern.kind();
         if (this != kind) {
@@ -135,7 +135,7 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
      */
     public JsonNode patternPatch(final SpreadsheetPattern pattern,
                                  final JsonNodeMarshallContext context) {
-        this.check(pattern);
+        this.checkSameOrFail(pattern);
         return this.isFormatPattern() ?
                 SpreadsheetDelta.formatPatternPatch(
                         (SpreadsheetFormatPattern) pattern,

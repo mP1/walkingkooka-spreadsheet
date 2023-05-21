@@ -260,28 +260,28 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
         );
     }
 
-    // check............................................................................................................
+    // checkSameOrFail..................................................................................................
 
     @Test
-    public void testCheckWithNullPatternFails() {
+    public void testCheckSameOrFailWithNullPatternFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.check(null)
+                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.checkSameOrFail(null)
         );
     }
 
     @Test
-    public void testCheck() {
-        SpreadsheetPatternKind.DATE_FORMAT_PATTERN.check(
+    public void testCheckSameOrFail() {
+        SpreadsheetPatternKind.DATE_FORMAT_PATTERN.checkSameOrFail(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
         );
     }
 
     @Test
-    public void testCheckInvalidThrows() {
+    public void testCheckSameOrFailInvalidThrows() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.check(
+                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.checkSameOrFail(
                         SpreadsheetPattern.parseTimeParsePattern("hh:mm")
                 )
         );
