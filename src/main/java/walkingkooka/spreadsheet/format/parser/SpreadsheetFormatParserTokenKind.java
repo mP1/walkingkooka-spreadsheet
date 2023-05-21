@@ -144,6 +144,17 @@ public enum SpreadsheetFormatParserTokenKind {
     /**
      * Returns kinds that can only appear in a format pattern {@link SpreadsheetFormatParserTokenKind}
      */
+    public static Set<SpreadsheetFormatParserTokenKind> formatAndParseOnly() {
+        return FORMAT_AND_PARSE_ONLY;
+    }
+
+    private final static Set<SpreadsheetFormatParserTokenKind> FORMAT_AND_PARSE_ONLY = Sets.of(
+            GENERAL
+    );
+
+    /**
+     * Returns kinds that can only appear in a format pattern {@link SpreadsheetFormatParserTokenKind}
+     */
     public static Set<SpreadsheetFormatParserTokenKind> formatOnly() {
         return FORMAT_ONLY;
     }
@@ -171,6 +182,17 @@ public enum SpreadsheetFormatParserTokenKind {
             FRACTION,
             PERCENT,
             THOUSANDS
+    );
+
+    /**
+     * Returns kinds that can only appear in a parse pattern {@link SpreadsheetFormatParserTokenKind}
+     */
+    public static Set<SpreadsheetFormatParserTokenKind> parseOnly() {
+        return PARSE_ONLY;
+    }
+
+    private final static Set<SpreadsheetFormatParserTokenKind> PARSE_ONLY = Sets.of(
+            SEPARATOR
     );
 
     /**
