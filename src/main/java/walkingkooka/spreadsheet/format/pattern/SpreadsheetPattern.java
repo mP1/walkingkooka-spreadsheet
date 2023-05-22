@@ -245,10 +245,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
     /**
      * Factory that fetches a {@link DateFormat}, casts to a {@link SimpleDateFormat} and parses the pattern.
      */
-    private static <P extends SpreadsheetPattern, V> P javaTextDateFormat(final DateFormat dateFormat,
-                                                                          final boolean date,
-                                                                          final boolean time,
-                                                                          final Function<String, P> patternParser) {
+    private static <P extends SpreadsheetPattern> P javaTextDateFormat(final DateFormat dateFormat,
+                                                                       final boolean date,
+                                                                       final boolean time,
+                                                                       final Function<String, P> patternParser) {
         return javaTextDateFormat(
                 Lists.of(dateFormat),
                 date,
@@ -263,10 +263,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
      * simplified forms of each pattern are also created, this means if a locale supports a pattern like <code>hh:mm:ss</code>
      * the form <code>hh:mm</code> will also be added.
      */
-    private static <P extends SpreadsheetPattern, V> P javaTextDateFormat(final Iterable<DateFormat> dateFormats,
-                                                                          final boolean date,
-                                                                          final boolean time,
-                                                                          final Function<String, P> patternParser) {
+    private static <P extends SpreadsheetPattern> P javaTextDateFormat(final Iterable<DateFormat> dateFormats,
+                                                                       final boolean date,
+                                                                       final boolean time,
+                                                                       final Function<String, P> patternParser) {
         final Set<String> patterns = Sets.ordered();
 
         for (final DateFormat dateFormat : dateFormats) {
