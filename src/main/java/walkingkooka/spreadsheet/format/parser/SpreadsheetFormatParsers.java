@@ -252,14 +252,21 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSE_PARSER;
 
     private static void dateAndTime(final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined) {
-        predefined.put(MONTH_MINUTE_IDENTIFIER, MONTH_MINUTE);
+        predefined.put(MINUTE_IDENTIFIER, MINUTE);
+        predefined.put(MONTH_IDENTIFIER, MONTH);
     }
 
-    private static final EbnfIdentifierName MONTH_MINUTE_IDENTIFIER = EbnfIdentifierName.with("MONTH_MINUTE");
+    private static final EbnfIdentifierName MINUTE_IDENTIFIER = EbnfIdentifierName.with("MINUTE");
 
-    private static final Parser<SpreadsheetFormatParserContext> MONTH_MINUTE = repeatingSymbol('M',
-            SpreadsheetFormatParserToken::monthOrMinute,
-            SpreadsheetFormatMonthOrMinuteParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> MINUTE = repeatingSymbol('M',
+            SpreadsheetFormatParserToken::minute,
+            SpreadsheetFormatMinuteParserToken.class);
+
+    private static final EbnfIdentifierName MONTH_IDENTIFIER = EbnfIdentifierName.with("MONTH");
+
+    private static final Parser<SpreadsheetFormatParserContext> MONTH = repeatingSymbol('M',
+            SpreadsheetFormatParserToken::month,
+            SpreadsheetFormatMonthParserToken.class);
 
     // general ..........................................................................................................
 

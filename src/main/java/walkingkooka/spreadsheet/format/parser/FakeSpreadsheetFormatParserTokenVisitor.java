@@ -310,7 +310,12 @@ public class FakeSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatPa
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
+    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatMonthParserToken token) {
         throw new UnsupportedOperationException();
     }
 

@@ -293,10 +293,17 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetFormatMonthOrMinuteParserToken}
+     * {@see SpreadsheetFormatMinuteParserToken}
      */
-    public static SpreadsheetFormatMonthOrMinuteParserToken monthOrMinute(final String value, final String text) {
-        return SpreadsheetFormatMonthOrMinuteParserToken.with(value, text);
+    public static SpreadsheetFormatMinuteParserToken minute(final String value, final String text) {
+        return SpreadsheetFormatMinuteParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetFormatMonthParserToken}
+     */
+    public static SpreadsheetFormatMonthParserToken month(final String value, final String text) {
+        return SpreadsheetFormatMonthParserToken.with(value, text);
     }
 
     /**
@@ -718,10 +725,17 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetFormatMonthOrMinuteParserToken} return true
+     * Only {@link SpreadsheetFormatMinuteParserToken} return true
      */
-    public final boolean isMonthOrMinute() {
-        return this instanceof SpreadsheetFormatMonthOrMinuteParserToken;
+    public final boolean isMinute() {
+        return this instanceof SpreadsheetFormatMinuteParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetFormatMonthParserToken} return true
+     */
+    public final boolean isMonth() {
+        return this instanceof SpreadsheetFormatMonthParserToken;
     }
 
     /**
@@ -848,7 +862,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     /**
      * Returns the {@link SpreadsheetFormatParserTokenKind} for this token. Only leaf tokens will return something.
      */
-    public abstract Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute);
+    public abstract Optional<SpreadsheetFormatParserTokenKind> kind();
 
     final static Optional<SpreadsheetFormatParserTokenKind> EMPTY_KIND = Optional.empty();
 
@@ -960,8 +974,13 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetFormatMonthOrMinuteParserToken.class,
-                SpreadsheetFormatParserToken::unmarshallMonthOrMinute
+                SpreadsheetFormatMinuteParserToken.class,
+                SpreadsheetFormatParserToken::unmarshallMinute
+        );
+
+        registerLeafParserToken(
+                SpreadsheetFormatMonthParserToken.class,
+                SpreadsheetFormatParserToken::unmarshallMonth
         );
 
         registerLeafParserToken(
@@ -1121,12 +1140,21 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetFormatMonthOrMinuteParserToken unmarshallMonthOrMinute(final JsonNode node,
-                                                                             final JsonNodeUnmarshallContext context) {
+    static SpreadsheetFormatMinuteParserToken unmarshallMinute(final JsonNode node,
+                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallStringLeafParserToken(
                 node,
                 context,
-                SpreadsheetFormatParserToken::monthOrMinute
+                SpreadsheetFormatParserToken::minute
+        );
+    }
+
+    static SpreadsheetFormatMonthParserToken unmarshallMonth(final JsonNode node,
+                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshallStringLeafParserToken(
+                node,
+                context,
+                SpreadsheetFormatParserToken::month
         );
     }
 

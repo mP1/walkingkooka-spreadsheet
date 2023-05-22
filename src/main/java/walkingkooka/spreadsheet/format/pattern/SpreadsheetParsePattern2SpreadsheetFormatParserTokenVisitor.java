@@ -29,7 +29,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserTo
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthOrMinuteParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMinuteParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
@@ -223,7 +224,6 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
                         token.text()
                 )
         );
-        this.month = false;
     }
 
     private static List<String> ampm(final SpreadsheetParserContext context) {
@@ -242,8 +242,6 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
                 2,
                 SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::day
         );
-
-        this.month = true;
     }
 
     /**
@@ -283,8 +281,6 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
                 2,
                 SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::hour
         );
-
-        this.month = false;
     }
 
     /**
@@ -299,63 +295,12 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
-        final int length = token.value().length();
-
-        if (this.month) {
-            switch (length) {
-                case 1:
-                case 2:
-                    this.value(
-                            1,
-                            2,
-                            SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::month
-                    );
-                    break;
-                case 3:
-                    this.addParser(
-                            SpreadsheetParsePattern2Parser.stringChoices(
-                                    SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::monthNamesAbbreviations,
-                                    SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::spreadsheetMonthNameAbbreviationParserToken,
-                                    token.text()
-                            )
-                    );
-                    break;
-                default:
-                    this.addParser(
-                            SpreadsheetParsePattern2Parser.stringChoices(
-                                    SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::monthNames,
-                                    SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::spreadsheetMonthNameParserToken,
-                                    token.text()
-                            )
-                    );
-                    break;
-            }
-        } else {
-            this.value(
-                    1,
-                    2,
-                    SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::minute
-            );
-        }
-    }
-
-    private boolean month = true;
-
-    private static List<String> monthNames(final SpreadsheetParserContext context) {
-        return context.monthNames();
-    }
-
-    private static SpreadsheetMonthNameParserToken spreadsheetMonthNameParserToken(final int value, final String text) {
-        return SpreadsheetParserToken.monthName(value + 1, text); // JAN=1 but SpreadsheetParsePattern2Parser.stringChoices 1st = 0.
-    }
-
-    private static List<String> monthNamesAbbreviations(final SpreadsheetParserContext context) {
-        return context.monthNameAbbreviations();
-    }
-
-    private static SpreadsheetMonthNameAbbreviationParserToken spreadsheetMonthNameAbbreviationParserToken(final int value, final String text) {
-        return SpreadsheetParserToken.monthNameAbbreviation(value + 1, text); // JAN=1 but SpreadsheetParsePattern2Parser.stringChoices 1st = 0.
+    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+        this.value(
+                1,
+                2,
+                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::minute
+        );
     }
 
     /**
@@ -367,6 +312,64 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
                 token,
                 SpreadsheetParserToken::minute
         );
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatMonthParserToken token) {
+        final int length = token.value().length();
+
+        switch (length) {
+            case 1:
+            case 2:
+                this.value(
+                        1,
+                        2,
+                        SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::month
+                );
+                break;
+            case 3:
+                this.addParser(
+                        SpreadsheetParsePattern2Parser.stringChoices(
+                                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::monthNamesAbbreviations,
+                                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::monthNameAbbreviationParserToken,
+                                token.text()
+                        )
+                );
+                break;
+            default:
+                this.addParser(
+                        SpreadsheetParsePattern2Parser.stringChoices(
+                                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::monthNames,
+                                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::monthNameParserToken,
+                                token.text()
+                        )
+                );
+                break;
+        }
+    }
+
+    private static List<String> monthNames(final SpreadsheetParserContext context) {
+        return context.monthNames();
+    }
+
+    private static SpreadsheetMonthNameParserToken monthNameParserToken(final int value,
+                                                                        final String text) {
+        return SpreadsheetParserToken.monthName(
+                value + 1,
+                text
+        ); // JAN=1 but SpreadsheetParsePattern2Parser.stringChoices 1st = 0.
+    }
+
+    private static List<String> monthNamesAbbreviations(final SpreadsheetParserContext context) {
+        return context.monthNameAbbreviations();
+    }
+
+    private static SpreadsheetMonthNameAbbreviationParserToken monthNameAbbreviationParserToken(final int value,
+                                                                                                final String text) {
+        return SpreadsheetParserToken.monthNameAbbreviation(
+                value + 1,
+                text
+        ); // JAN=1 but SpreadsheetParsePattern2Parser.stringChoices 1st = 0.
     }
 
     /**
@@ -392,8 +395,6 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
                 2,
                 SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::seconds
         );
-
-        this.month = false;
     }
 
     /**
@@ -455,7 +456,6 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
                 this.year(4, 4);
                 break;
         }
-        this.month = true;
     }
 
     private void year(final int min,

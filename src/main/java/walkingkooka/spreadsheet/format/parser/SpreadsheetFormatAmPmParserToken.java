@@ -42,7 +42,7 @@ public final class SpreadsheetFormatAmPmParserToken extends SpreadsheetFormatNon
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         SpreadsheetFormatParserTokenKind kind;
 
         final String text = this.text();

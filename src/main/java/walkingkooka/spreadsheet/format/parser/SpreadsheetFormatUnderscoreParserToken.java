@@ -41,7 +41,7 @@ public final class SpreadsheetFormatUnderscoreParserToken extends SpreadsheetFor
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.UNDERSCORE.asOptional;
     }
 

@@ -44,7 +44,7 @@ public final class SpreadsheetFormatSeparatorSymbolParserToken extends Spreadshe
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.SEPARATOR.asOptional;
     }
 

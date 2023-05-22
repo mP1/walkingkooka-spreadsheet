@@ -47,7 +47,7 @@ public final class SpreadsheetFormatColorNameParserToken extends SpreadsheetForm
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.COLOR_NAME.asOptional;
     }
 

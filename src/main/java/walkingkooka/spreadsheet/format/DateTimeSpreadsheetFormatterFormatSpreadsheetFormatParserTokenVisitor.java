@@ -24,7 +24,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParser
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthOrMinuteParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMinuteParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
@@ -114,7 +115,6 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
         this.secondRounding = secondRounding;
 
         this.twelveHourTime = twelveHourTime;
-        this.minute = false;
     }
 
     private final SpreadsheetFormatterContext context;
@@ -123,7 +123,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
         final String ampm = this.context.ampm(this.value.getHour());
 
-        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+        final SpreadsheetFormatParserTokenKind kind = token.kind()
                 .get();
 
         final String text;
@@ -169,7 +169,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
     protected void visit(final SpreadsheetFormatDayParserToken token) {
         final LocalDateTime value = this.value;
 
-        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+        final SpreadsheetFormatParserTokenKind kind = token.kind()
                 .get();
 
         switch (kind) {
@@ -200,7 +200,6 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
             default:
                 throw new UnsupportedOperationException("Expected day kind got " + kind);
         }
-        this.minute = false;
     }
 
     // DayOfWeek 1=Monday 2=Tuesday.
@@ -226,7 +225,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
             }
         }
 
-        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+        final SpreadsheetFormatParserTokenKind kind = token.kind()
                 .get();
 
         switch (kind) {
@@ -239,15 +238,13 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
             default:
                 throw new UnsupportedOperationException("Expected hour kind got " + kind);
         }
-
-        this.minute = true;
     }
 
     private final boolean twelveHourTime;
 
     @Override
-    protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
-        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+        final SpreadsheetFormatParserTokenKind kind = token.kind()
                 .get();
         final LocalDateTime value = this.value;
 
@@ -262,6 +259,18 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
                         value.getMinute()
                 );
                 break;
+            default:
+                throw new UnsupportedOperationException("Expected minute kind got " + kind);
+        }
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatMonthParserToken token) {
+        final SpreadsheetFormatParserTokenKind kind = token.kind()
+                .get();
+        final LocalDateTime value = this.value;
+
+        switch (kind) {
             case MONTH_WITHOUT_LEADING_ZERO:
                 this.append(
                         value.getMonthValue()
@@ -297,13 +306,11 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
                 );
                 break;
             default:
-                throw new UnsupportedOperationException("Expected minute or month kind got " + kind);
+                throw new UnsupportedOperationException("Expected month kind got " + kind);
         }
     }
 
     private final static int LOCALE_DATE_TIME_MONTH_BIAS = 1;
-
-    private boolean minute;
 
     @Override
     protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
@@ -316,7 +323,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
         final double secondsAndMills = value.getSecond() + 1.0 * value.getNano() / NANOS_IN_SECOND + this.secondRounding;
         final int seconds = (int) secondsAndMills;
 
-        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+        final SpreadsheetFormatParserTokenKind kind = token.kind()
                 .get();
         switch (kind) {
             case SECONDS_WITHOUT_LEADING_ZERO:
@@ -341,8 +348,6 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
                 this.append(Character.forDigit(((int) millis) % 10, 10));
             }
         }
-
-        this.minute = false;
     }
 
     private final static int NANOS_IN_SECOND = 1_000_000_000;
@@ -366,7 +371,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
     protected void visit(final SpreadsheetFormatYearParserToken token) {
         final int year = this.value.getYear();
 
-        final SpreadsheetFormatParserTokenKind kind = token.kind(this.minute)
+        final SpreadsheetFormatParserTokenKind kind = token.kind()
                 .get();
 
         switch (kind) {
@@ -379,8 +384,6 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
             default:
                 throw new UnsupportedOperationException("Expected year kind got " + kind);
         }
-
-        this.minute = false;
     }
 
     private void append(final int text) {

@@ -191,7 +191,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
                 LocalTime.of(12, 58, 59),
                 String.class,
                 this.createContext(),
-                "59 01 12"
+                "59 58 12"
         );
     }
 

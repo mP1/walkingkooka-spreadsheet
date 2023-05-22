@@ -42,7 +42,7 @@ public final class SpreadsheetFormatTextPlaceholderParserToken extends Spreadshe
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER.asOptional;
     }
 

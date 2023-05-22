@@ -83,7 +83,7 @@ final class SpreadsheetPatternForEachComponentSpreadsheetFormatParserTokenVisito
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatParserToken token) {
-        final Optional<SpreadsheetFormatParserTokenKind> kind = token.kind(this.minute);
+        final Optional<SpreadsheetFormatParserTokenKind> kind = token.kind();
 
         if (kind.isPresent()) {
             this.consumer.accept(

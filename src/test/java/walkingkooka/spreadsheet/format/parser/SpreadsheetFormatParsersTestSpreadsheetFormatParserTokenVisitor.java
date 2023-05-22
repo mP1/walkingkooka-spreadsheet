@@ -318,8 +318,13 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
-        this.addString(token, SpreadsheetFormatParserToken::monthOrMinute);
+    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+        this.addString(token, SpreadsheetFormatParserToken::minute);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatMonthParserToken token) {
+        this.addString(token, SpreadsheetFormatParserToken::month);
     }
 
     @Override

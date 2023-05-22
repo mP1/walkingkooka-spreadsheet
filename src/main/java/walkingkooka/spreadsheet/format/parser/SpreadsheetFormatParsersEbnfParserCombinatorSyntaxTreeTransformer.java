@@ -127,10 +127,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformDateTime(final ParserToken token,
                                                  final SpreadsheetFormatParserContext context) {
-        return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::dateTime
-        );
+        return SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor.fixMinutes(token);
     }
 
     private static final EbnfIdentifierName DATETIME_IDENTIFIER = EbnfIdentifierName.with("DATETIME");

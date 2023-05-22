@@ -42,7 +42,7 @@ public final class SpreadsheetFormatTextLiteralParserToken extends SpreadsheetFo
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.TEXT_LITERAL.asOptional;
     }
 

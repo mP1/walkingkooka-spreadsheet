@@ -24,12 +24,12 @@ import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetFormatMonthOrMinuteParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatMonthOrMinuteParserToken, String> {
+public final class SpreadsheetFormatMonthParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatMonthParserToken, String> {
 
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetFormatMonthOrMinuteParserToken token = this.createToken();
+        final SpreadsheetFormatMonthParserToken token = this.createToken();
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override
@@ -59,7 +59,7 @@ public final class SpreadsheetFormatMonthOrMinuteParserTokenTest extends Spreads
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken t) {
+            protected void visit(final SpreadsheetFormatMonthParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -70,37 +70,9 @@ public final class SpreadsheetFormatMonthOrMinuteParserTokenTest extends Spreads
     // kind............................................................................................................
 
     @Test
-    public void testKindMinutes1() {
-        this.kindAndCheck(
-                "m",
-                true,
-                SpreadsheetFormatParserTokenKind.MINUTES_WITHOUT_LEADING_ZERO
-        );
-    }
-
-    @Test
-    public void testKindMinutes2() {
-        this.kindAndCheck(
-                "mm",
-                true,
-                SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO
-        );
-    }
-
-    @Test
-    public void testKindMinutes3() {
-        this.kindAndCheck(
-                "mmm",
-                true,
-                SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO
-        );
-    }
-
-    @Test
     public void testKindMonths1() {
         this.kindAndCheck(
                 "m",
-                false,
                 SpreadsheetFormatParserTokenKind.MONTH_WITHOUT_LEADING_ZERO
         );
     }
@@ -109,7 +81,6 @@ public final class SpreadsheetFormatMonthOrMinuteParserTokenTest extends Spreads
     public void testKindMonths2() {
         this.kindAndCheck(
                 "mm",
-                false,
                 SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO
         );
     }
@@ -118,7 +89,6 @@ public final class SpreadsheetFormatMonthOrMinuteParserTokenTest extends Spreads
     public void testKindMonths3() {
         this.kindAndCheck(
                 "mmm",
-                false,
                 SpreadsheetFormatParserTokenKind.MONTH_NAME_ABBREVIATION
         );
     }
@@ -160,23 +130,23 @@ public final class SpreadsheetFormatMonthOrMinuteParserTokenTest extends Spreads
     }
 
     @Override
-    SpreadsheetFormatMonthOrMinuteParserToken createToken(final String value, final String text) {
-        return SpreadsheetFormatMonthOrMinuteParserToken.with(value, text);
+    SpreadsheetFormatMonthParserToken createToken(final String value, final String text) {
+        return SpreadsheetFormatMonthParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetFormatMonthOrMinuteParserToken createDifferentToken() {
-        return SpreadsheetFormatMonthOrMinuteParserToken.with(this.text(), "different");
+    public SpreadsheetFormatMonthParserToken createDifferentToken() {
+        return SpreadsheetFormatMonthParserToken.with(this.text(), "different");
     }
 
     @Override
-    public Class<SpreadsheetFormatMonthOrMinuteParserToken> type() {
-        return SpreadsheetFormatMonthOrMinuteParserToken.class;
+    public Class<SpreadsheetFormatMonthParserToken> type() {
+        return SpreadsheetFormatMonthParserToken.class;
     }
 
     @Override
-    public SpreadsheetFormatMonthOrMinuteParserToken unmarshall(final JsonNode node,
-                                                                final JsonNodeUnmarshallContext context) {
-        return SpreadsheetFormatParserToken.unmarshallMonthOrMinute(node, context);
+    public SpreadsheetFormatMonthParserToken unmarshall(final JsonNode node,
+                                                        final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormatParserToken.unmarshallMonth(node, context);
     }
 }

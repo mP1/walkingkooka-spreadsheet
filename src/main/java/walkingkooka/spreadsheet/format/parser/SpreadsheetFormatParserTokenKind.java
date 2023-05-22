@@ -228,7 +228,7 @@ public enum SpreadsheetFormatParserTokenKind {
     );
 
     /**
-     * Used as the answer for many {@link SpreadsheetFormatParserToken#kind(boolean)}
+     * Used as the answer for many {@link SpreadsheetFormatParserToken#kind()}
      */
     final Optional<SpreadsheetFormatParserTokenKind> asOptional = Optional.of(this);
 
