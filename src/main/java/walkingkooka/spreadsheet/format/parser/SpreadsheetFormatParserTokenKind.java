@@ -233,6 +233,101 @@ public enum SpreadsheetFormatParserTokenKind {
     final Optional<SpreadsheetFormatParserTokenKind> asOptional = Optional.of(this);
 
     /**
+     * Returns true if this token is a colour.
+     */
+    public boolean isColor() {
+        return this == COLOR_NAME || this == COLOR_NUMBER;
+    }
+
+    /**
+     * Returns true if this token is a condition.
+     */
+    public boolean isCondition() {
+        return this == CONDITION;
+    }
+
+    /**
+     * Returns true if this token is a date component.
+     */
+    public boolean isDate() {
+        return this == DAY_WITH_LEADING_ZERO ||
+                this == DAY_WITHOUT_LEADING_ZERO ||
+                this == DAY_NAME_ABBREVIATION ||
+                this == DAY_NAME_FULL ||
+                this == MONTH_WITH_LEADING_ZERO ||
+                this == MONTH_WITHOUT_LEADING_ZERO ||
+                this == MONTH_NAME_ABBREVIATION ||
+                this == MONTH_NAME_FULL ||
+                this == MONTH_NAME_INITIAL ||
+                this == YEAR_TWO_DIGIT ||
+                this == YEAR_FULL;
+    }
+
+    /**
+     * Returns true if this token is a date-time component.
+     */
+    public boolean isDateTime() {
+        return this.isDate() ||
+                this.isTime();
+    }
+
+    /**
+     * Returns true if this kind is a valid format token.
+     */
+    public boolean isFormat() {
+        return this != SEPARATOR;
+    }
+
+    /**
+     * Returns true if this token is {@link #GENERAL}.
+     */
+    public boolean isGeneral() {
+        return this == GENERAL;
+    }
+
+    /**
+     * Returns true if this token is a number component.
+     */
+    public boolean isNumber() {
+        return this == DIGIT ||
+                this == DIGIT_SPACE ||
+                this == DIGIT_ZERO ||
+                this == CURRENCY_SYMBOL ||
+                this == DECIMAL_PLACE ||
+                this == EXPONENT ||
+                this == FRACTION ||
+                this == PERCENT ||
+                this == THOUSANDS;
+    }
+
+    /**
+     * Returns true if this token is a text component.
+     */
+    public boolean isText() {
+        return this == TEXT_LITERAL ||
+                this == TEXT_PLACEHOLDER ||
+                this == STAR ||
+                this == UNDERSCORE;
+    }
+
+
+    /**
+     * Returns true if this token is a time component.
+     */
+    public boolean isTime() {
+        return this == HOUR_WITH_LEADING_ZERO ||
+                this == HOUR_WITHOUT_LEADING_ZERO ||
+                this == MINUTES_WITH_LEADING_ZERO ||
+                this == MINUTES_WITHOUT_LEADING_ZERO ||
+                this == SECONDS_WITH_LEADING_ZERO ||
+                this == SECONDS_WITHOUT_LEADING_ZERO ||
+                this == AMPM_FULL_LOWER ||
+                this == AMPM_FULL_UPPER ||
+                this == AMPM_INITIAL_LOWER ||
+                this == AMPM_INITIAL_UPPER;
+    }
+
+    /**
      * Unique but generic English label text for this {@link SpreadsheetFormatParserTokenKind}.
      * <br>
      * The initial use-case is for this text to become the label for a single {@link SpreadsheetFormatParserTokenKind}

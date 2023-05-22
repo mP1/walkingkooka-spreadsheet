@@ -25,10 +25,193 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<SpreadsheetFormatParserTokenKind> {
+
+    // isXXX............................................................................................................
+
+    @Test
+    public void testIsColour() {
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER
+                ),
+                this.collect(SpreadsheetFormatParserTokenKind::isColor)
+        );
+    }
+
+    @Test
+    public void testIsDate() {
+        final Set<SpreadsheetFormatParserTokenKind> date = this.collect(SpreadsheetFormatParserTokenKind::isDate);
+
+        this.checkEquals(
+                this.collect(k -> {
+                    final String name = k.name();
+                    return name.startsWith("DAY_") || name.startsWith("MONTH_") || name.startsWith("YEAR_");
+                }),
+                date
+        );
+
+        this.checkNoOverlapOrFail(
+                date,
+                this.collect(SpreadsheetFormatParserTokenKind::isNumber)
+        );
+
+        this.checkNoOverlapOrFail(
+                date,
+                this.collect(SpreadsheetFormatParserTokenKind::isText)
+        );
+
+        this.checkNoOverlapOrFail(
+                date,
+                this.collect(SpreadsheetFormatParserTokenKind::isTime)
+        );
+    }
+
+    @Test
+    public void testIsGeneral() {
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.GENERAL
+                ),
+                this.collect(SpreadsheetFormatParserTokenKind::isGeneral)
+        );
+    }
+
+    @Test
+    public void testIsNumber() {
+        final Set<SpreadsheetFormatParserTokenKind> number = this.collect(SpreadsheetFormatParserTokenKind::isNumber);
+
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.DIGIT,
+                        SpreadsheetFormatParserTokenKind.DIGIT_SPACE,
+                        SpreadsheetFormatParserTokenKind.DIGIT_ZERO,
+                        SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL,
+                        SpreadsheetFormatParserTokenKind.DECIMAL_PLACE,
+                        SpreadsheetFormatParserTokenKind.EXPONENT,
+                        SpreadsheetFormatParserTokenKind.FRACTION,
+                        SpreadsheetFormatParserTokenKind.PERCENT,
+                        SpreadsheetFormatParserTokenKind.THOUSANDS
+                ),
+                this.collect(SpreadsheetFormatParserTokenKind::isNumber)
+        );
+
+        this.checkNoOverlapOrFail(
+                number,
+                this.collect(SpreadsheetFormatParserTokenKind::isDate)
+        );
+
+        this.checkNoOverlapOrFail(
+                number,
+                this.collect(SpreadsheetFormatParserTokenKind::isDateTime)
+        );
+
+        this.checkNoOverlapOrFail(
+                number,
+                this.collect(SpreadsheetFormatParserTokenKind::isText)
+        );
+
+        this.checkNoOverlapOrFail(
+                number,
+                this.collect(SpreadsheetFormatParserTokenKind::isTime)
+        );
+    }
+
+    @Test
+    public void testIsText() {
+        final Set<SpreadsheetFormatParserTokenKind> text = this.collect(SpreadsheetFormatParserTokenKind::isText);
+
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        SpreadsheetFormatParserTokenKind.STAR,
+                        SpreadsheetFormatParserTokenKind.UNDERSCORE
+                ),
+                text
+        );
+
+        this.checkNoOverlapOrFail(
+                text,
+                this.collect(SpreadsheetFormatParserTokenKind::isDate)
+        );
+
+        this.checkNoOverlapOrFail(
+                text,
+                this.collect(SpreadsheetFormatParserTokenKind::isDateTime)
+        );
+
+        this.checkNoOverlapOrFail(
+                text,
+                this.collect(SpreadsheetFormatParserTokenKind::isNumber)
+        );
+
+        this.checkNoOverlapOrFail(
+                text,
+                this.collect(SpreadsheetFormatParserTokenKind::isTime)
+        );
+    }
+
+    @Test
+    public void testIsTime() {
+        final Set<SpreadsheetFormatParserTokenKind> time = this.collect(SpreadsheetFormatParserTokenKind::isTime);
+
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                        SpreadsheetFormatParserTokenKind.HOUR_WITHOUT_LEADING_ZERO,
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITHOUT_LEADING_ZERO,
+                        SpreadsheetFormatParserTokenKind.SECONDS_WITH_LEADING_ZERO,
+                        SpreadsheetFormatParserTokenKind.SECONDS_WITHOUT_LEADING_ZERO,
+                        SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER,
+                        SpreadsheetFormatParserTokenKind.AMPM_FULL_UPPER,
+                        SpreadsheetFormatParserTokenKind.AMPM_INITIAL_LOWER,
+                        SpreadsheetFormatParserTokenKind.AMPM_INITIAL_UPPER
+                ),
+                time
+        );
+
+        this.checkNoOverlapOrFail(
+                time,
+                this.collect(SpreadsheetFormatParserTokenKind::isDate)
+        );
+
+        this.checkNoOverlapOrFail(
+                time,
+                this.collect(SpreadsheetFormatParserTokenKind::isNumber)
+        );
+
+        this.checkNoOverlapOrFail(
+                time,
+                this.collect(SpreadsheetFormatParserTokenKind::isText)
+        );
+    }
+
+    private Set<SpreadsheetFormatParserTokenKind> collect(final Predicate<SpreadsheetFormatParserTokenKind> predicate) {
+        return Arrays.stream(SpreadsheetFormatParserTokenKind.values())
+                .filter(predicate)
+                .collect(Collectors.toCollection(Sets::sorted));
+    }
+
+    private void checkNoOverlapOrFail(final Set<SpreadsheetFormatParserTokenKind> left,
+                                      final Set<SpreadsheetFormatParserTokenKind> right) {
+        final Set<SpreadsheetFormatParserTokenKind> overlap = EnumSet.copyOf(left);
+        overlap.retainAll(right);
+
+        this.checkEquals(
+                Sets.empty(),
+                overlap
+        );
+    }
 
     // XXXOnly..........................................................................................................
 
