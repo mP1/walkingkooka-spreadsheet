@@ -18,15 +18,21 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.visit.Visiting;
 
+import java.util.Map;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -257,6 +263,109 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
                 expected,
                 kind.isFormatPattern(),
                 () -> kind + " isFormatPattern"
+        );
+    }
+
+    // spreadsheetFormatParserTokenKinds................................................................................
+
+    @Test
+    public void testSpreadsheetFormatParserTokenKindsWithDateFormatPattern() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
+                "dd/mm/yyyy \"Hello\""
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatParserTokenKindsWithDateParsePattern() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPatternKind.DATE_PARSE_PATTERN,
+                "dd/mm/yyyy \"Hello\";dd/mm/yyyy"
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatParserTokenKindsWithDateTimeFormatPattern() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN,
+                "dd/mm/yyyy hh:mm:ss\"Hello\""
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatParserTokenKindsWithDateTimeParsePattern() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN,
+                "dd/mm/yyyy hh:mm:ss\"Hello\";dd/mm/yyyy hh:mm:ss"
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatParserTokenKindsWithNumberFormatPattern() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN,
+                "00.00 \"Hello\""
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatParserTokenKindsWithNumberParsePattern() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPatternKind.NUMBER_PARSE_PATTERN,
+                "$0.00 \"Hello\";00.00%"
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatParserTokenKindsWithTextFormatPattern() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
+                "@\"Hello\"*a"
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatParserTokenKindsWithTimeFormatPattern() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPatternKind.TIME_FORMAT_PATTERN,
+                "hh:mm:ss.000 \"Hello\""
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatParserTokenKindsWithTimeParsePattern() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPatternKind.TIME_PARSE_PATTERN,
+                "hh:mm:ss \"Hello\";hh:mm:ss"
+        );
+    }
+
+    private void spreadsheetFormatParserTokenKindsAndCheck(final SpreadsheetPatternKind patternKind,
+                                                           final String pattern) {
+        final SpreadsheetPattern spreadsheetPattern = patternKind.parse(pattern);
+
+        final Map<SpreadsheetFormatParserToken, SpreadsheetFormatParserTokenKind> tokenToKinds = Maps.ordered();
+        new SpreadsheetFormatParserTokenVisitor() {
+
+            @Override
+            protected Visiting startVisit(final SpreadsheetFormatParserToken token) {
+                token.kind()
+                        .ifPresent(k ->
+                        {
+                            if (false == patternKind.spreadsheetFormatParserTokenKinds().contains(k)) {
+                                tokenToKinds.put(token, k);
+                            }
+                        });
+                return super.startVisit(token);
+            }
+        }.accept(
+                spreadsheetPattern.value()
+        );
+
+        this.checkEquals(
+                Maps.empty(),
+                tokenToKinds,
+                () -> pattern + " " + patternKind
         );
     }
 
