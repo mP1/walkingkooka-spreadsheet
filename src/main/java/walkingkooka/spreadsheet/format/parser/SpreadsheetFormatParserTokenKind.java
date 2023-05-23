@@ -226,7 +226,9 @@ public enum SpreadsheetFormatParserTokenKind {
                         return name.startsWith("HOUR_") ||
                                 name.startsWith("MINUTES_") ||
                                 name.startsWith("SECONDS_") ||
-                                name.startsWith("AMPM_");
+                                name.startsWith("AMPM_") ||
+                                k == DECIMAL_PLACE ||
+                                k == DIGIT_ZERO;
                     }).toArray(SpreadsheetFormatParserTokenKind[]::new)
     );
 
