@@ -19,20 +19,27 @@ package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.visit.Visiting;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<SpreadsheetFormatParserTokenKind> {
+public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<SpreadsheetFormatParserTokenKind>,
+        TreePrintableTesting {
 
     // isXXX............................................................................................................
 
@@ -210,6 +217,148 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         this.checkEquals(
                 Sets.empty(),
                 overlap
+        );
+    }
+
+    // isXXXFormat | isXXXParse.........................................................................................
+
+    @Test
+    public void testIsDateFormat() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isDateFormat
+        );
+    }
+
+    @Test
+    public void testIsDateFormatWithColor() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("[red]dd/mm/yyyy \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isDateFormat
+        );
+    }
+
+    @Test
+    public void testIsDateParse() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy;yyyy/mmm/dd \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isDateParse
+        );
+    }
+
+    @Test
+    public void testIsDateTimeFormat() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm:ss \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isDateTimeFormat
+        );
+    }
+
+    @Test
+    public void testIsDateTimeFormatWithColor() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseDateTimeFormatPattern("[red]dd/mm/yyyy hh:mm:ss \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isDateTimeFormat
+        );
+    }
+
+    @Test
+    public void testIsDateTimeParse() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss;yyyy/mmm/dd hh:mm:ss \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isDateTimeParse
+        );
+    }
+
+    @Test
+    public void testIsNumberFormat() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("$0.00 \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isNumberFormat
+        );
+    }
+
+    @Test
+    public void testIsNumberFormatWithColor() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("[red]$0.00 \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isNumberFormat
+        );
+    }
+
+    @Test
+    public void testIsNumberParse() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseNumberParsePattern("$0.00;$00.00 \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isNumberParse
+        );
+    }
+
+    @Test
+    public void testIsTextFormat() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("@ \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isTextFormat
+        );
+    }
+
+    @Test
+    public void testIsTextFormatWithColor() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("[red]@ \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isTextFormat
+        );
+    }
+
+    @Test
+    public void testIsTimeFormat() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isTimeFormat
+        );
+    }
+
+    @Test
+    public void testIsTimeFormatWithColor() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseTimeFormatPattern("[red]hh:mm:ss \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isTimeFormat
+        );
+    }
+
+    @Test
+    public void testIsTimeParse() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss;hh:mm:ss \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isTimeParse
+        );
+    }
+
+    private void spreadsheetFormatParserTokenKindsAndCheck(final SpreadsheetPattern pattern,
+                                                           final Predicate<SpreadsheetFormatParserTokenKind> predicate) {
+        final List<SpreadsheetFormatParserToken> tokens = Lists.array();
+        new SpreadsheetFormatParserTokenVisitor() {
+
+            @Override
+            protected Visiting startVisit(final SpreadsheetFormatParserToken token) {
+                tokens.add(token);
+                return super.startVisit(token);
+            }
+        }.accept(
+                pattern.value()
+        );
+
+        final Set<SpreadsheetFormatParserToken> wrong = tokens.stream()
+                .filter(t -> {
+                    final Optional<SpreadsheetFormatParserTokenKind> maybeKind = t.kind();
+                    return maybeKind.isPresent() ?
+                            false == predicate.test(maybeKind.get()) :
+                            false;
+                }).collect(Collectors.toSet());
+
+        this.checkEquals(
+                Sets.empty(),
+                wrong
         );
     }
 

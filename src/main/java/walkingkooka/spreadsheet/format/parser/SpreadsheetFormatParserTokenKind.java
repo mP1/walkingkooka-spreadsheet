@@ -264,11 +264,43 @@ public enum SpreadsheetFormatParserTokenKind {
     }
 
     /**
+     * Returns true if the {@link SpreadsheetFormatParserTokenKind} is a date format.
+     */
+    public boolean isDateFormat() {
+        return this.isDate() ||
+                this.isFormatExtra();
+    }
+
+    /**
+     * Returns true if the {@link SpreadsheetFormatParserTokenKind} is a date format.
+     */
+    public boolean isDateParse() {
+        return this.isDate() ||
+                this.isParseExtra();
+    }
+
+    /**
      * Returns true if this token is a date-time component.
      */
     public boolean isDateTime() {
         return this.isDate() ||
                 this.isTime();
+    }
+
+    /**
+     * Returns true if the {@link SpreadsheetFormatParserTokenKind} is a date time format.
+     */
+    public boolean isDateTimeFormat() {
+        return this.isDateTime() ||
+                this.isFormatExtra();
+    }
+
+    /**
+     * Returns true if the {@link SpreadsheetFormatParserTokenKind} is a date time format.
+     */
+    public boolean isDateTimeParse() {
+        return this.isDateTime() ||
+                this.isParseExtra();
     }
 
     /**
@@ -300,6 +332,23 @@ public enum SpreadsheetFormatParserTokenKind {
                 this == THOUSANDS;
     }
 
+
+    /**
+     * Returns true if the {@link SpreadsheetFormatParserTokenKind} is a number format.
+     */
+    public boolean isNumberFormat() {
+        return this.isNumber() ||
+                this.isFormatExtra();
+    }
+
+    /**
+     * Returns true if the {@link SpreadsheetFormatParserTokenKind} is a number format.
+     */
+    public boolean isNumberParse() {
+        return this.isNumber() ||
+                this.isParseExtra();
+    }
+
     /**
      * Returns true if this token is a text component.
      */
@@ -310,6 +359,16 @@ public enum SpreadsheetFormatParserTokenKind {
                 this == UNDERSCORE;
     }
 
+    /**
+     * Returns true if the {@link SpreadsheetFormatParserTokenKind} is a text format.
+     */
+    public boolean isTextFormat() {
+        return this.isText() || this.isColor() || this.isCondition() || this.isGeneral();
+    }
+
+    private boolean isTextLiteral() {
+        return this == TEXT_LITERAL;
+    }
 
     /**
      * Returns true if this token is a time component.
@@ -325,6 +384,36 @@ public enum SpreadsheetFormatParserTokenKind {
                 this == AMPM_FULL_UPPER ||
                 this == AMPM_INITIAL_LOWER ||
                 this == AMPM_INITIAL_UPPER;
+    }
+
+    /**
+     * Returns true if the {@link SpreadsheetFormatParserTokenKind} is a time format.
+     */
+    public boolean isTimeFormat() {
+        return this.isTime() ||
+                this.isFormatExtra();
+    }
+
+    /**
+     * Returns true if the {@link SpreadsheetFormatParserTokenKind} is a time format.
+     */
+    public boolean isTimeParse() {
+        return this.isTime() ||
+                this.isParseExtra();
+    }
+
+    private boolean isFormatExtra() {
+        return this.isColor() ||
+                this.isCondition() ||
+                this.isGeneral() ||
+                this.isTextLiteral();
+    }
+
+
+    private boolean isParseExtra() {
+        return this.isGeneral() ||
+                this == SEPARATOR ||
+                this.isTextLiteral();
     }
 
     /**
