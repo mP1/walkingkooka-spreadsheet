@@ -410,7 +410,8 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         final Map<String, Set<SpreadsheetFormatParserTokenKind>> methodNameToKinds = Maps.sorted();
 
         for (final Method method : SpreadsheetFormatParserTokenKind.class.getDeclaredMethods()) {
-            if (false == method.getName().endsWith("Only")) {
+            final String methodName = method.getName();
+            if (methodName.contains("time") || false == methodName.endsWith("Only")) {
                 continue;
             }
 
@@ -421,6 +422,8 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
                     )
             );
         }
+
+        // skip dateTime and time because they include DECIMAL_PLACES and DIGIT_ZERO which also appear in NUMBER
 
         for (final Map.Entry<String, Set<SpreadsheetFormatParserTokenKind>> methodNameAndKinds : methodNameToKinds.entrySet()) {
             final String methodName = methodNameAndKinds.getKey();
