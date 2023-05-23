@@ -386,7 +386,9 @@ public enum SpreadsheetFormatParserTokenKind {
                 this == AMPM_FULL_LOWER ||
                 this == AMPM_FULL_UPPER ||
                 this == AMPM_INITIAL_LOWER ||
-                this == AMPM_INITIAL_UPPER;
+                this == AMPM_INITIAL_UPPER ||
+                this == DECIMAL_PLACE ||
+                this == DIGIT_ZERO;
     }
 
     /**

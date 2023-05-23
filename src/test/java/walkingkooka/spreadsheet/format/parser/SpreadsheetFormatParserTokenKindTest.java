@@ -116,19 +116,11 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
                 this.collect(SpreadsheetFormatParserTokenKind::isDate)
         );
 
-        this.checkNoOverlapOrFail(
-                number,
-                this.collect(SpreadsheetFormatParserTokenKind::isDateTime)
-        );
+        // skip date-time and time because they also have DECIMAL_PLACES and DIGIT_ZERO
 
         this.checkNoOverlapOrFail(
                 number,
                 this.collect(SpreadsheetFormatParserTokenKind::isText)
-        );
-
-        this.checkNoOverlapOrFail(
-                number,
-                this.collect(SpreadsheetFormatParserTokenKind::isTime)
         );
     }
 
@@ -182,7 +174,9 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
                         SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER,
                         SpreadsheetFormatParserTokenKind.AMPM_FULL_UPPER,
                         SpreadsheetFormatParserTokenKind.AMPM_INITIAL_LOWER,
-                        SpreadsheetFormatParserTokenKind.AMPM_INITIAL_UPPER
+                        SpreadsheetFormatParserTokenKind.AMPM_INITIAL_UPPER,
+                        SpreadsheetFormatParserTokenKind.DECIMAL_PLACE,
+                        SpreadsheetFormatParserTokenKind.DIGIT_ZERO
                 ),
                 time
         );
@@ -192,10 +186,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
                 this.collect(SpreadsheetFormatParserTokenKind::isDate)
         );
 
-        this.checkNoOverlapOrFail(
-                time,
-                this.collect(SpreadsheetFormatParserTokenKind::isNumber)
-        );
+        // skip number because it also has DECIMAL_PLACES & DIGIT_ZERO
 
         this.checkNoOverlapOrFail(
                 time,
@@ -319,6 +310,14 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     }
 
     @Test
+    public void testIsTimeFormatWithMillis() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss.000 \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isTimeFormat
+        );
+    }
+
+    @Test
     public void testIsTimeFormatWithColor() {
         this.spreadsheetFormatParserTokenKindsAndCheck(
                 SpreadsheetPattern.parseTimeFormatPattern("[red]hh:mm:ss \"Hello\""),
@@ -330,6 +329,14 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     public void testIsTimeParse() {
         this.spreadsheetFormatParserTokenKindsAndCheck(
                 SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss;hh:mm:ss \"Hello\""),
+                SpreadsheetFormatParserTokenKind::isTimeParse
+        );
+    }
+
+    @Test
+    public void testIsTimeParseWithMillis() {
+        this.spreadsheetFormatParserTokenKindsAndCheck(
+                SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss;hh:mm:ss.000 \"Hello\""),
                 SpreadsheetFormatParserTokenKind::isTimeParse
         );
     }
