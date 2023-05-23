@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * The different types of {@link SpreadsheetPattern}.
@@ -39,67 +40,57 @@ import java.util.function.Function;
 public enum SpreadsheetPatternKind implements HasUrlFragment {
     DATE_FORMAT_PATTERN(
             SpreadsheetPattern::parseDateFormatPattern,
-            SpreadsheetFormatParserTokenKind.dateOnly()
+            SpreadsheetFormatParserTokenKind::isDateFormat
     ),
 
     DATE_PARSE_PATTERN(
             SpreadsheetPattern::parseDateParsePattern,
-            SpreadsheetFormatParserTokenKind.dateOnly()
+            SpreadsheetFormatParserTokenKind::isDateParse
     ),
 
     DATE_TIME_FORMAT_PATTERN(
             SpreadsheetPattern::parseDateTimeFormatPattern,
-            concat(
-                    SpreadsheetFormatParserTokenKind.dateOnly(),
-                    SpreadsheetFormatParserTokenKind.timeOnly()
-            )
+            SpreadsheetFormatParserTokenKind::isDateTimeFormat
     ),
 
     DATE_TIME_PARSE_PATTERN(
             SpreadsheetPattern::parseDateTimeParsePattern,
-            concat(
-                    SpreadsheetFormatParserTokenKind.dateOnly(),
-                    SpreadsheetFormatParserTokenKind.timeOnly()
-            )
+            SpreadsheetFormatParserTokenKind::isDateTimeParse
     ),
 
     NUMBER_FORMAT_PATTERN(
             SpreadsheetPattern::parseNumberFormatPattern,
-            SpreadsheetFormatParserTokenKind.numberOnly()
+            SpreadsheetFormatParserTokenKind::isNumberFormat
     ),
 
     NUMBER_PARSE_PATTERN(
             SpreadsheetPattern::parseNumberParsePattern,
-            SpreadsheetFormatParserTokenKind.numberOnly()
+            SpreadsheetFormatParserTokenKind::isNumberParse
     ),
 
     TEXT_FORMAT_PATTERN(
             SpreadsheetPattern::parseTextFormatPattern,
-            SpreadsheetFormatParserTokenKind.textOnly()
+            SpreadsheetFormatParserTokenKind::isTextFormat
     ),
 
     TIME_FORMAT_PATTERN(
             SpreadsheetPattern::parseTimeFormatPattern,
-            SpreadsheetFormatParserTokenKind.timeOnly()
+            SpreadsheetFormatParserTokenKind::isTimeFormat
     ),
 
     TIME_PARSE_PATTERN(
             SpreadsheetPattern::parseTimeParsePattern,
-            SpreadsheetFormatParserTokenKind.timeOnly()
+            SpreadsheetFormatParserTokenKind::isTimeParse
     );
 
     SpreadsheetPatternKind(final Function<String, SpreadsheetPattern> parser,
-                           final Set<SpreadsheetFormatParserTokenKind> only) {
+                           final Predicate<SpreadsheetFormatParserTokenKind> kinds) {
         this.parser = parser;
-        this.spreadsheetFormatParserTokenKinds =
-                concat(
-                        this.isFormatPattern() ?
-                                SpreadsheetFormatParserTokenKind.formatOnly() :
-                                SpreadsheetFormatParserTokenKind.parseOnly(),
-                        SpreadsheetFormatParserTokenKind.formatAndParseOnly(),
-                        only
-                );
-
+        this.spreadsheetFormatParserTokenKinds = Sets.of(
+                Arrays.stream(SpreadsheetFormatParserTokenKind.values())
+                        .filter(kinds)
+                        .toArray(SpreadsheetFormatParserTokenKind[]::new)
+        );
 
         this.typeName =
                 "spreadsheet-" +
@@ -120,19 +111,6 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                                                 .replace('_', '-')
                                 )
                         );
-    }
-
-    private static Set<SpreadsheetFormatParserTokenKind> concat(final Set<SpreadsheetFormatParserTokenKind>... kinds) {
-        final Set<SpreadsheetFormatParserTokenKind> all = Sets.ordered();
-
-        for (final Set<SpreadsheetFormatParserTokenKind> k : kinds) {
-            all.addAll(k);
-        }
-
-        final int count = all.size();
-        final SpreadsheetFormatParserTokenKind[] allArray = new SpreadsheetFormatParserTokenKind[count];
-        all.toArray(allArray);
-        return Sets.of(allArray);
     }
 
     /**
