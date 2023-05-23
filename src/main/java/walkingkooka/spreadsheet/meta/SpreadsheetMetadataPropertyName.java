@@ -310,7 +310,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     /**
-     * Calls to this constructor will compute the {@link #name} from the {@Link Class#getSimpleName}
+     * Calls to this constructor will compute the {@link #name} from the {@link Class#getSimpleName}
      */
     SpreadsheetMetadataPropertyName() {
         this(null);
