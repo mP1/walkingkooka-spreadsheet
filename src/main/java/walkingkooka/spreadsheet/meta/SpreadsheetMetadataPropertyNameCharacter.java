@@ -78,7 +78,7 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
 
     @Override
     public final Character parseValue0(final String value) {
-        if (value.isEmpty() || value.length() > 1) {
+        if (value.length() != 1) {
             throw new IllegalArgumentException("Invalid value " + CharSequences.quoteAndEscape(value) + " expected a single character");
         }
 
