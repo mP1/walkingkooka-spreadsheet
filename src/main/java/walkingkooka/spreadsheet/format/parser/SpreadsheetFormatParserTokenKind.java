@@ -25,6 +25,9 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * A kind that may be used to group {@link SpreadsheetFormatParserToken tokens} to possible {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern}.
+ */
 public enum SpreadsheetFormatParserTokenKind {
 
     // COLOR............................................................................................................
