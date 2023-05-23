@@ -60,10 +60,12 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpr
         }
     }
 
+    @Override
     protected void endVisit(final RepeatedParserToken token) {
         this.add = null;
     }
 
+    @Override
     protected void endVisit(final SequenceParserToken token) {
         this.add = null;
     }
