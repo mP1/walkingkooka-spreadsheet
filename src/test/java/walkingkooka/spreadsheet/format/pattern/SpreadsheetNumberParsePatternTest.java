@@ -58,8 +58,13 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     }
 
     @Test
-    public void testWithMonthOrMinuteFails() {
-        this.withInvalidCharacterFails(this.monthOrMinute());
+    public void testWithMinuteFails() {
+        this.withInvalidCharacterFails(this.minute());
+    }
+
+    @Test
+    public void testWithMonthFails() {
+        this.withInvalidCharacterFails(this.month());
     }
 
     @Test

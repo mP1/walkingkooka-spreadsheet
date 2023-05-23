@@ -42,7 +42,7 @@ public final class SpreadsheetFormatYearParserToken extends SpreadsheetFormatNon
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         SpreadsheetFormatParserTokenKind kind;
 
         switch (this.textLength()) {

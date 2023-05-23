@@ -21,15 +21,15 @@ import java.util.Optional;
 /**
  * Represents a month or minute token both of which use 'm' using context decide which is meant.
  */
-public final class SpreadsheetFormatMonthOrMinuteParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
+public final class SpreadsheetFormatMonthParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
 
-    static SpreadsheetFormatMonthOrMinuteParserToken with(final String value, final String text) {
+    static SpreadsheetFormatMonthParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
 
-        return new SpreadsheetFormatMonthOrMinuteParserToken(value, text);
+        return new SpreadsheetFormatMonthParserToken(value, text);
     }
 
-    private SpreadsheetFormatMonthOrMinuteParserToken(final String value, final String text) {
+    private SpreadsheetFormatMonthParserToken(final String value, final String text) {
         super(value, text);
     }
 
@@ -41,35 +41,10 @@ public final class SpreadsheetFormatMonthOrMinuteParserToken extends Spreadsheet
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
-        final int textLength = this.textLength();
-
-        return (
-                minute ?
-                        kindForMinute(textLength) :
-                        kindForMonth(textLength)
-        ).asOptional;
-    }
-
-    private static SpreadsheetFormatParserTokenKind kindForMinute(final int patternLength) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         final SpreadsheetFormatParserTokenKind kind;
 
-        switch (patternLength) {
-            case 1:
-                kind = SpreadsheetFormatParserTokenKind.MINUTES_WITHOUT_LEADING_ZERO;
-                break;
-            default:
-                kind = SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO;
-                break;
-        }
-
-        return kind;
-    }
-
-    private static SpreadsheetFormatParserTokenKind kindForMonth(final int patternLength) {
-        final SpreadsheetFormatParserTokenKind kind;
-
-        switch (patternLength) {
+        switch (this.textLength()) {
             case 1:
                 kind = SpreadsheetFormatParserTokenKind.MONTH_WITHOUT_LEADING_ZERO;
                 break;
@@ -88,14 +63,14 @@ public final class SpreadsheetFormatMonthOrMinuteParserToken extends Spreadsheet
                 break;
         }
 
-        return kind;
+        return kind.asOptional;
     }
 
     // Object...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatMonthOrMinuteParserToken;
+        return other instanceof SpreadsheetFormatMonthParserToken;
     }
 
 }

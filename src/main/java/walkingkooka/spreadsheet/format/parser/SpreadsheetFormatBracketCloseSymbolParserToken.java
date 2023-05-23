@@ -43,7 +43,7 @@ public final class SpreadsheetFormatBracketCloseSymbolParserToken extends Spread
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.TEXT_LITERAL.asOptional;
     }
 

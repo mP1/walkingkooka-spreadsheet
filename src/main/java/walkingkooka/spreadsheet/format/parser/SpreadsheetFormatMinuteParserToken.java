@@ -19,17 +19,17 @@ package walkingkooka.spreadsheet.format.parser;
 import java.util.Optional;
 
 /**
- * Represents a currency token.
+ * Represents a month or minute token both of which use 'm' using context decide which is meant.
  */
-public final class SpreadsheetFormatCurrencyParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
+public final class SpreadsheetFormatMinuteParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
 
-    static SpreadsheetFormatCurrencyParserToken with(final String value, final String text) {
+    static SpreadsheetFormatMinuteParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
 
-        return new SpreadsheetFormatCurrencyParserToken(value, text);
+        return new SpreadsheetFormatMinuteParserToken(value, text);
     }
 
-    private SpreadsheetFormatCurrencyParserToken(final String value, final String text) {
+    private SpreadsheetFormatMinuteParserToken(final String value, final String text) {
         super(value, text);
     }
 
@@ -42,14 +42,25 @@ public final class SpreadsheetFormatCurrencyParserToken extends SpreadsheetForma
 
     @Override
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
-        return SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL.asOptional;
+        final SpreadsheetFormatParserTokenKind kind;
+
+        switch (this.textLength()) {
+            case 1:
+                kind = SpreadsheetFormatParserTokenKind.MINUTES_WITHOUT_LEADING_ZERO;
+                break;
+            default:
+                kind = SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO;
+                break;
+        }
+
+        return kind.asOptional;
     }
 
-    // equals ..........................................................................................................
+    // Object...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatCurrencyParserToken;
+        return other instanceof SpreadsheetFormatMinuteParserToken;
     }
 
 }

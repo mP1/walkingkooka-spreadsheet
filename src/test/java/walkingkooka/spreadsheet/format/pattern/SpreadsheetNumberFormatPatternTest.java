@@ -68,7 +68,12 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
 
     @Test
     public void testWithMonthOrMinuteFails() {
-        this.withInvalidCharacterFails(this.monthOrMinute());
+        this.withInvalidCharacterFails(this.minute());
+    }
+
+    @Test
+    public void testWithMonthFails() {
+        this.withInvalidCharacterFails(this.month());
     }
 
     @Test

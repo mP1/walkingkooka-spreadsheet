@@ -41,7 +41,7 @@ public final class SpreadsheetFormatThousandsParserToken extends SpreadsheetForm
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.THOUSANDS.asOptional;
     }
 

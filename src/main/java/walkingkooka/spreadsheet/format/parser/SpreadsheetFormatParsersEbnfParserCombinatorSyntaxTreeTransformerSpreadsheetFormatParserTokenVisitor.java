@@ -1,0 +1,140 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.spreadsheet.format.parser;
+
+import walkingkooka.collect.list.Lists;
+import walkingkooka.text.cursor.parser.ParentParserToken;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.RepeatedParserToken;
+import walkingkooka.text.cursor.parser.SequenceParserToken;
+import walkingkooka.visit.Visiting;
+
+import java.util.List;
+
+/**
+ * The DateTime {@link Parser} initially parses all M tokens into {@link SpreadsheetFormatMonthParserToken}, however some of these particularly those after HOURS, need to be converted into {@link SpreadsheetFormatMinuteParserToken}.
+ */
+final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+
+    static SpreadsheetFormatDateTimeParserToken fixMinutes(final ParserToken token) {
+        final SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor();
+        visitor.accept(token);
+        return SpreadsheetFormatParserToken.dateTime(
+                visitor.tokens,
+                token.text()
+        );
+    }
+
+    // @VisibleForTesting
+    SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor() {
+        super();
+    }
+
+    @Override
+    protected Visiting startVisit(final ParserToken token) {
+        this.add = token;
+        return Visiting.CONTINUE;
+    }
+
+    @Override
+    protected void endVisit(final ParserToken token) {
+        final ParserToken add = this.add;
+        if (null != add) {
+            this.tokens.add(add);
+        }
+    }
+
+    protected void endVisit(final RepeatedParserToken token) {
+        this.add = null;
+    }
+
+    protected void endVisit(final SequenceParserToken token) {
+        this.add = null;
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatParserToken token) {
+        return token instanceof ParentParserToken ?
+                Visiting.SKIP : // leave color etc alone
+                Visiting.CONTINUE;
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatAmPmParserToken token) {
+        this.minute = true;
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatDayParserToken token) {
+        this.minute = false;
+    }
+
+    // any month after an hour should be replaced by a minute.
+    @Override
+    protected void visit(final SpreadsheetFormatHourParserToken token) {
+        this.minute = true;
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+        throw new UnsupportedOperationException(); // minutes cannot appear in a DATETIME_FORMAT or DATETIME_PARSE
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatMonthParserToken token) {
+        if (this.minute) {
+            this.add = SpreadsheetFormatParserToken.minute(
+                    token.value(),
+                    token.text()
+            );
+        }
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatSecondParserToken token) {
+        this.minute = true;
+    }
+
+    // any month after a year should stay as a month
+    @Override
+    protected void visit(final SpreadsheetFormatYearParserToken token) {
+        this.minute = false;
+    }
+
+    /**
+     * When true any {@link SpreadsheetFormatMonthParserToken} will be replaced by a {@link SpreadsheetFormatMinuteParserToken},
+     * with the same text.
+     */
+    private boolean minute = false;
+
+    /**
+     * The token that will be added by {@link #endVisit(ParserToken)}.
+     */
+    private ParserToken add;
+
+    /**
+     * Collects all tokens including the replacement of MONTHS with MINUTES as necessary.
+     */
+    private final List<ParserToken> tokens = Lists.array();
+
+    @Override
+    public String toString() {
+        return this.tokens.toString();
+    }
+}

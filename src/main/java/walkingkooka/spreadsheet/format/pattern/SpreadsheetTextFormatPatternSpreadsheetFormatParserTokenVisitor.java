@@ -29,7 +29,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserTo
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthOrMinuteParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMinuteParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
@@ -124,7 +125,12 @@ final class SpreadsheetTextFormatPatternSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
+    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+        this.failInvalid(token);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatMonthParserToken token) {
         this.failInvalid(token);
     }
 

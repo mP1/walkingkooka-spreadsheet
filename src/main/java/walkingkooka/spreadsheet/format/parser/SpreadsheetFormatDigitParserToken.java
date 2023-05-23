@@ -42,7 +42,7 @@ public final class SpreadsheetFormatDigitParserToken extends SpreadsheetFormatNo
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.DIGIT.asOptional;
     }
 

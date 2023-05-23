@@ -534,7 +534,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Test
     public void testDate() {
         final SpreadsheetFormatParserToken d = day();
-        final SpreadsheetFormatParserToken m = monthOrMinute();
+        final SpreadsheetFormatParserToken m = month();
         final SpreadsheetFormatParserToken y = year();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.date(Lists.of(
@@ -567,7 +567,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
+            protected void visit(final SpreadsheetFormatMonthParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
@@ -598,10 +598,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Test
     public void testDateTime() {
         final SpreadsheetFormatParserToken d = day();
-        final SpreadsheetFormatParserToken month = monthOrMinute();
+        final SpreadsheetFormatParserToken month = month();
         final SpreadsheetFormatParserToken y = year();
         final SpreadsheetFormatParserToken h = hour();
-        final SpreadsheetFormatParserToken min = monthOrMinute();
+        final SpreadsheetFormatParserToken min = minute();
         final SpreadsheetFormatParserToken s = second();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.date(Lists.of(
@@ -643,25 +643,31 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
+            protected void visit(final SpreadsheetFormatMinuteParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatSecondParserToken token) {
+            protected void visit(final SpreadsheetFormatMonthParserToken token) {
                 b.append("A");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatYearParserToken token) {
+            protected void visit(final SpreadsheetFormatSecondParserToken token) {
                 b.append("B");
+                visited.add(token);
+            }
+
+            @Override
+            protected void visit(final SpreadsheetFormatYearParserToken token) {
+                b.append("C");
                 visited.add(token);
             }
         };
         visitor.accept(token);
-        this.checkEquals("135137421394213B42138421394213A42642", b.toString(), "visited");
+        this.checkEquals("1351374213A4213C42138421394213B42642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
                         d, d, d, d, d,
                         month, month, month, month, month,
@@ -1048,7 +1054,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Test
     public void testTime() {
         final SpreadsheetFormatParserToken h = hour();
-        final SpreadsheetFormatParserToken m = monthOrMinute();
+        final SpreadsheetFormatParserToken m = minute();
         final SpreadsheetFormatParserToken s = second();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.time(Lists.of(
@@ -1081,7 +1087,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
+            protected void visit(final SpreadsheetFormatMinuteParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
@@ -1435,15 +1441,15 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     }
 
     @Test
-    public void testMonthOrMinute() {
-        final SpreadsheetFormatParserToken token = monthOrMinute();
+    public void testMonth() {
+        final SpreadsheetFormatParserToken token = month();
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
+            protected void visit(final SpreadsheetFormatMonthParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1456,9 +1462,15 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     }
 
     @Test
-    public void testMonthOrMinute2() {
+    public void testMinute2() {
         new SpreadsheetFormatParserTokenVisitor() {
-        }.accept(monthOrMinute());
+        }.accept(minute());
+    }
+
+    @Test
+    public void testMonth2() {
+        new SpreadsheetFormatParserTokenVisitor() {
+        }.accept(month());
     }
 
     @Test

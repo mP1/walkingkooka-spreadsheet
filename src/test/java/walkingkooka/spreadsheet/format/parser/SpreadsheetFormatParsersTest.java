@@ -102,8 +102,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testColorMonthOrMinuteFails() {
-        this.colorThrows(monthOrMinute());
+    public void testColorMinuteFails() {
+        this.colorThrows(minute());
+    }
+
+    @Test
+    public void testColorMonthFails() {
+        this.colorThrows(month());
     }
 
     @Test
@@ -245,8 +250,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testConditionMonthOrMinuteFails() {
-        this.conditionParseThrows(monthOrMinute());
+    public void testConditionMonthFails() {
+        this.conditionParseThrows(month());
     }
 
     @Test
@@ -653,7 +658,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatMonth() {
         this.dateFormatParseAndCheck(
                 date(
-                        monthOrMinute()
+                        month()
                 )
         );
     }
@@ -663,7 +668,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -674,7 +679,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(2),
-                        monthOrMinute(2),
+                        month(2),
                         year(2)
                 )
         );
@@ -685,7 +690,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(3),
-                        monthOrMinute(3),
+                        month(3),
                         year(3)
                 )
         );
@@ -696,10 +701,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -709,7 +714,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatMonthDayYear() {
         this.dateFormatParseAndCheck(
                 date(
-                        monthOrMinute(),
+                        month(),
                         day(),
                         year()
                 )
@@ -721,7 +726,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day()
                 )
         );
@@ -733,7 +738,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         year(),
                         textLiteralComma(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralComma(),
                         day()
                 )
@@ -748,7 +753,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         escape(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -760,7 +765,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         escape(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -771,7 +776,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         escape(),
                         year()
                 )
@@ -783,7 +788,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         escape()
                 )
@@ -798,7 +803,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         quotedText(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -810,7 +815,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         quotedText(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -821,7 +826,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         quotedText(),
                         year()
                 )
@@ -833,7 +838,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         quotedText()
                 )
@@ -848,7 +853,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralCloseParens(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -860,7 +865,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralCloseParens(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -871,7 +876,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralCloseParens(),
                         year()
                 )
@@ -883,7 +888,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralCloseParens()
                 )
@@ -898,7 +903,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralColon(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -910,7 +915,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralColon(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -921,7 +926,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralColon(),
                         year()
                 )
@@ -933,7 +938,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralColon()
 
@@ -949,7 +954,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralDollar(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -961,7 +966,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralDollar(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -972,7 +977,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralDollar(),
                         year()
                 )
@@ -984,7 +989,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralDollar()
                 )
@@ -999,7 +1004,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralMinus(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -1011,7 +1016,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralMinus(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -1022,7 +1027,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralMinus(),
                         year()
                 )
@@ -1034,7 +1039,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralMinus()
                 )
@@ -1049,7 +1054,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralOpenParens(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -1061,7 +1066,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralOpenParens(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -1072,7 +1077,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralOpenParens(),
                         year()
                 )
@@ -1084,7 +1089,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralOpenParens()
                 )
@@ -1099,7 +1104,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralPlus(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -1111,7 +1116,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralPlus(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -1122,7 +1127,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralPlus(),
                         year()
                 )
@@ -1134,7 +1139,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralPlus()
                 )
@@ -1149,7 +1154,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralSlash(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -1161,7 +1166,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralSlash(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -1172,7 +1177,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralSlash(),
                         year()
                 )
@@ -1184,7 +1189,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralSlash()
                 )
@@ -1199,7 +1204,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralSpace(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -1211,7 +1216,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralSpace(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -1222,7 +1227,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralSpace(),
                         year()
                 )
@@ -1234,7 +1239,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralSpace()
                 )
@@ -1248,7 +1253,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 equalsSymbol(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1258,7 +1263,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 day(),
                 equalsSymbol(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1267,7 +1272,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthEqualsYearFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 equalsSymbol(),
                 year()
         );
@@ -1277,7 +1282,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthYearEqualsFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 equalsSymbol()
         );
@@ -1290,7 +1295,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 greaterThan(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1300,7 +1305,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 day(),
                 greaterThan(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1309,7 +1314,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthGreaterThanYearFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 greaterThan(),
                 year()
         );
@@ -1319,7 +1324,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthYearGreaterThanFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 greaterThan()
         );
@@ -1332,7 +1337,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 greaterThanEquals(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1342,7 +1347,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 day(),
                 greaterThanEquals(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1351,7 +1356,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthGreaterThanEqualsYearFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 greaterThanEquals(),
                 year()
         );
@@ -1361,7 +1366,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthYearGreaterThanEqualsFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 greaterThanEquals()
         );
@@ -1374,7 +1379,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 lessThan(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1384,7 +1389,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 day(),
                 lessThan(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1393,7 +1398,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthLessThanYearFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 lessThan(),
                 year()
         );
@@ -1403,7 +1408,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthYearLessThanFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 lessThan()
         );
@@ -1414,7 +1419,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 lessThanEquals(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1424,7 +1429,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 day(),
                 lessThanEquals(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1433,7 +1438,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthLessThanEqualsYearFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 lessThanEquals(),
                 year()
         );
@@ -1443,7 +1448,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthYearLessThanEqualsFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 lessThanEquals()
         );
@@ -1456,7 +1461,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 notEquals(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1466,7 +1471,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseThrows(
                 day(),
                 notEquals(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -1475,7 +1480,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthNotEqualsYearFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 notEquals(),
                 year()
         );
@@ -1485,7 +1490,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatDayMonthYearNotEqualsFails() {
         this.dateFormatParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 notEquals()
         );
@@ -1508,7 +1513,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         color(),
-                        monthOrMinute()
+                        month()
                 )
         );
     }
@@ -1537,7 +1542,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatMonthColor() {
         this.dateFormatParseAndCheck(
                 date(
-                        monthOrMinute(),
+                        month(),
                         color()
                 )
         );
@@ -1668,7 +1673,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day()
                 ),
                 separator()
@@ -1680,13 +1685,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 ),
                 separator(),
                 date(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day()
                 )
         );
@@ -1698,13 +1703,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         color(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 ),
                 separator(),
                 date(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day()
                 )
         );
@@ -1716,13 +1721,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 conditionEquals(),
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 ),
                 separator(),
                 date(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day()
                 )
         );
@@ -1975,7 +1980,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseMonth() {
         this.dateParseParseAndCheck(
                 date(
-                        monthOrMinute()
+                        month()
                 )
         );
     }
@@ -1985,7 +1990,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -1996,7 +2001,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(2),
-                        monthOrMinute(2),
+                        month(2),
                         year(2)
                 )
         );
@@ -2007,7 +2012,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(3),
-                        monthOrMinute(3),
+                        month(3),
                         year(3)
                 )
         );
@@ -2018,10 +2023,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2031,7 +2036,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseMonthDayYear() {
         this.dateParseParseAndCheck(
                 date(
-                        monthOrMinute(),
+                        month(),
                         day(),
                         year()
                 )
@@ -2043,7 +2048,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day()
                 )
         );
@@ -2055,7 +2060,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         year(),
                         textLiteralComma(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralComma(),
                         day()
                 )
@@ -2070,7 +2075,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         escape(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2082,7 +2087,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         escape(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2093,7 +2098,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         escape(),
                         year()
                 )
@@ -2105,7 +2110,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         escape()
                 )
@@ -2120,7 +2125,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         quotedText(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2132,7 +2137,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         quotedText(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2143,7 +2148,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         quotedText(),
                         year()
                 )
@@ -2155,7 +2160,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         quotedText()
                 )
@@ -2170,7 +2175,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralCloseParens(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2182,7 +2187,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralCloseParens(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2193,7 +2198,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralCloseParens(),
                         year()
                 )
@@ -2205,7 +2210,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralCloseParens()
                 )
@@ -2220,7 +2225,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralColon(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2232,7 +2237,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralColon(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2243,7 +2248,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralColon(),
                         year()
                 )
@@ -2255,7 +2260,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralColon()
 
@@ -2271,7 +2276,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralDollar(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2283,7 +2288,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralDollar(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2294,7 +2299,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralDollar(),
                         year()
                 )
@@ -2306,7 +2311,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralDollar()
                 )
@@ -2321,7 +2326,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralMinus(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2333,7 +2338,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralMinus(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2344,7 +2349,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralMinus(),
                         year()
                 )
@@ -2356,7 +2361,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralMinus()
                 )
@@ -2371,7 +2376,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralOpenParens(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2383,7 +2388,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralOpenParens(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2394,7 +2399,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralOpenParens(),
                         year()
                 )
@@ -2406,7 +2411,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralOpenParens()
                 )
@@ -2421,7 +2426,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralPlus(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2433,7 +2438,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralPlus(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2444,7 +2449,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralPlus(),
                         year()
                 )
@@ -2456,7 +2461,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralPlus()
                 )
@@ -2471,7 +2476,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralSlash(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2483,7 +2488,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralSlash(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2494,7 +2499,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralSlash(),
                         year()
                 )
@@ -2506,7 +2511,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralSlash()
                 )
@@ -2521,7 +2526,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         textLiteralSpace(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2533,7 +2538,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         textLiteralSpace(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -2544,7 +2549,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralSpace(),
                         year()
                 )
@@ -2556,7 +2561,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         textLiteralSpace()
                 )
@@ -2570,7 +2575,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 equalsSymbol(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2580,7 +2585,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 day(),
                 equalsSymbol(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2589,7 +2594,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthEqualsYearFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 equalsSymbol(),
                 year()
         );
@@ -2599,7 +2604,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthYearEqualsFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 equalsSymbol()
         );
@@ -2612,7 +2617,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 greaterThan(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2622,7 +2627,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 day(),
                 greaterThan(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2631,7 +2636,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthGreaterThanYearFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 greaterThan(),
                 year()
         );
@@ -2641,7 +2646,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthYearGreaterThanFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 greaterThan()
         );
@@ -2654,7 +2659,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 greaterThanEquals(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2664,7 +2669,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 day(),
                 greaterThanEquals(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2673,7 +2678,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthGreaterThanEqualsYearFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 greaterThanEquals(),
                 year()
         );
@@ -2683,7 +2688,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthYearGreaterThanEqualsFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 greaterThanEquals()
         );
@@ -2696,7 +2701,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 lessThan(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2706,7 +2711,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 day(),
                 lessThan(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2715,7 +2720,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthLessThanYearFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 lessThan(),
                 year()
         );
@@ -2725,7 +2730,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthYearLessThanFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 lessThan()
         );
@@ -2736,7 +2741,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 lessThanEquals(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2746,7 +2751,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 day(),
                 lessThanEquals(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2755,7 +2760,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthLessThanEqualsYearFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 lessThanEquals(),
                 year()
         );
@@ -2765,7 +2770,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthYearLessThanEqualsFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 lessThanEquals()
         );
@@ -2778,7 +2783,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 notEquals(),
                 day(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2788,7 +2793,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 day(),
                 notEquals(),
-                monthOrMinute(),
+                month(),
                 year()
         );
     }
@@ -2797,7 +2802,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthNotEqualsYearFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 notEquals(),
                 year()
         );
@@ -2807,7 +2812,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayMonthYearNotEqualsFails() {
         this.dateParseParseThrows(
                 day(),
-                monthOrMinute(),
+                month(),
                 year(),
                 notEquals()
         );
@@ -2830,7 +2835,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseThrows(
                 date(
                         color(),
-                        monthOrMinute()
+                        month()
                 )
         );
     }
@@ -2859,7 +2864,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseMonthColorFails() {
         this.dateParseParseThrows(
                 date(
-                        monthOrMinute(),
+                        month(),
                         color()
                 )
         );
@@ -2977,7 +2982,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day()
                 ),
                 separator()
@@ -2989,13 +2994,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 ),
                 separator(),
                 date(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day()
                 )
         );
@@ -3007,13 +3012,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         color(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 ),
                 separator(),
                 date(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day()
                 )
         );
@@ -3086,10 +3091,18 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testNumberFormatMinuteOrMonthFails() {
+    public void testNumberFormatMinuteFails() {
         this.numberFormatParseThrows(
                 digit(),
-                monthOrMinute()
+                minute()
+        );
+    }
+
+    @Test
+    public void testNumberFormatMonthFails() {
+        this.numberFormatParseThrows(
+                digit(),
+                month()
         );
     }
 
@@ -5196,10 +5209,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testNumberParseMinuteOrMonthFails() {
+    public void testNumberParseMonthFails() {
         this.numberParseParseThrows(
                 digit(),
-                monthOrMinute()
+                month()
         );
     }
 
@@ -7130,8 +7143,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testFractionMinuteOrMonthFails() {
-        this.fractionParseThrows(digit(), monthOrMinute());
+    public void testFractionMinuteFails() {
+        this.fractionParseThrows(digit(), minute());
+    }
+
+    @Test
+    public void testFractionMonthFails() {
+        this.fractionParseThrows(digit(), month());
     }
 
     @Test
@@ -8647,7 +8665,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatMinute() {
         this.timeFormatParseAndCheck(
                 time(
-                        monthOrMinute()
+                        minute()
                 )
         );
     }
@@ -8657,7 +8675,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -8668,7 +8686,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         aSlashP()
                 )
@@ -8680,7 +8698,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         amSlashPm()
                 )
@@ -8692,7 +8710,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 time(
                         hour(2),
-                        monthOrMinute(2),
+                        minute(2),
                         second(2)
                 )
         );
@@ -8703,7 +8721,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 time(
                         hour(3),
-                        monthOrMinute(3),
+                        minute(3),
                         second(3)
                 )
         );
@@ -8714,10 +8732,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -8727,7 +8745,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatMinuteHourSecond() {
         this.timeFormatParseAndCheck(
                 time(
-                        monthOrMinute(),
+                        minute(),
                         hour(),
                         second()
                 )
@@ -8739,7 +8757,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 time(
                         second(),
-                        monthOrMinute(),
+                        minute(),
                         hour()
                 )
         );
@@ -8751,7 +8769,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         second(),
                         textLiteralComma(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralComma(),
                         hour()
                 )
@@ -8761,35 +8779,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // escaped
 
     @Test
-    public void testTimeFormatEscapedHourMonthSecond() {
+    public void testTimeFormatEscapedHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         escape(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourEscapedMonthSecond() {
+    public void testTimeFormatHourEscapedMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
                         escape(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthEscapedSecond() {
+    public void testTimeFormatHourMinuteEscapedSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         escape(),
                         second()
                 )
@@ -8797,11 +8815,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsEscaped() {
+    public void testTimeFormatHourMinuteSecondsEscaped() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         escape()
                 )
@@ -8811,35 +8829,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // quotedText
 
     @Test
-    public void testTimeFormatQuotedTextHourMonthSecond() {
+    public void testTimeFormatQuotedTextHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         quotedText(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourQuotedTextMonthSecond() {
+    public void testTimeFormatHourQuotedTextMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
                         quotedText(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthQuotedTextSecond() {
+    public void testTimeFormatHourMinuteQuotedTextSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         quotedText(),
                         second()
                 )
@@ -8847,11 +8865,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsQuotedText() {
+    public void testTimeFormatHourMinuteSecondsQuotedText() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         quotedText()
                 )
@@ -8861,35 +8879,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // closeParens
 
     @Test
-    public void testTimeFormatCloseParensHourMonthSecond() {
+    public void testTimeFormatCloseParensHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         textLiteralCloseParens(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourCloseParensMonthSecond() {
+    public void testTimeFormatHourCloseParensMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
                         textLiteralCloseParens(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthCloseParensSecond() {
+    public void testTimeFormatHourMinuteCloseParensSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralCloseParens(),
                         second()
                 )
@@ -8897,11 +8915,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsCloseParens() {
+    public void testTimeFormatHourMinuteSecondsCloseParens() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralCloseParens()
                 )
@@ -8911,35 +8929,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // colon
 
     @Test
-    public void testTimeFormatColonHourMonthSecond() {
+    public void testTimeFormatColonHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         textLiteralColon(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourColonMonthSecond() {
+    public void testTimeFormatHourColonMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
                         textLiteralColon(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthColonSecond() {
+    public void testTimeFormatHourMinuteColonSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralColon(),
                         second()
                 )
@@ -8947,11 +8965,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsColon() {
+    public void testTimeFormatHourMinuteSecondsColon() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralColon()
                 )
@@ -8961,35 +8979,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // dollar
 
     @Test
-    public void testTimeFormatDollarHourMonthSecond() {
+    public void testTimeFormatDollarHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         textLiteralDollar(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourDollarMonthSecond() {
+    public void testTimeFormatHourDollarMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
                         textLiteralDollar(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthDollarSecond() {
+    public void testTimeFormatHourMinuteDollarSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralDollar(),
                         second()
                 )
@@ -8997,11 +9015,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsDollar() {
+    public void testTimeFormatHourMinuteSecondsDollar() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralDollar()
                 )
@@ -9011,35 +9029,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // minus
 
     @Test
-    public void testTimeFormatMinusHourMonthSecond() {
+    public void testTimeFormatMinusHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         textLiteralMinus(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourMinusMonthSecond() {
+    public void testTimeFormatHourMinusMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
                         textLiteralMinus(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthMinusSecond() {
+    public void testTimeFormatHourMinuteMinusSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralMinus(),
                         second()
                 )
@@ -9047,11 +9065,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsMinus() {
+    public void testTimeFormatHourMinuteSecondsMinus() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralMinus()
                 )
@@ -9061,35 +9079,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // openParens
 
     @Test
-    public void testTimeFormatOpenParensHourMonthSecond() {
+    public void testTimeFormatOpenParensHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         textLiteralOpenParens(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourOpenParensMonthSecond() {
+    public void testTimeFormatHourOpenParensMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
                         textLiteralOpenParens(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthOpenParensSecond() {
+    public void testTimeFormatHourMinuteOpenParensSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralOpenParens(),
                         second()
                 )
@@ -9097,11 +9115,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsOpenParens() {
+    public void testTimeFormatHourMinuteSecondsOpenParens() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralOpenParens()
                 )
@@ -9111,35 +9129,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // plus
 
     @Test
-    public void testTimeFormatPlusHourMonthSecond() {
+    public void testTimeFormatPlusHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         textLiteralPlus(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourPlusMonthSecond() {
+    public void testTimeFormatHourPlusMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
                         textLiteralPlus(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthPlusSecond() {
+    public void testTimeFormatHourMinutePlusSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralPlus(),
                         second()
                 )
@@ -9147,11 +9165,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsPlus() {
+    public void testTimeFormatHourMinuteSecondsPlus() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralPlus()
                 )
@@ -9161,35 +9179,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // slash
 
     @Test
-    public void testTimeFormatSlashHourMonthSecond() {
+    public void testTimeFormatSlashHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         textLiteralSlash(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourSlashMonthSecond() {
+    public void testTimeFormatHourSlashMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
                         textLiteralSlash(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthSlashSecond() {
+    public void testTimeFormatHourMinuteSlashSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralSlash(),
                         second()
                 )
@@ -9197,11 +9215,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsSlash() {
+    public void testTimeFormatHourMinuteSecondsSlash() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralSlash()
                 )
@@ -9211,35 +9229,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // space
 
     @Test
-    public void testTimeFormatSpaceHourMonthSecond() {
+    public void testTimeFormatSpaceHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         textLiteralSpace(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourSpaceMonthSecond() {
+    public void testTimeFormatHourSpaceMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
                         textLiteralSpace(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthSpaceSecond() {
+    public void testTimeFormatHourMinuteSpaceSecond() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralSpace(),
                         second()
                 )
@@ -9247,11 +9265,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsSpace() {
+    public void testTimeFormatHourMinuteSecondsSpace() {
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralSpace()
                 )
@@ -9261,40 +9279,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // equals
 
     @Test
-    public void testTimeFormatEqualsHourMonthSecondFails() {
+    public void testTimeFormatEqualsHourMinuteSecondFails() {
         this.timeFormatParseThrows(
                 equalsSymbol(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourEqualsMonthSecondFails() {
+    public void testTimeFormatHourEqualsMinuteSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
                 equalsSymbol(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthEqualsSecondFails() {
+    public void testTimeFormatHourMinuteEqualsSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 equalsSymbol(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsEqualsFails() {
+    public void testTimeFormatHourMinuteSecondsEqualsFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 equalsSymbol()
         );
@@ -9303,40 +9321,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // greaterThan
 
     @Test
-    public void testTimeFormatGreaterThanHourMonthSecondFails() {
+    public void testTimeFormatGreaterThanHourMinuteSecondFails() {
         this.timeFormatParseThrows(
                 greaterThan(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourGreaterThanMonthSecondFails() {
+    public void testTimeFormatHourGreaterThanMinuteSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
                 greaterThan(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthGreaterThanSecondFails() {
+    public void testTimeFormatHourMinuteGreaterThanSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 greaterThan(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsGreaterThanFails() {
+    public void testTimeFormatHourMinuteSecondsGreaterThanFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 greaterThan()
         );
@@ -9345,40 +9363,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // greaterThanEquals
 
     @Test
-    public void testTimeFormatGreaterThanEqualsHourMonthSecondFails() {
+    public void testTimeFormatGreaterThanEqualsHourMinuteSecondFails() {
         this.timeFormatParseThrows(
                 greaterThanEquals(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourGreaterThanEqualsMonthSecondFails() {
+    public void testTimeFormatHourGreaterThanEqualsMinuteSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
                 greaterThanEquals(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthGreaterThanEqualsSecondFails() {
+    public void testTimeFormatHourMinuteGreaterThanEqualsSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 greaterThanEquals(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsGreaterThanEqualsFails() {
+    public void testTimeFormatHourMinuteSecondsGreaterThanEqualsFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 greaterThanEquals()
         );
@@ -9387,40 +9405,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // lessThan
 
     @Test
-    public void testTimeFormatLessThanHourMonthSecondFails() {
+    public void testTimeFormatLessThanHourMinuteSecondFails() {
         this.timeFormatParseThrows(
                 lessThan(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourLessThanMonthSecondFails() {
+    public void testTimeFormatHourLessThanMinuteSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
                 lessThan(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthLessThanSecondFails() {
+    public void testTimeFormatHourMinuteLessThanSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 lessThan(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsLessThanFails() {
+    public void testTimeFormatHourMinuteSecondsLessThanFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 lessThan()
         );
@@ -9429,40 +9447,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // lessThanEquals
 
     @Test
-    public void testTimeFormatLessThanEqualsHourMonthSecondFails() {
+    public void testTimeFormatLessThanEqualsHourMinuteSecondFails() {
         this.timeFormatParseThrows(
                 lessThanEquals(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourLessThanEqualsMonthSecondFails() {
+    public void testTimeFormatHourLessThanEqualsMinuteSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
                 lessThanEquals(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthLessThanEqualsSecondFails() {
+    public void testTimeFormatHourMinuteLessThanEqualsSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 lessThanEquals(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsLessThanEqualsFails() {
+    public void testTimeFormatHourMinuteSecondsLessThanEqualsFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 lessThanEquals()
         );
@@ -9471,40 +9489,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // notEquals
 
     @Test
-    public void testTimeFormatNotEqualsHourMonthSecondFails() {
+    public void testTimeFormatNotEqualsHourMinuteSecondFails() {
         this.timeFormatParseThrows(
                 notEquals(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourNotEqualsMonthSecondFails() {
+    public void testTimeFormatHourNotEqualsMinuteSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
                 notEquals(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthNotEqualsSecondFails() {
+    public void testTimeFormatHourMinuteNotEqualsSecondFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 notEquals(),
                 second()
         );
     }
 
     @Test
-    public void testTimeFormatHourMonthSecondsNotEqualsFails() {
+    public void testTimeFormatHourMinuteSecondsNotEqualsFails() {
         this.timeFormatParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 notEquals()
         );
@@ -9527,7 +9545,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 time(
                         color(),
-                        monthOrMinute()
+                        minute()
                 )
         );
     }
@@ -9556,7 +9574,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatMinuteColor() {
         this.timeFormatParseAndCheck(
                 time(
-                        monthOrMinute(),
+                        minute(),
                         color()
                 )
         );
@@ -9687,7 +9705,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator()
         );
@@ -9698,12 +9716,12 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator(),
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -9715,12 +9733,12 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         color(),
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator(),
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -9732,12 +9750,12 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 conditionEquals(),
                 time(
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator(),
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -10001,7 +10019,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseMinute() {
         this.timeParseParseAndCheck(
                 time(
-                        monthOrMinute()
+                        minute()
                 )
         );
     }
@@ -10011,7 +10029,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -10022,7 +10040,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         aSlashP()
                 )
@@ -10034,7 +10052,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         amSlashPm()
                 )
@@ -10046,7 +10064,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 time(
                         hour(2),
-                        monthOrMinute(2),
+                        minute(2),
                         second(2)
                 )
         );
@@ -10057,7 +10075,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 time(
                         hour(3),
-                        monthOrMinute(3),
+                        minute(3),
                         second(3)
                 )
         );
@@ -10068,10 +10086,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -10081,7 +10099,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseMinuteHourSecond() {
         this.timeParseParseAndCheck(
                 time(
-                        monthOrMinute(),
+                        minute(),
                         hour(),
                         second()
                 )
@@ -10093,7 +10111,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 time(
                         second(),
-                        monthOrMinute(),
+                        minute(),
                         hour()
                 )
         );
@@ -10105,7 +10123,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         second(),
                         textLiteralComma(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralComma(),
                         hour()
                 )
@@ -10115,35 +10133,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // escaped
 
     @Test
-    public void testTimeParseEscapedHourMonthSecond() {
+    public void testTimeParseEscapedHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         escape(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourEscapedMonthSecond() {
+    public void testTimeParseHourEscapedMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
                         escape(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourMonthEscapedSecond() {
+    public void testTimeParseHourMinuteEscapedSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         escape(),
                         second()
                 )
@@ -10151,11 +10169,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsEscaped() {
+    public void testTimeParseHourMinuteSecondsEscaped() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         escape()
                 )
@@ -10165,35 +10183,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // quotedText
 
     @Test
-    public void testTimeParseQuotedTextHourMonthSecond() {
+    public void testTimeParseQuotedTextHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         quotedText(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourQuotedTextMonthSecond() {
+    public void testTimeParseHourQuotedTextMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
                         quotedText(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourMonthQuotedTextSecond() {
+    public void testTimeParseHourMinuteQuotedTextSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         quotedText(),
                         second()
                 )
@@ -10201,11 +10219,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsQuotedText() {
+    public void testTimeParseHourMinuteSecondsQuotedText() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         quotedText()
                 )
@@ -10215,35 +10233,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // closeParens
 
     @Test
-    public void testTimeParseCloseParensHourMonthSecond() {
+    public void testTimeParseCloseParensHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         textLiteralCloseParens(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourCloseParensMonthSecond() {
+    public void testTimeParseHourCloseParensMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
                         textLiteralCloseParens(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourMonthCloseParensSecond() {
+    public void testTimeParseHourMinuteCloseParensSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralCloseParens(),
                         second()
                 )
@@ -10251,11 +10269,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsCloseParens() {
+    public void testTimeParseHourMinuteSecondsCloseParens() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralCloseParens()
                 )
@@ -10265,35 +10283,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // colon
 
     @Test
-    public void testTimeParseColonHourMonthSecond() {
+    public void testTimeParseColonHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         textLiteralColon(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourColonMonthSecond() {
+    public void testTimeParseHourColonMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
                         textLiteralColon(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourMonthColonSecond() {
+    public void testTimeParseHourMinuteColonSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralColon(),
                         second()
                 )
@@ -10301,11 +10319,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsColon() {
+    public void testTimeParseHourMinuteSecondsColon() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralColon()
                 )
@@ -10315,35 +10333,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // dollar
 
     @Test
-    public void testTimeParseDollarHourMonthSecond() {
+    public void testTimeParseDollarHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         textLiteralDollar(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourDollarMonthSecond() {
+    public void testTimeParseHourDollarMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
                         textLiteralDollar(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourMonthDollarSecond() {
+    public void testTimeParseHourMinuteDollarSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralDollar(),
                         second()
                 )
@@ -10351,11 +10369,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsDollar() {
+    public void testTimeParseHourMinuteSecondsDollar() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralDollar()
                 )
@@ -10365,35 +10383,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // minus
 
     @Test
-    public void testTimeParseMinusHourMonthSecond() {
+    public void testTimeParseMinusHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         textLiteralMinus(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourMinusMonthSecond() {
+    public void testTimeParseHourMinusMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
                         textLiteralMinus(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourMonthMinusSecond() {
+    public void testTimeParseHourMinuteMinusSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralMinus(),
                         second()
                 )
@@ -10401,11 +10419,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsMinus() {
+    public void testTimeParseHourMinuteSecondsMinus() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralMinus()
                 )
@@ -10415,35 +10433,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // openParens
 
     @Test
-    public void testTimeParseOpenParensHourMonthSecond() {
+    public void testTimeParseOpenParensHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         textLiteralOpenParens(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourOpenParensMonthSecond() {
+    public void testTimeParseHourOpenParensMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
                         textLiteralOpenParens(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourMonthOpenParensSecond() {
+    public void testTimeParseHourMinuteOpenParensSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralOpenParens(),
                         second()
                 )
@@ -10451,11 +10469,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsOpenParens() {
+    public void testTimeParseHourMinuteSecondsOpenParens() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralOpenParens()
                 )
@@ -10465,35 +10483,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // plus
 
     @Test
-    public void testTimeParsePlusHourMonthSecond() {
+    public void testTimeParsePlusHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         textLiteralPlus(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourPlusMonthSecond() {
+    public void testTimeParseHourPlusMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
                         textLiteralPlus(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourMonthPlusSecond() {
+    public void testTimeParseHourMinutePlusSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralPlus(),
                         second()
                 )
@@ -10501,11 +10519,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsPlus() {
+    public void testTimeParseHourMinuteSecondsPlus() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralPlus()
                 )
@@ -10515,35 +10533,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // slash
 
     @Test
-    public void testTimeParseSlashHourMonthSecond() {
+    public void testTimeParseSlashHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         textLiteralSlash(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourSlashMonthSecond() {
+    public void testTimeParseHourSlashMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
                         textLiteralSlash(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourMonthSlashSecond() {
+    public void testTimeParseHourMinuteSlashSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralSlash(),
                         second()
                 )
@@ -10551,11 +10569,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsSlash() {
+    public void testTimeParseHourMinuteSecondsSlash() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralSlash()
                 )
@@ -10565,35 +10583,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // space
 
     @Test
-    public void testTimeParseSpaceHourMonthSecond() {
+    public void testTimeParseSpaceHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         textLiteralSpace(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourSpaceMonthSecond() {
+    public void testTimeParseHourSpaceMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
                         textLiteralSpace(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
     }
 
     @Test
-    public void testTimeParseHourMonthSpaceSecond() {
+    public void testTimeParseHourMinuteSpaceSecond() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         textLiteralSpace(),
                         second()
                 )
@@ -10601,11 +10619,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsSpace() {
+    public void testTimeParseHourMinuteSecondsSpace() {
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         textLiteralSpace()
                 )
@@ -10615,40 +10633,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // equals
 
     @Test
-    public void testTimeParseEqualsHourMonthSecondFails() {
+    public void testTimeParseEqualsHourMinuteSecondFails() {
         this.timeParseParseThrows(
                 equalsSymbol(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourEqualsMonthSecondFails() {
+    public void testTimeParseHourEqualsMinuteSecondFails() {
         this.timeParseParseThrows(
                 hour(),
                 equalsSymbol(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthEqualsSecondFails() {
+    public void testTimeParseHourMinuteEqualsSecondFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 equalsSymbol(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsEqualsFails() {
+    public void testTimeParseHourMinuteSecondsEqualsFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 equalsSymbol()
         );
@@ -10657,40 +10675,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // greaterThan
 
     @Test
-    public void testTimeParseGreaterThanHourMonthSecondFails() {
+    public void testTimeParseGreaterThanHourMinuteSecondFails() {
         this.timeParseParseThrows(
                 greaterThan(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourGreaterThanMonthSecondFails() {
+    public void testTimeParseHourGreaterThanMinuteSecondFails() {
         this.timeParseParseThrows(
                 hour(),
                 greaterThan(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthGreaterThanSecondFails() {
+    public void testTimeParseHourMinuteGreaterThanSecondFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 greaterThan(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsGreaterThanFails() {
+    public void testTimeParseHourMinuteSecondsGreaterThanFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 greaterThan()
         );
@@ -10699,40 +10717,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // greaterThanEquals
 
     @Test
-    public void testTimeParseGreaterThanEqualsHourMonthSecondFails() {
+    public void testTimeParseGreaterThanEqualsHourMinuteSecondFails() {
         this.timeParseParseThrows(
                 greaterThanEquals(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourGreaterThanEqualsMonthSecondFails() {
+    public void testTimeParseHourGreaterThanEqualsMinuteSecondFails() {
         this.timeParseParseThrows(
                 hour(),
                 greaterThanEquals(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthGreaterThanEqualsSecondFails() {
+    public void testTimeParseHourMinuteGreaterThanEqualsSecondFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 greaterThanEquals(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsGreaterThanEqualsFails() {
+    public void testTimeParseHourMinuteSecondsGreaterThanEqualsFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 greaterThanEquals()
         );
@@ -10741,40 +10759,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // lessThan
 
     @Test
-    public void testTimeParseLessThanHourMonthSecondFails() {
+    public void testTimeParseLessThanHourMinuteSecondFails() {
         this.timeParseParseThrows(
                 lessThan(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourLessThanMonthSecondFails() {
+    public void testTimeParseHourLessThanMinuteSecondFails() {
         this.timeParseParseThrows(
                 hour(),
                 lessThan(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthLessThanSecondFails() {
+    public void testTimeParseHourMinuteLessThanSecondFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 lessThan(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsLessThanFails() {
+    public void testTimeParseHourMinuteSecondsLessThanFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 lessThan()
         );
@@ -10783,40 +10801,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // lessThanEquals
 
     @Test
-    public void testTimeParseLessThanEqualsHourMonthSecondFails() {
+    public void testTimeParseLessThanEqualsHourMinuteSecondFails() {
         this.timeParseParseThrows(
                 lessThanEquals(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourLessThanEqualsMonthSecondFails() {
+    public void testTimeParseHourLessThanEqualsMinuteSecondFails() {
         this.timeParseParseThrows(
                 hour(),
                 lessThanEquals(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthLessThanEqualsSecondFails() {
+    public void testTimeParseHourMinuteLessThanEqualsSecondFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 lessThanEquals(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsLessThanEqualsFails() {
+    public void testTimeParseHourMinuteSecondsLessThanEqualsFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 lessThanEquals()
         );
@@ -10825,40 +10843,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     // notEquals
 
     @Test
-    public void testTimeParseNotEqualsHourMonthSecondFails() {
+    public void testTimeParseNotEqualsHourMinuteSecondFails() {
         this.timeParseParseThrows(
                 notEquals(),
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourNotEqualsMonthSecondFails() {
+    public void testTimeParseHourNotEqualsMinuteSecondFails() {
         this.timeParseParseThrows(
                 hour(),
                 notEquals(),
-                monthOrMinute(),
+                minute(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthNotEqualsSecondFails() {
+    public void testTimeParseHourMinuteNotEqualsSecondFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 notEquals(),
                 second()
         );
     }
 
     @Test
-    public void testTimeParseHourMonthSecondsNotEqualsFails() {
+    public void testTimeParseHourMinuteSecondsNotEqualsFails() {
         this.timeParseParseThrows(
                 hour(),
-                monthOrMinute(),
+                minute(),
                 second(),
                 notEquals()
         );
@@ -10881,7 +10899,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseThrows(
                 time(
                         color(),
-                        monthOrMinute()
+                        minute()
                 )
         );
     }
@@ -10910,7 +10928,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseMinuteColorFails() {
         this.timeParseParseThrows(
                 time(
-                        monthOrMinute(),
+                        minute(),
                         color()
                 )
         );
@@ -11029,7 +11047,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator()
         );
@@ -11040,12 +11058,12 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator(),
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -11057,12 +11075,12 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         color(),
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator(),
                 time(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -11291,7 +11309,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 dateTime(
                         day(),
-                        monthOrMinute()
+                        month()
                 )
         );
     }
@@ -11301,7 +11319,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 dateTime(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -11323,7 +11341,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 dateTime(
                         hour(),
-                        monthOrMinute()
+                        minute()
                 )
         );
     }
@@ -11333,7 +11351,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 dateTime(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -11421,10 +11439,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 dateTime(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -11435,16 +11453,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 dateTime(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -11455,16 +11473,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 dateTime(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         decimalPoint(),
                         digitZero()
@@ -11498,7 +11516,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 dateTime(
                         day(),
                         textLiteralComma(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralComma(),
                         year()
                 )
@@ -11728,10 +11746,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 dateTime(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator()
         );
@@ -11742,18 +11760,18 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 dateTime(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator(),
                 dateTime(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -11765,18 +11783,18 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 dateTime(
                         color(),
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator(),
                 dateTime(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -11788,18 +11806,18 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 conditionEquals(),
                 dateTime(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator(),
                 dateTime(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -12006,7 +12024,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeParseParseAndCheck(
                 dateTime(
                         day(),
-                        monthOrMinute()
+                        month()
                 )
         );
     }
@@ -12016,7 +12034,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeParseParseAndCheck(
                 dateTime(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year()
                 )
         );
@@ -12038,7 +12056,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeParseParseAndCheck(
                 dateTime(
                         hour(),
-                        monthOrMinute()
+                        minute()
                 )
         );
     }
@@ -12048,7 +12066,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeParseParseAndCheck(
                 dateTime(
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -12136,10 +12154,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeParseParseAndCheck(
                 dateTime(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -12150,16 +12168,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeParseParseAndCheck(
                 dateTime(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -12170,16 +12188,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeParseParseAndCheck(
                 dateTime(
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         day(),
-                        monthOrMinute(),
+                        month(),
                         year(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second(),
                         decimalPoint(),
                         digitZero()
@@ -12213,7 +12231,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 dateTime(
                         day(),
                         textLiteralComma(),
-                        monthOrMinute(),
+                        month(),
                         textLiteralComma(),
                         year()
                 )
@@ -12420,10 +12438,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeParseParseAndCheck(
                 dateTime(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator()
         );
@@ -12434,18 +12452,18 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeParseParseAndCheck(
                 dateTime(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator(),
                 dateTime(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );
@@ -12457,18 +12475,18 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 dateTime(
                         color(),
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute()
+                        minute()
                 ),
                 separator(),
                 dateTime(
                         year(),
-                        monthOrMinute(),
+                        month(),
                         day(),
                         hour(),
-                        monthOrMinute(),
+                        minute(),
                         second()
                 )
         );

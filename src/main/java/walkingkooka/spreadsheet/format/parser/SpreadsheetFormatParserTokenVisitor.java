@@ -253,7 +253,11 @@ public abstract class SpreadsheetFormatParserTokenVisitor extends ParserTokenVis
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
+    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+        // nop
+    }
+
+    protected void visit(final SpreadsheetFormatMonthParserToken token) {
         // nop
     }
 

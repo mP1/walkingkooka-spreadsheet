@@ -252,13 +252,22 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.lessThanEqualsSymbol("<=", "<=");
     }
 
-    static SpreadsheetFormatParserToken monthOrMinute() {
-        return monthOrMinute(1);
+    static SpreadsheetFormatParserToken minute() {
+        return minute(1);
     }
 
-    static SpreadsheetFormatParserToken monthOrMinute(final int count) {
+    static SpreadsheetFormatParserToken minute(final int count) {
         final String text = repeat('M', count);
-        return SpreadsheetFormatParserToken.monthOrMinute(text, text);
+        return SpreadsheetFormatParserToken.minute(text, text);
+    }
+
+    static SpreadsheetFormatParserToken month() {
+        return month(1);
+    }
+
+    static SpreadsheetFormatParserToken month(final int count) {
+        final String text = repeat('M', count);
+        return SpreadsheetFormatParserToken.month(text, text);
     }
 
     static SpreadsheetFormatParserToken notEquals() {

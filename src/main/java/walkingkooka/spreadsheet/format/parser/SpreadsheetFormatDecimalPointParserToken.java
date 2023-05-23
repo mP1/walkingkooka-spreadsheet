@@ -42,7 +42,7 @@ public final class SpreadsheetFormatDecimalPointParserToken extends SpreadsheetF
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.DECIMAL_PLACE.asOptional;
     }
 

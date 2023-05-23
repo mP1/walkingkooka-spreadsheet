@@ -133,8 +133,12 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
         return SpreadsheetFormatParserToken.lessThanEqualsSymbol("<=", "<=");
     }
 
-    final SpreadsheetFormatParserToken monthOrMinute() {
-        return SpreadsheetFormatParserToken.monthOrMinute("m", "m");
+    final SpreadsheetFormatParserToken minute() {
+        return SpreadsheetFormatParserToken.minute("m", "m");
+    }
+
+    final SpreadsheetFormatParserToken month() {
+        return SpreadsheetFormatParserToken.month("m", "m");
     }
 
     final SpreadsheetFormatParserToken notEqualsSymbol() {

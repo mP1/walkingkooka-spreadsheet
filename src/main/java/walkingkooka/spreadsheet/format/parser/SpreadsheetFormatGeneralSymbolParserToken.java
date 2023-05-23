@@ -43,7 +43,7 @@ public final class SpreadsheetFormatGeneralSymbolParserToken extends Spreadsheet
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.GENERAL.asOptional;
     }
 

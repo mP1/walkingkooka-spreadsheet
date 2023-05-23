@@ -103,8 +103,13 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
-    public void testWithMonthOrMinuteSymbolFails() {
-        this.withInvalidCharacterFails(this.monthOrMinute());
+    public void testWithMinuteSymbolFails() {
+        this.withInvalidCharacterFails(this.minute());
+    }
+
+    @Test
+    public void testWithMonthSymbolFails() {
+        this.withInvalidCharacterFails(this.month());
     }
 
     @Test

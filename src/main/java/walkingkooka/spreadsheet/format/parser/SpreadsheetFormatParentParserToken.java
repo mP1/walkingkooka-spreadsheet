@@ -51,12 +51,12 @@ abstract public class SpreadsheetFormatParentParserToken extends SpreadsheetForm
     // SpreadsheetFormatParserTokenKind ................................................................................
 
     @Override
-    public final Optional<SpreadsheetFormatParserTokenKind> kind(final boolean minute) {
+    public final Optional<SpreadsheetFormatParserTokenKind> kind() {
         return this.isCondition() ?
                 SpreadsheetFormatParserTokenKind.CONDITION.asOptional :
                 this.isColorName() ?
                         this.cast(SpreadsheetFormatColorParserToken.class).nameOrNumber()
-                                .kind(minute) :
+                                .kind() :
                         EMPTY_KIND;
     }
 }

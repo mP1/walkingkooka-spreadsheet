@@ -142,16 +142,6 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
     }
 
     final void kindAndCheck(final String token,
-                            final boolean minutes,
-                            final SpreadsheetFormatParserTokenKind kind) {
-        this.kindAndCheck(
-                this.createToken(token),
-                minutes,
-                Optional.of(kind)
-        );
-    }
-
-    final void kindAndCheck(final String token,
                             final SpreadsheetFormatParserTokenKind expected) {
         this.kindAndCheck(
                 token,
@@ -169,20 +159,10 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
 
     final void kindAndCheck(final T token,
                             final Optional<SpreadsheetFormatParserTokenKind> expected) {
-        this.kindAndCheck(
-                token,
-                false,
-                expected
-        );
-    }
-
-    final void kindAndCheck(final T token,
-                            final boolean minutes,
-                            final Optional<SpreadsheetFormatParserTokenKind> expected) {
         this.checkEquals(
                 expected,
-                token.kind(minutes),
-                () -> token + " " + (minutes ? "minutes" : "months")
+                token.kind(),
+                () -> token.toString()
         );
     }
 
