@@ -38,20 +38,74 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
      */
     private final static int MAX_LENGTH = 255;
 
+    // https://www.excelsupersite.com/what-are-the-56-colorindex-colors-in-excel/
+    //
+    // Black, White, Red, Green, Blue, Yellow, Magenta, and Cyan
+
+    public final static SpreadsheetColorName BLACK = new SpreadsheetColorName("Black");
+
+    public final static SpreadsheetColorName WHITE = new SpreadsheetColorName("White");
+
+    public final static SpreadsheetColorName RED = new SpreadsheetColorName("Red");
+
+    public final static SpreadsheetColorName GREEN = new SpreadsheetColorName("Green");
+
+    public final static SpreadsheetColorName BLUE = new SpreadsheetColorName("Blue");
+
+    public final static SpreadsheetColorName YELLOW = new SpreadsheetColorName("Yellow");
+
+    public final static SpreadsheetColorName MAGENTA = new SpreadsheetColorName("Magenta");
+
+    public final static SpreadsheetColorName CYAN = new SpreadsheetColorName("Cyan");
+
     /**
      * Factory that creates a {@link SpreadsheetColorName}
      */
     public static SpreadsheetColorName with(final String name) {
-        CharPredicates.failIfNullOrEmptyOrFalse(name,
+        CharPredicates.failIfNullOrEmptyOrFalse(
+                name,
                 SpreadsheetColorName.class.getSimpleName(),
-                LETTER);
+                LETTER
+        );
 
-        final int length = name.length();
-        if (length > MAX_LENGTH) {
-            throw new IllegalArgumentException("Color name length " + length + " greater than allowed of " + MAX_LENGTH);
+        final SpreadsheetColorName spreadsheetColorName;
+
+        switch (name) {
+            case "Black":
+                spreadsheetColorName = BLACK;
+                break;
+            case "White":
+                spreadsheetColorName = WHITE;
+                break;
+            case "Red":
+                spreadsheetColorName = RED;
+                break;
+            case "Green":
+                spreadsheetColorName = GREEN;
+                break;
+            case "Blue":
+                spreadsheetColorName = BLUE;
+                break;
+            case "Yellow":
+                spreadsheetColorName = YELLOW;
+                break;
+            case "Magenta":
+                spreadsheetColorName = MAGENTA;
+                break;
+            case "Cyan":
+                spreadsheetColorName = CYAN;
+                break;
+            default:
+                final int length = name.length();
+                if (length > MAX_LENGTH) {
+                    throw new IllegalArgumentException("Color name length " + length + " greater than allowed of " + MAX_LENGTH);
+                }
+
+                spreadsheetColorName = new SpreadsheetColorName(name);
+                break;
         }
 
-        return new SpreadsheetColorName(name);
+        return spreadsheetColorName;
     }
 
     /**

@@ -18,13 +18,24 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.ConstantsTesting;
+import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 final public class SpreadsheetColorNameTest implements ClassTesting2<SpreadsheetColorName>,
-        NameTesting2<SpreadsheetColorName, SpreadsheetColorName> {
+        NameTesting2<SpreadsheetColorName, SpreadsheetColorName>,
+        ConstantsTesting<SpreadsheetColorName> {
 
     @Test
     public void testEqualsDifferentCase() {
@@ -99,6 +110,52 @@ final public class SpreadsheetColorNameTest implements ClassTesting2<Spreadsheet
     public String possibleInvalidChars(final int position) {
         return CONTROL + BYTE_NON_ASCII + ASCII_DIGITS;
     }
+
+    // ConstantTesting..................................................................................................
+
+    @Test
+    public void testWithBlack() {
+        assertSame(
+                SpreadsheetColorName.BLACK,
+                SpreadsheetColorName.with(SpreadsheetColorName.BLACK.value())
+        );
+    }
+
+    @Test
+    public void testWithBLACK() {
+        assertNotSame(
+                SpreadsheetColorName.BLACK,
+                SpreadsheetColorName.with("BLACK")
+        );
+    }
+
+    @Test
+    public void testWithEachConstants() throws Exception {
+        final Set<SpreadsheetColorName> constants = Arrays.stream(SpreadsheetColorName.class.getDeclaredFields())
+                .filter(FieldAttributes.STATIC::is)
+                .filter(f -> f.getType() == SpreadsheetColorName.class)
+                .map(f -> {
+                    try {
+                        return SpreadsheetColorName.class.cast(f.get(null));
+                    } catch (final Exception cause) {
+                        throw new Error(cause);
+                    }
+                }).collect(Collectors.toCollection(Sets::sorted));
+
+        for (final SpreadsheetColorName color : constants) {
+            assertSame(
+                    color,
+                    SpreadsheetColorName.with(color.value())
+            );
+        }
+    }
+
+    @Override
+    public Set<SpreadsheetColorName> intentionalDuplicateConstants() {
+        return Sets.empty();
+    }
+
+    // ClassTesting.....................................................................................................
 
     @Override
     public Class<SpreadsheetColorName> type() {
