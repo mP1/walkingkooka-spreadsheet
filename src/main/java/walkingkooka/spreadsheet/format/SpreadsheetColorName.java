@@ -18,15 +18,23 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
 
+import java.util.Set;
+
 /**
  * The {@link Name} of a color within a spreadsheet format pattern expression.
  */
 final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetColorName> {
+
+    /**
+     * Early declaration prevents NPE within DEFAULTS Sets#of.
+     */
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
 
     /**
      * Used to validate the characters within a name.
@@ -57,6 +65,20 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
     public final static SpreadsheetColorName MAGENTA = new SpreadsheetColorName("Magenta");
 
     public final static SpreadsheetColorName CYAN = new SpreadsheetColorName("Cyan");
+
+    /**
+     * A {@link Set} holding the default {@link SpreadsheetColorName color names}.
+     */
+    public final static Set<SpreadsheetColorName> DEFAULTS = Sets.of(
+            BLACK,
+            WHITE,
+            RED,
+            GREEN,
+            BLUE,
+            YELLOW,
+            MAGENTA,
+            CYAN
+    );
 
     /**
      * Factory that creates a {@link SpreadsheetColorName}
@@ -159,6 +181,4 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
     public CaseSensitivity caseSensitivity() {
         return CASE_SENSITIVITY;
     }
-
-    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
 }
