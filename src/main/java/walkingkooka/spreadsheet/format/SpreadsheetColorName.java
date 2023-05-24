@@ -24,10 +24,13 @@ import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
 
 /**
- * The {@link Name} of a color with a format expression.
+ * The {@link Name} of a color within a spreadsheet format pattern expression.
  */
 final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetColorName> {
 
+    /**
+     * Used to validate the characters within a name.
+     */
     private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 
     /**
