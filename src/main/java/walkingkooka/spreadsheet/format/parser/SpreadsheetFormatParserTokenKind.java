@@ -17,13 +17,10 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.collect.set.Sets;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
-import java.util.Arrays;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * A kind that may be used to group {@link SpreadsheetFormatParserToken tokens} to possible {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern}.
@@ -123,114 +120,6 @@ public enum SpreadsheetFormatParserTokenKind {
     // MISC.............................................................................................................
 
     SEPARATOR;
-
-    // collections......................................................................................................
-
-    /**
-     * Returns date only {@link SpreadsheetFormatParserTokenKind}
-     */
-    public static Set<SpreadsheetFormatParserTokenKind> dateOnly() {
-        return DATE_ONLY;
-    }
-
-    private final static Set<SpreadsheetFormatParserTokenKind> DATE_ONLY =
-            Sets.of(
-                    Arrays.stream(values())
-                            .filter(k -> {
-                                final String name = k.name();
-                                return name.startsWith("DAY_") ||
-                                        name.startsWith("MONTH_") ||
-                                        name.startsWith("YEAR_");
-                            }).toArray(SpreadsheetFormatParserTokenKind[]::new)
-            );
-
-    /**
-     * Returns kinds that can only appear in a format pattern {@link SpreadsheetFormatParserTokenKind}
-     */
-    public static Set<SpreadsheetFormatParserTokenKind> formatAndParseOnly() {
-        return FORMAT_AND_PARSE_ONLY;
-    }
-
-    private final static Set<SpreadsheetFormatParserTokenKind> FORMAT_AND_PARSE_ONLY = Sets.of(
-            GENERAL,
-            TEXT_LITERAL
-    );
-
-    /**
-     * Returns kinds that can only appear in a format pattern {@link SpreadsheetFormatParserTokenKind}
-     */
-    public static Set<SpreadsheetFormatParserTokenKind> formatOnly() {
-        return FORMAT_ONLY;
-    }
-
-    private final static Set<SpreadsheetFormatParserTokenKind> FORMAT_ONLY = Sets.of(
-            COLOR_NAME,
-            COLOR_NUMBER,
-            CONDITION
-    );
-
-    /**
-     * Returns number only {@link SpreadsheetFormatParserTokenKind}
-     */
-    public static Set<SpreadsheetFormatParserTokenKind> numberOnly() {
-        return NUMBER_ONLY;
-    }
-
-    private final static Set<SpreadsheetFormatParserTokenKind> NUMBER_ONLY = Sets.of(
-            DIGIT,
-            DIGIT_SPACE,
-            DIGIT_ZERO,
-            CURRENCY_SYMBOL,
-            DECIMAL_PLACE,
-            EXPONENT,
-            FRACTION,
-            PERCENT,
-            THOUSANDS
-    );
-
-    /**
-     * Returns kinds that can only appear in a parse pattern {@link SpreadsheetFormatParserTokenKind}
-     */
-    public static Set<SpreadsheetFormatParserTokenKind> parseOnly() {
-        return PARSE_ONLY;
-    }
-
-    private final static Set<SpreadsheetFormatParserTokenKind> PARSE_ONLY = Sets.of(
-            SEPARATOR
-    );
-
-    /**
-     * Returns text only {@link SpreadsheetFormatParserTokenKind}
-     */
-    public static Set<SpreadsheetFormatParserTokenKind> textOnly() {
-        return TEXT_ONLY;
-    }
-
-    private final static Set<SpreadsheetFormatParserTokenKind> TEXT_ONLY = Sets.of(
-            TEXT_PLACEHOLDER,
-            STAR,
-            UNDERSCORE
-    );
-
-    /**
-     * Returns time only {@link SpreadsheetFormatParserTokenKind}
-     */
-    public static Set<SpreadsheetFormatParserTokenKind> timeOnly() {
-        return TIME_ONLY;
-    }
-
-    private final static Set<SpreadsheetFormatParserTokenKind> TIME_ONLY = Sets.of(
-            Arrays.stream(values())
-                    .filter(k -> {
-                        final String name = k.name();
-                        return name.startsWith("HOUR_") ||
-                                name.startsWith("MINUTES_") ||
-                                name.startsWith("SECONDS_") ||
-                                name.startsWith("AMPM_") ||
-                                k == DECIMAL_PLACE ||
-                                k == DIGIT_ZERO;
-                    }).toArray(SpreadsheetFormatParserTokenKind[]::new)
-    );
 
     /**
      * Used as the answer for many {@link SpreadsheetFormatParserToken#kind()}

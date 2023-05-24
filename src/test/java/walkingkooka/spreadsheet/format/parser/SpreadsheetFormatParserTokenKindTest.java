@@ -18,9 +18,7 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
@@ -28,11 +26,9 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.visit.Visiting;
 
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -367,85 +363,6 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
                 Sets.empty(),
                 wrong
         );
-    }
-
-    // XXXOnly..........................................................................................................
-
-    @Test
-    public void testTextOnly() {
-        this.checkEquals(
-                Sets.of(
-                        SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
-                        SpreadsheetFormatParserTokenKind.STAR,
-                        SpreadsheetFormatParserTokenKind.UNDERSCORE
-                ),
-                SpreadsheetFormatParserTokenKind.textOnly()
-        );
-    }
-
-    @Test
-    public void testFormatOnlyAndFormatAndParserOnlyAndTextOnly() {
-        final Set<SpreadsheetFormatParserTokenKind> kinds = Sets.ordered();
-        kinds.addAll(SpreadsheetFormatParserTokenKind.formatOnly());
-        kinds.addAll(SpreadsheetFormatParserTokenKind.formatAndParseOnly());
-        kinds.addAll(SpreadsheetFormatParserTokenKind.textOnly());
-
-        this.checkEquals(
-                Sets.of(
-                        SpreadsheetFormatParserTokenKind.COLOR_NAME,
-                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
-                        SpreadsheetFormatParserTokenKind.CONDITION,
-                        SpreadsheetFormatParserTokenKind.GENERAL,
-                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
-                        SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
-                        SpreadsheetFormatParserTokenKind.STAR,
-                        SpreadsheetFormatParserTokenKind.UNDERSCORE
-                ),
-                kinds
-        );
-    }
-
-    @Test
-    public void testOnlyNotEmpty() throws Exception {
-        final Map<String, Set<SpreadsheetFormatParserTokenKind>> methodNameToKinds = Maps.sorted();
-
-        for (final Method method : SpreadsheetFormatParserTokenKind.class.getDeclaredMethods()) {
-            final String methodName = method.getName();
-            if (methodName.contains("time") || false == methodName.endsWith("Only")) {
-                continue;
-            }
-
-            methodNameToKinds.put(
-                    method.getName(),
-                    Cast.to(
-                            method.invoke(null)
-                    )
-            );
-        }
-
-        // skip dateTime and time because they include DECIMAL_PLACES and DIGIT_ZERO which also appear in NUMBER
-
-        for (final Map.Entry<String, Set<SpreadsheetFormatParserTokenKind>> methodNameAndKinds : methodNameToKinds.entrySet()) {
-            final String methodName = methodNameAndKinds.getKey();
-            final Set<SpreadsheetFormatParserTokenKind> kinds = methodNameAndKinds.getValue();
-
-            for (final Map.Entry<String, Set<SpreadsheetFormatParserTokenKind>> methodNameAndKinds2 : methodNameToKinds.entrySet()) {
-                final String methodName2 = methodNameAndKinds2.getKey();
-                if (methodName.equals(methodName2)) {
-                    continue;
-                }
-
-                final Set<SpreadsheetFormatParserTokenKind> duplicates = Sets.sorted();
-                duplicates.addAll(kinds);
-                duplicates.retainAll(methodNameAndKinds2.getValue());
-
-                this.checkEquals(
-                        Sets.empty(),
-                        duplicates,
-                        () -> methodName + " kinds also appear in " + methodName2
-                );
-            }
-        }
     }
 
     // labelText........................................................................................................
