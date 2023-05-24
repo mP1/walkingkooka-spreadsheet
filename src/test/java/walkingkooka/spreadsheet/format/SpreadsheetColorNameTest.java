@@ -130,7 +130,17 @@ final public class SpreadsheetColorNameTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testWithEachConstants() throws Exception {
+    public void testWithEachConstants() {
+        for (final SpreadsheetColorName color : SpreadsheetColorName.DEFAULTS) {
+            assertSame(
+                    color,
+                    SpreadsheetColorName.with(color.value())
+            );
+        }
+    }
+
+    @Test
+    public void testWithEachConstantFields() {
         final Set<SpreadsheetColorName> constants = Arrays.stream(SpreadsheetColorName.class.getDeclaredFields())
                 .filter(FieldAttributes.STATIC::is)
                 .filter(f -> f.getType() == SpreadsheetColorName.class)
