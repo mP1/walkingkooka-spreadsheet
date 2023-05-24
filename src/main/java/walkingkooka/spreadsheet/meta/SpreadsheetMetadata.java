@@ -251,7 +251,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     /**
      * Fetches the effective style with properties replaced by non defaults when they exist.
      */
-    public TextStyle effectiveStyle() {
+    public final TextStyle effectiveStyle() {
         if (null == this.effectiveStyle) {
             final TextStyle style = this.getStyleOrEmpty();
             final TextStyle defaultStyle = this.defaults().getStyleOrEmpty();
@@ -680,8 +680,8 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public SpreadsheetFormatterContext formatterContext(final Supplier<LocalDateTime> now,
-                                                        final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
+    public final SpreadsheetFormatterContext formatterContext(final Supplier<LocalDateTime> now,
+                                                              final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
         return SpreadsheetFormatterContexts.basic(this.numberToColor(),
                 this.nameToColor(),
                 this.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
@@ -825,7 +825,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     /**
      * This may be used to test if there is sufficient differences between this and the given {@link SpreadsheetMetadata}.
      */
-    public boolean shouldViewRefresh(final SpreadsheetMetadata metadata) {
+    public final boolean shouldViewRefresh(final SpreadsheetMetadata metadata) {
         Objects.requireNonNull(metadata, "metadata");
 
         boolean should = false;
@@ -981,8 +981,8 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
      * will remove that property and other properties will set the new value.
      */
     @Override
-    public SpreadsheetMetadata patch(final JsonNode patch,
-                                     final JsonNodeUnmarshallContext context) {
+    public final SpreadsheetMetadata patch(final JsonNode patch,
+                                           final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(patch, "patch");
         Objects.requireNonNull(context, "context");
 
@@ -1027,7 +1027,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     // TreePrintable...................................................................................................
 
     @Override
-    public void printTree(final IndentingPrinter printer) {
+    public final void printTree(final IndentingPrinter printer) {
         for (final Map.Entry<SpreadsheetMetadataPropertyName<?>, Object> nameAndValue : this.value().entrySet()) {
             printer.print(nameAndValue.getKey().value());
             printer.print(": ");
