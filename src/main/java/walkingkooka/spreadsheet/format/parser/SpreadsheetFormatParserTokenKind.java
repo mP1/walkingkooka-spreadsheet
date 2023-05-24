@@ -17,10 +17,16 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.SpreadsheetColors;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * A kind that may be used to group {@link SpreadsheetFormatParserToken tokens} to possible {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern}.
@@ -29,97 +35,122 @@ public enum SpreadsheetFormatParserTokenKind {
 
     // COLOR............................................................................................................
 
-    COLOR_NAME,
+    COLOR_NAME(
+            Sets.of(
+                    SpreadsheetColorName.DEFAULTS.stream()
+                            .map(n -> "[" + n.value() + "]")
+                            .toArray(String[]::new)
+            )
+    ),
 
-    COLOR_NUMBER,
+    COLOR_NUMBER(
+            Sets.of(
+                    IntStream.range(
+                                    SpreadsheetColors.MIN,
+                                    SpreadsheetColors.MAX + 1
+                            ).mapToObj(n -> "[Color " + n + "]")
+                            .toArray(String[]::new)
+            )
+    ),
 
     // CONDITIONAL......................................................................................................
 
-    CONDITION,
+    CONDITION("=0"),
 
     // DATE.............................................................................................................
 
-    DAY_WITH_LEADING_ZERO,
+    // @see SpreadsheetFormatDayParserToken for 'D' count'
+    DAY_WITH_LEADING_ZERO("dd"),
 
-    DAY_WITHOUT_LEADING_ZERO,
+    DAY_WITHOUT_LEADING_ZERO("d"),
 
-    DAY_NAME_ABBREVIATION,
+    DAY_NAME_ABBREVIATION("ddd"),
 
-    DAY_NAME_FULL,
+    DAY_NAME_FULL("dddd"),
 
-    MONTH_WITH_LEADING_ZERO,
+    // SpreadsheetFormatMonthParserToken for 'M' count
+    MONTH_WITH_LEADING_ZERO("mm"),
 
-    MONTH_WITHOUT_LEADING_ZERO,
+    MONTH_WITHOUT_LEADING_ZERO("m"),
 
-    MONTH_NAME_ABBREVIATION,
+    MONTH_NAME_ABBREVIATION("mmm"),
 
-    MONTH_NAME_FULL,
+    MONTH_NAME_FULL("mmmm"),
 
-    MONTH_NAME_INITIAL,
+    MONTH_NAME_INITIAL("mmmmm"),
 
-    YEAR_TWO_DIGIT,
+    // @see SpreadsheetFormatYearParserToken for 'Y' count
+    YEAR_TWO_DIGIT("YY"),
 
-    YEAR_FULL,
+    YEAR_FULL("YYYY"),
 
     // GENERAL...........................................................................................................
 
-    GENERAL,
+    GENERAL("General"),
 
     // NUMBER...........................................................................................................
 
-    DIGIT,
+    DIGIT("#"),
 
-    DIGIT_SPACE,
+    DIGIT_SPACE("?"),
 
-    DIGIT_ZERO,
+    DIGIT_ZERO("0"),
 
-    CURRENCY_SYMBOL,
+    CURRENCY_SYMBOL("$"),
 
-    DECIMAL_PLACE,
+    DECIMAL_PLACE("."),
 
-    EXPONENT,
+    EXPONENT("E"),
 
-    FRACTION,
+    FRACTION("/"),
 
-    PERCENT,
+    PERCENT("%"),
 
-    THOUSANDS,
+    THOUSANDS(","),
 
     // TEXT............................................................................................................
 
-    TEXT_PLACEHOLDER,
+    TEXT_PLACEHOLDER("@"),
 
-    TEXT_LITERAL,
+    TEXT_LITERAL("\"Text\""),
 
-    STAR,
+    STAR("* "),
 
-    UNDERSCORE,
+    UNDERSCORE("_ "),
 
     // TIME............................................................................................................
 
-    HOUR_WITH_LEADING_ZERO,
+    HOUR_WITH_LEADING_ZERO("hh"),
 
-    HOUR_WITHOUT_LEADING_ZERO,
+    HOUR_WITHOUT_LEADING_ZERO("h"),
 
-    MINUTES_WITH_LEADING_ZERO,
+    MINUTES_WITH_LEADING_ZERO("mm"),
 
-    MINUTES_WITHOUT_LEADING_ZERO,
+    MINUTES_WITHOUT_LEADING_ZERO("m"),
 
-    SECONDS_WITH_LEADING_ZERO,
+    SECONDS_WITH_LEADING_ZERO("ss"),
 
-    SECONDS_WITHOUT_LEADING_ZERO,
+    SECONDS_WITHOUT_LEADING_ZERO("s"),
 
-    AMPM_FULL_LOWER,
+    AMPM_FULL_LOWER("am/pm"),
 
-    AMPM_FULL_UPPER,
+    AMPM_FULL_UPPER("AM/PM"),
 
-    AMPM_INITIAL_LOWER,
+    AMPM_INITIAL_LOWER("a/p"),
 
-    AMPM_INITIAL_UPPER,
+    AMPM_INITIAL_UPPER("A/P"),
 
     // MISC.............................................................................................................
 
-    SEPARATOR;
+    SEPARATOR(SpreadsheetPattern.SEPARATOR.string());
+
+    SpreadsheetFormatParserTokenKind(final String pattern) {
+        this(Sets.of(pattern));
+    }
+
+    SpreadsheetFormatParserTokenKind(final Set<String> patterns) {
+        this.patterns = patterns;
+    }
 
     /**
      * Used as the answer for many {@link SpreadsheetFormatParserToken#kind()}
@@ -338,4 +369,14 @@ public enum SpreadsheetFormatParserTokenKind {
                             .toLowerCase()
             ).toString()
             .replace("Ampm", "AMPM");
+
+    /**
+     * Returns all possible patterns. Most enum values will only have one while others such as the colours will
+     * provide all possible color names and numbers.
+     */
+    public Set<String> patterns() {
+        return this.patterns;
+    }
+
+    private final Set<String> patterns;
 }
