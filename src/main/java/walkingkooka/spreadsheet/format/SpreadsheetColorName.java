@@ -19,9 +19,11 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CaseSensitivity;
 
 import java.util.Set;
@@ -145,7 +147,11 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
 
     private final String name;
 
-    // Object..................................................................................................
+    public SpreadsheetMetadataPropertyName<Color> spreadsheetMetadataPropertyName() {
+        return SpreadsheetMetadataPropertyName.namedColor(this);
+    }
+
+    // Object...........................................................................................................
 
     @Override
     public int hashCode() {

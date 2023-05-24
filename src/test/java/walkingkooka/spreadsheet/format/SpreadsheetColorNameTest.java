@@ -24,6 +24,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.ConstantsTesting;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CaseSensitivity;
 
 import java.util.Arrays;
@@ -109,6 +110,16 @@ final public class SpreadsheetColorNameTest implements ClassTesting2<Spreadsheet
     @Override
     public String possibleInvalidChars(final int position) {
         return CONTROL + BYTE_NON_ASCII + ASCII_DIGITS;
+    }
+
+    // spreadsheetMetadataPropertyName..................................................................................
+
+    @Test
+    public void testSpreadsheetMetadataPropertyName() {
+        this.checkEquals(
+                SpreadsheetColorName.BLACK.spreadsheetMetadataPropertyName(),
+                SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK)
+        );
     }
 
     // ConstantTesting..................................................................................................
