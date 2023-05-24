@@ -1032,14 +1032,12 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
             printer.print(nameAndValue.getKey().value());
             printer.print(": ");
 
-            final Object value = nameAndValue.getValue();
-            if (value instanceof SpreadsheetSelection) {
-                printer.print(value.toString());
-            } else {
-                TreePrintable.printTreeOrToString(value, printer);
-            }
+            TreePrintable.printTreeOrToString(
+                    nameAndValue.getValue(),
+                    printer
+            );
 
-            printer.println();
+            printer.lineStart();
         }
     }
 }

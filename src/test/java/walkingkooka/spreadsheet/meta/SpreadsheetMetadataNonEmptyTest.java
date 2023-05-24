@@ -2306,10 +2306,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:3"))
                         .set(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetSelection.parseCell("D4")),
                 "spreadsheet-id: 4d2\n" +
-                        "frozen-columns: A:C\n" +
-                        "frozen-rows: 1:3\n" +
+                        "frozen-columns: column-range A:C\n" +
+                        "frozen-rows: row-range 1:3\n" +
                         "spreadsheet-name: Untitled\n" +
-                        "viewport-cell: D4\n"
+                        "viewport-cell: cell D4\n"
         );
     }
 
