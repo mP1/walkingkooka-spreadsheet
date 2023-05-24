@@ -453,7 +453,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         return parseNumberParsePattern(
                 number.equals(integer) ?
                         number :
-                        number + ";" + integer);
+                        number + SEPARATOR.string() + integer);
     }
 
 
