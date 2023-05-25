@@ -25,6 +25,7 @@ import walkingkooka.naming.NameTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.text.CaseSensitivity;
@@ -107,7 +108,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     public void testWithColorNumber() {
         final Color color = Color.fromRgb(0);
 
-        IntStream.range(SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER, SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER + 10)
+        IntStream.range(SpreadsheetColors.MAX, SpreadsheetColors.MAX + 10)
                 .forEach(i -> {
                             final String value = "color-" + i;
                             final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.with(value);

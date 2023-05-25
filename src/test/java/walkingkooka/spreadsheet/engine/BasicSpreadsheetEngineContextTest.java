@@ -29,6 +29,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -545,7 +546,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testToStringMetadataLotsProperties() {
         SpreadsheetMetadata metadata = this.metadata();
 
-        for (int i = 0; i < 60; i++) {
+        for (int i = SpreadsheetColors.MIN; i <= SpreadsheetColors.MAX; i++) {
             metadata = metadata.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
         }
 
@@ -556,7 +557,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 ),
                 "metadata={\n" +
                         "  \"cell-character-width\": 1,\n" +
-                        "  \"color-0\": \"#000000\",\n" +
                         "  \"color-1\": \"#000001\",\n" +
                         "  \"color-2\": \"#000002\",\n" +
                         "  \"color-3\": \"#000003\",\n" +
@@ -613,9 +613,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-54\": \"#000036\",\n" +
                         "  \"color-55\": \"#000037\",\n" +
                         "  \"color-56\": \"#000038\",\n" +
-                        "  \"color-57\": \"#000039\",\n" +
-                        "  \"color-58\": \"#00003a\",\n" +
-                        "  \"color-59\": \"#00003b\",\n" +
                         "  \"color-Black\": \"#000000\",\n" +
                         "  \"color-Blue\": \"#0000ff\",\n" +
                         "  \"color-Cyan\": \"#00ffff\",\n" +

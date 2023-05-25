@@ -417,11 +417,6 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     // Function<Integer, Optional<Color>>................................................................................
 
     /**
-     * The maximum number of colors.
-     */
-    public static final int MAX_NUMBER_COLOR = SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER;
-
-    /**
      * Returns a {@link Function} that returns a {@link Color} given its number.
      */
     public abstract Function<Integer, Optional<Color>> numberToColor();

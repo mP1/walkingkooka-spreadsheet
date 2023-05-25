@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 
 import java.util.Locale;
 import java.util.stream.IntStream;
@@ -37,7 +38,7 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
     public void testConstants() {
         final Color color = Color.fromRgb(0);
 
-        IntStream.range(0, SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER)
+        IntStream.range(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
                 .forEach(i -> {
                     final SpreadsheetMetadataPropertyNameNumberedColor propertyName = SpreadsheetMetadataPropertyNameNumberedColor.withNumber(i);
                     final String value = "color-" + i;

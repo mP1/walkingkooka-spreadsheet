@@ -35,6 +35,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -1152,7 +1153,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"));
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = SpreadsheetColors.MIN; i < 10; i++) {
             this.numberToColorAndCheck(metadata,
                     i,
                     number1 == i ? color1 :
@@ -2156,7 +2157,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testUnmarshall() {
         final JsonNode json = JsonNode.parse("{\n" +
                 "  \"cell-character-width\": 0,\n" +
-                "  \"color-0\": \"#000000\",\n" +
                 "  \"color-1\": \"#000001\",\n" +
                 "  \"color-10\": \"#00000a\",\n" +
                 "  \"color-11\": \"#00000b\",\n" +
@@ -2276,7 +2276,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetSelection.parseCell("B99"));
 
-        for (int i = 0; i < SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER + 2; i++) {
+        for (int i = SpreadsheetColors.MIN; i < SpreadsheetColors.MAX + 2; i++) {
             properties.put(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
         }
 

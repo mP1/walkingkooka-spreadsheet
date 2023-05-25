@@ -75,11 +75,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         ToStringTesting<SpreadsheetMetadata> {
 
     @Test
-    public void testMaxNumberColorConstant() {
-        this.checkEquals(SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER, SpreadsheetMetadata.MAX_NUMBER_COLOR);
-    }
-
-    @Test
     public void testSwappablePropertiesConstants() {
         assertArrayEquals(
                 SpreadsheetMetadataPropertyName.CONSTANTS.values()
