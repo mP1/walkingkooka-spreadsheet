@@ -80,7 +80,7 @@ public final class SpreadsheetFormatDigitSpaceParserTokenTest extends Spreadshee
 
     @Override
     public String text() {
-        return "#";
+        return "?";
     }
 
     @Override
