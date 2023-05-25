@@ -467,6 +467,62 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.createContext(),
                 "metadata={\n" +
                         "  \"cell-character-width\": 1,\n" +
+                        "  \"color-1\": \"#000000\",\n" +
+                        "  \"color-2\": \"#ffffff\",\n" +
+                        "  \"color-3\": \"#ff0000\",\n" +
+                        "  \"color-4\": \"#00ff00\",\n" +
+                        "  \"color-5\": \"#0000ff\",\n" +
+                        "  \"color-6\": \"#ffff00\",\n" +
+                        "  \"color-7\": \"#ff00ff\",\n" +
+                        "  \"color-8\": \"#00ffff\",\n" +
+                        "  \"color-9\": \"#800000\",\n" +
+                        "  \"color-10\": \"#008000\",\n" +
+                        "  \"color-11\": \"#000080\",\n" +
+                        "  \"color-12\": \"#808000\",\n" +
+                        "  \"color-13\": \"#800080\",\n" +
+                        "  \"color-14\": \"#008080\",\n" +
+                        "  \"color-15\": \"#c0c0c0\",\n" +
+                        "  \"color-16\": \"#808080\",\n" +
+                        "  \"color-17\": \"#9999ff\",\n" +
+                        "  \"color-18\": \"#993366\",\n" +
+                        "  \"color-19\": \"#ffffcc\",\n" +
+                        "  \"color-20\": \"#ccffff\",\n" +
+                        "  \"color-21\": \"#660066\",\n" +
+                        "  \"color-22\": \"#ff8080\",\n" +
+                        "  \"color-23\": \"#0066cc\",\n" +
+                        "  \"color-24\": \"#ccccff\",\n" +
+                        "  \"color-25\": \"#000080\",\n" +
+                        "  \"color-26\": \"#ff00ff\",\n" +
+                        "  \"color-27\": \"#ffff00\",\n" +
+                        "  \"color-28\": \"#00ffff\",\n" +
+                        "  \"color-29\": \"#800080\",\n" +
+                        "  \"color-30\": \"#800000\",\n" +
+                        "  \"color-31\": \"#008080\",\n" +
+                        "  \"color-32\": \"#0000ff\",\n" +
+                        "  \"color-33\": \"#00ccff\",\n" +
+                        "  \"color-34\": \"#ccffff\",\n" +
+                        "  \"color-35\": \"#ccffcc\",\n" +
+                        "  \"color-36\": \"#ffff99\",\n" +
+                        "  \"color-37\": \"#99ccff\",\n" +
+                        "  \"color-38\": \"#ff99cc\",\n" +
+                        "  \"color-39\": \"#cc99ff\",\n" +
+                        "  \"color-40\": \"#ffcc99\",\n" +
+                        "  \"color-41\": \"#3366ff\",\n" +
+                        "  \"color-42\": \"#33cccc\",\n" +
+                        "  \"color-43\": \"#99cc00\",\n" +
+                        "  \"color-44\": \"#ffcc00\",\n" +
+                        "  \"color-45\": \"#ff9900\",\n" +
+                        "  \"color-46\": \"#ff6600\",\n" +
+                        "  \"color-47\": \"#666699\",\n" +
+                        "  \"color-48\": \"#969696\",\n" +
+                        "  \"color-49\": \"#003366\",\n" +
+                        "  \"color-50\": \"#339966\",\n" +
+                        "  \"color-51\": \"#003300\",\n" +
+                        "  \"color-52\": \"#333300\",\n" +
+                        "  \"color-53\": \"#993300\",\n" +
+                        "  \"color-54\": \"#993366\",\n" +
+                        "  \"color-55\": \"#333399\",\n" +
+                        "  \"color-56\": \"#333333\",\n" +
                         "  \"color-Black\": \"#000000\",\n" +
                         "  \"color-Blue\": \"#0000ff\",\n" +
                         "  \"color-Cyan\": \"#00ffff\",\n" +
