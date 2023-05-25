@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.text.CharSequences;
 
 import java.util.stream.IntStream;
@@ -32,33 +33,31 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
      * Retrieves a {@link SpreadsheetMetadataPropertyNameNumberedColor} for a numbered {@link Color}.
      */
     static SpreadsheetMetadataPropertyNameNumberedColor withNumber(final int number) {
-        if (number < 0) {
+        if (number < SpreadsheetColors.MIN) {
             throw new IllegalArgumentException("Number " + number + " < 0");
         }
 
-        return number < MAX_NUMBER ?
-                NUMBER_TO_COLOR[number] :
+        return number < SpreadsheetColors.MAX ?
+                NUMBER_TO_COLOR[number - SpreadsheetColors.MIN] :
                 new SpreadsheetMetadataPropertyNameNumberedColor(number);
     }
 
-    static final int MAX_NUMBER = 32;
-
     /**
-     * Cache of 0 to {@link #MAX_NUMBER} names.
+     * Cache of {@link SpreadsheetColors#MIN} to {@link SpreadsheetColors#MAX} values.
      */
-    private static final SpreadsheetMetadataPropertyNameNumberedColor[] NUMBER_TO_COLOR = new SpreadsheetMetadataPropertyNameNumberedColor[MAX_NUMBER];
+    private static final SpreadsheetMetadataPropertyNameNumberedColor[] NUMBER_TO_COLOR = new SpreadsheetMetadataPropertyNameNumberedColor[SpreadsheetColors.MAX - SpreadsheetColors.MIN];
 
     /*
-     * Fills the cache of {@link SpreadsheetMetadataPropertyNameNumberedColor} for color numbers 0 to {@link #MAX_NUMBER}.
+     * Fills the cache of {@link SpreadsheetMetadataPropertyNameNumberedColor} for color numbers 0 to {@link #SpreadsheetColors.MAX}.
      */
     static {
-        IntStream.range(0, MAX_NUMBER)
+        IntStream.range(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
                 .forEach(SpreadsheetMetadataPropertyNameNumberedColor::registerColor);
     }
 
     private static void registerColor(final int i) {
         final SpreadsheetMetadataPropertyNameNumberedColor name = new SpreadsheetMetadataPropertyNameNumberedColor(i);
-        NUMBER_TO_COLOR[i] = name;
+        NUMBER_TO_COLOR[i - SpreadsheetColors.MIN] = name;
         CONSTANTS.put(name.value(), name);
     }
 
