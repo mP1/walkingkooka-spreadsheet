@@ -466,6 +466,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.createContext(),
                 "metadata={\n" +
                         "  \"cell-character-width\": 1,\n" +
+                        "  \"color-Black\": \"#000000\",\n" +
+                        "  \"color-Blue\": \"#0000ff\",\n" +
+                        "  \"color-Cyan\": \"#00ffff\",\n" +
+                        "  \"color-Green\": \"#00ff00\",\n" +
+                        "  \"color-Magenta\": \"#ff00ff\",\n" +
+                        "  \"color-Red\": \"#ff0000\",\n" +
+                        "  \"color-White\": \"#ffffff\",\n" +
+                        "  \"color-Yellow\": \"#ffff00\",\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
                         "  \"date-format-pattern\": \"dddd, d mmmm yyyy\",\n" +
                         "  \"date-parse-pattern\": \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
@@ -542,7 +550,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
 
         this.toStringAndCheck(
-                this.createContext(metadata, SpreadsheetLabelStores.treeMap()),
+                this.createContext(
+                        metadata,
+                        SpreadsheetLabelStores.treeMap()
+                ),
                 "metadata={\n" +
                         "  \"cell-character-width\": 1,\n" +
                         "  \"color-0\": \"#000000\",\n" +
@@ -605,6 +616,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-57\": \"#000039\",\n" +
                         "  \"color-58\": \"#00003a\",\n" +
                         "  \"color-59\": \"#00003b\",\n" +
+                        "  \"color-Black\": \"#000000\",\n" +
+                        "  \"color-Blue\": \"#0000ff\",\n" +
+                        "  \"color-Cyan\": \"#00ffff\",\n" +
+                        "  \"color-Green\": \"#00ff00\",\n" +
+                        "  \"color-Magenta\": \"#ff00ff\",\n" +
+                        "  \"color-Red\": \"#ff0000\",\n" +
+                        "  \"color-White\": \"#ffffff\",\n" +
+                        "  \"color-Yellow\": \"#ffff00\",\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
                         "  \"date-format-pattern\": \"dddd, d mmmm yyyy\",\n" +
                         "  \"date-parse-pattern\": \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +

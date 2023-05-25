@@ -1,5 +1,13 @@
 {
   "cell-character-width": 1,
+  "color-Black": "#000",
+  "color-White": "#fff",
+  "color-Red": "#f00",
+  "color-Green": "#0f0",
+  "color-Blue": "#00f",
+  "color-Yellow": "#ff0",
+  "color-Magenta": "#f0f",
+  "color-Cyan": "#0ff",
   "date-time-offset": -25569,
   "default-year": 1900,
   "expression-number-kind": "BIG_DECIMAL",
