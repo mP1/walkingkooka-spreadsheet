@@ -27,6 +27,7 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -63,6 +64,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -152,7 +154,16 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .filter(n -> false == nonLocaleDefaults.defaults()
                                 .get(n.spreadsheetMetadataPropertyName()).isPresent())
                         .collect(Collectors.toSet()),
-                () -> "missing color defaults"
+                () -> "missing named color defaults"
+        );
+
+        this.checkNotEquals(
+                Sets.empty(),
+                IntStream.range(SpreadsheetColors.MIN, SpreadsheetColors.MAX + 1)
+                        .mapToObj(i -> SpreadsheetMetadataPropertyName.numberedColor(i))
+                        .filter(n -> false == nonLocaleDefaults.defaults().get(n).isPresent())
+                        .collect(Collectors.toSet()),
+                () -> "missing numbered color defaults"
         );
 
         this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_YEAR));
