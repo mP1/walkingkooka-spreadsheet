@@ -32,7 +32,7 @@ abstract class SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor exten
 
     @Override
     protected final void visit(final SpreadsheetFormatGeneralSymbolParserToken token) {
-        this.failInvalid();
+        // OK!
     }
 
     @Override

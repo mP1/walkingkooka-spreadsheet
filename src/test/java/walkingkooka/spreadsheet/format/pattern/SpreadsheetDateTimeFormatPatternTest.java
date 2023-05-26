@@ -125,6 +125,12 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.parseStringFails("0#00", IllegalArgumentException.class);
     }
 
+
+    @Test
+    public void testParseGeneral() {
+        this.parseString("General");
+    }
+
     // helpers.........................................................................................................
 
     @Override
@@ -813,6 +819,15 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         );
     }
 
+    @Test
+    public void testFormatterGeneral() {
+        this.formatAndCheck2(
+                "General",
+                LocalDateTime.now(),
+                GENERAL_FORMATTED
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -843,6 +858,16 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
                             Converters.simple()
                     )
             );
+
+            @Override
+            public Optional<SpreadsheetText> defaultFormatText(final Object value) {
+                return Optional.of(
+                        SpreadsheetText.with(
+                                SpreadsheetText.WITHOUT_COLOR,
+                                GENERAL_FORMATTED
+                        )
+                );
+            }
 
             @Override
             public List<String> monthNames() {
