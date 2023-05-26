@@ -45,51 +45,51 @@ final class SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitor ex
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
-        return this.failInvalid(token);
+        return this.failInvalid();
     }
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        return this.failInvalid(token);
+        return this.failInvalid();
     }
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
-        return this.failInvalid(token);
+        return this.failInvalid();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDayParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatHourParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatMinuteParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatMonthParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatSecondParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatYearParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 }

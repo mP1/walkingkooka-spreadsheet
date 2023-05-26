@@ -18,12 +18,11 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
 /**
  * A {@link SpreadsheetFormatParserTokenVisitor} for all {@link SpreadsheetFormatPattern} that is used to validate a pattern
- * includes only supported tokens. Each sub class will call {@link #failInvalid(SpreadsheetFormatParserToken)} for invalid tokens.
+ * includes only supported tokens. Each sub class will call {@link SpreadsheetPatternSpreadsheetFormatParserTokenVisitor#failInvalid()} for invalid tokens.
  */
 abstract class SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor {
 
@@ -33,7 +32,7 @@ abstract class SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor exten
 
     @Override
     protected final void visit(final SpreadsheetFormatGeneralSymbolParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
