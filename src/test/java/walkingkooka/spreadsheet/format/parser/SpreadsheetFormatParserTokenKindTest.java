@@ -31,8 +31,11 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<SpreadsheetFormatParserTokenKind>,
         TreePrintableTesting {
@@ -406,6 +409,352 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
                 kind.labelText(),
                 () -> kind + " labelText()"
         );
+    }
+
+    // patterns.........................................................................................................
+
+    @Test
+    public void testPatternsAllNonEmpty() {
+        this.checkEquals(
+                Lists.empty(),
+                Arrays.stream(SpreadsheetFormatParserTokenKind.values())
+                        .filter(k -> k.patterns().isEmpty())
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @Test
+    public void testPatternsColorName() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                SpreadsheetPattern::parseDateFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatternsColorNumber() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
+                SpreadsheetPattern::parseDateFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_DAY_WITH_LEADING_ZERO() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testPatterns_DAY_WITHOUT_LEADING_ZERO() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testPatterns_DAY_NAME_ABBREVIATION() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.DAY_NAME_ABBREVIATION,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testPatterns_DAY_NAME_FULL() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.DAY_NAME_FULL,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testPatterns_MONTH_WITH_LEADING_ZERO() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testPatterns_MONTH_WITHOUT_LEADING_ZERO() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.MONTH_WITHOUT_LEADING_ZERO,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testPatterns_MONTH_NAME_ABBREVIATION() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.MONTH_NAME_ABBREVIATION,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testPatterns_MONTH_NAME_FULL() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.MONTH_NAME_FULL,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testPatterns_MONTH_NAME_INITIAL() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.MONTH_NAME_INITIAL,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testPatterns_YEAR_TWO_DIGIT() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.YEAR_TWO_DIGIT,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testPatterns_YEAR_FULL() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                SpreadsheetPattern::parseDateParsePattern
+        );
+    }
+
+    @Test
+    public void testPatterns_GENERAL() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.GENERAL,
+                SpreadsheetPattern::parseNumberFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_DIGIT() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.DIGIT,
+                SpreadsheetPattern::parseNumberFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_DIGIT_SPACE() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.DIGIT_SPACE,
+                SpreadsheetPattern::parseNumberFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_DIGIT_ZERO() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.DIGIT_ZERO,
+                SpreadsheetPattern::parseNumberFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_CURRENCY_SYMBOL() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL,
+                SpreadsheetPattern::parseNumberFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_DECIMAL_PLACE() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.DECIMAL_PLACE,
+                SpreadsheetPattern::parseNumberFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_EXPONENT() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseNumberParsePattern(
+                        SpreadsheetFormatParserTokenKind.EXPONENT.patterns()
+                                .iterator()
+                                .next()
+                )
+        );
+    }
+
+    @Test
+    public void testPatterns_FRACTION() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseNumberParsePattern(
+                        SpreadsheetFormatParserTokenKind.FRACTION.patterns()
+                                .iterator()
+                                .next()
+                )
+        );
+    }
+
+    @Test
+    public void testPatterns_PERCENT() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.PERCENT,
+                SpreadsheetPattern::parseNumberFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_THOUSANDS() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.THOUSANDS,
+                SpreadsheetPattern::parseNumberFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_TEXT_PLACEHOLDER() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
+                SpreadsheetPattern::parseTextFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_TEXT_LITERAL() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                SpreadsheetPattern::parseTextFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_STAR() {
+        SpreadsheetPattern.parseTextFormatPattern("* ");
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.STAR,
+                SpreadsheetPattern::parseTextFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_UNDERSCORE() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.UNDERSCORE,
+                SpreadsheetPattern::parseTextFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_HOUR_WITH_LEADING_ZERO() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_HOUR_WITHOUT_LEADING_ZERO() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.HOUR_WITHOUT_LEADING_ZERO,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_MINUTES_WITH_LEADING_ZERO() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_MINUTES_WITHOUT_LEADING_ZERO() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.MINUTES_WITHOUT_LEADING_ZERO,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_SECONDS_WITH_LEADING_ZERO() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.SECONDS_WITH_LEADING_ZERO,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_SECONDS_WITHOUT_LEADING_ZERO() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.SECONDS_WITHOUT_LEADING_ZERO,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_AMPM_FULL_LOWER() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_AMPM_FULL_UPPER() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_UPPER,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_AMPM_INITIAL_LOWER() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_INITIAL_LOWER,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    @Test
+    public void testPatterns_AMPM_INITIAL_UPPER() {
+        this.patternsParseAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_INITIAL_UPPER,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
+    private void patternsParseAndCheck(final SpreadsheetFormatParserTokenKind kind,
+                                       final Function<String, SpreadsheetPattern> parser) {
+        for (final String pattern : kind.patterns()) {
+            final SpreadsheetPattern spreadsheetPattern = parser.apply(pattern);
+
+            final List<SpreadsheetFormatParserToken> tokens = Lists.array();
+            new SpreadsheetFormatParserTokenVisitor() {
+
+                @Override
+                protected Visiting startVisit(final SpreadsheetFormatParserToken token) {
+                    tokens.add(token);
+                    return super.startVisit(token);
+                }
+            }.accept(
+                    spreadsheetPattern.value()
+            );
+
+            final Set<SpreadsheetFormatParserToken> wrong = tokens.stream()
+                    .filter(t -> t instanceof SpreadsheetFormatNonSymbolParserToken)
+                    .filter(t -> kind != t.kind().get())
+                    .collect(Collectors.toSet());
+
+            this.checkEquals(
+                    Sets.empty(),
+                    wrong
+            );
+        }
     }
 
     // ClassTesting.....................................................................................................
