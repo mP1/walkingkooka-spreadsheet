@@ -68,32 +68,50 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
     @Test
     public void testDateFormatPatternLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateFormatPatternLocale(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.dateFormatPatternLocale(null)
+        );
     }
 
     @Test
     public void testDateParsePatternLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateParsePatternLocale(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.dateParsePatternLocale(null)
+        );
     }
 
     @Test
     public void testDateTimeFormatPatternLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateTimeFormatPatternLocale(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.dateTimeFormatPatternLocale(null)
+        );
     }
 
     @Test
     public void testDateTimeParsePatternLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.dateTimeParsePatternLocale(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.dateTimeParsePatternLocale(null)
+        );
     }
 
     @Test
     public void testTimeFormatPatternLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.timeFormatPatternLocale(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.timeFormatPatternLocale(null)
+        );
     }
 
     @Test
     public void testTimeParsePatternLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.timeParsePatternLocale(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.timeParsePatternLocale(null)
+        );
     }
 
     private final static Locale EN_AU = Locale.forLanguageTag("EN-AU");
@@ -405,40 +423,45 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
         this.checkEquals(
                 expected,
-                parser.parse(cursor, new FakeSpreadsheetParserContext() {
-                            @Override
-                            public List<String> ampms() {
-                                return dateTimeContext.ampms();
-                            }
+                parser.parse(
+                                cursor,
+                                new FakeSpreadsheetParserContext() {
+                                    @Override
+                                    public List<String> ampms() {
+                                        return dateTimeContext.ampms();
+                                    }
 
-                            @Override
-                            public char decimalSeparator() {
-                                return '.';
-                    }
+                                    @Override
+                                    public char decimalSeparator() {
+                                        return '.';
+                                    }
 
-                    @Override
-                    public List<String> monthNames() {
-                        return dateTimeContext.monthNames();
-                    }
+                                    @Override
+                                    public List<String> monthNames() {
+                                        return dateTimeContext.monthNames();
+                                    }
 
-                    @Override
-                    public List<String> monthNameAbbreviations() {
-                        return dateTimeContext.monthNameAbbreviations();
-                    }
-                })
-                        .map(t -> tokenToValue.apply(t, new FakeExpressionEvaluationContext() {
+                                    @Override
+                                    public List<String> monthNameAbbreviations() {
+                                        return dateTimeContext.monthNameAbbreviations();
+                                    }
+                                })
+                        .map(t -> tokenToValue.apply(
+                                t,
+                                new FakeExpressionEvaluationContext() {
 
-                            @Override
-                            public int defaultYear() {
-                                return dateTimeContext.defaultYear();
-                            }
+                                    @Override
+                                    public int defaultYear() {
+                                        return dateTimeContext.defaultYear();
+                                    }
 
-                            @Override
-                            public int twoDigitYear() {
-                                return dateTimeContext.twoDigitYear();
-                            }
+                                    @Override
+                                    public int twoDigitYear() {
+                                        return dateTimeContext.twoDigitYear();
+                                    }
 
-                        }))
+                                })
+                        )
                         .orElse(null),
                 () -> "parse " + CharSequences.quoteAndEscape(text) + " parser: " + parser
         );
@@ -448,12 +471,18 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
     @Test
     public void testNumberFormatPatternLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.numberFormatPatternLocale(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.numberFormatPatternLocale(null)
+        );
     }
 
     @Test
     public void testNumberParsePatternLocaleNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPattern.numberParsePatternLocale(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.numberParsePatternLocale(null)
+        );
     }
 
     @Test
@@ -473,10 +502,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     public <T> Either<T, String> convert(final Object value,
                                                          final Class<T> target) {
                         return Converters.simple()
-                                .convert
-                                        (value,
-                                                target,
-                                                ConverterContexts.fake());
+                                .convert(
+                                        value,
+                                        target,
+                                        ConverterContexts.fake()
+                                );
                     }
 
                     @Override
@@ -516,7 +546,9 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
         this.checkEquals(
                 ExpressionNumberKind.BIG_DECIMAL.create(1.2),
-                parser.parse(cursor, new FakeSpreadsheetParserContext() {
+                parser.parse(
+                        cursor,
+                        new FakeSpreadsheetParserContext() {
 
                             @Override
                             public char decimalSeparator() {
@@ -525,20 +557,21 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
                             @Override
                             public char groupingSeparator() {
-                        return 'g';
-                    }
+                                return 'g';
+                            }
 
-                    @Override
-                    public char negativeSign() {
-                        return 'n';
-                    }
+                            @Override
+                            public char negativeSign() {
+                                return 'n';
+                            }
 
-                    @Override
-                    public char positiveSign() {
-                        return 'p';
-                    }
-                })
-                        .map(t -> t.cast(SpreadsheetNumberParserToken.class).toNumber(new FakeExpressionEvaluationContext() {
+                            @Override
+                            public char positiveSign() {
+                                return 'p';
+                            }
+                        }
+                ).map(t -> t.cast(SpreadsheetNumberParserToken.class).toNumber(
+                        new FakeExpressionEvaluationContext() {
 
                             @Override
                             public char negativeSign() {
@@ -554,8 +587,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                             public ExpressionNumberKind expressionNumberKind() {
                                 return ExpressionNumberKind.BIG_DECIMAL;
                             }
-                        }))
-                        .orElse(null),
+                        })
+                ).orElse(null),
                 () -> "parse " + CharSequences.quoteAndEscape(text) + " parser: " + parser
         );
     }
