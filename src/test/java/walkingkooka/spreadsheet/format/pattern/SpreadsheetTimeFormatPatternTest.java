@@ -473,6 +473,15 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testFormatterGeneral() {
+        this.formatAndCheck2(
+                "General",
+                LocalTime.now(),
+                GENERAL_FORMATTED
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -503,6 +512,16 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
                             Converters.localTimeLocalDateTime()
                     )
             );
+
+            @Override
+            public Optional<SpreadsheetText> defaultFormatText(final Object value) {
+                return Optional.of(
+                        SpreadsheetText.with(
+                                SpreadsheetText.WITHOUT_COLOR,
+                                GENERAL_FORMATTED
+                        )
+                );
+            }
 
             @Override
             public String ampm(final int hourOfDay) {

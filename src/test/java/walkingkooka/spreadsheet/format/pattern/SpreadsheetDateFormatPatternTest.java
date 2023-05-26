@@ -137,6 +137,11 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testParseGeneral() {
+        this.parseString("General");
+    }
+
     // HasFormatter.....................................................................................................
 
     @Test
@@ -454,6 +459,15 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testFormatterGeneral() {
+        this.formatAndCheck2(
+                "General",
+                LocalDate.now(),
+                GENERAL_FORMATTED
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -484,6 +498,16 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
                             Converters.localDateLocalDateTime()
                     )
             );
+
+            @Override
+            public Optional<SpreadsheetText> defaultFormatText(final Object value) {
+                return Optional.of(
+                        SpreadsheetText.with(
+                                SpreadsheetText.WITHOUT_COLOR,
+                                GENERAL_FORMATTED
+                        )
+                );
+            }
 
             @Override
             public List<String> monthNames() {

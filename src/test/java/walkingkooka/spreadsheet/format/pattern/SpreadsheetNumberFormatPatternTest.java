@@ -565,6 +565,15 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         );
     }
 
+    @Test
+    public void testFormatterGeneral() {
+        this.formatAndCheck2(
+                "General",
+                1.5,
+                GENERAL_FORMATTED
+        );
+    }
+
     @Override
     SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
@@ -596,6 +605,16 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
             @Override
             public char decimalSeparator() {
                 return 'd';
+            }
+
+            @Override
+            public Optional<SpreadsheetText> defaultFormatText(final Object value) {
+                return Optional.of(
+                        SpreadsheetText.with(
+                                SpreadsheetText.WITHOUT_COLOR,
+                                GENERAL_FORMATTED
+                        )
+                );
             }
 
             @Override

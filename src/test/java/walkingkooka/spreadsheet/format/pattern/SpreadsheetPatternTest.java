@@ -31,6 +31,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
@@ -42,8 +43,10 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
@@ -55,12 +58,14 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern>,
+        ParserTesting,
         SpreadsheetFormatterTesting {
 
 
@@ -150,6 +155,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 formatPattern.formatter(),
                 value,
                 new FakeSpreadsheetFormatterContext() {
+
                     @Override
                     public <TT> Either<TT, String> convert(final Object value,
                                                            final Class<TT> target) {
@@ -593,6 +599,190 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    // parseXXX.........................................................................................................
+
+    @Test
+    public void testParseDateFormatPattern() {
+        this.formatPatternFormatAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy"),
+                LocalDate.of(1999, 12, 31),
+                "31/12/1999"
+        );
+    }
+
+    @Test
+    public void testParseDateFormatPatternWithGeneral() {
+        final LocalDate date = LocalDate.of(1999, 12, 31);
+        final String formattedText = "31/12/1999 Hello";
+
+        this.formatAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("GENERAL").formatter(),
+                date,
+                new FakeSpreadsheetFormatterContext() {
+                    public Optional<SpreadsheetText> defaultFormatText(final Object value) {
+                        checkEquals(date, value);
+                        return Optional.ofNullable(
+                                SpreadsheetText.with(
+                                        SpreadsheetText.WITHOUT_COLOR,
+                                        formattedText
+                                )
+                        );
+                    }
+                },
+                formattedText
+        );
+    }
+
+    @Test
+    public void testParseDateTimeFormatPattern() {
+        this.formatPatternFormatAndCheck(
+                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh/mm/ss \"Hello\""),
+                LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+                "31/12/1999 12/58/59 Hello"
+        );
+    }
+
+    @Test
+    public void testParseDateTimeFormatPatternWithGeneral() {
+        final LocalDateTime dateTime = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
+        final String formattedText = "31/12/1999 12/58/59 Hello";
+
+        this.formatAndCheck(
+                SpreadsheetPattern.parseDateTimeFormatPattern("GENERAL").formatter(),
+                dateTime,
+                new FakeSpreadsheetFormatterContext() {
+                    public Optional<SpreadsheetText> defaultFormatText(final Object value) {
+                        checkEquals(dateTime, value);
+                        return Optional.ofNullable(
+                                SpreadsheetText.with(
+                                        SpreadsheetText.WITHOUT_COLOR,
+                                        formattedText
+                                )
+                        );
+                    }
+                },
+                formattedText
+        );
+    }
+
+    @Test
+    public void testParseNumberFormatPattern() {
+        this.formatAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("0.00 \"Hello\"").formatter(),
+                ExpressionNumberKind.BIG_DECIMAL.create(1.5),
+                new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return this.successfulConversion(
+                                ExpressionNumber.class.cast(value).bigDecimal(),
+                                target
+                        );
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL128;
+                    }
+                },
+                "1.50 Hello"
+        );
+    }
+
+    @Test
+    public void testParseNumberFormatPatternWithGeneral() {
+        final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(1.5);
+        final String formattedText = "1.5 Hello";
+
+        this.formatAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("GENERAL").formatter(),
+                number,
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return type == String.class;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return this.successfulConversion(value, target);
+                    }
+
+                    public Optional<SpreadsheetText> defaultFormatText(final Object value) {
+                        checkEquals(number, value);
+                        return Optional.ofNullable(
+                                SpreadsheetText.with(
+                                        SpreadsheetText.WITHOUT_COLOR,
+                                        formattedText
+                                )
+                        );
+                    }
+                },
+                formattedText
+        );
+    }
+
+    @Test
+    public void testParseTextFormatPattern() {
+        this.formatAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("@@ \"Hello\"").formatter(),
+                "Banana",
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return String.class == type;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return this.successfulConversion(value, target);
+                    }
+                },
+                "BananaBanana Hello"
+        );
+    }
+
+    @Test
+    public void testParseTimeFormatPattern() {
+        this.formatPatternFormatAndCheck(
+                SpreadsheetPattern.parseTimeFormatPattern("hh/mm/ss"),
+                LocalTime.of(12, 58, 59),
+                "12/58/59"
+        );
+    }
+
+    @Test
+    public void testParseTimeFormatPatternWithGeneral() {
+        final LocalTime time = LocalTime.of(12, 58, 59);
+        final String formattedText = "12/58/59 Hello";
+
+        this.formatAndCheck(
+                SpreadsheetPattern.parseTimeFormatPattern("GENERAL").formatter(),
+                time,
+                new FakeSpreadsheetFormatterContext() {
+                    public Optional<SpreadsheetText> defaultFormatText(final Object value) {
+                        checkEquals(time, value);
+                        return Optional.ofNullable(
+                                SpreadsheetText.with(
+                                        SpreadsheetText.WITHOUT_COLOR,
+                                        formattedText
+                                )
+                        );
+                    }
+                },
+                formattedText
+        );
+    }
     // forEachComponent..................................................................................................
 
     @Test
