@@ -56,37 +56,37 @@ abstract class SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<T exte
 
     @Override
     protected final void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatColorLiteralSymbolParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatColorNameParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatColorNumberParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatConditionNumberParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatEqualsSymbolParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
@@ -96,32 +96,32 @@ abstract class SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<T exte
 
     @Override
     protected final void visit(final SpreadsheetFormatGeneralSymbolParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatGreaterThanEqualsSymbolParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatGreaterThanSymbolParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatLessThanEqualsSymbolParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatLessThanSymbolParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatNotEqualsSymbolParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
@@ -136,7 +136,7 @@ abstract class SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<T exte
 
     @Override
     protected final void visit(final SpreadsheetFormatStarParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
@@ -146,12 +146,12 @@ abstract class SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<T exte
 
     @Override
     protected final void visit(final SpreadsheetFormatTextPlaceholderParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatUnderscoreParserToken token) {
-        this.failInvalid(token);
+        this.failInvalid();
     }
 
     abstract void text(final String text);
