@@ -28,17 +28,17 @@ import java.util.Optional;
  * A {@link SpreadsheetFormatter} that converts any given value to a {@link ExpressionNumber} and ten proceeds to format.
  * Note numbers with more than 12 digits are formatted as a scientific number.
  */
-final class GeneralNumberSpreadsheetFormatter implements SpreadsheetFormatter {
+final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
 
     /**
      * Singleton
      */
-    final static GeneralNumberSpreadsheetFormatter INSTANCE = new GeneralNumberSpreadsheetFormatter();
+    final static GeneralSpreadsheetFormatter INSTANCE = new GeneralSpreadsheetFormatter();
 
     /**
      * Private ctor use singleton
      */
-    private GeneralNumberSpreadsheetFormatter() {
+    private GeneralSpreadsheetFormatter() {
         super();
     }
 

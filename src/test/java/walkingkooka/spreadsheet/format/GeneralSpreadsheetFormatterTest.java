@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-public final class GeneralNumberSpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<GeneralNumberSpreadsheetFormatter> {
+public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<GeneralSpreadsheetFormatter> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -191,7 +191,7 @@ public final class GeneralNumberSpreadsheetFormatterTest extends SpreadsheetForm
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                GeneralNumberSpreadsheetFormatter.INSTANCE,
+                GeneralSpreadsheetFormatter.INSTANCE,
                 "General"
         );
     }
@@ -199,8 +199,8 @@ public final class GeneralNumberSpreadsheetFormatterTest extends SpreadsheetForm
     // SpreadsheetFormatterTestCase.....................................................................................
 
     @Override
-    public GeneralNumberSpreadsheetFormatter createFormatter() {
-        return GeneralNumberSpreadsheetFormatter.INSTANCE;
+    public GeneralSpreadsheetFormatter createFormatter() {
+        return GeneralSpreadsheetFormatter.INSTANCE;
     }
 
     @Override
@@ -288,7 +288,7 @@ public final class GeneralNumberSpreadsheetFormatterTest extends SpreadsheetForm
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<GeneralNumberSpreadsheetFormatter> type() {
-        return GeneralNumberSpreadsheetFormatter.class;
+    public Class<GeneralSpreadsheetFormatter> type() {
+        return GeneralSpreadsheetFormatter.class;
     }
 }
