@@ -28,20 +28,24 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
     /**
      * A basic {@link Converter} that supports number -> number, date -> datetime, time -> datetime.
      */
-    public static <C extends ConverterContext> Converter<C> basic() {
+    public static <C extends ExpressionNumberConverterContext> Converter<C> basic() {
         return Cast.to(CONVERTER);
     }
 
-    private final static Converter<ConverterContext> CONVERTER = Converters.collection(
+    private final static Converter<ExpressionNumberConverterContext> CONVERTER = Converters.collection(
             Lists.of(
                     Converters.simple(),
-                    Converters.numberNumber(),
+                    ExpressionNumber.toConverter(
+                            Converters.numberNumber()
+                    ),
                     Converters.localDateLocalDateTime(),
                     Converters.localTimeLocalDateTime()
             )

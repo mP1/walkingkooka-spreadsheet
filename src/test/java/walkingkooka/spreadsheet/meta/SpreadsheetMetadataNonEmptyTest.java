@@ -59,10 +59,12 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.tree.expression.FakeExpressionNumberConverterContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -1686,11 +1688,25 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     @Override
                     public <T> Either<T, String> convert(final Object value,
                                                          final Class<T> target) {
-                        return Converters.collection(Lists.of(Converters.simple(),
-                                Converters.numberNumber(),
-                                Converters.localDateLocalDateTime(),
-                                Converters.localTimeLocalDateTime()))
-                                .convert(value, target, ConverterContexts.fake());
+                        return Converters.collection(
+                                Lists.of(
+                                        Converters.simple(),
+                                        ExpressionNumber.toConverter(
+                                                Converters.numberNumber()
+                                        ),
+                                        Converters.localDateLocalDateTime(),
+                                        Converters.localTimeLocalDateTime()
+                                )
+                        ).convert(
+                                value,
+                                target,
+                                new FakeExpressionNumberConverterContext() {
+                                    @Override
+                                    public ExpressionNumberKind expressionNumberKind() {
+                                        return ExpressionNumberKind.BIG_DECIMAL;
+                                    }
+                                }
+                        );
                     }
 
                     @Override

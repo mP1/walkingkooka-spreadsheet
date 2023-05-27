@@ -21,7 +21,6 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +65,11 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     @Override
     public boolean canFormat(final Object value,
                              final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-        return ExpressionNumber.is(value) && context.canConvertOrFail(value, BigDecimal.class);
+        return ExpressionNumber.is(value) &&
+                context.canConvertOrFail(
+                        value,
+                        ExpressionNumber.class
+                );
     }
 
     @Override
@@ -77,7 +80,10 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
                         this.color(context),
                         this.format1(
                                 this.normalOrScientific.context(
-                                        context.convertOrFail(value, BigDecimal.class),
+                                        context.convertOrFail(
+                                                value,
+                                                ExpressionNumber.class
+                                        ).bigDecimal(),
                                         this,
                                         context
                                 )

@@ -275,7 +275,9 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
     public SpreadsheetConverterContext createContext() {
         final Converter<SpreadsheetConverterContext> converter = Converters.collection(
                 Lists.of(
-                        ExpressionNumber.fromConverter(Converters.numberNumber()),
+                        ExpressionNumber.toConverter(
+                                Converters.numberNumber()
+                        ),
                         Converters.localDateLocalDateTime(),
                         Converters.localTimeLocalDateTime(),
                         Converters.simple()

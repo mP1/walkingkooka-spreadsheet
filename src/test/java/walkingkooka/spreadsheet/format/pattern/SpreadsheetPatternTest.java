@@ -50,7 +50,6 @@ import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
-import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -495,24 +494,23 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     public void testNumberFormatLocale() {
         this.formatAndCheck(
                 SpreadsheetPattern.numberFormatPatternLocale(EN_AU).formatter(),
-                BigDecimal.valueOf(12.5),
+                ExpressionNumberKind.DOUBLE.create(12.5),
                 new FakeSpreadsheetFormatterContext() {
 
                     @Override
                     public boolean canConvert(final Object value,
                                               final Class<?> type) {
-                        return true;
+                        return value instanceof ExpressionNumber && type == ExpressionNumber.class;
                     }
 
                     @Override
                     public <T> Either<T, String> convert(final Object value,
                                                          final Class<T> target) {
-                        return Converters.simple()
-                                .convert(
-                                        value,
-                                        target,
-                                        ConverterContexts.fake()
-                                );
+                        this.canConvertOrFail(value, target);
+                        return this.successfulConversion(
+                                value,
+                                target
+                        );
                     }
 
                     @Override
@@ -669,14 +667,14 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     public void testParseNumberFormatPattern() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("0.00 \"Hello\"").formatter(),
-                ExpressionNumberKind.BIG_DECIMAL.create(1.5),
+                ExpressionNumberKind.DOUBLE.create(1.5),
                 new FakeSpreadsheetFormatterContext() {
 
                     @Override
                     public <T> Either<T, String> convert(final Object value,
                                                          final Class<T> target) {
                         return this.successfulConversion(
-                                ExpressionNumber.class.cast(value).bigDecimal(),
+                                ExpressionNumber.class.cast(value),
                                 target
                         );
                     }
