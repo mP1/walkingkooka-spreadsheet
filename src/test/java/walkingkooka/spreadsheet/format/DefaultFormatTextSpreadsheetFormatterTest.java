@@ -25,7 +25,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<GeneralSpreadsheetFormatter> {
+public final class DefaultFormatTextSpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<DefaultFormatTextSpreadsheetFormatter> {
 
     private final static BigDecimal BIG_DECIMAL = BigDecimal.valueOf(123);
     private final static String BIGDECIMAL_STRING = "123D00Text";
@@ -51,12 +51,15 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createFormatter(), "General");
+        this.toStringAndCheck(
+                this.createFormatter(),
+                "defaultFormatText"
+        );
     }
 
     @Override
-    public GeneralSpreadsheetFormatter createFormatter() {
-        return GeneralSpreadsheetFormatter.INSTANCE;
+    public DefaultFormatTextSpreadsheetFormatter createFormatter() {
+        return DefaultFormatTextSpreadsheetFormatter.INSTANCE;
     }
 
     @Override
@@ -149,7 +152,7 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
     }
 
     @Override
-    public Class<GeneralSpreadsheetFormatter> type() {
-        return GeneralSpreadsheetFormatter.class;
+    public Class<DefaultFormatTextSpreadsheetFormatter> type() {
+        return DefaultFormatTextSpreadsheetFormatter.class;
     }
 }
