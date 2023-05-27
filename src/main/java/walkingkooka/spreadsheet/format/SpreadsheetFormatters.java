@@ -99,6 +99,13 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
+     * {@see GeneralSpreadsheetFormatter}
+     */
+    public static SpreadsheetFormatter generalNumber() {
+        return GeneralNumberSpreadsheetFormatter.INSTANCE;
+    }
+
+    /**
      * {@see NumberSpreadsheetFormatter}
      */
     public static SpreadsheetFormatter number(final SpreadsheetFormatNumberParserToken token) {
