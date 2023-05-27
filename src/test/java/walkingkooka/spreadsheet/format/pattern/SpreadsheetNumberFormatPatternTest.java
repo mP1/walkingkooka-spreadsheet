@@ -20,8 +20,6 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.color.Color;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -33,9 +31,12 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
 import java.util.Optional;
@@ -580,21 +581,34 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
 
             @Override
             public boolean canConvert(final Object value, final Class<?> target) {
-                try {
-                    this.convert(value, target);
-                    return true;
-                } catch (final Exception failed) {
-                    return false;
-                }
+                return TEXT.equals(value) && target == String.class ||
+                        value instanceof Integer && target == BigDecimal.class ||
+                        value instanceof Number && target == ExpressionNumber.class;
             }
 
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
-                return TEXT.equals(value) && String.class == target ?
-                        this.successfulConversion(value, target) :
-                        Converters.numberNumber()
-                                .convert(value, target, ConverterContexts.fake());
+                if (TEXT.equals(value) && String.class == target) {
+                    return this.successfulConversion(
+                            value,
+                            target
+                    );
+                }
+                if (value instanceof Integer && BigDecimal.class == target) {
+                    return this.successfulConversion(
+                            BigDecimal.valueOf(Integer.class.cast(value)),
+                            target
+                    );
+                }
+                if (value instanceof Number && ExpressionNumber.class == target) {
+                    return this.successfulConversion(
+                            ExpressionNumberKind.DOUBLE.create(Number.class.cast(value)),
+                            target
+                    );
+                }
+
+                return this.failConversion(value, target);
             }
 
             @Override

@@ -30,8 +30,8 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.FakeExpressionNumberConverterContext;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -2447,8 +2447,18 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
-                return ExpressionNumber.fromConverter(Converters.numberNumber())
-                        .convert(value, target, ExpressionNumberConverterContexts.fake());
+                return ExpressionNumber.toConverter(
+                        Converters.numberNumber()
+                ).convert(
+                        value,
+                        target,
+                        new FakeExpressionNumberConverterContext() {
+                            @Override
+                            public ExpressionNumberKind expressionNumberKind() {
+                                return ExpressionNumberKind.BIG_DECIMAL;
+                            }
+                        }
+                );
             }
 
             @Override

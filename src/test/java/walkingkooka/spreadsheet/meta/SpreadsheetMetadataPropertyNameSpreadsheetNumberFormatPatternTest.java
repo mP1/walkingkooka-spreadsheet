@@ -31,27 +31,35 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
-import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern, SpreadsheetNumberFormatPattern> {
 
+    private final static ExpressionNumberKind KIND = ExpressionNumberKind.DOUBLE;
+
     @Test
     public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(BigDecimal.valueOf(1.25), "1.25");
+        this.extractLocaleValueAndCheck(
+                KIND.create(1.25),
+                "1.25"
+        );
     }
 
     @Test
     public void testExtractLocaleValueInteger() {
-        this.extractLocaleValueAndCheck(BigDecimal.valueOf(789), "789.");
+        this.extractLocaleValueAndCheck(
+                KIND.create(789),
+                "789."
+        );
     }
 
-    private void extractLocaleValueAndCheck(final BigDecimal number,
+    private void extractLocaleValueAndCheck(final ExpressionNumber number,
                                             final String expected) {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetNumberFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern.instance()
