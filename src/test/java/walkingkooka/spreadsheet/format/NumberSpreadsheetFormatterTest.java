@@ -2430,7 +2430,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
         return this.createContext(RoundingMode.HALF_UP);
     }
 
-    public SpreadsheetFormatterContext createContext(final RoundingMode roundingMode) {
+    private SpreadsheetFormatterContext createContext(final RoundingMode roundingMode) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
