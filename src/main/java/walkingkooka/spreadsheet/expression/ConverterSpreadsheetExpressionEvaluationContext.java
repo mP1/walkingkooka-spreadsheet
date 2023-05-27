@@ -58,7 +58,7 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
 
     static ConverterSpreadsheetExpressionEvaluationContext with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                                 final SpreadsheetExpressionEvaluationContext context) {
-        Objects.requireNonNull(converter, "general");
+        Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(context, "context");
 
         return context instanceof ConverterSpreadsheetExpressionEvaluationContext ?
