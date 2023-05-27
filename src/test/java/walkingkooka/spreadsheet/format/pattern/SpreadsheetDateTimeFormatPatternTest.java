@@ -37,9 +37,12 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -824,7 +827,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck2(
                 "General",
                 LocalDateTime.now(),
-                GENERAL_FORMATTED
+                "19505d1"
         );
     }
 
@@ -854,7 +857,9 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
 
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
                     Lists.of(
-                            Converters.localDateTimeNumber(0),
+                            ExpressionNumber.toConverter(
+                                    Converters.localDateTimeNumber(0)
+                            ),
                             Converters.simple()
                     )
             );
@@ -867,6 +872,16 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
                                 GENERAL_FORMATTED
                         )
                 );
+            }
+
+            @Override
+            public ExpressionNumberKind expressionNumberKind() {
+                return ExpressionNumberKind.BIG_DECIMAL;
+            }
+
+            @Override
+            public MathContext mathContext() {
+                return MathContext.DECIMAL32;
             }
 
             @Override

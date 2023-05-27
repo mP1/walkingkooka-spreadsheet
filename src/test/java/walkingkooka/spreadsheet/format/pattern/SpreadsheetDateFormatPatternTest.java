@@ -36,9 +36,12 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -463,8 +466,8 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
     public void testFormatterGeneral() {
         this.formatAndCheck2(
                 "General",
-                LocalDate.now(),
-                GENERAL_FORMATTED
+                LocalDate.of(1999, 12, 31),
+                "10956"
         );
     }
 
@@ -494,19 +497,26 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
 
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
                     Lists.of(
-                            Converters.localDateNumber(0),
+                            ExpressionNumber.toConverter(
+                                    Converters.localDateNumber(0)
+                            ),
                             Converters.localDateLocalDateTime()
                     )
             );
 
             @Override
-            public Optional<SpreadsheetText> defaultFormatText(final Object value) {
-                return Optional.of(
-                        SpreadsheetText.with(
-                                SpreadsheetText.WITHOUT_COLOR,
-                                GENERAL_FORMATTED
-                        )
-                );
+            public char decimalSeparator() {
+                return '.';
+            }
+
+            @Override
+            public ExpressionNumberKind expressionNumberKind() {
+                return ExpressionNumberKind.BIG_DECIMAL;
+            }
+
+            @Override
+            public MathContext mathContext() {
+                return MathContext.DECIMAL32;
             }
 
             @Override

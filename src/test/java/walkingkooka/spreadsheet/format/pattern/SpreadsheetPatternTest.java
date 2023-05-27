@@ -31,7 +31,6 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
-import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
@@ -50,6 +49,7 @@ import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
+import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -57,7 +57,6 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -611,23 +610,51 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseDateFormatPatternWithGeneral() {
         final LocalDate date = LocalDate.of(1999, 12, 31);
-        final String formattedText = "31/12/1999 Hello";
 
         this.formatAndCheck(
                 SpreadsheetPattern.parseDateFormatPattern("GENERAL").formatter(),
                 date,
                 new FakeSpreadsheetFormatterContext() {
-                    public Optional<SpreadsheetText> defaultFormatText(final Object value) {
-                        checkEquals(date, value);
-                        return Optional.ofNullable(
-                                SpreadsheetText.with(
-                                        SpreadsheetText.WITHOUT_COLOR,
-                                        formattedText
-                                )
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return value.equals(date) && type == ExpressionNumber.class;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        if (value instanceof ExpressionNumber && target == BigDecimal.class) {
+                            return this.successfulConversion(
+                                    ExpressionNumber.class.cast(value).bigDecimal(),
+                                    target
+                            );
+                        }
+                        if (value instanceof ExpressionNumber && target == ExpressionNumber.class) {
+                            return this.successfulConversion(
+                                    value,
+                                    target
+                            );
+                        }
+
+                        this.canConvertOrFail(value, target);
+                        return this.successfulConversion(
+                                ExpressionNumberKind.BIG_DECIMAL.create(1234),
+                                target
                         );
                     }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL32;
+                    }
                 },
-                formattedText
+                "1234"
         );
     }
 
@@ -643,23 +670,51 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseDateTimeFormatPatternWithGeneral() {
         final LocalDateTime dateTime = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
-        final String formattedText = "31/12/1999 12/58/59 Hello";
 
         this.formatAndCheck(
                 SpreadsheetPattern.parseDateTimeFormatPattern("GENERAL").formatter(),
                 dateTime,
                 new FakeSpreadsheetFormatterContext() {
-                    public Optional<SpreadsheetText> defaultFormatText(final Object value) {
-                        checkEquals(dateTime, value);
-                        return Optional.ofNullable(
-                                SpreadsheetText.with(
-                                        SpreadsheetText.WITHOUT_COLOR,
-                                        formattedText
-                                )
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return value.equals(dateTime) && type == ExpressionNumber.class;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        if (value instanceof ExpressionNumber && target == BigDecimal.class) {
+                            return this.successfulConversion(
+                                    ExpressionNumber.class.cast(value).bigDecimal(),
+                                    target
+                            );
+                        }
+                        if (value instanceof ExpressionNumber && target == ExpressionNumber.class) {
+                            return this.successfulConversion(
+                                    value,
+                                    target
+                            );
+                        }
+
+                        this.canConvertOrFail(value, target);
+                        return this.successfulConversion(
+                                ExpressionNumberKind.BIG_DECIMAL.create(1234),
+                                target
                         );
                     }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL32;
+                    }
                 },
-                formattedText
+                "1234"
         );
     }
 
@@ -696,7 +751,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseNumberFormatPatternWithGeneral() {
         final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(1.5);
-        final String formattedText = "1.5 Hello";
 
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("GENERAL").formatter(),
@@ -705,26 +759,31 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public boolean canConvert(final Object value,
                                               final Class<?> type) {
-                        return type == String.class;
+                        return value.equals(number) && type == ExpressionNumber.class;
                     }
 
                     @Override
                     public <T> Either<T, String> convert(final Object value,
                                                          final Class<T> target) {
-                        return this.successfulConversion(value, target);
-                    }
+                        this.canConvertOrFail(value, target);
 
-                    public Optional<SpreadsheetText> defaultFormatText(final Object value) {
-                        checkEquals(number, value);
-                        return Optional.ofNullable(
-                                SpreadsheetText.with(
-                                        SpreadsheetText.WITHOUT_COLOR,
-                                        formattedText
-                                )
+                        return this.successfulConversion(
+                                ExpressionNumber.class.cast(value),
+                                target
                         );
                     }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL32;
+                    }
                 },
-                formattedText
+                "1.5"
         );
     }
 
@@ -762,23 +821,51 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseTimeFormatPatternWithGeneral() {
         final LocalTime time = LocalTime.of(12, 58, 59);
-        final String formattedText = "12/58/59 Hello";
 
         this.formatAndCheck(
                 SpreadsheetPattern.parseTimeFormatPattern("GENERAL").formatter(),
                 time,
                 new FakeSpreadsheetFormatterContext() {
-                    public Optional<SpreadsheetText> defaultFormatText(final Object value) {
-                        checkEquals(time, value);
-                        return Optional.ofNullable(
-                                SpreadsheetText.with(
-                                        SpreadsheetText.WITHOUT_COLOR,
-                                        formattedText
-                                )
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return value.equals(time) && type == ExpressionNumber.class;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        if (value instanceof ExpressionNumber && target == BigDecimal.class) {
+                            return this.successfulConversion(
+                                    ExpressionNumber.class.cast(value).bigDecimal(),
+                                    target
+                            );
+                        }
+                        if (value instanceof ExpressionNumber && target == ExpressionNumber.class) {
+                            return this.successfulConversion(
+                                    value,
+                                    target
+                            );
+                        }
+
+                        this.canConvertOrFail(value, target);
+                        return this.successfulConversion(
+                                ExpressionNumberKind.BIG_DECIMAL.create(1234),
+                                target
                         );
                     }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL32;
+                    }
                 },
-                formattedText
+                "1234"
         );
     }
     // forEachComponent..................................................................................................

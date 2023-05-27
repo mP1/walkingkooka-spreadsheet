@@ -34,9 +34,12 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.math.MathContext;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -477,8 +480,8 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     public void testFormatterGeneral() {
         this.formatAndCheck2(
                 "General",
-                LocalTime.now(),
-                GENERAL_FORMATTED
+                LocalTime.of(12, 58, 59),
+                "46739"
         );
     }
 
@@ -508,20 +511,12 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
 
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
                     Lists.of(
-                            Converters.localTimeNumber(),
+                            ExpressionNumber.toConverter(
+                                    Converters.localTimeNumber()
+                            ),
                             Converters.localTimeLocalDateTime()
                     )
             );
-
-            @Override
-            public Optional<SpreadsheetText> defaultFormatText(final Object value) {
-                return Optional.of(
-                        SpreadsheetText.with(
-                                SpreadsheetText.WITHOUT_COLOR,
-                                GENERAL_FORMATTED
-                        )
-                );
-            }
 
             @Override
             public String ampm(final int hourOfDay) {
@@ -533,6 +528,16 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             @Override
             public char decimalSeparator() {
                 return 'D';
+            }
+
+            @Override
+            public ExpressionNumberKind expressionNumberKind() {
+                return ExpressionNumberKind.BIG_DECIMAL;
+            }
+
+            @Override
+            public MathContext mathContext() {
+                return MathContext.DECIMAL128;
             }
 
             @Override
