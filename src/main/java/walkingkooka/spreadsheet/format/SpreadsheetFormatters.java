@@ -94,8 +94,8 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see GeneralSpreadsheetFormatter}
      */
-    public static SpreadsheetFormatter general() {
-        return GeneralSpreadsheetFormatter.INSTANCE;
+    public static SpreadsheetFormatter defaultFormatText() {
+        return DefaultFormatTextSpreadsheetFormatter.INSTANCE;
     }
 
     /**

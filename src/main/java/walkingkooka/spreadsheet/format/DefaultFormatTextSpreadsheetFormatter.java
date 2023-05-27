@@ -22,17 +22,17 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetFormatter} that delegates formatting to {@link SpreadsheetFormatterContext#defaultFormatText(Object)}.
  */
-final class GeneralSpreadsheetFormatter extends SpreadsheetFormatter2 {
+final class DefaultFormatTextSpreadsheetFormatter extends SpreadsheetFormatter2 {
 
     /**
-     * The {@link GeneralSpreadsheetFormatter} singleton instance.
+     * The {@link DefaultFormatTextSpreadsheetFormatter} singleton instance.
      */
-    static final GeneralSpreadsheetFormatter INSTANCE = new GeneralSpreadsheetFormatter();
+    static final DefaultFormatTextSpreadsheetFormatter INSTANCE = new DefaultFormatTextSpreadsheetFormatter();
 
     /**
      * Private ctor use factory
      */
-    private GeneralSpreadsheetFormatter() {
+    private DefaultFormatTextSpreadsheetFormatter() {
         super();
     }
 
@@ -48,6 +48,6 @@ final class GeneralSpreadsheetFormatter extends SpreadsheetFormatter2 {
 
     @Override
     public String toString() {
-        return "General";
+        return "defaultFormatText";
     }
 }
