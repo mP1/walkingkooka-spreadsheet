@@ -143,7 +143,7 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     /**
-     * The {@link Converter} that is overriding the defaultFormatText support methods in the wrapped {@link SpreadsheetExpressionEvaluationContext}.
+     * The {@link Converter} that is overriding the general support methods in the wrapped {@link SpreadsheetExpressionEvaluationContext}.
      */
     // @VisibleForTesting
     final Converter<SpreadsheetExpressionEvaluationContext> converter;
