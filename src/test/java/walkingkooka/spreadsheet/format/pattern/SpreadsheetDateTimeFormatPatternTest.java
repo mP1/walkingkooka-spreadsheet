@@ -826,8 +826,8 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     public void testFormatterGeneral() {
         this.formatAndCheck2(
                 "General",
-                LocalDateTime.now(),
-                "19505d1"
+                LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+                "10956d5"
         );
     }
 
