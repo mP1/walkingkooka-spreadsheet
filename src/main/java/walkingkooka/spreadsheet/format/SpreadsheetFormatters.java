@@ -101,8 +101,8 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see GeneralSpreadsheetFormatter}
      */
-    public static SpreadsheetFormatter generalNumber() {
-        return GeneralNumberSpreadsheetFormatter.INSTANCE;
+    public static SpreadsheetFormatter general() {
+        return GeneralSpreadsheetFormatter.INSTANCE;
     }
 
     /**
