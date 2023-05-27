@@ -126,7 +126,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     @Override
     protected void endVisit(final SpreadsheetFormatGeneralParserToken token) {
         this.saveFormatter(
-                SpreadsheetFormatters.defaultFormatText()
+                SpreadsheetFormatters.general()
         );
     }
 
