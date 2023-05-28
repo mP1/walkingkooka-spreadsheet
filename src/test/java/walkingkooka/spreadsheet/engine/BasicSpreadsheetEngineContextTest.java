@@ -984,7 +984,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
     };
 
-    SpreadsheetStoreRepository storeRepository() {
+    private SpreadsheetStoreRepository storeRepository() {
         return SpreadsheetStoreRepositories.fake();
     }
 
