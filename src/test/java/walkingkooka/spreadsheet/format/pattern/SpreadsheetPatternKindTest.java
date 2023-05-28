@@ -84,7 +84,7 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
         this.checkEquals(
                 JsonNodeContext.computeTypeName(expected),
                 kind.typeName(),
-                () -> kind.toString()
+                kind::toString
         );
     }
 

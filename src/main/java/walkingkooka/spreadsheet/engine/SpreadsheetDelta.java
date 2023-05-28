@@ -775,7 +775,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                                        final SpreadsheetViewportWindows window) {
         return filterMap(
                 columnWidths,
-                c -> window.test(c)
+                window::test
         );
     }
 
@@ -783,7 +783,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                                   final SpreadsheetViewportWindows window) {
         return filterMap(
                 rowHeights,
-                r -> window.test(r)
+                window::test
         );
     }
 
