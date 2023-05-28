@@ -41,7 +41,7 @@ public final class ErrorExpressionFunctionTest implements ExpressionFunctionTest
     public void testMissingParameterFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> this.apply2()
+                this::apply2
         );
     }
 

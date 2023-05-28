@@ -160,7 +160,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkNotEquals(
                 Sets.empty(),
                 IntStream.range(SpreadsheetColors.MIN, SpreadsheetColors.MAX + 1)
-                        .mapToObj(i -> SpreadsheetMetadataPropertyName.numberedColor(i))
+                        .mapToObj(SpreadsheetMetadataPropertyName::numberedColor)
                         .filter(n -> false == nonLocaleDefaults.defaults().get(n).isPresent())
                         .collect(Collectors.toSet()),
                 () -> "missing numbered color defaults"

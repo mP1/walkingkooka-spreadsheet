@@ -162,7 +162,7 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
         this.checkEquals(
                 expected,
                 token.kind(),
-                () -> token.toString()
+                token::toString
         );
     }
 
