@@ -694,10 +694,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
         this.parseFormatAndCheck(
                 "yyyy/mm/dd",
                 LocalDate.of(2000, 12, 31),
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        "2000/12/31"
-                )
+                SpreadsheetText.with("2000/12/31")
         );
     }
 
@@ -706,10 +703,10 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
         this.parseFormatAndCheck(
                 "[RED]yyyy/mm/dd",
                 LocalDate.of(2000, 12, 31),
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        "2000/12/31"
-                )
+                SpreadsheetText.with("2000/12/31")
+                        .setColor(
+                                Optional.of(RED)
+                        )
         );
     }
 
@@ -718,10 +715,10 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
         this.parseFormatAndCheck(
                 "[color44]yyyy/mm/dd",
                 LocalDate.of(2000, 12, 31),
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        "2000/12/31"
-                )
+                SpreadsheetText.with("2000/12/31")
+                        .setColor(
+                                Optional.of(RED)
+                        )
         );
     }
 
@@ -766,10 +763,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
         this.parseFormatAndCheck(
                 "hh/mm/ss",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        "12/58/59"
-                )
+                SpreadsheetText.with("12/58/59")
         );
     }
 
@@ -778,12 +772,10 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
         this.parseFormatAndCheck(
                 "[RED]hh/mm/ss",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with(
-                        Optional.of(
-                                RED
-                        ),
-                        "12/58/59"
-                )
+                SpreadsheetText.with("12/58/59")
+                        .setColor(
+                                Optional.of(RED)
+                        )
         );
     }
 
@@ -839,17 +831,20 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
         this.formatAndCheck(this.createFormatter(pattern),
                 value,
                 this.createContext(),
-                SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
+                SpreadsheetText.with(text)
+        );
     }
 
     private void parseFormatAndCheck(final String pattern,
                                      final String value,
                                      final SpreadsheetFormatterContext context,
                                      final String text) {
-        this.parseFormatAndCheck(pattern,
+        this.parseFormatAndCheck(
+                pattern,
                 value,
                 context,
-                SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
+                SpreadsheetText.with(text)
+        );
     }
 
     private void parseFormatAndCheck(final String pattern,

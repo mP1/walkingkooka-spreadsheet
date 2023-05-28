@@ -454,7 +454,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 BigDecimal.valueOf(-123.45),
                 SpreadsheetPattern.parseNumberFormatPattern("#.#\"Abc123\"").formatter(),
                 Optional.of(
-                        SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, MINUS + "123" + DECIMAL + "5Abc123")
+                        SpreadsheetText.with(
+                                MINUS + "123" + DECIMAL + "5Abc123"
+                        )
                 )
         );
     }

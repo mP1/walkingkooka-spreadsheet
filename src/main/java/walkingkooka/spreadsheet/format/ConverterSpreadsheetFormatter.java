@@ -50,7 +50,9 @@ final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
                                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
         final Either<String, String> converted = this.converter.convert(value, String.class, context);
         return converted.isLeft() ?
-                Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, converted.leftValue())) :
+                Optional.of(
+                        SpreadsheetText.with(converted.leftValue())
+                ) :
                 Optional.empty();
     }
 

@@ -409,10 +409,10 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "[red]hhmmss",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        "125859"
-                )
+                SpreadsheetText.with("125859")
+                        .setColor(
+                                Optional.of(RED)
+                        )
         );
     }
 
@@ -421,10 +421,10 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "[color44]hhmmss",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        "125859"
-                )
+                SpreadsheetText.with("125859")
+                        .setColor(
+                                Optional.of(RED)
+                        )
         );
     }
 
@@ -433,10 +433,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "hhmmss;",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        "125859"
-                )
+                SpreadsheetText.with("125859")
         );
     }
 
@@ -445,10 +442,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "[>0]hhmmss;hhmm",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        "125859"
-                )
+                SpreadsheetText.with("125859")
         );
     }
 
@@ -457,10 +451,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "[=0]hh;hhmmss",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        "125859"
-                )
+                SpreadsheetText.with("125859")
         );
     }
 
@@ -469,10 +460,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "[=0]hh;hhmmss;",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        "125859"
-                )
+                SpreadsheetText.with("125859")
         );
     }
 

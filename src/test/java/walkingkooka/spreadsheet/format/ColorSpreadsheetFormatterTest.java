@@ -77,7 +77,9 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                         return color;
                     }
                 },
-                SpreadsheetText.with(color, text + text));
+                SpreadsheetText.with(text + text)
+                        .setColor(color)
+        );
     }
 
     @Test
@@ -94,7 +96,9 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                         return color;
                     }
                 },
-                SpreadsheetText.with(color, text + text));
+                SpreadsheetText.with(text + text)
+                        .setColor(color)
+        );
     }
 
     @Test
@@ -111,7 +115,9 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                         return color;
                     }
                 },
-                SpreadsheetText.with(color, text + text));
+                SpreadsheetText.with(text + text)
+                        .setColor(color)
+        );
     }
 
     @Test
@@ -133,7 +139,9 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                                     public Optional<SpreadsheetText> format(final Object value,
                                                                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                                         checkEquals(text, value, "value");
-                                        return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text + text));
+                                        return Optional.of(
+                                                SpreadsheetText.with(text + text)
+                                        );
                                     }
                                 })
                 ),
@@ -145,7 +153,9 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                         return color;
                     }
                 },
-                SpreadsheetText.with(color, text + text));
+                SpreadsheetText.with(text + text)
+                        .setColor(color)
+        );
     }
 
     @Test
@@ -162,7 +172,9 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                         return color;
                     }
                 },
-                SpreadsheetText.with(color, text + text));
+                SpreadsheetText.with(text + text)
+                        .setColor(color)
+        );
     }
 
     private void formatAndCheck(final String pattern,

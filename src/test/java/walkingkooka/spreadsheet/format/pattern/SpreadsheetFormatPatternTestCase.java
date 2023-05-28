@@ -120,10 +120,7 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         this.formatAndCheck2(
                 pattern,
                 value,
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        expected
-                )
+                SpreadsheetText.with(expected)
         );
     }
 

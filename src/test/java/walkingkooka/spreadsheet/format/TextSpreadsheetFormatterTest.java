@@ -88,10 +88,8 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
                 new TestSpreadsheetFormatterContext() {
 
                 },
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        TEXT
-                )
+                SpreadsheetText.with(TEXT)
+                        .setColor(Optional.of(RED))
         );
     }
 
@@ -103,10 +101,8 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
                 new TestSpreadsheetFormatterContext() {
 
                 },
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        TEXT
-                )
+                SpreadsheetText.with(TEXT)
+                        .setColor(Optional.of(RED))
         );
     }
 
@@ -120,7 +116,12 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
                                      final String value,
                                      final SpreadsheetFormatterContext context,
                                      final String text) {
-        this.parseFormatAndCheck(pattern, value, context, SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
+        this.parseFormatAndCheck(
+                pattern,
+                value,
+                context,
+                SpreadsheetText.with(text)
+        );
     }
 
     private void parseFormatAndCheck(final String pattern,

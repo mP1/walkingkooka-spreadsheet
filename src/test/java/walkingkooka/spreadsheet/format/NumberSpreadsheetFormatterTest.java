@@ -2265,12 +2265,12 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
         this.parseFormatNumberAndCheck(
                 "[RED]#",
                 "3",
-                SpreadsheetText.with(
-                        Optional.of(
-                                RED
-                        ),
-                        "3"
-                )
+                SpreadsheetText.with("3")
+                        .setColor(
+                                Optional.of(
+                                        RED
+                                )
+                        )
         );
     }
 
@@ -2279,12 +2279,12 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
         this.parseFormatNumberAndCheck(
                 "[color44]#",
                 "4",
-                SpreadsheetText.with(
-                        Optional.of(
-                                RED
-                        ),
-                        "4"
-                )
+                SpreadsheetText.with("4")
+                        .setColor(
+                                Optional.of(
+                                        RED
+                                )
+                        )
         );
     }
 
@@ -2326,7 +2326,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
                 pattern,
                 value,
                 this.createContext(roundingMode),
-                SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text)
+                SpreadsheetText.with(text)
         );
     }
 

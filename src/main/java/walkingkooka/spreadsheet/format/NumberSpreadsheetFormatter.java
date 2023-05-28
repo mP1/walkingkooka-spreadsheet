@@ -77,7 +77,6 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
                                       final SpreadsheetFormatterContext context) {
         return Optional.of(
                 SpreadsheetText.with(
-                        this.color(context),
                         this.format1(
                                 this.normalOrScientific.context(
                                         context.convertOrFail(
@@ -88,6 +87,8 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
                                         context
                                 )
                         )
+                ).setColor(
+                        this.color(context)
                 )
         );
     }

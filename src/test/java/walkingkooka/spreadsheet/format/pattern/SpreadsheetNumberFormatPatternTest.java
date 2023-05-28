@@ -433,10 +433,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         this.formatAndCheck2(
                 "[red]#",
                 -123.0,
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        "n123"
-                )
+                SpreadsheetText.with("n123")
+                        .setColor(
+                                Optional.of(RED)
+                        )
         );
     }
 
@@ -445,10 +445,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         this.formatAndCheck2(
                 "[color44]#",
                 -123.0,
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        "n123"
-                )
+                SpreadsheetText.with("n123")
+                        .setColor(
+                                Optional.of(RED)
+                        )
         );
     }
 

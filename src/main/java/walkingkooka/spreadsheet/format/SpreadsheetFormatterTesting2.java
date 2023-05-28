@@ -121,7 +121,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
     @Test
     default void testThenFormat() {
         final String text = this.getClass().getName();
-        final SpreadsheetText spreadsheetText = SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text);
+        final SpreadsheetText spreadsheetText = SpreadsheetText.with(text);
 
         final SpreadsheetFormatter last = new SpreadsheetFormatter() {
             @Override
@@ -186,10 +186,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                                 final String text) {
         this.formatAndCheck(
                 value,
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        text
-                )
+                SpreadsheetText.with(text)
         );
     }
 
@@ -208,10 +205,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         this.formatAndCheck(
                 formatter,
                 value,
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        text
-                )
+                SpreadsheetText.with(text)
         );
     }
 

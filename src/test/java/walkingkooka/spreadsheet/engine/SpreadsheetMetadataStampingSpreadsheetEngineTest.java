@@ -453,7 +453,9 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             public Optional<SpreadsheetText> format(final Object value,
                                                     final SpreadsheetFormatter formatter) {
                 checkEquals(FORMULA_VALUE, value, "formatValue");
-                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, FORMULA_VALUE));
+                return Optional.of(
+                        SpreadsheetText.with(FORMULA_VALUE)
+                );
             }
         };
     }

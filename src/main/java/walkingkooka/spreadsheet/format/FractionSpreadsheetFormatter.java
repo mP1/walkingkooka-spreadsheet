@@ -75,7 +75,7 @@ final class FractionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadshe
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
         return Optional.ofNullable(context.convert(value, BigDecimal.class)
-                .mapLeft(v -> SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, this.format1(v, context)))
+                .mapLeft(v -> SpreadsheetText.with(this.format1(v, context)))
                 .orElseLeft(null));
     }
 

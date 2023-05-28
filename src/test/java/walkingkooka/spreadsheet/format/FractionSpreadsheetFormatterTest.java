@@ -371,7 +371,11 @@ public final class FractionSpreadsheetFormatterTest extends SpreadsheetFormatter
     private void parseFormatAndCheck(final String pattern,
                                      final String value,
                                      final String text) {
-        this.parseFormatAndCheck0(pattern, value, SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
+        this.parseFormatAndCheck0(
+                pattern,
+                value,
+                SpreadsheetText.with(text)
+        );
     }
 
     private void parseFormatAndCheck0(final String pattern,
