@@ -755,10 +755,10 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck2(
                 "[red]yyyymmddhhmmss",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        "20001231125859"
-                )
+                SpreadsheetText.with("20001231125859")
+                        .setColor(
+                                Optional.of(RED)
+                        )
         );
     }
 
@@ -767,10 +767,8 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck2(
                 "[color44]yyyymmddhhmmss",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        "20001231125859"
-                )
+                SpreadsheetText.with("20001231125859")
+                        .setColor(Optional.of(RED))
         );
     }
 
@@ -779,10 +777,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck2(
                 "yyyymmddhhmmss;",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        "20001231125859"
-                )
+                SpreadsheetText.with("20001231125859")
         );
     }
 
@@ -791,10 +786,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck2(
                 "[>0]yyyymmddhhmmss;yyyy",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        "20001231125859"
-                )
+                SpreadsheetText.with("20001231125859")
         );
     }
 
@@ -803,10 +795,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck2(
                 "[=0]yyyyy;ddmmyyyyhhmmss",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        "31122000125859"
-                )
+                SpreadsheetText.with("31122000125859")
         );
     }
 
@@ -815,10 +804,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck2(
                 "[=0]yyyyy;ddmmyyyyhhmmss;",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with(
-                        SpreadsheetText.WITHOUT_COLOR,
-                        "31122000125859"
-                )
+                SpreadsheetText.with("31122000125859")
         );
     }
 

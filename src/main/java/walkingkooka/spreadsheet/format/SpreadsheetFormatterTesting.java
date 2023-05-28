@@ -43,7 +43,7 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
         this.formatAndCheck(formatter,
                 value,
                 context,
-                SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
+                SpreadsheetText.with(text));
     }
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,

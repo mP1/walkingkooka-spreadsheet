@@ -53,11 +53,10 @@ public final class SpreadsheetText implements HasText,
     /**
      * Creates a {@link SpreadsheetText}
      */
-    public static SpreadsheetText with(final Optional<Color> color, final String text) {
-        checkColor(color);
+    public static SpreadsheetText with(final String text) {
         checkText(text);
 
-        return new SpreadsheetText(color, text);
+        return new SpreadsheetText(WITHOUT_COLOR, text);
     }
 
     private static void checkColor(final Optional<Color> color) {
@@ -182,7 +181,8 @@ public final class SpreadsheetText implements HasText,
             JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT_PROPERTY, node);
         }
 
-        return with(Optional.ofNullable(color), text);
+        return with(text)
+                .setColor(Optional.ofNullable(color));
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {

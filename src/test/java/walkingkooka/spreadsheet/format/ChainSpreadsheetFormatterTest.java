@@ -154,7 +154,7 @@ public final class ChainSpreadsheetFormatterTest extends SpreadsheetFormatterTes
     }
 
     private static SpreadsheetText spreadsheetText(final String text) {
-        return SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text);
+        return SpreadsheetText.with(text);
     }
 
     @Override

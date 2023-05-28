@@ -146,7 +146,9 @@ public final class DefaultFormatTextSpreadsheetFormatterTest extends Spreadsheet
             }
 
             private Optional<SpreadsheetText> formattedText(final String text) {
-                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
+                return Optional.of(
+                        SpreadsheetText.with(text)
+                );
             }
         };
     }

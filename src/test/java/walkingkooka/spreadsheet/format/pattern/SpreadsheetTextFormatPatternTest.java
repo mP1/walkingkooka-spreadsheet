@@ -278,10 +278,8 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "[red]@@",
                 "Hello",
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        "HelloHello"
-                )
+                SpreadsheetText.with("HelloHello")
+                        .setColor(Optional.of(RED))
         );
     }
 
@@ -290,10 +288,8 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "[color44]@@",
                 "Hello",
-                SpreadsheetText.with(
-                        Optional.of(RED),
-                        "HelloHello"
-                )
+                SpreadsheetText.with("HelloHello")
+                        .setColor(Optional.of(RED))
         );
     }
 

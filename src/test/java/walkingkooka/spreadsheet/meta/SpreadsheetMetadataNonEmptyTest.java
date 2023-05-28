@@ -1736,7 +1736,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
                     private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.UNLIMITED);
                 },
-                SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
+                SpreadsheetText.with(text));
     }
 
     @Test

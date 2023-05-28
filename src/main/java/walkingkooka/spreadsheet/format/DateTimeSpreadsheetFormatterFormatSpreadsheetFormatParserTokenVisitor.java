@@ -56,10 +56,10 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
                 twelveHourTime,
                 millisecondDecimals);
         visitor.accept(token);
+
         return SpreadsheetText.with(
-                visitor.color,
                 visitor.text.toString()
-        );
+        ).setColor(visitor.color);
     }
 
     /**

@@ -47,36 +47,36 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
     private final static String TEXT = "1/1/2000";
 
-    @SuppressWarnings("OptionalAssignedToNull")
-    @Test
-    public void testWithNullColorFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetText.with(null, TEXT));
-    }
-
     @Test
     public void testWithNullTextFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetText.with(COLOR, null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetText.with(null)
+        );
     }
 
     @Test
     public void testWith() {
         final SpreadsheetText formatted = this.createFormattedText();
-        this.check(formatted, COLOR, TEXT);
-    }
-
-    @Test
-    public void testWithEmptyColor() {
-        this.createAndCheck(SpreadsheetText.WITHOUT_COLOR, TEXT);
+        this.check(
+                formatted,
+                SpreadsheetText.WITHOUT_COLOR,
+                TEXT
+        );
     }
 
     @Test
     public void testWithEmptyText() {
-        this.createAndCheck(COLOR, "");
+        this.createAndCheck("");
     }
 
-    private void createAndCheck(final Optional<Color> color, final String text) {
-        final SpreadsheetText formatted = SpreadsheetText.with(color, text);
-        this.check(formatted, color, text);
+    private void createAndCheck(final String text) {
+        final SpreadsheetText formatted = SpreadsheetText.with(text);
+        this.check(
+                formatted,
+                SpreadsheetText.WITHOUT_COLOR,
+                text
+        );
     }
 
     // setColor..........................................................................................................
@@ -89,8 +89,12 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
 
     @Test
     public void testSetColorSame() {
-        final SpreadsheetText formatted = this.createFormattedText();
-        assertSame(formatted, formatted.setColor(COLOR));
+        final SpreadsheetText formatted = this.createFormattedText()
+                .setColor(COLOR);
+        assertSame(
+                formatted,
+                formatted.setColor(COLOR)
+        );
     }
 
     @Test
@@ -113,7 +117,8 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     public void testToTextNodeWithoutColor() {
         final String text = "abc123";
 
-        this.toTextNodeAndCheck(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text),
+        this.toTextNodeAndCheck(
+                SpreadsheetText.with(text),
                 TextNode.text(text));
     }
 
@@ -122,70 +127,108 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         final String text = "abc123";
         final Color color = Color.fromRgb(0x123456);
 
-        this.toTextNodeAndCheck(SpreadsheetText.with(Optional.of(color), text),
-                TextNode.text(text).setAttributes(Maps.of(TextStylePropertyName.COLOR, color)));
+        this.toTextNodeAndCheck(
+                SpreadsheetText.with(text)
+                        .setColor(Optional.of(color)),
+                TextNode.text(text)
+                        .setAttributes(
+                                Maps.of(
+                                        TextStylePropertyName.COLOR,
+                                        color
+                                )
+                        )
+        );
     }
 
     // HashCodeEqualsDefined ..................................................................................................
 
     @Test
     public void testEqualsDifferentColor() {
-        this.checkNotEquals(SpreadsheetText.with(Optional.of(Color.WHITE), TEXT));
+        this.checkNotEquals(
+                SpreadsheetText.with(TEXT)
+                        .setColor(Optional.of(Color.WHITE))
+        );
     }
 
     @Test
     public void testEqualsDifferentColor2() {
-        this.checkNotEquals(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, TEXT));
+        this.checkNotEquals(
+                SpreadsheetText.with(TEXT)
+        );
     }
 
     @Test
     public void testEqualsDifferentText() {
-        this.checkNotEquals(SpreadsheetText.with(COLOR, "different"));
+        this.checkNotEquals(
+                SpreadsheetText.with("different")
+                        .setColor(COLOR));
     }
 
     // toString ........................................................................................................
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createFormattedText(), COLOR.get() + " " + CharSequences.quote(TEXT));
+        this.toStringAndCheck(
+                SpreadsheetText.with(TEXT),
+                CharSequences.quote(TEXT).toString()
+        );
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testToStringWithoutColor() {
-        this.toStringAndCheck(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, TEXT),
-                CharSequences.quote(TEXT).toString());
+    public void testToStringWithColor() {
+        this.toStringAndCheck(
+                SpreadsheetText.with(TEXT)
+                        .setColor(COLOR),
+                COLOR.get() + " " + CharSequences.quote(TEXT)
+        );
     }
+
+    // factory..........................................................................................................
 
     private SpreadsheetText createFormattedText() {
-        return SpreadsheetText.with(COLOR, TEXT);
+        return SpreadsheetText.with(TEXT);
     }
 
     // json ............................................................................................................
 
     @Test
     public void testUnmarshallTextOnly() {
-        this.unmarshallAndCheck("{ \"text\":  \"1/1/2000\"}", SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, TEXT));
+        this.unmarshallAndCheck(
+                "{ \"text\":  \"1/1/2000\"}",
+                SpreadsheetText.with(TEXT));
     }
 
     @Test
     public void testUnmarshallColorAndText() {
-        this.unmarshallAndCheck("{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}", SpreadsheetText.with(COLOR, TEXT));
+        this.unmarshallAndCheck(
+                "{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}",
+                SpreadsheetText.with(TEXT).setColor(COLOR));
     }
 
     @Test
     public void testMarshallTextOnly() {
-        this.marshallAndCheck(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, TEXT), "{ \"text\":  \"1/1/2000\"}");
+        this.marshallAndCheck(
+                SpreadsheetText.with(TEXT),
+                "{ \"text\":  \"1/1/2000\"}"
+        );
     }
 
     @Test
     public void testMarshallColorAndText() {
-        this.marshallAndCheck(SpreadsheetText.with(COLOR, TEXT), "{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}");
+        this.marshallAndCheck(
+                SpreadsheetText.with(TEXT)
+                        .setColor(COLOR),
+                "{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}"
+        );
     }
 
     @Test
     public void testJsonRoundtrip() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetText.with(Optional.of(Color.fromRgb(0x123456)), "text-abc-123"));
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetText.with("text-abc-123")
+                        .setColor(Optional.of(Color.fromRgb(0x123456)))
+        );
     }
 
     // ClassTesting.....................................................................................................
@@ -204,7 +247,8 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
 
     @Override
     public SpreadsheetText createObject() {
-        return SpreadsheetText.with(COLOR, TEXT);
+        return SpreadsheetText.with(TEXT)
+                .setColor(COLOR);
     }
 
     // json.............................................................................................................
