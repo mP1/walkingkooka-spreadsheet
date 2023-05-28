@@ -865,16 +865,6 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             );
 
             @Override
-            public Optional<SpreadsheetText> defaultFormatText(final Object value) {
-                return Optional.of(
-                        SpreadsheetText.with(
-                                SpreadsheetText.WITHOUT_COLOR,
-                                GENERAL_FORMATTED
-                        )
-                );
-            }
-
-            @Override
             public ExpressionNumberKind expressionNumberKind() {
                 return ExpressionNumberKind.BIG_DECIMAL;
             }

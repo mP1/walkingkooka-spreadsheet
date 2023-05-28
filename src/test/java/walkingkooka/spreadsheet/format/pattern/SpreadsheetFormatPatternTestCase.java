@@ -39,8 +39,6 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
 
     final static Color RED = Color.parse("#FF0000");
 
-    final static String GENERAL_FORMATTED = "General Formatted";
-
     SpreadsheetFormatPatternTestCase() {
         super();
     }
