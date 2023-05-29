@@ -185,7 +185,11 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
 
     @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
-        return (m) -> m.equals("isCondition") || m.equals("isNoise") || m.equals("isSymbol");
+        return (m) -> m.equals("isCondition") ||
+                m.equals("isLeaf") ||
+                m.equals("isNoise") ||
+                m.equals("isParent") ||
+                m.equals("isSymbol");
     }
 
     @Override

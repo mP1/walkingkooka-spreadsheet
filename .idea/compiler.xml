@@ -20,10 +20,14 @@
         <module name="walkingkooka-spreadsheet" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="walkingkooka-spreadsheet-gwt" target="9" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="walkingkooka-spreadsheet" options="-Awalkingkooka.j2cl.java.util.Currency=XXX -Awalkingkooka.j2cl.java.util.Locale=* -Awalkingkooka.j2cl.java.util.Locale.DEFAULT=en-AU -Awalkingkooka.j2cl.java.util.TimeZone=Australia/Sydney -Awalkingkooka.j2cl.java.util.TimeZone.DEFAULT=Australia/Sydney -Awalkingkooka.j2cl.locale.Logging=SLASH_SLASH_COMMENTS" />
+      <module name="walkingkooka-spreadsheet-gwt" options="-Awalkingkooka.j2cl.java.util.Currency=XXX -Awalkingkooka.j2cl.java.util.Locale=en-AU -Awalkingkooka.j2cl.java.util.Locale.DEFAULT=en-AU -Awalkingkooka.j2cl.java.util.TimeZone=Australia/* -Awalkingkooka.j2cl.java.util.TimeZone.DEFAULT=Australia/Sydney -Awalkingkooka.j2cl.locale.Logging=SLASH_SLASH_COMMENTS" />
     </option>
   </component>
 </project>

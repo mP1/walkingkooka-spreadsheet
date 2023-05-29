@@ -697,6 +697,14 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
+     * Returns true for sub-classes of {@link SpreadsheetFormatLeafParserToken}.
+     */
+    @Override
+    public final boolean isLeaf() {
+        return this instanceof SpreadsheetFormatLeafParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetFormatLessThanParserToken} return true
      */
     public final boolean isLessThan() {
@@ -757,6 +765,14 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
      */
     public final boolean isNotEqualsSymbol() {
         return this instanceof SpreadsheetFormatNotEqualsSymbolParserToken;
+    }
+
+    /**
+     * Returns true for sub-classes of {@link SpreadsheetFormatParentParserToken}.
+     */
+    @Override
+    public final boolean isParent() {
+        return this instanceof SpreadsheetFormatParentParserToken;
     }
 
     /**

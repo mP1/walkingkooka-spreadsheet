@@ -17,7 +17,6 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
-import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -39,7 +38,7 @@ public final class SpreadsheetFunctionParserToken extends SpreadsheetParentParse
                                            final String text) {
         super(value, text);
 
-        final List<ParserToken> without = ParentParserToken.filterWithoutNoise(value);
+        final List<ParserToken> without = ParserToken.filterWithoutNoise(value);
         final int count = without.size();
         if (count < 1) {
             throw new IllegalArgumentException("Expected at least 1 tokens but got " + count + "=" + without);

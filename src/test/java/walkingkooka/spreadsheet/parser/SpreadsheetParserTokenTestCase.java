@@ -195,7 +195,10 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
 
     @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
-        return (m) -> m.equals("isNoise") || m.equals("isSymbol");
+        return (m) -> m.equals("isLeaf") ||
+                m.equals("isNoise") ||
+                m.equals("isParent") ||
+                m.equals("isSymbol");
     }
 
     // JsonNodeMarshallTesting..........................................................................................

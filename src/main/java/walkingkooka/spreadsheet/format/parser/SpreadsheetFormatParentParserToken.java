@@ -16,7 +16,7 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.text.cursor.parser.ParentParserToken;
+import walkingkooka.Value;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.Optional;
  * Base parent class for a {@link SpreadsheetFormatParserToken} that holds child tokens.
  */
 abstract public class SpreadsheetFormatParentParserToken extends SpreadsheetFormatParserToken
-        implements ParentParserToken {
+        implements Value<List<ParserToken>> {
 
     SpreadsheetFormatParentParserToken(final List<ParserToken> value, final String text) {
         super(text);
