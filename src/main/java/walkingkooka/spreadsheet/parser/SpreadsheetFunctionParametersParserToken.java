@@ -16,7 +16,6 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -41,7 +40,7 @@ public final class SpreadsheetFunctionParametersParserToken extends SpreadsheetP
                                                      final String text) {
         super(value, text);
 
-        this.parameters = ParentParserToken.filterWithoutNoise(value);
+        this.parameters = ParserToken.filterWithoutNoise(value);
     }
 
     public List<ParserToken> parameters() {

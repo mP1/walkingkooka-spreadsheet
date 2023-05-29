@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
-import walkingkooka.text.cursor.parser.LeafParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -45,7 +44,7 @@ abstract class SpreadsheetPatternSpreadsheetFormatParserTokenVisitor extends Spr
 
     @Override
     protected void endVisit(final ParserToken token) {
-        if (token instanceof LeafParserToken) {
+        if (token.isLeaf()) {
             this.position += token.textLength();
         }
     }

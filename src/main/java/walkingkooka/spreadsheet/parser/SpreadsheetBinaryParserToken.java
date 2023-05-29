@@ -16,7 +16,6 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -29,7 +28,7 @@ abstract class SpreadsheetBinaryParserToken extends SpreadsheetParentParserToken
     SpreadsheetBinaryParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
 
-        final List<ParserToken> without = ParentParserToken.filterWithoutNoise(value);
+        final List<ParserToken> without = ParserToken.filterWithoutNoise(value);
         final int count = without.size();
         if (2 != count) {
             throw new IllegalArgumentException("Expected 2 tokens but got " + count + "=" + without);

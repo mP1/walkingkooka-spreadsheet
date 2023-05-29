@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.RepeatedParserToken;
@@ -72,7 +71,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpr
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatParserToken token) {
-        return token instanceof ParentParserToken ?
+        return token.isParent() ?
                 Visiting.SKIP : // leave color etc alone
                 Visiting.CONTINUE;
     }
