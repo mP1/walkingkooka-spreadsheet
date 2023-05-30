@@ -377,6 +377,26 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         );
     }
 
+    @Test
+    public void testParseTextLiteralDigit() {
+        this.parseAndCheck2(
+                "\"Number\"#",
+                "Number5",
+                SpreadsheetParserToken.textLiteral("Number", "Number"),
+                digit5()
+        );
+    }
+
+    @Test
+    public void testParseWhitespaceDigit() {
+        this.parseAndCheck2(
+                " #",
+                " 5",
+                SpreadsheetParserToken.whitespace(" ", " "),
+                digit5()
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test

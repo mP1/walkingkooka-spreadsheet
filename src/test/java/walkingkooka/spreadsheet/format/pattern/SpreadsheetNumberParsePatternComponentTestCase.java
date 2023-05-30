@@ -84,13 +84,20 @@ public abstract class SpreadsheetNumberParsePatternComponentTestCase<C extends S
     }
 
     final void parseFails(final String text) {
+        this.parseFails(
+                this.createComponent(),
+                text
+        );
+    }
+
+    final void parseFails(final C component,
+                          final String text) {
         final TextCursor cursor = TextCursors.charSequence(text);
 
         final SpreadsheetNumberParsePatternRequest request = this.createRequest(NEXT_SKIPPED);
         this.checkEquals(
                 false,
-                this.createComponent()
-                        .parse(cursor, request),
+                component.parse(cursor, request),
                 () -> "parse of " + CharSequences.quoteAndEscape(text) + " should have returned false"
         );
 

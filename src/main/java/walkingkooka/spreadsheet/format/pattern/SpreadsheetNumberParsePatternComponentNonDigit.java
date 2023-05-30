@@ -17,10 +17,18 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserContexts;
+
 /**
  * Base {@link SpreadsheetNumberParsePatternComponent} for all non digit {@link SpreadsheetNumberParsePatternComponent}.
  */
 abstract class SpreadsheetNumberParsePatternComponentNonDigit extends SpreadsheetNumberParsePatternComponent {
+
+    /**
+     * A {@link ParserContext} used by any {@link walkingkooka.text.cursor.parser.Parser}.
+     */
+    final static ParserContext PARSER_CONTEXT = ParserContexts.fake();
 
     SpreadsheetNumberParsePatternComponentNonDigit() {
         super();

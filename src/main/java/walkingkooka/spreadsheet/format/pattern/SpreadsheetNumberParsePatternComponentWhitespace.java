@@ -17,8 +17,17 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.text.cursor.parser.SequenceParserBuilder;
+
+import java.util.Optional;
 
 /**
  * A {@link SpreadsheetNumberParsePatternComponent} that matches a given number of whitespace characters.
@@ -35,7 +44,17 @@ final class SpreadsheetNumberParsePatternComponentWhitespace extends Spreadsheet
     private SpreadsheetNumberParsePatternComponentWhitespace(final int length) {
         super();
         this.length = length;
+
+        SequenceParserBuilder<ParserContext> repeating = Parsers.sequenceParserBuilder();
+
+        for (int i = 0; i < length; i++) {
+            repeating = repeating.required(WHITESPACE);
+        }
+
+        this.parser = repeating.build();
     }
+
+    private final static Parser<ParserContext> WHITESPACE = Parsers.character(CharPredicates.whitespace());
 
     @Override
     boolean isExpressionCompatible() {
@@ -45,9 +64,28 @@ final class SpreadsheetNumberParsePatternComponentWhitespace extends Spreadsheet
     @Override
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternRequest request) {
-        // not consumed
-        return request.nextComponent(cursor);
+        boolean completed = false;
+        final Optional<ParserToken> maybeWhitespace = this.parser.parse(
+                cursor,
+                PARSER_CONTEXT
+        );
+        if (maybeWhitespace.isPresent()) {
+            final String whitespace = maybeWhitespace.get()
+                    .text();
+            request.add(
+                    SpreadsheetParserToken.whitespace(
+                            whitespace,
+                            whitespace
+                    )
+            );
+            completed = request.nextComponent(cursor);
+        }
+
+        return completed;
     }
+
+
+    private final Parser<ParserContext> parser;
 
     @Override
     public String toString() {
