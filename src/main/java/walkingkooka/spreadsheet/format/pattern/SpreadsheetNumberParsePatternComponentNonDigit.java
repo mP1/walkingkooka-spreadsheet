@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.format.pattern;
 /**
  * Base {@link SpreadsheetNumberParsePatternComponent} for all non digit {@link SpreadsheetNumberParsePatternComponent}.
  */
-abstract class SpreadsheetNumberParsePatternComponent2 extends SpreadsheetNumberParsePatternComponent {
+abstract class SpreadsheetNumberParsePatternComponentNonDigit extends SpreadsheetNumberParsePatternComponent {
 
-    SpreadsheetNumberParsePatternComponent2() {
+    SpreadsheetNumberParsePatternComponentNonDigit() {
         super();
     }
 

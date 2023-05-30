@@ -24,7 +24,7 @@ import walkingkooka.text.cursor.TextCursor;
 /**
  * A {@link SpreadsheetNumberParsePatternComponent} that matches an exponent and switches parsing to exponent parsing mode.
  */
-final class SpreadsheetNumberParsePatternComponentExponent extends SpreadsheetNumberParsePatternComponent2 {
+final class SpreadsheetNumberParsePatternComponentExponent extends SpreadsheetNumberParsePatternComponentNonDigit {
 
     /**
      * Singleton

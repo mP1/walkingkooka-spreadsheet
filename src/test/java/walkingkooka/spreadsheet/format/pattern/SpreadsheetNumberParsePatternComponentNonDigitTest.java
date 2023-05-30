@@ -17,19 +17,19 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-public final class SpreadsheetNumberParsePatternComponent2Test extends SpreadsheetNumberParsePatternTestCase2<SpreadsheetNumberParsePatternComponent2> {
+public final class SpreadsheetNumberParsePatternComponentNonDigitTest extends SpreadsheetNumberParsePatternTestCase2<SpreadsheetNumberParsePatternComponentNonDigit> {
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetNumberParsePatternComponent2> type() {
-        return SpreadsheetNumberParsePatternComponent2.class;
+    public Class<SpreadsheetNumberParsePatternComponentNonDigit> type() {
+        return SpreadsheetNumberParsePatternComponentNonDigit.class;
     }
 
     // TypeNameTesting..................................................................................................
 
     @Override
     public String typeNameSuffix() {
-        return "Component2";
+        return "ComponentNonDigit";
     }
 }

@@ -24,7 +24,7 @@ import walkingkooka.text.cursor.TextCursor;
 /**
  * A {@link SpreadsheetNumberParsePatternComponent} that matches any decimal separators.
  */
-final class SpreadsheetNumberParsePatternComponentPercent extends SpreadsheetNumberParsePatternComponent2 {
+final class SpreadsheetNumberParsePatternComponentPercent extends SpreadsheetNumberParsePatternComponentNonDigit {
 
     /**
      * Singleton

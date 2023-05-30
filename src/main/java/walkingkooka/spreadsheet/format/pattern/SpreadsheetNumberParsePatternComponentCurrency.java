@@ -24,7 +24,7 @@ import walkingkooka.text.cursor.TextCursor;
 /**
  * A {@link SpreadsheetNumberParsePatternComponent} that matches currency symbols.
  */
-final class SpreadsheetNumberParsePatternComponentCurrency extends SpreadsheetNumberParsePatternComponent2 {
+final class SpreadsheetNumberParsePatternComponentCurrency extends SpreadsheetNumberParsePatternComponentNonDigit {
 
     /**
      * Singleton
