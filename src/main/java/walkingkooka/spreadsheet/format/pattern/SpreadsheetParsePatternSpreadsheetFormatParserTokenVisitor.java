@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBracketCloseSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBracketOpenSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorLiteralSymbolParserToken;
@@ -41,8 +39,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatStarParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextPlaceholderParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatUnderscoreParserToken;
-
-import java.util.List;
 
 /**
  * A base {@link SpreadsheetFormatParserTokenVisitor} where most (almost all overrides fail when an unexpected or invalid
@@ -155,24 +151,4 @@ abstract class SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<T exte
     }
 
     abstract void text(final String text);
-
-    final void addToken(final T token) {
-        this.tokens.add(token);
-    }
-
-    final List<T> tokens() {
-        if (this.tokens.isEmpty()) {
-            throw new IllegalArgumentException("Empty tokens");
-        }
-        return Lists.immutable(this.tokens);
-    }
-
-    private final List<T> tokens = Lists.array();
-
-    @Override
-    public final String toString() {
-        return ToStringBuilder.empty()
-                .value(this.tokens)
-                .build();
-    }
 }
