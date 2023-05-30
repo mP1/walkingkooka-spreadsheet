@@ -35,7 +35,7 @@ final class SpreadsheetNumberParsePatternComponentTextLiteral extends Spreadshee
 
     @Override
     boolean isExpressionCompatible() {
-        return this.text.equals(SpreadsheetPattern.SEPARATOR.string()); // Pattern separator is ok!
+        return false;
     }
 
     @Override
