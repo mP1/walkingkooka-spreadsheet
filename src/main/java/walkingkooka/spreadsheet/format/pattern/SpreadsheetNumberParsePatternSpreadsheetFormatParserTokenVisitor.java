@@ -71,8 +71,6 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
-        this.addToken(token);
-
         this.components = Lists.array();
         this.lastDigit = -1;
         this.mode = SpreadsheetNumberParsePatternComponentDigitMode.INTEGER_OR_SIGN;

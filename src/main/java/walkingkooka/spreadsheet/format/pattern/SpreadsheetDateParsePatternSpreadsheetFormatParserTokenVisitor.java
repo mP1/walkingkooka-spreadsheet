@@ -47,7 +47,7 @@ final class SpreadsheetDateParsePatternSpreadsheetFormatParserTokenVisitor exten
 
     @Override
     protected void endVisit(final SpreadsheetFormatDateParserToken token) {
-        this.addToken(token);
+        // nop
     }
 
     @Override
