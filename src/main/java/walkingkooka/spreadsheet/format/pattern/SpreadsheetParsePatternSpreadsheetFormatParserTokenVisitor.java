@@ -131,7 +131,7 @@ abstract class SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<T exte
 
     @Override
     protected final void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
-        this.text(token.text());
+        // separators do not contribute any required or optional text in anything being parsed.
     }
 
     @Override
