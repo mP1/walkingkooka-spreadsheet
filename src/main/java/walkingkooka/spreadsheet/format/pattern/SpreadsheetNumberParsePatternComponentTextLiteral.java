@@ -22,7 +22,7 @@ import walkingkooka.text.cursor.TextCursor;
 /**
  * Text literals within a parse number pattern are not required and ignored
  */
-final class SpreadsheetNumberParsePatternComponentTextLiteral extends SpreadsheetNumberParsePatternComponent2 {
+final class SpreadsheetNumberParsePatternComponentTextLiteral extends SpreadsheetNumberParsePatternComponentNonDigit {
 
     static SpreadsheetNumberParsePatternComponentTextLiteral with(final String text) {
         return new SpreadsheetNumberParsePatternComponentTextLiteral(text);

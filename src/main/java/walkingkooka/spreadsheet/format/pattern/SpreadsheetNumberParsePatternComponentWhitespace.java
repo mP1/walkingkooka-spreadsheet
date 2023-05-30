@@ -22,7 +22,7 @@ import walkingkooka.text.cursor.TextCursor;
 /**
  * A {@link SpreadsheetNumberParsePatternComponent} that matches any whitespace character.
  */
-final class SpreadsheetNumberParsePatternComponentWhitespace extends SpreadsheetNumberParsePatternComponent2 {
+final class SpreadsheetNumberParsePatternComponentWhitespace extends SpreadsheetNumberParsePatternComponentNonDigit {
 
     /**
      * Singleton

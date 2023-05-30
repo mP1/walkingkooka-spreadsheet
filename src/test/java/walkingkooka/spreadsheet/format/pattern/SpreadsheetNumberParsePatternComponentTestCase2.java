@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.ToStringTesting;
 
-public abstract class SpreadsheetNumberParsePatternComponentTestCase2<C extends SpreadsheetNumberParsePatternComponent2> extends SpreadsheetNumberParsePatternComponentTestCase<C>
+public abstract class SpreadsheetNumberParsePatternComponentTestCase2<C extends SpreadsheetNumberParsePatternComponentNonDigit> extends SpreadsheetNumberParsePatternComponentTestCase<C>
         implements ToStringTesting<C> {
 
     SpreadsheetNumberParsePatternComponentTestCase2() {
