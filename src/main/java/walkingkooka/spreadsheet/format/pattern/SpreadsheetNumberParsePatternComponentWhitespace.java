@@ -17,20 +17,24 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
- * A {@link SpreadsheetNumberParsePatternComponent} that matches any whitespace character.
+ * A {@link SpreadsheetNumberParsePatternComponent} that matches a given number of whitespace characters.
  */
 final class SpreadsheetNumberParsePatternComponentWhitespace extends SpreadsheetNumberParsePatternComponentNonDigit {
 
     /**
      * Singleton
      */
-    final static SpreadsheetNumberParsePatternComponentWhitespace INSTANCE = new SpreadsheetNumberParsePatternComponentWhitespace();
+    static SpreadsheetNumberParsePatternComponentWhitespace with(final int length) {
+        return new SpreadsheetNumberParsePatternComponentWhitespace(length);
+    }
 
-    private SpreadsheetNumberParsePatternComponentWhitespace() {
+    private SpreadsheetNumberParsePatternComponentWhitespace(final int length) {
         super();
+        this.length = length;
     }
 
     @Override
@@ -47,6 +51,11 @@ final class SpreadsheetNumberParsePatternComponentWhitespace extends Spreadsheet
 
     @Override
     public String toString() {
-        return " ";
+        return CharSequences.repeating(
+                ' ',
+                this.length
+        ).toString();
     }
+
+    private final int length;
 }

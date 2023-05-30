@@ -615,14 +615,25 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                 .cast();
     }
 
+    /**
+     * Includes logic making a special case of space characters transforming them into a {@link SpreadsheetFormatParserToken#whitespace(String, String)}.
+     */
     private static SpreadsheetFormatParserToken literalTransform(final ParserToken token,
                                                                  final ParserContext context) {
-        return SpreadsheetFormatParserToken.textLiteral(
-                token.cast(CharacterParserToken.class)
-                        .value()
-                        .toString(),
-                token.text()
-        );
+        final CharacterParserToken characterParserToken = token.cast(CharacterParserToken.class);
+        final char c = characterParserToken.value();
+        final String value = String.valueOf(c);
+        final String text = characterParserToken.text();
+
+        return ' ' == c ?
+                SpreadsheetFormatParserToken.whitespace(
+                        value,
+                        text
+                ) :
+                SpreadsheetFormatParserToken.textLiteral(
+                        value,
+                        text
+                );
     }
 
     /**

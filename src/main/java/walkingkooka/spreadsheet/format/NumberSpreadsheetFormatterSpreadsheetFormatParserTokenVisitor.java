@@ -33,6 +33,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToke
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
+import walkingkooka.text.CharSequences;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -147,6 +149,18 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     @Override
     protected void visit(final SpreadsheetFormatThousandsParserToken token) {
         this.digitMode.thousands(this);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
+        this.add(
+                NumberSpreadsheetFormatterComponent.textLiteral(
+                        CharSequences.repeating(
+                                ' ',
+                                token.value().length()
+                        ).toString()
+                )
+        );
     }
 
     // misc ..................................................................................................

@@ -140,7 +140,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.colorParseAndCheck(
                 bracketOpenSymbol(),
                 red(),
-                whitespace(),
+                whitespace3(),
                 bracketCloseSymbol()
         );
     }
@@ -160,7 +160,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.colorParseAndCheck(
                 bracketOpenSymbol(),
                 colorLiteral(),
-                whitespace(),
+                whitespace3(),
                 colorNumberFive(),
                 bracketCloseSymbol()
         );
@@ -171,9 +171,9 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.colorParseAndCheck(
                 bracketOpenSymbol(),
                 colorLiteral(),
-                whitespace(),
+                whitespace3(),
                 colorNumberFive(),
-                whitespace(),
+                whitespace3(),
                 bracketCloseSymbol()
         );
     }
@@ -276,7 +276,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testConditionSpaceFails() {
-        this.conditionParseThrows(textLiteralSpace());
+        this.conditionParseThrows(whitespace());
     }
 
     @Test
@@ -455,7 +455,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatWhitespaceGeneral() {
         this.dateFormatParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -466,7 +466,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 general(
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -475,9 +475,9 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatWhitespaceGeneralWhitespace() {
         this.dateFormatParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -497,7 +497,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 general(
                         color(),
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -631,7 +631,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatSpace() {
         this.dateFormatParseAndCheck(
                 date(
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -1202,7 +1202,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatSpaceDayMonthYear() {
         this.dateFormatParseAndCheck(
                 date(
-                        textLiteralSpace(),
+                        whitespace(),
                         day(),
                         month(),
                         year()
@@ -1215,7 +1215,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        textLiteralSpace(),
+                        whitespace(),
                         month(),
                         year()
                 )
@@ -1228,7 +1228,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         month(),
-                        textLiteralSpace(),
+                        whitespace(),
                         year()
                 )
         );
@@ -1241,7 +1241,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         day(),
                         month(),
                         year(),
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -1777,7 +1777,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseWhitespaceGeneral() {
         this.dateParseParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -1788,7 +1788,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 general(
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -1797,9 +1797,9 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseWhitespaceGeneralWhitespace() {
         this.dateParseParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -1819,7 +1819,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 general(
                         color(),
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -1953,7 +1953,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseSpace() {
         this.dateParseParseAndCheck(
                 date(
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -2524,7 +2524,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseSpaceDayMonthYear() {
         this.dateParseParseAndCheck(
                 date(
-                        textLiteralSpace(),
+                        whitespace(),
                         day(),
                         month(),
                         year()
@@ -2537,7 +2537,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        textLiteralSpace(),
+                        whitespace(),
                         month(),
                         year()
                 )
@@ -2550,7 +2550,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         month(),
-                        textLiteralSpace(),
+                        whitespace(),
                         year()
                 )
         );
@@ -2563,7 +2563,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         day(),
                         month(),
                         year(),
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -3188,7 +3188,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatGeneralWhitespace() {
         this.numberFormatParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -3198,9 +3198,9 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatWhitespaceGeneralWhitespace() {
         this.numberFormatParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -3220,7 +3220,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberFormatParseAndCheck(
                 general(
                         color(),
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -3334,7 +3334,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatSpace() {
         this.numberFormatParseAndCheck(
                 number(
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -4036,7 +4036,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatSpaceDigitSlashDigit() {
         this.numberFormatParseAndCheck(
                 number(
-                        textLiteralSpace(),
+                        whitespace(),
                         digit(),
                         decimalPoint(),
                         digit()
@@ -4049,7 +4049,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        textLiteralSpace(),
+                        whitespace(),
                         decimalPoint(),
                         digit()
                 )
@@ -4060,10 +4060,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitSlashSpaceDigit() {
         this.numberFormatParseAndCheck(
                 number(
-                        textLiteralSpace(),
+                        whitespace(),
                         digit(),
                         decimalPoint(),
-                        textLiteralSpace(),
+                        whitespace(),
                         digit()
                 )
         );
@@ -4076,7 +4076,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         digit(),
                         decimalPoint(),
                         digit(),
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -4600,7 +4600,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralSpace())
+                        exponent1(whitespace())
                 )
         );
     }
@@ -4610,7 +4610,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralSpace())
+                        exponent2(whitespace())
                 )
         );
     }
@@ -4620,7 +4620,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralSpace())
+                        exponent3(whitespace())
                 )
         );
     }
@@ -5298,7 +5298,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseGeneralWhitespace() {
         this.numberParseParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -5308,9 +5308,9 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseWhitespaceGeneralWhitespace() {
         this.numberParseParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -5330,7 +5330,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberParseParseAndCheck(
                 general(
                         color(),
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -5444,7 +5444,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseSpace() {
         this.numberParseParseAndCheck(
                 number(
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -6146,7 +6146,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseSpaceDigitSlashDigit() {
         this.numberParseParseAndCheck(
                 number(
-                        textLiteralSpace(),
+                        whitespace(),
                         digit(),
                         decimalPoint(),
                         digit()
@@ -6159,7 +6159,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        textLiteralSpace(),
+                        whitespace(),
                         decimalPoint(),
                         digit()
                 )
@@ -6170,10 +6170,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitSlashSpaceDigit() {
         this.numberParseParseAndCheck(
                 number(
-                        textLiteralSpace(),
+                        whitespace(),
                         digit(),
                         decimalPoint(),
-                        textLiteralSpace(),
+                        whitespace(),
                         digit()
                 )
         );
@@ -6186,7 +6186,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         digit(),
                         decimalPoint(),
                         digit(),
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -6710,7 +6710,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralSpace())
+                        exponent1(whitespace())
                 )
         );
     }
@@ -6720,7 +6720,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralSpace())
+                        exponent2(whitespace())
                 )
         );
     }
@@ -6730,7 +6730,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralSpace())
+                        exponent3(whitespace())
                 )
         );
     }
@@ -7492,22 +7492,22 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testFractionSpaceDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralSpace(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(whitespace(), digit(), fractionSymbol(), digit());
     }
 
     @Test
     public void testFractionDigitSpaceSlashDigit() {
-        this.fractionParseAndCheck(digit(), textLiteralSpace(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(digit(), whitespace(), fractionSymbol(), digit());
     }
 
     @Test
     public void testFractionDigitSlashSpaceDigit() {
-        this.fractionParseAndCheck(textLiteralSpace(), digit(), fractionSymbol(), textLiteralSpace(), digit());
+        this.fractionParseAndCheck(whitespace(), digit(), fractionSymbol(), whitespace(), digit());
     }
 
     @Test
     public void testFractionDigitSlashDigitSpace() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), textLiteralSpace());
+        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), whitespace());
     }
 
     // thousands
@@ -7788,12 +7788,12 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testGeneralWhitespaceGeneral() {
-        this.generalParseAndCheck(whitespace(), generalSymbol());
+        this.generalParseAndCheck(whitespace3(), generalSymbol());
     }
 
     @Test
     public void testGeneralGeneralWhitespace() {
-        this.generalParseAndCheck(generalSymbol(), whitespace());
+        this.generalParseAndCheck(generalSymbol(), whitespace3());
     }
 
     @Test
@@ -7803,7 +7803,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testGeneralColorWhitespaceGeneral() {
-        this.generalParseAndCheck(color(), whitespace(), generalSymbol());
+        this.generalParseAndCheck(color(), whitespace3(), generalSymbol());
     }
 
     @Test
@@ -7813,12 +7813,12 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testGeneralGeneralColorWhitespace() {
-        this.generalParseAndCheck(generalSymbol(), color(), whitespace());
+        this.generalParseAndCheck(generalSymbol(), color(), whitespace3());
     }
 
     @Test
     public void testGeneralGeneralWhitespaceColor() {
-        this.generalParseAndCheck(generalSymbol(), whitespace(), color());
+        this.generalParseAndCheck(generalSymbol(), whitespace3(), color());
     }
 
     /**
@@ -8048,7 +8048,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatSpace() {
         this.textFormatParseAndCheck(
                 text(
-                        textLiteralSpace()
+                        whitespace()
+                )
+        );
+    }
+
+    @Test
+    public void testTextFormatSpaceSpaceSpace() {
+        this.textFormatParseAndCheck(
+                text(
+                        whitespace3()
                 )
         );
     }
@@ -8113,7 +8122,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatAll() {
         this.textFormatParseAndCheck(
                 text(
-                        textLiteralSpace(),
+                        whitespace(),
                         quotedText(),
                         textPlaceholder(),
                         underscore()
@@ -8486,7 +8495,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatWhitespaceGeneral() {
         this.timeFormatParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -8497,7 +8506,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 general(
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -8506,9 +8515,9 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatWhitespaceGeneralWhitespace() {
         this.timeFormatParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -8528,7 +8537,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 general(
                         color(),
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -8620,7 +8629,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatSpace() {
         this.timeFormatParseAndCheck(
                 time(
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -9232,7 +9241,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatSpaceHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
-                        textLiteralSpace(),
+                        whitespace(),
                         hour(),
                         minute(),
                         second()
@@ -9245,7 +9254,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        textLiteralSpace(),
+                        whitespace(),
                         minute(),
                         second()
                 )
@@ -9258,7 +9267,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         hour(),
                         minute(),
-                        textLiteralSpace(),
+                        whitespace(),
                         second()
                 )
         );
@@ -9271,7 +9280,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         hour(),
                         minute(),
                         second(),
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -9840,7 +9849,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseWhitespaceGeneral() {
         this.timeParseParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -9851,7 +9860,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 general(
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -9860,9 +9869,9 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseWhitespaceGeneralWhitespace() {
         this.timeParseParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -9882,7 +9891,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 general(
                         color(),
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -9974,7 +9983,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseSpace() {
         this.timeParseParseAndCheck(
                 time(
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -10586,7 +10595,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseSpaceHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
-                        textLiteralSpace(),
+                        whitespace(),
                         hour(),
                         minute(),
                         second()
@@ -10599,7 +10608,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        textLiteralSpace(),
+                        whitespace(),
                         minute(),
                         second()
                 )
@@ -10612,7 +10621,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         hour(),
                         minute(),
-                        textLiteralSpace(),
+                        whitespace(),
                         second()
                 )
         );
@@ -10625,7 +10634,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         hour(),
                         minute(),
                         second(),
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -11145,7 +11154,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatWhitespaceGeneral() {
         this.dateTimeFormatParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -11156,7 +11165,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 general(
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -11165,9 +11174,9 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatWhitespaceGeneralWhitespace() {
         this.dateTimeFormatParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -11187,7 +11196,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeFormatParseAndCheck(
                 general(
                         color(),
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -11279,7 +11288,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatSpace() {
         this.dateTimeFormatParseAndCheck(
                 dateTime(
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }
@@ -11860,7 +11869,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseWhitespaceGeneral() {
         this.dateTimeParseParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -11871,7 +11880,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeParseParseAndCheck(
                 general(
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -11880,9 +11889,9 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseWhitespaceGeneralWhitespace() {
         this.dateTimeParseParseAndCheck(
                 general(
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol(),
-                        whitespace()
+                        whitespace3()
                 )
         );
     }
@@ -11902,7 +11911,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.dateTimeParseParseAndCheck(
                 general(
                         color(),
-                        whitespace(),
+                        whitespace3(),
                         generalSymbol()
                 )
         );
@@ -11994,7 +12003,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseSpace() {
         this.dateTimeParseParseAndCheck(
                 dateTime(
-                        textLiteralSpace()
+                        whitespace()
                 )
         );
     }

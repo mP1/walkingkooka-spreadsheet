@@ -103,8 +103,8 @@ abstract class SpreadsheetNumberParsePatternComponent {
      * {@see SpreadsheetNumberParsePatternComponentWhitespace}
      */
     @SuppressWarnings("SameReturnValue")
-    static SpreadsheetNumberParsePatternComponent whitespace() {
-        return SpreadsheetNumberParsePatternComponentCurrency.INSTANCE;
+    static SpreadsheetNumberParsePatternComponent whitespace(final int length) {
+        return SpreadsheetNumberParsePatternComponentWhitespace.with(length);
     }
 
     /**

@@ -44,7 +44,7 @@ public abstract class SpreadsheetFormatParserTestCase {
     }
 
     static SpreadsheetFormatParserToken color() {
-        final List<ParserToken> tokens = Lists.of(bracketOpenSymbol(), colorLiteral(), whitespace(), colorNumberFive(), bracketCloseSymbol());
+        final List<ParserToken> tokens = Lists.of(bracketOpenSymbol(), colorLiteral(), whitespace3(), colorNumberFive(), bracketCloseSymbol());
         return SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens));
     }
 
@@ -65,7 +65,7 @@ public abstract class SpreadsheetFormatParserTestCase {
     }
 
     static SpreadsheetFormatParserToken conditionEquals() {
-        final List<ParserToken> list = Lists.of(bracketOpenSymbol(), whitespace(), equalsSymbol(), conditionNumber(), bracketCloseSymbol());
+        final List<ParserToken> list = Lists.of(bracketOpenSymbol(), whitespace3(), equalsSymbol(), conditionNumber(), bracketCloseSymbol());
         return SpreadsheetFormatParserToken.equalsParserToken(list, ParserToken.text(list));
     }
 
@@ -378,10 +378,6 @@ public abstract class SpreadsheetFormatParserTestCase {
         return textLiteral('/');
     }
 
-    static SpreadsheetFormatParserToken textLiteralSpace() {
-        return textLiteral(' ');
-    }
-
     static SpreadsheetFormatParserToken textLiteral(final char c) {
         return textLiteral("" + c);
     }
@@ -415,7 +411,17 @@ public abstract class SpreadsheetFormatParserTestCase {
     }
 
     static SpreadsheetFormatParserToken whitespace() {
-        return SpreadsheetFormatParserToken.whitespace("   ", "   ");
+        return SpreadsheetFormatParserToken.whitespace(
+                " ",
+                " "
+        );
+    }
+
+    static SpreadsheetFormatParserToken whitespace3() {
+        return SpreadsheetFormatParserToken.whitespace(
+                "   ",
+                "   "
+        );
     }
 
     static SpreadsheetFormatParserToken year() {

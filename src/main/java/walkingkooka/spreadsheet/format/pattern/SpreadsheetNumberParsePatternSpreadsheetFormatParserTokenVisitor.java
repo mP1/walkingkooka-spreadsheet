@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -202,6 +203,15 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     @Override
     protected void visit(final SpreadsheetFormatThousandsParserToken token) {
         this.addComponent(SpreadsheetNumberParsePatternComponent.thousands());
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
+        this.addComponent(
+                SpreadsheetNumberParsePatternComponent.whitespace(
+                        token.textLength()
+                )
+        );
     }
 
     @Override

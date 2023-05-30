@@ -169,10 +169,16 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
     private static ParserToken transformTextCharacter(final ParserToken token,
                                                       final SpreadsheetFormatParserContext context) {
         final String text = token.text();
-        return SpreadsheetFormatParserToken.textLiteral(
-                text,
-                text
-        );
+
+        return text.equals(" ") ?
+                SpreadsheetFormatParserToken.whitespace(
+                        text,
+                        text
+                ) :
+                SpreadsheetFormatParserToken.textLiteral(
+                        text,
+                        text
+                );
     }
 
     private static final EbnfIdentifierName TEXT_CHARACTER_IDENTIFIER = EbnfIdentifierName.with("TEXT_CHARACTER");
