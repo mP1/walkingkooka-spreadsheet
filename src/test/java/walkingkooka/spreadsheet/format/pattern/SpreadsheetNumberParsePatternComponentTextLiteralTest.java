@@ -18,26 +18,37 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
 public final class SpreadsheetNumberParsePatternComponentTextLiteralTest extends SpreadsheetNumberParsePatternComponentTestCase2<SpreadsheetNumberParsePatternComponentTextLiteral> {
 
     private final static String TOKEN = "ghi";
 
     @Test
-    public void testDifferentCase() {
-        this.parseAndCheck2(
-                "",
-                TOKEN.toUpperCase(),
-                NEXT_CALLED
+    public void testIncompleteFails() {
+        this.parseFails(
+                "gh"
+        );
+    }
+
+    @Test
+    public void testDifferentCaseFails() {
+        this.parseFails(
+                TOKEN.toUpperCase()
         );
     }
 
     @Test
     public void testMatchingCase() {
+        final String text = "ghi";
         this.parseAndCheck2(
-                "",
+                text,
                 TOKEN,
-                NEXT_CALLED
+                NEXT_CALLED,
+                SpreadsheetParserToken.textLiteral(
+                        text,
+                        text
+                )
         );
     }
 

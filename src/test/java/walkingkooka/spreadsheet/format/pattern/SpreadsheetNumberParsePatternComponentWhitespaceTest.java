@@ -18,24 +18,66 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
 public final class SpreadsheetNumberParsePatternComponentWhitespaceTest extends SpreadsheetNumberParsePatternComponentTestCase2<SpreadsheetNumberParsePatternComponentWhitespace> {
 
     @Test
+    public void testNonWhitespaceFails() {
+        this.parseFails("failed!");
+    }
+
+    @Test
+    public void testInsufficientSpaceFails() {
+        this.parseFails(
+                SpreadsheetNumberParsePatternComponentWhitespace.with(3),
+                " a"
+        );
+    }
+
+    @Test
     public void testSpace() {
+        final String text = " ";
         this.parseAndCheck2(
-                "",
-                " ",
-                NEXT_CALLED
+                text,
+                "A",
+                NEXT_CALLED,
+                SpreadsheetParserToken.whitespace(
+                        text,
+                        text
+                )
+        );
+    }
+
+    @Test
+    public void testSpaceSpace() {
+        final String text = "  ";
+
+        this.parseAndCheck2(
+                SpreadsheetNumberParsePatternComponentWhitespace.with(2),
+                text, // text
+                "A", // textAfter
+                this.createRequest(true),
+                NEXT_CALLED,
+                SpreadsheetParserToken.whitespace(
+                        text,
+                        text
+                )
         );
     }
 
     @Test
     public void testTab() {
+        final String text = "\t";
+
         this.parseAndCheck2(
-                "",
-                "\t",
-                NEXT_CALLED
+                text,
+                "A",
+                NEXT_CALLED,
+                SpreadsheetParserToken.whitespace(
+                        text,
+                        text
+                )
         );
     }
 

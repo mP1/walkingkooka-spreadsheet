@@ -1014,7 +1014,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testStringNumber() {
         this.convertAndCheck(
-                "123",
+                "N 123",
                 EXPRESSION_NUMBER_KIND.create(123)
         );
     }

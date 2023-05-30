@@ -1286,47 +1286,74 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testConverterStringToExpressionNumber() {
-        this.convertAndCheck2("123.500", EXPRESSION_NUMBER_KIND.create(123.5));
+        this.convertAndCheck2(
+                "Number 123.500",
+                EXPRESSION_NUMBER_KIND.create(123.5)
+        );
     }
 
     @Test
     public void testConverterStringToBigDecimal() {
-        this.convertAndCheck2("123.500", BigDecimal.valueOf(123.5));
+        this.convertAndCheck2(
+                "Number 123.500",
+                BigDecimal.valueOf(123.5)
+        );
     }
 
     @Test
     public void testConverterStringToBigInteger() {
-        this.convertAndCheck2("123.000", BigInteger.valueOf(123));
+        this.convertAndCheck2(
+                "Number 123.000",
+                BigInteger.valueOf(123)
+        );
     }
 
     @Test
     public void testConverterStringToByte() {
-        this.convertAndCheck2("123.000", (byte) 123);
+        this.convertAndCheck2(
+                "Number 123.000",
+                (byte) 123
+        );
     }
 
     @Test
     public void testConverterStringToShort() {
-        this.convertAndCheck2("123.000", (short) 123);
+        this.convertAndCheck2(
+                "Number 123.000",
+                (short) 123
+        );
     }
 
     @Test
     public void testConverterStringToInteger() {
-        this.convertAndCheck2("123.000", 123);
+        this.convertAndCheck2(
+                "Number 123.000",
+                123
+        );
     }
 
     @Test
     public void testConverterStringToLong() {
-        this.convertAndCheck2("123.000", 123L);
+        this.convertAndCheck2(
+                "Number 123.000",
+                123L
+        );
     }
 
     @Test
     public void testConverterStringToFloat() {
-        this.convertAndCheck2("123.500", 123.5f);
+        this.convertAndCheck2(
+                "Number 123.500",
+                123.5f
+        );
     }
 
     @Test
     public void testConverterStringToDouble() {
-        this.convertAndCheck2("123.500", 123.5);
+        this.convertAndCheck2(
+                "Number 123.500",
+                123.5
+        );
     }
 
     @Test

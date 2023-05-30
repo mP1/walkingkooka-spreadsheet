@@ -17,7 +17,16 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.text.cursor.parser.StringParserToken;
+
+import java.util.Optional;
 
 /**
  * Text literals within a parse number pattern are not required and ignored
@@ -31,6 +40,10 @@ final class SpreadsheetNumberParsePatternComponentTextLiteral extends Spreadshee
     private SpreadsheetNumberParsePatternComponentTextLiteral(final String text) {
         super();
         this.text = text;
+        this.parser = Parsers.string(
+                text,
+                CaseSensitivity.SENSITIVE
+        );
     }
 
     @Override
@@ -41,14 +54,32 @@ final class SpreadsheetNumberParsePatternComponentTextLiteral extends Spreadshee
     @Override
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternRequest request) {
-        // not consumed
-        return request.nextComponent(cursor);
+        boolean completed = false;
+        final Optional<ParserToken> maybeTextLiteral = this.parser.parse(
+                cursor,
+                PARSER_CONTEXT
+        );
+        if (maybeTextLiteral.isPresent()) {
+            final StringParserToken textLiteral = maybeTextLiteral.get()
+                    .cast(StringParserToken.class);
+            request.add(
+                    SpreadsheetParserToken.textLiteral(
+                            textLiteral.text(),
+                            textLiteral.value()
+                    )
+            );
+            completed = request.nextComponent(cursor);
+        }
+
+        return completed;
     }
 
-    private final String text;
+    private final Parser<ParserContext> parser;
 
     @Override
     public String toString() {
         return this.text;
     }
+
+    private final String text;
 }
