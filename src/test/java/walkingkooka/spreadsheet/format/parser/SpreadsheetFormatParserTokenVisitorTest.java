@@ -998,7 +998,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
     @Test
     public void testText() {
-        final SpreadsheetFormatParserToken whitespace = whitespace();
+        final SpreadsheetFormatParserToken whitespace = whitespace3();
         final SpreadsheetFormatParserToken placeholder = textPlaceholder();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.text(Lists.of(
@@ -2043,7 +2043,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
     @Test
     public void testWhitespace() {
-        final SpreadsheetFormatParserToken token = whitespace();
+        final SpreadsheetFormatParserToken token = whitespace3();
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -2065,7 +2065,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Test
     public void testWhitespace2() {
         new SpreadsheetFormatParserTokenVisitor() {
-        }.accept(whitespace());
+        }.accept(whitespace3());
     }
 
     abstract static class TestSpreadsheetFormatParserTokenVisitor extends FakeSpreadsheetFormatParserTokenVisitor {

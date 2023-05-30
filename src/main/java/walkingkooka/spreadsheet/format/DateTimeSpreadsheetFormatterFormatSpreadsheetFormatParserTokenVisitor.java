@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 
 import java.time.LocalDateTime;
@@ -364,6 +365,11 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
 
     @Override
     protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
+        this.append(token.value());
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
         this.append(token.value());
     }
 

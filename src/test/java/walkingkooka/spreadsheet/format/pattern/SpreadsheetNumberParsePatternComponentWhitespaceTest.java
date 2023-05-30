@@ -41,12 +41,23 @@ public final class SpreadsheetNumberParsePatternComponentWhitespaceTest extends 
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createComponent(), " ");
+        this.toStringAndCheck(
+                this.createComponent(),
+                " "
+        );
+    }
+
+    @Test
+    public void testToString3() {
+        this.toStringAndCheck(
+                SpreadsheetNumberParsePatternComponentWhitespace.with(3),
+                "   "
+        );
     }
 
     @Override
     SpreadsheetNumberParsePatternComponentWhitespace createComponent() {
-        return SpreadsheetNumberParsePatternComponentWhitespace.INSTANCE;
+        return SpreadsheetNumberParsePatternComponentWhitespace.with(1);
     }
 
     // ClassTesting.....................................................................................................

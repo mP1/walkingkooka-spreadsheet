@@ -28,6 +28,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParser
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextPlaceholderParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatUnderscoreParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
+import walkingkooka.text.CharSequences;
 
 import java.util.Optional;
 
@@ -110,11 +112,21 @@ final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends 
         this.append(token.value());
     }
 
+    @Override
+    protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
+        this.append(
+                CharSequences.repeating(
+                        ' ',
+                        token.value().length()
+                )
+        );
+    }
+
     private void append(final char c) {
         this.text.append(c);
     }
 
-    private void append(final String text) {
+    private void append(final CharSequence text) {
         this.text.append(text);
     }
 
