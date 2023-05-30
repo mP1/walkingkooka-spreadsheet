@@ -788,6 +788,76 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
+    public void testParseNumberFormatPatternWithPercent() {
+        this.formatAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("0.0% \"Hello\"").formatter(),
+                ExpressionNumberKind.DOUBLE.create(1.005),
+                new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return this.successfulConversion(
+                                ExpressionNumber.class.cast(value),
+                                target
+                        );
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL128;
+                    }
+
+                    @Override
+                    public char percentageSymbol() {
+                        return '%';
+                    }
+                },
+                "100.5% Hello"
+        );
+    }
+
+    @Test
+    public void testParseNumberFormatPatternWithPercentCustomPercentSymbol() {
+        this.formatAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("0.0% \"Hello\"").formatter(),
+                ExpressionNumberKind.DOUBLE.create(1.005),
+                new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return this.successfulConversion(
+                                ExpressionNumber.class.cast(value),
+                                target
+                        );
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL128;
+                    }
+
+                    @Override
+                    public char percentageSymbol() {
+                        return '!';
+                    }
+                },
+                "100.5! Hello"
+        );
+    }
+
+    @Test
     public void testParseTextFormatPattern() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseTextFormatPattern("@@ \"Hello\"").formatter(),
