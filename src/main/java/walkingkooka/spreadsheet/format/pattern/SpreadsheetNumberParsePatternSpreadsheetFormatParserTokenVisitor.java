@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserTo
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -50,8 +51,10 @@ import java.util.List;
  */
 final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatNumberParserToken> {
 
-    static SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor with() {
-        return new SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor();
+    static List<List<SpreadsheetNumberParsePatternComponent>> patterns(final ParserToken token) {
+        final SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor();
+        visitor.startAccept(token);
+        return visitor.patterns;
     }
 
     SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor() {
@@ -67,7 +70,6 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
         return this.failInvalid();
     }
-
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
@@ -105,7 +107,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     /**
      * Accumulates all the components for each and every pattern.
      */
-    final List<List<SpreadsheetNumberParsePatternComponent>> patterns = Lists.array();
+    private final List<List<SpreadsheetNumberParsePatternComponent>> patterns = Lists.array();
 
     @Override
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
