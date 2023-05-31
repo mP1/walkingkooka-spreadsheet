@@ -32,11 +32,9 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
      * Factory that creates a {@link SpreadsheetNumberParsePattern} from the given tokens.
      */
     static SpreadsheetNumberParsePattern with(final ParserToken token) {
-        final SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor.with();
-        visitor.startAccept(token);
         return new SpreadsheetNumberParsePattern(
                 token,
-                visitor.patterns
+                SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor.patterns(token)
         );
     }
 
