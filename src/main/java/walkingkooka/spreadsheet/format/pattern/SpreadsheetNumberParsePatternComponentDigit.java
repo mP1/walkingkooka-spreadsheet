@@ -44,22 +44,18 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
     @Override
     final boolean parse(final TextCursor cursor,
                         final SpreadsheetNumberParsePatternRequest request) {
-        boolean completed;
-
-        if (cursor.isEmpty()) {
-            completed = request.nextComponent(cursor);
-        } else {
+        if (false == cursor.isEmpty()) {
             request.digitMode.tryParseSign(cursor, request);
-            completed = this.parseDigits(cursor, request);
+            this.parseDigits(cursor, request);
         }
-        return completed;
+        return request.nextComponent(cursor);
     }
 
     /**
      * Attempts to parse the requested number of digits.
      */
-    private boolean parseDigits(final TextCursor cursor,
-                                final SpreadsheetNumberParsePatternRequest request) {
+    private void parseDigits(final TextCursor cursor,
+                             final SpreadsheetNumberParsePatternRequest request) {
         final DecimalNumberContext context = request.context;
         final SpreadsheetNumberParsePatternMode mode = request.mode;
         final int max = this.max;
@@ -110,7 +106,6 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
         if (request.addNumberIfNecessary()) {
             request.setDigitMode(request.digitMode.next());
         }
-        return request.nextComponent(cursor);
     }
 
     final SpreadsheetNumberParsePatternComponentDigitMode mode;
