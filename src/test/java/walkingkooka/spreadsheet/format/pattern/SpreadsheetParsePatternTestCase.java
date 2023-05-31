@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetPlusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
@@ -496,8 +497,11 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         return SpreadsheetParserToken.textLiteral(text, text);
     }
 
-    static SpreadsheetTextLiteralParserToken textLiteralWhitespace() {
-        return textLiteral(" ");
+    static SpreadsheetWhitespaceParserToken whitespace1() {
+        return SpreadsheetParserToken.whitespace(
+                " ",
+                " "
+        );
     }
 
     static SpreadsheetYearParserToken year2000() {

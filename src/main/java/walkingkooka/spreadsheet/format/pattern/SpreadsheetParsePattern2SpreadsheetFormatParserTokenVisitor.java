@@ -541,22 +541,32 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
                 Parsers.string(
                                 text,
                                 CaseSensitivity.SENSITIVE
-                        ).transform(SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::textLiteral)
+                        ).transform(
+                                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::textLiteralOrWhitespace
+                        )
                         .cast()
         );
     }
 
     /**
-     * Transforms a {@link StringParserToken} into a {@link SpreadsheetTextLiteralParserToken}.
+     * Transforms a {@link StringParserToken} into a {@link SpreadsheetTextLiteralParserToken} or
+     * {@link walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken}
      */
-    private static SpreadsheetTextLiteralParserToken textLiteral(final ParserToken token,
-                                                                 final ParserContext context) {
+    private static SpreadsheetParserToken textLiteralOrWhitespace(final ParserToken token,
+                                                                  final ParserContext context) {
         final StringParserToken stringParserToken = token.cast(StringParserToken.class);
+        final String text = stringParserToken.text();
+        final String value = stringParserToken.value();
 
-        return SpreadsheetParserToken.textLiteral(
-                stringParserToken.value(),
-                stringParserToken.text()
-        );
+        return text.equals(" ") ?
+                SpreadsheetParserToken.whitespace(
+                        text,
+                        value
+                ) :
+                SpreadsheetParserToken.textLiteral(
+                        value,
+                        text
+                );
     }
 
     /**
