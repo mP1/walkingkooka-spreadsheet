@@ -22,7 +22,7 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
- * A {@link SpreadsheetNumberParsePatternComponent} that matches any decimal separators.
+ * A {@link SpreadsheetNumberParsePatternComponent} that matches any percent symbol.
  */
 final class SpreadsheetNumberParsePatternComponentPercent extends SpreadsheetNumberParsePatternComponentNonDigit {
 
