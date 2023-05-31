@@ -22,7 +22,7 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
- * Text literals within a parse number pattern are not required and ignored
+ * Text literals within a parse number pattern are required but ignored when evaluating the digits and numeric symbols into a numeric value.
  */
 final class SpreadsheetNumberParsePatternComponentTextLiteral extends SpreadsheetNumberParsePatternComponentNonDigit {
 
