@@ -234,7 +234,7 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
                 minute58(),
                 colon(),
                 second59(),
-                textLiteralWhitespace(),
+                whitespace1(),
                 pm()
         );
     }
@@ -251,7 +251,7 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
                 second59(),
                 decimalSeparator(),
                 milli(100_000_000, "1"),
-                textLiteralWhitespace(),
+                whitespace1(),
                 pm()
         );
     }
@@ -314,7 +314,7 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
                 day31(),
                 month12(),
                 year2000(),
-                textLiteralWhitespace(),
+                whitespace1(),
                 hour11(),
                 minute58(),
                 second59()
@@ -330,7 +330,7 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
                 day31(),
                 month12(),
                 year2000(),
-                textLiteralWhitespace(),
+                whitespace1(),
                 hour11(),
                 minute58(),
                 second59()

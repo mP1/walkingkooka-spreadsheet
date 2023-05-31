@@ -228,7 +228,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 month12(),
                 slash(),
                 year2000(),
-                textLiteral(" "),
+                whitespace(" "),
                 hour11(),
                 colon(),
                 minute58(),
@@ -236,7 +236,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 seconds59(),
                 decimal(),
                 millis123(),
-                textLiteral(" "),
+                whitespace(" "),
                 pm()
         );
     }
@@ -624,7 +624,16 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetCellReferenceParserToken to = this.cell(1, "B", 1);
 
         final String text = from.text() + "  " + between() + "  " + to.text();
-        final SpreadsheetCellRangeParserToken range = SpreadsheetParserToken.cellRange(Lists.of(from, whitespace(), between(), whitespace(), to), text);
+        final SpreadsheetCellRangeParserToken range = SpreadsheetParserToken.cellRange(
+                Lists.of(
+                        from,
+                        whitespace2(),
+                        between(),
+                        whitespace2(),
+                        to
+                ),
+                text
+        );
 
         this.rangeParseAndCheck(
                 text,
@@ -898,7 +907,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.parseExpressionAndCheck(
                 text,
                 SpreadsheetParserToken.negative(
-                        Lists.of(minus(), whitespace(), number(1)),
+                        Lists.of(
+                                minus(),
+                                whitespace2(),
+                                number(1)
+                        ),
                         text
                 ),
                 text,
@@ -1020,7 +1033,16 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String labelText = "Hello";
         final String groupText = "(  " + labelText + "  )";
 
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(openParenthesis(), whitespace(), label(labelText), whitespace(), closeParenthesis()), groupText);
+        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(
+                Lists.of(
+                        openParenthesis(),
+                        whitespace2(),
+                        label(labelText),
+                        whitespace2(),
+                        closeParenthesis()
+                ),
+                groupText
+        );
 
         this.parseExpressionAndCheck(
                 groupText,
@@ -1237,10 +1259,26 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetParserToken left = number(123);
         final SpreadsheetParserToken right = number(456);
         final String text = "123  -  456";
-        final SpreadsheetSubtractionParserToken sub = SpreadsheetParserToken.subtraction(Lists.of(left, whitespace(), minus(), whitespace(), right), text);
+        final SpreadsheetSubtractionParserToken sub = SpreadsheetParserToken.subtraction(
+                Lists.of(
+                        left,
+                        whitespace2(),
+                        minus(),
+                        whitespace2(),
+                        right
+                ),
+                text
+        );
 
         final String text2 = text + "+789";
-        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(sub, plus(), number(789)), text2);
+        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(
+                Lists.of(
+                        sub,
+                        plus(),
+                        number(789)
+                ),
+                text2
+        );
 
         this.parseExpressionAndCheck(
                 text2,
@@ -1741,7 +1779,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 SpreadsheetParserToken.functionParameters(
                         Lists.of(
                                 openParenthesis(),
-                                whitespace(),
+                                whitespace2(),
                                 closeParenthesis()
                         ),
                         "(  )"
@@ -2011,7 +2049,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 functionName("xyz"),
                 functionParameters(
                         openParenthesis(),
-                        whitespace(),
+                        whitespace2(),
                         closeParenthesis()
                 )
         );
@@ -2068,7 +2106,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 functionName("xyz"),
                 functionParameters(
                         openParenthesis(),
-                        whitespace(),
+                        whitespace2(),
                         number(123),
                         closeParenthesis()
                 )
@@ -2099,7 +2137,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 functionParameters(
                         openParenthesis(),
                         number(123),
-                        whitespace(),
+                        whitespace2(),
                         closeParenthesis()
                 )
         );
@@ -2128,9 +2166,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 functionName("xyz"),
                 functionParameters(
                         openParenthesis(),
-                        whitespace(),
+                        whitespace2(),
                         number(123),
-                        whitespace(),
+                        whitespace2(),
                         closeParenthesis()
                 )
         );
@@ -3265,8 +3303,19 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParserToken.negative(Lists.of(minus(), number), "-" + number.text());
     }
 
-    private SpreadsheetParserToken whitespace() {
-        return SpreadsheetParserToken.whitespace("  ", "  ");
+    private SpreadsheetParserToken whitespace1() {
+        return whitespace(" ");
+    }
+
+    private SpreadsheetParserToken whitespace2() {
+        return whitespace("  ");
+    }
+
+    private SpreadsheetParserToken whitespace(final String text) {
+        return SpreadsheetParserToken.whitespace(
+                text,
+                text
+        );
     }
 
     private SpreadsheetParserToken add(final SpreadsheetParserToken... tokens) {

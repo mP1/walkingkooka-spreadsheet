@@ -291,7 +291,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 SpreadsheetParserToken.monthNumber(12, "12"),
                                 SpreadsheetParserToken.textLiteral("/", "/"),
                                 SpreadsheetParserToken.year(2000, "2000"),
-                                SpreadsheetParserToken.textLiteral(" ", " "),
+                                SpreadsheetParserToken.whitespace(" ", " "),
                                 SpreadsheetParserToken.hour(12, "12"),
                                 SpreadsheetParserToken.textLiteral(":", ":"),
                                 SpreadsheetParserToken.minute(58, "58")

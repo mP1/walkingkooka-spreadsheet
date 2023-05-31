@@ -185,7 +185,7 @@ public final class SpreadsheetDateParsePatternTest extends SpreadsheetParsePatte
                 "dd yyyy",
                 "31 2000",
                 day31(),
-                textLiteralWhitespace(),
+                whitespace1(),
                 year2000()
         );
     }
@@ -196,7 +196,7 @@ public final class SpreadsheetDateParsePatternTest extends SpreadsheetParsePatte
                 "mm yyyy",
                 "12 2000",
                 month12(),
-                textLiteralWhitespace(),
+                whitespace1(),
                 year2000()
         );
     }

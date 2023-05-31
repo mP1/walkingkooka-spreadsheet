@@ -328,7 +328,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
                 hour11(),
                 colon(),
                 minute58(),
-                textLiteralWhitespace(),
+                whitespace1(),
                 am()
         );
     }
@@ -341,7 +341,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
                 hour11(),
                 colon(),
                 minute58(),
-                textLiteralWhitespace(),
+                whitespace1(),
                 pm()
         );
     }
@@ -356,7 +356,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
                 minute58(),
                 colon(),
                 second59(),
-                textLiteralWhitespace(),
+                whitespace1(),
                 pm()
         );
     }
@@ -373,7 +373,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
                 second59(),
                 decimalSeparator(),
                 milli(100_000_000, "1"),
-                textLiteralWhitespace(),
+                whitespace1(),
                 pm()
         );
     }
