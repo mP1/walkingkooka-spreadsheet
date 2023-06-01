@@ -87,19 +87,26 @@ enum SpreadsheetNumberParsePatternComponentDigitMode {
         }
     };
 
+    final boolean isDecimal() {
+        return this == DECIMAL_FIRST || this == DECIMAL_NOT_FIRST;
+    }
+
     /**
      * Returns true if this is the first digit in sequence.
      */
-    final boolean isFirst() {
+    final boolean isFirstDigit() {
         return this.isSign() || this == DECIMAL_FIRST;
     }
 
-    boolean isSign() {
-        return this == INTEGER_OR_SIGN || this == EXPONENT_START;
+    /**
+     * Returns true if this is an integer mode.
+     */
+    final boolean isInteger() {
+        return this == INTEGER_OR_SIGN || this == INTEGER;
     }
 
-    final boolean isDecimal() {
-        return this == DECIMAL_FIRST || this == DECIMAL_NOT_FIRST;
+    final boolean isSign() {
+        return this == INTEGER_OR_SIGN || this == EXPONENT_START;
     }
 
     final void tryParseSign(final TextCursor cursor,

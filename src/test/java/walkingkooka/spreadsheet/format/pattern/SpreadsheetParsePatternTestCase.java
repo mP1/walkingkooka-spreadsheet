@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetDayNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDecimalSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetGroupingSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetHourParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMillisecondParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
@@ -439,6 +440,13 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     static SpreadsheetExponentSymbolParserToken e() {
         return SpreadsheetParserToken.exponentSymbol("" + EXPONENT, "" + EXPONENT);
+    }
+
+    static SpreadsheetGroupingSeparatorSymbolParserToken groupingSymbol() {
+        return SpreadsheetParserToken.groupingSeparatorSymbol(
+                "" + GROUPING,
+                "" + GROUPING
+        );
     }
 
     static SpreadsheetHourParserToken hour9() {

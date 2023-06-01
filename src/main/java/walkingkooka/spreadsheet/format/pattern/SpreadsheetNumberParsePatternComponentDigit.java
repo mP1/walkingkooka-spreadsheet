@@ -65,6 +65,7 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
     private void parseDigits(final TextCursor cursor,
                              final SpreadsheetNumberParsePatternRequest request) {
         final DecimalNumberContext context = request.context;
+        final SpreadsheetNumberParsePatternComponentDigitMode digitMode = request.digitMode;
         final SpreadsheetNumberParsePatternMode mode = request.mode;
         final int max = this.max;
         int count = 0;
@@ -91,7 +92,7 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
                 }
             }
 
-            if (mode.isGroupSeparator(c, context)) {
+            if (digitMode.isInteger() && mode.isGroupSeparator(c, context)) {
                 request.addNumberIfNecessary();
 
                 final String groupingText = Character.toString(c);

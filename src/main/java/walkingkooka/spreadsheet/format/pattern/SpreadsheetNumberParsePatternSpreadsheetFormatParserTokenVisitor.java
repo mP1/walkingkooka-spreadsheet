@@ -237,7 +237,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     }
 
     private int digitMaxCount() {
-        return this.mode.isFirst() ?
+        return this.mode.isFirstDigit() ?
                 Integer.MAX_VALUE :
                 1;
     }
