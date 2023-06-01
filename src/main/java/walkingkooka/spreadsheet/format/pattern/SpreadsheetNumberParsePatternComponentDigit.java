@@ -75,7 +75,6 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
                 break;
             }
 
-            // grouping separators are skipped when digits are expected.
             final char c = cursor.at();
 
             final int digit = Character.digit(
