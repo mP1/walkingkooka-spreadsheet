@@ -30,7 +30,7 @@ public final class SpreadsheetNumberParsePatternComponentDigitDigitTest extends 
     public void testToString2() {
         this.toStringAndCheck(
                 SpreadsheetNumberParsePatternComponentDigitDigit.with(
-                        SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL,
+                        SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST,
                         1
                 ),
                 "#"

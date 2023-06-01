@@ -49,14 +49,14 @@ public final class SpreadsheetNumberParsePatternComponentDigitSpaceTest extends 
     @Test
     public void testSpaceDecimal() {
         this.testSpace(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public void testSpaceExponentOrSign() {
         this.testSpace(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START
         );
     }
 

@@ -51,7 +51,7 @@ final class SpreadsheetNumberParsePatternComponentExponent extends SpreadsheetNu
                 request.context.exponentSymbol(),
                 CaseSensitivity.INSENSITIVE,
                 SpreadsheetParserToken::exponentSymbol,
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START,
                 request
         );
     }
