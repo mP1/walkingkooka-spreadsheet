@@ -1023,7 +1023,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String labelText = "Hello";
 
         final String groupText = "(" + labelText + ")";
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(openParenthesis(), label(labelText), closeParenthesis()), groupText);
+        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(parenthesisOpen(), label(labelText), parenthesisClose()), groupText);
 
         this.parseExpressionAndCheck(groupText, group, groupText, labelText);
     }
@@ -1035,11 +1035,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(
                 Lists.of(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         whitespace2(),
                         label(labelText),
                         whitespace2(),
-                        closeParenthesis()
+                        parenthesisClose()
                 ),
                 groupText
         );
@@ -1066,7 +1066,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetParserToken negative = negative(number(123));
 
         final String groupText = "(-123)";
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(openParenthesis(), negative, closeParenthesis()), groupText);
+        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(parenthesisOpen(), negative, parenthesisClose()), groupText);
 
         this.parseExpressionAndCheck(
                 groupText,
@@ -1088,7 +1088,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void testExpressionNegativeGroupNumber() {
         final String groupText = "(123)";
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(openParenthesis(), number(123), closeParenthesis()), groupText);
+        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(parenthesisOpen(), number(123), parenthesisClose()), groupText);
 
         final String text = "-" + groupText;
         this.parseExpressionAndCheck(
@@ -1737,7 +1737,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(number(111), plus(), number(222)), addText);
 
         final String groupText = "(-333)";
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(openParenthesis(), negative(number(333)), closeParenthesis()), groupText);
+        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(parenthesisOpen(), negative(number(333)), parenthesisClose()), groupText);
 
         final String addText2 = add + "+" + groupText;
         final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(add, plus(), group), addText2);
@@ -1764,8 +1764,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 "()",
                 SpreadsheetParserToken.functionParameters(
                         Lists.of(
-                                openParenthesis(),
-                                closeParenthesis()
+                                parenthesisOpen(),
+                                parenthesisClose()
                         ),
                         "()"
                 )
@@ -1778,9 +1778,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 "(  )",
                 SpreadsheetParserToken.functionParameters(
                         Lists.of(
-                                openParenthesis(),
+                                parenthesisOpen(),
                                 whitespace2(),
-                                closeParenthesis()
+                                parenthesisClose()
                         ),
                         "(  )"
                 )
@@ -1793,9 +1793,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 "(1)",
                 SpreadsheetParserToken.functionParameters(
                         Lists.of(
-                                openParenthesis(),
+                                parenthesisOpen(),
                                 number(1),
-                                closeParenthesis()
+                                parenthesisClose()
                         ),
                         "(1)"
                 )
@@ -1808,7 +1808,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 "(\"abc\")",
                 SpreadsheetParserToken.functionParameters(
                         Lists.of(
-                                openParenthesis(),
+                                parenthesisOpen(),
                                 SpreadsheetParserToken.text(
                                         Lists.of(
                                                 doubleQuotes(),
@@ -1817,7 +1817,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                         ),
                                         "\"abc\""
                                 ),
-                                closeParenthesis()
+                                parenthesisClose()
                         ),
                         "(\"abc\")"
                 )
@@ -1830,11 +1830,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 "(1;2)",
                 SpreadsheetParserToken.functionParameters(
                         Lists.of(
-                                openParenthesis(),
+                                parenthesisOpen(),
                                 number(1),
                                 valueSeparator(),
                                 number(2),
-                                closeParenthesis()
+                                parenthesisClose()
                         ),
                         "(1;2)"
                 )
@@ -1847,13 +1847,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 "(1;2;345)",
                 SpreadsheetParserToken.functionParameters(
                         Lists.of(
-                                openParenthesis(),
+                                parenthesisOpen(),
                                 number(1),
                                 valueSeparator(),
                                 number(2),
                                 valueSeparator(),
                                 number(345),
-                                closeParenthesis()
+                                parenthesisClose()
                         ),
                         "(1;2;345)"
                 )
@@ -1899,7 +1899,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetLambdaFunctionParserToken lambda = lambdaFunction(
                 functionName("lambda"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         x,
                         valueSeparator(),
                         add(
@@ -1907,12 +1907,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                 plus(),
                                 x
                         ),
-                        closeParenthesis()
+                        parenthesisClose()
                 ),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         number(1),
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -1931,7 +1931,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetLambdaFunctionParserToken lambda = lambdaFunction(
                 functionName("lambda"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         x,
                         valueSeparator(),
                         add(
@@ -1939,10 +1939,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                 plus(),
                                 x
                         ),
-                        closeParenthesis()
+                        parenthesisClose()
                 ),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         SpreadsheetParserToken.text(
                                 Lists.of(
                                         doubleQuotes(),
@@ -1951,7 +1951,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                 ),
                                 "\"Hello\""
                         ),
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2012,8 +2012,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
-                        openParenthesis(),
-                        closeParenthesis()
+                        parenthesisOpen(),
+                        parenthesisClose()
                 )
         );
 
@@ -2030,8 +2030,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken f = namedFunction(
                 functionName("Error.Type"),
                 functionParameters(
-                        openParenthesis(),
-                        closeParenthesis()
+                        parenthesisOpen(),
+                        parenthesisClose()
                 )
         );
 
@@ -2048,9 +2048,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         whitespace2(),
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2077,9 +2077,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         number(123),
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2105,10 +2105,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         whitespace2(),
                         number(123),
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2135,10 +2135,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         number(123),
                         whitespace2(),
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2165,11 +2165,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         whitespace2(),
                         number(123),
                         whitespace2(),
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2196,11 +2196,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         number(123),
                         valueSeparator(),
                         number(456),
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2227,7 +2227,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         number(1),
                         valueSeparator(),
                         number(2),
@@ -2235,7 +2235,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         number(3),
                         valueSeparator(),
                         number(4),
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2262,9 +2262,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken y = namedFunction(
                 functionName("y"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         number(123),
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2272,9 +2272,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken x = namedFunction(
                 functionName("x"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         y,
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2300,9 +2300,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken z = namedFunction(
                 functionName("z"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         number(123),
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2311,9 +2311,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
                 functionName("y"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         z,
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2322,9 +2322,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
                 functionName("x"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         y,
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2356,9 +2356,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetNamedFunctionParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
-                        openParenthesis(),
+                        parenthesisOpen(),
                         range,
-                        closeParenthesis()
+                        parenthesisClose()
                 )
         );
 
@@ -2418,7 +2418,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetParserToken left = number(1);
         final SpreadsheetParserToken right = number(2);
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(left, plus(), right), "1+2");
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(this.openParenthesis(), add, this.closeParenthesis()), "(" + add.text() + ")");
+        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(this.parenthesisOpen(), add, this.parenthesisClose()), "(" + add.text() + ")");
 
         final SpreadsheetParserToken last = number(3);
         final SpreadsheetMultiplicationParserToken mul = SpreadsheetParserToken.multiplication(Lists.of(group, multiply(), last), group.text() + "*3");
@@ -2445,12 +2445,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetParserToken left1 = number(1);
         final SpreadsheetParserToken right1 = number(2);
         final SpreadsheetAdditionParserToken add1 = SpreadsheetParserToken.addition(Lists.of(left1, plus(), right1), "1+2");
-        final SpreadsheetGroupParserToken group1 = SpreadsheetParserToken.group(Lists.of(this.openParenthesis(), add1, this.closeParenthesis()), "(" + add1.text() + ")");
+        final SpreadsheetGroupParserToken group1 = SpreadsheetParserToken.group(Lists.of(this.parenthesisOpen(), add1, this.parenthesisClose()), "(" + add1.text() + ")");
 
         final SpreadsheetParserToken left2 = number(3);
         final SpreadsheetParserToken right2 = number(4);
         final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(left2, plus(), right2), "3+4");
-        final SpreadsheetGroupParserToken group2 = SpreadsheetParserToken.group(Lists.of(this.openParenthesis(), add2, this.closeParenthesis()), "(" + add2.text() + ")");
+        final SpreadsheetGroupParserToken group2 = SpreadsheetParserToken.group(Lists.of(this.parenthesisOpen(), add2, this.parenthesisClose()), "(" + add2.text() + ")");
 
         final SpreadsheetMultiplicationParserToken mul = SpreadsheetParserToken.multiplication(Lists.of(group1, multiply(), group2), group1.text() + "*" + group2.text());
 
@@ -3276,48 +3276,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         };
     }
 
-    private SpreadsheetNumberParserToken number(final int number) {
-        return SpreadsheetParserToken.number(
-                Lists.of(
-                        SpreadsheetParserToken.digits("" + number, "" + number)
-                ),
-                "1"
-        );
-    }
-
-    private SpreadsheetCellReferenceParserToken cell(final int column, final String columnText, final int row) {
-        final SpreadsheetParserToken columnToken = SpreadsheetParserToken.columnReference(SpreadsheetColumnOrRowReference.column(column, SpreadsheetReferenceKind.RELATIVE), columnText);
-        final SpreadsheetParserToken rowToken = SpreadsheetParserToken.rowReference(SpreadsheetColumnOrRowReference.row(row, SpreadsheetReferenceKind.RELATIVE), String.valueOf(1 + row));
-        return SpreadsheetParserToken.cellReference(Lists.of(columnToken, rowToken), columnToken.text() + rowToken.text());
-    }
-
-    private SpreadsheetParserToken functionName(final String name) {
-        return SpreadsheetParserToken.functionName(SpreadsheetFunctionName.with(name), name);
-    }
-
-    private SpreadsheetLabelNameParserToken label(final String label) {
-        return SpreadsheetParserToken.labelName(SpreadsheetSelection.labelName(label), label);
-    }
-
-    private SpreadsheetParserToken negative(final SpreadsheetParserToken number) {
-        return SpreadsheetParserToken.negative(Lists.of(minus(), number), "-" + number.text());
-    }
-
-    private SpreadsheetParserToken whitespace1() {
-        return whitespace(" ");
-    }
-
-    private SpreadsheetParserToken whitespace2() {
-        return whitespace("  ");
-    }
-
-    private SpreadsheetParserToken whitespace(final String text) {
-        return SpreadsheetParserToken.whitespace(
-                text,
-                text
-        );
-    }
-
     private SpreadsheetParserToken add(final SpreadsheetParserToken... tokens) {
         return SpreadsheetParserToken.addition(
                 Lists.of(
@@ -3333,6 +3291,32 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParserToken.betweenSymbol(":", ":");
     }
 
+    private SpreadsheetCellReferenceParserToken cell(final int column,
+                                                     final String columnText,
+                                                     final int row) {
+        final SpreadsheetParserToken columnToken = SpreadsheetParserToken.columnReference(
+                SpreadsheetColumnOrRowReference.column(
+                        column,
+                        SpreadsheetReferenceKind.RELATIVE
+                ),
+                columnText
+        );
+        final SpreadsheetParserToken rowToken = SpreadsheetParserToken.rowReference(
+                SpreadsheetColumnOrRowReference.row(
+                        row,
+                        SpreadsheetReferenceKind.RELATIVE
+                ),
+                String.valueOf(1 + row)
+        );
+        return SpreadsheetParserToken.cellReference(
+                Lists.of(
+                        columnToken,
+                        rowToken
+                ),
+                columnToken.text() + rowToken.text()
+        );
+    }
+
     private SpreadsheetParserToken divide() {
         return SpreadsheetParserToken.divideSymbol("/", "/");
     }
@@ -3343,6 +3327,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private SpreadsheetParserToken equals() {
         return SpreadsheetParserToken.equalsSymbol("=", "=");
+    }
+
+    private SpreadsheetParserToken functionName(final String name) {
+        return SpreadsheetParserToken.functionName(
+                SpreadsheetFunctionName.with(name),
+                name
+        );
     }
 
     private SpreadsheetFunctionParametersParserToken functionParameters(final SpreadsheetParserToken... tokens) {
@@ -3362,6 +3353,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private SpreadsheetParserToken greaterThanEquals() {
         return SpreadsheetParserToken.greaterThanEqualsSymbol(">=", ">=");
+    }
+
+    private SpreadsheetLabelNameParserToken label(final String label) {
+        return SpreadsheetParserToken.labelName(SpreadsheetSelection.labelName(label), label);
     }
 
     private SpreadsheetLambdaFunctionParserToken lambdaFunction(final SpreadsheetParserToken... tokens) {
@@ -3402,8 +3397,29 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
+    private SpreadsheetParserToken negative(final SpreadsheetParserToken number) {
+        return SpreadsheetParserToken.negative(Lists.of(minus(), number), "-" + number.text());
+    }
+
     private SpreadsheetParserToken notEquals() {
         return SpreadsheetParserToken.notEqualsSymbol("<>", "<>");
+    }
+
+    private SpreadsheetNumberParserToken number(final int number) {
+        return SpreadsheetParserToken.number(
+                Lists.of(
+                        SpreadsheetParserToken.digits("" + number, "" + number)
+                ),
+                "1"
+        );
+    }
+
+    private SpreadsheetParserToken parenthesisOpen() {
+        return SpreadsheetParserToken.parenthesisOpenSymbol("(", "(");
+    }
+
+    private SpreadsheetParserToken parenthesisClose() {
+        return SpreadsheetParserToken.parenthesisCloseSymbol(")", ")");
     }
 
     private SpreadsheetParserToken percent() {
@@ -3418,21 +3434,29 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParserToken.powerSymbol("^", "^");
     }
 
-    private SpreadsheetParserToken openParenthesis() {
-        return SpreadsheetParserToken.parenthesisOpenSymbol("(", "(");
-    }
-
-    private SpreadsheetParserToken closeParenthesis() {
-        return SpreadsheetParserToken.parenthesisCloseSymbol(")", ")");
-    }
-
-    private SpreadsheetCellRangeParserToken range(final SpreadsheetParserToken from, final SpreadsheetParserToken to) {
+    private SpreadsheetCellRangeParserToken range(final SpreadsheetParserToken from,
+                                                  final SpreadsheetParserToken to) {
         final String text = from.text() + between() + to.text();
         return SpreadsheetParserToken.cellRange(Lists.of(from, between(), to), text);
     }
 
     private SpreadsheetParserToken valueSeparator() {
         return SpreadsheetParserToken.valueSeparatorSymbol("" + VALUE_SEPARATOR, "" + VALUE_SEPARATOR);
+    }
+
+    private SpreadsheetParserToken whitespace1() {
+        return whitespace(" ");
+    }
+
+    private SpreadsheetParserToken whitespace2() {
+        return whitespace("  ");
+    }
+
+    private SpreadsheetParserToken whitespace(final String text) {
+        return SpreadsheetParserToken.whitespace(
+                text,
+                text
+        );
     }
 
     // PublicStaticHelperTesting........................................................................................
