@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
- * Base class for both digit kinds, that tries to match the minimum but not more then the maximum.
+ * Base class for both digit kinds, that tries to match the minimum but not more than the maximum.
  */
 abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNumberParsePatternComponent {
 
@@ -45,8 +45,16 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
     final boolean parse(final TextCursor cursor,
                         final SpreadsheetNumberParsePatternRequest request) {
         if (false == cursor.isEmpty()) {
-            request.digitMode.tryParseSign(cursor, request);
+            final SpreadsheetNumberParsePatternComponentDigitMode digitMode = request.digitMode;
+            digitMode.tryParseSign(cursor, request);
+
             this.parseDigits(cursor, request);
+
+            if (request.addNumberIfNecessary()) {
+                request.setDigitMode(
+                        digitMode.next()
+                );
+            }
         }
         return request.nextComponent(cursor);
     }
@@ -68,11 +76,31 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
 
             // grouping separators are skipped when digits are expected.
             final char c = cursor.at();
+
+            final int digit = Character.digit(
+                    c,
+                    10
+            );
+            if (-1 != digit) {
+                request.digits.append(c);
+
+                cursor.next();
+                count++;
+                if (count < max) {
+                    continue;
+                }
+            }
+
             if (mode.isGroupSeparator(c, context)) {
                 request.addNumberIfNecessary();
 
                 final String groupingText = Character.toString(c);
-                request.add(SpreadsheetParserToken.groupingSeparatorSymbol(groupingText, groupingText));
+                request.add(
+                        SpreadsheetParserToken.groupingSeparatorSymbol(
+                                groupingText,
+                                groupingText
+                        )
+                );
 
                 cursor.next();
                 continue;
@@ -82,29 +110,19 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
                 request.addNumberIfNecessary();
 
                 final String whitespaceText = Character.toString(c);
-                request.add(SpreadsheetParserToken.whitespace(whitespaceText, whitespaceText));
+                request.add(
+                        SpreadsheetParserToken.whitespace(
+                                whitespaceText,
+                                whitespaceText
+                        )
+                );
 
                 cursor.next();
                 continue;
             }
 
-            // $c might be a digit or space
-            final int digit = Character.digit(c, 10);
-            if (-1 == digit) {
-                break;
-            }
-
-            request.digits.append(c);
-
-            cursor.next();
-            count++;
-            if (count == max) {
-                break;
-            }
-        }
-
-        if (request.addNumberIfNecessary()) {
-            request.setDigitMode(request.digitMode.next());
+            // bad char!
+            break;
         }
     }
 
