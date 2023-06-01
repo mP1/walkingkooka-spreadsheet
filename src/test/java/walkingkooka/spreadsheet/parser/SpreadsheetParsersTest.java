@@ -1008,7 +1008,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 Lists.of(number(1),
                         percent()
                 ),
-                "1%");
+                "1%"
+        );
 
         this.parseExpressionAndCheck(
                 text,
@@ -3398,7 +3399,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetParserToken negative(final SpreadsheetParserToken number) {
-        return SpreadsheetParserToken.negative(Lists.of(minus(), number), "-" + number.text());
+        return SpreadsheetParserToken.negative(
+                Lists.of(
+                        minus(),
+                        number
+                ),
+                "-" + number.text()
+        );
     }
 
     private SpreadsheetParserToken notEquals() {
@@ -3437,11 +3444,21 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private SpreadsheetCellRangeParserToken range(final SpreadsheetParserToken from,
                                                   final SpreadsheetParserToken to) {
         final String text = from.text() + between() + to.text();
-        return SpreadsheetParserToken.cellRange(Lists.of(from, between(), to), text);
+        return SpreadsheetParserToken.cellRange(
+                Lists.of(
+                        from,
+                        between(),
+                        to
+                ),
+                text
+        );
     }
 
     private SpreadsheetParserToken valueSeparator() {
-        return SpreadsheetParserToken.valueSeparatorSymbol("" + VALUE_SEPARATOR, "" + VALUE_SEPARATOR);
+        return SpreadsheetParserToken.valueSeparatorSymbol(
+                "" + VALUE_SEPARATOR,
+                "" + VALUE_SEPARATOR
+        );
     }
 
     private SpreadsheetParserToken whitespace1() {
