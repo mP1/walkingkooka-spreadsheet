@@ -86,7 +86,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetSubtractionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetThousandsSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetValueSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
@@ -608,14 +607,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void visit(final SpreadsheetTextLiteralParserToken token) {
         this.leaf(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetThousandsSymbolParserToken token) {
-        this.leafCharacter(
-                SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR,
-                SpreadsheetParserToken::thousandsSymbol
-        );
     }
 
     @Override

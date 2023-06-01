@@ -502,13 +502,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetThousandsSymbolParserToken}
-     */
-    public static SpreadsheetThousandsSymbolParserToken thousandsSymbol(final String value, final String text) {
-        return SpreadsheetThousandsSymbolParserToken.with(value, text);
-    }
-
-    /**
      * {@see SpreadsheetTimeParserToken}
      */
     public static SpreadsheetTimeParserToken time(final List<ParserToken> value, final String text) {
@@ -1044,13 +1037,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetThousandsSymbolParserToken} returns true
-     */
-    public final boolean isThousandsSymbol() {
-        return this instanceof SpreadsheetThousandsSymbolParserToken;
-    }
-
-    /**
      * Only {@link SpreadsheetTimeParserToken} return true
      */
     public final boolean isTime() {
@@ -1570,11 +1556,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetThousandsSymbolParserToken.class,
-                SpreadsheetParserToken::unmarshallThousandsSymbol
-        );
-
-        registerLeafParserToken(
                 SpreadsheetValueSeparatorSymbolParserToken.class,
                 SpreadsheetParserToken::unmarshallValueSeparatorSymbol
         );
@@ -1772,15 +1753,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::powerSymbol
-        );
-    }
-
-    static SpreadsheetThousandsSymbolParserToken unmarshallThousandsSymbol(final JsonNode node,
-                                                                           final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
-                node,
-                context,
-                SpreadsheetParserToken::thousandsSymbol
         );
     }
 

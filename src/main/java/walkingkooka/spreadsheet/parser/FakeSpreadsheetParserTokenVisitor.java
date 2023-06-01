@@ -463,11 +463,6 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
-    protected void visit(final SpreadsheetThousandsSymbolParserToken token) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visit(final SpreadsheetValueSeparatorSymbolParserToken token) {
         throw new UnsupportedOperationException();
     }
