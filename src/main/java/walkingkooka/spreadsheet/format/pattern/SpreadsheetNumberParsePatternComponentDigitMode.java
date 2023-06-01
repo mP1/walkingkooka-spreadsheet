@@ -27,7 +27,7 @@ import walkingkooka.text.cursor.TextCursor;
 enum SpreadsheetNumberParsePatternComponentDigitMode {
 
     /**
-     * Digits before any decimal separator.
+     * The sign or first digit for the integer portion of a number, before any decimal separator or exponent.
      */
     INTEGER_OR_SIGN {
         @Override
@@ -47,30 +47,30 @@ enum SpreadsheetNumberParsePatternComponentDigitMode {
     },
 
     /**
-     * Digits after a decimal separator
+     * The first digit after a decimal separator
      */
     DECIMAL_FIRST {
         @Override
         SpreadsheetNumberParsePatternComponentDigitMode next() {
-            return DECIMAL;
+            return DECIMAL_NOT_FIRST;
         }
 
     },
 
     /**
-     * Digits after a decimal separator
+     * Any digits but not the first after a decimal separataor
      */
-    DECIMAL {
+    DECIMAL_NOT_FIRST {
         @Override
         SpreadsheetNumberParsePatternComponentDigitMode next() {
-            return DECIMAL;
+            return DECIMAL_NOT_FIRST;
         }
     },
 
     /**
-     * Digits or sign
+     * THe start of the exponent portion of a number which may be a sign or digit
      */
-    EXPONENT_OR_SIGN {
+    EXPONENT_START {
         @Override
         SpreadsheetNumberParsePatternComponentDigitMode next() {
             return EXPONENT;
@@ -95,11 +95,11 @@ enum SpreadsheetNumberParsePatternComponentDigitMode {
     }
 
     boolean isSign() {
-        return this == INTEGER_OR_SIGN || this == EXPONENT_OR_SIGN;
+        return this == INTEGER_OR_SIGN || this == EXPONENT_START;
     }
 
     final boolean isDecimal() {
-        return this == DECIMAL_FIRST || this == DECIMAL;
+        return this == DECIMAL_FIRST || this == DECIMAL_NOT_FIRST;
     }
 
     final void tryParseSign(final TextCursor cursor,
@@ -126,7 +126,7 @@ enum SpreadsheetNumberParsePatternComponentDigitMode {
 
 
     /**
-     * Advances a mode to the unsigned form.
+     * Advances a mode to continue processing more characters.
      */
     abstract SpreadsheetNumberParsePatternComponentDigitMode next();
 

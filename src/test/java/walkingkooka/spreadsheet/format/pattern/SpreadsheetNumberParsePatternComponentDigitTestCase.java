@@ -56,14 +56,14 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     @Test
     public final void testGroupingDecimal() {
         this.testGrouping(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public final void testGroupingExponentOrSign() {
         this.testGrouping(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START
         );
     }
 
@@ -112,14 +112,14 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     @Test
     public final void testPlusDecimal() {
         this.testPlus(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public final void testPlusExponentOrSign() {
         this.testPlus(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START
         );
     }
 
@@ -181,14 +181,14 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     @Test
     public final void testMinusDecimal() {
         this.testMinus(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public final void testMinusExponentOrSign() {
         this.testMinus(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START
         );
     }
 
@@ -247,7 +247,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     public final void testDigit1Max1DecimalFirst() {
         this.testDigit1Max1(
                 SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
 
     }
@@ -255,15 +255,15 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     @Test
     public final void testDigit1Max1Decimal() {
         this.testDigit1Max1(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST,
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public final void testDigit1Max1ExponentOrSign() {
         this.testDigit1Max1(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START,
                 SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
         );
     }
@@ -312,7 +312,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     public final void testDigit1TextMax1DecimalFirst() {
         this.testDigit1TextMax1(
                 SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
 
     }
@@ -320,15 +320,15 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     @Test
     public final void testDigit1TextMax1Decimal() {
         this.testDigit1TextMax1(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST,
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public final void testDigit1TextMax1ExponentOrSign() {
         this.testDigit1TextMax1(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START,
                 SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
         );
     }
@@ -377,7 +377,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     public final void testDigit2Max1DecimalFirst() {
         this.testDigit2Max1(
                 SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
 
     }
@@ -385,15 +385,15 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     @Test
     public final void testDigit2Max1Decimal() {
         this.testDigit2Max1(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST,
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public final void testDigit2Max1ExponentOrSign() {
         this.testDigit2Max1(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START,
                 SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
         );
     }
@@ -442,7 +442,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     public final void testDigit2Max2DecimalFirst() {
         this.testDigit2Max2(
                 SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
 
     }
@@ -450,15 +450,15 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     @Test
     public final void testDigit2Max2Decimal() {
         this.testDigit2Max2(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST,
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public final void testDigit2Max2ExponentOrSign() {
         this.testDigit2Max2(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START,
                 SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
         );
     }
@@ -508,7 +508,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     public final void testDigit2TextMax2DecimalFirst() {
         this.testDigit2TextMax2(
                 SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
 
     }
@@ -516,15 +516,15 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     @Test
     public final void testDigit2TextMax2Decimal() {
         this.testDigit2TextMax2(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST,
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public final void testDigit2TextMax2ExponentOrSign() {
         this.testDigit2TextMax2(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START,
                 SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
         );
     }
@@ -574,7 +574,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     public final void testPlusDigit1TextMax2DecimalFirst() {
         this.testPlusDigit1TextMax2(
                 SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
 
     }
@@ -582,15 +582,15 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     @Test
     public final void testPlusDigit1TextMax2Decimal() {
         this.testPlusDigit1TextMax2(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST,
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public final void testPlusDigit1TextMax2ExponentOrSign() {
         this.testPlusDigit1TextMax2(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START,
                 SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
         );
     }
@@ -655,7 +655,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     public final void testMinusDigit1TextMax2DecimalFirst() {
         this.testMinusDigit1TextMax2(
                 SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
 
     }
@@ -663,15 +663,15 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     @Test
     public final void testMinusDigit1TextMax2Decimal() {
         this.testMinusDigit1TextMax2(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST,
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public final void testMinusDigit1TextMax2ExponentOrSign() {
         this.testMinusDigit1TextMax2(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START,
                 SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
         );
     }

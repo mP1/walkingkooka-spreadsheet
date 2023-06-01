@@ -172,7 +172,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     protected void visit(final SpreadsheetFormatExponentSymbolParserToken token) {
         this.addComponent(SpreadsheetNumberParsePatternComponent.exponent());
 
-        this.mode = SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_OR_SIGN;
+        this.mode = SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START;
     }
 
     @Override
