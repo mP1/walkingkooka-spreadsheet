@@ -155,8 +155,58 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
 
     @Test
     public void testParseFails2() {
-        this.parseFails2("$ #.00",
-                "1" + DECIMAL + "23");
+        this.parseFails2(
+                "$ #.00",
+                "1" + DECIMAL + "23"
+        );
+    }
+
+    @Test
+    public void testParseGroupingAfterDecimalFails() {
+        this.parseFails2(
+                "$ #.00",
+                "1" + DECIMAL + GROUPING + "23"
+        );
+    }
+
+    @Test
+    public void testParseGroupingAfterDecimalFails2() {
+        this.parseFails2(
+                "$ #.00",
+                "1" + DECIMAL + "2" + GROUPING + "3"
+        );
+    }
+
+    @Test
+    public void testParseGroupingWithinExponentFails() {
+        this.parseFails2(
+                "$ #.00",
+                "1" + DECIMAL + EXPONENT + GROUPING + "23"
+        );
+    }
+
+    @Test
+    public void testParseGroupingWithinExponentFails2() {
+        this.parseFails2(
+                "$ #.00",
+                "1" + DECIMAL + EXPONENT + GROUPING + PLUS + "23"
+        );
+    }
+
+    @Test
+    public void testParseGroupingWithinExponentFails3() {
+        this.parseFails2(
+                "$ #.00",
+                "1" + DECIMAL + EXPONENT + GROUPING + MINUS + "23"
+        );
+    }
+
+    @Test
+    public void testParseGroupingWithinExponentFails4() {
+        this.parseFails2(
+                "$ #.00",
+                "1" + DECIMAL + "2" + EXPONENT + "2" + GROUPING + "3"
+        );
     }
 
     @Test
@@ -373,6 +423,17 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                 "1" + DECIMAL + "5",
                 digit1(),
                 decimalSeparator(),
+                digit5()
+        );
+    }
+
+    @Test
+    public void testParseIncludesGrouping() {
+        this.parseAndCheck2(
+                "#",
+                "1" + GROUPING + "5",
+                digit1(),
+                groupingSymbol(),
                 digit5()
         );
     }

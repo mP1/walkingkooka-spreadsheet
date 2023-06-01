@@ -33,48 +33,20 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     // grouping.............................................................................................................
 
     @Test
-    public final void testGroupingIntegerOrSign() {
-        this.testGrouping(
+    public final void testIntegerOrSignGrouping() {
+        this.groupAndCheck(
                 SpreadsheetNumberParsePatternComponentDigitMode.INTEGER_OR_SIGN
         );
     }
 
     @Test
-    public final void testGroupingInteger() {
-        this.testGrouping(
+    public final void testIntegerGrouping() {
+        this.groupAndCheck(
                 SpreadsheetNumberParsePatternComponentDigitMode.INTEGER
         );
     }
 
-    @Test
-    public final void testGroupingDecimalFirst() {
-        this.testGrouping(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST
-        );
-    }
-
-    @Test
-    public final void testGroupingDecimal() {
-        this.testGrouping(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
-        );
-    }
-
-    @Test
-    public final void testGroupingExponentOrSign() {
-        this.testGrouping(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START
-        );
-    }
-
-    @Test
-    public final void testGroupingExponent() {
-        this.testGrouping(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
-        );
-    }
-
-    private void testGrouping(final SpreadsheetNumberParsePatternComponentDigitMode mode) {
+    private void groupAndCheck(final SpreadsheetNumberParsePatternComponentDigitMode mode) {
         this.parseAndCheck3(
                 1,
                 mode,
@@ -83,6 +55,45 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                 mode,
                 NEXT_SKIPPED,
                 SpreadsheetParserToken.groupingSeparatorSymbol("" + GROUP, "" + GROUP)
+        );
+    }
+
+    @Test
+    public final void testDecimalFirstGrouping() {
+        this.groupAndCheck2(
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST
+        );
+    }
+
+    @Test
+    public final void testDecimalNotFirstGrouping() {
+        this.groupAndCheck2(
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
+        );
+    }
+
+    @Test
+    public final void testExponentOrSignGrouping() {
+        this.groupAndCheck2(
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START
+        );
+    }
+
+    @Test
+    public final void testExponentGrouping() {
+        this.groupAndCheck2(
+                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
+        );
+    }
+
+    private void groupAndCheck2(final SpreadsheetNumberParsePatternComponentDigitMode mode) {
+        this.parseAndCheck3(
+                1,
+                mode,
+                "",
+                "" + GROUP,
+                mode,
+                NEXT_CALLED
         );
     }
 
