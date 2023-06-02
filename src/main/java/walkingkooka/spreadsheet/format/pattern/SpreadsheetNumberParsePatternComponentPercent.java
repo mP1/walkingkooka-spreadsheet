@@ -37,13 +37,14 @@ final class SpreadsheetNumberParsePatternComponentPercent extends SpreadsheetNum
 
     @Override
     boolean isExpressionCompatible() {
-        return false;
+        return true;
     }
 
     @Override
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternRequest request) {
         final char percentSymbol = request.context.percentageSymbol();
+
         return this.parseToken(
                 cursor,
                 Character.toString(percentSymbol),
