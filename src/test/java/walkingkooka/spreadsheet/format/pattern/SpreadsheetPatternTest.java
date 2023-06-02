@@ -23,6 +23,7 @@ import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
@@ -31,7 +32,9 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
@@ -58,6 +61,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -67,6 +71,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         ParserTesting,
         SpreadsheetFormatterTesting {
 
+    private final static Color COLOR = Color.BLACK;
 
     // static factory method Locale.....................................................................................
 
@@ -150,6 +155,16 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     private <T> void formatPatternFormatAndCheck(final SpreadsheetFormatPattern formatPattern,
                                                  final T value,
                                                  final String formattedText) {
+        this.formatPatternFormatAndCheck(
+                formatPattern,
+                value,
+                SpreadsheetText.with(formattedText)
+        );
+    }
+
+    private <T> void formatPatternFormatAndCheck(final SpreadsheetFormatPattern formatPattern,
+                                                 final T value,
+                                                 final SpreadsheetText formattedText) {
         this.formatAndCheck(
                 formatPattern.formatter(),
                 value,
@@ -198,6 +213,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                                 50,
                                 LocalDateTime::now
                         );
+                    }
+
+                    @Override
+                    public Optional<Color> colorName(final SpreadsheetColorName name) {
+                        return formattedText.color();
                     }
 
                 },
@@ -622,6 +642,16 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
+    public void testDateFormatPatternColor() {
+        this.formatPatternFormatAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("[BLACK]dd/mm/yyyy"),
+                LocalDate.of(1999, 12, 31),
+                SpreadsheetText.with("31/12/1999")
+                        .setColor(Optional.of(COLOR))
+        );
+    }
+
+    @Test
     public void testDateFormatPatternWithGeneral() {
         final LocalDate date = LocalDate.of(1999, 12, 31);
 
@@ -706,6 +736,16 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh/mm/ss \"Hello\""),
                 LocalDateTime.of(1999, 12, 31, 12, 58, 59),
                 "31/12/1999 12/58/59 Hello"
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatPatternColor() {
+        this.formatPatternFormatAndCheck(
+                SpreadsheetPattern.parseDateTimeFormatPattern("[BLACK]dd/mm/yyyy hh/mm/ss \"Hello\""),
+                LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+                SpreadsheetText.with("31/12/1999 12/58/59 Hello")
+                        .setColor(Optional.of(COLOR))
         );
     }
 
@@ -851,6 +891,42 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
                 },
                 "1.5 Hello"
+        );
+    }
+
+    @Test
+    public void testNumberFormatPatternColor() {
+        this.formatAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("[BLACK]0.0 \"Hello\"").formatter(),
+                ExpressionNumberKind.DOUBLE.create(1.5),
+                new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return this.successfulConversion(
+                                ExpressionNumber.class.cast(value),
+                                target
+                        );
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL128;
+                    }
+
+                    @Override
+                    public Optional<Color> colorName(final SpreadsheetColorName name) {
+                        return Optional.of(COLOR);
+                    }
+                },
+                SpreadsheetText.with("1.5 Hello")
+                        .setColor(Optional.of(COLOR))
         );
     }
 
@@ -1019,6 +1095,35 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    @Test
+    public void testTextFormatPatternColor() {
+        this.formatAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("[RED]@@ \"Hello\"").formatter(),
+                "Banana",
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return String.class == type;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return this.successfulConversion(value, target);
+                    }
+
+                    @Override
+                    public Optional<Color> colorName(final SpreadsheetColorName name) {
+                        return Optional.of(COLOR);
+                    }
+                },
+                SpreadsheetText.with("BananaBanana Hello").setColor(
+                        Optional.of(COLOR)
+                )
+        );
+    }
+
     // parseTimeParsePattern............................................................................................
 
     @Test
@@ -1049,6 +1154,18 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 SpreadsheetPattern.parseTimeFormatPattern("hh/mm/ss"),
                 LocalTime.of(12, 58, 59),
                 "12/58/59"
+        );
+    }
+
+    @Test
+    public void testTimeFormatPatternColor() {
+        this.formatPatternFormatAndCheck(
+                SpreadsheetPattern.parseTimeFormatPattern("[BLACK]hh/mm/ss"),
+                LocalTime.of(12, 58, 59),
+                SpreadsheetText.with("12/58/59")
+                        .setColor(
+                                Optional.of(COLOR)
+                        )
         );
     }
 
