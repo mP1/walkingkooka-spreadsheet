@@ -1046,7 +1046,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // forEachComponent..................................................................................................
+    // components......................................................................................................
 
     @Test
     public void testComponentsWithNullBiConsumerFails() {
