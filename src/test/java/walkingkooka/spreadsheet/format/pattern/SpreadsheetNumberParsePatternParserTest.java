@@ -62,13 +62,11 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
         this.parseExpressionFails("#\"text\"#");
     }
 
-    @Test
-    public void testExpressionPercentFails() {
-        this.parseExpressionFails("#.#%");
-    }
-
     private void parseExpressionFails(final String pattern) {
-        assertThrows(IllegalStateException.class, () -> SpreadsheetNumberParsePattern.parseNumberParsePattern(pattern).expressionParser());
+        assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetNumberParsePattern.parseNumberParsePattern(pattern).expressionParser()
+        );
     }
 
     // integer values single digit pattern..............................................................................

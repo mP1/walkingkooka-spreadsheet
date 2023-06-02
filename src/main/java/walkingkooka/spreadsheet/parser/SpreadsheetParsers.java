@@ -510,7 +510,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         predefined.put(
                 NUMBER_IDENTIFIER,
-                SpreadsheetParsePattern.parseNumberParsePattern("#.#E+#;#.#;#").expressionParser() //
+                SpreadsheetParsePattern.parseNumberParsePattern("#.#E+#;#.#%;#.#;#%;#").expressionParser() //
         );
         predefined.put(VALUE_IDENTIFIER, value.setToString(VALUE_IDENTIFIER.toString()));
 

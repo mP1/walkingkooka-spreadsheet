@@ -438,6 +438,102 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 text);
     }
 
+    @Test
+    public void testNumberPercent() {
+        final String text = "100%";
+
+        this.parseExpressionAndCheck(
+                text,
+                number(
+                        digits(100),
+                        percent()
+                ),
+                text,
+                "1"
+        );
+    }
+
+    @Test
+    public void testNumberPercent2() {
+        final String text = "123%";
+
+        this.parseExpressionAndCheck(
+                text,
+                number(
+                        digits(123),
+                        percent()
+                ),
+                text,
+                "1.23"
+        );
+    }
+
+    @Test
+    public void testNumberDecimalPercent() {
+        final String text = "100.%";
+
+        this.parseExpressionAndCheck(
+                text,
+                number(
+                        digits(100),
+                        decimal(),
+                        percent()
+                ),
+                text,
+                "1"
+        );
+    }
+
+    @Test
+    public void testNumberDecimalPercent2() {
+        final String text = "123.%";
+
+        this.parseExpressionAndCheck(
+                text,
+                number(
+                        digits(123),
+                        decimal(),
+                        percent()
+                ),
+                text,
+                "1.23"
+        );
+    }
+
+    @Test
+    public void testNumberDecimalDigitPercent() {
+        final String text = "100.0%";
+
+        this.parseExpressionAndCheck(
+                text,
+                number(
+                        digits(100),
+                        decimal(),
+                        digits(0),
+                        percent()
+                ),
+                text,
+                "1"
+        );
+    }
+
+    @Test
+    public void testNumberDecimalDigitPercent2() {
+        final String text = "123.5%";
+
+        this.parseExpressionAndCheck(
+                text,
+                number(
+                        digits(123),
+                        decimal(),
+                        digits(5),
+                        percent()
+                ),
+                text,
+                "1.235"
+        );
+    }
+
     // CELL,............................................................................................................
 
     @Test
@@ -980,14 +1076,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         this.parseExpressionAndCheck(
                 text,
-                SpreadsheetParserToken.number(
-                        Lists.of(
-                                number(1),
-                                percent()
-                        ),
-                        text),
-                text,
-                "0.01"
+                number(
+                        digits(1),
+                        percent()
+                ),
+                "1%",
+                "0.01" // expression without percent
         );
     }
 
@@ -1004,16 +1098,16 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private void testExpressionNegativeNumberPercentage() {
         final String text = "-1%";
 
-        final SpreadsheetParserToken percent = SpreadsheetParserToken.number(
-                Lists.of(number(1),
-                        percent()
-                ),
-                "1%"
+        final SpreadsheetParserToken percent = number(
+                digits(1),
+                percent()
         );
 
         this.parseExpressionAndCheck(
                 text,
-                SpreadsheetParserToken.negative(Lists.of(minus(), percent), text),
+                negative(
+                        percent
+                ),
                 text,
                 "-0.01"
         );
@@ -3318,6 +3412,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
+    private SpreadsheetParserToken digits(final Number number) {
+        return SpreadsheetParserToken.digits(
+                "" + number,
+                "" + number
+        );
+    }
+
     private SpreadsheetParserToken divide() {
         return SpreadsheetParserToken.divideSymbol("/", "/");
     }
@@ -3412,12 +3513,18 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParserToken.notEqualsSymbol("<>", "<>");
     }
 
-    private SpreadsheetNumberParserToken number(final int number) {
+    private SpreadsheetNumberParserToken number(final Number number) {
+        return number(
+                digits(number)
+        );
+    }
+
+    private SpreadsheetNumberParserToken number(final SpreadsheetParserToken... tokens) {
         return SpreadsheetParserToken.number(
-                Lists.of(
-                        SpreadsheetParserToken.digits("" + number, "" + number)
-                ),
-                "1"
+                Lists.of(tokens),
+                ParserToken.text(
+                        Lists.of(tokens)
+                )
         );
     }
 
