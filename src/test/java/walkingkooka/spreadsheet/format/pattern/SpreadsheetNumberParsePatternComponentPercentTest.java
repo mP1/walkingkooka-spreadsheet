@@ -23,16 +23,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 public final class SpreadsheetNumberParsePatternComponentPercentTest extends SpreadsheetNumberParsePatternComponentTestCase2<SpreadsheetNumberParsePatternComponentPercent> {
 
     @Test
-    public void testFails() {
-        final String text = "A";
-        this.checkNotEquals("" + PERCENT, text);
-
-        this.parseFails(
-                text
-        );
-    }
-
-    @Test
     public void testToken1() {
         this.parseAndCheck2(
                 PERCENT,

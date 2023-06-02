@@ -569,6 +569,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                             }
 
                             @Override
+                            public char percentageSymbol() {
+                                return '*';
+                            }
+
+                            @Override
                             public char positiveSign() {
                                 return 'p';
                             }
@@ -745,6 +750,36 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
                 },
                 "1.50 Hello"
+        );
+    }
+
+    @Test
+    public void testNumberFormatPatternWithNumberIncludesPercent() {
+        this.formatAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("0.0 \"Hello\"").formatter(),
+                ExpressionNumberKind.DOUBLE.create(1.5),
+                new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return this.successfulConversion(
+                                ExpressionNumber.class.cast(value),
+                                target
+                        );
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL128;
+                    }
+                },
+                "1.5 Hello"
         );
     }
 
