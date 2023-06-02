@@ -31,21 +31,21 @@ import java.util.function.Function;
 /**
  * A {@link Parser} that handles partial matches from a list taken from the {@link SpreadsheetParserContext}.
  */
-final class SpreadsheetParsePattern2ParserString extends SpreadsheetParsePattern2Parser {
+final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonNumberParsePatternParser {
 
-    static SpreadsheetParsePattern2ParserString with(final Function<SpreadsheetParserContext, List<String>> values,
-                                                     final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
-                                                     final String pattern) {
-        return new SpreadsheetParsePattern2ParserString(
+    static SpreadsheetNonNumberParsePatternParserString with(final Function<SpreadsheetParserContext, List<String>> values,
+                                                             final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
+                                                             final String pattern) {
+        return new SpreadsheetNonNumberParsePatternParserString(
                 values,
                 tokenFactory,
                 pattern
         );
     }
 
-    private SpreadsheetParsePattern2ParserString(final Function<SpreadsheetParserContext, List<String>> values,
-                                                 final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
-                                                 final String pattern) {
+    private SpreadsheetNonNumberParsePatternParserString(final Function<SpreadsheetParserContext, List<String>> values,
+                                                         final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
+                                                         final String pattern) {
         super();
         this.values = values;
         this.tokenFactory = tokenFactory;

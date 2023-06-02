@@ -22,9 +22,9 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 
-public final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitorTest
-        extends SpreadsheetParsePattern2TestCase<SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor>
-        implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitorTest
+        extends SpreadsheetNonNumberParsePatternTestCase<SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor>
+        implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor> {
 
     @Override
     public void testIfClassIsFinalIfAllConstructorsArePrivate() {
@@ -40,7 +40,7 @@ public final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitorTe
     public void testToString() {
         final SpreadsheetFormatParserToken token = this.parserToken("yyyymmdd");
 
-        final SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor();
+        final SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
 
         this.toStringAndCheck(
@@ -58,21 +58,21 @@ public final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitorTe
     }
 
     @Override
-    public SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor();
+    public SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor.class;
     }
 
     // TypeNameTesting..................................................................................................
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetParsePattern2.class.getSimpleName();
+        return SpreadsheetNonNumberParsePattern.class.getSimpleName();
     }
 }

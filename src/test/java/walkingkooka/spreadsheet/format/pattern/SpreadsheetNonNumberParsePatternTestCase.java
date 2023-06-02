@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public abstract class SpreadsheetParsePattern2TestCase<T> implements ClassTesting2<T> {
+public abstract class SpreadsheetNonNumberParsePatternTestCase<T> implements ClassTesting2<T> {
 
-    SpreadsheetParsePattern2TestCase() {
+    SpreadsheetNonNumberParsePatternTestCase() {
         super();
     }
 

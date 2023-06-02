@@ -37,14 +37,14 @@ import java.util.List;
 /**
  * Base class for any class that creates a {@link Parser} from a {@link DateTimeFormatter}.
  */
-abstract class SpreadsheetParsePattern2<V> extends SpreadsheetParsePattern {
+abstract class SpreadsheetNonNumberParsePattern<V> extends SpreadsheetParsePattern {
 
     // ctor.............................................................................................................
 
     /**
      * Package private ctor use factory
      */
-    SpreadsheetParsePattern2(final ParserToken token) {
+    SpreadsheetNonNumberParsePattern(final ParserToken token) {
         super(token);
     }
 
@@ -59,7 +59,7 @@ abstract class SpreadsheetParsePattern2<V> extends SpreadsheetParsePattern {
         return Converters.parser(
                 this.targetType(),
                 this.createParser(),
-                SpreadsheetParsePattern2::spreadsheetParserContext,
+                SpreadsheetNonNumberParsePattern::spreadsheetParserContext,
                 this::converterTransformer
         );
     }
@@ -68,7 +68,7 @@ abstract class SpreadsheetParsePattern2<V> extends SpreadsheetParsePattern {
                                    final ExpressionNumberConverterContext context) {
         return this.converterTransformer0(
                 token,
-                SpreadsheetParsePattern2ExpressionEvaluationContext.with(context)
+                SpreadsheetNonNumberParsePatternExpressionEvaluationContext.with(context)
         );
     }
 
@@ -102,6 +102,6 @@ abstract class SpreadsheetParsePattern2<V> extends SpreadsheetParsePattern {
      */
     @Override
     final Parser<SpreadsheetParserContext> createParser() {
-        return SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor.toParser(this.value());
+        return SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor.toParser(this.value());
     }
 }

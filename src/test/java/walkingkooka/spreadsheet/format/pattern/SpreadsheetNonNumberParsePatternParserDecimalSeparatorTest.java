@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
-public final class SpreadsheetParsePattern2ParserDecimalSeparatorTest extends SpreadsheetParsePattern2ParserTestCase<SpreadsheetParsePattern2ParserDecimalSeparator> {
+public final class SpreadsheetNonNumberParsePatternParserDecimalSeparatorTest extends SpreadsheetNonNumberParsePatternParserTestCase<SpreadsheetNonNumberParsePatternParserDecimalSeparator> {
 
     @Test
     public void testParseFails() {
@@ -75,8 +75,8 @@ public final class SpreadsheetParsePattern2ParserDecimalSeparatorTest extends Sp
     }
 
     @Override
-    public SpreadsheetParsePattern2ParserDecimalSeparator createParser() {
-        return SpreadsheetParsePattern2ParserDecimalSeparator.decimalSeparator();
+    public SpreadsheetNonNumberParsePatternParserDecimalSeparator createParser() {
+        return SpreadsheetNonNumberParsePatternParserDecimalSeparator.decimalSeparator();
     }
 
     @Override
@@ -94,8 +94,8 @@ public final class SpreadsheetParsePattern2ParserDecimalSeparatorTest extends Sp
     }
 
     @Override
-    public Class<SpreadsheetParsePattern2ParserDecimalSeparator> type() {
-        return SpreadsheetParsePattern2ParserDecimalSeparator.class;
+    public Class<SpreadsheetNonNumberParsePatternParserDecimalSeparator> type() {
+        return SpreadsheetNonNumberParsePatternParserDecimalSeparator.class;
     }
 
     @Override
