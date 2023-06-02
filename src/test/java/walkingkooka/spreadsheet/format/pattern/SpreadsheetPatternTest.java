@@ -599,7 +599,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     // parseXXX.........................................................................................................
 
     @Test
-    public void testParseDateFormatPattern() {
+    public void testDateFormatPattern() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy"),
                 LocalDate.of(1999, 12, 31),
@@ -608,7 +608,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseDateFormatPatternWithGeneral() {
+    public void testDateFormatPatternWithGeneral() {
         final LocalDate date = LocalDate.of(1999, 12, 31);
 
         this.formatAndCheck(
@@ -659,7 +659,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseDateTimeFormatPattern() {
+    public void testDateTimeFormatPattern() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh/mm/ss \"Hello\""),
                 LocalDateTime.of(1999, 12, 31, 12, 58, 59),
@@ -668,7 +668,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseDateTimeFormatPatternWithGeneral() {
+    public void testDateTimeFormatPatternWithGeneral() {
         final LocalDateTime dateTime = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
 
         this.formatAndCheck(
@@ -719,7 +719,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseNumberFormatPattern() {
+    public void testNumberFormatPattern() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("0.00 \"Hello\"").formatter(),
                 ExpressionNumberKind.DOUBLE.create(1.5),
@@ -749,7 +749,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseNumberFormatPatternWithGeneral() {
+    public void testNumberFormatPatternWithGeneral() {
         final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(1.5);
 
         this.formatAndCheck(
@@ -788,7 +788,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseNumberFormatPatternWithPercent() {
+    public void testNumberFormatPatternWithPercent() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("0.0% \"Hello\"").formatter(),
                 ExpressionNumberKind.DOUBLE.create(1.005),
@@ -823,7 +823,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseNumberFormatPatternWithPercentCustomPercentSymbol() {
+    public void testNumberFormatPatternWithPercentCustomPercentSymbol() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("0.0% \"Hello\"").formatter(),
                 ExpressionNumberKind.DOUBLE.create(1.005),
@@ -858,7 +858,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseTextFormatPattern() {
+    public void testTextFormatPattern() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseTextFormatPattern("@@ \"Hello\"").formatter(),
                 "Banana",
@@ -880,7 +880,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseTimeFormatPattern() {
+    public void testTimeFormatPattern() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseTimeFormatPattern("hh/mm/ss"),
                 LocalTime.of(12, 58, 59),
@@ -889,7 +889,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseTimeFormatPatternWithGeneral() {
+    public void testTimeFormatPatternWithGeneral() {
         final LocalTime time = LocalTime.of(12, 58, 59);
 
         this.formatAndCheck(
@@ -941,7 +941,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     // forEachComponent..................................................................................................
 
     @Test
-    public void testForEachComponentWithNullBiConsumerFails() {
+    public void testComponentsWithNullBiConsumerFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseTextFormatPattern("@").forEachComponent(null)
@@ -949,8 +949,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testForEachComponentDateFormat() {
-        this.forEachComponentAndCheck(
+    public void testComponentsDateFormat() {
+        this.componentsAndCheck(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy"),
                 Map.entry(
                         SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
@@ -976,8 +976,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testForEachComponentDateTimeFormat() {
-        this.forEachComponentAndCheck(
+    public void testComponentsDateTimeFormat() {
+        this.componentsAndCheck(
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm"),
                 Map.entry(
                         SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
@@ -1019,8 +1019,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testForEachComponentNumberFormat() {
-        this.forEachComponentAndCheck(
+    public void testComponentsNumberFormat() {
+        this.componentsAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("$#.00"),
                 Map.entry(
                         SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL,
@@ -1046,8 +1046,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testForEachComponentTextFormat() {
-        this.forEachComponentAndCheck(
+    public void testComponentsTextFormat() {
+        this.componentsAndCheck(
                 SpreadsheetPattern.parseTextFormatPattern("@\"Hello\""),
                 Map.entry(
                         SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
@@ -1061,8 +1061,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testForEachComponentTimeFormat() {
-        this.forEachComponentAndCheck(
+    public void testComponentsTimeFormat() {
+        this.componentsAndCheck(
                 SpreadsheetPattern.parseTimeFormatPattern("hh:mm"),
                 Map.entry(
                         SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
@@ -1080,8 +1080,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testForEachComponentDateParse() {
-        this.forEachComponentAndCheck(
+    public void testComponentsDateParse() {
+        this.componentsAndCheck(
                 SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy"),
                 Map.entry(
                         SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
@@ -1107,8 +1107,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testForEachComponentDateTimeParse() {
-        this.forEachComponentAndCheck(
+    public void testComponentsDateTimeParse() {
+        this.componentsAndCheck(
                 SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm"),
                 Map.entry(
                         SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
@@ -1150,8 +1150,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testForEachComponentNumberParse() {
-        this.forEachComponentAndCheck(
+    public void testComponentsNumberParse() {
+        this.componentsAndCheck(
                 SpreadsheetPattern.parseNumberParsePattern("$#.00"),
                 Map.entry(
                         SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL,
@@ -1177,8 +1177,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testForEachComponentTimeParse() {
-        this.forEachComponentAndCheck(
+    public void testComponentsTimeParse() {
+        this.componentsAndCheck(
                 SpreadsheetPattern.parseTimeParsePattern("hh:mm"),
                 Map.entry(
                         SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
@@ -1195,8 +1195,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    private void forEachComponentAndCheck(final SpreadsheetPattern pattern,
-                                          final Map.Entry<SpreadsheetFormatParserTokenKind, String>... expected) {
+    private void componentsAndCheck(final SpreadsheetPattern pattern,
+                                    final Map.Entry<SpreadsheetFormatParserTokenKind, String>... expected) {
         final List<Map.Entry<SpreadsheetFormatParserTokenKind, String>> components = Lists.array();
 
         pattern.forEachComponent(
