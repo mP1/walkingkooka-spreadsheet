@@ -406,7 +406,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setToken(this.token()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    SpreadsheetText\n" +
+                        "    SpreadsheetText \"1+2\"\n" +
                         "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n"
         );
     }
@@ -419,7 +419,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setExpression(this.expression()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    SpreadsheetText\n" +
+                        "    SpreadsheetText \"1+2\"\n" +
                         "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n"
@@ -435,7 +435,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setValue(this.value()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    SpreadsheetText\n" +
+                        "    SpreadsheetText \"1+2\"\n" +
                         "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
@@ -452,7 +452,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setValue(this.error()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    SpreadsheetText\n" +
+                        "    SpreadsheetText \"1+2\"\n" +
                         "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
@@ -482,7 +482,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         ),
                 "Formula\n" +
                         "  token:\n" +
-                        "    SpreadsheetText\n" +
+                        "    SpreadsheetText \"1+2\"\n" +
                         "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +

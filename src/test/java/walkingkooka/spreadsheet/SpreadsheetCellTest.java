@@ -1080,12 +1080,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression\n" +
+                        "      SpreadsheetExpression \"=1+2\"\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
-                        "        SpreadsheetAddition\n" +
-                        "          SpreadsheetNumber\n" +
+                        "        SpreadsheetAddition \"1+2\"\n" +
+                        "          SpreadsheetNumber \"1\"\n" +
                         "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
-                        "          SpreadsheetNumber\n" +
+                        "          SpreadsheetNumber \"2\"\n" +
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n"
         );
     }
@@ -1103,12 +1103,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression\n" +
+                        "      SpreadsheetExpression \"=1+2\"\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
-                        "        SpreadsheetAddition\n" +
-                        "          SpreadsheetNumber\n" +
+                        "        SpreadsheetAddition \"1+2\"\n" +
+                        "          SpreadsheetNumber \"1\"\n" +
                         "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
-                        "          SpreadsheetNumber\n" +
+                        "          SpreadsheetNumber \"2\"\n" +
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
@@ -1131,12 +1131,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression\n" +
+                        "      SpreadsheetExpression \"=1+2\"\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
-                        "        SpreadsheetAddition\n" +
-                        "          SpreadsheetNumber\n" +
+                        "        SpreadsheetAddition \"1+2\"\n" +
+                        "          SpreadsheetNumber \"1\"\n" +
                         "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
-                        "          SpreadsheetNumber\n" +
+                        "          SpreadsheetNumber \"2\"\n" +
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
@@ -1164,12 +1164,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression\n" +
+                        "      SpreadsheetExpression \"=1+2\"\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
-                        "        SpreadsheetAddition\n" +
-                        "          SpreadsheetNumber\n" +
+                        "        SpreadsheetAddition \"1+2\"\n" +
+                        "          SpreadsheetNumber \"1\"\n" +
                         "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
-                        "          SpreadsheetNumber\n" +
+                        "          SpreadsheetNumber \"2\"\n" +
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
@@ -1193,12 +1193,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression\n" +
+                        "      SpreadsheetExpression \"=1+2\"\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
-                        "        SpreadsheetAddition\n" +
-                        "          SpreadsheetNumber\n" +
+                        "        SpreadsheetAddition \"1+2\"\n" +
+                        "          SpreadsheetNumber \"1\"\n" +
                         "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
-                        "          SpreadsheetNumber\n" +
+                        "          SpreadsheetNumber \"2\"\n" +
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
@@ -1227,12 +1227,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression\n" +
+                        "      SpreadsheetExpression \"=1+2\"\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
-                        "        SpreadsheetAddition\n" +
-                        "          SpreadsheetNumber\n" +
+                        "        SpreadsheetAddition \"1+2\"\n" +
+                        "          SpreadsheetNumber \"1\"\n" +
                         "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
-                        "          SpreadsheetNumber\n" +
+                        "          SpreadsheetNumber \"2\"\n" +
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
@@ -1265,12 +1265,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression\n" +
+                        "      SpreadsheetExpression \"=1+2\"\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
-                        "        SpreadsheetAddition\n" +
-                        "          SpreadsheetNumber\n" +
+                        "        SpreadsheetAddition \"1+2\"\n" +
+                        "          SpreadsheetNumber \"1\"\n" +
                         "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
-                        "          SpreadsheetNumber\n" +
+                        "          SpreadsheetNumber \"2\"\n" +
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
@@ -1303,12 +1303,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression\n" +
+                        "      SpreadsheetExpression \"=1+2\"\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
-                        "        SpreadsheetAddition\n" +
-                        "          SpreadsheetNumber\n" +
+                        "        SpreadsheetAddition \"1+2\"\n" +
+                        "          SpreadsheetNumber \"1\"\n" +
                         "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
-                        "          SpreadsheetNumber\n" +
+                        "          SpreadsheetNumber \"2\"\n" +
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
@@ -1339,12 +1339,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression\n" +
+                        "      SpreadsheetExpression \"=1+2\"\n" +
                         "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
-                        "        SpreadsheetAddition\n" +
-                        "          SpreadsheetNumber\n" +
+                        "        SpreadsheetAddition \"1+2\"\n" +
+                        "          SpreadsheetNumber \"1\"\n" +
                         "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
-                        "          SpreadsheetNumber\n" +
+                        "          SpreadsheetNumber \"2\"\n" +
                         "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
