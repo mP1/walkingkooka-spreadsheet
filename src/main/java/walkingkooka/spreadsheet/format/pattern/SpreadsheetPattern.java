@@ -38,6 +38,7 @@ import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -479,7 +480,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATE_FORMAT_PARSER = SpreadsheetFormatParsers.dateFormat();
+    private final static Parser<SpreadsheetFormatParserContext> DATE_FORMAT_PARSER = SpreadsheetFormatParsers.dateFormat()
+            .orFailIfCursorNotEmpty(ParserReporters.basic());
 
     /**
      * Transforms the tokens into a {@link SpreadsheetDateFormatPattern}
@@ -503,7 +505,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSE_PARSER = SpreadsheetFormatParsers.dateParse();
+    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSE_PARSER = SpreadsheetFormatParsers.dateParse()
+            .orFailIfCursorNotEmpty(ParserReporters.basic());
 
     // parseDateTimeFormatPatterns.......................................................................................
 
@@ -518,7 +521,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATETIME_FORMAT_PARSER = SpreadsheetFormatParsers.dateTimeFormat();
+    private final static Parser<SpreadsheetFormatParserContext> DATETIME_FORMAT_PARSER = SpreadsheetFormatParsers.dateTimeFormat()
+            .orFailIfCursorNotEmpty(ParserReporters.basic());
 
     /**
      * Transforms the tokens into a {@link SpreadsheetDateTimeFormatPattern}
@@ -542,7 +546,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSE_PARSER = SpreadsheetFormatParsers.dateTimeParse();
+    private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSE_PARSER = SpreadsheetFormatParsers.dateTimeParse()
+            .orFailIfCursorNotEmpty(ParserReporters.basic());
 
     // parseNumberFormatPatterns.........................................................................................
 
@@ -555,7 +560,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
                 SpreadsheetPattern::transformNumber);
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> NUMBER_FORMAT_PARSER = SpreadsheetFormatParsers.numberFormat();
+    private final static Parser<SpreadsheetFormatParserContext> NUMBER_FORMAT_PARSER = SpreadsheetFormatParsers.numberFormat()
+            .orFailIfCursorNotEmpty(ParserReporters.basic());
 
     /**
      * Transforms the tokens into a {@link SpreadsheetNumberFormatPattern}
@@ -577,7 +583,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSE_PARSER = SpreadsheetFormatParsers.numberParse();
+    private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSE_PARSER = SpreadsheetFormatParsers.numberParse()
+            .orFailIfCursorNotEmpty(ParserReporters.basic());
 
     // parseTextFormatPatterns..........................................................................................
 
@@ -592,7 +599,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER = SpreadsheetFormatParsers.textFormat();
+    private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER = SpreadsheetFormatParsers.textFormat()
+            .orFailIfCursorNotEmpty(ParserReporters.basic());
 
     /**
      * Transforms the tokens into a {@link SpreadsheetTextFormatPattern}
@@ -614,7 +622,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TIME_FORMAT_PARSER = SpreadsheetFormatParsers.timeFormat();
+    private final static Parser<SpreadsheetFormatParserContext> TIME_FORMAT_PARSER = SpreadsheetFormatParsers.timeFormat()
+            .orFailIfCursorNotEmpty(ParserReporters.basic());
 
     /**
      * Transforms the tokens into a {@link SpreadsheetTimeFormatPattern}
@@ -638,7 +647,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSE_PARSER = SpreadsheetFormatParsers.timeParse();
+    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSE_PARSER = SpreadsheetFormatParsers.timeParse()
+            .orFailIfCursorNotEmpty(ParserReporters.basic());
 
     // helper...........................................................................................................
 
@@ -651,7 +661,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         Objects.requireNonNull(text, "text");
 
         try {
-            return parser.parse(
+            return parser.andEmptyTextCursor().parse(
                             TextCursors.charSequence(text),
                             SpreadsheetFormatParserContexts.basic()
                     )
