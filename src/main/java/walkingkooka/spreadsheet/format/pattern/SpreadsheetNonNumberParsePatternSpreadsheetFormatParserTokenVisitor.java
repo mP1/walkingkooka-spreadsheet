@@ -76,13 +76,13 @@ import java.util.function.BiFunction;
  * A {@link SpreadsheetFormatParserTokenVisitor} that creates a parser, by mapping {@link SpreadsheetFormatParserToken}
  * into a parser made up of multiple components.
  */
-final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     /**
      * Creates a {@link Parser} for each of the individual date/datetime/time individual patterns.
      */
     static Parser<SpreadsheetParserContext> toParser(final ParserToken token) {
-        final SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor();
+        final SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
 
         return Parsers.alternatives(visitor.parsers)
@@ -100,7 +100,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
                 .flat();
     }
 
-    SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 
@@ -135,7 +135,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
     protected void endVisit(final SpreadsheetFormatDateParserToken token) {
         this.endParser(
                 token,
-                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::transformDate
+                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::transformDate
         );
     }
 
@@ -154,7 +154,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
     protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
         this.endParser(
                 token,
-                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::transformDateTime
+                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::transformDateTime
         );
     }
 
@@ -181,7 +181,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
     protected void endVisit(final SpreadsheetFormatTimeParserToken token) {
         this.endParser(
                 token,
-                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::transformTime
+                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::transformTime
         );
     }
 
@@ -218,9 +218,9 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
     @Override
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
         this.text(
-                SpreadsheetParsePattern2Parser.stringChoices(
-                        SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::ampm,
-                        SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::spreadsheetAmPmParserToken,
+                SpreadsheetNonNumberParsePatternParser.stringChoices(
+                        SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::ampm,
+                        SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::spreadsheetAmPmParserToken,
                         token.text()
                 )
         );
@@ -240,7 +240,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
         this.value(
                 1,
                 2,
-                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::day
+                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::day
         );
     }
 
@@ -279,7 +279,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
         this.value(
                 1,
                 2,
-                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::hour
+                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::hour
         );
     }
 
@@ -299,7 +299,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
         this.value(
                 1,
                 2,
-                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::minute
+                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::minute
         );
     }
 
@@ -324,23 +324,23 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
                 this.value(
                         1,
                         2,
-                        SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::month
+                        SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::month
                 );
                 break;
             case 3:
                 this.addParser(
-                        SpreadsheetParsePattern2Parser.stringChoices(
-                                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::monthNamesAbbreviations,
-                                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::monthNameAbbreviationParserToken,
+                        SpreadsheetNonNumberParsePatternParser.stringChoices(
+                                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::monthNamesAbbreviations,
+                                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::monthNameAbbreviationParserToken,
                                 token.text()
                         )
                 );
                 break;
             default:
                 this.addParser(
-                        SpreadsheetParsePattern2Parser.stringChoices(
-                                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::monthNames,
-                                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::monthNameParserToken,
+                        SpreadsheetNonNumberParsePatternParser.stringChoices(
+                                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::monthNames,
+                                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::monthNameParserToken,
                                 token.text()
                         )
                 );
@@ -357,7 +357,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
         return SpreadsheetParserToken.monthName(
                 value + 1,
                 text
-        ); // JAN=1 but SpreadsheetParsePattern2Parser.stringChoices 1st = 0.
+        ); // JAN=1 but SpreadsheetNonNumberParsePatternParser.stringChoices 1st = 0.
     }
 
     private static List<String> monthNamesAbbreviations(final SpreadsheetParserContext context) {
@@ -369,7 +369,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
         return SpreadsheetParserToken.monthNameAbbreviation(
                 value + 1,
                 text
-        ); // JAN=1 but SpreadsheetParsePattern2Parser.stringChoices 1st = 0.
+        ); // JAN=1 but SpreadsheetNonNumberParsePatternParser.stringChoices 1st = 0.
     }
 
     /**
@@ -393,7 +393,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
         this.value(
                 1,
                 2,
-                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::seconds
+                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::seconds
         );
     }
 
@@ -463,7 +463,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
         this.value(
                 min,
                 max,
-                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::year
+                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::year
         );
     }
 
@@ -493,7 +493,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
         );
     }
 
-    private void text(final SpreadsheetParsePattern2Parser parser) {
+    private void text(final SpreadsheetNonNumberParsePatternParser parser) {
         this.appendDecimalSeparatorMillisecondsIfNecessary();
         this.addParser(parser);
     }
@@ -542,7 +542,7 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
                                 text,
                                 CaseSensitivity.SENSITIVE
                         ).transform(
-                                SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor::textLiteralOrWhitespace
+                                SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor::textLiteralOrWhitespace
                         )
                         .cast()
         );
@@ -579,8 +579,8 @@ final class SpreadsheetParsePattern2SpreadsheetFormatParserTokenVisitor extends 
 
             this.sequenceParserBuilder.optional(
                     Parsers.<SpreadsheetParserContext>sequenceParserBuilder()
-                            .required(SpreadsheetParsePattern2Parser.decimalSeparator())
-                            .optional(SpreadsheetParsePattern2Parser.milliseconds(CharSequences.repeating('0', millis - 1).toString()))
+                            .required(SpreadsheetNonNumberParsePatternParser.decimalSeparator())
+                            .optional(SpreadsheetNonNumberParsePatternParser.milliseconds(CharSequences.repeating('0', millis - 1).toString()))
                             .build()
             );
 

@@ -26,7 +26,7 @@ import java.time.LocalTime;
 /**
  * Holds a valid {@link SpreadsheetTimeParsePattern}.
  */
-public final class SpreadsheetTimeParsePattern extends SpreadsheetParsePattern2<LocalTime> {
+public final class SpreadsheetTimeParsePattern extends SpreadsheetNonNumberParsePattern<LocalTime> {
 
     /**
      * Factory that creates a {@link ParserToken} from the given tokens.

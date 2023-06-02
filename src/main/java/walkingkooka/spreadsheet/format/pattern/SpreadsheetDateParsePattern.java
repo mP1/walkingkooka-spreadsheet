@@ -26,7 +26,7 @@ import java.time.LocalDate;
 /**
  * Holds a valid {@link SpreadsheetDateParsePattern}.
  */
-public final class SpreadsheetDateParsePattern extends SpreadsheetParsePattern2<LocalDate> {
+public final class SpreadsheetDateParsePattern extends SpreadsheetNonNumberParsePattern<LocalDate> {
 
     /**
      * Factory that creates a {@link ParserToken} from the given tokens.

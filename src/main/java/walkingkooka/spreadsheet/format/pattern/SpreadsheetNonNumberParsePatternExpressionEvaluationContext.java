@@ -39,13 +39,13 @@ import java.util.function.Function;
  * A {@link ExpressionEvaluationContext} view of a {@link ExpressionNumberConverterContext}.
  * Note a few methods throw {@link UnsupportedOperationException}.
  */
-final class SpreadsheetParsePattern2ExpressionEvaluationContext implements ExpressionEvaluationContext {
+final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implements ExpressionEvaluationContext {
 
-    static SpreadsheetParsePattern2ExpressionEvaluationContext with(final ExpressionNumberConverterContext context) {
-        return new SpreadsheetParsePattern2ExpressionEvaluationContext(context);
+    static SpreadsheetNonNumberParsePatternExpressionEvaluationContext with(final ExpressionNumberConverterContext context) {
+        return new SpreadsheetNonNumberParsePatternExpressionEvaluationContext(context);
     }
 
-    private SpreadsheetParsePattern2ExpressionEvaluationContext(final ExpressionNumberConverterContext context) {
+    private SpreadsheetNonNumberParsePatternExpressionEvaluationContext(final ExpressionNumberConverterContext context) {
         super();
         this.context = context;
     }

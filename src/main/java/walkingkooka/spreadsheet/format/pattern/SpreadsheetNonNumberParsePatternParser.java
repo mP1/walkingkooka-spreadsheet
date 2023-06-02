@@ -32,36 +32,36 @@ import java.util.function.Function;
 /**
  * Abstract {@link Parser} that requires a {@link SpreadsheetParserContext} that provides some template methods.
  */
-abstract class SpreadsheetParsePattern2Parser implements Parser<SpreadsheetParserContext> {
+abstract class SpreadsheetNonNumberParsePatternParser implements Parser<SpreadsheetParserContext> {
 
     /**
-     * @see SpreadsheetParsePattern2ParserDecimalSeparator
+     * @see SpreadsheetNonNumberParsePatternParserDecimalSeparator
      */
-    static SpreadsheetParsePattern2ParserDecimalSeparator decimalSeparator() {
-        return SpreadsheetParsePattern2ParserDecimalSeparator.instance();
+    static SpreadsheetNonNumberParsePatternParserDecimalSeparator decimalSeparator() {
+        return SpreadsheetNonNumberParsePatternParserDecimalSeparator.instance();
     }
 
     /**
-     * @see SpreadsheetParsePattern2ParserMilliseconds
+     * @see SpreadsheetNonNumberParsePatternParserMilliseconds
      */
-    static SpreadsheetParsePattern2ParserMilliseconds milliseconds(final String pattern) {
-        return SpreadsheetParsePattern2ParserMilliseconds.with(pattern);
+    static SpreadsheetNonNumberParsePatternParserMilliseconds milliseconds(final String pattern) {
+        return SpreadsheetNonNumberParsePatternParserMilliseconds.with(pattern);
     }
 
     /**
-     * @see SpreadsheetParsePattern2ParserString
+     * @see SpreadsheetNonNumberParsePatternParserString
      */
-    static SpreadsheetParsePattern2ParserString stringChoices(final Function<SpreadsheetParserContext, List<String>> values,
-                                                              final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
-                                                              final String pattern) {
-        return SpreadsheetParsePattern2ParserString.with(
+    static SpreadsheetNonNumberParsePatternParserString stringChoices(final Function<SpreadsheetParserContext, List<String>> values,
+                                                                      final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
+                                                                      final String pattern) {
+        return SpreadsheetNonNumberParsePatternParserString.with(
                 values,
                 tokenFactory,
                 pattern
         );
     }
 
-    SpreadsheetParsePattern2Parser() {
+    SpreadsheetNonNumberParsePatternParser() {
         super();
     }
 
