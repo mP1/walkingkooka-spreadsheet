@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -671,6 +672,24 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    // parseDateParsePattern...........................................................................................
+
+    @Test
+    public void testDateParsePatternParseNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.parseDateParsePattern(null)
+        );
+    }
+
+    @Test
+    public void testDateParsePatternIncompleteGeneralFails() {
+        assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetPattern.parseDateParsePattern("General")
+        );
+    }
+
     @Test
     public void testDateParsePatternIncompleteTextLiteralFails() {
         assertThrows(
@@ -679,13 +698,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    @Test
-    public void testDateTimeFormatPatternIncompleteTextLiteralFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm:ss\"Incomplete")
-        );
-    }
+    // parseDateTimeFormatPattern......................................................................................
 
     @Test
     public void testDateTimeFormatPattern() {
@@ -744,6 +757,24 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
                 },
                 "1234"
+        );
+    }
+
+    // parseDateTimeParsePattern........................................................................................
+
+    @Test
+    public void testDateTimeParsePatternParseNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.parseDateTimeParsePattern(null)
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternIncompleteGeneralFails() {
+        assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetPattern.parseDateTimeParsePattern("General")
         );
     }
 
@@ -940,6 +971,24 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    // parseTextFormat.................................................................................................
+
+    @Test
+    public void testTextFormatPatternParseNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.parseTextFormatPattern(null)
+        );
+    }
+
+    @Test
+    public void testTextFormatPatternIncompleteGeneralFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseTextFormatPattern("General")
+        );
+    }
+
     @Test
     public void testTextFormatPatternIncompleteTextLiteralFails() {
         assertThrows(
@@ -968,6 +1017,22 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 },
                 "BananaBanana Hello"
         );
+    }
+
+    // parseTimeParsePattern............................................................................................
+
+    @Test
+    public void testTimeFormatPatternFormatNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.parseTimeFormatPattern(null)
+        );
+    }
+
+    // https://github.com/mP1/walkingkooka-spreadsheet/issues/2909
+    @Test
+    public void testTimeFormatPatternIncompleteGeneralShouldFail() {
+        SpreadsheetPattern.parseTimeFormatPattern("General");
     }
 
     @Test
@@ -1035,6 +1100,24 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
                 },
                 "1234"
+        );
+    }
+
+    // parseTimeParsePattern............................................................................................
+
+    @Test
+    public void testTimeParsePatternParseNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.parseTimeParsePattern(null)
+        );
+    }
+
+    @Test
+    public void testTimeParsePatternIncompleteGeneralFails() {
+        assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetPattern.parseTimeParsePattern("General")
         );
     }
 
