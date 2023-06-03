@@ -73,8 +73,8 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
     }
 
     @Test
-    public void testWithGroupingSeparatorFails() {
-        this.withInvalidCharacterFails(this.groupingSeparator());
+    public void testWithGroupSeparatorFails() {
+        this.withInvalidCharacterFails(this.groupSeparator());
     }
 
     @Test

@@ -428,7 +428,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     }
 
     @Test
-    public void testParseIncludesGrouping() {
+    public void testParseIncludesGroupSeparator() {
         this.parseAndCheck2(
                 "#",
                 "1" + GROUPING + "5",

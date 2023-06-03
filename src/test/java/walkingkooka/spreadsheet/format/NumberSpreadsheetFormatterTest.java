@@ -2020,10 +2020,10 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
         );
     }
 
-    // grouping ........................................................................................................
+    // groupSeparator...................................................................................................
 
     @Test
-    public void testGrouping0() {
+    public void testGroupSeparator0() {
         this.parseFormatAndCheck(
                 "#,0",
                 0,
@@ -2032,7 +2032,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGroupingPositive1() {
+    public void testGroupSeparatorPositive1() {
         this.parseFormatAndCheck(
                 "#,0",
                 1,
@@ -2041,7 +2041,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGroupingNegative1() {
+    public void testGroupSeparatorNegative1() {
         this.parseFormatAndCheck(
                 "#,0",
                 -1,
@@ -2050,7 +2050,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGrouping12() {
+    public void testGroupSeparator12() {
         this.parseFormatAndCheck(
                 "#,0",
                 12,
@@ -2059,7 +2059,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGrouping123() {
+    public void testGroupSeparator123() {
         this.parseFormatAndCheck(
                 "#,0",
                 123,
@@ -2068,7 +2068,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGrouping1234() {
+    public void testGroupSeparator1234() {
         this.parseFormatAndCheck(
                 "#,0",
                 1234,
@@ -2077,7 +2077,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGrouping12345() {
+    public void testGroupSeparator12345() {
         this.parseFormatAndCheck(
                 "#,0",
                 12345,
@@ -2086,7 +2086,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGrouping123456() {
+    public void testGroupSeparator123456() {
         this.parseFormatAndCheck(
                 "#,0",
                 123456,
@@ -2095,7 +2095,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGrouping1234567() {
+    public void testGroupSeparator1234567() {
         this.parseFormatAndCheck(
                 "#,0",
                 1234567,
@@ -2104,7 +2104,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGroupingGrouping1234567() {
+    public void testGroupSeparatorGrouping1234567() {
         this.parseFormatAndCheck(
                 "#,0",
                 1234567,
@@ -2113,7 +2113,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGrouping0_1() {
+    public void testGroupSeparator0_1() {
         this.parseFormatAndCheck(
                 "#,#.#",
                 0.1,
@@ -2124,7 +2124,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     // grouping multiplier .........................................................................................
 
     @Test
-    public void testGroupingDividerDigitComma0() {
+    public void testGroupSeparatorDividerDigitComma0() {
         this.parseFormatAndCheck(
                 "0,",
                 0,
@@ -2133,7 +2133,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGroupingDividerCommaDecimal12345() {
+    public void testGroupSeparatorDividerCommaDecimal12345() {
         this.parseFormatAndCheck(
                 "0,.0#######,",
                 12345,
@@ -2142,7 +2142,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGroupingDividerCommaTextLiteralDecimal12345() {
+    public void testGroupSeparatorDividerCommaTextLiteralDecimal12345() {
         this.parseFormatAndCheck(
                 "0,\"Text\".0#######,",
                 12345,
@@ -2151,7 +2151,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGroupingDividerCommaCommaDecimal123456789() {
+    public void testGroupSeparatorDividerCommaCommaDecimal123456789() {
         this.parseFormatAndCheck(
                 "0,,.0000##########,",
                 123456789,

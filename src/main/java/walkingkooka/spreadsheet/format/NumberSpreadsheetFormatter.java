@@ -59,7 +59,7 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
         this.exponentDigitSymbolCount = visitor.exponentDigitSymbolCount;
 
         this.decimalPlacesShift = visitor.decimalPlacesShift;
-        this.groupingSeparator = visitor.groupingSeparator;
+        this.groupSeparator = visitor.groupSeparator;
     }
 
     @Override
@@ -141,9 +141,9 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     final int exponentDigitSymbolCount;
 
     /**
-     * When true groupingSeparator(thousand) separators should appear in the output.
+     * When true groupSeparator(thousand) separators should appear in the output.
      */
-    final NumberSpreadsheetFormatterGroupSeparator groupingSeparator;
+    final NumberSpreadsheetFormatterGroupSeparator groupSeparator;
 
     @Override
     String toStringSuffix() {
