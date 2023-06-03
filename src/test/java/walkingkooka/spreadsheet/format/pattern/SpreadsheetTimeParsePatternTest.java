@@ -84,7 +84,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
 
     @Test
     public void testWithThousandsFails() {
-        this.withInvalidCharacterFails(this.thousands());
+        this.withInvalidCharacterFails(this.grouping());
     }
 
     @Test

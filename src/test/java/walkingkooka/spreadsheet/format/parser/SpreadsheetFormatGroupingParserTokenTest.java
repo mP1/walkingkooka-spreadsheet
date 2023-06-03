@@ -24,12 +24,12 @@ import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetFormatThousandsParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatThousandsParserToken, String> {
+public final class SpreadsheetFormatGroupingParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatGroupingParserToken, String> {
 
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetFormatThousandsParserToken token = this.createToken();
+        final SpreadsheetFormatGroupingParserToken token = this.createToken();
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override
@@ -59,7 +59,7 @@ public final class SpreadsheetFormatThousandsParserTokenTest extends Spreadsheet
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatThousandsParserToken t) {
+            protected void visit(final SpreadsheetFormatGroupingParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -89,23 +89,23 @@ public final class SpreadsheetFormatThousandsParserTokenTest extends Spreadsheet
     }
 
     @Override
-    SpreadsheetFormatThousandsParserToken createToken(final String value, final String text) {
-        return SpreadsheetFormatThousandsParserToken.with(value, text);
+    SpreadsheetFormatGroupingParserToken createToken(final String value, final String text) {
+        return SpreadsheetFormatGroupingParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetFormatThousandsParserToken createDifferentToken() {
-        return SpreadsheetFormatThousandsParserToken.with(this.text(), "different");
+    public SpreadsheetFormatGroupingParserToken createDifferentToken() {
+        return SpreadsheetFormatGroupingParserToken.with(this.text(), "different");
     }
 
     @Override
-    public Class<SpreadsheetFormatThousandsParserToken> type() {
-        return SpreadsheetFormatThousandsParserToken.class;
+    public Class<SpreadsheetFormatGroupingParserToken> type() {
+        return SpreadsheetFormatGroupingParserToken.class;
     }
 
     @Override
-    public SpreadsheetFormatThousandsParserToken unmarshall(final JsonNode node,
-                                                            final JsonNodeUnmarshallContext context) {
+    public SpreadsheetFormatGroupingParserToken unmarshall(final JsonNode node,
+                                                           final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormatParserToken.unmarshallThousands(node, context);
     }
 }

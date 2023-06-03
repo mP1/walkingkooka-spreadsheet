@@ -374,8 +374,8 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             SpreadsheetFormatPercentParserToken.class);
 
     private static final Parser<SpreadsheetFormatParserContext> THOUSANDS = symbol(',',
-            SpreadsheetFormatParserToken::thousands,
-            SpreadsheetFormatThousandsParserToken.class);
+            SpreadsheetFormatParserToken::grouping,
+            SpreadsheetFormatGroupingParserToken.class);
     private static final EbnfIdentifierName THOUSANDS_IDENTIFIER = EbnfIdentifierName.with("THOUSANDS");
 
     // pattern..........................................................................................................

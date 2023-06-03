@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionSymbolParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupingParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMinuteParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthParserToken;
@@ -35,7 +36,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
@@ -120,6 +120,11 @@ final class SpreadsheetTextFormatPatternSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
+    protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+        this.failInvalid();
+    }
+
+    @Override
     protected void visit(final SpreadsheetFormatHourParserToken token) {
         this.failInvalid();
     }
@@ -146,11 +151,6 @@ final class SpreadsheetTextFormatPatternSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
-        this.failInvalid();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatThousandsParserToken token) {
         this.failInvalid();
     }
 

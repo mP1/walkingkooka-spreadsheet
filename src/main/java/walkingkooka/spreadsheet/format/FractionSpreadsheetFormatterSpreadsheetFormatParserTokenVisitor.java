@@ -24,12 +24,12 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionSymbolParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupingParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -91,6 +91,11 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
+    protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+        this.multiplier = this.multiplier.scaleByPowerOfTen(-3); // divide by 1000
+    }
+
+    @Override
     protected void visit(final SpreadsheetFormatPercentParserToken token) {
         if (!this.percentage) {
             this.percentage = true;
@@ -114,11 +119,6 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
         this.add(FractionSpreadsheetFormatterComponent.textLiteral(token.value()));
     }
 
-    @Override
-    protected void visit(final SpreadsheetFormatThousandsParserToken token) {
-        this.multiplier = this.multiplier.scaleByPowerOfTen(-3); // divide by 1000
-    }
-
     // misc ..................................................................................................
 
     /**
@@ -138,7 +138,7 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
 
     /**
      * A multiplier that is applied to the number before formatting.
-     * This is increased when the thousands appear after the decimal point and percentage symbol.
+     * This is increased when the grouping appear after the decimal point and percentage symbol.
      */
     BigDecimal multiplier = BigDecimal.ONE;
 

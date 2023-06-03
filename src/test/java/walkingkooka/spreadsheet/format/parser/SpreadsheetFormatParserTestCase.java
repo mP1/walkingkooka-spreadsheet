@@ -235,6 +235,10 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.greaterThanEqualsSymbol(">=", ">=");
     }
 
+    static SpreadsheetFormatParserToken grouping() {
+        return SpreadsheetFormatParserToken.grouping(",", ",");
+    }
+
     static SpreadsheetFormatParserToken hour() {
         return hour(1);
     }
@@ -396,10 +400,6 @@ public abstract class SpreadsheetFormatParserTestCase {
                 list,
                 ParserToken.text(list)
         );
-    }
-
-    static SpreadsheetFormatParserToken thousands() {
-        return SpreadsheetFormatParserToken.thousands(",", ",");
     }
 
     static SpreadsheetFormatParserToken underscore() {

@@ -3622,13 +3622,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    // thousands
+    // grouping
 
     @Test
     public void testNumberFormatThousandsDigitSlashDigit() {
         this.numberFormatParseAndCheck(
                 number(
-                        thousands(),
+                        grouping(),
                         digit(),
                         decimalPoint(),
                         digit()
@@ -3641,7 +3641,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        thousands(),
+                        grouping(),
                         decimalPoint(),
                         digit()
                 )
@@ -3652,10 +3652,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitSlashThousandsDigit() {
         this.numberFormatParseAndCheck(
                 number(
-                        thousands(),
+                        grouping(),
                         digit(),
                         decimalPoint(),
-                        thousands(),
+                        grouping(),
                         digit()
                 )
         );
@@ -3668,7 +3668,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         digit(),
                         decimalPoint(),
                         digit(),
-                        thousands()
+                        grouping()
                 )
         );
     }
@@ -5732,13 +5732,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    // thousands
+    // grouping
 
     @Test
     public void testNumberParseThousandsDigitSlashDigit() {
         this.numberParseParseAndCheck(
                 number(
-                        thousands(),
+                        grouping(),
                         digit(),
                         decimalPoint(),
                         digit()
@@ -5751,7 +5751,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        thousands(),
+                        grouping(),
                         decimalPoint(),
                         digit()
                 )
@@ -5762,10 +5762,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitSlashThousandsDigit() {
         this.numberParseParseAndCheck(
                 number(
-                        thousands(),
+                        grouping(),
                         digit(),
                         decimalPoint(),
-                        thousands(),
+                        grouping(),
                         digit()
                 )
         );
@@ -5778,7 +5778,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         digit(),
                         decimalPoint(),
                         digit(),
-                        thousands()
+                        grouping()
                 )
         );
     }
@@ -7199,12 +7199,12 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testFractionThousandsFails() {
-        this.fractionParseThrows(thousands());
+        this.fractionParseThrows(grouping());
     }
 
     @Test
     public void testFractionDigitThousandsFails() {
-        this.fractionParseThrows(digit(), thousands());
+        this.fractionParseThrows(digit(), grouping());
     }
 
     @Test
@@ -7510,26 +7510,26 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), whitespace());
     }
 
-    // thousands
+    // grouping
 
     @Test
     public void testFractionThousandsDigitSlashDigit() {
-        this.fractionParseAndCheck(thousands(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(grouping(), digit(), fractionSymbol(), digit());
     }
 
     @Test
     public void testFractionDigitThousandsSlashDigit() {
-        this.fractionParseAndCheck(digit(), thousands(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(digit(), grouping(), fractionSymbol(), digit());
     }
 
     @Test
     public void testFractionDigitSlashThousandsDigit() {
-        this.fractionParseAndCheck(thousands(), digit(), fractionSymbol(), thousands(), digit());
+        this.fractionParseAndCheck(grouping(), digit(), fractionSymbol(), grouping(), digit());
     }
 
     @Test
     public void testFractionDigitSlashDigitThousands() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), thousands());
+        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), grouping());
     }
 
     // equals

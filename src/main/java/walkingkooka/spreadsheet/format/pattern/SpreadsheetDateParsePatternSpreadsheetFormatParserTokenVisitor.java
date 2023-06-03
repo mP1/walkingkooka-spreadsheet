@@ -26,12 +26,12 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentSymbolParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupingParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -106,6 +106,11 @@ final class SpreadsheetDateParsePatternSpreadsheetFormatParserTokenVisitor exten
     }
 
     @Override
+    protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+        this.failInvalid();
+    }
+
+    @Override
     protected void visit(final SpreadsheetFormatHourParserToken token) {
         this.failInvalid();
     }
@@ -117,11 +122,6 @@ final class SpreadsheetDateParsePatternSpreadsheetFormatParserTokenVisitor exten
 
     @Override
     protected void visit(final SpreadsheetFormatSecondParserToken token) {
-        this.failInvalid();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatThousandsParserToken token) {
         this.failInvalid();
     }
 

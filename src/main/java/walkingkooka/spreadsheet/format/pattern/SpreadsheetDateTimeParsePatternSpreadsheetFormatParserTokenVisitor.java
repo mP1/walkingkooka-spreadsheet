@@ -23,10 +23,10 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserTok
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentSymbolParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupingParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -86,12 +86,12 @@ final class SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor e
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatPercentParserToken token) {
+    protected void visit(final SpreadsheetFormatGroupingParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatThousandsParserToken token) {
+    protected void visit(final SpreadsheetFormatPercentParserToken token) {
         this.failInvalid();
     }
 

@@ -384,10 +384,10 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetFormatThousandsParserToken}
+     * {@see SpreadsheetFormatGroupingParserToken}
      */
-    public static SpreadsheetFormatThousandsParserToken thousands(final String value, final String text) {
-        return SpreadsheetFormatThousandsParserToken.with(value, text);
+    public static SpreadsheetFormatGroupingParserToken grouping(final String value, final String text) {
+        return SpreadsheetFormatGroupingParserToken.with(value, text);
     }
 
     /**
@@ -690,6 +690,13 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetFormatGroupingParserToken} return true
+     */
+    public final boolean isGrouping() {
+        return this instanceof SpreadsheetFormatGroupingParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetFormatHourParserToken} return true
      */
     public final boolean isHour() {
@@ -836,13 +843,6 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
      */
     public final boolean isTextPlaceholder() {
         return this instanceof SpreadsheetFormatTextPlaceholderParserToken;
-    }
-
-    /**
-     * Only {@link SpreadsheetFormatThousandsParserToken} return true
-     */
-    public final boolean isThousands() {
-        return this instanceof SpreadsheetFormatThousandsParserToken;
     }
 
     /**
@@ -1030,7 +1030,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetFormatThousandsParserToken.class,
+                SpreadsheetFormatGroupingParserToken.class,
                 SpreadsheetFormatParserToken::unmarshallThousands
         );
 
@@ -1228,12 +1228,12 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetFormatThousandsParserToken unmarshallThousands(final JsonNode node,
-                                                                     final JsonNodeUnmarshallContext context) {
+    static SpreadsheetFormatGroupingParserToken unmarshallThousands(final JsonNode node,
+                                                                    final JsonNodeUnmarshallContext context) {
         return unmarshallStringLeafParserToken(
                 node,
                 context,
-                SpreadsheetFormatParserToken::thousands
+                SpreadsheetFormatParserToken::grouping
         );
     }
 

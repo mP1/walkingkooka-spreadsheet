@@ -1636,14 +1636,14 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
     @Test
     public void testThousands() {
-        final SpreadsheetFormatParserToken token = thousands();
+        final SpreadsheetFormatParserToken token = grouping();
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatThousandsParserToken token) {
+            protected void visit(final SpreadsheetFormatGroupingParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1658,7 +1658,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Test
     public void testThousands2() {
         new SpreadsheetFormatParserTokenVisitor() {
-        }.accept(thousands());
+        }.accept(grouping());
     }
 
     @Test

@@ -129,7 +129,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
 
     @Test
     public void testWithThousandsFails() {
-        this.withInvalidCharacterFails(this.thousands());
+        this.withInvalidCharacterFails(this.grouping());
     }
 
     @Test

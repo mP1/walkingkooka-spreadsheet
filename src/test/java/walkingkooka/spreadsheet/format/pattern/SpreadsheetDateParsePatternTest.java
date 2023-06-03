@@ -78,6 +78,11 @@ public final class SpreadsheetDateParsePatternTest extends SpreadsheetParsePatte
     }
 
     @Test
+    public void testWithGroupingFails() {
+        this.withInvalidCharacterFails(this.grouping());
+    }
+
+    @Test
     public void testWithHourFails() {
         this.withInvalidCharacterFails(this.hour());
     }
@@ -95,11 +100,6 @@ public final class SpreadsheetDateParsePatternTest extends SpreadsheetParsePatte
     @Test
     public void testWithSecondsFails() {
         this.withInvalidCharacterFails(this.second());
-    }
-
-    @Test
-    public void testWithThousandFails() {
-        this.withInvalidCharacterFails(this.thousands());
     }
 
     @Test

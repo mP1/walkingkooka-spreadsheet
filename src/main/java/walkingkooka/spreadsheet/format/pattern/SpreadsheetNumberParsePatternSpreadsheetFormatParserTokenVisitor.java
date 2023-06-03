@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentSymbolParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupingParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMinuteParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthParserToken;
@@ -36,7 +37,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
@@ -176,6 +176,11 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     }
 
     @Override
+    protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+        this.addComponent(SpreadsheetNumberParsePatternComponent.thousands());
+    }
+
+    @Override
     protected void visit(final SpreadsheetFormatHourParserToken token) {
         this.failInvalid();
     }
@@ -198,11 +203,6 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     @Override
     protected void visit(final SpreadsheetFormatSecondParserToken token) {
         this.failInvalid();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatThousandsParserToken token) {
-        this.addComponent(SpreadsheetNumberParsePatternComponent.thousands());
     }
 
     @Override
