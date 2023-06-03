@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetNumberParsePatternComponentThousandsSeparatorTest extends SpreadsheetNumberParsePatternComponentTestCase2<SpreadsheetNumberParsePatternComponentThousandsSeparator> {
+public final class SpreadsheetNumberParsePatternComponentGroupingSeparatorTest extends SpreadsheetNumberParsePatternComponentTestCase2<SpreadsheetNumberParsePatternComponentGroupingSeparator> {
 
     @Test
     public void testToString() {
@@ -27,21 +27,21 @@ public final class SpreadsheetNumberParsePatternComponentThousandsSeparatorTest 
     }
 
     @Override
-    SpreadsheetNumberParsePatternComponentThousandsSeparator createComponent() {
-        return SpreadsheetNumberParsePatternComponentThousandsSeparator.INSTANCE;
+    SpreadsheetNumberParsePatternComponentGroupingSeparator createComponent() {
+        return SpreadsheetNumberParsePatternComponentGroupingSeparator.INSTANCE;
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetNumberParsePatternComponentThousandsSeparator> type() {
-        return SpreadsheetNumberParsePatternComponentThousandsSeparator.class;
+    public Class<SpreadsheetNumberParsePatternComponentGroupingSeparator> type() {
+        return SpreadsheetNumberParsePatternComponentGroupingSeparator.class;
     }
 
     // TypeNameTesting..................................................................................................
 
     @Override
     public String typeNameSuffix() {
-        return "ThousandsSeparator";
+        return "GroupingSeparator";
     }
 }

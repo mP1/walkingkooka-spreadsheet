@@ -22,14 +22,14 @@ import walkingkooka.text.cursor.TextCursor;
 /**
  * A {@link SpreadsheetNumberParsePatternComponent} that does not actually expect or consume the grouping character.
  */
-final class SpreadsheetNumberParsePatternComponentThousandsSeparator extends SpreadsheetNumberParsePatternComponentNonDigit {
+final class SpreadsheetNumberParsePatternComponentGroupingSeparator extends SpreadsheetNumberParsePatternComponentNonDigit {
 
     /**
      * Singleton
      */
-    final static SpreadsheetNumberParsePatternComponentThousandsSeparator INSTANCE = new SpreadsheetNumberParsePatternComponentThousandsSeparator();
+    final static SpreadsheetNumberParsePatternComponentGroupingSeparator INSTANCE = new SpreadsheetNumberParsePatternComponentGroupingSeparator();
 
-    private SpreadsheetNumberParsePatternComponentThousandsSeparator() {
+    private SpreadsheetNumberParsePatternComponentGroupingSeparator() {
         super();
     }
 
