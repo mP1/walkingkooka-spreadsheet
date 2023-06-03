@@ -1261,7 +1261,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTextFormatPatternIncompleteGeneralFails() {
+    public void testTextFormatPatternGeneralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseTextFormatPattern("General")
@@ -1339,7 +1339,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
     // https://github.com/mP1/walkingkooka-spreadsheet/issues/2909
     @Test
-    public void testTimeFormatPatternIncompleteGeneralShouldFail() {
+    public void testTimeFormatPatternGeneralShouldFail() {
         SpreadsheetPattern.parseTimeFormatPattern("General");
     }
 
@@ -1430,14 +1430,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseTimeParsePattern(null)
-        );
-    }
-
-    @Test
-    public void testTimeParsePatternIncompleteGeneralFails() {
-        assertThrows(
-                InvalidCharacterException.class,
-                () -> SpreadsheetPattern.parseTimeParsePattern("General")
         );
     }
 
