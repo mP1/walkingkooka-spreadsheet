@@ -67,7 +67,7 @@ abstract class NumberSpreadsheetFormatterDigits implements UsesToStringBuilder {
                          final NumberSpreadsheetFormatterContext context);
 
     /**
-     * Conditionally appends the grouping separator. This may only happen during formatting of INTEGER digits.
+     * Conditionally appends the groupingSeparator separator. This may only happen during formatting of INTEGER digits.
      */
     abstract void groupingSeparator(final int numberDigitPosition,
                                     final NumberSpreadsheetFormatterContext context);

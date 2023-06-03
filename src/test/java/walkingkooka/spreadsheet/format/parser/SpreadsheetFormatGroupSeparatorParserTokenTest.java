@@ -24,12 +24,12 @@ import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetFormatGroupingParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatGroupingParserToken, String> {
+public final class SpreadsheetFormatGroupSeparatorParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatGroupSeparatorParserToken, String> {
 
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetFormatGroupingParserToken token = this.createToken();
+        final SpreadsheetFormatGroupSeparatorParserToken token = this.createToken();
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override
@@ -59,7 +59,7 @@ public final class SpreadsheetFormatGroupingParserTokenTest extends SpreadsheetF
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatGroupingParserToken t) {
+            protected void visit(final SpreadsheetFormatGroupSeparatorParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -89,23 +89,23 @@ public final class SpreadsheetFormatGroupingParserTokenTest extends SpreadsheetF
     }
 
     @Override
-    SpreadsheetFormatGroupingParserToken createToken(final String value, final String text) {
-        return SpreadsheetFormatGroupingParserToken.with(value, text);
+    SpreadsheetFormatGroupSeparatorParserToken createToken(final String value, final String text) {
+        return SpreadsheetFormatGroupSeparatorParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetFormatGroupingParserToken createDifferentToken() {
-        return SpreadsheetFormatGroupingParserToken.with(this.text(), "different");
+    public SpreadsheetFormatGroupSeparatorParserToken createDifferentToken() {
+        return SpreadsheetFormatGroupSeparatorParserToken.with(this.text(), "different");
     }
 
     @Override
-    public Class<SpreadsheetFormatGroupingParserToken> type() {
-        return SpreadsheetFormatGroupingParserToken.class;
+    public Class<SpreadsheetFormatGroupSeparatorParserToken> type() {
+        return SpreadsheetFormatGroupSeparatorParserToken.class;
     }
 
     @Override
-    public SpreadsheetFormatGroupingParserToken unmarshall(final JsonNode node,
-                                                           final JsonNodeUnmarshallContext context) {
-        return SpreadsheetFormatParserToken.unmarshallGrouping(node, context);
+    public SpreadsheetFormatGroupSeparatorParserToken unmarshall(final JsonNode node,
+                                                                 final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormatParserToken.unmarshallGroupSeparator(node, context);
     }
 }

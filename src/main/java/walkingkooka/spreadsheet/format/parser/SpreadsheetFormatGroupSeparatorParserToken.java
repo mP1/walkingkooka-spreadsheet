@@ -19,17 +19,17 @@ package walkingkooka.spreadsheet.format.parser;
 import java.util.Optional;
 
 /**
- * Represents a grouping token within a pattern.
+ * Represents a groupingSeparator token within a pattern.
  */
-public final class SpreadsheetFormatGroupingParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
+public final class SpreadsheetFormatGroupSeparatorParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
 
-    static SpreadsheetFormatGroupingParserToken with(final String value, final String text) {
+    static SpreadsheetFormatGroupSeparatorParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
 
-        return new SpreadsheetFormatGroupingParserToken(value, text);
+        return new SpreadsheetFormatGroupSeparatorParserToken(value, text);
     }
 
-    private SpreadsheetFormatGroupingParserToken(final String value, final String text) {
+    private SpreadsheetFormatGroupSeparatorParserToken(final String value, final String text) {
         super(value, text);
     }
 
@@ -49,6 +49,6 @@ public final class SpreadsheetFormatGroupingParserToken extends SpreadsheetForma
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatGroupingParserToken;
+        return other instanceof SpreadsheetFormatGroupSeparatorParserToken;
     }
 }

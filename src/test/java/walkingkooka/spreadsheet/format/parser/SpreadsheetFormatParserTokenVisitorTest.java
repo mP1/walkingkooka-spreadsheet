@@ -1415,14 +1415,14 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
     @Test
     public void testGroupingSeparator() {
-        final SpreadsheetFormatParserToken token = grouping();
+        final SpreadsheetFormatParserToken token = groupingSeparator();
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+            protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1437,7 +1437,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Test
     public void testGroupingSeparator2() {
         new SpreadsheetFormatParserTokenVisitor() {
-        }.accept(grouping());
+        }.accept(groupingSeparator());
     }
 
     @Test

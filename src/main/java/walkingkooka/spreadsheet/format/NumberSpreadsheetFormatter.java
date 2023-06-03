@@ -141,7 +141,7 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     final int exponentDigitSymbolCount;
 
     /**
-     * When true grouping(thousand) separators should appear in the output.
+     * When true groupingSeparator(thousand) separators should appear in the output.
      */
     final NumberSpreadsheetFormatterGroupingSeparator groupingSeparator;
 

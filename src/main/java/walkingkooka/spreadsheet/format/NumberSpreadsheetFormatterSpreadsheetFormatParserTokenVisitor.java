@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupingParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupSeparatorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
@@ -123,7 +123,7 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+    protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
         this.digitMode.grouping(this);
     }
 

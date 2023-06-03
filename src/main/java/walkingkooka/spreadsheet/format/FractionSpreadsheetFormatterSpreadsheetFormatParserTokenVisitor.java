@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupingParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupSeparatorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
@@ -91,7 +91,7 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+    protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
         this.multiplier = this.multiplier.scaleByPowerOfTen(-3); // divide by 1000
     }
 
@@ -138,7 +138,7 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
 
     /**
      * A multiplier that is applied to the number before formatting.
-     * This is increased when the grouping appear after the decimal point and percentage symbol.
+     * This is increased when the groupingSeparator appear after the decimal point and percentage symbol.
      */
     BigDecimal multiplier = BigDecimal.ONE;
 
