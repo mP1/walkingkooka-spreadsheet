@@ -22,7 +22,7 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 /**
- * A wrapper around a numeric type that is also a percentage.
+ * A wrapper around a grouping.
  */
 public final class SpreadsheetGroupParserToken extends SpreadsheetParentParserToken {
 
