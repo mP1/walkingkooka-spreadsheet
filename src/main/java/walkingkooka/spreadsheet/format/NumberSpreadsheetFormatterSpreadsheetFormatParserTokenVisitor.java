@@ -196,8 +196,8 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
      */
     private void computeGroupingSeparatorAndCommaAdjust() {
         this.groupingSeparator = this.thousandsDivider ?
-                NumberSpreadsheetFormatterGroupingSeparator.INCLUDE :
-                NumberSpreadsheetFormatterGroupingSeparator.NONE;
+                NumberSpreadsheetFormatterGroupSeparator.INCLUDE :
+                NumberSpreadsheetFormatterGroupSeparator.NONE;
 
         final int comma = this.comma;
         if (comma > 0) {
@@ -217,9 +217,9 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     boolean thousandsDivider = false;
 
     /**
-     * The computed {@link NumberSpreadsheetFormatterGroupingSeparator}.
+     * The computed {@link NumberSpreadsheetFormatterGroupSeparator}.
      */
-    NumberSpreadsheetFormatterGroupingSeparator groupingSeparator;
+    NumberSpreadsheetFormatterGroupSeparator groupingSeparator;
 
     /**
      * The number of decimal places to adjust, positive values multiply by 10, negative values divide by 10.

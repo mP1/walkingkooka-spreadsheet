@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet.format;
 
 /**
- * The groupingSeparator separator within a formatting.
+ * The group separator within a formatting.
  */
-enum NumberSpreadsheetFormatterGroupingSeparator {
+enum NumberSpreadsheetFormatterGroupSeparator {
 
     /**
-     * Only inserts the groupingSeparator or groupingSeparator separator if the textDigitPosition is a multiple of 3.
+     * Only inserts the group separator if the textDigitPosition is a multiple of 3.
      */
     INCLUDE {
         @Override

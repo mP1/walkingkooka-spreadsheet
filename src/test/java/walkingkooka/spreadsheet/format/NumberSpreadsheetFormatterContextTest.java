@@ -26,9 +26,9 @@ public final class NumberSpreadsheetFormatterContextTest extends NumberSpreadshe
     @Test
     public void testToString() {
         this.toStringAndCheck(NumberSpreadsheetFormatterContext.with(
-                        NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.NOT_REQUIRED, "123", NumberSpreadsheetFormatterGroupingSeparator.INCLUDE),
-                        NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.REQUIRED, "456", NumberSpreadsheetFormatterGroupingSeparator.INCLUDE),
-                        NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.NOT_REQUIRED, "789", NumberSpreadsheetFormatterGroupingSeparator.NONE),
+                        NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.NOT_REQUIRED, "123", NumberSpreadsheetFormatterGroupSeparator.INCLUDE),
+                        NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.REQUIRED, "456", NumberSpreadsheetFormatterGroupSeparator.INCLUDE),
+                        NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.NOT_REQUIRED, "789", NumberSpreadsheetFormatterGroupSeparator.NONE),
                         NumberSpreadsheetFormatter.with(SpreadsheetFormatParserToken.number(Lists.of(SpreadsheetFormatParserToken.digit("1", "1")), "1")),
                         SpreadsheetFormatterContexts.fake()),
                 "123-456789");

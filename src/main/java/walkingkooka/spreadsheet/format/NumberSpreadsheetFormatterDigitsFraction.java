@@ -62,8 +62,8 @@ final class NumberSpreadsheetFormatterDigitsFraction extends NumberSpreadsheetFo
     }
 
     @Override
-    void groupingSeparator(final int numberDigitPosition,
-                           final NumberSpreadsheetFormatterContext context) {
+    void groupSeparator(final int numberDigitPosition,
+                        final NumberSpreadsheetFormatterContext context) {
         // nop
     }
 

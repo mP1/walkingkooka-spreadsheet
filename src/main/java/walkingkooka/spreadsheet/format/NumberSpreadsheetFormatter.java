@@ -143,7 +143,7 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     /**
      * When true groupingSeparator(thousand) separators should appear in the output.
      */
-    final NumberSpreadsheetFormatterGroupingSeparator groupingSeparator;
+    final NumberSpreadsheetFormatterGroupSeparator groupingSeparator;
 
     @Override
     String toStringSuffix() {
