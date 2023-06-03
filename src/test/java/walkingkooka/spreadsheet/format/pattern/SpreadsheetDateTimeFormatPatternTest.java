@@ -81,6 +81,11 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
+    public void testWithGroupingFails() {
+        this.withInvalidCharacterFails(this.grouping());
+    }
+
+    @Test
     public void testWithNumberFails() {
         this.withInvalidCharacterFails(this.number());
     }
@@ -88,11 +93,6 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     @Test
     public void testWithPercentSymbolFails() {
         this.withInvalidCharacterFails(this.percentSymbol());
-    }
-
-    @Test
-    public void testWithThousandFails() {
-        this.withInvalidCharacterFails(this.thousands());
     }
 
     @Test

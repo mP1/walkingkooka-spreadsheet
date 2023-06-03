@@ -241,6 +241,10 @@ public abstract class SpreadsheetFormatParserTokenVisitor extends ParserTokenVis
         // nop
     }
 
+    protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+        // nop
+    }
+
     protected void visit(final SpreadsheetFormatHourParserToken token) {
         // nop
     }
@@ -290,10 +294,6 @@ public abstract class SpreadsheetFormatParserTokenVisitor extends ParserTokenVis
     }
 
     protected void visit(final SpreadsheetFormatTextPlaceholderParserToken token) {
-        // nop
-    }
-
-    protected void visit(final SpreadsheetFormatThousandsParserToken token) {
         // nop
     }
 

@@ -27,12 +27,12 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupingParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.visit.Visiting;
@@ -123,6 +123,11 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     }
 
     @Override
+    protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+        this.digitMode.thousands(this);
+    }
+
+    @Override
     protected void visit(final SpreadsheetFormatPercentParserToken token) {
         if (!this.percentage) {
             this.percentage = true;
@@ -144,11 +149,6 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     @Override
     protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
         this.add(NumberSpreadsheetFormatterComponent.textLiteral(token.value()));
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatThousandsParserToken token) {
-        this.digitMode.thousands(this);
     }
 
     @Override

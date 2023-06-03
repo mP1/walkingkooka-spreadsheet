@@ -19,17 +19,17 @@ package walkingkooka.spreadsheet.format.parser;
 import java.util.Optional;
 
 /**
- * Represents a thousands token.
+ * Represents a grouping token within a pattern.
  */
-public final class SpreadsheetFormatThousandsParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
+public final class SpreadsheetFormatGroupingParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
 
-    static SpreadsheetFormatThousandsParserToken with(final String value, final String text) {
+    static SpreadsheetFormatGroupingParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
 
-        return new SpreadsheetFormatThousandsParserToken(value, text);
+        return new SpreadsheetFormatGroupingParserToken(value, text);
     }
 
-    private SpreadsheetFormatThousandsParserToken(final String value, final String text) {
+    private SpreadsheetFormatGroupingParserToken(final String value, final String text) {
         super(value, text);
     }
 
@@ -49,6 +49,6 @@ public final class SpreadsheetFormatThousandsParserToken extends SpreadsheetForm
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatThousandsParserToken;
+        return other instanceof SpreadsheetFormatGroupingParserToken;
     }
 }
