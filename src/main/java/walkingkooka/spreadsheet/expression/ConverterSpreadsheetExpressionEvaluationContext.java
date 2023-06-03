@@ -384,8 +384,8 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     @Override
-    public char groupingSeparator() {
-        return this.context.groupingSeparator();
+    public char groupSeparator() {
+        return this.context.groupSeparator();
     }
 
     @Override

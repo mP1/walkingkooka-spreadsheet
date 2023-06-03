@@ -46,7 +46,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         final String currencySymbol = components.getOrNull(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL);
         final Character decimalSeparator = components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
         final String exponentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
-        final Character groupingSeparator = components.getOrNull(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR);
+        final Character groupSeparator = components.getOrNull(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR);
         final Character negativeSign = components.getOrNull(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN);
         final Character percentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL);
         final Character positiveSign = components.getOrNull(SpreadsheetMetadataPropertyName.POSITIVE_SIGN);
@@ -61,7 +61,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         return DecimalNumberContexts.basic(currencySymbol,
                 decimalSeparator,
                 exponentSymbol,
-                groupingSeparator,
+                groupSeparator,
                 negativeSign,
                 percentSymbol,
                 positiveSign,

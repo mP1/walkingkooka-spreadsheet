@@ -41,7 +41,7 @@ public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements
     }
 
     @Override
-    public char groupingSeparator() {
+    public char groupSeparator() {
         throw new UnsupportedOperationException();
     }
 

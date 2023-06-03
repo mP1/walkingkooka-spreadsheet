@@ -53,7 +53,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     private final static String CURRENCY_SYMBOL = "AUD";
     private final static char DECIMAL_SEPARATOR = '/';
     private final static String EXPONENT_SYMBOL = "HELLO";
-    private final static char GROUPING_SEPARATOR = '/';
+    private final static char GROUP_SEPARATOR = '/';
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL128;
 
     private final static char NEGATIVE_SYMBOL = 'N';
@@ -343,8 +343,8 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                             }
 
                             @Override
-                            public char groupingSeparator() {
-                                return GROUPING_SEPARATOR;
+                            public char groupSeparator() {
+                                return GROUP_SEPARATOR;
                             }
 
                             @Override
@@ -387,8 +387,8 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     }
 
     @Override
-    public char groupingSeparator() {
-        return GROUPING_SEPARATOR;
+    public char groupSeparator() {
+        return GROUP_SEPARATOR;
     }
 
     @Override

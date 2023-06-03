@@ -359,7 +359,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
             }
 
             @Override
-            public char groupingSeparator() {
+            public char groupSeparator() {
                 return GROUPING;
             }
 

@@ -118,9 +118,9 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
             }
 
             @Override
-            public char groupingSeparator() {
+            public char groupSeparator() {
                 return decimalNumberContext()
-                        .groupingSeparator();
+                        .groupSeparator();
             }
 
             @Override
@@ -167,9 +167,9 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
     }
 
     @Override
-    public char groupingSeparator() {
+    public char groupSeparator() {
         return this.decimalNumberContext()
-                .groupingSeparator();
+                .groupSeparator();
     }
 
     @Override

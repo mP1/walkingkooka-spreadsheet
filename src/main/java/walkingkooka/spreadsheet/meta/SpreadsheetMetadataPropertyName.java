@@ -382,7 +382,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         return this instanceof SpreadsheetMetadataPropertyNameCharacter;
     }
 
-    final boolean isGroupingSeparatorOrValueSeparator() {
+    final boolean isGroupSeparatorOrValueSeparator() {
         return this instanceof SpreadsheetMetadataPropertyNameGroupSeparator || this instanceof SpreadsheetMetadataPropertyNameValueSeparator;
     }
 

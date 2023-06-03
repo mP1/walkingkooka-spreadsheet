@@ -145,7 +145,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitGroupSeparator(final char groupingSeparator) {
+    protected void visitGroupSeparator(final char groupSeparator) {
         throw new UnsupportedOperationException();
     }
 

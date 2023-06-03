@@ -3330,8 +3330,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             }
 
             @Override
-            public char groupingSeparator() {
-                return decimalNumberContext.groupingSeparator();
+            public char groupSeparator() {
+                return decimalNumberContext.groupSeparator();
             }
 
             @Override

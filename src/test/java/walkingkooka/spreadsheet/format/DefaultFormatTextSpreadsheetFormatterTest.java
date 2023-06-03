@@ -87,7 +87,7 @@ public final class DefaultFormatTextSpreadsheetFormatterTest extends Spreadsheet
             }
 
             @Override
-            public char groupingSeparator() {
+            public char groupSeparator() {
                 return 'G';
             }
 

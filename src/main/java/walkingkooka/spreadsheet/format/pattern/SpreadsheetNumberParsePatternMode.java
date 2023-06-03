@@ -55,7 +55,7 @@ enum SpreadsheetNumberParsePatternMode {
     VALUE {
         @Override
         boolean isGroupSeparator(final char c, final DecimalNumberContext context) {
-            return c == context.groupingSeparator();
+            return c == context.groupSeparator();
         }
 
         @Override

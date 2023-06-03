@@ -329,7 +329,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return DecimalNumberContexts.basic(this.currencySymbol(),
                 this.decimalSeparator(),
                 this.exponentSymbol(),
-                this.groupingSeparator(),
+                this.groupSeparator(),
                 this.negativeSign(),
                 this.percentageSymbol(),
                 this.positiveSign(),
@@ -353,7 +353,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     @Override
-    public char groupingSeparator() {
+    public char groupSeparator() {
         return 'G';
     }
 

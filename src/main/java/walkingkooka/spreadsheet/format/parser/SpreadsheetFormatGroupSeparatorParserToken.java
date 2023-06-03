@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format.parser;
 import java.util.Optional;
 
 /**
- * Represents a groupingSeparator token within a pattern.
+ * Represents a groupSeparator token within a pattern.
  */
 public final class SpreadsheetFormatGroupSeparatorParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
 

@@ -52,7 +52,7 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     static NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor analyze(final SpreadsheetFormatParserToken token) {
         final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
-        visitor.computeGroupingSeparatorAndCommaAdjust();
+        visitor.computeGroupSeparatorAndCommaAdjust();
         return visitor;
     }
 
@@ -194,7 +194,7 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     /**
      * If the comma count is greater than one update the {@link #decimalPlacesShift}.
      */
-    private void computeGroupingSeparatorAndCommaAdjust() {
+    private void computeGroupSeparatorAndCommaAdjust() {
         this.groupSeparator = this.thousandsDivider ?
                 NumberSpreadsheetFormatterGroupSeparator.INCLUDE :
                 NumberSpreadsheetFormatterGroupSeparator.NONE;

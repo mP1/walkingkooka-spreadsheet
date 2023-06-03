@@ -66,7 +66,7 @@ public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassT
             }
 
             @Override
-            public char groupingSeparator() {
+            public char groupSeparator() {
                 return GROUP;
             }
 
@@ -96,7 +96,7 @@ public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassT
                         .label("currencySymbol").value(this.currencySymbol())
                         .label("decimalSeparator").value(this.decimalSeparator())
                         .label("exponentSymbol").value(this.exponentSymbol())
-                        .label("groupingSeparator").value(this.groupingSeparator())
+                        .label("groupSeparator").value(this.groupSeparator())
                         .label("negativeSign").value(this.negativeSign())
                         .label("percentageSymbol").value(this.percentageSymbol())
                         .label("positiveSign").value(this.positiveSign())

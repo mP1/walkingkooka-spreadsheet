@@ -138,7 +138,7 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
 
     /**
      * A multiplier that is applied to the number before formatting.
-     * This is increased when the groupingSeparator appear after the decimal point and percentage symbol.
+     * This is increased when the groupSeparator appear after the decimal point and percentage symbol.
      */
     BigDecimal multiplier = BigDecimal.ONE;
 
