@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.format;
 
-public final class NumberSpreadsheetFormatterThousandsSeparatorTest extends NumberSpreadsheetFormatterTestCase<NumberSpreadsheetFormatterThousandsSeparator> {
+public final class NumberSpreadsheetFormatterGroupingSeparatorTest extends NumberSpreadsheetFormatterTestCase<NumberSpreadsheetFormatterGroupingSeparator> {
     @Override
-    public Class<NumberSpreadsheetFormatterThousandsSeparator> type() {
-        return NumberSpreadsheetFormatterThousandsSeparator.class;
+    public Class<NumberSpreadsheetFormatterGroupingSeparator> type() {
+        return NumberSpreadsheetFormatterGroupingSeparator.class;
     }
 }

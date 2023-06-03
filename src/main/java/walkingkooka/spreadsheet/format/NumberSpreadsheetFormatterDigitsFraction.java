@@ -62,12 +62,14 @@ final class NumberSpreadsheetFormatterDigitsFraction extends NumberSpreadsheetFo
     }
 
     @Override
-    void sign(final NumberSpreadsheetFormatterContext context) {
-        // never append sign inside a fraction
+    void groupingSeparator(final int numberDigitPosition,
+                           final NumberSpreadsheetFormatterContext context) {
+        // nop
     }
 
-    void thousandsSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
-        // nop
+    @Override
+    void sign(final NumberSpreadsheetFormatterContext context) {
+        // never append sign inside a fraction
     }
 
     @Override

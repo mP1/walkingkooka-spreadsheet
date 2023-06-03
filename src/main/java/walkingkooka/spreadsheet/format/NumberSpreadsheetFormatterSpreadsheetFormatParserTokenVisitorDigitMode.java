@@ -36,7 +36,7 @@ enum NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorDigitMode {
         @Override
         int digitCounterAndIncrement(final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
             if (visitor.comma > 0) {
-                visitor.thousandsGrouping = true;
+                visitor.thousandsDivider = true;
                 visitor.comma = 0;
             }
             return visitor.integerDigitSymbolCount++;
@@ -76,7 +76,7 @@ enum NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorDigitMode {
 
         @Override
         void thousands(final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
-            visitor.thousandsGrouping = true;
+            visitor.thousandsDivider = true;
         }
     },
 
@@ -102,7 +102,7 @@ enum NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorDigitMode {
 
         @Override
         void thousands(final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
-            visitor.thousandsGrouping = true;
+            visitor.thousandsDivider = true;
         }
     };
 

@@ -29,8 +29,8 @@ final class NumberSpreadsheetFormatterDigitsInteger extends NumberSpreadsheetFor
      */
     static NumberSpreadsheetFormatterDigitsInteger with(final NumberSpreadsheetFormatterMinusSign minusSign,
                                                         final String text,
-                                                        final NumberSpreadsheetFormatterThousandsSeparator thousandsSeparator) {
-        return new NumberSpreadsheetFormatterDigitsInteger(minusSign, text, thousandsSeparator);
+                                                        final NumberSpreadsheetFormatterGroupingSeparator groupingSeparator) {
+        return new NumberSpreadsheetFormatterDigitsInteger(minusSign, text, groupingSeparator);
     }
 
     /**
@@ -38,9 +38,9 @@ final class NumberSpreadsheetFormatterDigitsInteger extends NumberSpreadsheetFor
      */
     private NumberSpreadsheetFormatterDigitsInteger(final NumberSpreadsheetFormatterMinusSign minusSign,
                                                     final String text,
-                                                    final NumberSpreadsheetFormatterThousandsSeparator thousandsSeparator) {
+                                                    final NumberSpreadsheetFormatterGroupingSeparator groupingSeparator) {
         super(minusSign, text);
-        this.thousandsSeparator = thousandsSeparator;
+        this.groupingSeparator = groupingSeparator;
     }
 
     @Override
@@ -66,11 +66,11 @@ final class NumberSpreadsheetFormatterDigitsInteger extends NumberSpreadsheetFor
     }
 
     @Override
-    void thousandsSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
-        this.thousandsSeparator.append(numberDigitPosition, context);
+    void groupingSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
+        this.groupingSeparator.append(numberDigitPosition, context);
     }
 
-    private final NumberSpreadsheetFormatterThousandsSeparator thousandsSeparator;
+    private final NumberSpreadsheetFormatterGroupingSeparator groupingSeparator;
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
