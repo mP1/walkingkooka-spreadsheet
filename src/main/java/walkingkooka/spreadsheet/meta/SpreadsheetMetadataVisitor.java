@@ -159,7 +159,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitGroupSeparator(final char groupingSeparator) {
+    protected void visitGroupSeparator(final char groupSeparator) {
         // nop
     }
 

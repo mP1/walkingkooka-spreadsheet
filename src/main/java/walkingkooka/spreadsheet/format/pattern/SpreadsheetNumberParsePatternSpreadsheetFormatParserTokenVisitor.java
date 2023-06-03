@@ -177,7 +177,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
 
     @Override
     protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
-        this.addComponent(SpreadsheetNumberParsePatternComponent.groupingSeparator());
+        this.addComponent(SpreadsheetNumberParsePatternComponent.groupSeparator());
     }
 
     @Override

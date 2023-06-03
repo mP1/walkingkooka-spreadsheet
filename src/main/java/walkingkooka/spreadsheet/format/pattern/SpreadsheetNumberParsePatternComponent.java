@@ -80,7 +80,7 @@ abstract class SpreadsheetNumberParsePatternComponent {
     /**
      * {@see SpreadsheetNumberParsePatternComponentGroupSeparator}
      */
-    static SpreadsheetNumberParsePatternComponent groupingSeparator() {
+    static SpreadsheetNumberParsePatternComponent groupSeparator() {
         return SpreadsheetNumberParsePatternComponentGroupSeparator.INSTANCE;
     }
 

@@ -3622,13 +3622,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    // groupingSeparator
+    // groupSeparator
 
     @Test
-    public void testNumberFormatGroupingSeparatorDigitSlashDigit() {
+    public void testNumberFormatGroupSeparatorDigitSlashDigit() {
         this.numberFormatParseAndCheck(
                 number(
-                        groupingSeparator(),
+                        groupSeparator(),
                         digit(),
                         decimalPoint(),
                         digit()
@@ -3637,11 +3637,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testNumberFormatDigitGroupingSeparatorSlashDigit() {
+    public void testNumberFormatDigitGroupSeparatorSlashDigit() {
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        groupingSeparator(),
+                        groupSeparator(),
                         decimalPoint(),
                         digit()
                 )
@@ -3649,26 +3649,26 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testNumberFormatDigitSlashGroupingSeparatorDigit() {
+    public void testNumberFormatDigitSlashGroupSeparatorDigit() {
         this.numberFormatParseAndCheck(
                 number(
-                        groupingSeparator(),
+                        groupSeparator(),
                         digit(),
                         decimalPoint(),
-                        groupingSeparator(),
+                        groupSeparator(),
                         digit()
                 )
         );
     }
 
     @Test
-    public void testNumberFormatDigitSlashDigitGroupingSeparator() {
+    public void testNumberFormatDigitSlashDigitGroupSeparator() {
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        groupingSeparator()
+                        groupSeparator()
                 )
         );
     }
@@ -5732,13 +5732,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    // groupingSeparator
+    // groupSeparator
 
     @Test
-    public void testNumberParseGroupingSeparatorDigitSlashDigit() {
+    public void testNumberParseGroupSeparatorDigitSlashDigit() {
         this.numberParseParseAndCheck(
                 number(
-                        groupingSeparator(),
+                        groupSeparator(),
                         digit(),
                         decimalPoint(),
                         digit()
@@ -5747,11 +5747,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testNumberParseDigitGroupingSeparatorSlashDigit() {
+    public void testNumberParseDigitGroupSeparatorSlashDigit() {
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        groupingSeparator(),
+                        groupSeparator(),
                         decimalPoint(),
                         digit()
                 )
@@ -5759,26 +5759,26 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testNumberParseDigitSlashGroupingSeparatorDigit() {
+    public void testNumberParseDigitSlashGroupSeparatorDigit() {
         this.numberParseParseAndCheck(
                 number(
-                        groupingSeparator(),
+                        groupSeparator(),
                         digit(),
                         decimalPoint(),
-                        groupingSeparator(),
+                        groupSeparator(),
                         digit()
                 )
         );
     }
 
     @Test
-    public void testNumberParseDigitSlashDigitGroupingSeparator() {
+    public void testNumberParseDigitSlashDigitGroupSeparator() {
         this.numberParseParseAndCheck(
                 number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        groupingSeparator()
+                        groupSeparator()
                 )
         );
     }
@@ -7198,13 +7198,13 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testFractionGroupingSeparatorFails() {
-        this.fractionParseThrows(groupingSeparator());
+    public void testFractionGroupSeparatorFails() {
+        this.fractionParseThrows(groupSeparator());
     }
 
     @Test
-    public void testFractionDigitGroupingSeparatorFails() {
-        this.fractionParseThrows(digit(), groupingSeparator());
+    public void testFractionDigitGroupSeparatorFails() {
+        this.fractionParseThrows(digit(), groupSeparator());
     }
 
     @Test
@@ -7510,26 +7510,26 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), whitespace());
     }
 
-    // groupingSeparator
+    // groupSeparator
 
     @Test
-    public void testFractionGroupingSeparatorDigitSlashDigit() {
-        this.fractionParseAndCheck(groupingSeparator(), digit(), fractionSymbol(), digit());
+    public void testFractionGroupSeparatorDigitSlashDigit() {
+        this.fractionParseAndCheck(groupSeparator(), digit(), fractionSymbol(), digit());
     }
 
     @Test
-    public void testFractionDigitGroupingSeparatorSlashDigit() {
-        this.fractionParseAndCheck(digit(), groupingSeparator(), fractionSymbol(), digit());
+    public void testFractionDigitGroupSeparatorSlashDigit() {
+        this.fractionParseAndCheck(digit(), groupSeparator(), fractionSymbol(), digit());
     }
 
     @Test
-    public void testFractionDigitSlashGroupingSeparatorDigit() {
-        this.fractionParseAndCheck(groupingSeparator(), digit(), fractionSymbol(), groupingSeparator(), digit());
+    public void testFractionDigitSlashGroupSeparatorDigit() {
+        this.fractionParseAndCheck(groupSeparator(), digit(), fractionSymbol(), groupSeparator(), digit());
     }
 
     @Test
-    public void testFractionDigitSlashDigitGroupingSeparator() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), groupingSeparator());
+    public void testFractionDigitSlashDigitGroupSeparator() {
+        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), groupSeparator());
     }
 
     // equals

@@ -181,8 +181,8 @@ final class SpreadsheetNumberParsePatternConverterExpressionEvaluationContext im
     }
 
     @Override
-    public char groupingSeparator() {
-        return this.context.groupingSeparator();
+    public char groupSeparator() {
+        return this.context.groupSeparator();
     }
 
     @Override

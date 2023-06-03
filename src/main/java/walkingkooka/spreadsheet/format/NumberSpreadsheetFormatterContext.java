@@ -82,8 +82,8 @@ final class NumberSpreadsheetFormatterContext implements Context {
         this.digits = this.exponent;
     }
 
-    void appendGroupingSeparator() {
-        this.text.append(this.context.groupingSeparator());
+    void appendGroupSeparator() {
+        this.text.append(this.context.groupSeparator());
     }
 
     void appendNegativeSign() {

@@ -2477,7 +2477,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
             }
 
             @Override
-            public char groupingSeparator() {
+            public char groupSeparator() {
                 return 'G';
             }
 

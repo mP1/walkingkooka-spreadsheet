@@ -48,7 +48,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     private final static char DECIMAL_SEPARATOR = ',';
     private final static int DEFAULT_YEAR = 1800;
     private final static String EXPONENT_SYMBOL = "e";
-    private final static char GROUPING_SEPARATOR = '.';
+    private final static char GROUP_SEPARATOR = '.';
     private final static char NEGATIVE_SIGN = '-';
     private final static char PERCENT = '^';
     private final static char POSITIVE_SIGN = '+';
@@ -919,7 +919,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
-                .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUPING_SEPARATOR)
+                .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#;#.#"))

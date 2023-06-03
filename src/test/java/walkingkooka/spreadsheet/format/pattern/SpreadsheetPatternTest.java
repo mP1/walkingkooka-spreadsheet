@@ -581,7 +581,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                             }
 
                             @Override
-                            public char groupingSeparator() {
+                            public char groupSeparator() {
                                 return 'g';
                             }
 
@@ -1179,7 +1179,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
 
                     @Override
-                    public char groupingSeparator() {
+                    public char groupSeparator() {
                         return ',';
                     }
 
@@ -1217,7 +1217,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
 
                     @Override
-                    public char groupingSeparator() {
+                    public char groupSeparator() {
                         return ',';
                     }
 

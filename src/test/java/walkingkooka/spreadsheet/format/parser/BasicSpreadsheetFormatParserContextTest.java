@@ -59,8 +59,8 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
     }
 
     @Override
-    public char groupingSeparator() {
-        return this.decimalNumberContext().groupingSeparator();
+    public char groupSeparator() {
+        return this.decimalNumberContext().groupSeparator();
     }
 
     @Override

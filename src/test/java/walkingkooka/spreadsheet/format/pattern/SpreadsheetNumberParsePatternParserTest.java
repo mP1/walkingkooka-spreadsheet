@@ -53,7 +53,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     // expression parser fail...........................................................................................
 
     @Test
-    public void testExpressionGroupingSeparatorFails() {
+    public void testExpressionGroupSeparatorFails() {
         this.parseExpressionFails("#,###.##");
     }
 

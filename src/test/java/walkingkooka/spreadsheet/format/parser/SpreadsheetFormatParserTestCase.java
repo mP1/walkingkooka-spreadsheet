@@ -235,7 +235,7 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.greaterThanEqualsSymbol(">=", ">=");
     }
 
-    static SpreadsheetFormatParserToken groupingSeparator() {
+    static SpreadsheetFormatParserToken groupSeparator() {
         return SpreadsheetFormatParserToken.groupSeparator(",", ",");
     }
 

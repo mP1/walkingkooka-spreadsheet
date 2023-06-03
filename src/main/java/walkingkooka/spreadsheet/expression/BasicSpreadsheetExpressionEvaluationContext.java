@@ -353,9 +353,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
-    public char groupingSeparator() {
+    public char groupSeparator() {
         return this.converterContext()
-                .groupingSeparator();
+                .groupSeparator();
     }
 
     @Override

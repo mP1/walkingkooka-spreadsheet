@@ -393,8 +393,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Override
-    public char groupingSeparator() {
-        return DECIMAL_NUMBER_CONTEXT.groupingSeparator();
+    public char groupSeparator() {
+        return DECIMAL_NUMBER_CONTEXT.groupSeparator();
     }
 
     @Override

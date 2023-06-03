@@ -318,14 +318,14 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
         copy.putAll(this.value());
         copy.put(propertyName, value);
 
-        final boolean groupOrValue = propertyName.isGroupingSeparatorOrValueSeparator();
+        final boolean groupOrValue = propertyName.isGroupSeparatorOrValueSeparator();
 
         if (swapIfDuplicateValue) {
             for (final SpreadsheetMetadataPropertyName<Character> duplicate : SWAPPABLE_PROPERTIES) {
                 if (propertyName.equals(duplicate)) {
                     continue;
                 }
-                final boolean duplicateIsGroupingOrValue = duplicate.isGroupingSeparatorOrValueSeparator();
+                final boolean duplicateIsGroupingOrValue = duplicate.isGroupSeparatorOrValueSeparator();
                 if (groupOrValue && duplicateIsGroupingOrValue) {
                     continue;
                 }

@@ -30,7 +30,7 @@ enum NumberSpreadsheetFormatterGroupSeparator {
         void append(final int numberDigitPosition,
                     final NumberSpreadsheetFormatterContext context) {
             if (numberDigitPosition > 0 && 0 == numberDigitPosition % 3) {
-                context.appendGroupingSeparator();
+                context.appendGroupSeparator();
             }
         }
     },

@@ -259,7 +259,7 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
             }
 
             @Override
-            public char groupingSeparator() {
+            public char groupSeparator() {
                 return 'G';
             }
 

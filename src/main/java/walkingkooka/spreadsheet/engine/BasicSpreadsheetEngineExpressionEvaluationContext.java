@@ -231,9 +231,9 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     @Override
-    public char groupingSeparator() {
+    public char groupSeparator() {
         return this.expressionNumberContext()
-                .groupingSeparator();
+                .groupSeparator();
     }
 
     @Override
