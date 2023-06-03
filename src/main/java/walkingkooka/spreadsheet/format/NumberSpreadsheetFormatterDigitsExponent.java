@@ -63,7 +63,7 @@ final class NumberSpreadsheetFormatterDigitsExponent extends NumberSpreadsheetFo
     }
 
     @Override
-    void thousandsSeparator(int numberDigitPosition, NumberSpreadsheetFormatterContext context) {
+    void groupingSeparator(int numberDigitPosition, NumberSpreadsheetFormatterContext context) {
         // exponents never have thousands separator
     }
 

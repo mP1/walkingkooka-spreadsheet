@@ -18,16 +18,17 @@
 package walkingkooka.spreadsheet.format;
 
 /**
- * THe thousands separator
+ * The grouping separator within a formatting.
  */
-enum NumberSpreadsheetFormatterThousandsSeparator {
+enum NumberSpreadsheetFormatterGroupingSeparator {
 
     /**
      * Only inserts the grouping or thousands separator if the textDigitPosition is a multiple of 3.
      */
     INCLUDE {
         @Override
-        void append(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
+        void append(final int numberDigitPosition,
+                    final NumberSpreadsheetFormatterContext context) {
             if (numberDigitPosition > 0 && 0 == numberDigitPosition % 3) {
                 context.appendGroupingSeparator();
             }
@@ -38,10 +39,12 @@ enum NumberSpreadsheetFormatterThousandsSeparator {
      */
     NONE {
         @Override
-        void append(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
+        void append(final int numberDigitPosition,
+                    final NumberSpreadsheetFormatterContext context) {
             // nop
         }
     };
 
-    abstract void append(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context);
+    abstract void append(final int numberDigitPosition,
+                         final NumberSpreadsheetFormatterContext context);
 }

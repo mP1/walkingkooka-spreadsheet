@@ -52,7 +52,7 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     static NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor analyze(final SpreadsheetFormatParserToken token) {
         final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
-        visitor.computeThousandsSeparatorAndCommaAdjust();
+        visitor.computeGroupingSeparatorAndCommaAdjust();
         return visitor;
     }
 
@@ -194,10 +194,10 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     /**
      * If the comma count is greater than one update the {@link #decimalPlacesShift}.
      */
-    private void computeThousandsSeparatorAndCommaAdjust() {
-        this.thousandsSeparator = this.thousandsGrouping ?
-                NumberSpreadsheetFormatterThousandsSeparator.INCLUDE :
-                NumberSpreadsheetFormatterThousandsSeparator.NONE;
+    private void computeGroupingSeparatorAndCommaAdjust() {
+        this.groupingSeparator = this.thousandsDivider ?
+                NumberSpreadsheetFormatterGroupingSeparator.INCLUDE :
+                NumberSpreadsheetFormatterGroupingSeparator.NONE;
 
         final int comma = this.comma;
         if (comma > 0) {
@@ -214,12 +214,12 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     /**
      * A flag that is set whenever a comma is found that isnt a thousands divider.
      */
-    boolean thousandsGrouping = false;
+    boolean thousandsDivider = false;
 
     /**
-     * The computed {@link NumberSpreadsheetFormatterThousandsSeparator}.
+     * The computed {@link NumberSpreadsheetFormatterGroupingSeparator}.
      */
-    NumberSpreadsheetFormatterThousandsSeparator thousandsSeparator;
+    NumberSpreadsheetFormatterGroupingSeparator groupingSeparator;
 
     /**
      * The number of decimal places to adjust, positive values multiply by 10, negative values divide by 10.
