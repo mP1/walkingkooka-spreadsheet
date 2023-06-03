@@ -106,7 +106,7 @@ public enum SpreadsheetFormatParserTokenKind {
 
     PERCENT("%"),
 
-    THOUSANDS(","),
+    GROUPING(","),
 
     // TEXT............................................................................................................
 
@@ -253,8 +253,8 @@ public enum SpreadsheetFormatParserTokenKind {
                 this == DECIMAL_PLACE ||
                 this == EXPONENT ||
                 this == FRACTION ||
-                this == PERCENT ||
-                this == THOUSANDS;
+                this == GROUPING ||
+                this == PERCENT;
     }
 
 

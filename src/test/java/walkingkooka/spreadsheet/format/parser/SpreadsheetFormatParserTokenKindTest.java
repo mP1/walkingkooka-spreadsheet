@@ -105,7 +105,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
                         SpreadsheetFormatParserTokenKind.EXPONENT,
                         SpreadsheetFormatParserTokenKind.FRACTION,
                         SpreadsheetFormatParserTokenKind.PERCENT,
-                        SpreadsheetFormatParserTokenKind.THOUSANDS
+                        SpreadsheetFormatParserTokenKind.GROUPING
                 ),
                 this.collect(SpreadsheetFormatParserTokenKind::isNumber)
         );
@@ -610,7 +610,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     @Test
     public void testPatterns_THOUSANDS() {
         this.patternsParseAndCheck(
-                SpreadsheetFormatParserTokenKind.THOUSANDS,
+                SpreadsheetFormatParserTokenKind.GROUPING,
                 SpreadsheetPattern::parseNumberFormatPattern
         );
     }

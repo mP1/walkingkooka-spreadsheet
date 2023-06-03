@@ -72,7 +72,7 @@ public final class SpreadsheetFormatGroupingParserTokenTest extends SpreadsheetF
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.THOUSANDS
+                SpreadsheetFormatParserTokenKind.GROUPING
         );
     }
 
