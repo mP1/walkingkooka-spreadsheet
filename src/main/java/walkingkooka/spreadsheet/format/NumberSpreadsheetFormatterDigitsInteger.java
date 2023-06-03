@@ -29,8 +29,8 @@ final class NumberSpreadsheetFormatterDigitsInteger extends NumberSpreadsheetFor
      */
     static NumberSpreadsheetFormatterDigitsInteger with(final NumberSpreadsheetFormatterMinusSign minusSign,
                                                         final String text,
-                                                        final NumberSpreadsheetFormatterGroupingSeparator groupingSeparator) {
-        return new NumberSpreadsheetFormatterDigitsInteger(minusSign, text, groupingSeparator);
+                                                        final NumberSpreadsheetFormatterGroupSeparator groupSeparator) {
+        return new NumberSpreadsheetFormatterDigitsInteger(minusSign, text, groupSeparator);
     }
 
     /**
@@ -38,9 +38,9 @@ final class NumberSpreadsheetFormatterDigitsInteger extends NumberSpreadsheetFor
      */
     private NumberSpreadsheetFormatterDigitsInteger(final NumberSpreadsheetFormatterMinusSign minusSign,
                                                     final String text,
-                                                    final NumberSpreadsheetFormatterGroupingSeparator groupingSeparator) {
+                                                    final NumberSpreadsheetFormatterGroupSeparator groupSeparator) {
         super(minusSign, text);
-        this.groupingSeparator = groupingSeparator;
+        this.groupSeparator = groupSeparator;
     }
 
     @Override
@@ -66,11 +66,11 @@ final class NumberSpreadsheetFormatterDigitsInteger extends NumberSpreadsheetFor
     }
 
     @Override
-    void groupingSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
-        this.groupingSeparator.append(numberDigitPosition, context);
+    void groupSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
+        this.groupSeparator.append(numberDigitPosition, context);
     }
 
-    private final NumberSpreadsheetFormatterGroupingSeparator groupingSeparator;
+    private final NumberSpreadsheetFormatterGroupSeparator groupSeparator;
 
     @Override
     public void buildToString(final ToStringBuilder builder) {

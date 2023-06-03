@@ -68,7 +68,7 @@ final class NumberSpreadsheetFormatterContext implements Context {
     void appendDigit(final char c, final int numberDigitPosition) {
         this.digits.sign(this);
         this.text.append(c);
-        this.digits.groupingSeparator(numberDigitPosition, this);
+        this.digits.groupSeparator(numberDigitPosition, this);
     }
 
     void appendDecimalSeparator(final NumberSpreadsheetFormatterDigits next) {

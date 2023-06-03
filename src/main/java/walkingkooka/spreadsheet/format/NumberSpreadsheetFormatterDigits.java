@@ -30,8 +30,8 @@ abstract class NumberSpreadsheetFormatterDigits implements UsesToStringBuilder {
      */
     static NumberSpreadsheetFormatterDigits integer(final NumberSpreadsheetFormatterMinusSign minusSign,
                                                     final String text,
-                                                    final NumberSpreadsheetFormatterGroupingSeparator groupingSeparator) {
-        return NumberSpreadsheetFormatterDigitsInteger.with(minusSign, text, groupingSeparator);
+                                                    final NumberSpreadsheetFormatterGroupSeparator groupSeparator) {
+        return NumberSpreadsheetFormatterDigitsInteger.with(minusSign, text, groupSeparator);
     }
 
     /**
@@ -67,10 +67,10 @@ abstract class NumberSpreadsheetFormatterDigits implements UsesToStringBuilder {
                          final NumberSpreadsheetFormatterContext context);
 
     /**
-     * Conditionally appends the groupingSeparator separator. This may only happen during formatting of INTEGER digits.
+     * Conditionally appends the group separator. This may only happen during formatting of INTEGER digits.
      */
-    abstract void groupingSeparator(final int numberDigitPosition,
-                                    final NumberSpreadsheetFormatterContext context);
+    abstract void groupSeparator(final int numberDigitPosition,
+                                 final NumberSpreadsheetFormatterContext context);
 
     /**
      * Conditionally appends the sign if necessary, during INTEGER and EXPONENT digit formatting.
