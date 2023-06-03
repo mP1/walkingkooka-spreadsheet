@@ -334,8 +334,8 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         predefined.put(DIGIT_SPACE_IDENTIFIER, DIGIT_SPACE);
         predefined.put(DIGIT_ZERO_IDENTIFIER, DIGIT_ZERO);
         predefined.put(FRACTION_SYMBOL_IDENTIFIER, FRACTION_SYMBOL);
+        predefined.put(GROUPING_IDENTIFIER, GROUPING);
         predefined.put(PERCENTAGE_IDENTIFIER, PERCENTAGE);
-        predefined.put(THOUSANDS_IDENTIFIER, THOUSANDS);
     }
 
     private static final EbnfIdentifierName CURRENCY_IDENTIFIER = EbnfIdentifierName.with("CURRENCY");
@@ -368,15 +368,15 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             SpreadsheetFormatParserToken::fractionSymbol,
             SpreadsheetFormatFractionSymbolParserToken.class);
 
+    private static final Parser<SpreadsheetFormatParserContext> GROUPING = symbol(',',
+            SpreadsheetFormatParserToken::grouping,
+            SpreadsheetFormatGroupingParserToken.class);
+    private static final EbnfIdentifierName GROUPING_IDENTIFIER = EbnfIdentifierName.with("GROUPING");
+
     private static final EbnfIdentifierName PERCENTAGE_IDENTIFIER = EbnfIdentifierName.with("PERCENTAGE");
     private static final Parser<SpreadsheetFormatParserContext> PERCENTAGE = symbol('%',
             SpreadsheetFormatParserToken::percent,
             SpreadsheetFormatPercentParserToken.class);
-
-    private static final Parser<SpreadsheetFormatParserContext> THOUSANDS = symbol(',',
-            SpreadsheetFormatParserToken::grouping,
-            SpreadsheetFormatGroupingParserToken.class);
-    private static final EbnfIdentifierName THOUSANDS_IDENTIFIER = EbnfIdentifierName.with("THOUSANDS");
 
     // pattern..........................................................................................................
 

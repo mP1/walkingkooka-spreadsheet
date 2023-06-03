@@ -106,6 +106,6 @@ public final class SpreadsheetFormatGroupingParserTokenTest extends SpreadsheetF
     @Override
     public SpreadsheetFormatGroupingParserToken unmarshall(final JsonNode node,
                                                            final JsonNodeUnmarshallContext context) {
-        return SpreadsheetFormatParserToken.unmarshallThousands(node, context);
+        return SpreadsheetFormatParserToken.unmarshallGrouping(node, context);
     }
 }
