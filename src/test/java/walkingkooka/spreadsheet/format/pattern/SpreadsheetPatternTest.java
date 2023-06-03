@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -721,7 +722,23 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateParsePatternIncompleteGeneralFails() {
+    public void testDateParsePatternIncompleteTextLiteralFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy\"Incomplete")
+        );
+    }
+
+    @Test
+    public void testDateParsePatternColorFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseDateParsePattern("[BLACK]dd/mm/yyyy")
+        );
+    }
+
+    @Test
+    public void testDateParsePatternGeneralFails() {
         assertThrows(
                 InvalidCharacterException.class,
                 () -> SpreadsheetPattern.parseDateParsePattern("General")
@@ -729,10 +746,22 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateParsePatternIncompleteTextLiteralFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy\"Incomplete")
+    public void testDateParsePattern() {
+        this.parseAndCheck(
+                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser(),
+                new FakeSpreadsheetParserContext(),
+                "1999/12/31",
+                SpreadsheetParserToken.date(
+                        Lists.of(
+                                SpreadsheetParserToken.year(1999, "1999"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.monthNumber(12, "12"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.dayNumber(31, "31")
+                        ),
+                        "1999/12/31"
+                ),
+                "1999/12/31"
         );
     }
 
@@ -835,18 +864,50 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternIncompleteGeneralFails() {
+    public void testDateTimeParsePatternIncompleteTextLiteralFails() {
         assertThrows(
-                InvalidCharacterException.class,
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss\"Incomplete")
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternColorFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseDateTimeParsePattern("[BLACK]dd/mm/yyyy hh:mm:ss")
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePatternGeneralFails() {
+        assertThrows(
+                IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseDateTimeParsePattern("General")
         );
     }
 
     @Test
-    public void testDateTimeParsePatternIncompleteTextLiteralFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss\"Incomplete")
+    public void testDateTimeParsePattern() {
+        this.parseAndCheck(
+                SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").parser(),
+                new FakeSpreadsheetParserContext(),
+                "1999/12/31 12:58",
+                SpreadsheetParserToken.dateTime(
+                        Lists.of(
+                                SpreadsheetParserToken.year(1999, "1999"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.monthNumber(12, "12"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.dayNumber(31, "31"),
+                                SpreadsheetParserToken.whitespace(" ", " "),
+                                SpreadsheetParserToken.hour(12, "12"),
+                                SpreadsheetParserToken.textLiteral(":", ":"),
+                                SpreadsheetParserToken.minute(58, "58")
+                        ),
+                        "1999/12/31 12:58"
+                ),
+                "1999/12/31 12:58"
         );
     }
 
@@ -1091,6 +1152,104 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    @Test
+    public void testNumberParsePatternColorFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseNumberParsePattern("[BLACK]#.#")
+        );
+    }
+
+    @Test
+    public void testNumberParsePatternGeneralFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseNumberParsePattern("General")
+        );
+    }
+
+    @Test
+    public void testNumberParsePattern() {
+        this.parseAndCheck(
+                SpreadsheetPattern.parseNumberParsePattern("#.#").parser(),
+                new FakeSpreadsheetParserContext() {
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public char groupingSeparator() {
+                        return ',';
+                    }
+
+                    @Override
+                    public char negativeSign() {
+                        return '-';
+                    }
+
+                    @Override
+                    public char positiveSign() {
+                        return '+';
+                    }
+                },
+                "1.5",
+                SpreadsheetParserToken.number(
+                        Lists.of(
+                                SpreadsheetParserToken.digits("1", "1"),
+                                SpreadsheetParserToken.decimalSeparatorSymbol(".", "."),
+                                SpreadsheetParserToken.digits("5", "5")
+                        ),
+                        "1.5"
+                ),
+                "1.5"
+        );
+    }
+
+    @Test
+    public void testNumberParsePatternPercent() {
+        this.parseAndCheck(
+                SpreadsheetPattern.parseNumberParsePattern("#.#%").parser(),
+                new FakeSpreadsheetParserContext() {
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public char groupingSeparator() {
+                        return ',';
+                    }
+
+                    @Override
+                    public char negativeSign() {
+                        return '-';
+                    }
+
+                    @Override
+                    public char percentageSymbol() {
+                        return '*';
+                    }
+
+                    @Override
+                    public char positiveSign() {
+                        return '+';
+                    }
+                },
+                "1.5*",
+                SpreadsheetParserToken.number(
+                        Lists.of(
+                                SpreadsheetParserToken.digits("1", "1"),
+                                SpreadsheetParserToken.decimalSeparatorSymbol(".", "."),
+                                SpreadsheetParserToken.digits("5", "5"),
+                                SpreadsheetParserToken.percentSymbol("*", "*")
+                        ),
+                        "1.5*"
+                ),
+                "1.5*"
+        );
+    }
+
     // TextFormatPattern................................................................................................
 
     @Test
@@ -1287,6 +1446,40 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss\"Incomplete")
+        );
+    }
+
+    @Test
+    public void testTimeParsePatternColorFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseTimeParsePattern("[BLACK]hh:mm:ss")
+        );
+    }
+
+    @Test
+    public void testTimeParsePatternGeneralFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseTimeParsePattern("General")
+        );
+    }
+
+    @Test
+    public void testTimeParsePattern() {
+        this.parseAndCheck(
+                SpreadsheetPattern.parseTimeParsePattern("hh:mm").parser(),
+                new FakeSpreadsheetParserContext(),
+                "12:58",
+                SpreadsheetParserToken.time(
+                        Lists.of(
+                                SpreadsheetParserToken.hour(12, "12"),
+                                SpreadsheetParserToken.textLiteral(":", ":"),
+                                SpreadsheetParserToken.minute(58, "58")
+                        ),
+                        "12:58"
+                ),
+                "12:58"
         );
     }
 
