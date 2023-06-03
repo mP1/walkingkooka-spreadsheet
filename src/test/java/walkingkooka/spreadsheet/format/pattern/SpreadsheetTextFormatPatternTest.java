@@ -98,6 +98,11 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
+    public void testWithGroupingSeparatorFails() {
+        this.withInvalidCharacterFails(this.grouping());
+    }
+
+    @Test
     public void testWithHourSymbolFails() {
         this.withInvalidCharacterFails(this.hour());
     }
@@ -125,11 +130,6 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     @Test
     public void testWithSecondFails() {
         this.withInvalidCharacterFails(this.second());
-    }
-
-    @Test
-    public void testWithThousandsFails() {
-        this.withInvalidCharacterFails(this.grouping());
     }
 
     @Test

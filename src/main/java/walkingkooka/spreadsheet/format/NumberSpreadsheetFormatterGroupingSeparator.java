@@ -23,7 +23,7 @@ package walkingkooka.spreadsheet.format;
 enum NumberSpreadsheetFormatterGroupingSeparator {
 
     /**
-     * Only inserts the grouping or thousands separator if the textDigitPosition is a multiple of 3.
+     * Only inserts the grouping or grouping separator if the textDigitPosition is a multiple of 3.
      */
     INCLUDE {
         @Override

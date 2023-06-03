@@ -73,8 +73,8 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
     }
 
     @Test
-    public void testWithPercentSymbolFails() {
-        this.withInvalidCharacterFails(this.percentSymbol());
+    public void testWithGroupingSeparatorFails() {
+        this.withInvalidCharacterFails(this.grouping());
     }
 
     @Test
@@ -83,8 +83,8 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
     }
 
     @Test
-    public void testWithThousandsFails() {
-        this.withInvalidCharacterFails(this.grouping());
+    public void testWithPercentSymbolFails() {
+        this.withInvalidCharacterFails(this.percentSymbol());
     }
 
     @Test

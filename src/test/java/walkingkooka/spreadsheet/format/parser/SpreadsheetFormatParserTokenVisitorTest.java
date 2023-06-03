@@ -1414,6 +1414,33 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     }
 
     @Test
+    public void testGroupingSeparator() {
+        final SpreadsheetFormatParserToken token = grouping();
+        final StringBuilder b = new StringBuilder();
+        final List<ParserToken> visited = Lists.array();
+
+        final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
+
+            @Override
+            protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+                b.append("5");
+                visited.add(token);
+            }
+        };
+        visitor.accept(token);
+        this.checkEquals("13542", b.toString(), "visited");
+        this.checkEquals(Lists.of(token, token, token, token, token),
+                visited,
+                "visitedTokens");
+    }
+
+    @Test
+    public void testGroupingSeparator2() {
+        new SpreadsheetFormatParserTokenVisitor() {
+        }.accept(grouping());
+    }
+
+    @Test
     public void testHour() {
         final SpreadsheetFormatParserToken token = hour();
         final StringBuilder b = new StringBuilder();
@@ -1632,33 +1659,6 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     public void testTextPlaceholder2() {
         new SpreadsheetFormatParserTokenVisitor() {
         }.accept(textPlaceholder());
-    }
-
-    @Test
-    public void testThousands() {
-        final SpreadsheetFormatParserToken token = grouping();
-        final StringBuilder b = new StringBuilder();
-        final List<ParserToken> visited = Lists.array();
-
-        final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
-
-            @Override
-            protected void visit(final SpreadsheetFormatGroupingParserToken token) {
-                b.append("5");
-                visited.add(token);
-            }
-        };
-        visitor.accept(token);
-        this.checkEquals("13542", b.toString(), "visited");
-        this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
-    }
-
-    @Test
-    public void testThousands2() {
-        new SpreadsheetFormatParserTokenVisitor() {
-        }.accept(grouping());
     }
 
     @Test
