@@ -622,7 +622,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // parseXXX.........................................................................................................
+    // dateFormatPattern................................................................................................
 
     @Test
     public void testDateFormatPatternIncompleteTextLiteralFails() {
@@ -702,7 +702,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // parseDateParsePattern...........................................................................................
+    // DateParsePattern.................................................................................................
 
     @Test
     public void testDateParsePatternParseNullFails() {
@@ -728,7 +728,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // parseDateTimeFormatPattern......................................................................................
+    // DateTimeFormatPattern............................................................................................
 
     @Test
     public void testDateTimeFormatPattern() {
@@ -800,7 +800,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // parseDateTimeParsePattern........................................................................................
+    // DateTimeParsePattern............................................................................................
 
     @Test
     public void testDateTimeParsePatternParseNullFails() {
@@ -825,6 +825,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 () -> SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss\"Incomplete")
         );
     }
+
+    // NumberTimeFormatPattern..........................................................................................
 
     @Test
     public void testNumberFormatPatternIncompleteTextLiteralFails() {
@@ -1039,6 +1041,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    // NumberTimeParsePattern..........................................................................................
+
     @Test
     public void testNumberParsePatternIncompleteTextLiteralFails() {
         assertThrows(
@@ -1047,7 +1051,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // parseTextFormat.................................................................................................
+    // TextFormatPattern................................................................................................
 
     @Test
     public void testTextFormatPatternParseNullFails() {
@@ -1124,7 +1128,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // parseTimeParsePattern............................................................................................
+    // TimeFormatPattern................................................................................................
 
     @Test
     public void testTimeFormatPatternFormatNullFails() {
@@ -1220,7 +1224,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // parseTimeParsePattern............................................................................................
+    // timeParsePattern.................................................................................................
 
     @Test
     public void testTimeParsePatternParseNullFails() {
