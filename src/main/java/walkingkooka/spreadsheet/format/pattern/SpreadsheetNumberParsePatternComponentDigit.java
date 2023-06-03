@@ -96,7 +96,7 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
 
                 final String groupingText = Character.toString(c);
                 request.add(
-                        SpreadsheetParserToken.groupingSeparatorSymbol(
+                        SpreadsheetParserToken.groupSeparatorSymbol(
                                 groupingText,
                                 groupingText
                         )

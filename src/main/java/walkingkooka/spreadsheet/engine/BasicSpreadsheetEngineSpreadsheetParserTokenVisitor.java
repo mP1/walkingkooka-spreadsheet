@@ -48,7 +48,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanEqualsSymbolParserT
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGroupParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetGroupingSeparatorSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetGroupSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetHourParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLabelNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLessThanEqualsParserToken;
@@ -417,7 +417,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected final void visit(final SpreadsheetGroupingSeparatorSymbolParserToken token) {
+    protected final void visit(final SpreadsheetGroupSeparatorSymbolParserToken token) {
         this.leaf(token);
     }
 

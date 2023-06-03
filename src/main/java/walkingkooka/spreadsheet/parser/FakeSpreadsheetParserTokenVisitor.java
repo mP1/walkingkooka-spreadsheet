@@ -353,7 +353,7 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
-    protected void visit(final SpreadsheetGroupingSeparatorSymbolParserToken token) {
+    protected void visit(final SpreadsheetGroupSeparatorSymbolParserToken token) {
         throw new UnsupportedOperationException();
     }
 
