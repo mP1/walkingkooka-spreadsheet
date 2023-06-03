@@ -81,8 +81,8 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
-    public void testWithGroupingFails() {
-        this.withInvalidCharacterFails(this.groupingSeparator());
+    public void testWithGroupSeparatorFails() {
+        this.withInvalidCharacterFails(this.groupSeparator());
     }
 
     @Test

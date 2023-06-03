@@ -98,8 +98,8 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
-    public void testWithGroupingSeparatorFails() {
-        this.withInvalidCharacterFails(this.groupingSeparator());
+    public void testWithGroupSeparatorFails() {
+        this.withInvalidCharacterFails(this.groupSeparator());
     }
 
     @Test

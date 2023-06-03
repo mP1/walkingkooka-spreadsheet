@@ -62,7 +62,7 @@ enum NumberSpreadsheetFormatterNormalOrScientific {
                     NumberSpreadsheetFormatterDigits.integer(
                             NumberSpreadsheetFormatterMinusSign.fromSignum(valueSign),
                             integerDigits,
-                            formatter.groupingSeparator
+                            formatter.groupSeparator
                     ),
                     NumberSpreadsheetFormatterDigits.fraction(fractionDigits),
                     NO_EXPONENT,
@@ -99,7 +99,7 @@ enum NumberSpreadsheetFormatterNormalOrScientific {
             final int exponent = rounded.precision() - rounded.scale() - integerDigitCount;
 
             return NumberSpreadsheetFormatterContext.with(
-                    NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.fromSignum(value.signum()), digits.substring(0, integerDigitCount), formatter.groupingSeparator),
+                    NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.fromSignum(value.signum()), digits.substring(0, integerDigitCount), formatter.groupSeparator),
                     NumberSpreadsheetFormatterDigits.fraction(digits.substring(integerDigitCount, Math.min(integerDigitCount + fractionDigitCount, digitCount))),
                     NumberSpreadsheetFormatterDigits.exponent(NumberSpreadsheetFormatterMinusSign.fromSignum(exponent), String.valueOf(Math.abs(exponent))),
                     formatter,

@@ -195,7 +195,7 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
      * If the comma count is greater than one update the {@link #decimalPlacesShift}.
      */
     private void computeGroupingSeparatorAndCommaAdjust() {
-        this.groupingSeparator = this.thousandsDivider ?
+        this.groupSeparator = this.thousandsDivider ?
                 NumberSpreadsheetFormatterGroupSeparator.INCLUDE :
                 NumberSpreadsheetFormatterGroupSeparator.NONE;
 
@@ -219,7 +219,7 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     /**
      * The computed {@link NumberSpreadsheetFormatterGroupSeparator}.
      */
-    NumberSpreadsheetFormatterGroupSeparator groupingSeparator;
+    NumberSpreadsheetFormatterGroupSeparator groupSeparator;
 
     /**
      * The number of decimal places to adjust, positive values multiply by 10, negative values divide by 10.
