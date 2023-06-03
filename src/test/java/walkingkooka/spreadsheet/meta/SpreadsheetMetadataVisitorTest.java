@@ -263,13 +263,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitGroupingSeparator() {
+    public void testVisitGroupSeparator() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitGroupingSeparator(final char c) {
+            protected void visitGroupSeparator(final char c) {
                 this.visited = c;
             }
-        }.accept(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, ',');
+        }.accept(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, ',');
     }
 
     @Test

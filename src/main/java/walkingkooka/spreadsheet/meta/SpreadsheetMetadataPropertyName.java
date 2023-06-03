@@ -161,9 +161,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetRowReferenceRange> FROZEN_ROWS = registerConstant(SpreadsheetMetadataPropertyNameFrozenRows.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>grouping-separator {@link Character}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>group-separator {@link Character}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Character> GROUPING_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameGroupingSeparator.instance());
+    public static final SpreadsheetMetadataPropertyName<Character> GROUP_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameGroupSeparator.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>
@@ -383,7 +383,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     final boolean isGroupingSeparatorOrValueSeparator() {
-        return this instanceof SpreadsheetMetadataPropertyNameGroupingSeparator || this instanceof SpreadsheetMetadataPropertyNameValueSeparator;
+        return this instanceof SpreadsheetMetadataPropertyNameGroupSeparator || this instanceof SpreadsheetMetadataPropertyNameValueSeparator;
     }
 
     @Override
