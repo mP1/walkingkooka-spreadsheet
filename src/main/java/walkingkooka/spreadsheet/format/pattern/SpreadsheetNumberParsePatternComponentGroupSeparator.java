@@ -20,16 +20,16 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
- * A {@link SpreadsheetNumberParsePatternComponent} that does not actually expect or consume the groupingSeparator character.
+ * A {@link SpreadsheetNumberParsePatternComponent} that does not actually expect or consume the group separator character.
  */
-final class SpreadsheetNumberParsePatternComponentGroupingSeparator extends SpreadsheetNumberParsePatternComponentNonDigit {
+final class SpreadsheetNumberParsePatternComponentGroupSeparator extends SpreadsheetNumberParsePatternComponentNonDigit {
 
     /**
      * Singleton
      */
-    final static SpreadsheetNumberParsePatternComponentGroupingSeparator INSTANCE = new SpreadsheetNumberParsePatternComponentGroupingSeparator();
+    final static SpreadsheetNumberParsePatternComponentGroupSeparator INSTANCE = new SpreadsheetNumberParsePatternComponentGroupSeparator();
 
-    private SpreadsheetNumberParsePatternComponentGroupingSeparator() {
+    private SpreadsheetNumberParsePatternComponentGroupSeparator() {
         super();
     }
 
