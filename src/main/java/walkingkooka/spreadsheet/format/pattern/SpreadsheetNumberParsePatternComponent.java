@@ -78,10 +78,10 @@ abstract class SpreadsheetNumberParsePatternComponent {
     }
 
     /**
-     * {@see SpreadsheetNumberParsePatternComponentGroupingSeparator}
+     * {@see SpreadsheetNumberParsePatternComponentGroupSeparator}
      */
     static SpreadsheetNumberParsePatternComponent groupingSeparator() {
-        return SpreadsheetNumberParsePatternComponentGroupingSeparator.INSTANCE;
+        return SpreadsheetNumberParsePatternComponentGroupSeparator.INSTANCE;
     }
 
     /**
@@ -126,7 +126,7 @@ abstract class SpreadsheetNumberParsePatternComponent {
     }
 
     /**
-     * Some components (groupingSeparator separator) are not valid within an expression but are valid as a number literal.
+     * Some components (group separator) are not valid within an expression but are valid as a number literal.
      */
     abstract boolean isExpressionCompatible();
 

@@ -98,7 +98,7 @@ final class SpreadsheetNumberParsePatternRequest {
     }
 
     /**
-     * Aggregates the digit characters, which may include groupingSeparator separators.
+     * Aggregates the digit characters, which may include group separator separators.
      * This will become the text of any created {@link walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken}.
      */
     final StringBuilder digits = new StringBuilder();
