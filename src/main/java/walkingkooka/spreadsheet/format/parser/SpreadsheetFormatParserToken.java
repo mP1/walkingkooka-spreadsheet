@@ -985,6 +985,11 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetFormatGroupingParserToken.class,
+                SpreadsheetFormatParserToken::unmarshallGrouping
+        );
+
+        registerLeafParserToken(
                 SpreadsheetFormatHourParserToken.class,
                 SpreadsheetFormatParserToken::unmarshallHour
         );
@@ -1027,11 +1032,6 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
         registerLeafParserToken(
                 SpreadsheetFormatTextPlaceholderParserToken.class,
                 SpreadsheetFormatParserToken::unmarshallTextPlaceholder
-        );
-
-        registerLeafParserToken(
-                SpreadsheetFormatGroupingParserToken.class,
-                SpreadsheetFormatParserToken::unmarshallThousands
         );
 
         registerLeafParserToken(
@@ -1228,8 +1228,8 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetFormatGroupingParserToken unmarshallThousands(final JsonNode node,
-                                                                    final JsonNodeUnmarshallContext context) {
+    static SpreadsheetFormatGroupingParserToken unmarshallGrouping(final JsonNode node,
+                                                                   final JsonNodeUnmarshallContext context) {
         return unmarshallStringLeafParserToken(
                 node,
                 context,
