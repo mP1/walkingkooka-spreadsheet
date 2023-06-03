@@ -263,10 +263,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetGroupingSeparatorSymbolParserToken}
+     * {@see SpreadsheetGroupSeparatorSymbolParserToken}
      */
-    public static SpreadsheetGroupingSeparatorSymbolParserToken groupingSeparatorSymbol(final String value, final String text) {
-        return SpreadsheetGroupingSeparatorSymbolParserToken.with(value, text);
+    public static SpreadsheetGroupSeparatorSymbolParserToken groupSeparatorSymbol(final String value, final String text) {
+        return SpreadsheetGroupSeparatorSymbolParserToken.with(value, text);
     }
 
     /**
@@ -776,10 +776,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetGroupingSeparatorSymbolParserToken} return true
+     * Only {@link SpreadsheetGroupSeparatorSymbolParserToken} return true
      */
-    public final boolean isGroupingSeparatorSymbol() {
-        return this instanceof SpreadsheetGroupingSeparatorSymbolParserToken;
+    public final boolean isGroupSeparatorSymbol() {
+        return this instanceof SpreadsheetGroupSeparatorSymbolParserToken;
     }
 
     /**
@@ -1501,8 +1501,8 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetGroupingSeparatorSymbolParserToken.class,
-                SpreadsheetParserToken::unmarshallGroupingSeparatorSymbol
+                SpreadsheetGroupSeparatorSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallGroupSeparatorSymbol
         );
 
         registerLeafParserToken(
@@ -1657,12 +1657,12 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetGroupingSeparatorSymbolParserToken unmarshallGroupingSeparatorSymbol(final JsonNode node,
-                                                                                           final JsonNodeUnmarshallContext context) {
+    static SpreadsheetGroupSeparatorSymbolParserToken unmarshallGroupSeparatorSymbol(final JsonNode node,
+                                                                                     final JsonNodeUnmarshallContext context) {
         return unmarshallSymbolParserToken(
                 node,
                 context,
-                SpreadsheetParserToken::groupingSeparatorSymbol
+                SpreadsheetParserToken::groupSeparatorSymbol
         );
     }
 

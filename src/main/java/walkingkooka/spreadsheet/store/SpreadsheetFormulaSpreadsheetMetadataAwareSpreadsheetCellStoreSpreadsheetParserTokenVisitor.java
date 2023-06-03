@@ -51,7 +51,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanEqualsSymbolParserT
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGroupParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetGroupingSeparatorSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetGroupSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetHourParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLabelNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLessThanEqualsParserToken;
@@ -464,10 +464,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetGroupingSeparatorSymbolParserToken token) {
+    protected void visit(final SpreadsheetGroupSeparatorSymbolParserToken token) {
         this.leafCharacter(
                 SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR,
-                SpreadsheetParserToken::groupingSeparatorSymbol
+                SpreadsheetParserToken::groupSeparatorSymbol
         );
     }
 

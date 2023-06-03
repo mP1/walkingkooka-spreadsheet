@@ -21,19 +21,19 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import java.util.List;
 
 /**
- * Represents a grouping separator symbol token with a number.
+ * Represents a group separator symbol token with a number.
  */
-public final class SpreadsheetGroupingSeparatorSymbolParserToken extends SpreadsheetSymbolParserToken {
+public final class SpreadsheetGroupSeparatorSymbolParserToken extends SpreadsheetSymbolParserToken {
 
-    static SpreadsheetGroupingSeparatorSymbolParserToken with(final String value,
-                                                              final String text) {
-        return new SpreadsheetGroupingSeparatorSymbolParserToken(
+    static SpreadsheetGroupSeparatorSymbolParserToken with(final String value,
+                                                           final String text) {
+        return new SpreadsheetGroupSeparatorSymbolParserToken(
                 checkValue(value),
                 checkText(text)
         );
     }
 
-    private SpreadsheetGroupingSeparatorSymbolParserToken(final String value, final String text) {
+    private SpreadsheetGroupSeparatorSymbolParserToken(final String value, final String text) {
         super(value, text);
     }
 
@@ -58,6 +58,6 @@ public final class SpreadsheetGroupingSeparatorSymbolParserToken extends Spreads
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetGroupingSeparatorSymbolParserToken;
+        return other instanceof SpreadsheetGroupSeparatorSymbolParserToken;
     }
 }

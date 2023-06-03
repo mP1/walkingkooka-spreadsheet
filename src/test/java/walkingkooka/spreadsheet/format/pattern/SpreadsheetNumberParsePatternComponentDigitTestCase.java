@@ -54,7 +54,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                 "",
                 mode,
                 NEXT_SKIPPED,
-                SpreadsheetParserToken.groupingSeparatorSymbol("" + GROUP, "" + GROUP)
+                SpreadsheetParserToken.groupSeparatorSymbol("" + GROUP, "" + GROUP)
         );
     }
 

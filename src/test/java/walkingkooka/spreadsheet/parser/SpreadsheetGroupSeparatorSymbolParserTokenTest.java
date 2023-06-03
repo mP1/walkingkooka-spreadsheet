@@ -24,7 +24,7 @@ import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetGroupingSeparatorSymbolParserTokenTest extends SpreadsheetSymbolParserTokenTestCase<SpreadsheetGroupingSeparatorSymbolParserToken> {
+public final class SpreadsheetGroupSeparatorSymbolParserTokenTest extends SpreadsheetSymbolParserTokenTestCase<SpreadsheetGroupSeparatorSymbolParserToken> {
 
     @Test
     public void testAccept() {
@@ -59,7 +59,7 @@ public final class SpreadsheetGroupingSeparatorSymbolParserTokenTest extends Spr
             }
 
             @Override
-            protected void visit(final SpreadsheetGroupingSeparatorSymbolParserToken t) {
+            protected void visit(final SpreadsheetGroupSeparatorSymbolParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -78,23 +78,23 @@ public final class SpreadsheetGroupingSeparatorSymbolParserTokenTest extends Spr
     }
 
     @Override
-    SpreadsheetGroupingSeparatorSymbolParserToken createToken(final String value, final String text) {
-        return SpreadsheetGroupingSeparatorSymbolParserToken.with(value, text);
+    SpreadsheetGroupSeparatorSymbolParserToken createToken(final String value, final String text) {
+        return SpreadsheetGroupSeparatorSymbolParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetGroupingSeparatorSymbolParserToken createDifferentToken() {
-        return SpreadsheetGroupingSeparatorSymbolParserToken.with(this.text(), "different");
+    public SpreadsheetGroupSeparatorSymbolParserToken createDifferentToken() {
+        return SpreadsheetGroupSeparatorSymbolParserToken.with(this.text(), "different");
     }
 
     @Override
-    public Class<SpreadsheetGroupingSeparatorSymbolParserToken> type() {
-        return SpreadsheetGroupingSeparatorSymbolParserToken.class;
+    public Class<SpreadsheetGroupSeparatorSymbolParserToken> type() {
+        return SpreadsheetGroupSeparatorSymbolParserToken.class;
     }
 
     @Override
-    public SpreadsheetGroupingSeparatorSymbolParserToken unmarshall(final JsonNode from,
-                                                                    final JsonNodeUnmarshallContext context) {
-        return SpreadsheetParserToken.unmarshallGroupingSeparatorSymbol(from, context);
+    public SpreadsheetGroupSeparatorSymbolParserToken unmarshall(final JsonNode from,
+                                                                 final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallGroupSeparatorSymbol(from, context);
     }
 }
