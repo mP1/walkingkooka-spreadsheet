@@ -149,7 +149,7 @@ public class TestGwtTest extends GWTTestCase {
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
                     .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"))
                     .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"))
-                    .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, ',')
+                    .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, ',')
                     .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59))

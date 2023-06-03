@@ -466,7 +466,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void visit(final SpreadsheetGroupSeparatorSymbolParserToken token) {
         this.leafCharacter(
-                SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR,
+                SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
                 SpreadsheetParserToken::groupSeparatorSymbol
         );
     }

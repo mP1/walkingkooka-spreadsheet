@@ -352,7 +352,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     // @VisibleForTesting
     static final SpreadsheetMetadataPropertyName<Character>[] SWAPPABLE_PROPERTIES = new SpreadsheetMetadataPropertyName[]{
             SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
-            SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR,
+            SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
             SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
             SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
             SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
@@ -542,7 +542,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
      * <li>{@link SpreadsheetMetadataPropertyName#CURRENCY_SYMBOL}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DECIMAL_SEPARATOR}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#EXPONENT_SYMBOL}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#GROUPING_SEPARATOR}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#GROUP_SEPARATOR}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#NEGATIVE_SIGN}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#PERCENTAGE_SYMBOL}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#POSITIVE_SIGN}</li>

@@ -158,7 +158,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.parserContext(LocalDateTime::now)
         );
-        this.checkEquals("Required properties \"currency-symbol\", \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
+        this.checkEquals("Required properties \"currency-symbol\", \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"group-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
                 thrown.getMessage(),
                 "message");
     }
@@ -171,7 +171,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                         .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
                         .parserContext(LocalDateTime::now)
         );
-        this.checkEquals("Required properties \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
+        this.checkEquals("Required properties \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"group-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
                 thrown.getMessage(),
                 "message");
     }

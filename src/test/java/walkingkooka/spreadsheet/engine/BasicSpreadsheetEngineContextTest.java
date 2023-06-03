@@ -543,7 +543,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"default-year\": 1900,\n" +
                         "  \"exponent-symbol\": \"e\",\n" +
                         "  \"expression-number-kind\": \"DOUBLE\",\n" +
-                        "  \"grouping-separator\": \",\",\n" +
+                        "  \"group-separator\": \",\",\n" +
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
                         "  \"number-format-pattern\": \"#,##0.###\",\n" +
@@ -689,7 +689,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"default-year\": 1900,\n" +
                         "  \"exponent-symbol\": \"e\",\n" +
                         "  \"expression-number-kind\": \"DOUBLE\",\n" +
-                        "  \"grouping-separator\": \",\",\n" +
+                        "  \"group-separator\": \",\",\n" +
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
                         "  \"number-format-pattern\": \"#,##0.###\",\n" +
@@ -799,7 +799,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT)
-                .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, GROUPING)
+                .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUPING)
                 .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, MINUS)
                 .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, PLUS)
                 .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
