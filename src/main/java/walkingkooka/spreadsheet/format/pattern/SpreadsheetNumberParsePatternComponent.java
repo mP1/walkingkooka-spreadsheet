@@ -78,6 +78,13 @@ abstract class SpreadsheetNumberParsePatternComponent {
     }
 
     /**
+     * {@see SpreadsheetNumberParsePatternComponentGroupingSeparator}
+     */
+    static SpreadsheetNumberParsePatternComponent groupingSeparator() {
+        return SpreadsheetNumberParsePatternComponentGroupingSeparator.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetNumberParsePatternComponentPercent}
      */
     @SuppressWarnings("SameReturnValue")
@@ -90,13 +97,6 @@ abstract class SpreadsheetNumberParsePatternComponent {
      */
     static SpreadsheetNumberParsePatternComponent textLiteral(final String text) {
         return SpreadsheetNumberParsePatternComponentTextLiteral.with(text);
-    }
-
-    /**
-     * {@see SpreadsheetNumberParsePatternComponentThousandsSeparator}
-     */
-    static SpreadsheetNumberParsePatternComponent thousands() {
-        return SpreadsheetNumberParsePatternComponentThousandsSeparator.INSTANCE;
     }
 
     /**
