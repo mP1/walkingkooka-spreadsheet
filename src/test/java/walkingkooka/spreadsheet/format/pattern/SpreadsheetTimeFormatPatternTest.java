@@ -84,6 +84,11 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
+    public void testWithGroupingSeparatorFails() {
+        this.withInvalidCharacterFails(this.grouping());
+    }
+
+    @Test
     public void testWithPercentSymbolFails() {
         this.withInvalidCharacterFails(this.percentSymbol());
     }
@@ -91,11 +96,6 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     @Test
     public void testWithNumberFails() {
         this.withInvalidCharacterFails(this.number());
-    }
-
-    @Test
-    public void testWithThousandsFails() {
-        this.withInvalidCharacterFails(this.grouping());
     }
 
     @Test

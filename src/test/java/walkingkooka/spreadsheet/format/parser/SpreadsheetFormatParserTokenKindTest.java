@@ -600,17 +600,17 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     }
 
     @Test
-    public void testPatterns_PERCENT() {
+    public void testPatterns_GROUPING() {
         this.patternsParseAndCheck(
-                SpreadsheetFormatParserTokenKind.PERCENT,
+                SpreadsheetFormatParserTokenKind.GROUPING,
                 SpreadsheetPattern::parseNumberFormatPattern
         );
     }
 
     @Test
-    public void testPatterns_THOUSANDS() {
+    public void testPatterns_PERCENT() {
         this.patternsParseAndCheck(
-                SpreadsheetFormatParserTokenKind.GROUPING,
+                SpreadsheetFormatParserTokenKind.PERCENT,
                 SpreadsheetPattern::parseNumberFormatPattern
         );
     }

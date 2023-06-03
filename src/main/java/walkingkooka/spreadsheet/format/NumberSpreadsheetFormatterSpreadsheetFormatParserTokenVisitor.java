@@ -124,7 +124,7 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
 
     @Override
     protected void visit(final SpreadsheetFormatGroupingParserToken token) {
-        this.digitMode.thousands(this);
+        this.digitMode.grouping(this);
     }
 
     @Override
