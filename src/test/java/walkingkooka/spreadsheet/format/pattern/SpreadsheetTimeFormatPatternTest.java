@@ -85,7 +85,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
 
     @Test
     public void testWithGroupingSeparatorFails() {
-        this.withInvalidCharacterFails(this.grouping());
+        this.withInvalidCharacterFails(this.groupingSeparator());
     }
 
     @Test

@@ -368,7 +368,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+    protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
         this.add(token);
     }
 

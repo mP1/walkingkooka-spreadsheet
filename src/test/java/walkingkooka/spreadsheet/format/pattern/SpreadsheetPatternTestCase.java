@@ -165,8 +165,8 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
         return SpreadsheetFormatParserToken.textLiteral("@", "@");
     }
 
-    final SpreadsheetFormatParserToken grouping() {
-        return SpreadsheetFormatParserToken.grouping(",", ",");
+    final SpreadsheetFormatParserToken groupingSeparator() {
+        return SpreadsheetFormatParserToken.groupSeparator(",", ",");
     }
 
     final SpreadsheetFormatParserToken time() {

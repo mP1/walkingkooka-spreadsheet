@@ -94,7 +94,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
 
     @Test
     public void testWithGroupingFails() {
-        this.withInvalidCharacterFails(this.grouping());
+        this.withInvalidCharacterFails(this.groupingSeparator());
     }
 
     @Test

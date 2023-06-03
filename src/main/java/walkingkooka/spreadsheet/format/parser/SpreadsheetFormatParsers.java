@@ -369,8 +369,8 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             SpreadsheetFormatFractionSymbolParserToken.class);
 
     private static final Parser<SpreadsheetFormatParserContext> GROUPING = symbol(',',
-            SpreadsheetFormatParserToken::grouping,
-            SpreadsheetFormatGroupingParserToken.class);
+            SpreadsheetFormatParserToken::groupSeparator,
+            SpreadsheetFormatGroupSeparatorParserToken.class);
     private static final EbnfIdentifierName GROUPING_IDENTIFIER = EbnfIdentifierName.with("GROUPING");
 
     private static final EbnfIdentifierName PERCENTAGE_IDENTIFIER = EbnfIdentifierName.with("PERCENTAGE");

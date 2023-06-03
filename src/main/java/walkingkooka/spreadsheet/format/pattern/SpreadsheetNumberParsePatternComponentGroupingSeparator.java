@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
- * A {@link SpreadsheetNumberParsePatternComponent} that does not actually expect or consume the grouping character.
+ * A {@link SpreadsheetNumberParsePatternComponent} that does not actually expect or consume the groupingSeparator character.
  */
 final class SpreadsheetNumberParsePatternComponentGroupingSeparator extends SpreadsheetNumberParsePatternComponentNonDigit {
 

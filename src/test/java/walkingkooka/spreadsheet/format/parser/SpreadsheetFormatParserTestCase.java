@@ -235,8 +235,8 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.greaterThanEqualsSymbol(">=", ">=");
     }
 
-    static SpreadsheetFormatParserToken grouping() {
-        return SpreadsheetFormatParserToken.grouping(",", ",");
+    static SpreadsheetFormatParserToken groupingSeparator() {
+        return SpreadsheetFormatParserToken.groupSeparator(",", ",");
     }
 
     static SpreadsheetFormatParserToken hour() {

@@ -258,6 +258,13 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetFormatGroupSeparatorParserToken}
+     */
+    public static SpreadsheetFormatGroupSeparatorParserToken groupSeparator(final String value, final String text) {
+        return SpreadsheetFormatGroupSeparatorParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetFormatHourParserToken}
      */
     public static SpreadsheetFormatHourParserToken hour(final String value, final String text) {
@@ -381,13 +388,6 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
      */
     public static SpreadsheetFormatTextPlaceholderParserToken textPlaceholder(final String value, final String text) {
         return SpreadsheetFormatTextPlaceholderParserToken.with(value, text);
-    }
-
-    /**
-     * {@see SpreadsheetFormatGroupingParserToken}
-     */
-    public static SpreadsheetFormatGroupingParserToken grouping(final String value, final String text) {
-        return SpreadsheetFormatGroupingParserToken.with(value, text);
     }
 
     /**
@@ -690,10 +690,10 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetFormatGroupingParserToken} return true
+     * Only {@link SpreadsheetFormatGroupSeparatorParserToken} return true
      */
-    public final boolean isGrouping() {
-        return this instanceof SpreadsheetFormatGroupingParserToken;
+    public final boolean isGroupSeparator() {
+        return this instanceof SpreadsheetFormatGroupSeparatorParserToken;
     }
 
     /**
@@ -985,8 +985,8 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetFormatGroupingParserToken.class,
-                SpreadsheetFormatParserToken::unmarshallGrouping
+                SpreadsheetFormatGroupSeparatorParserToken.class,
+                SpreadsheetFormatParserToken::unmarshallGroupSeparator
         );
 
         registerLeafParserToken(
@@ -1228,12 +1228,12 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetFormatGroupingParserToken unmarshallGrouping(final JsonNode node,
-                                                                   final JsonNodeUnmarshallContext context) {
+    static SpreadsheetFormatGroupSeparatorParserToken unmarshallGroupSeparator(final JsonNode node,
+                                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallStringLeafParserToken(
                 node,
                 context,
-                SpreadsheetFormatParserToken::grouping
+                SpreadsheetFormatParserToken::groupSeparator
         );
     }
 

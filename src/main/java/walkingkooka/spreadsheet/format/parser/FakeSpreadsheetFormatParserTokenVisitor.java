@@ -355,7 +355,7 @@ public class FakeSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatPa
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGroupingParserToken token) {
+    protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
         throw new UnsupportedOperationException();
     }
 
