@@ -1120,8 +1120,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                .set(SpreadsheetMetadataPropertyName.namedColor(name1), color1)
-                .set(SpreadsheetMetadataPropertyName.namedColor(name2), color2)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(2), color1)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(4), color2)
+                .set(SpreadsheetMetadataPropertyName.namedColor(name1), 2)
+                .set(SpreadsheetMetadataPropertyName.namedColor(name2), 4)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
 
         Stream.of(name1, name2, SpreadsheetColorName.with("unknown"))
@@ -2233,9 +2235,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"color-7\": \"#000007\",\n" +
                 "  \"color-8\": \"#000008\",\n" +
                 "  \"color-9\": \"#000009\",\n" +
-                "  \"color-big\": \"#017d0000\",\n" +
-                "  \"color-medium\": \"#be8f75bf\",\n" +
-                "  \"color-small\": \"#87950706\",\n" +
+                "  \"color-big\": 1,\n" +
+                "  \"color-medium\": 2,\n" +
+                "  \"color-small\": 3,\n" +
                 "  \"create-date-time\": \"2000-12-31T12:58:59\",\n" +
                 "  \"creator\": \"creator@example.com\",\n" +
                 "  \"currency-symbol\": \"$AUD\",\n" +
@@ -2324,7 +2326,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         }
 
         Stream.of("big", "small", "medium")
-                .forEach(n -> properties.put(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with(n)), Color.fromArgb(n.hashCode())));
+                .forEach(
+                        n -> properties.put(
+                                SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with(n)),
+                                n.length()
+                        )
+                );
 
         final Set<SpreadsheetMetadataPropertyName<?>> missing = Sets.ordered();
         missing.addAll(SpreadsheetMetadataPropertyName.CONSTANTS.values());

@@ -22,12 +22,14 @@ import walkingkooka.naming.Name;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.text.CharSequences;
 
+import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 /**
  * The {@link Name} of metadata property for numbered colors.
  */
-final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMetadataPropertyNameColor {
+final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMetadataPropertyName<Color> {
 
     /**
      * Retrieves a {@link SpreadsheetMetadataPropertyNameNumberedColor} for a numbered {@link Color}.
@@ -71,6 +73,43 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     }
 
     final int number;
+
+    @Override
+    Color checkValue0(final Object value) {
+        return this.checkValueType(
+                value,
+                v -> v instanceof Color
+        );
+    }
+
+    @Override
+    String expected() {
+        return Color.class.getSimpleName();
+    }
+
+    @Override
+    Optional<Color> extractLocaleValue(final Locale locale) {
+        return Optional.empty(); // colours are not Locale aware
+    }
+
+    @Override
+    Class<Color> type() {
+        return Color.class;
+    }
+
+    // parseValue.......................................................................................................
+
+    @Override
+    public boolean isParseValueSupported() {
+        return true;
+    }
+
+    @Override
+    public Color parseValue0(final String value) {
+        return Color.parse(value);
+    }
+
+    // SpreadsheetMetadataVisitor.......................................................................................
 
     @Override
     void accept(final Color value,

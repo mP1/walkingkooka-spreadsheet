@@ -41,10 +41,15 @@ public final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitorTest 
         visitor.accept(
                 SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
-                        .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("apple")), Color.fromRgb(0x112233))
-                        .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("banana")), Color.fromRgb(0xffeedd))
+                        .set(SpreadsheetMetadataPropertyName.numberedColor(1), Color.parse("#123456"))
+                        .set(SpreadsheetMetadataPropertyName.numberedColor(2), Color.parse("#89abcd"))
+                        .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("apple")), 1)
+                        .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("banana")), 2)
         );
-        this.toStringAndCheck(visitor, "{apple=#112233, banana=#ffeedd}");
+        this.toStringAndCheck(
+                visitor,
+                "{apple=#123456, banana=#89abcd}"
+        );
     }
 
     @Override
