@@ -49,7 +49,7 @@ enum NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorDigitMode {
         }
 
         @Override
-        void grouping(final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
+        void groupSeparator(final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
             visitor.comma++;
         }
     },
@@ -75,7 +75,7 @@ enum NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorDigitMode {
         }
 
         @Override
-        void grouping(final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
+        void groupSeparator(final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
             visitor.thousandsDivider = true;
         }
     },
@@ -101,7 +101,7 @@ enum NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorDigitMode {
         }
 
         @Override
-        void grouping(final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
+        void groupSeparator(final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
             visitor.thousandsDivider = true;
         }
     };
@@ -113,5 +113,5 @@ enum NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorDigitMode {
     abstract void exponent(final SpreadsheetFormatExponentParserToken token,
                            final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor);
 
-    abstract void grouping(final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor);
+    abstract void groupSeparator(final NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor);
 }

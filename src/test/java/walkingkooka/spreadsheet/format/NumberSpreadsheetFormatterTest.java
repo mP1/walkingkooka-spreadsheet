@@ -2121,7 +2121,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
         );
     }
 
-    // grouping multiplier .........................................................................................
+    // groupSeparator multiplier .........................................................................................
 
     @Test
     public void testGroupSeparatorDividerDigitComma0() {
