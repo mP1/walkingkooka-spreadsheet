@@ -442,7 +442,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         return SpreadsheetParserToken.exponentSymbol("" + EXPONENT, "" + EXPONENT);
     }
 
-    static SpreadsheetGroupSeparatorSymbolParserToken groupingSymbol() {
+    static SpreadsheetGroupSeparatorSymbolParserToken groupSymbol() {
         return SpreadsheetParserToken.groupSeparatorSymbol(
                 "" + GROUP_SEPARATOR,
                 "" + GROUP_SEPARATOR

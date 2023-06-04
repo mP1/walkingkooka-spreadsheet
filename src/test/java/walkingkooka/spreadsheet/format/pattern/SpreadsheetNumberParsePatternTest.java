@@ -433,7 +433,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                 "#",
                 "1" + GROUP_SEPARATOR + "5",
                 digit1(),
-                groupingSymbol(),
+                groupSymbol(),
                 digit5()
         );
     }
