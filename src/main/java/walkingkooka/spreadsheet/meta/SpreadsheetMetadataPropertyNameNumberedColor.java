@@ -34,7 +34,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
      */
     static SpreadsheetMetadataPropertyNameNumberedColor withNumber(final int number) {
         if (number < SpreadsheetColors.MIN) {
-            throw new IllegalArgumentException("Number " + number + " < 0");
+            throw new IllegalArgumentException("color number " + number + " < " + SpreadsheetColors.MIN);
         }
 
         return number < SpreadsheetColors.MAX ?

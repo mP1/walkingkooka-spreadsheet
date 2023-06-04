@@ -30,8 +30,42 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameNumberedColor, Color> {
 
     @Test
-    public void testWithNumberFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetMetadataPropertyName.numberedColor(-1));
+    public void testWithNumberLessThanMinFails() {
+        this.withFails(
+                SpreadsheetColors.MIN - 1,
+                "color number 0 < 1"
+        );
+    }
+
+//    @Test
+//    public void testWithNumberGreaterThanMaxFails() {
+//        this.withFails(
+//                SpreadsheetColors.MAX + 1,
+//                "XX"
+//        );
+//    }
+
+    private void withFails(final int value,
+                           final String message) {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetMetadataPropertyName.numberedColor(value)
+        );
+        this.checkEquals(
+                message,
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testWithNumberMin() {
+        SpreadsheetMetadataPropertyNameNumberedColor.withNumber(SpreadsheetColors.MIN);
+    }
+
+    @Test
+    public void testWithNumberMax() {
+        SpreadsheetMetadataPropertyNameNumberedColor.withNumber(SpreadsheetColors.MIN);
     }
 
     @Test
