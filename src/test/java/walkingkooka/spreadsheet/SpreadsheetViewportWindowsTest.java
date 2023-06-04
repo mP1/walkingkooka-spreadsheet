@@ -59,6 +59,48 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
     }
 
     @Test
+    public void testWithOverlappingRangesFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetViewportWindows.parse("A1:B2,A1:C3")
+        );
+
+        this.checkEquals(
+                "Window cell-ranges overlap A1:B2 and A1:C3",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testWithOverlappingRangesFails2() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetViewportWindows.parse("A1:B2,C4,B2:C3")
+        );
+
+        this.checkEquals(
+                "Window cell-ranges overlap A1:B2 and B2:C3",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testWithOverlappingRangesFails3() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetViewportWindows.parse("A1:B2,C3:D4,E5,C3:C4")
+        );
+
+        this.checkEquals(
+                "Window cell-ranges overlap C3:C4 and C3:D4",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
     public void testWith() {
         final Set<SpreadsheetCellRange> cellRanges = Sets.of(
                 SpreadsheetSelection.parseCellRange("A1:C3")

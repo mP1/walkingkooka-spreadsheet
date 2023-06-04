@@ -38,7 +38,6 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -75,11 +74,11 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
         return windows.length() == 0 ?
                 EMPTY :
                 new SpreadsheetViewportWindows(
-                        Sets.immutable(
+                        overlapCheckAndCreate(
                                 Arrays.stream(
                                                 windows.split(SEPARATOR.string())
                                         ).map(SpreadsheetSelection::parseCellRange)
-                                        .collect(Collectors.toCollection(Sets::sorted))
+                                        .toArray(SpreadsheetCellRange[]::new)
                         )
                 );
     }
@@ -87,20 +86,43 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
     public static SpreadsheetViewportWindows with(final Set<SpreadsheetCellRange> cellRanges) {
         Objects.requireNonNull(cellRanges, "cellRanges");
 
-        final Set<SpreadsheetCellRange> copy = Sets.immutable(
-                cellRanges instanceof SortedSet ?
-                        cellRanges :
-                        copy(cellRanges)
-        );
+        final Set<SpreadsheetCellRange> copy = copy(cellRanges);
         return copy.isEmpty() ?
                 EMPTY :
                 new SpreadsheetViewportWindows(copy);
     }
 
+    /**
+     * While taking a copy of the given {@link Set} test if there are any overlapping {@link SpreadsheetCellRange}.
+     */
     private static Set<SpreadsheetCellRange> copy(final Set<SpreadsheetCellRange> cellRanges) {
-        final Set<SpreadsheetCellRange> copy = Sets.sorted();
-        copy.addAll(cellRanges);
-        return copy;
+        return overlapCheckAndCreate(cellRanges.toArray(
+                        new SpreadsheetCellRange[
+                                cellRanges.size()
+                                ]
+                )
+        );
+    }
+
+    /**
+     * Assumes the ranges have been copied, and checks that there are no overlaps.
+     */
+    private static Set<SpreadsheetCellRange> overlapCheckAndCreate(final SpreadsheetCellRange[] cellRanges) {
+        Arrays.sort(cellRanges);
+        final int count = cellRanges.length;
+
+        for (int i = 0; i < count; i++) {
+            final SpreadsheetCellRange first = cellRanges[i];
+
+            for (int j = i + 1; j < count; j++) {
+                final SpreadsheetCellRange other = cellRanges[j];
+                if (first.testCellRange(other)) {
+                    throw new IllegalArgumentException("Window cell-ranges overlap " + first + " and " + other);
+                }
+            }
+        }
+
+        return Sets.of(cellRanges);
     }
 
     private SpreadsheetViewportWindows(final Set<SpreadsheetCellRange> cellRanges) {
