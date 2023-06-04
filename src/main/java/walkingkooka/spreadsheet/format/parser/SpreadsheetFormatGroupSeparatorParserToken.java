@@ -42,7 +42,7 @@ public final class SpreadsheetFormatGroupSeparatorParserToken extends Spreadshee
 
     @Override
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
-        return SpreadsheetFormatParserTokenKind.GROUPING.asOptional;
+        return SpreadsheetFormatParserTokenKind.GROUP_SEPARATOR.asOptional;
     }
 
     // equals...........................................................................................................

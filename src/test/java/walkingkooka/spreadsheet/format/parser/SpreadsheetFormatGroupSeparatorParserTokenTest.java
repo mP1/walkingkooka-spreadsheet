@@ -72,7 +72,7 @@ public final class SpreadsheetFormatGroupSeparatorParserTokenTest extends Spread
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.GROUPING
+                SpreadsheetFormatParserTokenKind.GROUP_SEPARATOR
         );
     }
 
