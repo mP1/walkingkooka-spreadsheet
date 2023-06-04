@@ -799,7 +799,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT)
-                .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUPING)
+                .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, MINUS)
                 .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, PLUS)
                 .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
@@ -954,7 +954,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     final static String CURRENCY = "CURR";
     final static char DECIMAL = '.';
     final static String EXPONENT = "e";
-    final static char GROUPING = ',';
+    final static char GROUP_SEPARATOR = ',';
     final static char MINUS = '!';
     final static char PERCENT = '#';
     final static char PLUS = '@';
@@ -965,7 +965,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 CURRENCY,
                 DECIMAL,
                 EXPONENT,
-                GROUPING,
+                GROUP_SEPARATOR,
                 MINUS,
                 PERCENT,
                 PLUS,
