@@ -79,7 +79,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     final static String CURRENCY = "NZ$";
     final static char DECIMAL = 'd';
     final static String EXPONENT = "XP";
-    final static char GROUPING = 'g';
+    final static char GROUP_SEPARATOR = 'g';
     final static char MINUS = 'm';
     final static char PERCENT = 'q';
     final static char PLUS = 'p';
@@ -360,7 +360,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
             @Override
             public char groupSeparator() {
-                return GROUPING;
+                return GROUP_SEPARATOR;
             }
 
             @Override
@@ -444,8 +444,8 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     static SpreadsheetGroupSeparatorSymbolParserToken groupingSymbol() {
         return SpreadsheetParserToken.groupSeparatorSymbol(
-                "" + GROUPING,
-                "" + GROUPING
+                "" + GROUP_SEPARATOR,
+                "" + GROUP_SEPARATOR
         );
     }
 

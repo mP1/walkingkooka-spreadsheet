@@ -334,7 +334,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         predefined.put(DIGIT_SPACE_IDENTIFIER, DIGIT_SPACE);
         predefined.put(DIGIT_ZERO_IDENTIFIER, DIGIT_ZERO);
         predefined.put(FRACTION_SYMBOL_IDENTIFIER, FRACTION_SYMBOL);
-        predefined.put(GROUPING_IDENTIFIER, GROUPING);
+        predefined.put(GROUP_SEPARATOR_IDENTIFIER, GROUP_SEPARATOR);
         predefined.put(PERCENTAGE_IDENTIFIER, PERCENTAGE);
     }
 
@@ -368,10 +368,10 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             SpreadsheetFormatParserToken::fractionSymbol,
             SpreadsheetFormatFractionSymbolParserToken.class);
 
-    private static final Parser<SpreadsheetFormatParserContext> GROUPING = symbol(',',
+    private static final Parser<SpreadsheetFormatParserContext> GROUP_SEPARATOR = symbol(',',
             SpreadsheetFormatParserToken::groupSeparator,
             SpreadsheetFormatGroupSeparatorParserToken.class);
-    private static final EbnfIdentifierName GROUPING_IDENTIFIER = EbnfIdentifierName.with("GROUPING");
+    private static final EbnfIdentifierName GROUP_SEPARATOR_IDENTIFIER = EbnfIdentifierName.with("GROUP_SEPARATOR");
 
     private static final EbnfIdentifierName PERCENTAGE_IDENTIFIER = EbnfIdentifierName.with("PERCENTAGE");
     private static final Parser<SpreadsheetFormatParserContext> PERCENTAGE = symbol('%',

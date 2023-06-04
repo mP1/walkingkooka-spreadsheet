@@ -162,50 +162,50 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     }
 
     @Test
-    public void testParseGroupingAfterDecimalFails() {
+    public void testParseGroupSeparatorAfterDecimalFails() {
         this.parseFails2(
                 "$ #.00",
-                "1" + DECIMAL + GROUPING + "23"
+                "1" + DECIMAL + GROUP_SEPARATOR + "23"
         );
     }
 
     @Test
-    public void testParseGroupingAfterDecimalFails2() {
+    public void testParseGroupSeparatorAfterDecimalFails2() {
         this.parseFails2(
                 "$ #.00",
-                "1" + DECIMAL + "2" + GROUPING + "3"
+                "1" + DECIMAL + "2" + GROUP_SEPARATOR + "3"
         );
     }
 
     @Test
-    public void testParseGroupingWithinExponentFails() {
+    public void testParseGroupSeparatorWithinExponentFails() {
         this.parseFails2(
                 "$ #.00",
-                "1" + DECIMAL + EXPONENT + GROUPING + "23"
+                "1" + DECIMAL + EXPONENT + GROUP_SEPARATOR + "23"
         );
     }
 
     @Test
-    public void testParseGroupingWithinExponentFails2() {
+    public void testParseGroupSeparatorWithinExponentFails2() {
         this.parseFails2(
                 "$ #.00",
-                "1" + DECIMAL + EXPONENT + GROUPING + PLUS + "23"
+                "1" + DECIMAL + EXPONENT + GROUP_SEPARATOR + PLUS + "23"
         );
     }
 
     @Test
-    public void testParseGroupingWithinExponentFails3() {
+    public void testParseGroupSeparatorWithinExponentFails3() {
         this.parseFails2(
                 "$ #.00",
-                "1" + DECIMAL + EXPONENT + GROUPING + MINUS + "23"
+                "1" + DECIMAL + EXPONENT + GROUP_SEPARATOR + MINUS + "23"
         );
     }
 
     @Test
-    public void testParseGroupingWithinExponentFails4() {
+    public void testParseGroupSeparatorWithinExponentFails4() {
         this.parseFails2(
                 "$ #.00",
-                "1" + DECIMAL + "2" + EXPONENT + "2" + GROUPING + "3"
+                "1" + DECIMAL + "2" + EXPONENT + "2" + GROUP_SEPARATOR + "3"
         );
     }
 
@@ -431,7 +431,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     public void testParseIncludesGroupSeparator() {
         this.parseAndCheck2(
                 "#",
-                "1" + GROUPING + "5",
+                "1" + GROUP_SEPARATOR + "5",
                 digit1(),
                 groupingSymbol(),
                 digit5()

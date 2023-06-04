@@ -2104,7 +2104,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
-    public void testGroupSeparatorGrouping1234567() {
+    public void testGroupSeparatorGroupSeparator1234567() {
         this.parseFormatAndCheck(
                 "#,0",
                 1234567,

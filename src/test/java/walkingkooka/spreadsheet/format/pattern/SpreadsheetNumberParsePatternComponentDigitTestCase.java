@@ -33,14 +33,14 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     // grouping.............................................................................................................
 
     @Test
-    public final void testIntegerOrSignGrouping() {
+    public final void testIntegerOrSignGroupSeparator() {
         this.groupAndCheck(
                 SpreadsheetNumberParsePatternComponentDigitMode.INTEGER_OR_SIGN
         );
     }
 
     @Test
-    public final void testIntegerGrouping() {
+    public final void testIntegerGroupSeparator() {
         this.groupAndCheck(
                 SpreadsheetNumberParsePatternComponentDigitMode.INTEGER
         );
@@ -59,28 +59,28 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
     }
 
     @Test
-    public final void testDecimalFirstGrouping() {
+    public final void testDecimalFirstGroupSeparator() {
         this.groupAndCheck2(
                 SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST
         );
     }
 
     @Test
-    public final void testDecimalNotFirstGrouping() {
+    public final void testDecimalNotFirstGroupSeparator() {
         this.groupAndCheck2(
                 SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
-    public final void testExponentOrSignGrouping() {
+    public final void testExponentOrSignGroupSeparator() {
         this.groupAndCheck2(
                 SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START
         );
     }
 
     @Test
-    public final void testExponentGrouping() {
+    public final void testExponentGroupSeparator() {
         this.groupAndCheck2(
                 SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
         );
