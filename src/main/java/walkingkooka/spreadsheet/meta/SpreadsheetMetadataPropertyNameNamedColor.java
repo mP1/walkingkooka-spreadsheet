@@ -17,14 +17,13 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 
 /**
  * The {@link Name} of metadata property, with a custom handler and visitor to handle dispatching to a {@link SpreadsheetMetadataVisitor} method.
  */
-final class SpreadsheetMetadataPropertyNameNamedColor extends SpreadsheetMetadataPropertyNameColor {
+final class SpreadsheetMetadataPropertyNameNamedColor extends SpreadsheetMetadataPropertyNameInteger {
 
     /**
      * Factory used to create a new {@link SpreadsheetMetadataPropertyNameNamedColor} constant.
@@ -42,15 +41,29 @@ final class SpreadsheetMetadataPropertyNameNamedColor extends SpreadsheetMetadat
     }
 
     @Override
-    void accept(final Color value,
+    Integer checkValue0(final Object value) {
+        final int colorNumber = this.checkValueTypeInteger(value);
+        try {
+            SpreadsheetMetadataPropertyName.numberedColor(colorNumber);
+        } catch (final Exception cause) {
+            throw new SpreadsheetMetadataPropertyValueException(
+                    cause.getMessage(),
+                    this,
+                    value,
+                    cause
+            );
+        }
+        return colorNumber;
+    }
+
+    @Override
+    void accept(final Integer value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitNamedColor(this.name, value);
+        visitor.visitNamedColor(
+                this.name,
+                value
+        );
     }
 
     final SpreadsheetColorName name;
-
-    @Override
-    String compareToName() {
-        return this.value();
-    }
 }

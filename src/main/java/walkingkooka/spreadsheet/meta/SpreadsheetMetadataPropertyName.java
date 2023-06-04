@@ -296,9 +296,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     static final String COLOR_PREFIX = "color-";
 
     /**
-     * Retrieves a {@link SpreadsheetMetadataPropertyName} for a {@link SpreadsheetColorName named} {@link Color}.
+     * Retrieves a {@link SpreadsheetMetadataPropertyName} for a {@link SpreadsheetColorName named}.
      */
-    public static SpreadsheetMetadataPropertyName<Color> namedColor(final SpreadsheetColorName name) {
+    public static SpreadsheetMetadataPropertyName<Integer> namedColor(final SpreadsheetColorName name) {
         return SpreadsheetMetadataPropertyNameNamedColor.withColorName(name);
     }
 

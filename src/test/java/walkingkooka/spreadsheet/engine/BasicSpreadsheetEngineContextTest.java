@@ -525,14 +525,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-54\": \"#993366\",\n" +
                         "  \"color-55\": \"#333399\",\n" +
                         "  \"color-56\": \"#333333\",\n" +
-                        "  \"color-Black\": \"#000000\",\n" +
-                        "  \"color-Blue\": \"#0000ff\",\n" +
-                        "  \"color-Cyan\": \"#00ffff\",\n" +
-                        "  \"color-Green\": \"#00ff00\",\n" +
-                        "  \"color-Magenta\": \"#ff00ff\",\n" +
-                        "  \"color-Red\": \"#ff0000\",\n" +
-                        "  \"color-White\": \"#ffffff\",\n" +
-                        "  \"color-Yellow\": \"#ffff00\",\n" +
+                        "  \"color-Black\": 1,\n" +
+                        "  \"color-Blue\": 5,\n" +
+                        "  \"color-Cyan\": 8,\n" +
+                        "  \"color-Green\": 4,\n" +
+                        "  \"color-Magenta\": 7,\n" +
+                        "  \"color-Red\": 3,\n" +
+                        "  \"color-White\": 2,\n" +
+                        "  \"color-Yellow\": 6,\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
                         "  \"date-format-pattern\": \"dddd, d mmmm yyyy\",\n" +
                         "  \"date-parse-pattern\": \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
@@ -671,14 +671,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-54\": \"#000036\",\n" +
                         "  \"color-55\": \"#000037\",\n" +
                         "  \"color-56\": \"#000038\",\n" +
-                        "  \"color-Black\": \"#000000\",\n" +
-                        "  \"color-Blue\": \"#0000ff\",\n" +
-                        "  \"color-Cyan\": \"#00ffff\",\n" +
-                        "  \"color-Green\": \"#00ff00\",\n" +
-                        "  \"color-Magenta\": \"#ff00ff\",\n" +
-                        "  \"color-Red\": \"#ff0000\",\n" +
-                        "  \"color-White\": \"#ffffff\",\n" +
-                        "  \"color-Yellow\": \"#ffff00\",\n" +
+                        "  \"color-Black\": 1,\n" +
+                        "  \"color-Blue\": 5,\n" +
+                        "  \"color-Cyan\": 8,\n" +
+                        "  \"color-Green\": 4,\n" +
+                        "  \"color-Magenta\": 7,\n" +
+                        "  \"color-Red\": 3,\n" +
+                        "  \"color-White\": 2,\n" +
+                        "  \"color-Yellow\": 6,\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
                         "  \"date-format-pattern\": \"dddd, d mmmm yyyy\",\n" +
                         "  \"date-parse-pattern\": \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +

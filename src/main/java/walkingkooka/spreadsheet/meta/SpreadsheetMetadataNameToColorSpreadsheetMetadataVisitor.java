@@ -20,8 +20,10 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.visit.Visiting;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * A {@link SpreadsheetMetadataVisitor} that fills a {@link Map} of all present named {@link Color colors}.
@@ -39,9 +41,26 @@ final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor extends Spr
     }
 
     @Override
-    protected void visitNamedColor(final SpreadsheetColorName name, final Color color) {
-        this.colors.put(name, color);
+    protected Visiting startVisit(final SpreadsheetMetadata metadata) {
+        this.metadata = metadata;
+        return super.startVisit(metadata);
     }
+
+    @Override
+    protected void visitNamedColor(final SpreadsheetColorName name,
+                                   final int colorNumber) {
+        final Optional<Color> color = this.metadata.get(
+                SpreadsheetMetadataPropertyName.numberedColor(colorNumber)
+        );
+        if (null != color && color.isPresent()) {
+            this.colors.put(
+                    name,
+                    color.get()
+            );
+        }
+    }
+
+    private SpreadsheetMetadata metadata;
 
     private final Map<SpreadsheetColorName, Color> colors = Maps.ordered();
 

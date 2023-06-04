@@ -315,14 +315,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     @Test
     public void testVisitNamedColor() {
         final SpreadsheetColorName name = SpreadsheetColorName.with("shiny");
+        final int colorNumber = 23;
 
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitNamedColor(final SpreadsheetColorName n, final Color c) {
+            protected void visitNamedColor(final SpreadsheetColorName n,
+                                           final int c) {
                 checkEquals(name, n, "name");
                 this.visited = c;
             }
-        }.accept(SpreadsheetMetadataPropertyName.namedColor(name), this.color());
+        }.accept(
+                SpreadsheetMetadataPropertyName.namedColor(name),
+                colorNumber
+        );
     }
 
     @Test

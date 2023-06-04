@@ -18,15 +18,12 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataPropertyNameNamedColorTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameNamedColor, Color> {
+public final class SpreadsheetMetadataPropertyNameNamedColorTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameNamedColor> {
 
     @Test
     public void testWithNullFails() {
@@ -41,8 +38,11 @@ public final class SpreadsheetMetadataPropertyNameNamedColorTest extends Spreads
     }
 
     @Test
-    public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+    public void testColorNumberZeroFails() {
+        this.checkValueFails(
+                0,
+                "color number 0 < 1, but got 0 for \"color-dull\""
+        );
     }
 
     @Test
@@ -57,16 +57,6 @@ public final class SpreadsheetMetadataPropertyNameNamedColorTest extends Spreads
     @Override
     SpreadsheetMetadataPropertyNameNamedColor createName() {
         return SpreadsheetMetadataPropertyNameNamedColor.withColorName(SpreadsheetColorName.with("dull"));
-    }
-
-    @Override
-    Color propertyValue() {
-        return Color.parse("#123abc");
-    }
-
-    @Override
-    String propertyValueType() {
-        return Color.class.getSimpleName();
     }
 
     @Override

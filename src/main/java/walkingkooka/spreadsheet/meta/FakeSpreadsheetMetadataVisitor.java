@@ -170,7 +170,8 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitNamedColor(final SpreadsheetColorName name, final Color color) {
+    protected void visitNamedColor(final SpreadsheetColorName name,
+                                   final int colorNumber) {
         throw new UnsupportedOperationException();
     }
 

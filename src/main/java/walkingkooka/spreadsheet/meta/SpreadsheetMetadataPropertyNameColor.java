@@ -19,9 +19,6 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
 
-import java.util.Locale;
-import java.util.Optional;
-
 /**
  * A property that holds a {@link Color} value.
  */
@@ -34,36 +31,4 @@ abstract class SpreadsheetMetadataPropertyNameColor extends SpreadsheetMetadataP
         super(name);
     }
 
-    @Override
-    final Color checkValue0(final Object value) {
-        return this.checkValueType(value,
-                v -> v instanceof Color);
-    }
-
-    @Override
-    final String expected() {
-        return Color.class.getSimpleName();
-    }
-
-    @Override
-    final Optional<Color> extractLocaleValue(final Locale locale) {
-        return Optional.empty(); // colours are not Locale aware
-    }
-
-    @Override
-    final Class<Color> type() {
-        return Color.class;
-    }
-
-    // parseValue.......................................................................................................
-
-    @Override
-    public final boolean isParseValueSupported() {
-        return true;
-    }
-
-    @Override
-    public final Color parseValue0(final String value) {
-        return Color.parse(value);
-    }
 }

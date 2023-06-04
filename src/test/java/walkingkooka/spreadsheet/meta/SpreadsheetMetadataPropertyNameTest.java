@@ -90,7 +90,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Test
     public void testWithColorName() {
-        final Color color = Color.fromRgb(0);
+        final int colorNumber = 12;
 
         Stream.of("big", "medium", "small")
                 .forEach(i -> {
@@ -99,7 +99,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                             this.checkEquals(SpreadsheetMetadataPropertyNameNamedColor.class, propertyName.getClass(), "class name");
                             this.checkEquals(value, propertyName.value(), "value");
 
-                            propertyName.checkValue(color);
+                    propertyName.checkValue(colorNumber);
                         }
                 );
     }

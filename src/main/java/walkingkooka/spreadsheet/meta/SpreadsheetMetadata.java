@@ -408,7 +408,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     public abstract Function<SpreadsheetColorName, Optional<Color>> nameToColor();
 
     /**
-     * Lazy factory.
+     * Lazy factory that maps a {@link SpreadsheetColorName} to its eventual color number and then its {@link Color}.
      */
     final Function<SpreadsheetColorName, Optional<Color>> nameToColor0() {
         return SpreadsheetMetadataColorFunction.with(SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor.nameToColorMap(this));
@@ -422,7 +422,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     public abstract Function<Integer, Optional<Color>> numberToColor();
 
     /**
-     * Lazy factory that creates a {@link Function}.
+     * Lazy factory that creates a {@link Function} that maps an integer to a {@link Color}
      */
     final Function<Integer, Optional<Color>> numberToColor0() {
         return SpreadsheetMetadataColorFunction.with(SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor.numberToColorMap(this));
