@@ -484,12 +484,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character comma = ',';
 
         this.setAndCheck(
                 this.createSpreadsheetMetadata(decimalSeparator, dot),
-                grouping,
+                groupSeparator,
                 comma,
                 "{\n" +
                         "  \"decimal-separator\": \".\",\n" +
@@ -503,14 +503,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character comma = ',';
 
         final SpreadsheetMetadataPropertyName<Character> positive = SpreadsheetMetadataPropertyName.POSITIVE_SIGN;
         final Character plus = '+';
 
         this.setAndCheck(
-                this.createSpreadsheetMetadata(decimalSeparator, dot, grouping, comma),
+                this.createSpreadsheetMetadata(decimalSeparator, dot, groupSeparator, comma),
                 positive,
                 plus,
                 "{\n" +
@@ -523,13 +523,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSetNewPropetyGroupseparatorAndValueSeparatorWithSameValue() {
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character dot = '.';
 
         final SpreadsheetMetadataPropertyName<Character> value = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
 
         this.setAndCheck(
-                this.createSpreadsheetMetadata(grouping, dot),
+                this.createSpreadsheetMetadata(groupSeparator, dot),
                 value,
                 dot,
                 "{\n" +
@@ -544,11 +544,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
 
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> this.createSpreadsheetMetadata(decimalSeparator, dot).set(grouping, dot)
+                () -> this.createSpreadsheetMetadata(decimalSeparator, dot).set(groupSeparator, dot)
         );
 
         this.checkEquals("Cannot set group-separator='.' duplicate of decimal-separator", thrown.getMessage(), "thrown message");
@@ -571,14 +571,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSetPropertyCharacterGroupseparatorAndValueSeparator() {
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character dot = '.';
 
         final SpreadsheetMetadataPropertyName<Character> value = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
         final Character comma = ',';
 
         this.setAndCheck(
-                this.createSpreadsheetMetadata(grouping, dot, value, comma),
+                this.createSpreadsheetMetadata(groupSeparator, dot, value, comma),
                 value,
                 dot,
                 "{\n" +
@@ -593,12 +593,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character comma = ',';
 
         this.setAndCheck(
-                this.createSpreadsheetMetadata(decimalSeparator, dot, grouping, comma),
-                grouping,
+                this.createSpreadsheetMetadata(decimalSeparator, dot, groupSeparator, comma),
+                groupSeparator,
                 dot,
                 "{\n" +
                         "  \"decimal-separator\": \",\",\n" +
@@ -631,7 +631,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character comma = ',';
 
         final SpreadsheetMetadataPropertyName<Character> positive = SpreadsheetMetadataPropertyName.POSITIVE_SIGN;
@@ -640,10 +640,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.setAndCheck(
                 this.createSpreadsheetMetadata(
                         decimalSeparator, dot,
-                        grouping, comma,
+                        groupSeparator, comma,
                         positive, plus
                 ),
-                grouping,
+                groupSeparator,
                 dot,
                 "{\n" +
                         "  \"decimal-separator\": \",\",\n" +
@@ -658,7 +658,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character comma = ',';
 
         final SpreadsheetMetadataPropertyName<Character> positive = SpreadsheetMetadataPropertyName.POSITIVE_SIGN;
@@ -667,10 +667,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.setAndCheck(
                 this.createSpreadsheetMetadata(
                         decimalSeparator, dot,
-                        grouping, comma,
+                        groupSeparator, comma,
                         positive, plus
                 ),
-                grouping,
+                groupSeparator,
                 dot,
                 "{\n" +
                         "  \"decimal-separator\": \",\",\n" +
@@ -685,7 +685,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character comma = ',';
 
         final SpreadsheetMetadataPropertyName<Character> positive = SpreadsheetMetadataPropertyName.POSITIVE_SIGN;
@@ -693,32 +693,32 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         // start
         //  decimal=dot
-        //  grouping=comma
+        //  groupSeparator=comma
         //  positive=plus
 
         // set decimal=comma
         //  decimal=comma
-        //  grouping=dot (swap with decimal)
+        //  groupSeparator=dot (swap with decimal)
         //  positive=plus
 
-        // set grouping=plus
+        // set groupSeparator=plus
         //  decimal=comma
-        //  grouping=plus
+        //  groupSeparator=plus
         //  positive=dot
 
         this.checkEquals(
                 this.createSpreadsheetMetadata(
                         decimalSeparator, comma,
-                        grouping, plus,
+                        groupSeparator, plus,
                         positive, dot
                 ),
                 this.createSpreadsheetMetadata(
                                 decimalSeparator, dot,
-                                grouping, comma,
+                                groupSeparator, comma,
                                 positive,
                                 plus
-                ).set(decimalSeparator, comma)
-                        .set(grouping, plus)
+                        ).set(decimalSeparator, comma)
+                        .set(groupSeparator, plus)
         );
     }
 
@@ -727,10 +727,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character comma = ',';
 
-        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(grouping, comma);
+        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(groupSeparator, comma);
 
         this.setAndCheck(
                 this.createSpreadsheetMetadata(decimalSeparator, dot).setDefaults(defaults),
@@ -751,12 +751,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character comma = ',';
 
         final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(
                 decimalSeparator, dot,
-                grouping, comma
+                groupSeparator, comma
         );
 
         this.setAndCheck(
@@ -782,10 +782,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character comma = ',';
 
-        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(decimalSeparator, dot, grouping, comma);
+        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(decimalSeparator, dot, groupSeparator, comma);
 
         this.setAndCheck(
                 this.createSpreadsheetMetadata(creator, email).setDefaults(defaults),
@@ -811,14 +811,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
         final Character dot = '.';
 
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final Character comma = ',';
 
-        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(decimalSeparator, dot, grouping, comma);
+        final SpreadsheetMetadata defaults = this.createSpreadsheetMetadata(decimalSeparator, dot, groupSeparator, comma);
 
         this.setAndCheck(
                 this.createSpreadsheetMetadata(creator, email).setDefaults(defaults),
-                grouping,
+                groupSeparator,
                 dot,
                 "{\n" +
                         "  \"_defaults\": {\n" +
@@ -834,11 +834,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSetDefaultAgain() {
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final SpreadsheetMetadataPropertyName<Character> percent = SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL;
         final SpreadsheetMetadataPropertyName<Character> value = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
 
-        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(grouping, ',').set(percent, '%').set(value, ',');
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(groupSeparator, ',').set(percent, '%').set(value, ',');
 
         this.setAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
                 percent,
@@ -855,14 +855,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSetDefaultGroupseparatorAgain() {
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final SpreadsheetMetadataPropertyName<Character> percent = SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL;
         final SpreadsheetMetadataPropertyName<Character> value = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
 
-        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(grouping, ',').set(percent, '%').set(value, ',');
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(groupSeparator, ',').set(percent, '%').set(value, ',');
 
         this.setAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
-                grouping,
+                groupSeparator,
                 ',',
                 "{\n" +
                         "  \"_defaults\": {\n" +
@@ -876,11 +876,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSetDefaultValueSeparatorAgain() {
-        final SpreadsheetMetadataPropertyName<Character> grouping = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
+        final SpreadsheetMetadataPropertyName<Character> groupSeparator = SpreadsheetMetadataPropertyName.GROUP_SEPARATOR;
         final SpreadsheetMetadataPropertyName<Character> percent = SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL;
         final SpreadsheetMetadataPropertyName<Character> value = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR;
 
-        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(grouping, ',').set(percent, '%').set(value, ',');
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(groupSeparator, ',').set(percent, '%').set(value, ',');
 
         this.setAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
                 value,

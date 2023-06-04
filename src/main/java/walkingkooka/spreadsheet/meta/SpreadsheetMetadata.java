@@ -325,8 +325,8 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
                 if (propertyName.equals(duplicate)) {
                     continue;
                 }
-                final boolean duplicateIsGroupingOrValue = duplicate.isGroupSeparatorOrValueSeparator();
-                if (groupOrValue && duplicateIsGroupingOrValue) {
+                final boolean duplicateIsGroupSeparatorOrValue = duplicate.isGroupSeparatorOrValueSeparator();
+                if (groupOrValue && duplicateIsGroupSeparatorOrValue) {
                     continue;
                 }
 
@@ -334,7 +334,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
                 if (null != duplicateValue) {
                     if (value.equals(duplicateValue)) {
                         if (null == previousValue) {
-                            if (!duplicateIsGroupingOrValue) {
+                            if (!duplicateIsGroupSeparatorOrValue) {
                                 reportDuplicateProperty(propertyName, value, duplicate);
                             }
                         } else {
