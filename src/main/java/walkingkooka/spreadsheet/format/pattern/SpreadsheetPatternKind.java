@@ -162,6 +162,13 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     }
 
     /**
+     * Returns true if this {@link SpreadsheetPatternKind} identifies a pattern that is a sub-class of {@link SpreadsheetParsePattern}.
+     */
+    public boolean isParsePattern() {
+        return false == this.isFormatPattern();
+    }
+
+    /**
      * Checks and throws a {@link IllegalArgumentException} if the {@link SpreadsheetPattern#kind()} is different to this.
      */
     public void checkSameOrFail(final SpreadsheetPattern pattern) {

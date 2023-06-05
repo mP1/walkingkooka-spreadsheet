@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
@@ -32,8 +33,10 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.visit.Visiting;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -366,6 +369,18 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
                 Maps.empty(),
                 tokenToKinds,
                 () -> pattern + " " + patternKind
+        );
+    }
+
+    // isFormatPattern..................................................................................................
+
+    @Test
+    public void testIsFormatPatternVIsParsePattern() {
+        this.checkEquals(
+                Lists.empty(),
+                Arrays.stream(SpreadsheetPatternKind.values())
+                        .filter(k -> k.isFormatPattern() == k.isParsePattern())
+                        .collect(Collectors.toList())
         );
     }
 
