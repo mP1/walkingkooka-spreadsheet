@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -84,19 +85,19 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     );
 
     SpreadsheetPatternKind(final Function<String, SpreadsheetPattern> parser,
-                           final Predicate<SpreadsheetFormatParserTokenKind> kinds) {
+                           final Predicate<SpreadsheetFormatParserTokenKind> formatParserTokenKind) {
         this.parser = parser;
         this.spreadsheetFormatParserTokenKinds = Sets.of(
                 Arrays.stream(SpreadsheetFormatParserTokenKind.values())
-                        .filter(kinds)
+                        .filter(formatParserTokenKind)
                         .toArray(SpreadsheetFormatParserTokenKind[]::new)
         );
 
-        this.typeName =
-                "spreadsheet-" +
-                        this.name()
-                                .toLowerCase()
-                                .replace('_', '-');
+        final String nameLowerKebab = CaseKind.SNAKE.change(
+                this.name(),
+                CaseKind.KEBAB
+        ).toLowerCase();
+        this.typeName = "spreadsheet-" + nameLowerKebab;
 
         this.urlFragment =
                 SpreadsheetUrlFragments.PATTERN
@@ -104,11 +105,10 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                         .append(
                                 UrlFragment.with(
                                         CharSequences.subSequence(
-                                                        typeName,
-                                                        "spreadsheet-".length(),
-                                                        -"_PATTERN".length()
-                                                ).toString()
-                                                .replace('_', '-')
+                                                nameLowerKebab,
+                                                0,
+                                                -"_PATTERN".length()
+                                        ).toString()
                                 )
                         );
     }
