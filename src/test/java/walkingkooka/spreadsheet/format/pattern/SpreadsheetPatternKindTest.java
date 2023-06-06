@@ -387,11 +387,8 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     // checkSameOrFail..................................................................................................
 
     @Test
-    public void testCheckSameOrFailWithNullPatternFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.checkSameOrFail(null)
-        );
+    public void testCheckSameOrFailWithNull() {
+        SpreadsheetPatternKind.DATE_FORMAT_PATTERN.checkSameOrFail(null);
     }
 
     @Test
@@ -420,23 +417,29 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
     // patternPatch.....................................................................................................
 
     @Test
-    public void testPatternPatchWithNullPatternFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
-                        null,
-                        JsonNodeMarshallContexts.fake()
-                )
-        );
-    }
-
-    @Test
     public void testPatternPatchWithInvalidPatternFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
                         SpreadsheetPattern.parseTextFormatPattern("@@@"),
                         JsonNodeMarshallContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testPatternPatchWithNull() {
+        final SpreadsheetFormatPattern pattern = null;
+        final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
+
+        this.checkEquals(
+                SpreadsheetDelta.formatPatternPatch(
+                        pattern,
+                        context
+                ),
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
+                        pattern,
+                        context
                 )
         );
     }
