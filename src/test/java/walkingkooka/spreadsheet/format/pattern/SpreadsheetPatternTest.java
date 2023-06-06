@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
@@ -70,6 +71,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern>,
         ParserTesting,
+        HasTextTesting,
         SpreadsheetFormatterTesting {
 
     private final static Color COLOR = Color.BLACK;
@@ -1783,6 +1785,26 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.checkEquals(
                 SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
                 SpreadsheetPattern.parseTextFormatPattern("@").kind()
+        );
+    }
+
+    // HasText..........................................................................................................
+
+    @Test
+    public void testText() {
+        final String text = "@\"Hello\"";
+        this.textAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern(text),
+                text
+        );
+    }
+
+    @Test
+    public void testText2() {
+        final String text = "yyyy/mm//dd";
+        this.textAndCheck(
+                SpreadsheetPattern.parseDateTimeParsePattern(text),
+                text
         );
     }
 

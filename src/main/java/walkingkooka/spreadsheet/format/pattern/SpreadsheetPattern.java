@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
+import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
@@ -62,7 +63,10 @@ import java.util.function.Function;
 /**
  * Holds a tokens that may be used to parse or format values along with helpers.
  */
-abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrintable, HasUrlFragment {
+abstract public class SpreadsheetPattern implements Value<ParserToken>,
+        HasText,
+        TreePrintable,
+        HasUrlFragment {
 
     /**
      * The separator character between multiple patterns.
@@ -695,6 +699,15 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>, TreePrin
         return SpreadsheetPatternKind.fromTypeName(
                 "spreadsheet-" + this.printTreeTypeName()
         );
+    }
+
+    // HasText..........................................................................................................
+
+    /**
+     * Returns the pattern in text form.
+     */
+    public final String text() {
+        return this.value().text();
     }
 
     // HasUrlFragment...................................................................................................
