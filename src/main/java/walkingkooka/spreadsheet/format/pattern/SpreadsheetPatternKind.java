@@ -96,7 +96,7 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
         final String nameLowerKebab = CaseKind.SNAKE.change(
                 this.name(),
                 CaseKind.KEBAB
-        ).toLowerCase();
+        );
         this.typeName = "spreadsheet-" + nameLowerKebab;
 
         this.urlFragment =
