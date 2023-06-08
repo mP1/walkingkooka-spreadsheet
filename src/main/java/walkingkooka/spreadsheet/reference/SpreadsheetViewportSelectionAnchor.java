@@ -171,7 +171,7 @@ public enum SpreadsheetViewportSelectionAnchor implements HasUrlFragment {
     public UrlFragment urlFragment() {
         return UrlFragment.with(
                 CaseKind.SNAKE.change(
-                        this.name().toLowerCase(),
+                        this.name(),
                         CaseKind.KEBAB
                 )
         );
