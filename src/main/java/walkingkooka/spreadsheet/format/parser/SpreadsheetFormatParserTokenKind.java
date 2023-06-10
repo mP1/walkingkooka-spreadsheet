@@ -80,9 +80,9 @@ public enum SpreadsheetFormatParserTokenKind {
     MONTH_NAME_INITIAL("mmmmm"),
 
     // @see SpreadsheetFormatYearParserToken for 'Y' count
-    YEAR_TWO_DIGIT("YY"),
+    YEAR_TWO_DIGIT("yy"),
 
-    YEAR_FULL("YYYY"),
+    YEAR_FULL("yyyy"),
 
     // GENERAL...........................................................................................................
 
