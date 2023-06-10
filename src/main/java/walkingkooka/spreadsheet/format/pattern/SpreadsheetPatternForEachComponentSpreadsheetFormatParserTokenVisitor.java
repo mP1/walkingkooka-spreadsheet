@@ -17,15 +17,9 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -49,39 +43,6 @@ final class SpreadsheetPatternForEachComponentSpreadsheetFormatParserTokenVisito
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
-        this.minute = false;
-        return super.startVisit(token);
-    }
-
-    @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        this.minute = false;
-        return super.startVisit(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatDayParserToken token) {
-        this.minute = false;
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatHourParserToken token) {
-        this.minute = true;
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatYearParserToken token) {
-        this.minute = false;
-    }
-
-    @Override
-    protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
-        this.minute = true;
-        return super.startVisit(token);
-    }
-
-    @Override
     protected Visiting startVisit(final SpreadsheetFormatParserToken token) {
         final Optional<SpreadsheetFormatParserTokenKind> kind = token.kind();
 
@@ -96,8 +57,6 @@ final class SpreadsheetPatternForEachComponentSpreadsheetFormatParserTokenVisito
     }
 
     private final BiConsumer<SpreadsheetFormatParserTokenKind, String> consumer;
-
-    private boolean minute;
 
     @Override
     public String toString() {
