@@ -43,11 +43,6 @@ import java.util.function.BiFunction;
 public abstract class SpreadsheetFormatParserToken implements ParserToken {
 
     /**
-     * An empty list of {@link ParserToken tokens/values}.
-     */
-    public final static List<ParserToken> EMPTY = Lists.empty();
-
-    /**
      * {@see SpreadsheetFormatAmPmParserToken}
      */
     public static SpreadsheetFormatAmPmParserToken amPm(final String value, final String text) {
