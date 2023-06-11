@@ -501,6 +501,7 @@ public enum SpreadsheetFormatParserTokenKind {
         return this.isColor() ||
                 this.isCondition() ||
                 this.isGeneral() ||
+                this == SEPARATOR ||
                 this.isTextLiteral();
     }
 
