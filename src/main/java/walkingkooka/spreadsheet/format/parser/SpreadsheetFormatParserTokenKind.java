@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -39,22 +40,18 @@ public enum SpreadsheetFormatParserTokenKind {
 
     COLOR_NAME(
             SpreadsheetFormatParserTokenKind::isColor,
-            Sets.of(
-                    SpreadsheetColorName.DEFAULTS.stream()
-                            .map(n -> "[" + n.value() + "]")
-                            .toArray(String[]::new)
-            )
+            SpreadsheetColorName.DEFAULTS.stream()
+                    .map(n -> "[" + n.value() + "]")
+                    .toArray(String[]::new)
     ),
 
     COLOR_NUMBER(
             SpreadsheetFormatParserTokenKind::isColor,
-            Sets.of(
-                    IntStream.range(
-                                    SpreadsheetColors.MIN,
-                                    SpreadsheetColors.MAX + 1
-                            ).mapToObj(n -> "[Color " + n + "]")
-                            .toArray(String[]::new)
-            )
+            IntStream.range(
+                            SpreadsheetColors.MIN,
+                            SpreadsheetColors.MAX + 1
+                    ).mapToObj(n -> "[Color " + n + "]")
+                    .toArray(String[]::new)
     ),
 
     // CONDITIONAL......................................................................................................
@@ -236,20 +233,15 @@ public enum SpreadsheetFormatParserTokenKind {
     }
 
     SpreadsheetFormatParserTokenKind(final Predicate<SpreadsheetFormatParserTokenKind> duplicate,
-                                     final String pattern) {
-        this(
-                duplicate,
-                Sets.of(pattern)
-        );
-    }
-
-    SpreadsheetFormatParserTokenKind(final Predicate<SpreadsheetFormatParserTokenKind> duplicate,
-                                     final Set<String> patterns) {
+                                     final String... patterns) {
         this.duplicate =
                 null != duplicate ?
                         duplicate :
                         (other) -> this == other;
-        this.patterns = patterns;
+        if (null == patterns || patterns.length == 0) {
+            throw new IllegalArgumentException("Expected at least 1 pattern but got " + Arrays.toString(patterns));
+        }
+        this.patterns = Sets.of(patterns);
     }
 
     /**
