@@ -174,6 +174,13 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 new FakeSpreadsheetFormatterContext() {
 
                     @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return this.convert(value, type)
+                                .isLeft();
+                    }
+
+                    @Override
                     public <TT> Either<TT, String> convert(final Object value,
                                                            final Class<TT> target) {
                         if (target == LocalDateTime.class) {
@@ -653,6 +660,15 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
+    public void testDateFormatPatternSeveral() {
+        this.formatPatternFormatAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy;\"Ignored\";"),
+                LocalDate.of(1999, 12, 31),
+                "31/12/1999"
+        );
+    }
+
+    @Test
     public void testDateFormatPatternColor() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateFormatPattern("[BLACK]dd/mm/yyyy"),
@@ -789,6 +805,15 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     public void testDateTimeFormatPattern() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh/mm/ss \"Hello\""),
+                LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+                "31/12/1999 12/58/59 Hello"
+        );
+    }
+
+    @Test
+    public void testDateTimeFormatPatternSeveral() {
+        this.formatPatternFormatAndCheck(
+                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh/mm/ss \"Hello\";\"Ignored\""),
                 LocalDateTime.of(1999, 12, 31, 12, 58, 59),
                 "31/12/1999 12/58/59 Hello"
         );
@@ -936,6 +961,36 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("0.00 \"Hello\"").formatter(),
                 ExpressionNumberKind.DOUBLE.create(1.5),
+                new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return this.successfulConversion(
+                                ExpressionNumber.class.cast(value),
+                                target
+                        );
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL128;
+                    }
+                },
+                "1.50 Hello"
+        );
+    }
+
+    @Test
+    public void testNumberFormatPatternSeveral() {
+        this.formatAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("0.00 \"Hello\";").formatter(),
+                ExpressionNumberKind.BIG_DECIMAL.create(1.5),
                 new FakeSpreadsheetFormatterContext() {
 
                     @Override
@@ -1357,6 +1412,15 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     public void testTimeFormatPattern() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseTimeFormatPattern("hh/mm/ss"),
+                LocalTime.of(12, 58, 59),
+                "12/58/59"
+        );
+    }
+
+    @Test
+    public void testTimeFormatPatternSeveral() {
+        this.formatPatternFormatAndCheck(
+                SpreadsheetPattern.parseTimeFormatPattern("hh/mm/ss;\"Ignored\""),
                 LocalTime.of(12, 58, 59),
                 "12/58/59"
         );
