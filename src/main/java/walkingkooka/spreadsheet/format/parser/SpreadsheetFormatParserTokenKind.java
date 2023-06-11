@@ -158,6 +158,13 @@ public enum SpreadsheetFormatParserTokenKind {
     final Optional<SpreadsheetFormatParserTokenKind> asOptional = Optional.of(this);
 
     /**
+     * Returns true for any AMPM {@link SpreadsheetFormatParserTokenKind}
+     */
+    public boolean isAmpm() {
+        return this.name().startsWith("AMPM");
+    }
+
+    /**
      * Returns true if this token is a colour.
      */
     public boolean isColor() {
@@ -229,6 +236,20 @@ public enum SpreadsheetFormatParserTokenKind {
     }
 
     /**
+     * Returns true for any DAY {@link SpreadsheetFormatParserTokenKind}
+     */
+    public boolean isDay() {
+        return this.name().startsWith("DAY");
+    }
+
+    /**
+     * Returns true for any DIGIT {@link SpreadsheetFormatParserTokenKind}
+     */
+    public boolean isDigit() {
+        return this.name().startsWith("DIGIT");
+    }
+
+    /**
      * Returns true if this kind is a valid format token.
      */
     public boolean isFormat() {
@@ -240,6 +261,27 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isGeneral() {
         return this == GENERAL;
+    }
+
+    /**
+     * Returns true for any HOUR {@link SpreadsheetFormatParserTokenKind}
+     */
+    public boolean isHour() {
+        return this.name().startsWith("HOUR");
+    }
+
+    /**
+     * Returns true for any MINUTES {@link SpreadsheetFormatParserTokenKind}
+     */
+    public boolean isMinutes() {
+        return this.name().startsWith("MINUTES");
+    }
+
+    /**
+     * Returns true for any MONTH {@link SpreadsheetFormatParserTokenKind}
+     */
+    public boolean isMonth() {
+        return this.name().startsWith("MONTH");
     }
 
     /**
@@ -272,6 +314,13 @@ public enum SpreadsheetFormatParserTokenKind {
     public boolean isNumberParse() {
         return this.isNumber() ||
                 this.isParseExtra();
+    }
+
+    /**
+     * Returns true for any SECOND {@link SpreadsheetFormatParserTokenKind}
+     */
+    public boolean isSecond() {
+        return this.name().startsWith("SECOND");
     }
 
     /**
@@ -328,6 +377,14 @@ public enum SpreadsheetFormatParserTokenKind {
         return this.isTime() ||
                 this.isParseExtra();
     }
+
+    /**
+     * Returns true for any YEAR {@link SpreadsheetFormatParserTokenKind}
+     */
+    public boolean isYear() {
+        return this.name().startsWith("YEAR");
+    }
+
 
     private boolean isFormatExtra() {
         return this.isColor() ||

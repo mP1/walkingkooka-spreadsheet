@@ -54,6 +54,19 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     }
 
     @Test
+    public void testIsDay() {
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.DAY_NAME_FULL,
+                        SpreadsheetFormatParserTokenKind.DAY_NAME_ABBREVIATION,
+                        SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                        SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO
+                ),
+                this.collect(SpreadsheetFormatParserTokenKind::isDay)
+        );
+    }
+
+    @Test
     public void testIsDate() {
         final Set<SpreadsheetFormatParserTokenKind> date = this.collect(SpreadsheetFormatParserTokenKind::isDate);
 
@@ -82,12 +95,60 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     }
 
     @Test
+    public void testIsDigit() {
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.DIGIT,
+                        SpreadsheetFormatParserTokenKind.DIGIT_SPACE,
+                        SpreadsheetFormatParserTokenKind.DIGIT_ZERO
+                ),
+                this.collect(SpreadsheetFormatParserTokenKind::isDigit)
+        );
+    }
+
+    @Test
     public void testIsGeneral() {
         this.checkEquals(
                 Sets.of(
                         SpreadsheetFormatParserTokenKind.GENERAL
                 ),
                 this.collect(SpreadsheetFormatParserTokenKind::isGeneral)
+        );
+    }
+
+    @Test
+    public void testIsHour() {
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                        SpreadsheetFormatParserTokenKind.HOUR_WITHOUT_LEADING_ZERO
+                ),
+                this.collect(SpreadsheetFormatParserTokenKind::isHour)
+        );
+    }
+
+    @Test
+    public void testIsMinutes() {
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITHOUT_LEADING_ZERO
+                ),
+                this.collect(SpreadsheetFormatParserTokenKind::isMinutes)
+        );
+    }
+
+    @Test
+    public void testIsMonth() {
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.MONTH_NAME_ABBREVIATION,
+                        SpreadsheetFormatParserTokenKind.MONTH_NAME_INITIAL,
+                        SpreadsheetFormatParserTokenKind.MONTH_NAME_FULL,
+                        SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                        SpreadsheetFormatParserTokenKind.MONTH_WITHOUT_LEADING_ZERO
+                ),
+                this.collect(SpreadsheetFormatParserTokenKind::isMonth)
         );
     }
 
@@ -120,6 +181,17 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         this.checkNoOverlapOrFail(
                 number,
                 this.collect(SpreadsheetFormatParserTokenKind::isText)
+        );
+    }
+
+    @Test
+    public void testIsSecond() {
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.SECONDS_WITH_LEADING_ZERO,
+                        SpreadsheetFormatParserTokenKind.SECONDS_WITHOUT_LEADING_ZERO
+                ),
+                this.collect(SpreadsheetFormatParserTokenKind::isSecond)
         );
     }
 
@@ -190,6 +262,17 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         this.checkNoOverlapOrFail(
                 time,
                 this.collect(SpreadsheetFormatParserTokenKind::isText)
+        );
+    }
+
+    @Test
+    public void testIsYear() {
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                        SpreadsheetFormatParserTokenKind.YEAR_TWO_DIGIT
+                ),
+                this.collect(SpreadsheetFormatParserTokenKind::isYear)
         );
     }
 
