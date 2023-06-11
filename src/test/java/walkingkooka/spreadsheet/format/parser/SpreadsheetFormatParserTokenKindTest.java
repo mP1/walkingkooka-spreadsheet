@@ -841,6 +841,54 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         );
     }
 
+    // isParse.........................................................................................................
+
+    @Test
+    public void testIsParse() {
+        final Set<SpreadsheetFormatParserTokenKind> expected = EnumSet.allOf(SpreadsheetFormatParserTokenKind.class);
+        expected.removeIf(SpreadsheetFormatParserTokenKind::isColor);
+        expected.removeIf(SpreadsheetFormatParserTokenKind::isCondition);
+
+        this.checkEquals(
+                expected,
+                Arrays.stream(SpreadsheetFormatParserTokenKind.values())
+                        .filter(SpreadsheetFormatParserTokenKind::isParse)
+                        .collect(Collectors.toSet())
+        );
+    }
+
+    @Test
+    public void testIsParseDateParse() {
+        this.isParseAndIsXXXParseCheck(SpreadsheetFormatParserTokenKind::isDateParse);
+    }
+
+    @Test
+    public void testIsParseDateTimeParse() {
+        this.isParseAndIsXXXParseCheck(SpreadsheetFormatParserTokenKind::isDateTimeParse);
+    }
+
+    @Test
+    public void testIsParseNumberParse() {
+        this.isParseAndIsXXXParseCheck(SpreadsheetFormatParserTokenKind::isNumberParse);
+    }
+
+    @Test
+    public void testIsParseTimeParse() {
+        this.isParseAndIsXXXParseCheck(SpreadsheetFormatParserTokenKind::isTimeParse);
+    }
+
+    private void isParseAndIsXXXParseCheck(final Predicate<SpreadsheetFormatParserTokenKind> isXXXParse) {
+        final Set<SpreadsheetFormatParserTokenKind> kinds = EnumSet.allOf(SpreadsheetFormatParserTokenKind.class);
+        kinds.removeIf(isXXXParse.negate());
+
+        this.checkEquals(
+                kinds,
+                kinds.stream()
+                        .filter(SpreadsheetFormatParserTokenKind::isParse)
+                        .collect(Collectors.toSet())
+        );
+    }
+
     // labelText........................................................................................................
 
     @Test
