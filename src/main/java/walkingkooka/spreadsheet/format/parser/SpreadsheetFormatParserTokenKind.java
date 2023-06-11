@@ -366,7 +366,6 @@ public enum SpreadsheetFormatParserTokenKind {
                     CaseKind.SNAKE.change(
                                     this.name(),
                                     CaseKind.NORMAL)
-                            .toLowerCase()
             ).toString()
             .replace("Ampm", "AMPM");
 
