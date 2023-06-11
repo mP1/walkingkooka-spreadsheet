@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -26,6 +27,7 @@ import walkingkooka.text.CharSequences;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 /**
@@ -36,6 +38,7 @@ public enum SpreadsheetFormatParserTokenKind {
     // COLOR............................................................................................................
 
     COLOR_NAME(
+            SpreadsheetFormatParserTokenKind::isColor,
             Sets.of(
                     SpreadsheetColorName.DEFAULTS.stream()
                             .map(n -> "[" + n.value() + "]")
@@ -44,6 +47,7 @@ public enum SpreadsheetFormatParserTokenKind {
     ),
 
     COLOR_NUMBER(
+            SpreadsheetFormatParserTokenKind::isColor,
             Sets.of(
                     IntStream.range(
                                     SpreadsheetColors.MIN,
@@ -55,34 +59,69 @@ public enum SpreadsheetFormatParserTokenKind {
 
     // CONDITIONAL......................................................................................................
 
-    CONDITION("=0"),
+    CONDITION(
+            "=0"
+    ),
 
     // DATE.............................................................................................................
 
     // @see SpreadsheetFormatDayParserToken for 'D' count'
-    DAY_WITH_LEADING_ZERO("dd"),
+    DAY_WITH_LEADING_ZERO(
+            SpreadsheetFormatParserTokenKind::isDay,
+            "dd"
+    ),
 
-    DAY_WITHOUT_LEADING_ZERO("d"),
+    DAY_WITHOUT_LEADING_ZERO(
+            SpreadsheetFormatParserTokenKind::isDay,
+            "d"
+    ),
 
-    DAY_NAME_ABBREVIATION("ddd"),
+    DAY_NAME_ABBREVIATION(
+            SpreadsheetFormatParserTokenKind::isDay,
+            "ddd"
+    ),
 
-    DAY_NAME_FULL("dddd"),
+    DAY_NAME_FULL(
+            SpreadsheetFormatParserTokenKind::isDay,
+            "dddd"
+    ),
 
     // SpreadsheetFormatMonthParserToken for 'M' count
-    MONTH_WITH_LEADING_ZERO("mm"),
+    MONTH_WITH_LEADING_ZERO(
+            SpreadsheetFormatParserTokenKind::isMonth,
+            "mm"
+    ),
 
-    MONTH_WITHOUT_LEADING_ZERO("m"),
+    MONTH_WITHOUT_LEADING_ZERO(
+            SpreadsheetFormatParserTokenKind::isMonth,
+            "m"
+    ),
 
-    MONTH_NAME_ABBREVIATION("mmm"),
+    MONTH_NAME_ABBREVIATION(
+            SpreadsheetFormatParserTokenKind::isMonth,
+            "mmm"
+    ),
 
-    MONTH_NAME_FULL("mmmm"),
+    MONTH_NAME_FULL(
+            SpreadsheetFormatParserTokenKind::isMonth,
+            "mmmm"
+    ),
 
-    MONTH_NAME_INITIAL("mmmmm"),
+    MONTH_NAME_INITIAL(
+            SpreadsheetFormatParserTokenKind::isMonth,
+            "mmmmm"
+    ),
 
     // @see SpreadsheetFormatYearParserToken for 'Y' count
-    YEAR_TWO_DIGIT("yy"),
+    YEAR_TWO_DIGIT(
+            SpreadsheetFormatParserTokenKind::isYear,
+            "yy"
+    ),
 
-    YEAR_FULL("yyyy"),
+    YEAR_FULL(
+            SpreadsheetFormatParserTokenKind::isYear,
+            "yyyy"
+    ),
 
     // GENERAL...........................................................................................................
 
@@ -90,11 +129,20 @@ public enum SpreadsheetFormatParserTokenKind {
 
     // NUMBER...........................................................................................................
 
-    DIGIT("#"),
+    DIGIT(
+            Predicates.never(),
+            "#"
+    ),
 
-    DIGIT_SPACE("?"),
+    DIGIT_SPACE(
+            Predicates.never(),
+            "?"
+    ),
 
-    DIGIT_ZERO("0"),
+    DIGIT_ZERO(
+            Predicates.never(),
+            "0"
+    ),
 
     CURRENCY_SYMBOL("$"),
 
@@ -110,9 +158,15 @@ public enum SpreadsheetFormatParserTokenKind {
 
     // TEXT............................................................................................................
 
-    TEXT_PLACEHOLDER("@"),
+    TEXT_PLACEHOLDER(
+            Predicates.never(),
+            "@"
+    ),
 
-    TEXT_LITERAL("\"Text\""),
+    TEXT_LITERAL(
+            Predicates.never(),
+            "\"Text\""
+    ),
 
     STAR("* "),
 
@@ -120,35 +174,81 @@ public enum SpreadsheetFormatParserTokenKind {
 
     // TIME............................................................................................................
 
-    HOUR_WITH_LEADING_ZERO("hh"),
+    HOUR_WITH_LEADING_ZERO(
+            SpreadsheetFormatParserTokenKind::isHour,
+            "hh"
+    ),
 
-    HOUR_WITHOUT_LEADING_ZERO("h"),
+    HOUR_WITHOUT_LEADING_ZERO(
+            SpreadsheetFormatParserTokenKind::isHour,
+            "h"
+    ),
 
-    MINUTES_WITH_LEADING_ZERO("mm"),
+    MINUTES_WITH_LEADING_ZERO(
+            SpreadsheetFormatParserTokenKind::isMinutes,
+            "mm"
+    ),
 
-    MINUTES_WITHOUT_LEADING_ZERO("m"),
+    MINUTES_WITHOUT_LEADING_ZERO(
+            SpreadsheetFormatParserTokenKind::isMinutes,
+            "m"
+    ),
 
-    SECONDS_WITH_LEADING_ZERO("ss"),
+    SECONDS_WITH_LEADING_ZERO(
+            SpreadsheetFormatParserTokenKind::isSecond,
+            "ss"
+    ),
 
-    SECONDS_WITHOUT_LEADING_ZERO("s"),
+    SECONDS_WITHOUT_LEADING_ZERO(
+            SpreadsheetFormatParserTokenKind::isSecond,
+            "s"
+    ),
 
-    AMPM_FULL_LOWER("am/pm"),
+    AMPM_FULL_LOWER(
+            SpreadsheetFormatParserTokenKind::isAmpm,
+            "am/pm"
+    ),
 
-    AMPM_FULL_UPPER("AM/PM"),
+    AMPM_FULL_UPPER(
+            SpreadsheetFormatParserTokenKind::isAmpm,
+            "AM/PM"
+    ),
 
-    AMPM_INITIAL_LOWER("a/p"),
+    AMPM_INITIAL_LOWER(
+            SpreadsheetFormatParserTokenKind::isAmpm,
+            "a/p"
+    ),
 
-    AMPM_INITIAL_UPPER("A/P"),
+    AMPM_INITIAL_UPPER(
+            SpreadsheetFormatParserTokenKind::isAmpm,
+            "A/P"
+    ),
 
     // MISC.............................................................................................................
 
     SEPARATOR(SpreadsheetPattern.SEPARATOR.string());
 
     SpreadsheetFormatParserTokenKind(final String pattern) {
-        this(Sets.of(pattern));
+        this(
+                null,
+                pattern
+        );
     }
 
-    SpreadsheetFormatParserTokenKind(final Set<String> patterns) {
+    SpreadsheetFormatParserTokenKind(final Predicate<SpreadsheetFormatParserTokenKind> duplicate,
+                                     final String pattern) {
+        this(
+                duplicate,
+                Sets.of(pattern)
+        );
+    }
+
+    SpreadsheetFormatParserTokenKind(final Predicate<SpreadsheetFormatParserTokenKind> duplicate,
+                                     final Set<String> patterns) {
+        this.duplicate =
+                null != duplicate ?
+                        duplicate :
+                        (other) -> this == other;
         this.patterns = patterns;
     }
 
@@ -156,6 +256,18 @@ public enum SpreadsheetFormatParserTokenKind {
      * Used as the answer for many {@link SpreadsheetFormatParserToken#kind()}
      */
     final Optional<SpreadsheetFormatParserTokenKind> asOptional = Optional.of(this);
+
+    /**
+     * Used to verify that two similar kinds do not follow each other in a patter.
+     * <pre>
+     * {@link #HOUR_WITH_LEADING_ZERO} and {@link #HOUR_WITHOUT_LEADING_ZERO}
+     * </pre>
+     */
+    public boolean isDuplicate(final SpreadsheetFormatParserTokenKind other) {
+        return this.duplicate.test(other);
+    }
+
+    private final Predicate<SpreadsheetFormatParserTokenKind> duplicate;
 
     /**
      * Returns true for any AMPM {@link SpreadsheetFormatParserTokenKind}

@@ -40,6 +40,384 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<SpreadsheetFormatParserTokenKind>,
         TreePrintableTesting {
 
+    // isDuplicate......................................................................................................
+
+    @Test
+    public void testIsDuplicate_AMPM_FULL_LOWER_and_AMPM_FULL_LOWER() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER,
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_AMPM_FULL_LOWER_and_AMPM_FULL_UPPER() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER,
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_UPPER,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_AMPM_FULL_LOWER_and_AMPM_INITIAL_LOWER() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER,
+                SpreadsheetFormatParserTokenKind.AMPM_INITIAL_LOWER,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_AMPM_FULL_LOWER_and_AMPM_INITIAL_UPPER() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER,
+                SpreadsheetFormatParserTokenKind.AMPM_INITIAL_UPPER,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_AMPM_FULL_UPPER_and_AMPM_FULL_UPPER() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_UPPER,
+                SpreadsheetFormatParserTokenKind.AMPM_FULL_UPPER,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_AMPM_INITIAL_LOWER_and_AMPM_INITIAL_LOWER() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_INITIAL_LOWER,
+                SpreadsheetFormatParserTokenKind.AMPM_INITIAL_LOWER,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_AMPM_INITIAL_UPPER_and_AMPM_INITIAL_UPPER() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.AMPM_INITIAL_UPPER,
+                SpreadsheetFormatParserTokenKind.AMPM_INITIAL_UPPER,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_COLOR_NAME_and_COLOR_NAME() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_COLOR_NAME_and_COLOR_NUMBER() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_COLOR_NUMBER_and_COLOR_NUMBER() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
+                SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_CURRENCY_SYMBOL_and_CURRENCY_SYMBOL() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL,
+                SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_DAY_WITH_LEADING_ZERO_and_DAY_WITH_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_DAY_WITH_LEADING_ZERO_and_DAY_WITHOUT_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_DAY_WITHOUT_LEADING_ZERO_and_DAY_WITHOUT_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_DECIMAL_PLACE_and_DECIMAL_PLACE() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.DECIMAL_PLACE,
+                SpreadsheetFormatParserTokenKind.DECIMAL_PLACE,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_DIGIT_and_DIGIT() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.DIGIT,
+                SpreadsheetFormatParserTokenKind.DIGIT,
+                false
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_DIGIT_and_DIGIT_SPACE() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.DIGIT,
+                SpreadsheetFormatParserTokenKind.DIGIT_SPACE,
+                false
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_DIGIT_and_DIGIT_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.DIGIT,
+                SpreadsheetFormatParserTokenKind.DIGIT_ZERO,
+                false
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_EXPONENT_and_EXPONENT() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.EXPONENT,
+                SpreadsheetFormatParserTokenKind.EXPONENT,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_FRACTION_and_FRACTION() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.FRACTION,
+                SpreadsheetFormatParserTokenKind.FRACTION,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_GENERAL_and_GENERAL() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.GENERAL,
+                SpreadsheetFormatParserTokenKind.GENERAL,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_GROUP_SEPARATOR_and_GROUP_SEPARATOR() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.GROUP_SEPARATOR,
+                SpreadsheetFormatParserTokenKind.GROUP_SEPARATOR,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_HOUR_WITH_LEADING_ZERO_and_HOUR_WITH_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_HOUR_WITH_LEADING_ZERO_and_HOUR_WITHOUT_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.HOUR_WITHOUT_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_HOUR_WITHOUT_LEADING_ZERO_and_HOUR_WITHOUT_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.HOUR_WITHOUT_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.HOUR_WITHOUT_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_MINUTES_WITH_LEADING_ZERO_and_MINUTES_WITH_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_MINUTES_WITH_LEADING_ZERO_and_MINUTES_WITHOUT_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.MINUTES_WITHOUT_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_MINUTES_WITHOUT_LEADING_ZERO_and_MINUTES_WITHOUT_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.MINUTES_WITHOUT_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.MINUTES_WITHOUT_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_MONTH_WITH_LEADING_ZERO_and_MONTH_WITH_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_MONTH_WITH_LEADING_ZERO_and_MONTH_WITHOUT_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.MONTH_WITHOUT_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_MONTH_WITHOUT_LEADING_ZERO_and_MONTH_WITHOUT_LEADING_ZERO() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.MONTH_WITHOUT_LEADING_ZERO,
+                SpreadsheetFormatParserTokenKind.MONTH_WITHOUT_LEADING_ZERO,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_PERCENT_and_PERCENT() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.PERCENT,
+                SpreadsheetFormatParserTokenKind.PERCENT,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_STAR_and_STAR() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.STAR,
+                SpreadsheetFormatParserTokenKind.STAR,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_TEXT_LITERAL_and_TEXT_LITERAL() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                false
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_TEXT_PLACEHOLDER_and_TEXT_PLACEHOLDER() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
+                SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
+                false
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_UNDERSCORE_and_UNDERSCORE() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.UNDERSCORE,
+                SpreadsheetFormatParserTokenKind.UNDERSCORE,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_YEAR_FULL_and_YEAR_FULL() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_YEAR_FULL_and_YEAR_TWO_DIGIT() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                SpreadsheetFormatParserTokenKind.YEAR_TWO_DIGIT,
+                true
+        );
+    }
+
+    @Test
+    public void testIsDuplicate_YEAR_TWO_DIGIT_and_YEAR_TWO_DIGIT() {
+        this.isDuplicateAndCheck(
+                SpreadsheetFormatParserTokenKind.YEAR_TWO_DIGIT,
+                SpreadsheetFormatParserTokenKind.YEAR_TWO_DIGIT,
+                true
+        );
+    }
+
+    private void isDuplicateAndCheck(final SpreadsheetFormatParserTokenKind left,
+                                     final SpreadsheetFormatParserTokenKind right,
+                                     final boolean expected) {
+        this.isDuplicateAndCheck0(
+                left,
+                right,
+                expected
+        );
+        this.isDuplicateAndCheck0(
+                right,
+                left,
+                expected
+        );
+    }
+
+    private void isDuplicateAndCheck0(final SpreadsheetFormatParserTokenKind left,
+                                      final SpreadsheetFormatParserTokenKind right,
+                                      final boolean expected) {
+        this.checkEquals(
+                expected,
+                left.isDuplicate(right),
+                left + " isDuplicate " + right
+        );
+    }
+
     // isXXX............................................................................................................
 
     @Test
