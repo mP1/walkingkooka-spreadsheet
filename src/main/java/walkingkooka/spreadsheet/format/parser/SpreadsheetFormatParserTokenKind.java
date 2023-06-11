@@ -357,7 +357,7 @@ public enum SpreadsheetFormatParserTokenKind {
      * Returns true if this kind is a valid format token.
      */
     public boolean isFormat() {
-        return this != SEPARATOR;
+        return true;
     }
 
     /**

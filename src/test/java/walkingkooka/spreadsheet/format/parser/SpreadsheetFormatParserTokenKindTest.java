@@ -829,6 +829,18 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         );
     }
 
+    // isFormat.........................................................................................................
+
+    @Test
+    public void testIsFormat() {
+        this.checkEquals(
+                EnumSet.allOf(SpreadsheetFormatParserTokenKind.class),
+                Arrays.stream(SpreadsheetFormatParserTokenKind.values())
+                        .filter(SpreadsheetFormatParserTokenKind::isFormat)
+                        .collect(Collectors.toSet())
+        );
+    }
+
     // labelText........................................................................................................
 
     @Test
