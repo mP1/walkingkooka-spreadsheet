@@ -421,6 +421,13 @@ public enum SpreadsheetFormatParserTokenKind {
     }
 
     /**
+     * Returns true for all {@link SpreadsheetFormatParserTokenKind} except for COLOR and CONDITION.
+     */
+    public boolean isParse() {
+        return false == this.isColor() && false == this.isCondition();
+    }
+
+    /**
      * Returns true for any SECOND {@link SpreadsheetFormatParserTokenKind}
      */
     public boolean isSecond() {
