@@ -841,6 +841,43 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         );
     }
 
+    @Test
+    public void testIsFormatDateFormat() {
+        this.isFormatAndIsXXXFormatCheck(SpreadsheetFormatParserTokenKind::isDateFormat);
+    }
+
+    @Test
+    public void testIsFormatDateTimeFormat() {
+        this.isFormatAndIsXXXFormatCheck(SpreadsheetFormatParserTokenKind::isDateTimeFormat);
+    }
+
+    @Test
+    public void testIsFormatNumberFormat() {
+        this.isFormatAndIsXXXFormatCheck(SpreadsheetFormatParserTokenKind::isNumberFormat);
+    }
+
+    @Test
+    public void testIsFormatTextFormat() {
+        this.isFormatAndIsXXXFormatCheck(SpreadsheetFormatParserTokenKind::isTextFormat);
+    }
+
+    @Test
+    public void testIsFormatTimeFormat() {
+        this.isFormatAndIsXXXFormatCheck(SpreadsheetFormatParserTokenKind::isTimeFormat);
+    }
+
+    private void isFormatAndIsXXXFormatCheck(final Predicate<SpreadsheetFormatParserTokenKind> isXXXFormat) {
+        final Set<SpreadsheetFormatParserTokenKind> kinds = EnumSet.allOf(SpreadsheetFormatParserTokenKind.class);
+        kinds.removeIf(isXXXFormat.negate());
+
+        this.checkEquals(
+                kinds,
+                kinds.stream()
+                        .filter(SpreadsheetFormatParserTokenKind::isFormat)
+                        .collect(Collectors.toSet())
+        );
+    }
+
     // isParse.........................................................................................................
 
     @Test
