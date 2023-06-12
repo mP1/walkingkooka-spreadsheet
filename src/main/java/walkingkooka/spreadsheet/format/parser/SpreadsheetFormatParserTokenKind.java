@@ -36,6 +36,11 @@ import java.util.stream.IntStream;
  */
 public enum SpreadsheetFormatParserTokenKind {
 
+    // note ordering of enums is important because values() after filtering is used to order the display of append-links
+    // SpreadsheetPatternEditorWidget
+    //
+    // h hh m mm s ss . 0 AM/PM etc.
+
     // COLOR............................................................................................................
 
     COLOR_NAME(
@@ -126,6 +131,8 @@ public enum SpreadsheetFormatParserTokenKind {
 
     // NUMBER...........................................................................................................
 
+    CURRENCY_SYMBOL("$"),
+
     DIGIT(
             Predicates.never(),
             "#"
@@ -141,15 +148,13 @@ public enum SpreadsheetFormatParserTokenKind {
             "0"
     ),
 
-    CURRENCY_SYMBOL("$"),
+    GROUP_SEPARATOR(","),
 
     DECIMAL_PLACE("."),
 
     EXPONENT("E"),
 
     FRACTION("/"),
-
-    GROUP_SEPARATOR(","),
 
     PERCENT("%"),
 
