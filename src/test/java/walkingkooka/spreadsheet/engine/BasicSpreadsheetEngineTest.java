@@ -519,38 +519,65 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadCellsWithoutFormatPattern() {
         this.cellStoreSaveAndLoadCellAndCheck(
+                "=1+2",
+                number(1 + 2),
                 SpreadsheetCell.NO_FORMAT_PATTERN,
-                FORMATTED_PATTERN_SUFFIX
+                "3 " + FORMATTED_PATTERN_SUFFIX
         );
     }
 
     @Test
     public void testLoadCellsWithFormatPattern() {
         this.cellStoreSaveAndLoadCellAndCheck(
+                "=1+2",
+                number(1 + 2),
                 Optional.of(
                         SpreadsheetPattern.parseNumberFormatPattern("# \"" + FORMATTED_PATTERN_SUFFIX + "\"")
                 ),
-                FORMATTED_PATTERN_SUFFIX
+                "3 " + FORMATTED_PATTERN_SUFFIX
         );
     }
 
-    private void cellStoreSaveAndLoadCellAndCheck(final Optional<SpreadsheetFormatPattern> formatPattern,
-                                                  final String patternSuffix) {
+    @Test
+    public void testLoadCellsWithErrorAndFormatPattern() {
+        this.cellStoreSaveAndLoadCellAndCheck(
+                "=1/0",
+                SpreadsheetErrorKind.DIV0.setMessage("Division by zero"),
+                Optional.of(
+                        SpreadsheetPattern.parseNumberFormatPattern("# \"" + FORMATTED_PATTERN_SUFFIX + "\"")
+                ),
+                "#DIV/0! " + FORMATTED_PATTERN_SUFFIX
+        );
+    }
+
+    private void cellStoreSaveAndLoadCellAndCheck(final String formulaText,
+                                                  final Object value,
+                                                  final Optional<SpreadsheetFormatPattern> formatPattern,
+                                                  final String formattedText) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
         context.storeRepository()
                 .cells()
-                .save(this.cell(cellReference, "=1+2")
-                        .setFormatPattern(formatPattern));
-
-        this.loadCellAndCheckFormatted2(engine,
+                .save(
+                        this.cell(
+                                        cellReference,
+                                        formulaText
+                                )
+                                .setFormatPattern(formatPattern)
+                );
+        final SpreadsheetCell cell = this.loadCellAndCheckValue(
+                engine,
                 cellReference,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                number(1 + 2),
-                patternSuffix);
+                value
+        );
+        this.checkFormattedText(
+                cell,
+                formattedText
+        );
     }
 
     @Test

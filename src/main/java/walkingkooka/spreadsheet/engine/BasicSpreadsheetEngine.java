@@ -650,16 +650,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                 c.column(),
                                                 columns,
                                                 columnStore
-                                                );
-                                            }
+                                        );
+                                    }
 
-                                            if (addRows) {
-                                                addIfNecessary(
-                                                        c.row(),
-                                                        rows,
-                                                        rowStore
-                                                );
-                                            }
+                                    if (addRows) {
+                                        addIfNecessary(
+                                                c.row(),
+                                                rows,
+                                                rowStore
+                                        );
+                                    }
                                         }
                                     }
                             );
@@ -1043,6 +1043,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             result = this.formatAndApplyStyle(
                     result,
+                    cell.formatPattern()
+                            .map(SpreadsheetFormatPattern::formatter),
                     context
             );
         } catch (final Exception cause) {
@@ -1087,6 +1089,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         )
                                 )
                 ),
+                Optional.empty(), // ignore cell formatter
                 context
         );
     }
@@ -1128,21 +1131,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // FORMAT .........................................................................................................
 
     /**
-     * If a value is present use the pattern to format and apply the styling.
+     * If a value is present use the {@link SpreadsheetFormatter} and apply the styling.
      */
     private SpreadsheetCell formatAndApplyStyle(final SpreadsheetCell cell,
+                                                final Optional<SpreadsheetFormatter> formatter,
                                                 final SpreadsheetEngineContext context) {
-        // try and use the cells custom format otherwise use a default from the context.
-        final SpreadsheetFormatter formatter;
-        final Optional<SpreadsheetFormatPattern> maybeFormat = cell.formatPattern();
-        if (maybeFormat.isPresent()) {
-            formatter = maybeFormat.get()
-                    .formatter();
-        } else {
-            formatter = context.metadata()
-                    .formatter();
-        }
-
         final SpreadsheetFormula formula = cell
                 .formula();
         final Object value = formula.value()
@@ -1151,7 +1144,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return this.locateAndApplyConditionalFormattingRule(
                 cell.setFormatted(
                         Optional.of(
-                                context.format(value, formatter)
+                                context.format(
+                                                value,
+                                                formatter.orElse(
+                                                        context.metadata()
+                                                                .formatter()
+                                                )
+                                        )
                                         .map(
                                                 f -> cell.style()
                                                         .replace(f.toTextNode())
