@@ -461,6 +461,21 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
                         number + SEPARATOR.string() + integer);
     }
 
+    /**
+     * Takes a {@link DecimalFormat} and returns its {@link SpreadsheetNumberParsePattern} equivalent.
+     * This method may be used to extract locale aware {@link SpreadsheetNumberParsePattern}. This will be used by
+     * https://github.com/mP1/walkingkooka-spreadsheet-dominokit to source locale aware number and currency patterns.
+     * <br>
+     * Note it does not include text literals, doing so will cause failures when the {@link DecimalFormat#toPattern()}
+     * is parsed.
+     */
+    public static SpreadsheetNumberParsePattern decimalFormat(final DecimalFormat decimalFormat) {
+        Objects.requireNonNull(decimalFormat, "decimalFormat");
+
+        return parseNumberParsePattern(
+                decimalFormat.toPattern()
+        );
+    }
 
     /**
      * This makes an assumption that a {@link DecimalFormat} pattern will only use characters that are also equal in
