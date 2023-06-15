@@ -30,6 +30,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern,
@@ -92,6 +93,14 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         final T token = this.createFormatParserToken(Lists.of(whitespace()));
         final P patterns = this.createPattern(token);
         this.checkEquals(patterns.value(), token, "value");
+    }
+
+    // toFormat.........................................................................................................
+
+    @Test
+    public final void testToFormat() {
+        final P pattern = this.createPattern();
+        assertSame(pattern, pattern.toFormat());
     }
 
     // helpers..........................................................................................................

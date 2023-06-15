@@ -45,6 +45,11 @@ public final class SpreadsheetDateParsePattern extends SpreadsheetNonNumberParse
     }
 
     @Override
+    public SpreadsheetDateFormatPattern toFormat() {
+        return SpreadsheetPattern.dateFormatPattern(this.value());
+    }
+
+    @Override
     Class<LocalDate> targetType() {
         return LocalDate.class;
     }

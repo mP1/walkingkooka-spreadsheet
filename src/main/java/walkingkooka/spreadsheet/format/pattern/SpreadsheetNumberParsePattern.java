@@ -47,6 +47,13 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
         this.patterns = patterns;
     }
 
+    // toFormat.........................................................................................................
+
+    @Override
+    public SpreadsheetNumberFormatPattern toFormat() {
+        return SpreadsheetPattern.numberFormatPattern(this.value());
+    }
+
     // Object...........................................................................................................
 
     @Override

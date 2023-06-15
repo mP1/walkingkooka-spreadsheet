@@ -701,6 +701,15 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
+    // toFormat.........................................................................................................
+
+    /**
+     * If necessary returns a {@link SpreadsheetFormatPattern} with the same pattern. For sub-classes of {@link SpreadsheetFormatPattern}
+     * this is always returned, for sub-classes of {@link SpreadsheetParsePattern} an equivalent {@link SpreadsheetFormatPattern}
+     * is returned with the same pattern.
+     */
+    public abstract SpreadsheetFormatPattern toFormat();
+
     // HasText..........................................................................................................
 
     /**

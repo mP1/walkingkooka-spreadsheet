@@ -45,6 +45,11 @@ public final class SpreadsheetTimeParsePattern extends SpreadsheetNonNumberParse
     }
 
     @Override
+    public SpreadsheetTimeFormatPattern toFormat() {
+        return SpreadsheetPattern.timeFormatPattern(this.value());
+    }
+
+    @Override
     Class<LocalTime> targetType() {
         return LocalTime.class;
     }
