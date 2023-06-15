@@ -28,6 +28,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -41,6 +42,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.text.CharSequences;
@@ -57,6 +59,7 @@ import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -1304,6 +1307,93 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                         "1.5*"
                 ),
                 "1.5*"
+        );
+    }
+
+    // DecimalFormat....................................................................................................
+
+    @Test
+    public void testDecimalFormatWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.decimalFormat(null)
+        );
+    }
+
+    @Test
+    public void testDecimalFormatWithSingleQuoteTextLiteralFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.decimalFormat(
+                        new DecimalFormat("'hello'#")
+                )
+        );
+    }
+
+    @Test
+    public void testDecimalFormatFormat() throws Exception {
+        this.decimalFormatParseAndCheck(
+                "#.##",
+                "1.25",
+                1.25
+        );
+    }
+
+    @Test
+    public void testDecimalFormatCurrency() throws Exception {
+        this.decimalFormatParseAndCheck(
+                "$#.##",
+                "$1.25",
+                1.25
+        );
+    }
+
+    @Test
+    public void testDecimalFormatIncludesSpaces() throws Exception {
+        this.decimalFormatParseAndCheck(
+                " #.##",
+                " 1.25",
+                1.25
+        );
+    }
+
+    private void decimalFormatParseAndCheck(final String pattern,
+                                            final String text,
+                                            final double expected) throws Exception {
+        final DecimalFormat decimalFormat = new DecimalFormat(pattern);
+
+        this.checkEquals(
+                expected,
+                decimalFormat.parse(text),
+                () -> pattern + " parse " + CharSequences.quoteAndEscape(text)
+        );
+
+        final Parser<SpreadsheetParserContext> parser = SpreadsheetPattern.decimalFormat(decimalFormat)
+                .parser();
+        final ExpressionNumberKind kind = ExpressionNumberKind.DOUBLE;
+
+        final SpreadsheetNumberParserToken token = parser.andEmptyTextCursor()
+                .parse(
+                        TextCursors.charSequence(text),
+                        SpreadsheetParserContexts.basic(
+                                DateTimeContexts.fake(),
+                                DecimalNumberContexts.american(MathContext.DECIMAL32),
+                                kind,
+                                ','
+                        )
+                ).get()
+                .cast(SpreadsheetNumberParserToken.class);
+
+        this.checkEquals(
+                kind.create(expected),
+                token.toNumber(
+                        new FakeExpressionEvaluationContext() {
+                            @Override
+                            public ExpressionNumberKind expressionNumberKind() {
+                                return kind;
+                            }
+                        }
+                )
         );
     }
 
