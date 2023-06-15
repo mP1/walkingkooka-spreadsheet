@@ -37,6 +37,15 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern implem
         super(token);
     }
 
+    // toFormat.........................................................................................................
+
+    /**
+     * Sub-classes of {@link SpreadsheetFormatPattern} always return this.
+     */
+    public final SpreadsheetFormatPattern toFormat() {
+        return this;
+    }
+
     // HasSpreadsheetFormatter..........................................................................................
 
     /**

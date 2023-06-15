@@ -253,6 +253,26 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         this.checkEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
     }
 
+    // toFormat.........................................................................................................
+
+    @Test
+    public final void testToFormat() {
+        final P parsePattern = this.createPattern();
+        final SpreadsheetFormatPattern formatPattern = parsePattern.toFormat();
+
+        this.checkNotEquals(
+                parsePattern,
+                formatPattern,
+                () -> parsePattern + " toPattern"
+        );
+
+        this.checkEquals(
+                parsePattern.value(),
+                formatPattern.value(),
+                () -> parsePattern + " toPattern.value"
+        );
+    }
+
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
