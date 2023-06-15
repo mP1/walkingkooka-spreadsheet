@@ -60,6 +60,7 @@ import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -632,6 +633,40 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                         })
                 ).orElse(null),
                 () -> "parse " + CharSequences.quoteAndEscape(text) + " parser: " + parser
+        );
+    }
+
+    // dateParsePattern................................................................................................
+
+    @Test
+    public void testDateParsePatternWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.dateParsePattern(null)
+        );
+    }
+
+    @Test
+    public void testDateParsePattern() {
+        final String pattern = "yyyy/mm/dd";
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        final SpreadsheetDateParsePattern dateParsePattern = SpreadsheetPattern.dateParsePattern(simpleDateFormat);
+
+        this.parseAndCheck(
+                dateParsePattern.parser(),
+                new FakeSpreadsheetParserContext(),
+                "1999/12/31",
+                SpreadsheetParserToken.date(
+                        Lists.of(
+                                SpreadsheetParserToken.year(1999, "1999"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.monthNumber(12, "12"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.dayNumber(31, "31")
+                        ),
+                        "1999/12/31"
+                ),
+                "1999/12/31"
         );
     }
 
