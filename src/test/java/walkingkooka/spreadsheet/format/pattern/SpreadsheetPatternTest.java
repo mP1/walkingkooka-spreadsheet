@@ -642,7 +642,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     public void testDateParsePatternWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetPattern.dateParsePattern(null)
+                () -> SpreadsheetPattern.dateParsePattern((SimpleDateFormat) null)
         );
     }
 
