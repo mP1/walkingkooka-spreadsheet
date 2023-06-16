@@ -245,25 +245,11 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * Returns an equivalent {@link SpreadsheetDateParsePattern} for the given {@link SimpleDateFormat}.
      */
     public static SpreadsheetDateParsePattern dateParsePattern(final SimpleDateFormat simpleDateFormat) {
-        Objects.requireNonNull(simpleDateFormat, "simpleDateFormat");
-
-        final Set<String> patterns = Sets.ordered();
-
-        final String simpleDateFormatPattern = simpleDateFormat.toPattern();
-
-        // include all year, seconds, ampm
-        visitSimpleDateFormatPattern(
-                simpleDateFormatPattern,
-                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
-                true,
-                patterns
-        );
-
         return parseDateParsePattern(
-                String.join(
-                        SEPARATOR.string(),
-                        patterns
+                simpleDateFormat(
+                        simpleDateFormat,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE
                 )
         );
     }
@@ -272,25 +258,11 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * Returns an equivalent {@link SpreadsheetDateTimeParsePattern} for the given {@link SimpleDateFormat}.
      */
     public static SpreadsheetDateTimeParsePattern dateTimeParsePattern(final SimpleDateFormat simpleDateFormat) {
-        Objects.requireNonNull(simpleDateFormat, "simpleDateFormat");
-
-        final Set<String> patterns = Sets.ordered();
-
-        final String simpleDateFormatPattern = simpleDateFormat.toPattern();
-
-        // include all year, seconds, ampm
-        visitSimpleDateFormatPattern(
-                simpleDateFormatPattern,
-                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
-                true,
-                patterns
-        );
-
         return parseDateTimeParsePattern(
-                String.join(
-                        SEPARATOR.string(),
-                        patterns
+                simpleDateFormat(
+                        simpleDateFormat,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE
                 )
         );
     }
@@ -299,6 +271,18 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * Returns an equivalent {@link SpreadsheetTimeParsePattern} for the given {@link SimpleDateFormat}.
      */
     public static SpreadsheetTimeParsePattern timeParsePattern(final SimpleDateFormat simpleDateFormat) {
+        return parseTimeParsePattern(
+                simpleDateFormat(
+                        simpleDateFormat,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE
+                )
+        );
+    }
+
+    private static String simpleDateFormat(final SimpleDateFormat simpleDateFormat,
+                                           final SpreadsheetPatternSimpleDateFormatPatternVisitorYear year,
+                                           final SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds seconds) {
         Objects.requireNonNull(simpleDateFormat, "simpleDateFormat");
 
         final Set<String> patterns = Sets.ordered();
@@ -308,17 +292,15 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         // include all year, seconds, ampm
         visitSimpleDateFormatPattern(
                 simpleDateFormatPattern,
-                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
-                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
+                year,
+                seconds,
                 true,
                 patterns
         );
 
-        return parseTimeParsePattern(
-                String.join(
-                        SEPARATOR.string(),
-                        patterns
-                )
+        return String.join(
+                SEPARATOR.string(),
+                patterns
         );
     }
 
