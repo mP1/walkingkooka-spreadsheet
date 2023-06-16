@@ -505,7 +505,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // number...........................................................................................................
+    // numberFormatPatternLocale........................................................................................
 
     @Test
     public void testNumberFormatPatternLocaleNullLocaleFails() {
@@ -635,10 +635,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // dateFormatPattern................................................................................................
+    // parseDateFormatPattern...........................................................................................
 
     @Test
-    public void testDateFormatPatternNullFails() {
+    public void testParseDateFormatPatternNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseDateFormatPattern(null)
@@ -646,7 +646,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateFormatPatternIncompleteTextLiteralFails() {
+    public void testParseDateFormatPatternIncompleteTextLiteralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy\"Incomplete")
@@ -654,7 +654,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateFormatPattern() {
+    public void testParseDateFormatPattern() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy"),
                 LocalDate.of(1999, 12, 31),
@@ -663,7 +663,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateFormatPatternSeveral() {
+    public void testParseDateFormatPatternSeveral() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy;\"Ignored\";"),
                 LocalDate.of(1999, 12, 31),
@@ -672,7 +672,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateFormatPatternColor() {
+    public void testParseDateFormatPatternColor() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateFormatPattern("[BLACK]dd/mm/yyyy"),
                 LocalDate.of(1999, 12, 31),
@@ -682,7 +682,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateFormatPatternWithGeneral() {
+    public void testParseDateFormatPatternWithGeneral() {
         final LocalDate date = LocalDate.of(1999, 12, 31);
 
         this.formatAndCheck(
@@ -732,10 +732,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // DateParsePattern.................................................................................................
+    // parseDateParsePattern...........................................................................................
 
     @Test
-    public void testDateParsePatternParseNullFails() {
+    public void testParseDateParsePatternParseNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseDateParsePattern(null)
@@ -743,7 +743,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateParsePatternIncompleteTextLiteralFails() {
+    public void testParseDateParsePatternIncompleteTextLiteralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy\"Incomplete")
@@ -751,7 +751,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateParsePatternColorFails() {
+    public void testParseDateParsePatternColorFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseDateParsePattern("[BLACK]dd/mm/yyyy")
@@ -759,7 +759,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateParsePatternGeneralFails() {
+    public void testParseDateParsePatternGeneralFails() {
         assertThrows(
                 InvalidCharacterException.class,
                 () -> SpreadsheetPattern.parseDateParsePattern("General")
@@ -767,7 +767,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateParsePattern() {
+    public void testParseDateParsePattern() {
         this.parseAndCheck(
                 SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser(),
                 new FakeSpreadsheetParserContext(),
@@ -786,10 +786,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // DateTimeFormatPattern............................................................................................
+    // parseDateTimeFormatPattern.......................................................................................
 
     @Test
-    public void testDateTimeFormatPatternParseNullFails() {
+    public void testParseDateTimeFormatPatternParseNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseDateTimeFormatPattern(null)
@@ -797,7 +797,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeFormatPatternIncompleteTextLiteralFails() {
+    public void testParseDateTimeFormatPatternIncompleteTextLiteralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy\"Incomplete")
@@ -805,7 +805,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeFormatPattern() {
+    public void testParseDateTimeFormatPattern() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh/mm/ss \"Hello\""),
                 LocalDateTime.of(1999, 12, 31, 12, 58, 59),
@@ -814,7 +814,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeFormatPatternSeveral() {
+    public void testParseDateTimeFormatPatternSeveral() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh/mm/ss \"Hello\";\"Ignored\""),
                 LocalDateTime.of(1999, 12, 31, 12, 58, 59),
@@ -823,7 +823,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeFormatPatternColor() {
+    public void testParseDateTimeFormatPatternColor() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateTimeFormatPattern("[BLACK]dd/mm/yyyy hh/mm/ss \"Hello\""),
                 LocalDateTime.of(1999, 12, 31, 12, 58, 59),
@@ -833,7 +833,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeFormatPatternWithGeneral() {
+    public void testParseDateTimeFormatPatternWithGeneral() {
         final LocalDateTime dateTime = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
 
         this.formatAndCheck(
@@ -886,7 +886,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     // DateTimeParsePattern............................................................................................
 
     @Test
-    public void testDateTimeParsePatternParseNullFails() {
+    public void testParseDateTimeParsePatternParseNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseDateTimeParsePattern(null)
@@ -894,7 +894,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternIncompleteTextLiteralFails() {
+    public void testParseDateTimeParsePatternIncompleteTextLiteralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss\"Incomplete")
@@ -902,7 +902,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternColorFails() {
+    public void testParseDateTimeParsePatternColorFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseDateTimeParsePattern("[BLACK]dd/mm/yyyy hh:mm:ss")
@@ -910,7 +910,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePatternGeneralFails() {
+    public void testParseDateTimeParsePatternGeneralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseDateTimeParsePattern("General")
@@ -918,7 +918,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testDateTimeParsePattern() {
+    public void testParseDateTimeParsePattern() {
         this.parseAndCheck(
                 SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").parser(),
                 new FakeSpreadsheetParserContext(),
@@ -941,10 +941,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // NumberTimeFormatPattern..........................................................................................
+    // parseNumberTimeFormatPattern.....................................................................................
 
     @Test
-    public void testNumberFormatPatternParseNullFails() {
+    public void testParseNumberFormatPatternParseNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseNumberFormatPattern(null)
@@ -952,7 +952,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberFormatPatternIncompleteTextLiteralFails() {
+    public void testParseNumberFormatPatternIncompleteTextLiteralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseNumberFormatPattern("#\"Incomplete")
@@ -960,7 +960,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberFormatPattern() {
+    public void testParseNumberFormatPattern() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("0.00 \"Hello\"").formatter(),
                 ExpressionNumberKind.DOUBLE.create(1.5),
@@ -990,7 +990,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberFormatPatternSeveral() {
+    public void testParseNumberFormatPatternSeveral() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("0.00 \"Hello\";").formatter(),
                 ExpressionNumberKind.BIG_DECIMAL.create(1.5),
@@ -1020,7 +1020,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberFormatPatternWithNumberIncludesPercent() {
+    public void testParseNumberFormatPatternWithNumberIncludesPercent() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("0.0 \"Hello\"").formatter(),
                 ExpressionNumberKind.DOUBLE.create(1.5),
@@ -1050,7 +1050,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberFormatPatternColor() {
+    public void testParseNumberFormatPatternColor() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("[BLACK]0.0 \"Hello\"").formatter(),
                 ExpressionNumberKind.DOUBLE.create(1.5),
@@ -1086,7 +1086,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberFormatPatternWithGeneral() {
+    public void testParseNumberFormatPatternWithGeneral() {
         final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(1.5);
 
         this.formatAndCheck(
@@ -1125,7 +1125,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberFormatPatternWithPercent() {
+    public void testParseNumberFormatPatternWithPercent() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("0.0% \"Hello\"").formatter(),
                 ExpressionNumberKind.DOUBLE.create(1.005),
@@ -1160,7 +1160,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberFormatPatternWithPercentCustomPercentSymbol() {
+    public void testParseNumberFormatPatternWithPercentCustomPercentSymbol() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("0.0% \"Hello\"").formatter(),
                 ExpressionNumberKind.DOUBLE.create(1.005),
@@ -1194,10 +1194,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // NumberParsePattern...............................................................................................
+    // parseNumberParsePattern..........................................................................................
 
     @Test
-    public void testNumberParsePatternParseNullFails() {
+    public void testParseNumberParsePatternParseNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseNumberFormatPattern(null)
@@ -1205,7 +1205,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberParsePatternIncompleteTextLiteralFails() {
+    public void testParseNumberParsePatternIncompleteTextLiteralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseNumberParsePattern("#\"Incomplete")
@@ -1213,7 +1213,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberParsePatternColorFails() {
+    public void testParseNumberParsePatternColorFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseNumberParsePattern("[BLACK]#.#")
@@ -1221,7 +1221,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberParsePatternGeneralFails() {
+    public void testParseNumberParsePatternGeneralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseNumberParsePattern("General")
@@ -1229,7 +1229,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberParsePattern() {
+    public void testParseNumberParsePattern() {
         this.parseAndCheck(
                 SpreadsheetPattern.parseNumberParsePattern("#.#").parser(),
                 new FakeSpreadsheetParserContext() {
@@ -1267,7 +1267,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testNumberParsePatternPercent() {
+    public void testParseNumberParsePatternPercent() {
         this.parseAndCheck(
                 SpreadsheetPattern.parseNumberParsePattern("#.#%").parser(),
                 new FakeSpreadsheetParserContext() {
@@ -1397,10 +1397,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // TextFormatPattern................................................................................................
+    // parseTextFormatPattern..........................................................................................
 
     @Test
-    public void testTextFormatPatternParseNullFails() {
+    public void testParseTextFormatPatternParseNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseTextFormatPattern(null)
@@ -1408,7 +1408,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTextFormatPatternGeneralFails() {
+    public void testParseTextFormatPatternGeneralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseTextFormatPattern("General")
@@ -1416,7 +1416,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTextFormatPatternIncompleteTextLiteralFails() {
+    public void testParseTextFormatPatternIncompleteTextLiteralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseTextFormatPattern("@\"Incomplete")
@@ -1424,7 +1424,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTextFormatPattern() {
+    public void testParseTextFormatPattern() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseTextFormatPattern("@@ \"Hello\"").formatter(),
                 "Banana",
@@ -1446,7 +1446,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTextFormatPatternColor() {
+    public void testParseTextFormatPatternColor() {
         this.formatAndCheck(
                 SpreadsheetPattern.parseTextFormatPattern("[RED]@@ \"Hello\"").formatter(),
                 "Banana",
@@ -1474,10 +1474,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // TimeFormatPattern................................................................................................
+    // parseTimeFormatPattern...........................................................................................
 
     @Test
-    public void testTimeFormatPatternFormatNullFails() {
+    public void testParseTimeFormatPatternFormatNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseTimeFormatPattern(null)
@@ -1486,12 +1486,12 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
     // https://github.com/mP1/walkingkooka-spreadsheet/issues/2909
     @Test
-    public void testTimeFormatPatternGeneralShouldFail() {
+    public void testParseTimeFormatPatternGeneralShouldFail() {
         SpreadsheetPattern.parseTimeFormatPattern("General");
     }
 
     @Test
-    public void testTimeFormatPatternIncompleteTextLiteralFails() {
+    public void testParseTimeFormatPatternIncompleteTextLiteralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss\"Incomplete")
@@ -1499,7 +1499,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeFormatPattern() {
+    public void testParseTimeFormatPattern() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseTimeFormatPattern("hh/mm/ss"),
                 LocalTime.of(12, 58, 59),
@@ -1508,7 +1508,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeFormatPatternSeveral() {
+    public void testParseTimeFormatPatternSeveral() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseTimeFormatPattern("hh/mm/ss;\"Ignored\""),
                 LocalTime.of(12, 58, 59),
@@ -1517,7 +1517,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeFormatPatternColor() {
+    public void testParseTimeFormatPatternColor() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseTimeFormatPattern("[BLACK]hh/mm/ss"),
                 LocalTime.of(12, 58, 59),
@@ -1529,7 +1529,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeFormatPatternWithGeneral() {
+    public void testParseTimeFormatPatternWithGeneral() {
         final LocalTime time = LocalTime.of(12, 58, 59);
 
         this.formatAndCheck(
@@ -1582,7 +1582,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     // timeParsePattern.................................................................................................
 
     @Test
-    public void testTimeParsePatternParseNullFails() {
+    public void testParseTimeParsePatternParseNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseTimeParsePattern(null)
@@ -1590,7 +1590,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeParsePatternIncompleteTextLiteralFails() {
+    public void testParseTimeParsePatternIncompleteTextLiteralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss\"Incomplete")
@@ -1598,7 +1598,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeParsePatternColorFails() {
+    public void testParseTimeParsePatternColorFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseTimeParsePattern("[BLACK]hh:mm:ss")
@@ -1606,7 +1606,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeParsePatternGeneralFails() {
+    public void testParseTimeParsePatternGeneralFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetPattern.parseTimeParsePattern("General")
@@ -1614,7 +1614,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testTimeParsePattern() {
+    public void testParseTimeParsePattern() {
         this.parseAndCheck(
                 SpreadsheetPattern.parseTimeParsePattern("hh:mm").parser(),
                 new FakeSpreadsheetParserContext(),
