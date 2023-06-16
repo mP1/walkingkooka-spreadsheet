@@ -821,6 +821,44 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    // dateTimeParsePattern.............................................................................................
+
+    @Test
+    public void testDateTimeParsePatternWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.dateTimeParsePattern((SimpleDateFormat) null)
+        );
+    }
+
+    @Test
+    public void testDateTimeParsePattern() {
+        final String pattern = "yyyy/MM/dd HH:mm";
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        final SpreadsheetDateTimeParsePattern dateTimeParsePattern = SpreadsheetPattern.dateTimeParsePattern(simpleDateFormat);
+
+        this.parseAndCheck(
+                dateTimeParsePattern.parser(),
+                new FakeSpreadsheetParserContext(),
+                "1999/12/31 12:58",
+                SpreadsheetParserToken.dateTime(
+                        Lists.of(
+                                SpreadsheetParserToken.year(1999, "1999"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.monthNumber(12, "12"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.dayNumber(31, "31"),
+                                SpreadsheetParserToken.whitespace(" ", " "),
+                                SpreadsheetParserToken.hour(12, "12"),
+                                SpreadsheetParserToken.textLiteral(":", ":"),
+                                SpreadsheetParserToken.minute(58, "58")
+                        ),
+                        "1999/12/31 12:58"
+                ),
+                "1999/12/31 12:58"
+        );
+    }
+
     // parseDateTimeFormatPattern.......................................................................................
 
     @Test

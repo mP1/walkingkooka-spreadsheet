@@ -268,6 +268,33 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
+    /**
+     * Returns an equivalent {@link SpreadsheetDateTimeParsePattern} for the given {@link SimpleDateFormat}.
+     */
+    public static SpreadsheetDateTimeParsePattern dateTimeParsePattern(final SimpleDateFormat simpleDateFormat) {
+        Objects.requireNonNull(simpleDateFormat, "simpleDateFormat");
+
+        final Set<String> patterns = Sets.ordered();
+
+        final String simpleDateFormatPattern = simpleDateFormat.toPattern();
+
+        // include all year, seconds, ampm
+        visitSimpleDateFormatPattern(
+                simpleDateFormatPattern,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
+                true,
+                patterns
+        );
+
+        return parseDateTimeParsePattern(
+                String.join(
+                        SEPARATOR.string(),
+                        patterns
+                )
+        );
+    }
+
     private final static boolean DATE = true;
     private final static boolean NOT_DATE = !DATE;
 
