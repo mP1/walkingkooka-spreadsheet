@@ -1547,6 +1547,40 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    // timeParsePattern................................................................................................
+
+    @Test
+    public void testTimeParsePatternWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPattern.timeParsePattern((SimpleDateFormat) null)
+        );
+    }
+
+    @Test
+    public void testTimeParsePattern() {
+        final String pattern = "HH/mm/ss";
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        final SpreadsheetTimeParsePattern timeParsePattern = SpreadsheetPattern.timeParsePattern(simpleDateFormat);
+
+        this.parseAndCheck(
+                timeParsePattern.parser(),
+                new FakeSpreadsheetParserContext(),
+                "12/58/59",
+                SpreadsheetParserToken.time(
+                        Lists.of(
+                                SpreadsheetParserToken.hour(12, "12"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.minute(58, "58"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.seconds(59, "59")
+                        ),
+                        "12/58/59"
+                ),
+                "12/58/59"
+        );
+    }
+
     // parseTimeFormatPattern...........................................................................................
 
     @Test
