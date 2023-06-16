@@ -83,7 +83,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     /**
      * Factory that creates a {@link SpreadsheetDateParsePattern} from the given tokens.
      */
-    public static SpreadsheetDateParsePattern dateParse(final ParserToken token) {
+    public static SpreadsheetDateParsePattern dateParsePattern(final ParserToken token) {
         return SpreadsheetDateParsePattern.with(token);
     }
 
