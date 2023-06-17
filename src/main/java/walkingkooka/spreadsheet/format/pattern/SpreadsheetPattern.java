@@ -50,7 +50,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
@@ -499,21 +498,6 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Creates a {@link SpreadsheetNumberParsePattern} using the {@link Locale}
-     */
-    public static SpreadsheetNumberParsePattern numberParsePatternLocale(final Locale locale) {
-        checkLocale(locale);
-
-        final String number = decimalFormatPattern(DecimalFormat.getInstance(locale));
-        final String integer = decimalFormatPattern(DecimalFormat.getIntegerInstance(locale));
-
-        return parseNumberParsePattern(
-                number.equals(integer) ?
-                        number :
-                        number + SEPARATOR.string() + integer);
-    }
-
-    /**
      * Takes a {@link DecimalFormat} and returns its {@link SpreadsheetNumberParsePattern} equivalent.
      * This method may be used to extract locale aware {@link SpreadsheetNumberParsePattern}. This will be used by
      * https://github.com/mP1/walkingkooka-spreadsheet-dominokit to source locale aware number and currency patterns.
@@ -527,15 +511,6 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         return parseNumberParsePattern(
                 decimalFormat.toPattern()
         );
-    }
-
-    /**
-     * This makes an assumption that a {@link DecimalFormat} pattern will only use characters that are also equal in
-     * functionality and meaning within a spreadsheet number format.
-     */
-    static String decimalFormatPattern(final NumberFormat numberFormat) {
-        final DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
-        return decimalFormat.toPattern();
     }
 
     // parseDateFormatPatterns...........................................................................................

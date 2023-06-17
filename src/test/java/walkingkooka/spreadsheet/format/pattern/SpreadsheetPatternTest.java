@@ -506,68 +506,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // numberParsePatternLocale........................................................................................
-
-    @Test
-    public void testNumberParsePatternLocale() {
-        final Parser<SpreadsheetParserContext> parser = SpreadsheetPattern.numberParsePatternLocale(EN_AU).parser();
-        final String text = "1d2";
-        final TextCursor cursor = TextCursors.charSequence(text);
-
-        this.checkEquals(
-                ExpressionNumberKind.BIG_DECIMAL.create(1.2),
-                parser.parse(
-                        cursor,
-                        new FakeSpreadsheetParserContext() {
-
-                            @Override
-                            public char decimalSeparator() {
-                                return 'd';
-                            }
-
-                            @Override
-                            public char groupSeparator() {
-                                return 'g';
-                            }
-
-                            @Override
-                            public char negativeSign() {
-                                return 'n';
-                            }
-
-                            @Override
-                            public char percentageSymbol() {
-                                return '*';
-                            }
-
-                            @Override
-                            public char positiveSign() {
-                                return 'p';
-                            }
-                        }
-                ).map(t -> t.cast(SpreadsheetNumberParserToken.class).toNumber(
-                        new FakeExpressionEvaluationContext() {
-
-                            @Override
-                            public char negativeSign() {
-                                return 'n';
-                            }
-
-                            @Override
-                            public char positiveSign() {
-                                return 'p';
-                            }
-
-                            @Override
-                            public ExpressionNumberKind expressionNumberKind() {
-                                return ExpressionNumberKind.BIG_DECIMAL;
-                            }
-                        })
-                ).orElse(null),
-                () -> "parse " + CharSequences.quoteAndEscape(text) + " parser: " + parser
-        );
-    }
-
     // dateParsePattern................................................................................................
 
     @Test

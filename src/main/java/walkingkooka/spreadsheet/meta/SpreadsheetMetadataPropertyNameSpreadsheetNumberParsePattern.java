@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -58,8 +59,21 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern extends
 
     @Override
     Optional<SpreadsheetNumberParsePattern> extractLocaleValue(final Locale locale) {
+        final SpreadsheetNumberParsePattern number = SpreadsheetPattern.decimalFormat(
+                (DecimalFormat) DecimalFormat.getInstance(locale)
+        );
+        final SpreadsheetNumberParsePattern integer = SpreadsheetPattern.decimalFormat(
+                (DecimalFormat) DecimalFormat.getIntegerInstance(locale)
+        );
+
         return Optional.of(
-                SpreadsheetPattern.numberParsePatternLocale(locale)
+                number.equals(integer) ?
+                        number :
+                        SpreadsheetPattern.parseNumberParsePattern(
+                                number.text() +
+                                        SpreadsheetPattern.SEPARATOR.string() +
+                                        integer.text()
+                        )
         );
     }
 
