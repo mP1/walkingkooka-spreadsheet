@@ -506,75 +506,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // numberFormatPatternLocale........................................................................................
-
-    @Test
-    public void testNumberFormatPatternLocaleNullLocaleFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetPattern.numberFormatPatternLocale(null)
-        );
-    }
-
-    @Test
-    public void testNumberParsePatternLocaleNullLocaleFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetPattern.numberParsePatternLocale(null)
-        );
-    }
-
-    @Test
-    public void testNumberFormatLocale() {
-        this.formatAndCheck(
-                SpreadsheetPattern.numberFormatPatternLocale(EN_AU).formatter(),
-                ExpressionNumberKind.DOUBLE.create(12.5),
-                new FakeSpreadsheetFormatterContext() {
-
-                    @Override
-                    public boolean canConvert(final Object value,
-                                              final Class<?> type) {
-                        return value instanceof ExpressionNumber && type == ExpressionNumber.class;
-                    }
-
-                    @Override
-                    public <T> Either<T, String> convert(final Object value,
-                                                         final Class<T> target) {
-                        this.canConvertOrFail(value, target);
-                        return this.successfulConversion(
-                                value,
-                                target
-                        );
-                    }
-
-                    @Override
-                    public char decimalSeparator() {
-                        return 'd';
-                    }
-
-                    @Override
-                    public MathContext mathContext() {
-                        return MathContext.DECIMAL32;
-                    }
-
-                    @Override
-                    public char negativeSign() {
-                        return 'n';
-                    }
-
-                    @Override
-                    public char positiveSign() {
-                        return 'p';
-                    }
-
-                    @Override
-                    public ExpressionNumberKind expressionNumberKind() {
-                        return ExpressionNumberKind.BIG_DECIMAL;
-                    }
-                },
-                "12d5"
-        );
-    }
+    // numberParsePatternLocale........................................................................................
 
     @Test
     public void testNumberParsePatternLocale() {

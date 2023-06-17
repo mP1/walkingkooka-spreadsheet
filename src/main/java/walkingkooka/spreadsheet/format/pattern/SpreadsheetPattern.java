@@ -499,17 +499,6 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Creates a {@link SpreadsheetNumberFormatPattern} using the {@link Locale}
-     */
-    public static SpreadsheetNumberFormatPattern numberFormatPatternLocale(final Locale locale) {
-        checkLocale(locale);
-
-        return parseNumberFormatPattern(
-                decimalFormatPattern(DecimalFormat.getInstance(locale))
-        );
-    }
-
-    /**
      * Creates a {@link SpreadsheetNumberParsePattern} using the {@link Locale}
      */
     public static SpreadsheetNumberParsePattern numberParsePatternLocale(final Locale locale) {
