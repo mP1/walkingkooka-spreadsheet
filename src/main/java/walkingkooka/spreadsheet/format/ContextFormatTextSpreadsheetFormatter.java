@@ -20,19 +20,19 @@ package walkingkooka.spreadsheet.format;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatter} that delegates formatting to {@link SpreadsheetFormatterContext#defaultFormatText(Object)}.
+ * A {@link SpreadsheetFormatter} that delegates formatting to {@link SpreadsheetFormatterContext#format(Object)}.
  */
-final class DefaultFormatTextSpreadsheetFormatter extends SpreadsheetFormatter2 {
+final class ContextFormatTextSpreadsheetFormatter extends SpreadsheetFormatter2 {
 
     /**
-     * The {@link DefaultFormatTextSpreadsheetFormatter} singleton instance.
+     * The {@link ContextFormatTextSpreadsheetFormatter} singleton instance.
      */
-    static final DefaultFormatTextSpreadsheetFormatter INSTANCE = new DefaultFormatTextSpreadsheetFormatter();
+    static final ContextFormatTextSpreadsheetFormatter INSTANCE = new ContextFormatTextSpreadsheetFormatter();
 
     /**
      * Private ctor use factory
      */
-    private DefaultFormatTextSpreadsheetFormatter() {
+    private ContextFormatTextSpreadsheetFormatter() {
         super();
     }
 
@@ -43,11 +43,11 @@ final class DefaultFormatTextSpreadsheetFormatter extends SpreadsheetFormatter2 
 
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
-        return context.defaultFormatText(value);
+        return context.format(value);
     }
 
     @Override
     public String toString() {
-        return "defaultFormatText";
+        return "format";
     }
 }

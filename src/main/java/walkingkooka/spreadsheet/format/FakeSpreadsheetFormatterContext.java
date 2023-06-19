@@ -40,7 +40,7 @@ public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterCon
     }
 
     @Override
-    public Optional<SpreadsheetText> defaultFormatText(final Object value) {
+    public Optional<SpreadsheetText> format(final Object value) {
         throw new UnsupportedOperationException();
     }
 }

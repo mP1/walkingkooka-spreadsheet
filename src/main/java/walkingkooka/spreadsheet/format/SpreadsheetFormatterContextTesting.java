@@ -45,18 +45,18 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
                 () -> "colorName " + name + " " + context);
     }
 
-    default void defaultFormatTextAndCheck(final Object value,
-                                           final Optional<SpreadsheetText> formattedText) {
-        this.defaultFormatTextAndCheck(this.createContext(),
+    default void formatAndCheck(final Object value,
+                                final Optional<SpreadsheetText> expected) {
+        this.formatAndCheck(this.createContext(),
                 value,
-                formattedText);
+                expected);
     }
 
-    default void defaultFormatTextAndCheck(final SpreadsheetFormatterContext context,
-                                           final Object value,
-                                           final Optional<SpreadsheetText> formattedText) {
-        this.checkEquals(formattedText,
-                context.defaultFormatText(value),
+    default void formatAndCheck(final SpreadsheetFormatterContext context,
+                                final Object value,
+                                final Optional<SpreadsheetText> expected) {
+        this.checkEquals(expected,
+                context.format(value),
                 () -> context + " " + CharSequences.quoteIfChars(value));
     }
 

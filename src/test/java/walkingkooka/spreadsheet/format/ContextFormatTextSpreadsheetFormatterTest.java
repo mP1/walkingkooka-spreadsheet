@@ -25,7 +25,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public final class DefaultFormatTextSpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<DefaultFormatTextSpreadsheetFormatter> {
+public final class ContextFormatTextSpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<ContextFormatTextSpreadsheetFormatter> {
 
     private final static BigDecimal BIG_DECIMAL = BigDecimal.valueOf(123);
     private final static String BIGDECIMAL_STRING = "123D00Text";
@@ -53,13 +53,13 @@ public final class DefaultFormatTextSpreadsheetFormatterTest extends Spreadsheet
     public void testToString() {
         this.toStringAndCheck(
                 this.createFormatter(),
-                "defaultFormatText"
+                "format"
         );
     }
 
     @Override
-    public DefaultFormatTextSpreadsheetFormatter createFormatter() {
-        return DefaultFormatTextSpreadsheetFormatter.INSTANCE;
+    public ContextFormatTextSpreadsheetFormatter createFormatter() {
+        return ContextFormatTextSpreadsheetFormatter.INSTANCE;
     }
 
     @Override
@@ -132,7 +132,7 @@ public final class DefaultFormatTextSpreadsheetFormatterTest extends Spreadsheet
             }
 
             @Override
-            public Optional<SpreadsheetText> defaultFormatText(final Object value) {
+            public Optional<SpreadsheetText> format(final Object value) {
                 if (value instanceof String) {
                     return this.formattedText(value.toString());
                 }
@@ -154,7 +154,7 @@ public final class DefaultFormatTextSpreadsheetFormatterTest extends Spreadsheet
     }
 
     @Override
-    public Class<DefaultFormatTextSpreadsheetFormatter> type() {
-        return DefaultFormatTextSpreadsheetFormatter.class;
+    public Class<ContextFormatTextSpreadsheetFormatter> type() {
+        return ContextFormatTextSpreadsheetFormatter.class;
     }
 }

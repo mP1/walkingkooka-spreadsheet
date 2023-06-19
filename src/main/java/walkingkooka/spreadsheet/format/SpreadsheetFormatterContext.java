@@ -17,13 +17,14 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Context;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 
 import java.util.Optional;
 
 /**
- * A {@link }Context} that accompanies a value format, holding local sensitive attributes such as the decimal point character.
+ * A {@link Context} that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
 public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext {
 
@@ -46,7 +47,7 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
     /**
      * Provides a default format text.
      */
-    Optional<SpreadsheetText> defaultFormatText(final Object value);
+    Optional<SpreadsheetText> format(final Object value);
 
     /**
      * Creates a {@link SpreadsheetFormatException}

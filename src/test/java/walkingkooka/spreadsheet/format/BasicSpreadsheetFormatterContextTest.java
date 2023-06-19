@@ -69,7 +69,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 null,
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,
-                this.defaultSpreadsheetFormatter(),
+                this.formatter(),
                 this.converterContext()
         );
     }
@@ -80,7 +80,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 this.numberToColor(),
                 null,
                 CELL_CHARACTER_WIDTH,
-                this.defaultSpreadsheetFormatter(),
+                this.formatter(),
                 this.converterContext()
         );
     }
@@ -92,7 +92,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                         this.nameToColor(),
                         -1,
-                        this.defaultSpreadsheetFormatter(),
+                        this.formatter(),
                         this.converterContext()
                 )
         );
@@ -105,13 +105,13 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                         this.nameToColor(),
                         0,
-                        this.defaultSpreadsheetFormatter(),
+                        this.formatter(),
                         this.converterContext())
         );
     }
 
     @Test
-    public void testWithNullDefaultSpreadsheetFormatterFails() {
+    public void testWithNullFormatterFails() {
         this.withFails(
                 this.numberToColor(),
                 this.nameToColor(),
@@ -127,7 +127,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 this.numberToColor(),
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,
-                this.defaultSpreadsheetFormatter(),
+                this.formatter(),
                 null
         );
     }
@@ -135,7 +135,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private void withFails(final Function<Integer, Optional<Color>> numberToColor,
                            final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                            final int width,
-                           final SpreadsheetFormatter defaultSpreadsheetFormatter,
+                           final SpreadsheetFormatter formatter,
                            final SpreadsheetConverterContext converterContext) {
         assertThrows(
                 NullPointerException.class,
@@ -143,7 +143,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         numberToColor,
                         nameToColor,
                         width,
-                        defaultSpreadsheetFormatter,
+                        formatter,
                         converterContext
                 )
         );
@@ -202,8 +202,8 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     @Test
-    public void testDefaultFormatText() {
-        this.defaultFormatTextAndCheck(
+    public void testFormat() {
+        this.formatAndCheck(
                 BigDecimal.valueOf(12.5),
                 Optional.of(
                         SpreadsheetText.with("012.500")
@@ -229,7 +229,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,
-                this.defaultSpreadsheetFormatter(),
+                this.formatter(),
                 this.converterContext());
     }
 
@@ -271,7 +271,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     private final static int CELL_CHARACTER_WIDTH = 1;
 
-    private SpreadsheetFormatter defaultSpreadsheetFormatter() {
+    private SpreadsheetFormatter formatter() {
         return new SpreadsheetFormatter() {
             @Override
             public boolean canFormat(final Object value,
@@ -292,7 +292,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
             @Override
             public String toString() {
-                return BasicSpreadsheetFormatterContextTest.class.getSimpleName() + ".defaultSpreadsheetFormatter()";
+                return BasicSpreadsheetFormatterContextTest.class.getSimpleName() + ".formatter()";
             }
         };
     }
