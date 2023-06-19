@@ -193,7 +193,7 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     // eval scoped......................................................................................................
 
     /**
-     * Evaluates the given {@link Expression} using this as the context which should result in the defaultFormatText
+     * Evaluates the given {@link Expression} using this as the context which should result in the format
      * being used.
      */
     @Override

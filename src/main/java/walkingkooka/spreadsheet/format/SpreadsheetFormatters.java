@@ -62,6 +62,13 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ContextFormatTextSpreadsheetFormatter}
+     */
+    public static SpreadsheetFormatter contextFormat() {
+        return ContextFormatTextSpreadsheetFormatter.INSTANCE;
+    }
+
+    /**
      * {@see ConverterSpreadsheetFormatter}
      */
     public static SpreadsheetFormatter converter(final Converter<ExpressionNumberConverterContext> converter) {
@@ -89,13 +96,6 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     public static SpreadsheetFormatter fraction(final SpreadsheetFormatFractionParserToken token,
                                                 final Function<BigDecimal, Fraction> fractioner) {
         return FractionSpreadsheetFormatter.with(token, fractioner);
-    }
-
-    /**
-     * {@see DefaultFormatTextSpreadsheetFormatter}
-     */
-    public static SpreadsheetFormatter defaultFormatText() {
-        return DefaultFormatTextSpreadsheetFormatter.INSTANCE;
     }
 
     /**
