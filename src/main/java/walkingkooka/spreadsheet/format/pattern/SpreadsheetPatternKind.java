@@ -17,11 +17,16 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.NeverError;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CaseKind;
@@ -29,7 +34,9 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
@@ -127,6 +134,61 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     }
 
     private final Set<SpreadsheetFormatParserTokenKind> spreadsheetFormatParserTokenKinds;
+
+    /**
+     * Returns a {@link SpreadsheetFormatter} that uses the default pattern for the given {@link Locale}.
+     */
+    public SpreadsheetFormatter formatter(final Locale locale) {
+        Objects.requireNonNull(locale, "locale");
+
+        final SpreadsheetFormatter formatter;
+
+        switch (this) {
+            case DATE_FORMAT_PATTERN:
+            case DATE_PARSE_PATTERN:
+                formatter = SpreadsheetPattern.dateFormatPatternLocale(locale)
+                        .formatter();
+                break;
+            case DATE_TIME_FORMAT_PATTERN:
+            case DATE_TIME_PARSE_PATTERN:
+                formatter = SpreadsheetPattern.dateTimeFormatPatternLocale(locale)
+                        .formatter();
+                break;
+            case NUMBER_FORMAT_PATTERN:
+            case NUMBER_PARSE_PATTERN:
+                formatter = SpreadsheetPattern.decimalFormat(
+                                (DecimalFormat)
+                                        DecimalFormat.getInstance(locale)
+                        ).toFormat()
+                        .formatter();
+                break;
+            case TEXT_FORMAT_PATTERN:
+                formatter = SpreadsheetFormatters.text(
+                        SpreadsheetFormatParserToken.text(
+                                Lists.of(
+                                        SpreadsheetFormatParserToken.textPlaceholder(
+                                                "@",
+                                                "@"
+                                        )
+                                ),
+                                "@"
+                        )
+                );
+                break;
+            case TIME_FORMAT_PATTERN:
+            case TIME_PARSE_PATTERN:
+                formatter = SpreadsheetPattern.timeParsePatternLocale(locale)
+                        .toFormat()
+                        .formatter();
+                break;
+            default:
+                NeverError.unhandledCase(this, this.values());
+                formatter = null;
+                break;
+        }
+
+        return formatter;
+    }
 
     /**
      * This is the corresponding type name that appears in JSON for each pattern.

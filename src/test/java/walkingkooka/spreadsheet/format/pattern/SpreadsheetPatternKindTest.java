@@ -18,29 +18,45 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.visit.Visiting;
 
+import java.math.MathContext;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetPatternKindTest implements ClassTesting<SpreadsheetPatternKind> {
+public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTesting,
+        ClassTesting<SpreadsheetPatternKind> {
 
     @Test
     public void testDateTimeFormat() {
@@ -212,6 +228,377 @@ public final class SpreadsheetPatternKindTest implements ClassTesting<Spreadshee
                 expected.apply(pattern),
                 kind.parse(pattern),
                 () -> "parse " + CharSequences.quoteAndEscape(pattern)
+        );
+    }
+
+    // formatter........................................................................................................
+
+    private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
+
+    @Test
+    public void testFormatterDateFormatPattern() {
+        this.datePatternFormatAndCheck(SpreadsheetPatternKind.DATE_FORMAT_PATTERN);
+    }
+
+    @Test
+    public void testFormatterDateParsePattern() {
+        this.datePatternFormatAndCheck(SpreadsheetPatternKind.DATE_PARSE_PATTERN);
+    }
+
+    private void datePatternFormatAndCheck(final SpreadsheetPatternKind kind) {
+        final LocalDate localDate = LocalDate.of(1999, 12, 31);
+
+        this.formatAndCheck(
+                kind.formatter(LOCALE),
+                localDate,
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return value instanceof LocalDate && LocalDateTime.class == type;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        this.canConvertOrFail(value, target);
+                        return this.successfulConversion(
+                                LocalDateTime.of(
+                                        LocalDate.class.cast(value),
+                                        LocalTime.MIN
+                                ),
+                                target
+                        );
+                    }
+
+                    @Override
+                    public List<String> monthNames() {
+                        return this.dateTimeContext.monthNames();
+                    }
+
+                    @Override
+                    public String monthName(final int month) {
+                        return this.dateTimeContext.monthName(month);
+                    }
+
+                    @Override
+                    public List<String> monthNameAbbreviations() {
+                        return this.dateTimeContext.monthNameAbbreviations();
+                    }
+
+                    @Override
+                    public String monthNameAbbreviation(final int month) {
+                        return this.dateTimeContext.monthNameAbbreviation(month);
+                    }
+
+                    @Override
+                    public List<String> weekDayNames() {
+                        return this.dateTimeContext.weekDayNames();
+                    }
+
+                    @Override
+                    public String weekDayName(final int day) {
+                        return this.dateTimeContext.weekDayName(day);
+                    }
+
+                    @Override
+                    public List<String> weekDayNameAbbreviations() {
+                        return this.weekDayNameAbbreviations();
+                    }
+
+                    @Override
+                    public String weekDayNameAbbreviation(int day) {
+                        return this.dateTimeContext.weekDayNameAbbreviation(day);
+                    }
+
+                    private final DateTimeContext dateTimeContext = DateTimeContexts.locale(
+                            LOCALE,
+                            1950,
+                            50,
+                            () -> {
+                                throw new UnsupportedOperationException();
+                            }
+                    );
+                },
+                "Friday, 31 December 1999"
+        );
+    }
+
+    @Test
+    public void testFormatterDateTimeFormatPattern() {
+        this.dateTimePatternFormatAndCheck(SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN);
+    }
+
+    @Test
+    public void testFormatterDateTimeParsePattern() {
+        this.dateTimePatternFormatAndCheck(SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN);
+    }
+
+    private void dateTimePatternFormatAndCheck(final SpreadsheetPatternKind kind) {
+        final LocalDateTime localDateTime = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
+
+        this.formatAndCheck(
+                kind.formatter(LOCALE),
+                localDateTime,
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return value instanceof LocalDateTime && LocalDateTime.class == type;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        this.canConvertOrFail(value, target);
+                        return this.successfulConversion(
+                                value,
+                                target
+                        );
+                    }
+
+                    @Override
+                    public List<String> ampms() {
+                        return this.dateTimeContext.ampms();
+                    }
+
+                    @Override
+                    public String ampm(final int hourOfDay) {
+                        return this.dateTimeContext.ampm(hourOfDay);
+                    }
+
+                    @Override
+                    public List<String> monthNames() {
+                        return this.dateTimeContext.monthNames();
+                    }
+
+                    @Override
+                    public String monthName(final int month) {
+                        return this.dateTimeContext.monthName(month);
+                    }
+
+                    @Override
+                    public List<String> monthNameAbbreviations() {
+                        return this.dateTimeContext.monthNameAbbreviations();
+                    }
+
+                    @Override
+                    public String monthNameAbbreviation(final int month) {
+                        return this.dateTimeContext.monthNameAbbreviation(month);
+                    }
+
+                    @Override
+                    public List<String> weekDayNames() {
+                        return this.dateTimeContext.weekDayNames();
+                    }
+
+                    @Override
+                    public String weekDayName(final int day) {
+                        return this.dateTimeContext.weekDayName(day);
+                    }
+
+                    @Override
+                    public List<String> weekDayNameAbbreviations() {
+                        return this.weekDayNameAbbreviations();
+                    }
+
+                    @Override
+                    public String weekDayNameAbbreviation(int day) {
+                        return this.dateTimeContext.weekDayNameAbbreviation(day);
+                    }
+
+                    private final DateTimeContext dateTimeContext = DateTimeContexts.locale(
+                            LOCALE,
+                            1950,
+                            50,
+                            () -> {
+                                throw new UnsupportedOperationException();
+                            }
+                    );
+                },
+                "Friday, 31 December 1999 at 12:58:59 PM"
+        );
+    }
+
+    @Test
+    public void testFormatterNumberFormatPattern() {
+        this.numberPatternFormatAndCheck(SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN);
+    }
+
+    @Test
+    public void testFormatterNumberParsePattern() {
+        this.numberPatternFormatAndCheck(SpreadsheetPatternKind.NUMBER_PARSE_PATTERN);
+    }
+
+    private void numberPatternFormatAndCheck(final SpreadsheetPatternKind kind) {
+        final ExpressionNumberKind expressionNumberKind = ExpressionNumberKind.DOUBLE;
+        final ExpressionNumber number = expressionNumberKind.create(-12.56);
+
+        this.formatAndCheck(
+                kind.formatter(LOCALE),
+                number,
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return value instanceof ExpressionNumber && ExpressionNumber.class == type;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        this.canConvertOrFail(value, target);
+                        return this.successfulConversion(
+                                value,
+                                target
+                        );
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return this.context.decimalSeparator();
+                    }
+
+                    @Override
+                    public char negativeSign() {
+                        return this.context.negativeSign();
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return this.context.mathContext();
+                    }
+
+                    private final DecimalNumberContext context = DecimalNumberContexts.american(MathContext.DECIMAL32);
+                },
+                "-12.56"
+        );
+    }
+
+    @Test
+    public void testFormatterTextFormatPattern() {
+        final String text = "Abc123";
+
+        this.formatAndCheck(
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN.formatter(LOCALE),
+                text,
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return value instanceof String && String.class == type;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        this.canConvertOrFail(value, target);
+                        return this.successfulConversion(
+                                value,
+                                target
+                        );
+                    }
+                },
+                text
+        );
+    }
+
+    @Test
+    public void testFormatterTimeFormatPattern() {
+        this.timePatternFormatAndCheck(SpreadsheetPatternKind.TIME_FORMAT_PATTERN);
+    }
+
+    @Test
+    public void testFormatterTimeParsePattern() {
+        this.timePatternFormatAndCheck(SpreadsheetPatternKind.TIME_PARSE_PATTERN);
+    }
+
+    private void timePatternFormatAndCheck(final SpreadsheetPatternKind kind) {
+        final LocalTime localTime = LocalTime.of(12, 58, 59);
+
+        this.formatAndCheck(
+                kind.formatter(LOCALE),
+                localTime,
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return value instanceof LocalTime && LocalDateTime.class == type;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        this.canConvertOrFail(value, target);
+                        return this.successfulConversion(
+                                LocalDateTime.of(
+                                        LocalDate.EPOCH,
+                                        LocalTime.class.cast(value)
+                                ),
+                                target
+                        );
+                    }
+
+                    @Override
+                    public List<String> ampms() {
+                        return this.dateTimeContext.ampms();
+                    }
+
+                    @Override
+                    public String ampm(final int hourOfDay) {
+                        return this.dateTimeContext.ampm(hourOfDay);
+                    }
+
+                    @Override
+                    public List<String> monthNames() {
+                        return this.dateTimeContext.monthNames();
+                    }
+
+                    @Override
+                    public String monthName(final int month) {
+                        return this.dateTimeContext.monthName(month);
+                    }
+
+                    @Override
+                    public List<String> monthNameAbbreviations() {
+                        return this.dateTimeContext.monthNameAbbreviations();
+                    }
+
+                    @Override
+                    public String monthNameAbbreviation(final int month) {
+                        return this.dateTimeContext.monthNameAbbreviation(month);
+                    }
+
+                    @Override
+                    public List<String> weekDayNames() {
+                        return this.dateTimeContext.weekDayNames();
+                    }
+
+                    @Override
+                    public String weekDayName(final int day) {
+                        return this.dateTimeContext.weekDayName(day);
+                    }
+
+                    @Override
+                    public List<String> weekDayNameAbbreviations() {
+                        return this.weekDayNameAbbreviations();
+                    }
+
+                    @Override
+                    public String weekDayNameAbbreviation(int day) {
+                        return this.dateTimeContext.weekDayNameAbbreviation(day);
+                    }
+
+                    private final DateTimeContext dateTimeContext = DateTimeContexts.locale(
+                            LOCALE,
+                            1950,
+                            50,
+                            () -> {
+                                throw new UnsupportedOperationException();
+                            }
+                    );
+                },
+                "12:58:59 PM"
         );
     }
 
