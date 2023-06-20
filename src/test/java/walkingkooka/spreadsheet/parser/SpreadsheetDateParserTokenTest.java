@@ -36,8 +36,8 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     @Test
-    public void testToExpressionDayNumberMonthNumberYear() {
-        this.toExpressionAndCheck2(
+    public void testToLocalDateDayNumberMonthNumberYear() {
+        this.testToLocalDateAndCheck(
                 date(),
                 dayNumber(),
                 slashTextLiteral(),
@@ -48,8 +48,8 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     @Test
-    public void testToExpressionYearMonthNumberDayNumber() {
-        this.toExpressionAndCheck2(
+    public void testToLocalDateYearMonthNumberDayNumber() {
+        this.testToLocalDateAndCheck(
                 date(),
                 year(),
                 slashTextLiteral(),
@@ -60,8 +60,8 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     @Test
-    public void testToExpressionDayNumberMonthNameYear() {
-        this.toExpressionAndCheck2(
+    public void testToLocalDateDayNumberMonthNameYear() {
+        this.testToLocalDateAndCheck(
                 date(),
                 dayNumber(),
                 slashTextLiteral(),
@@ -72,8 +72,8 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     @Test
-    public void testToExpressionDayNumberMonthNameAbbreviationYear() {
-        this.toExpressionAndCheck2(
+    public void testToLocalDateDayNumberMonthNameAbbreviationYear() {
+        this.testToLocalDateAndCheck(
                 date(),
                 dayNumber(),
                 slashTextLiteral(),
@@ -84,8 +84,8 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     @Test
-    public void testToExpressionDayNumberMonthNameInitialYear() {
-        this.toExpressionAndCheck2(
+    public void testToLocalDateDayNumberMonthNameInitialYear() {
+        this.testToLocalDateAndCheck(
                 date(),
                 dayNumber(),
                 slashTextLiteral(),
@@ -96,8 +96,8 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     @Test
-    public void testToExpressionDayNumberMonthNumber() {
-        this.toExpressionAndCheck2(
+    public void testToLocalDateDayNumberMonthNumber() {
+        this.testToLocalDateAndCheck(
                 LocalDate.of(DEFAULT_YEAR, MONTH, DAY),
                 dayNumber(),
                 slashTextLiteral(),
@@ -106,8 +106,8 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     @Test
-    public void testToExpressionDayNumberYear() {
-        this.toExpressionAndCheck2(
+    public void testToLocalDateDayNumberYear() {
+        this.testToLocalDateAndCheck(
                 LocalDate.of(YEAR, 1, DAY),
                 dayNumber(),
                 slashTextLiteral(),
@@ -116,8 +116,8 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     @Test
-    public void testToExpressionMonthNumberYear() {
-        this.toExpressionAndCheck2(
+    public void testToLocalDateMonthNumberYear() {
+        this.testToLocalDateAndCheck(
                 LocalDate.of(YEAR, MONTH, 1),
                 monthNumber(),
                 slashTextLiteral(),
@@ -126,8 +126,8 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     @Test
-    public void testToExpressionMonthNumberYearBeforeTwoDigitYearBefore() {
-        this.toExpressionAndCheck2(
+    public void testToLocalDateMonthNumberYearBeforeTwoDigitYearBefore() {
+        this.testToLocalDateAndCheck(
                 LocalDate.of(2010, MONTH, 1),
                 monthNumber(),
                 slashTextLiteral(),
@@ -136,8 +136,8 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     @Test
-    public void testToExpressionMonthNumberYearBeforeTwoDigitYearEqual() {
-        this.toExpressionAndCheck2(
+    public void testToLocalDateMonthNumberYearBeforeTwoDigitYearEqual() {
+        this.testToLocalDateAndCheck(
                 LocalDate.of(1920, MONTH, 1),
                 monthNumber(),
                 slashTextLiteral(),
@@ -146,8 +146,8 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     }
 
     @Test
-    public void testToExpressionMonthNumberYearBeforeTwoDigitYearAfter() {
-        this.toExpressionAndCheck2(
+    public void testToLocalDateMonthNumberYearBeforeTwoDigitYearAfter() {
+        this.testToLocalDateAndCheck(
                 LocalDate.of(1950, MONTH, 1),
                 monthNumber(),
                 slashTextLiteral(),
@@ -155,18 +155,18 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
         );
     }
 
-    private void toExpressionAndCheck2(final LocalDate expected,
-                                       final SpreadsheetParserToken... tokens) {
-        this.toExpressionAndCheck2(
+    private void testToLocalDateAndCheck(final LocalDate expected,
+                                         final SpreadsheetParserToken... tokens) {
+        this.testToLocalDateAndCheck(
                 this.expressionEvaluationContext(DEFAULT_YEAR, 20),
                 expected,
                 tokens
         );
     }
 
-    private void toExpressionAndCheck2(final ExpressionEvaluationContext context,
-                                       final LocalDate expected,
-                                       final SpreadsheetParserToken... tokens) {
+    private void testToLocalDateAndCheck(final ExpressionEvaluationContext context,
+                                         final LocalDate expected,
+                                         final SpreadsheetParserToken... tokens) {
         final List<ParserToken> tokensList = Lists.of(tokens);
 
         final SpreadsheetDateParserToken dateParserToken = SpreadsheetDateParserToken.with(

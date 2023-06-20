@@ -16,8 +16,8 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.visit.Visiting;
 
 import java.time.LocalDateTime;
@@ -39,12 +39,11 @@ public final class SpreadsheetDateTimeParserToken extends SpreadsheetParentParse
     /**
      * Creates a {@link LocalDateTime} from the components in this {@link SpreadsheetDateTimeParserToken}.
      */
-    public LocalDateTime toLocalDateTime(final ExpressionEvaluationContext context) {
+    public LocalDateTime toLocalDateTime(final DateTimeContext context) {
         return SpreadsheetParserTokenVisitorLocalDateTime.acceptSpreadsheetParentParserToken(
                 this,
                 context.defaultYear()
-        )
-                .toLocalDateTime(context);
+        ).toLocalDateTime(context);
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................
