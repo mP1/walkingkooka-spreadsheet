@@ -27,6 +27,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -89,8 +90,10 @@ abstract class SpreadsheetNonNumberParsePattern<V> extends SpreadsheetParsePatte
     private static SpreadsheetParserContext spreadsheetParserContext(final ConverterContext context) {
         return SpreadsheetParserContexts.basic(
                 context,
-                context,
-                ExpressionNumberKind.BIG_DECIMAL, // ignored
+                ExpressionNumberContexts.basic(
+                        ExpressionNumberKind.BIG_DECIMAL, // ignored not actually used.
+                        context
+                ),
                 ',' // ignored
         );
     }

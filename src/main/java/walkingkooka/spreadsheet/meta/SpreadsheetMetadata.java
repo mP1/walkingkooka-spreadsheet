@@ -744,8 +744,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
 
         return SpreadsheetParserContexts.basic(
                 this.dateTimeContext(now),
-                this.decimalNumberContext(),
-                this.expressionNumberKind(),
+                this.expressionNumberContext(),
                 valueSeparator
         );
     }

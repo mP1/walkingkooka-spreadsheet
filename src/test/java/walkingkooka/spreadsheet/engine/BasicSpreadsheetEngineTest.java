@@ -92,6 +92,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -11306,8 +11307,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 formula,
                                 SpreadsheetParserContexts.basic(
                                         DateTimeContexts.fake(),
-                                        converterContext(),
-                                        this.metadata().expressionNumberKind(),
+                                        ExpressionNumberContexts.basic(
+                                            this.metadata().expressionNumberKind(),
+                                            converterContext()
+                                        ),
                                         VALUE_SEPARATOR
                                 )
                         )
@@ -11559,8 +11562,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 .parse(TextCursors.charSequence(text),
                                         SpreadsheetParserContexts.basic(
                                                 this.dateTimeContext(),
-                                                this.decimalNumberContext(),
-                                                expressionNumberKind,
+                                                ExpressionNumberContexts.basic(
+                                                        expressionNumberKind,
+                                                        this.decimalNumberContext()
+                                                ),
                                                 VALUE_SEPARATOR
                                         )
                                 ).orElseThrow(() -> new AssertionError("Failed to parseFormula " + CharSequences.quote(text)))

@@ -54,6 +54,7 @@ import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
@@ -1320,8 +1321,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                         TextCursors.charSequence(text),
                         SpreadsheetParserContexts.basic(
                                 DateTimeContexts.fake(),
-                                DecimalNumberContexts.american(MathContext.DECIMAL32),
-                                kind,
+                                ExpressionNumberContexts.basic(
+                                        kind,
+                                        DecimalNumberContexts.american(MathContext.DECIMAL32)
+                                ),
                                 ','
                         )
                 ).get()
