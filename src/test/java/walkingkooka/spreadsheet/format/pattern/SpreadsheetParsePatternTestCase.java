@@ -53,6 +53,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokens;
@@ -271,6 +272,44 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                 parsePattern.value(),
                 formatPattern.value(),
                 () -> parsePattern + " toPattern.value"
+        );
+    }
+
+    // parse............................................................................................................
+
+    @Test
+    public final void testParseNullTextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createPattern()
+                        .parse(
+                                null,
+                                SpreadsheetParserContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    public final void testParseNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createPattern()
+                        .parse(
+                                "1",
+                                null
+                        )
+        );
+    }
+
+    @Test
+    public final void testParseInvalidTextFails() {
+        assertThrows(
+                ParserReporterException.class,
+                () -> this.createPattern()
+                        .parse(
+                                "!invalid",
+                                this.parserContext()
+                        )
         );
     }
 

@@ -65,13 +65,14 @@ public final class SpreadsheetDateTimeParsePattern extends SpreadsheetNonNumberP
         ).toLocalDateTime(context);
     }
 
-    // parseDateTime......................................................................................................
+    // parse......................................................................................................
 
     /**
      * Tries to parse the given {@link String text} into a {@link LocalDateTime} or throw.
      */
-    public LocalDateTime parseDateTime(final String text,
-                                       final SpreadsheetParserContext context) {
+    @Override
+    public LocalDateTime parse(final String text,
+                               final SpreadsheetParserContext context) {
         return this.parser()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), context)
