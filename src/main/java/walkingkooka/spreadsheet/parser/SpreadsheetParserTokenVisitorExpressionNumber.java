@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
@@ -36,7 +36,7 @@ final class SpreadsheetParserTokenVisitorExpressionNumber extends SpreadsheetPar
      * If the token includes a {@link SpreadsheetPercentSymbolParserToken} then the value will be divided by 100.
      */
     static ExpressionNumber toExpressionNumber(final SpreadsheetNumberParserToken token,
-                                               final ExpressionEvaluationContext context) {
+                                               final ExpressionNumberContext context) {
         Objects.requireNonNull(context, "context");
 
         final SpreadsheetParserTokenVisitorExpressionNumber visitor = new SpreadsheetParserTokenVisitorExpressionNumber();
