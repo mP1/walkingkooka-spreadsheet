@@ -25,6 +25,8 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.tree.expression.ExpressionNumberContext;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
@@ -41,6 +43,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static String CURRENCY = "$$";
     private final static char DECIMAL = 'D';
     private final static String EXPONENT = "X";
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static char GROUP_SEPARATOR = 'G';
     private final static char NEGATIVE = 'N';
     private final static char PERCENTAGE = 'R';
@@ -48,35 +51,27 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static Locale LOCALE = Locale.CANADA_FRENCH;
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
-    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.basic(CURRENCY,
-            DECIMAL,
-            EXPONENT,
-            GROUP_SEPARATOR,
-            NEGATIVE,
-            PERCENTAGE,
-            POSITIVE,
-            LOCALE,
-            MATH_CONTEXT);
-
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+    private final static ExpressionNumberContext EXPRESSION_NUMBER_CONTEXT = ExpressionNumberContexts.basic(
+            EXPRESSION_NUMBER_KIND,
+            DecimalNumberContexts.basic(
+                    CURRENCY,
+                    DECIMAL,
+                    EXPONENT,
+                    GROUP_SEPARATOR,
+                    NEGATIVE,
+                    PERCENTAGE,
+                    POSITIVE,
+                    LOCALE,
+                    MATH_CONTEXT
+            )
+    );
     private final static char VALUE_SEPARATOR = ',';
 
     @Test
     public void testWithNullDateTimeContextFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetParserContext.with(
                 null,
-                DECIMAL_NUMBER_CONTEXT,
-                EXPRESSION_NUMBER_KIND,
-                VALUE_SEPARATOR)
-        );
-    }
-
-    @Test
-    public void testWithNullDecimalNumberContextFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetParserContext.with(
-                DATE_TIME_CONTEXT,
-                null,
-                EXPRESSION_NUMBER_KIND,
+                EXPRESSION_NUMBER_CONTEXT,
                 VALUE_SEPARATOR)
         );
     }
@@ -85,12 +80,11 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     public void testWithNullExpressionNumberContextFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetParserContext.with(
                 DATE_TIME_CONTEXT,
-                DECIMAL_NUMBER_CONTEXT,
                 null,
                 VALUE_SEPARATOR)
         );
     }
-
+    
     @Test
     public void testLocale() {
         this.hasLocaleAndCheck(this.createContext(), LOCALE);
@@ -104,15 +98,17 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createContext(), DATE_TIME_CONTEXT + " " + DECIMAL_NUMBER_CONTEXT + " " + EXPRESSION_NUMBER_KIND + " ','");
+        this.toStringAndCheck(
+                this.createContext(),
+                DATE_TIME_CONTEXT + " " + EXPRESSION_NUMBER_CONTEXT + " ','"
+        );
     }
 
     @Override
     public BasicSpreadsheetParserContext createContext() {
         return BasicSpreadsheetParserContext.with(
                 DATE_TIME_CONTEXT,
-                DECIMAL_NUMBER_CONTEXT,
-                EXPRESSION_NUMBER_KIND,
+                EXPRESSION_NUMBER_CONTEXT,
                 VALUE_SEPARATOR
         );
     }

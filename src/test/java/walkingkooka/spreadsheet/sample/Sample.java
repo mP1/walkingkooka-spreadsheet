@@ -197,13 +197,7 @@ public final class Sample {
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(
                                 formula,
-                                SpreadsheetParserContexts.basic(
-                                        DateTimeContexts.fake(),
-                                        metadata.converterContext(
-                                                NOW,
-                                                RESOLVE_IF_LABEL),
-                                        EXPRESSION_NUMBER_KIND,
-                                        ',')
+                                metadata.parserContext(NOW)
                         ) // TODO should fetch from metadata prop
                         .get());
             }

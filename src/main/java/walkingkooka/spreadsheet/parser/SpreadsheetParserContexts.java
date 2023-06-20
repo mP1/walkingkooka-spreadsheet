@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.tree.expression.ExpressionNumberContext;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 public final class SpreadsheetParserContexts implements PublicStaticHelper {
@@ -28,13 +30,11 @@ public final class SpreadsheetParserContexts implements PublicStaticHelper {
      * {@see BasicSpreadsheetParserContext}
      */
     public static SpreadsheetParserContext basic(final DateTimeContext dateTimeContext,
-                                                 final DecimalNumberContext decimalNumberContext,
-                                                 final ExpressionNumberKind expressionNumberKind,
+                                                 final ExpressionNumberContext expressionNumberContext,
                                                  final char valueSeparator) {
         return BasicSpreadsheetParserContext.with(
                 dateTimeContext,
-                decimalNumberContext,
-                expressionNumberKind,
+                expressionNumberContext,
                 valueSeparator
         );
     }

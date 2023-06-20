@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
@@ -39,14 +40,25 @@ public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerS
     @Test
     public void testZeroZeroOffset() {
         final SpreadsheetParserToken token = SpreadsheetParsers.cellOrCellRangeOrLabel()
-                .parse(TextCursors.charSequence("$A$1"), SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
-                        DecimalNumberContexts.american(MathContext.DECIMAL32),
-                        EXPRESSION_NUMBER_KIND,
-                        VALUE_SEPARATOR))
+                .parse(TextCursors.charSequence("$A$1"), SpreadsheetParserContexts.basic(
+                                DateTimeContexts.fake(),
+                                ExpressionNumberContexts.basic(
+                                        EXPRESSION_NUMBER_KIND,
+                                        DecimalNumberContexts.american(MathContext.DECIMAL32)
+                                ),
+                                VALUE_SEPARATOR
+                        )
+                )
                 .map(SpreadsheetParserToken.class::cast)
                 .orElseThrow(() -> new Error("Unable to parseFormula"));
-        assertSame(token,
-                BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token, 0, 0));
+        assertSame(
+                token,
+                BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(
+                        token,
+                        0,
+                        0
+                )
+        );
     }
 
     @Test

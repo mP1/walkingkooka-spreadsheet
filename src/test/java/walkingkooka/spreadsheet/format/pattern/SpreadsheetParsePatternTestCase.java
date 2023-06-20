@@ -57,6 +57,7 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -584,8 +585,10 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     final SpreadsheetParserContext parserContext() {
         return SpreadsheetParserContexts.basic(
                 this.dateTimeContext(),
-                this.decimalNumberContext(),
-                EXPRESSION_NUMBER_KIND,
+                ExpressionNumberContexts.basic(
+                        EXPRESSION_NUMBER_KIND,
+                        this.decimalNumberContext()
+                ),
                 VALUE_SEPARATOR
         );
     }

@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.util.List;
@@ -580,8 +581,10 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     public SpreadsheetParserContext createContext() {
         return SpreadsheetParserContexts.basic(
                 DateTimeContexts.fake(),
-                this.decimalNumberContext(),
-                ExpressionNumberKind.BIG_DECIMAL,
+                ExpressionNumberContexts.basic(
+                        ExpressionNumberKind.BIG_DECIMAL,
+                        this.decimalNumberContext()
+                ),
                 VALUE_SEPARATOR
         );
     }
