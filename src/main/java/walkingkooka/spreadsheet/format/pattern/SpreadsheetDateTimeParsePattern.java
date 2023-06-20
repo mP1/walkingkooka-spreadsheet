@@ -18,6 +18,9 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 
@@ -60,6 +63,21 @@ public final class SpreadsheetDateTimeParsePattern extends SpreadsheetNonNumberP
         return token.cast(
                 SpreadsheetDateTimeParserToken.class
         ).toLocalDateTime(context);
+    }
+
+    // parseDateTime......................................................................................................
+
+    /**
+     * Tries to parse the given {@link String text} into a {@link LocalDateTime} or throw.
+     */
+    public LocalDateTime parseDateTime(final String text,
+                                       final SpreadsheetParserContext context) {
+        return this.parser()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(TextCursors.charSequence(text), context)
+                .get()
+                .cast(SpreadsheetDateTimeParserToken.class)
+                .toLocalDateTime(context);
     }
 
     // Object...........................................................................................................
