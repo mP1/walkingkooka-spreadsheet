@@ -17,7 +17,10 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 
@@ -60,6 +63,21 @@ public final class SpreadsheetTimeParsePattern extends SpreadsheetNonNumberParse
         return token.cast(
                 SpreadsheetTimeParserToken.class
         ).toLocalTime();
+    }
+
+    // parseTime......................................................................................................
+
+    /**
+     * Tries to parse the given {@link String text} into a {@link LocalTime} or throw.
+     */
+    public LocalTime parseTime(final String text,
+                               final SpreadsheetParserContext context) {
+        return this.parser()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(TextCursors.charSequence(text), context)
+                .get()
+                .cast(SpreadsheetTimeParserToken.class)
+                .toLocalTime();
     }
 
     // Object...........................................................................................................
