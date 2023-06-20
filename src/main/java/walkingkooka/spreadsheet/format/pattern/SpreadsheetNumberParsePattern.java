@@ -51,13 +51,14 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
         this.patterns = patterns;
     }
 
-    // parseNumber......................................................................................................
+    // parse............................................................................................................
 
     /**
      * Tries to parse the given {@link String text} into a {@link ExpressionNumber} or throw.
      */
-    public ExpressionNumber parseNumber(final String text,
-                                        final SpreadsheetParserContext context) {
+    @Override
+    public ExpressionNumber parse(final String text,
+                                  final SpreadsheetParserContext context) {
         return this.parser()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), context)

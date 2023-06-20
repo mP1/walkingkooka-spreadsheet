@@ -23,18 +23,14 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetDateTimeParsePattern,
         SpreadsheetFormatDateTimeParserToken,
@@ -444,50 +440,14 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
                 LocalDateTime.of(2000, 12, 31, 11, 58, 59));
     }
 
-    // parseDateTime....................................................................................................
-
-    @Test
-    public void testParseDateTimeNullTextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createPattern()
-                        .parseDateTime(
-                                null,
-                                SpreadsheetParserContexts.fake()
-                        )
-        );
-    }
-
-    @Test
-    public void testParseDateTimeNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createPattern()
-                        .parseDateTime(
-                                "1",
-                                null
-                        )
-        );
-    }
-
-    @Test
-    public void testParseDateTimeInvalidFails() {
-        assertThrows(
-                ParserReporterException.class,
-                () -> this.createPattern()
-                        .parseDateTime(
-                                "1",
-                                this.parserContext()
-                        )
-        );
-    }
+    // parse............................................................................................................
 
     @Test
     public void testParseDateTime() {
         this.checkEquals(
                 LocalDateTime.of(1999, 12, 31, 12, 58),
                 this.createPattern("yyyy/mm/dd/hh/mm")
-                        .parseDateTime(
+                        .parse(
                                 "1999/12/31/12/58",
                                 this.parserContext()
                         )
