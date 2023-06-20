@@ -22,15 +22,19 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalTime;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetTimeParsePattern,
         SpreadsheetFormatTimeParserToken,
@@ -529,6 +533,56 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
         this.convertAndCheck2("\"A\"hhmmss;\"B\"hhmmss",
                 "B115859",
                 LocalTime.of(11, 58, 59));
+    }
+
+    // parseTime........................................................................................................
+
+    @Test
+    public void testParseTimeNullTextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createPattern()
+                        .parseTime(
+                                null,
+                                SpreadsheetParserContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    public void testParseTimeNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createPattern()
+                        .parseTime(
+                                "1",
+                                null
+                        )
+        );
+    }
+
+    @Test
+    public void testParseTimeInvalidFails() {
+        assertThrows(
+                ParserReporterException.class,
+                () -> this.createPattern()
+                        .parseTime(
+                                "1",
+                                this.parserContext()
+                        )
+        );
+    }
+
+    @Test
+    public void testParseTime() {
+        this.checkEquals(
+                LocalTime.of(12, 58, 59),
+                this.createPattern("hh/mm/ss AM/PM")
+                        .parseTime(
+                                "12/58/59 AM",
+                                this.parserContext()
+                        )
+        );
     }
 
     // TreePrintable....................................................................................................
