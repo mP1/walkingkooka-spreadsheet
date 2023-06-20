@@ -17,9 +17,13 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.util.List;
 
@@ -45,6 +49,21 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
                                           final List<List<SpreadsheetNumberParsePatternComponent>> patterns) {
         super(token);
         this.patterns = patterns;
+    }
+
+    // parseNumber......................................................................................................
+
+    /**
+     * Tries to parse the given {@link String text} into a {@link ExpressionNumber} or throw.
+     */
+    public ExpressionNumber parseNumber(final String text,
+                                        final SpreadsheetParserContext context) {
+        return this.parser()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(TextCursors.charSequence(text), context)
+                .get()
+                .cast(SpreadsheetNumberParserToken.class)
+                .toNumber(context);
     }
 
     // toFormat.........................................................................................................

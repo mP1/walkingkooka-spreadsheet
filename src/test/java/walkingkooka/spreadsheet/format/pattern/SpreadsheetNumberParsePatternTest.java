@@ -23,14 +23,18 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetNumberParsePattern,
         SpreadsheetFormatNumberParserToken,
@@ -455,6 +459,56 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                 " 5",
                 SpreadsheetParserToken.whitespace(" ", " "),
                 digit5()
+        );
+    }
+
+    // parseNumber......................................................................................................
+
+    @Test
+    public void testParseNumberNullTextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createPattern()
+                        .parseNumber(
+                                null,
+                                SpreadsheetParserContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    public void testParseNumberNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createPattern()
+                        .parseNumber(
+                                "1",
+                                null
+                        )
+        );
+    }
+
+    @Test
+    public void testParseNumberInvalidFails() {
+        assertThrows(
+                ParserReporterException.class,
+                () -> this.createPattern()
+                        .parseNumber(
+                                "1",
+                                this.parserContext()
+                        )
+        );
+    }
+
+    @Test
+    public void testParseNumber() {
+        this.checkEquals(
+                EXPRESSION_NUMBER_KIND.create(-1.25),
+                this.createPattern("#.##")
+                        .parseNumber(
+                                MINUS + "1" + DECIMAL + "25",
+                                this.parserContext()
+                        )
         );
     }
 
