@@ -32,10 +32,6 @@ abstract class SpreadsheetFormatter2 implements SpreadsheetFormatter {
         super();
     }
 
-    final boolean isSpreadsheetValue(final Object value) {
-        return SpreadsheetFormatter2SpreadsheetValueVisitor.isSpreadsheetValue(value);
-    }
-
     /**
      * Accepts a value and uses the {@link SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor} to produce the formatted text.
      */
