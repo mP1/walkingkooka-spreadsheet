@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Formats a value
+ * A formatter may be queried to determine if it can format a given type of value into text possibly with a {@link walkingkooka.color.Color}.
  */
 public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterContext> {
 
