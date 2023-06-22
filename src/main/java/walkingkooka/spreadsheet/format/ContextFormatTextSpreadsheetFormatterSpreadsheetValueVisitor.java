@@ -19,15 +19,15 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 
-final class SpreadsheetFormatter2SpreadsheetValueVisitor extends SpreadsheetValueVisitor {
+final class ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
     static boolean isSpreadsheetValue(final Object value) {
-        final SpreadsheetFormatter2SpreadsheetValueVisitor visitor = new SpreadsheetFormatter2SpreadsheetValueVisitor();
+        final ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor visitor = new ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor();
         visitor.accept(value);
         return visitor.canFormat;
     }
 
-    SpreadsheetFormatter2SpreadsheetValueVisitor() {
+    ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor() {
         super();
     }
 

@@ -21,45 +21,45 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
 
-public final class SpreadsheetFormatter2SpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetFormatter2SpreadsheetValueVisitor> {
+public final class ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor> {
 
     @Test
     public void testSpreadsheetType() {
-        this.checkEquals(true, SpreadsheetFormatter2SpreadsheetValueVisitor.isSpreadsheetValue("hello"));
+        this.checkEquals(true, ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor.isSpreadsheetValue("hello"));
     }
 
     @Test
     public void testNotSpreadsheetType() {
-        this.checkEquals(false, SpreadsheetFormatter2SpreadsheetValueVisitor.isSpreadsheetValue(this));
+        this.checkEquals(false, ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor.isSpreadsheetValue(this));
     }
 
     @Test
     public void testToStringCan() {
-        final SpreadsheetFormatter2SpreadsheetValueVisitor visitor = new SpreadsheetFormatter2SpreadsheetValueVisitor();
+        final ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor visitor = new ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor();
         visitor.accept("abc");
         this.toStringAndCheck(visitor, "canFormat: true");
     }
 
     @Test
     public void testToStringCant() {
-        final SpreadsheetFormatter2SpreadsheetValueVisitor visitor = new SpreadsheetFormatter2SpreadsheetValueVisitor();
+        final ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor visitor = new ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor();
         visitor.accept(this);
         this.toStringAndCheck(visitor, "canFormat: false");
     }
 
     @Override
-    public SpreadsheetFormatter2SpreadsheetValueVisitor createVisitor() {
-        return new SpreadsheetFormatter2SpreadsheetValueVisitor();
+    public ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor createVisitor() {
+        return new ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor();
     }
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetFormatter2.class.getSimpleName();
+        return ContextFormatTextSpreadsheetFormatter.class.getSimpleName();
     }
 
     @Override
-    public Class<SpreadsheetFormatter2SpreadsheetValueVisitor> type() {
-        return SpreadsheetFormatter2SpreadsheetValueVisitor.class;
+    public Class<ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor> type() {
+        return ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor.class;
     }
 
     @Override
