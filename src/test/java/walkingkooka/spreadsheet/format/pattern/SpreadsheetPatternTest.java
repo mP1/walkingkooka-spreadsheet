@@ -741,6 +741,14 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
+    public void testParseDateTimeFormatPatternIncompleteAmpmFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy am")
+        );
+    }
+
+    @Test
     public void testParseDateTimeFormatPatternIncompleteTextLiteralFails() {
         assertThrows(
                 IllegalArgumentException.class,
@@ -892,6 +900,14 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetPattern.parseNumberFormatPattern(null)
+        );
+    }
+
+    @Test
+    public void testParseNumberFormatPatternIncompleteExponentFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseNumberFormatPattern("#E")
         );
     }
 
@@ -1468,6 +1484,14 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseTimeFormatPatternGeneralShouldFail() {
         SpreadsheetPattern.parseTimeFormatPattern("General");
+    }
+
+    @Test
+    public void testParseTimeFormatPatternIncompleteAmpmFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss am")
+        );
     }
 
     @Test

@@ -34,7 +34,6 @@ import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
-import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -522,8 +521,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATE_FORMAT_PARSER = SpreadsheetFormatParsers.dateFormat()
-            .orFailIfCursorNotEmpty(ParserReporters.basic());
+    private final static Parser<SpreadsheetFormatParserContext> DATE_FORMAT_PARSER = SpreadsheetFormatParsers.dateFormat();
 
     // parseDateParsePattern...........................................................................................
 
@@ -539,8 +537,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSE_PARSER = SpreadsheetFormatParsers.dateParse()
-            .orFailIfCursorNotEmpty(ParserReporters.basic());
+    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSE_PARSER = SpreadsheetFormatParsers.dateParse();
 
     // parseDateTimeFormatPatterns.......................................................................................
 
@@ -556,8 +553,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATETIME_FORMAT_PARSER = SpreadsheetFormatParsers.dateTimeFormat()
-            .orFailIfCursorNotEmpty(ParserReporters.basic());
+    private final static Parser<SpreadsheetFormatParserContext> DATETIME_FORMAT_PARSER = SpreadsheetFormatParsers.dateTimeFormat();
 
     // parseDateTimeParsePattern.......................................................................................
 
@@ -573,8 +569,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSE_PARSER = SpreadsheetFormatParsers.dateTimeParse()
-            .orFailIfCursorNotEmpty(ParserReporters.basic());
+    private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSE_PARSER = SpreadsheetFormatParsers.dateTimeParse();
 
     // parseNumberFormatPatterns.........................................................................................
 
@@ -590,8 +585,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> NUMBER_FORMAT_PARSER = SpreadsheetFormatParsers.numberFormat()
-            .orFailIfCursorNotEmpty(ParserReporters.basic());
+    private final static Parser<SpreadsheetFormatParserContext> NUMBER_FORMAT_PARSER = SpreadsheetFormatParsers.numberFormat();
 
     // parseNumberParsePattern.........................................................................................
 
@@ -607,8 +601,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSE_PARSER = SpreadsheetFormatParsers.numberParse()
-            .orFailIfCursorNotEmpty(ParserReporters.basic());
+    private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSE_PARSER = SpreadsheetFormatParsers.numberParse();
 
     // parseTextFormatPatterns..........................................................................................
 
@@ -624,8 +617,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER = SpreadsheetFormatParsers.textFormat()
-            .orFailIfCursorNotEmpty(ParserReporters.basic());
+    private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER = SpreadsheetFormatParsers.textFormat();
 
     // parseTimeFormatPatterns..........................................................................................
 
@@ -641,8 +633,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TIME_FORMAT_PARSER = SpreadsheetFormatParsers.timeFormat()
-            .orFailIfCursorNotEmpty(ParserReporters.basic());
+    private final static Parser<SpreadsheetFormatParserContext> TIME_FORMAT_PARSER = SpreadsheetFormatParsers.timeFormat();
 
     // parseTimeParsePattern....................................................................................................
 
@@ -658,8 +649,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSE_PARSER = SpreadsheetFormatParsers.timeParse()
-            .orFailIfCursorNotEmpty(ParserReporters.basic());
+    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSE_PARSER = SpreadsheetFormatParsers.timeParse();
 
     // helper...........................................................................................................
 
@@ -668,14 +658,13 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     private static ParserToken parsePatternOrFail(final String text,
                                                   final Parser<SpreadsheetFormatParserContext> parser) {
-        Objects.requireNonNull(text, "text");
+        CharSequences.failIfNullOrEmpty(text, "text");
 
         try {
-            return parser.andEmptyTextCursor()
-                    .parse(
-                            TextCursors.charSequence(text),
-                            SpreadsheetFormatParserContexts.basic()
-                    ).orElseThrow(() -> new IllegalArgumentException("Invalid pattern " + CharSequences.quoteAndEscape(text)));
+            return parser.parse(
+                    TextCursors.charSequence(text),
+                    SpreadsheetFormatParserContexts.basic()
+            ).get();
         } catch (final ParserException cause) {
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
