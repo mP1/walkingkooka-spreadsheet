@@ -17,18 +17,18 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.Cast;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
-public final class SpreadsheetFormatter3Test implements ClassTesting2<SpreadsheetFormatter3<?>> {
-    @Override
-    public Class<SpreadsheetFormatter3<?>> type() {
-        return Cast.to(SpreadsheetFormatter3.class);
-    }
+/**
+ * A {@link SpreadsheetFormatParserTokenVisitor} that assembles a {@link SpreadsheetFormatter} using the individual
+ * {@link walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken tokens}.
+ */
+abstract class SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+    /**
+     * Package private to limit sub classing.
+     */
+    SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor() {
+        super();
     }
 }

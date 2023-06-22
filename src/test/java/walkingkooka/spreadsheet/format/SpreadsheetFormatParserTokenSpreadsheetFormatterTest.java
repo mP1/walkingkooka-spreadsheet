@@ -17,14 +17,14 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTest implements ClassTesting2<SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor> {
-
+public final class SpreadsheetFormatParserTokenSpreadsheetFormatterTest implements ClassTesting2<SpreadsheetFormatParserTokenSpreadsheetFormatter<?>> {
     @Override
-    public Class<SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetFormatParserTokenSpreadsheetFormatter<?>> type() {
+        return Cast.to(SpreadsheetFormatParserTokenSpreadsheetFormatter.class);
     }
 
     @Override

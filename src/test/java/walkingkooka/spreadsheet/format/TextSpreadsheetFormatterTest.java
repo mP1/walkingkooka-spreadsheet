@@ -28,7 +28,7 @@ import walkingkooka.text.cursor.parser.SequenceParserToken;
 
 import java.util.Optional;
 
-public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<TextSpreadsheetFormatter, SpreadsheetFormatTextParserToken> {
+public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatParserTokenSpreadsheetFormatterTestCase<TextSpreadsheetFormatter, SpreadsheetFormatTextParserToken> {
 
     private final static String TEXT = "Abc123";
 

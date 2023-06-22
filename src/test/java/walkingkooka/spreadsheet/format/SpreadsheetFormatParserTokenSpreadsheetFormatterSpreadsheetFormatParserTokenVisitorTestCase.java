@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public abstract class SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor>
-        implements SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTesting<V>,
+public abstract class SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor>
+        implements SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTesting<V>,
         ClassTesting<V> {
 
-    SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase() {
+    SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase() {
         super();
     }
 

@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 
 public final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTest extends
-        SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase<TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> {
+        SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testToString() {

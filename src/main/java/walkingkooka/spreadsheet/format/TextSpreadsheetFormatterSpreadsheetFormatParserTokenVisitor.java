@@ -37,7 +37,7 @@ import java.util.Optional;
  * A {@link SpreadsheetFormatParserTokenVisitor} is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)}
  * to assemble a {@link SpreadsheetFormatter} that handles formatting text, all other tokens are ignored.
  */
-final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
+final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
 
     /**
      * Visits all the individual tokens in the given token which was compiled from the given pattern.

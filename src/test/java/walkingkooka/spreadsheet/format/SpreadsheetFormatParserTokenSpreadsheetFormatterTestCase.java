@@ -28,11 +28,11 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetFormatter3TestCase<F extends SpreadsheetFormatter3<T>,
+public abstract class SpreadsheetFormatParserTokenSpreadsheetFormatterTestCase<F extends SpreadsheetFormatParserTokenSpreadsheetFormatter<T>,
         T extends SpreadsheetFormatParserToken>
         extends SpreadsheetFormatterTestCase<F> {
 
-    SpreadsheetFormatter3TestCase() {
+    SpreadsheetFormatParserTokenSpreadsheetFormatterTestCase() {
         super();
     }
 
