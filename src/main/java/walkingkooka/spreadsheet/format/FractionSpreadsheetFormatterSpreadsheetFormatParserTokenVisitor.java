@@ -38,7 +38,7 @@ import java.util.List;
  * A {@link SpreadsheetFormatParserTokenVisitor} that assembles a {@link SpreadsheetFormatter}. Much of the work is done
  * by counting the number of pattern tokens for digits and percentage symbols and other components.
  */
-final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
+final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
 
     /**
      * Analyzes the given {@link SpreadsheetFormatParserToken}.

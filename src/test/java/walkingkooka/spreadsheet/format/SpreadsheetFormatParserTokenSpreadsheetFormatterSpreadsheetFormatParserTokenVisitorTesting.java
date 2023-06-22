@@ -19,6 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 
-public interface SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTesting<V extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor>
+public interface SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTesting<V extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor>
         extends SpreadsheetFormatParserTokenVisitorTesting<V> {
 }

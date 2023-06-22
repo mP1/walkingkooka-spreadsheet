@@ -24,7 +24,7 @@ import java.util.Objects;
 /**
  * Base class for all {@link SpreadsheetFormatter} implementations.
  */
-abstract class SpreadsheetFormatter3<T extends SpreadsheetFormatParserToken> extends SpreadsheetFormatter2 {
+abstract class SpreadsheetFormatParserTokenSpreadsheetFormatter<T extends SpreadsheetFormatParserToken> extends SpreadsheetFormatter2 {
 
     static void checkFormatter(SpreadsheetFormatter formatter) {
         Objects.requireNonNull(formatter, "formatter");
@@ -37,7 +37,7 @@ abstract class SpreadsheetFormatter3<T extends SpreadsheetFormatParserToken> ext
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetFormatter3(final T token) {
+    SpreadsheetFormatParserTokenSpreadsheetFormatter(final T token) {
         super();
 
         this.token = token;

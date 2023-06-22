@@ -28,7 +28,7 @@ import java.util.function.Predicate;
 /**
  * A {@link SpreadsheetFormatter} that formats any value after converting it to a {@link LocalDateTime}.
  */
-final class DateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetFormatDateTimeParserToken> {
+final class DateTimeSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpreadsheetFormatter<SpreadsheetFormatDateTimeParserToken> {
 
     /**
      * Creates a {@link DateTimeSpreadsheetFormatter} from a {@link SpreadsheetFormatDateTimeParserToken}

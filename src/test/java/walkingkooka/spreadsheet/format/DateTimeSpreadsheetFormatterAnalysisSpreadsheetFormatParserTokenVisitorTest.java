@@ -25,7 +25,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 
 public final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitorTest extends
-        SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase<DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor> {
+        SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testHHMMSS() {

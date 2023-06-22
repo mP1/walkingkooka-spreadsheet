@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
  * A {@link SpreadsheetFormatParserTokenVisitor} which tests if a date time tokens are 12/24 hour and also counts the
  * number of millisecond decimal places.
  */
-final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
+final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
 
     /**
      * Creates a {@link DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor}.
