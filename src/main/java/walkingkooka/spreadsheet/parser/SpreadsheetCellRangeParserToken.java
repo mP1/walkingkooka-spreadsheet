@@ -60,6 +60,17 @@ public final class SpreadsheetCellRangeParserToken extends SpreadsheetBinaryPars
 
     private final SpreadsheetCellRange cellRange;
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetCellRangeParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetCellRangeParserToken::with
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

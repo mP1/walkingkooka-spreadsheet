@@ -17,7 +17,9 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.Value;
+import walkingkooka.text.cursor.parser.ParserToken;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -39,10 +41,22 @@ abstract class SpreadsheetFormatLeafParserToken<T> extends SpreadsheetFormatPars
         this.value = value;
     }
 
+    // value............................................................................................................
+
     @Override
     public final T value() {
         return this.value;
     }
 
     final T value;
+
+    // children.........................................................................................................
+
+    @Override
+    public final ParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.leafSetChildren(
+                this,
+                children
+        );
+    }
 }

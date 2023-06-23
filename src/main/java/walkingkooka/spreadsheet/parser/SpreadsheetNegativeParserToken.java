@@ -53,6 +53,17 @@ public final class SpreadsheetNegativeParserToken extends SpreadsheetParentParse
 
     private final SpreadsheetParserToken parameter;
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetNegativeParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetNegativeParserToken::with
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

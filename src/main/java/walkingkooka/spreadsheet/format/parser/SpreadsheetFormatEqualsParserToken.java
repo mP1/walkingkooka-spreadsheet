@@ -41,6 +41,17 @@ public final class SpreadsheetFormatEqualsParserToken extends SpreadsheetFormatC
         return ComparisonRelation.EQ;
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatEqualsParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetFormatEqualsParserToken::with
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

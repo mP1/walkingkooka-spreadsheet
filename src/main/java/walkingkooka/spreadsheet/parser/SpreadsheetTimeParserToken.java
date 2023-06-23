@@ -43,6 +43,17 @@ public final class SpreadsheetTimeParserToken extends SpreadsheetParentParserTok
                 .toLocalTime();
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetTimeParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetTimeParserToken::with
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

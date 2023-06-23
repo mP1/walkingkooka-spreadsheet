@@ -46,6 +46,17 @@ public final class SpreadsheetDateParserToken extends SpreadsheetParentParserTok
         ).toLocalDate(context);
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetDateParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetDateParserToken::with
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

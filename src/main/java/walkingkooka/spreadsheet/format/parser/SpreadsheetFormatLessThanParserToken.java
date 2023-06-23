@@ -41,6 +41,17 @@ public final class SpreadsheetFormatLessThanParserToken extends SpreadsheetForma
         return ComparisonRelation.LT;
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatLessThanParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetFormatLessThanParserToken::with
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

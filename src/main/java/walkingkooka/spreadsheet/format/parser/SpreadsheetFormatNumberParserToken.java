@@ -42,6 +42,19 @@ public final class SpreadsheetFormatNumberParserToken extends SpreadsheetFormatP
         super(value, text);
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatNumberParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetFormatNumberParserToken::with
+        );
+    }
+
+    // accept.........................................................................................................
+
     @Override
     public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         if (Visiting.CONTINUE == visitor.startVisit(this)) {
