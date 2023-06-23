@@ -35,6 +35,17 @@ public final class SpreadsheetGreaterThanEqualsParserToken extends SpreadsheetBi
         super(value, text);
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetGreaterThanEqualsParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetGreaterThanEqualsParserToken::with
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

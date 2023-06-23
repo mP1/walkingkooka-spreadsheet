@@ -41,6 +41,17 @@ public final class SpreadsheetFormatNotEqualsParserToken extends SpreadsheetForm
         return ComparisonRelation.NE;
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatNotEqualsParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetFormatNotEqualsParserToken::with
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

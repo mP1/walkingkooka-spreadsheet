@@ -34,6 +34,17 @@ public final class SpreadsheetPowerParserToken extends SpreadsheetBinaryParserTo
         super(value, text);
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetPowerParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetPowerParserToken::with
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

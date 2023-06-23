@@ -42,6 +42,17 @@ public final class SpreadsheetFormatFractionParserToken extends SpreadsheetForma
         super(value, text);
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatFractionParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetFormatFractionParserToken::with
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

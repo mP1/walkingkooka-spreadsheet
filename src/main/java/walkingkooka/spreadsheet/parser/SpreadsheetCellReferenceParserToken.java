@@ -56,6 +56,17 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
 
     private final SpreadsheetCellReference cell;
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetCellReferenceParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetCellReferenceParserToken::with
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

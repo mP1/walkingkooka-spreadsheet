@@ -49,6 +49,17 @@ public final class SpreadsheetFunctionParametersParserToken extends SpreadsheetP
 
     private final List<ParserToken> parameters;
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetFunctionParametersParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetFunctionParametersParserToken::with
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

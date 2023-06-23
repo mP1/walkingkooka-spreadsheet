@@ -34,6 +34,17 @@ public final class SpreadsheetSubtractionParserToken extends SpreadsheetBinaryPa
         super(value, text);
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetSubtractionParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetSubtractionParserToken::with
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

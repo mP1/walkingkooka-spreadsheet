@@ -42,6 +42,17 @@ public final class SpreadsheetFormatDateTimeParserToken extends SpreadsheetForma
         super(value, text);
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatDateTimeParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetFormatDateTimeParserToken::with
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

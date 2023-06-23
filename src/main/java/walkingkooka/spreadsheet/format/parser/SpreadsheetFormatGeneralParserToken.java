@@ -42,6 +42,17 @@ public final class SpreadsheetFormatGeneralParserToken extends SpreadsheetFormat
         super(value, text);
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatGeneralParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetFormatGeneralParserToken::with
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

@@ -41,6 +41,17 @@ public final class SpreadsheetFormatGreaterThanEqualsParserToken extends Spreads
         return ComparisonRelation.GTE;
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatGreaterThanEqualsParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetFormatGreaterThanEqualsParserToken::with
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

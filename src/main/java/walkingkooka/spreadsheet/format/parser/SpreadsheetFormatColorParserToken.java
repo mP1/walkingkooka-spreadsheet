@@ -63,6 +63,17 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
 
     private final SpreadsheetFormatParserToken nameOrNumber;
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatColorParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetFormatColorParserToken::with
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

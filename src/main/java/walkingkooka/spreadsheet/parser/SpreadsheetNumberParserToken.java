@@ -46,6 +46,17 @@ public final class SpreadsheetNumberParserToken extends SpreadsheetParentParserT
         );
     }
 
+    // children.........................................................................................................
+
+    @Override
+    public SpreadsheetNumberParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SpreadsheetNumberParserToken::with
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override
