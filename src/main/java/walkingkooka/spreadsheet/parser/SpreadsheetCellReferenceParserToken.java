@@ -22,6 +22,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * A reference that includes a defined name or column and row.
@@ -64,6 +65,17 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
                 this,
                 children,
                 SpreadsheetCellReferenceParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetCellReferenceParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetCellReferenceParserToken.class
         );
     }
 

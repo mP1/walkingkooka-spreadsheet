@@ -21,6 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a division operation with its parameters.
@@ -43,6 +44,17 @@ public final class SpreadsheetDivisionParserToken extends SpreadsheetBinaryParse
                 this,
                 children,
                 SpreadsheetDivisionParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetDivisionParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetDivisionParserToken.class
         );
     }
 

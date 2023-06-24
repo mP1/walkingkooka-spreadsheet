@@ -21,6 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a equals test with its parameters.
@@ -43,6 +44,17 @@ public final class SpreadsheetEqualsParserToken extends SpreadsheetBinaryParserT
                 this,
                 children,
                 SpreadsheetEqualsParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetEqualsParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetEqualsParserToken.class
         );
     }
 

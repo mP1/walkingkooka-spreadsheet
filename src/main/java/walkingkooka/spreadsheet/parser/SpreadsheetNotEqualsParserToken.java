@@ -20,6 +20,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a not equals test operation with its parameters.
@@ -42,6 +43,17 @@ public final class SpreadsheetNotEqualsParserToken extends SpreadsheetBinaryPars
                 this,
                 children,
                 SpreadsheetNotEqualsParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetNotEqualsParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetNotEqualsParserToken.class
         );
     }
 

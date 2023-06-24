@@ -20,6 +20,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a greater than equals test with its parameters.
@@ -43,6 +44,17 @@ public final class SpreadsheetGreaterThanEqualsParserToken extends SpreadsheetBi
                 this,
                 children,
                 SpreadsheetGreaterThanEqualsParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetGreaterThanEqualsParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetGreaterThanEqualsParserToken.class
         );
     }
 

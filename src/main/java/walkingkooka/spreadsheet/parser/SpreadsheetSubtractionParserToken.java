@@ -20,6 +20,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a subtraction operation with its parameters.
@@ -42,6 +43,17 @@ public final class SpreadsheetSubtractionParserToken extends SpreadsheetBinaryPa
                 this,
                 children,
                 SpreadsheetSubtractionParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetSubtractionParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetSubtractionParserToken.class
         );
     }
 

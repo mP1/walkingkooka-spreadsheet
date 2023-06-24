@@ -21,6 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * The execution of a lambda function.
@@ -99,6 +100,17 @@ public final class SpreadsheetLambdaFunctionParserToken extends SpreadsheetParen
                 this,
                 children,
                 SpreadsheetLambdaFunctionParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetLambdaFunctionParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetLambdaFunctionParserToken.class
         );
     }
 

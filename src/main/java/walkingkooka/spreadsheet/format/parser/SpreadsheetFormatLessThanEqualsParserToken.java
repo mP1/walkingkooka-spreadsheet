@@ -21,6 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a less than equals test operation with its parameters.
@@ -49,6 +50,17 @@ public final class SpreadsheetFormatLessThanEqualsParserToken extends Spreadshee
                 this,
                 children,
                 SpreadsheetFormatLessThanEqualsParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetFormatLessThanEqualsParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetFormatLessThanEqualsParserToken.class
         );
     }
 

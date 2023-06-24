@@ -21,6 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * A expression which includes its name and any parameters if any. Each parameter will be separated by a comma.
@@ -86,6 +87,17 @@ public final class SpreadsheetNamedFunctionParserToken extends SpreadsheetParent
                 this,
                 children,
                 SpreadsheetNamedFunctionParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetNamedFunctionParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetNamedFunctionParserToken.class
         );
     }
 

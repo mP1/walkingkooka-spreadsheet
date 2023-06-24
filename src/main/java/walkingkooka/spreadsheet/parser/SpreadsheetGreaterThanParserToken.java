@@ -20,6 +20,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a greater than test with its parameters.
@@ -42,6 +43,17 @@ public final class SpreadsheetGreaterThanParserToken extends SpreadsheetBinaryPa
                 this,
                 children,
                 SpreadsheetGreaterThanParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetGreaterThanParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetGreaterThanParserToken.class
         );
     }
 

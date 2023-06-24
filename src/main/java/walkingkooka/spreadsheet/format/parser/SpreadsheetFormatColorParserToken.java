@@ -22,6 +22,7 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * A token that contains a color declaration which may be a name or color number.
@@ -71,6 +72,17 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
                 this,
                 children,
                 SpreadsheetFormatColorParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetFormatColorParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetFormatColorParserToken.class
         );
     }
 
