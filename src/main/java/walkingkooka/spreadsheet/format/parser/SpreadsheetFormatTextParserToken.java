@@ -22,6 +22,7 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * A token that contains a text formatting tokens.
@@ -53,6 +54,17 @@ public final class SpreadsheetFormatTextParserToken extends SpreadsheetFormatPar
                 this,
                 children,
                 SpreadsheetFormatTextParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetFormatTextParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetFormatTextParserToken.class
         );
     }
 

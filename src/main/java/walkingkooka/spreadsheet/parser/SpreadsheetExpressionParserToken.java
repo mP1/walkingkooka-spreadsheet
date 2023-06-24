@@ -20,6 +20,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * A top level parent that holds an equals sign and the following expression.
@@ -42,6 +43,17 @@ public final class SpreadsheetExpressionParserToken extends SpreadsheetParentPar
                 this,
                 children,
                 SpreadsheetExpressionParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetExpressionParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetExpressionParserToken.class
         );
     }
 

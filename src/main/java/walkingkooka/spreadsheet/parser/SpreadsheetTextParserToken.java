@@ -21,6 +21,7 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Holds a text expression in both forms an apostrophe prefixed string literal and a double quoted string.
@@ -46,6 +47,17 @@ public final class SpreadsheetTextParserToken extends SpreadsheetParentParserTok
                 this,
                 children,
                 SpreadsheetTextParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetTextParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetTextParserToken.class
         );
     }
 

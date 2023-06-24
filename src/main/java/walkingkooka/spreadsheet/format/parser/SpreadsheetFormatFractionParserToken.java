@@ -21,6 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * A token that contains an fraction.
@@ -50,6 +51,17 @@ public final class SpreadsheetFormatFractionParserToken extends SpreadsheetForma
                 this,
                 children,
                 SpreadsheetFormatFractionParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetFormatFractionParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetFormatFractionParserToken.class
         );
     }
 

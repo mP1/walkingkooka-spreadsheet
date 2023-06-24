@@ -20,6 +20,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * A wrapper around a grouping.
@@ -42,6 +43,17 @@ public final class SpreadsheetGroupParserToken extends SpreadsheetParentParserTo
                 this,
                 children,
                 SpreadsheetGroupParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetGroupParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetGroupParserToken.class
         );
     }
 

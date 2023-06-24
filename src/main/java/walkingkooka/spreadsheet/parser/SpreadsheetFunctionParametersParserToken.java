@@ -20,6 +20,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * The parameters including the open/close parenthesis for a function.
@@ -57,6 +58,17 @@ public final class SpreadsheetFunctionParametersParserToken extends SpreadsheetP
                 this,
                 children,
                 SpreadsheetFunctionParametersParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetFunctionParametersParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetFunctionParametersParserToken.class
         );
     }
 

@@ -21,6 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a addition operation with its parameters.
@@ -43,6 +44,17 @@ public final class SpreadsheetAdditionParserToken extends SpreadsheetBinaryParse
                 this,
                 children,
                 SpreadsheetAdditionParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetAdditionParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetAdditionParserToken.class
         );
     }
 

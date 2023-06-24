@@ -20,6 +20,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a multiplication operation with its parameters.
@@ -42,6 +43,17 @@ public final class SpreadsheetMultiplicationParserToken extends SpreadsheetBinar
                 this,
                 children,
                 SpreadsheetMultiplicationParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetMultiplicationParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetMultiplicationParserToken.class
         );
     }
 

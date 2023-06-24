@@ -21,6 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * A wrapper around a numeric type that is also a percentage.
@@ -68,6 +69,17 @@ public final class SpreadsheetCellRangeParserToken extends SpreadsheetBinaryPars
                 this,
                 children,
                 SpreadsheetCellRangeParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetCellRangeParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetCellRangeParserToken.class
         );
     }
 

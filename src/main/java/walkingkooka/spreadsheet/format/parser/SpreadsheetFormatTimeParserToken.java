@@ -21,6 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * A token that contains date formatting tokens.
@@ -50,6 +51,17 @@ public final class SpreadsheetFormatTimeParserToken extends SpreadsheetFormatPar
                 this,
                 children,
                 SpreadsheetFormatTimeParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetFormatTimeParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetFormatTimeParserToken.class
         );
     }
 

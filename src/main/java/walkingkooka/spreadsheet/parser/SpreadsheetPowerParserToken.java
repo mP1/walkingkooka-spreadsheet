@@ -20,6 +20,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a power operation with its parameters.
@@ -42,6 +43,17 @@ public final class SpreadsheetPowerParserToken extends SpreadsheetBinaryParserTo
                 this,
                 children,
                 SpreadsheetPowerParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetPowerParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetPowerParserToken.class
         );
     }
 

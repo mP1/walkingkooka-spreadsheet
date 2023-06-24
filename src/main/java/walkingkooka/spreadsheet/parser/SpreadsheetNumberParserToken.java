@@ -22,6 +22,7 @@ import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Holds a {@link walkingkooka.tree.expression.ExpressionNumber} value along with the components and original text.
@@ -54,6 +55,17 @@ public final class SpreadsheetNumberParserToken extends SpreadsheetParentParserT
                 this,
                 children,
                 SpreadsheetNumberParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetNumberParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetNumberParserToken.class
         );
     }
 

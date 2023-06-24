@@ -21,6 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * A token that contains number formatting tokens.
@@ -50,6 +51,17 @@ public final class SpreadsheetFormatNumberParserToken extends SpreadsheetFormatP
                 this,
                 children,
                 SpreadsheetFormatNumberParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetFormatNumberParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetFormatNumberParserToken.class
         );
     }
 

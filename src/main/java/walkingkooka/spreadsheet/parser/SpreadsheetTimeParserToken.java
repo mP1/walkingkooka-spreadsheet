@@ -21,6 +21,7 @@ import walkingkooka.visit.Visiting;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Holds a time value along with the components and original text.
@@ -51,6 +52,17 @@ public final class SpreadsheetTimeParserToken extends SpreadsheetParentParserTok
                 this,
                 children,
                 SpreadsheetTimeParserToken::with
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SpreadsheetTimeParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SpreadsheetTimeParserToken.class
         );
     }
 
