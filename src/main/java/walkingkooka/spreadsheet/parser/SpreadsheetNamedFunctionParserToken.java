@@ -101,6 +101,17 @@ public final class SpreadsheetNamedFunctionParserToken extends SpreadsheetParent
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public SpreadsheetNamedFunctionParserToken removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveIf(
+                this,
+                predicate,
+                SpreadsheetNamedFunctionParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

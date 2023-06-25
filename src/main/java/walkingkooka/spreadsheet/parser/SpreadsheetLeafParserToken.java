@@ -65,6 +65,14 @@ abstract class SpreadsheetLeafParserToken<T> extends SpreadsheetParserToken
         return this;
     }
 
+    // removeIf....................................................................................................
+
+    @Override
+    public final ParserToken removeIf(final Predicate<ParserToken> predicate) {
+        Objects.requireNonNull(predicate, "predicate");
+        return this;
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     abstract void accept(final SpreadsheetParserTokenVisitor visitor);

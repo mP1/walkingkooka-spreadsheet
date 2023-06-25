@@ -68,6 +68,17 @@ public final class SpreadsheetFormatTextParserToken extends SpreadsheetFormatPar
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatTextParserToken removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveIf(
+                this,
+                predicate,
+                SpreadsheetFormatTextParserToken.class
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

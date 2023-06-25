@@ -57,6 +57,17 @@ public final class SpreadsheetPowerParserToken extends SpreadsheetBinaryParserTo
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public SpreadsheetPowerParserToken removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveIf(
+                this,
+                predicate,
+                SpreadsheetPowerParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override
