@@ -231,6 +231,90 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         );
     }
 
+    // pattern..........................................................................................................
+
+    @Test
+    public void testPatternDateFormatPattern() {
+        this.patternAndCheck(
+                "[BLACK]dd/mm/yyyy",
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testPatternDateParsePattern() {
+        this.patternAndCheck(
+                "dd/mm/yyyy",
+                SpreadsheetPatternKind.DATE_PARSE_PATTERN
+        );
+    }
+
+    @Test
+    public void testPatternDateTimeFormatPattern() {
+        this.patternAndCheck(
+                "[BLACK]dd/mm/yyyy/hh/mm/ss",
+                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testPatternDateTimeParsePattern() {
+        this.patternAndCheck(
+                "dd/mm/yyyy/hh/mm/ss",
+                SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
+        );
+    }
+
+    @Test
+    public void testPatternNumberFormatPattern() {
+        this.patternAndCheck(
+                "[BLACK]$0.00",
+                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testPatternNumberParsePattern() {
+        this.patternAndCheck(
+                "$0.00",
+                SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
+        );
+    }
+
+    @Test
+    public void testPatternTextFormatPattern() {
+        this.patternAndCheck(
+                "[BLACK]@",
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testPatternTimeFormatPattern() {
+        this.patternAndCheck(
+                "[BLACK]hh/mm/ss",
+                SpreadsheetPatternKind.TIME_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testPatternTimeParsePattern() {
+        this.patternAndCheck(
+                "hh/mm/ss",
+                SpreadsheetPatternKind.TIME_PARSE_PATTERN
+        );
+    }
+
+    private void patternAndCheck(final String patternText,
+                                 final SpreadsheetPatternKind kind) {
+        final SpreadsheetPattern pattern = kind.parse(patternText);
+        this.checkEquals(
+                pattern,
+                kind.pattern(pattern.value()),
+                () -> kind + ".pattern " + pattern.value()
+        );
+    }
+
     // formatter........................................................................................................
 
     private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
