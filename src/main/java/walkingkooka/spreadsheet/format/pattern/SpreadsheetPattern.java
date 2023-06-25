@@ -109,6 +109,13 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
+     * Factory that creates a {@link SpreadsheetTextFormatPattern} from the given token.
+     */
+    public static SpreadsheetTextFormatPattern textFormatPattern(final ParserToken token) {
+        return SpreadsheetTextFormatPattern.with(token);
+    }
+
+    /**
      * Factory that creates a {@link SpreadsheetTimeFormatPattern} from the given token.
      */
     public static SpreadsheetTimeFormatPattern timeFormatPattern(final ParserToken token) {
