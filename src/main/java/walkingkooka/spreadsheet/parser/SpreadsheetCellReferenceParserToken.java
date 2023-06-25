@@ -79,6 +79,17 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public SpreadsheetCellReferenceParserToken removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveIf(
+                this,
+                predicate,
+                SpreadsheetCellReferenceParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

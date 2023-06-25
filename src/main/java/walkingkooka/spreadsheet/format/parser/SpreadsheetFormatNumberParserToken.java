@@ -65,6 +65,17 @@ public final class SpreadsheetFormatNumberParserToken extends SpreadsheetFormatP
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatNumberParserToken removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveIf(
+                this,
+                predicate,
+                SpreadsheetFormatNumberParserToken.class
+        );
+    }
+
     // accept.........................................................................................................
 
     @Override

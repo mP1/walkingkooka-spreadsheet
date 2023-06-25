@@ -69,6 +69,17 @@ public final class SpreadsheetDateParserToken extends SpreadsheetParentParserTok
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public SpreadsheetDateParserToken removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveIf(
+                this,
+                predicate,
+                SpreadsheetDateParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override
