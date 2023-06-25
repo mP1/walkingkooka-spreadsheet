@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents the double quotes symbols that surround a String o text value.
@@ -45,6 +46,19 @@ public final class SpreadsheetDoubleQuoteSymbolParserToken extends SpreadsheetSy
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         throw new UnsupportedOperationException();
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetDoubleQuoteSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                                  final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetDoubleQuoteSymbolParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

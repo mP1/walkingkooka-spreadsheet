@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Represents a groupSeparator token within a pattern.
@@ -32,6 +35,21 @@ public final class SpreadsheetFormatGroupSeparatorParserToken extends Spreadshee
     private SpreadsheetFormatGroupSeparatorParserToken(final String value, final String text) {
         super(value, text);
     }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFormatGroupSeparatorParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                                     final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatGroupSeparatorParserToken.class
+        );
+    }
+
+    // visitor........................................................................................................
 
     @Override
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {

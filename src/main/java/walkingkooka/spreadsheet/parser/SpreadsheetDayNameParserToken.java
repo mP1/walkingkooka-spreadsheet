@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Represents the week day name within a date or date/time.
@@ -31,6 +34,18 @@ public final class SpreadsheetDayNameParserToken extends SpreadsheetNonSymbolPar
 
     private SpreadsheetDayNameParserToken(final int value, final String text) {
         super(value, text);
+    }
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetDayNameParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                        final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetDayNameParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

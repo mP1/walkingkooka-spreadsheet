@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Holds literal text which may be empty. Together with a {@link SpreadsheetApostropheSymbolParserToken} this is a component of
@@ -33,6 +36,19 @@ public final class SpreadsheetTextLiteralParserToken extends SpreadsheetNonSymbo
 
     private SpreadsheetTextLiteralParserToken(final String value, final String text) {
         super(value, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetTextLiteralParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                            final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetTextLiteralParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

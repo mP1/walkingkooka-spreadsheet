@@ -17,6 +17,9 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.text.cursor.parser.ParserToken;
+
+import java.util.function.Predicate;
 
 /**
  * A token that holds a column reference.
@@ -33,6 +36,19 @@ public final class SpreadsheetColumnReferenceParserToken extends SpreadsheetNonS
 
     private SpreadsheetColumnReferenceParserToken(final SpreadsheetColumnReference value, final String text) {
         super(value, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetColumnReferenceParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                                final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetColumnReferenceParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

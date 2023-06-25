@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Represents the minute within a date/time or time.
@@ -31,6 +34,19 @@ public final class SpreadsheetMinuteParserToken extends SpreadsheetNonSymbolPars
 
     private SpreadsheetMinuteParserToken(final int value, final String text) {
         super(value, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetMinuteParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                       final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetMinuteParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................
