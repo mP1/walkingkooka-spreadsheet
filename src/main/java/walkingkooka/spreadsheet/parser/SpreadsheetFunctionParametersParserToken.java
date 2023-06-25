@@ -83,6 +83,19 @@ public final class SpreadsheetFunctionParametersParserToken extends SpreadsheetP
         );
     }
 
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFunctionParametersParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                                   final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFunctionParametersParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

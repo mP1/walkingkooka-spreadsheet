@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents the exponent symbol token with a number.
@@ -45,6 +46,19 @@ public final class SpreadsheetExponentSymbolParserToken extends SpreadsheetSymbo
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         throw new UnsupportedOperationException();
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetExponentSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                               final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetExponentSymbolParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

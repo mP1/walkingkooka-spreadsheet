@@ -76,6 +76,19 @@ public final class SpreadsheetFormatFractionParserToken extends SpreadsheetForma
         );
     }
 
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFormatFractionParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                               final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatFractionParserToken.class
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

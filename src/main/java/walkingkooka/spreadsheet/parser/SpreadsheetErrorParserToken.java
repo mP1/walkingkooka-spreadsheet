@@ -18,6 +18,9 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.text.cursor.parser.ParserToken;
+
+import java.util.function.Predicate;
 
 /**
  * A token that holds a {@link SpreadsheetError}.
@@ -35,6 +38,18 @@ public final class SpreadsheetErrorParserToken extends SpreadsheetNonSymbolParse
     private SpreadsheetErrorParserToken(final SpreadsheetError value,
                                         final String text) {
         super(value, text);
+    }
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetErrorParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                      final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetErrorParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

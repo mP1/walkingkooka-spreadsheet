@@ -68,6 +68,19 @@ public final class SpreadsheetGreaterThanParserToken extends SpreadsheetBinaryPa
         );
     }
 
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetGreaterThanParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                            final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetGreaterThanParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

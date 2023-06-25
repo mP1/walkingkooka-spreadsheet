@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Represents the underscore operand which adds a space with a width that matches the next character.
@@ -32,6 +35,21 @@ public final class SpreadsheetFormatUnderscoreParserToken extends SpreadsheetFor
     private SpreadsheetFormatUnderscoreParserToken(final Character value, final String text) {
         super(value, text);
     }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFormatUnderscoreParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                                 final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatUnderscoreParserToken.class
+        );
+    }
+
+    // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {

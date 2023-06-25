@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents an equals symbol token.
@@ -45,6 +46,19 @@ public final class SpreadsheetEqualsSymbolParserToken extends SpreadsheetSymbolP
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         return equalsParserToken(tokens, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetEqualsSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                             final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetEqualsSymbolParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

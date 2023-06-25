@@ -75,6 +75,19 @@ public final class SpreadsheetFormatLessThanEqualsParserToken extends Spreadshee
         );
     }
 
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFormatLessThanEqualsParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                                     final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatLessThanEqualsParserToken.class
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

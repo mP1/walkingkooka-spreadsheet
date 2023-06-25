@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Represents the hour within a date/time or time.
@@ -31,6 +34,19 @@ public final class SpreadsheetHourParserToken extends SpreadsheetNonSymbolParser
 
     private SpreadsheetHourParserToken(final int value, final String text) {
         super(value, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetHourParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                     final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetHourParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

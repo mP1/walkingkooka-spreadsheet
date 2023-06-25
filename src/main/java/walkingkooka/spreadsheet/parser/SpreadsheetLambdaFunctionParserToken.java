@@ -125,6 +125,19 @@ public final class SpreadsheetLambdaFunctionParserToken extends SpreadsheetParen
         );
     }
 
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetLambdaFunctionParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                               final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetLambdaFunctionParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

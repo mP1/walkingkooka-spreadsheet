@@ -97,6 +97,19 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
         );
     }
 
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFormatColorParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                            final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatColorParserToken.class
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

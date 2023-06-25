@@ -17,7 +17,10 @@
 package walkingkooka.spreadsheet.format.parser;
 
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Represents a day placeholder.
@@ -33,6 +36,21 @@ public final class SpreadsheetFormatDayParserToken extends SpreadsheetFormatNonS
     private SpreadsheetFormatDayParserToken(final String value, final String text) {
         super(value, text);
     }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFormatDayParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                          final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatDayParserToken.class
+        );
+    }
+
+    // visitor........................................................................................................
 
     @Override
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {

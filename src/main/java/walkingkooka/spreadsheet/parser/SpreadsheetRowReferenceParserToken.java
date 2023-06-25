@@ -17,6 +17,9 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.text.cursor.parser.ParserToken;
+
+import java.util.function.Predicate;
 
 /**
  * A token that holds a row reference.
@@ -33,6 +36,19 @@ public final class SpreadsheetRowReferenceParserToken extends SpreadsheetNonSymb
 
     private SpreadsheetRowReferenceParserToken(final SpreadsheetRowReference value, final String text) {
         super(value, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetRowReferenceParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                             final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetRowReferenceParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

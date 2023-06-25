@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents the decimal separator symbol token with number.
@@ -45,6 +46,19 @@ public final class SpreadsheetDecimalSeparatorSymbolParserToken extends Spreadsh
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         throw new UnsupportedOperationException();
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetDecimalSeparatorSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                                       final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetDecimalSeparatorSymbolParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

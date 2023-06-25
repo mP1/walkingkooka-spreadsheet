@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents the currency symbol token within a money amount.
@@ -45,6 +46,19 @@ public final class SpreadsheetCurrencySymbolParserToken extends SpreadsheetSymbo
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         throw new UnsupportedOperationException();
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetCurrencySymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                               final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetCurrencySymbolParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

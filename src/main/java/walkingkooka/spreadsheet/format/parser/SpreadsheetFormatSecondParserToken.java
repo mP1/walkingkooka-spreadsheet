@@ -17,7 +17,10 @@
 package walkingkooka.spreadsheet.format.parser;
 
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Represents a second placeholder.
@@ -33,6 +36,21 @@ public final class SpreadsheetFormatSecondParserToken extends SpreadsheetFormatN
     private SpreadsheetFormatSecondParserToken(final String value, final String text) {
         super(value, text);
     }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFormatSecondParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                             final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatSecondParserToken.class
+        );
+    }
+
+    // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {

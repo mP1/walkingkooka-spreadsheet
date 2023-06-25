@@ -76,7 +76,20 @@ public final class SpreadsheetFormatNumberParserToken extends SpreadsheetFormatP
         );
     }
 
-    // accept.........................................................................................................
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFormatNumberParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                             final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatNumberParserToken.class
+        );
+    }
+
+    // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override
     public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {

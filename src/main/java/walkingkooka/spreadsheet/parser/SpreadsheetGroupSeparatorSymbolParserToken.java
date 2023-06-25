@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a group separator symbol token with a number.
@@ -45,6 +46,19 @@ public final class SpreadsheetGroupSeparatorSymbolParserToken extends Spreadshee
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         return division(tokens, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetGroupSeparatorSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                                     final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetGroupSeparatorSymbolParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

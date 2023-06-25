@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Represents a currency token.
@@ -32,6 +35,21 @@ public final class SpreadsheetFormatCurrencyParserToken extends SpreadsheetForma
     private SpreadsheetFormatCurrencyParserToken(final String value, final String text) {
         super(value, text);
     }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFormatCurrencyParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                               final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatCurrencyParserToken.class
+        );
+    }
+
+    // visitor........................................................................................................
 
     @Override
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {

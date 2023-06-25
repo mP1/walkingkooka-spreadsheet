@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Holds a quoted text.
@@ -32,6 +35,21 @@ public final class SpreadsheetFormatQuotedTextParserToken extends SpreadsheetFor
     private SpreadsheetFormatQuotedTextParserToken(final String value, final String text) {
         super(value, text);
     }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFormatQuotedTextParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                                 final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatQuotedTextParserToken.class
+        );
+    }
+
+    // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {

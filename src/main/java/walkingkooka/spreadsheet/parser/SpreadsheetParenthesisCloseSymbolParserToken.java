@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Represents a close / right parens symbol token.
@@ -45,6 +46,19 @@ public final class SpreadsheetParenthesisCloseSymbolParserToken extends Spreadsh
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         throw new UnsupportedOperationException();
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetParenthesisCloseSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                                       final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetParenthesisCloseSymbolParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

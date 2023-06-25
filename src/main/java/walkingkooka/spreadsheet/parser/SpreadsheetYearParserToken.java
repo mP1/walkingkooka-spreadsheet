@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Represents the year within a date or date/time.
@@ -31,6 +34,19 @@ public final class SpreadsheetYearParserToken extends SpreadsheetNonSymbolParser
 
     private SpreadsheetYearParserToken(final int value, final String text) {
         super(value, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetYearParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                     final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetYearParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

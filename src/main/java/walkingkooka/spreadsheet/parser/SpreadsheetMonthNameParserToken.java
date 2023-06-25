@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Represents the month name within a date or date/time.
@@ -31,6 +34,19 @@ public final class SpreadsheetMonthNameParserToken extends SpreadsheetNonSymbolP
 
     private SpreadsheetMonthNameParserToken(final int value, final String text) {
         super(value, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetMonthNameParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                          final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetMonthNameParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

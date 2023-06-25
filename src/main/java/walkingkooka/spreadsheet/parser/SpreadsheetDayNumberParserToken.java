@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Represents the day within a date or date/time.
@@ -31,6 +34,19 @@ public final class SpreadsheetDayNumberParserToken extends SpreadsheetNonSymbolP
 
     private SpreadsheetDayNumberParserToken(final int value, final String text) {
         super(value, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetDayNumberParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                          final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetDayNumberParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

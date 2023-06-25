@@ -16,7 +16,10 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Represents a number or sequence of digits without a decimal point or sign.
@@ -32,6 +35,19 @@ public final class SpreadsheetDigitsParserToken extends SpreadsheetNonSymbolPars
 
     private SpreadsheetDigitsParserToken(final String value, final String text) {
         super(value, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetDigitsParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                       final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetDigitsParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

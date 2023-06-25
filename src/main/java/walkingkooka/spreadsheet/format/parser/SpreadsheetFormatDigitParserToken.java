@@ -17,7 +17,10 @@
 package walkingkooka.spreadsheet.format.parser;
 
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Represents a digit placeholder.
@@ -33,6 +36,21 @@ public final class SpreadsheetFormatDigitParserToken extends SpreadsheetFormatNo
     private SpreadsheetFormatDigitParserToken(final String value, final String text) {
         super(value, text);
     }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetFormatDigitParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                            final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatDigitParserToken.class
+        );
+    }
+
+    // visitor........................................................................................................
 
     @Override
     void accept(final SpreadsheetFormatParserTokenVisitor visitor) {

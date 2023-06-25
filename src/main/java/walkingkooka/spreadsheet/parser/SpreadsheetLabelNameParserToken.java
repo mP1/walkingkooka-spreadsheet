@@ -17,6 +17,9 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.text.cursor.parser.ParserToken;
+
+import java.util.function.Predicate;
 
 /**
  * Represents a label or name for a cell or range etc.
@@ -33,6 +36,19 @@ public final class SpreadsheetLabelNameParserToken extends SpreadsheetNonSymbolP
 
     private SpreadsheetLabelNameParserToken(final SpreadsheetLabelName value, final String text) {
         super(value, text);
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SpreadsheetLabelNameParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                          final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetLabelNameParserToken.class
+        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................
