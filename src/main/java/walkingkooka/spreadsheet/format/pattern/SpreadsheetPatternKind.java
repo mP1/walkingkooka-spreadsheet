@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
@@ -48,52 +49,63 @@ import java.util.function.Predicate;
 public enum SpreadsheetPatternKind implements HasUrlFragment {
     DATE_FORMAT_PATTERN(
             SpreadsheetPattern::parseDateFormatPattern,
+            SpreadsheetPattern::dateFormatPattern,
             SpreadsheetFormatParserTokenKind::isDateFormat
     ),
 
     DATE_PARSE_PATTERN(
             SpreadsheetPattern::parseDateParsePattern,
+            SpreadsheetPattern::dateParsePattern,
             SpreadsheetFormatParserTokenKind::isDateParse
     ),
 
     DATE_TIME_FORMAT_PATTERN(
             SpreadsheetPattern::parseDateTimeFormatPattern,
+            SpreadsheetPattern::dateTimeFormatPattern,
             SpreadsheetFormatParserTokenKind::isDateTimeFormat
     ),
 
     DATE_TIME_PARSE_PATTERN(
             SpreadsheetPattern::parseDateTimeParsePattern,
+            SpreadsheetPattern::dateTimeParsePattern,
             SpreadsheetFormatParserTokenKind::isDateTimeParse
     ),
 
     NUMBER_FORMAT_PATTERN(
             SpreadsheetPattern::parseNumberFormatPattern,
+            SpreadsheetPattern::numberFormatPattern,
             SpreadsheetFormatParserTokenKind::isNumberFormat
     ),
 
     NUMBER_PARSE_PATTERN(
             SpreadsheetPattern::parseNumberParsePattern,
+            SpreadsheetPattern::numberParsePattern,
             SpreadsheetFormatParserTokenKind::isNumberParse
     ),
 
     TEXT_FORMAT_PATTERN(
             SpreadsheetPattern::parseTextFormatPattern,
+            SpreadsheetPattern::textFormatPattern,
             SpreadsheetFormatParserTokenKind::isTextFormat
     ),
 
     TIME_FORMAT_PATTERN(
             SpreadsheetPattern::parseTimeFormatPattern,
+            SpreadsheetPattern::timeFormatPattern,
             SpreadsheetFormatParserTokenKind::isTimeFormat
     ),
 
     TIME_PARSE_PATTERN(
             SpreadsheetPattern::parseTimeParsePattern,
+            SpreadsheetPattern::timeParsePattern,
             SpreadsheetFormatParserTokenKind::isTimeParse
     );
 
     SpreadsheetPatternKind(final Function<String, SpreadsheetPattern> parser,
+                           final Function<ParserToken, SpreadsheetPattern> tokenToPattern,
                            final Predicate<SpreadsheetFormatParserTokenKind> formatParserTokenKind) {
         this.parser = parser;
+        this.tokenToPattern = tokenToPattern;
         this.spreadsheetFormatParserTokenKinds = Sets.of(
                 Arrays.stream(SpreadsheetFormatParserTokenKind.values())
                         .filter(formatParserTokenKind)
@@ -128,6 +140,15 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     }
 
     private final Function<String, SpreadsheetPattern> parser;
+
+    /**
+     * Accepts a {@link ParserToken} and returns the wrapping {@link SpreadsheetPattern}.
+     */
+    public SpreadsheetPattern pattern(final ParserToken token) {
+        return this.tokenToPattern.apply(token);
+    }
+
+    private final Function<ParserToken, SpreadsheetPattern> tokenToPattern;
 
     public Set<SpreadsheetFormatParserTokenKind> spreadsheetFormatParserTokenKinds() {
         return this.spreadsheetFormatParserTokenKinds;
