@@ -158,7 +158,10 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
     }
 
     final SpreadsheetFormatParserToken separator() {
-        return SpreadsheetFormatParserToken.separatorSymbol("s", "s");
+        return SpreadsheetFormatParserToken.separatorSymbol(
+                SpreadsheetPattern.SEPARATOR.string(),
+                SpreadsheetPattern.SEPARATOR.string()
+        );
     }
 
     final SpreadsheetFormatParserToken textLiteral() {
