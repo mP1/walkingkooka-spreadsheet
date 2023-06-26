@@ -81,6 +81,19 @@ public final class SpreadsheetExpressionParserToken extends SpreadsheetParentPar
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetExpressionParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                      final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetExpressionParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

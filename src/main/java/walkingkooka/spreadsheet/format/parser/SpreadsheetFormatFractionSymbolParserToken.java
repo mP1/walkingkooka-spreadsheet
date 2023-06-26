@@ -49,6 +49,19 @@ public final class SpreadsheetFormatFractionSymbolParserToken extends Spreadshee
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatFractionSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                                final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatFractionSymbolParserToken.class
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

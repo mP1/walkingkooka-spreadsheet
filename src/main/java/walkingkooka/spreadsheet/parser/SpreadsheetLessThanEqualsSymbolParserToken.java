@@ -61,6 +61,19 @@ public final class SpreadsheetLessThanEqualsSymbolParserToken extends Spreadshee
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetLessThanEqualsSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                                final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetLessThanEqualsSymbolParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

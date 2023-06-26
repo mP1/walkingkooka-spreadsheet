@@ -51,6 +51,19 @@ public final class SpreadsheetTextLiteralParserToken extends SpreadsheetNonSymbo
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetTextLiteralParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                       final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetTextLiteralParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

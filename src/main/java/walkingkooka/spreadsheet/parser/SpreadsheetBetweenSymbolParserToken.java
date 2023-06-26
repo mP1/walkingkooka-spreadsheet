@@ -60,7 +60,18 @@ public final class SpreadsheetBetweenSymbolParserToken extends SpreadsheetSymbol
                 SpreadsheetBetweenSymbolParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetBetweenSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                         final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetBetweenSymbolParserToken.class
+        );
+    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

@@ -50,6 +50,19 @@ public final class SpreadsheetFormatDayParserToken extends SpreadsheetFormatNonS
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatDayParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                     final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatDayParserToken.class
+        );
+    }
+
     // visitor........................................................................................................
 
     @Override

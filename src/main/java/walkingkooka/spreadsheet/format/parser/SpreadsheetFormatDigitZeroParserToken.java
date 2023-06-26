@@ -50,6 +50,19 @@ public final class SpreadsheetFormatDigitZeroParserToken extends SpreadsheetForm
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatDigitZeroParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                           final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatDigitZeroParserToken.class
+        );
+    }
+
     // visitor........................................................................................................
 
     @Override

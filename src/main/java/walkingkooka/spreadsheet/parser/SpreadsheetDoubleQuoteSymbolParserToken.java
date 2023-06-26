@@ -61,6 +61,19 @@ public final class SpreadsheetDoubleQuoteSymbolParserToken extends SpreadsheetSy
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetDoubleQuoteSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                             final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetDoubleQuoteSymbolParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

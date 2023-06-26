@@ -50,6 +50,19 @@ public final class SpreadsheetFormatWhitespaceParserToken extends SpreadsheetFor
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatWhitespaceParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                            final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatWhitespaceParserToken.class
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

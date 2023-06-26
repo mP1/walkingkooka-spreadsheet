@@ -49,6 +49,19 @@ public final class SpreadsheetFormatGeneralSymbolParserToken extends Spreadsheet
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatGeneralSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                               final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatGeneralSymbolParserToken.class
+        );
+    }
+
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

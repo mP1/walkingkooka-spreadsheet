@@ -107,6 +107,19 @@ public final class SpreadsheetCellRangeParserToken extends SpreadsheetBinaryPars
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetCellRangeParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                     final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetCellRangeParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

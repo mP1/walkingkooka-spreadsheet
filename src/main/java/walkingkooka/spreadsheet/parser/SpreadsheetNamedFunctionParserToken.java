@@ -124,7 +124,18 @@ public final class SpreadsheetNamedFunctionParserToken extends SpreadsheetParent
                 SpreadsheetNamedFunctionParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetNamedFunctionParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                         final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetNamedFunctionParserToken.class
+        );
+    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

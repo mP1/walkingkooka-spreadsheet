@@ -49,7 +49,18 @@ public final class SpreadsheetFormatTextLiteralParserToken extends SpreadsheetFo
                 SpreadsheetFormatTextLiteralParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetFormatTextLiteralParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                             final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatTextLiteralParserToken.class
+        );
+    }
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

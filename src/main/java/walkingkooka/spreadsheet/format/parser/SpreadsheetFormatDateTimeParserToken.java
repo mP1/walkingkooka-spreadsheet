@@ -88,7 +88,18 @@ public final class SpreadsheetFormatDateTimeParserToken extends SpreadsheetForma
                 SpreadsheetFormatDateTimeParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetFormatDateTimeParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                          final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatDateTimeParserToken.class
+        );
+    }
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

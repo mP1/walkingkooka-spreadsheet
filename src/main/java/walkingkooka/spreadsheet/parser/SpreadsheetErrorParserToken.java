@@ -52,6 +52,19 @@ public final class SpreadsheetErrorParserToken extends SpreadsheetNonSymbolParse
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetErrorParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                 final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetErrorParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

@@ -49,7 +49,18 @@ public final class SpreadsheetFormatSeparatorSymbolParserToken extends Spreadshe
                 SpreadsheetFormatSeparatorSymbolParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetFormatSeparatorSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                                 final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatSeparatorSymbolParserToken.class
+        );
+    }
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

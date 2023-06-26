@@ -61,6 +61,19 @@ public final class SpreadsheetApostropheSymbolParserToken extends SpreadsheetSym
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetApostropheSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                            final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetApostropheSymbolParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

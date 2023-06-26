@@ -81,6 +81,19 @@ public final class SpreadsheetLessThanEqualsParserToken extends SpreadsheetBinar
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetLessThanEqualsParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                          final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetLessThanEqualsParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

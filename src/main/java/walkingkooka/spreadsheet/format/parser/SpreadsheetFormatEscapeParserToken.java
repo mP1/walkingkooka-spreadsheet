@@ -49,6 +49,18 @@ public final class SpreadsheetFormatEscapeParserToken extends SpreadsheetFormatN
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatEscapeParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                        final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatEscapeParserToken.class
+        );
+    }
     // visitor........................................................................................................
 
     @Override

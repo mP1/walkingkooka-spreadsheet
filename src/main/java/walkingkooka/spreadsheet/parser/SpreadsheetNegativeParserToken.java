@@ -99,6 +99,18 @@ public final class SpreadsheetNegativeParserToken extends SpreadsheetParentParse
                 SpreadsheetNegativeParserToken.class
         );
     }
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetNegativeParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                    final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetNegativeParserToken.class
+        );
+    }
 
     // SpreadsheetParserTokenVisitor....................................................................................
 

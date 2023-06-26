@@ -49,6 +49,19 @@ public final class SpreadsheetYearParserToken extends SpreadsheetNonSymbolParser
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetYearParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetYearParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

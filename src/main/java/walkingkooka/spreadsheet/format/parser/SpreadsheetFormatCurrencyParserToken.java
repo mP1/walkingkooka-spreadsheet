@@ -49,6 +49,19 @@ public final class SpreadsheetFormatCurrencyParserToken extends SpreadsheetForma
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatCurrencyParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                          final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatCurrencyParserToken.class
+        );
+    }
+
     // visitor........................................................................................................
 
     @Override

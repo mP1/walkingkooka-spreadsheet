@@ -49,6 +49,19 @@ public final class SpreadsheetDayNumberParserToken extends SpreadsheetNonSymbolP
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetDayNumberParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                     final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetDayNumberParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

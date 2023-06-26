@@ -49,7 +49,18 @@ public final class SpreadsheetFormatConditionNumberParserToken extends Spreadshe
                 SpreadsheetFormatConditionNumberParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetFormatConditionNumberParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                                 final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatConditionNumberParserToken.class
+        );
+    }
     // visitor........................................................................................................
 
     @Override
