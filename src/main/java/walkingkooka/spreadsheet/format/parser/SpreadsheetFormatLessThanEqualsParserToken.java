@@ -87,7 +87,18 @@ public final class SpreadsheetFormatLessThanEqualsParserToken extends Spreadshee
                 SpreadsheetFormatLessThanEqualsParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetFormatLessThanEqualsParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                                final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatLessThanEqualsParserToken.class
+        );
+    }
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

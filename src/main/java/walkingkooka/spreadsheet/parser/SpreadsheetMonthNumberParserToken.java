@@ -48,6 +48,18 @@ public final class SpreadsheetMonthNumberParserToken extends SpreadsheetNonSymbo
                 SpreadsheetMonthNumberParserToken.class
         );
     }
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetMonthNumberParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                       final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetMonthNumberParserToken.class
+        );
+    }
 
     // SpreadsheetParserTokenVisitor....................................................................................
 

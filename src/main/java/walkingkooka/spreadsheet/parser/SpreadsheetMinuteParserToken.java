@@ -48,7 +48,18 @@ public final class SpreadsheetMinuteParserToken extends SpreadsheetNonSymbolPars
                 SpreadsheetMinuteParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetMinuteParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                  final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetMinuteParserToken.class
+        );
+    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

@@ -50,6 +50,19 @@ public final class SpreadsheetFormatAmPmParserToken extends SpreadsheetFormatNon
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatAmPmParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                      final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatAmPmParserToken.class
+        );
+    }
+
     // visitor........................................................................................................
 
     @Override

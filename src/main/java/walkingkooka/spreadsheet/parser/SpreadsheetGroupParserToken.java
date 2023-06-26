@@ -80,7 +80,18 @@ public final class SpreadsheetGroupParserToken extends SpreadsheetParentParserTo
                 SpreadsheetGroupParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetGroupParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                 final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetGroupParserToken.class
+        );
+    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

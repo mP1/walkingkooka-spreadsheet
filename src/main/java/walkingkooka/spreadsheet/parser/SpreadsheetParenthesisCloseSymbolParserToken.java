@@ -60,6 +60,18 @@ public final class SpreadsheetParenthesisCloseSymbolParserToken extends Spreadsh
                 SpreadsheetParenthesisCloseSymbolParserToken.class
         );
     }
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetParenthesisCloseSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                                  final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetParenthesisCloseSymbolParserToken.class
+        );
+    }
 
     // SpreadsheetParserTokenVisitor....................................................................................
 

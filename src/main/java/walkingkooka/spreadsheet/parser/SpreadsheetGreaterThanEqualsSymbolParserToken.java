@@ -61,6 +61,19 @@ public final class SpreadsheetGreaterThanEqualsSymbolParserToken extends Spreads
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetGreaterThanEqualsSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                                   final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetGreaterThanEqualsSymbolParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

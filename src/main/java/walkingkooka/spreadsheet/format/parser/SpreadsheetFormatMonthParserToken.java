@@ -49,6 +49,19 @@ public final class SpreadsheetFormatMonthParserToken extends SpreadsheetFormatNo
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatMonthParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                       final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatMonthParserToken.class
+        );
+    }
+
     // visitor........................................................................................................
 
     @Override

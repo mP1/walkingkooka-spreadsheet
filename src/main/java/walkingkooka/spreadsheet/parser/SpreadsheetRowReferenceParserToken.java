@@ -50,7 +50,18 @@ public final class SpreadsheetRowReferenceParserToken extends SpreadsheetNonSymb
                 SpreadsheetRowReferenceParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetRowReferenceParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                        final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetRowReferenceParserToken.class
+        );
+    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

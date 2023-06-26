@@ -60,7 +60,18 @@ public final class SpreadsheetMultiplySymbolParserToken extends SpreadsheetSymbo
                 SpreadsheetMultiplySymbolParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetMultiplySymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                          final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetMultiplySymbolParserToken.class
+        );
+    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

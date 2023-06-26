@@ -50,6 +50,19 @@ public final class SpreadsheetFormatDecimalPointParserToken extends SpreadsheetF
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatDecimalPointParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                              final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatDecimalPointParserToken.class
+        );
+    }
+
     // visitor........................................................................................................
 
     @Override

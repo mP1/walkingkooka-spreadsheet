@@ -51,6 +51,19 @@ public final class SpreadsheetFunctionNameParserToken extends SpreadsheetNonSymb
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFunctionNameParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                        final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFunctionNameParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

@@ -51,6 +51,19 @@ public final class SpreadsheetLabelNameParserToken extends SpreadsheetNonSymbolP
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetLabelNameParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                     final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetLabelNameParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

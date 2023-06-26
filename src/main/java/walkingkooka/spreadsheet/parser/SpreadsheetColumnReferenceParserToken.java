@@ -51,6 +51,19 @@ public final class SpreadsheetColumnReferenceParserToken extends SpreadsheetNonS
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetColumnReferenceParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                           final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetColumnReferenceParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

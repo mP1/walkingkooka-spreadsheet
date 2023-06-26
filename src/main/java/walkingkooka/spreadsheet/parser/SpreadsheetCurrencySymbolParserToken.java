@@ -61,6 +61,19 @@ public final class SpreadsheetCurrencySymbolParserToken extends SpreadsheetSymbo
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetCurrencySymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                          final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetCurrencySymbolParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

@@ -50,6 +50,19 @@ public final class SpreadsheetFormatDigitSpaceParserToken extends SpreadsheetFor
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatDigitSpaceParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                            final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatDigitSpaceParserToken.class
+        );
+    }
+
     // visitor........................................................................................................
 
     @Override

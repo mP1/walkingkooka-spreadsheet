@@ -48,7 +48,18 @@ public final class SpreadsheetSecondsParserToken extends SpreadsheetNonSymbolPar
                 SpreadsheetSecondsParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetSecondsParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                   final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetSecondsParserToken.class
+        );
+    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

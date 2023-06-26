@@ -48,7 +48,18 @@ public final class SpreadsheetFormatColorLiteralSymbolParserToken extends Spread
                 SpreadsheetFormatColorLiteralSymbolParserToken.class
         );
     }
+    // replaceIf........................................................................................................
 
+    @Override
+    public SpreadsheetFormatColorLiteralSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                                    final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatColorLiteralSymbolParserToken.class
+        );
+    }
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

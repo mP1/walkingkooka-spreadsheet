@@ -50,6 +50,19 @@ public final class SpreadsheetFormatHourParserToken extends SpreadsheetFormatNon
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetFormatHourParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                      final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetFormatHourParserToken.class
+        );
+    }
+
     // visitor........................................................................................................
 
     @Override

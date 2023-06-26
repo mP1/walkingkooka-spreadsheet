@@ -81,6 +81,19 @@ public final class SpreadsheetNotEqualsParserToken extends SpreadsheetBinaryPars
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetNotEqualsParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                     final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetNotEqualsParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

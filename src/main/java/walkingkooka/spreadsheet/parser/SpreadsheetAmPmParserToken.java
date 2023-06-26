@@ -49,6 +49,19 @@ public final class SpreadsheetAmPmParserToken extends SpreadsheetNonSymbolParser
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetAmPmParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetAmPmParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

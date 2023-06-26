@@ -49,6 +49,19 @@ public final class SpreadsheetDayNameAbbreviationParserToken extends Spreadsheet
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetDayNameAbbreviationParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                               final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetDayNameAbbreviationParserToken.class
+        );
+    }
+
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

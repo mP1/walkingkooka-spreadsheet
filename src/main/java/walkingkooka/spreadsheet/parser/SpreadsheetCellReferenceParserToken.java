@@ -102,6 +102,18 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
                 SpreadsheetCellReferenceParserToken.class
         );
     }
+    // replaceIf........................................................................................................
+
+    @Override
+    public SpreadsheetCellReferenceParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                                         final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SpreadsheetCellReferenceParserToken.class
+        );
+    }
 
     // SpreadsheetParserTokenVisitor....................................................................................
 
