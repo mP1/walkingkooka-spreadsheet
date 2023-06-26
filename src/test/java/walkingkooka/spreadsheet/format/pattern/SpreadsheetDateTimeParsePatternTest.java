@@ -466,12 +466,37 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
     }
 
     @Test
-    public void testTreePrint2() {
+    public void testTreePrintWithSeparator() {
+        final String pattern = "dd/mm/yyyy;";
+
         this.treePrintAndCheck(
-                SpreadsheetPattern.parseDateTimeParsePattern("ddmmyyhhmmss;yymmdd"),
+                this.createPattern(pattern),
                 "date-time-parse-pattern\n" +
-                        "  \"ddmmyyhhmmss\"\n" +
-                        "  \"yymmdd\"\n"
+                        "  \"dd/mm/yyyy\" ;\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatterns() {
+        final String pattern = "dd/mm/yyyy;dd/mmm/yyyy";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "date-time-parse-pattern\n" +
+                        "  \"dd/mm/yyyy\" ;\n" +
+                        "  \"dd/mmm/yyyy\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatternsAndSeparator() {
+        final String pattern = "dd/mm/yyyy;dd/mmm/yyyy;";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "date-time-parse-pattern\n" +
+                        "  \"dd/mm/yyyy\" ;\n" +
+                        "  \"dd/mmm/yyyy\" ;\n"
         );
     }
 

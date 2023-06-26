@@ -391,6 +391,8 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    // toString.........................................................................................................
+
     @Test
     public void testToString2() {
         this.toStringAndCheck(

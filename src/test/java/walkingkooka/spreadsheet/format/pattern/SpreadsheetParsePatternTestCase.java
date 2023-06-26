@@ -386,11 +386,12 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
         final List<ParserToken> tokens = Lists.of(
                 this.parseFormatParserToken(patternText),
+                separator(),
                 this.parseFormatParserToken(patternText2)
         );
 
         this.parseStringAndCheck(
-                patternText + ";" + patternText2,
+                patternText + this.separator().text() + patternText2,
                 this.createPattern(
                         ParserTokens.sequence(
                                 tokens,

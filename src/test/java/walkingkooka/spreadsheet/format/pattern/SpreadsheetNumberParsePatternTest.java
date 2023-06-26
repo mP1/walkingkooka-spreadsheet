@@ -477,10 +477,44 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                SpreadsheetPattern.parseNumberParsePattern("##.##;##"),
+                SpreadsheetPattern.parseNumberParsePattern("#"),
                 "number-parse-pattern\n" +
-                        "  \"##.##\"\n" +
-                        "  \"##\"\n"
+                        "  \"#\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintWithSeparator() {
+        final String pattern = "$0.00;";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "number-parse-pattern\n" +
+                        "  \"$0.00\" ;\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatterns() {
+        final String pattern = "$0.0;$0.00";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "number-parse-pattern\n" +
+                        "  \"$0.0\" ;\n" +
+                        "  \"$0.00\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatternsAndSeparator() {
+        final String pattern = "$0.0;$0.00;";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "number-parse-pattern\n" +
+                        "  \"$0.0\" ;\n" +
+                        "  \"$0.00\" ;\n"
         );
     }
 
