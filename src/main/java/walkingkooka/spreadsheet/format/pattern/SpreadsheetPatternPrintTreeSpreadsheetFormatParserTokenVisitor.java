@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNotEqualsParserTo
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.text.CharSequences;
@@ -44,6 +45,7 @@ final class SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor exten
                           final IndentingPrinter printer) {
         new SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor(printer)
                 .accept(token);
+        printer.lineStart();
     }
 
     SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor(final IndentingPrinter printer) {
@@ -120,8 +122,15 @@ final class SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor exten
         return this.treePrint0(token);
     }
 
+    @Override
+    protected void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
+        this.printer.print(" ");
+        this.printer.print(token.text());
+    }
+
     private Visiting treePrint0(final SpreadsheetFormatParserToken token) {
-        this.printer.println(
+        this.printer.lineStart();
+        this.printer.print(
                 CharSequences.quoteAndEscape(
                         token.text()
                 )

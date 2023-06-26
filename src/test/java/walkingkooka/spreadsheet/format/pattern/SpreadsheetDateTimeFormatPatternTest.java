@@ -963,6 +963,41 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         );
     }
 
+    @Test
+    public void testTreePrintWithSeparator() {
+        final String pattern = "dd/mm/yyyy;";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "date-time-format-pattern\n" +
+                        "  \"dd/mm/yyyy\" ;\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatterns() {
+        final String pattern = "dd/mm/yyyy;dd/mmm/yyyy";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "date-time-format-pattern\n" +
+                        "  \"dd/mm/yyyy\" ;\n" +
+                        "  \"dd/mmm/yyyy\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatternsAndSeparator() {
+        final String pattern = "dd/mm/yyyy;dd/mmm/yyyy;";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "date-time-format-pattern\n" +
+                        "  \"dd/mm/yyyy\" ;\n" +
+                        "  \"dd/mmm/yyyy\" ;\n"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

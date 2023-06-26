@@ -565,6 +565,41 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testTreePrintWithSeparator() {
+        final String pattern = "hhmmss;";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "time-format-pattern\n" +
+                        "  \"hhmmss\" ;\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatterns() {
+        final String pattern = "hhmm;hhmmss";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "time-format-pattern\n" +
+                        "  \"hhmm\" ;\n" +
+                        "  \"hhmmss\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatternsAndSeparator() {
+        final String pattern = "hhmm;hhmmss;";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "time-format-pattern\n" +
+                        "  \"hhmm\" ;\n" +
+                        "  \"hhmmss\" ;\n"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

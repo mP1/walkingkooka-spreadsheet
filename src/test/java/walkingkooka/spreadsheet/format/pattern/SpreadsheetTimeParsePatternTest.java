@@ -557,12 +557,37 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
     }
 
     @Test
-    public void testTreePrint2() {
+    public void testTreePrintWithSeparator() {
+        final String pattern = "hhmmss;";
+
         this.treePrintAndCheck(
-                SpreadsheetPattern.parseTimeParsePattern("hhmm;hhmmss"),
+                this.createPattern(pattern),
                 "time-parse-pattern\n" +
-                        "  \"hhmm\"\n" +
+                        "  \"hhmmss\" ;\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatterns() {
+        final String pattern = "hhmm;hhmmss";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "time-parse-pattern\n" +
+                        "  \"hhmm\" ;\n" +
                         "  \"hhmmss\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatternsAndSeparator() {
+        final String pattern = "hhmm;hhmmss;";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "time-parse-pattern\n" +
+                        "  \"hhmm\" ;\n" +
+                        "  \"hhmmss\" ;\n"
         );
     }
 

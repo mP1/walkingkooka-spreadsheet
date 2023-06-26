@@ -673,6 +673,41 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         );
     }
 
+    @Test
+    public void testTreePrintWithSeparator() {
+        final String pattern = "$0.00;";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "number-format-pattern\n" +
+                        "  \"$0.00\" ;\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatterns() {
+        final String pattern = "$0.0;$0.00";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "number-format-pattern\n" +
+                        "  \"$0.0\" ;\n" +
+                        "  \"$0.00\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintSeveralPatternsAndSeparator() {
+        final String pattern = "$0.0;$0.00;";
+
+        this.treePrintAndCheck(
+                this.createPattern(pattern),
+                "number-format-pattern\n" +
+                        "  \"$0.0\" ;\n" +
+                        "  \"$0.00\" ;\n"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
