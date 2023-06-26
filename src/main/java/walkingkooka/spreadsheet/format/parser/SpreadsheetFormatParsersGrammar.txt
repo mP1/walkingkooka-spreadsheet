@@ -227,10 +227,8 @@ NUMBER_DIGIT                    = DIGIT | DIGIT_SPACE | DIGIT_ZERO | GROUP_SEPAR
 
 
 (* text format, note the last pattern may not have a condition........................................................*)
-TEXT_FORMAT                   = [{ CONDITION, TEXT, PATTERN_SEPARATOR }],
-                                [ TEXT ],
+TEXT_FORMAT                   = TEXT,
                                 [ PATTERN_SEPARATOR ];
-
 
 
 (* text without color/condition used in parse patterns, some magic placeholder tokens are not valid like STAR.........*)

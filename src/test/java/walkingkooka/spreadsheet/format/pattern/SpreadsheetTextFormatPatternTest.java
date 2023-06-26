@@ -170,6 +170,39 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
+    public void testParseStringMultiplePatternsFails() {
+        this.parseStringFails(
+                "@;@",
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
+    public void testParseAtSignAt() {
+        final String text = "@";
+
+        this.parseStringAndCheck(
+                text,
+                SpreadsheetTextFormatPattern.with(
+                        SpreadsheetFormatParserToken.text(
+                                Lists.of(
+                                        textLiteral()
+                                ),
+                                text
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseAtSignAtSeparatorFails() {
+        this.parseStringFails(
+                "@;",
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
     public void testParseAtSignAtSign() {
         final String text = "@@";
 
