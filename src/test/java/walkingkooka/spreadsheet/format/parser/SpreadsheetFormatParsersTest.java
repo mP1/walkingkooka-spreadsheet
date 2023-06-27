@@ -5003,8 +5003,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testNumberFormatPatternSeparatorTextPatternSeparator() {
-        this.numberFormatParseAndCheck(
+    public void testNumberFormatPatternSeparatorTextPatternSeparatorFails() {
+        this.numberFormatParseThrows(
                 number(
                         digit()
                 ),
@@ -5084,8 +5084,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testNumberFormatPatternSeparatorPatternSeparatorTextPatternSeparator() {
-        this.numberFormatParseAndCheck(
+    public void testNumberFormatPatternSeparatorPatternSeparatorTextPatternSeparatorFails() {
+        this.numberFormatParseThrows(
                 number(
                         digit()
                 ),
@@ -5123,8 +5123,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testNumberFormatPatternSeparatorPatternSeparatorPatternSeparatorTextPatternSeparator() {
-        this.numberFormatParseAndCheck(
+    public void testNumberFormatPatternSeparatorPatternSeparatorPatternSeparatorTextPatternSeparatorFails() {
+        this.numberFormatParseThrows(
                 number(
                         digit()
                 ),
