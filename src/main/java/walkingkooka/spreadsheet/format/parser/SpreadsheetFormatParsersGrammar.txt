@@ -180,19 +180,28 @@ GENERAL_COLOR_WHITESPACE      = WHITESPACE | COLOR;
 
 
 (* NUMBER .............................................................................................................*)
-NUMBER_FORMAT                     = PATTERN_SEPARATOR_3 | NUMBER_FORMAT2;
 
-NUMBER_FORMAT2                    = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
-                                    [ PATTERN_SEPARATOR, CONDITION_GENERAL_OR_NUMBER_COLOR ],
-                                    [ PATTERN_SEPARATOR, CONDITION_GENERAL_OR_NUMBER_COLOR ],
-                                    [ PATTERN_SEPARATOR, [ TEXT ]],
-                                    [ PATTERN_SEPARATOR ];
+NUMBER_FORMAT                        = NUMBER_NUMBER_NUMBER_TEXT |
+                                       NUMBER_NUMBER_TEXT |
+                                       NUMBER_TEXT |
+                                       CONDITION_GENERAL_OR_NUMBER_COLOR;
 
-PATTERN_SEPARATOR_3               = PATTERN_SEPARATOR, PATTERN_SEPARATOR, PATTERN_SEPARATOR;
+NUMBER_NUMBER_NUMBER_TEXT            = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR | TEXT ];
+
+
+NUMBER_NUMBER_TEXT                   = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR | TEXT ];
+
+NUMBER_TEXT                          = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR | TEXT ];
+
+
 
 CONDITION_GENERAL_OR_NUMBER_COLOR = [ CONDITION ], [ GENERAL_OR_NUMBER_COLOR ];
-
-
 
 GENERAL_OR_NUMBER_OR_TEXT_COLOR = GENERAL_OR_NUMBER_COLOR | TEXT;
 
@@ -250,4 +259,6 @@ TEXT_COLOR_WITHOUT_STAR        = [{ TEXT_COLOR_COMPONENT }];
 
 TEXT_COLOR_COMPONENT           = COLOR | WHITESPACE | TEXT_CHARACTER | ESCAPE | QUOTED | TEXT_PLACEHOLDER | UNDERSCORE;
 
-TEXT_CHARACTER                 = { '<' | '>' | '=' | '!' | '$' | '-' | '+' | '(' | ')' | '%' | '#' | '&' | '/' | ',' | ':' };
+TEXT_CHARACTER                 = { '<' | '>' | '=' | '!' | '$' | '-' | '+' | '(' | ')' | '%' | '&' | '/' | ',' | ':' };
+
+ZTEXT_CHARACTER                 = { '<' | '>' | '=' | '!' | '$' | '-' | '+' | '(' | ')' | '%' | '#' | '&' | '/' | ',' | ':' };
