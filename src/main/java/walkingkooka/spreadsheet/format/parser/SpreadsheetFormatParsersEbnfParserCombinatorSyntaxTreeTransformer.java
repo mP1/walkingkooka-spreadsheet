@@ -326,19 +326,48 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
     }
 
     /**
-     * For identified rules, transform or special checks for required rules.
+     * Uses the {@link EbnfIdentifierName} to potentially wrap the given {@link Parser} in another will reset the
+     * {@link walkingkooka.text.cursor.TextCursor} if only a color is matched, adds a transformer or a required token check.
+     * <br>
+     * The {@link #colorCheck(EbnfIdentifierName, Parser)} will fail patterns with only a color such as <code>[BLACK]</code>.
      */
     @Override
     public Parser<SpreadsheetFormatParserContext> identifier(final EbnfIdentifierParserToken token,
                                                              final Parser<SpreadsheetFormatParserContext> parser) {
         final EbnfIdentifierName name = token.value();
-        final BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken> transform = this.identifierToTransform.get(name);
-        return null != transform ?
-                parser.transform(transform) :
-                this.requiredCheck(name, parser);
+
+        return requiredCheck(
+                name,
+                transformIfNecessary(
+                        name,
+                        colorCheck(name,
+                                parser
+                        )
+                )
+        );
     }
 
     private final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken>> identifierToTransform;
+
+    private Parser<SpreadsheetFormatParserContext> transformIfNecessary(final EbnfIdentifierName name,
+                                                                        final Parser<SpreadsheetFormatParserContext> parser) {
+        final BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken> transform = this.identifierToTransform.get(name);
+        return null == transform ?
+                parser :
+                parser.transform(transform);
+    }
+
+    private Parser<SpreadsheetFormatParserContext> colorCheck(final EbnfIdentifierName name,
+                                                              final Parser<SpreadsheetFormatParserContext> parser) {
+        return name.equals(DATE_COLOR_IDENTIFIER) ||
+                name.equals(DATETIME_COLOR_IDENTIFIER) ||
+                name.equals(SpreadsheetFormatParsers.GENERAL_IDENTIFIER) ||
+                name.equals(NUMBER_COLOR_IDENTIFIER) ||
+                name.equals(TIME_COLOR_IDENTIFIER) ||
+                name.equals(TEXT_IDENTIFIER) ?
+                SpreadsheetFormatParsersFormatColorParser.with(parser) :
+                parser;
+    }
 
     private Parser<SpreadsheetFormatParserContext> requiredCheck(final EbnfIdentifierName name,
                                                                  final Parser<SpreadsheetFormatParserContext> parser) {
