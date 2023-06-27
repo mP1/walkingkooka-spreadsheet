@@ -983,17 +983,23 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
 
     @Test
     public void testPatternsColorName() {
-        this.patternsParseAndCheck(
-                SpreadsheetFormatParserTokenKind.COLOR_NAME,
-                SpreadsheetPattern::parseDateFormatPattern
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.patternsParseAndCheck(
+                        SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                        SpreadsheetPattern::parseDateFormatPattern
+                )
         );
     }
 
     @Test
     public void testPatternsColorNumber() {
-        this.patternsParseAndCheck(
-                SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
-                SpreadsheetPattern::parseDateFormatPattern
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.patternsParseAndCheck(
+                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
+                        SpreadsheetPattern::parseDateFormatPattern
+                )
         );
     }
 
